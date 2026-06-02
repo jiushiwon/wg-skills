@@ -11,6 +11,9 @@
 | **虚词堆砌** | 其实、而且、但是、实际上 | P1 |
 | **短句短语** | 列表式短句、两字短语堆砌 | P1 |
 | **结尾套话** | 最后说一句、评论区见 | P2 |
+| **英文 AI 词汇** | delve, tapestry, robust, pivotal 等 | P1 |
+| **结构模式** | 二元对立、戏剧化断句、分形总结 | P1 |
+| **格式模式** | 粗体首词列表、Unicode 箭头、破折号 | P2 |
 
 ## 🚀 快速开始
 
@@ -94,6 +97,46 @@ Claude 会自动：
 | 觉得有用点个赞 | 🟠 High |
 | 评论区聊聊 | 🟠 High |
 
+### 英文 AI 词汇（P1）
+
+英文文案中的典型 AI 用词：
+
+| 类别 | 示例 |
+|------|------|
+| 重要性夸大词 | pivotal, crucial, vital, significant, profound |
+| AI 分析动词 | delve, embark, leverage, utilize, facilitate, foster |
+| 诗意名词 | tapestry, landscape, realm, paradigm, nexus |
+| 推销形容词 | vibrant, comprehensive, robust, seamless, innovative |
+| 夸大副词 | seamlessly, meticulously, profoundly, remarkably |
+| 开头套话 | "In today's world", "In conclusion", "Overall" |
+| 虚假真诚 | "Here's the truth", "Let me be clear", "But honestly?" |
+| 公式化模式 | "It's not just X, it's Y", "Not only X, but also Y" |
+
+### 结构模式（P1）
+
+跨语言的 AI 写作结构：
+
+| 模式 | 示例 |
+|------|------|
+| 二元对立 | Not a tool. A platform. |
+| 戏剧化断句 | Speed. That's it. That's the tradeoff. |
+| 自问自答 | The result? Devastating. |
+| 三列滥用 | fast, reliable, scalable |
+| 分形总结 | In this section, we'll explore... |
+| 被动语态 | The bug was fixed by the team. |
+| 分词附加语 | ..., highlighting its importance |
+
+### 格式模式（P2）
+
+视觉上的 AI 痕迹：
+
+| 模式 | 说明 |
+|------|------|
+| 粗体首词列表 | 每个列表项以粗体词开头 |
+| Unicode 箭头 | → ← ↑ ↓ ⇒ ⇐ |
+| 破折号滥用 | 使用 em dash (—) 或 en dash (–) |
+| 句子长度一致 | 所有句子都在 15-25 词之间 |
+
 ## ✏️ 修改技巧
 
 ### 1. 开头套话 → 删
@@ -131,6 +174,24 @@ Claude 会自动：
 ```
 
 把单词总结扩展为完整的句子表达。
+
+### 5. 英文 AI 词汇 → 替换
+
+```diff
+- This is a robust solution that leverages cutting-edge technology.
++ This solution uses the latest technology and works reliably.
+```
+
+用简单直接的词替代 AI 高频词。
+
+### 6. 结构模式 → 改写
+
+```diff
+- Not a tool. A platform.
++ This is a platform, not just a tool.
+```
+
+去掉戏剧化的对比，直接陈述。
 
 ## 📖 输出示例
 
@@ -193,6 +254,9 @@ Claude 会自动：
 | 电商文案 | 去除套话，提升转化率 |
 | 社媒运营 | 检测笔记是否有 AI 风 |
 | 演讲稿 | 让内容更 human |
+| 英文论文 | 去除 AI 词汇，提升学术感 |
+| 英文博客 | 避免 AI 套路，增加个性 |
+| 产品文案 | 去掉夸大词，用真实描述 |
 
 ## 📄 License
 
