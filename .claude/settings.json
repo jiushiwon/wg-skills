@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:tianya.net)"
+      "WebFetch(domain:tianya.net)",
+      "Bash(grep -q \"^docs/$\" .gitignore)",
+      "Bash(python3 -c \"import docx2txt; print\\(docx2txt.process\\('docs/还魂山【改版】\\(1\\).docx'\\)\\)\")",
+      "Bash(python3 -c ' *)"
     ]
   }
 }
