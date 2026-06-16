@@ -105,12 +105,58 @@ Claude 会根据你的需求自动匹配并调用对应的 Skill。
 
 ---
 
+### 3. frontend-ui-foundry 🎨
+
+> 综合前端 UI 技能：按场景生成 / 一键优化 / Token 统一 / 品牌套用
+
+**功能**：8 大场景 × 10 套调色板 × 58 个品牌 × 6 大技术栈的端到端 UI 工具链。提供 `forge`（从零生成）、`optimize`（智能重构）、`audit`（设计+代码审查）、`tokens`（设计资产管理）、`unify`（多页面变体收敛）、`brand`（品牌套用）、`scenario`（场景方案）、`stack`（技术栈最佳实践）共 8 个子命令。
+
+**使用场景**：
+- 从零生成新项目（落地页/官网/后台/文档/金融/3D 等）
+- 智能重构现有项目（Vue/React/uniapp/HTML）
+- 提取并统一设计 Token（颜色/字体/间距/圆角/动效）
+- 套用品牌风格（Stripe/Linear/Vercel/Apple/Claude 等）
+- 审查项目 AI slop 与可访问性
+
+**使用方式**：
+
+```
+/frontend-ui-foundry
+```
+
+或自然语言：
+
+```
+用 foundry 帮我做一个营销落地页，用 Stripe 风格
+用 foundry 优化我当前项目
+用 foundry 审查这个项目
+```
+
+**8 个子命令速查**：
+
+| 命令 | 干什么 | 例子 |
+|------|--------|------|
+| `forge` | 从零生成 | `forge landing-marketing --brand stripe --stack react-nextjs` |
+| `optimize` | 智能重构 | `optimize --strategy gradual` |
+| `audit` | 设计+代码审查 | `audit --depth deep` |
+| `tokens` | Token 提取/导出 | `tokens export tailwind` |
+| `unify` | 多页面统一 | `unify --scope pages` |
+| `brand` | 套用品牌 | `brand apple ./my-project` |
+| `scenario` | 查看场景方案 | `scenario admin-dashboard` |
+| `stack` | 查看栈方案 | `stack react-nextjs` |
+
+**详细文档**：[frontend-ui-foundry/README.md](frontend-ui-foundry/README.md)（安装说明 + 8 子命令 + 完整资源索引）
+
+---
+
 ## 📋 Skill 列表
 
 | Skill | 说明 | 触发关键词 |
 |------------|------------------|------------------|
 | [frontend-code-doctor](frontend-code-doctor/) | 前端代码审查 | 审查代码、code review |
 | [ai-speech-detector](ai-speech-detector/) | AI 风检测 | AI风、AI味、像AI写的 |
+| [frontend-ui-foundry](frontend-ui-foundry/) | 综合前端 UI | 生成 UI、优化项目、Token 统一 |
+| [demo/foundry-demo](demo/foundry-demo/) | 端到端示例 | admin-dashboard · Supabase 风 · html-tailwind |
 
 ---
 
@@ -160,7 +206,7 @@ xxx
 wg-skills/
 ├── README.md              # 本文件
 ├── SKILL.md               # 入口定义（旧格式，保留兼容）
-├── frontend-code-doctor/ # Skill 1
+├── frontend-code-doctor/  # Skill 1
 │   ├── SKILL.md
 │   ├── README.md
 │   └── references/
@@ -172,11 +218,34 @@ wg-skills/
 │       ├── a11y-rules.md
 │       ├── performance.md
 │       └── uniapp-rules.md
-└── ai-speech-detector/    # Skill 2
-    ├── SKILL.md
-    ├── README.md
-    └── references/
-        └── ai-words.md
+├── ai-speech-detector/    # Skill 2
+│   ├── SKILL.md
+│   ├── README.md
+│   └── references/
+│       └── ai-words.md
+├── demo/                  # Foundry 端到端 demo
+│   └── foundry-demo/      # admin-dashboard 完整示例
+│       ├── index.html
+│       ├── assets/css/tokens.css
+│       ├── tailwind.config.js
+│       ├── README.md
+│       └── forge-report.md
+└── frontend-ui-foundry/   # Skill 3（综合前端 UI，56 文件）
+    ├── SKILL.md           # 入口（8 子命令路由）
+    ├── README.md          # 使用文档（GitHub 首页）
+    ├── docs/              # 11 份独立使用文档
+    │   ├── README.md
+    │   └── usage/         # 10 份使用指南
+    ├── references/        # 24 份知识库
+    │   ├── anti-patterns.md
+    │   ├── tokens/        # 6 份
+    │   ├── scenarios/     # 8 份
+    │   ├── brands/        # 11 份（58 总览 + 10 详细）
+    │   ├── stacks/        # 6 份
+    │   └── commands/      # 8 份
+    ├── scripts/           # 4 个工具脚本
+    ├── templates/         # 2 份 Token 模板
+    └── demo/              # 端到端验证
 ```
 
 ---
