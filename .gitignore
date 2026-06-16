@@ -1,1 +1,35 @@
+# 文档目录（已单独管理）
 docs/
+
+# 依赖目录
+node_modules/
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# 日志文件
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 环境变量
+.env
+.env.local
+.env.*.local
+
+# 构建输出
+dist/
+build/
+out/
+
+# IDE / 编辑器
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 临时文件
+*.tmp
+*.temp

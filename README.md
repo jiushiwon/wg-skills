@@ -160,6 +160,36 @@ Claude 会根据你的需求自动匹配并调用对应的 Skill。
 
 ---
 
+## 🧰 工具脚本
+
+### png_genernate_scripts 🖼️
+
+> 一键批量生成 PNG 图标工具集
+
+**功能**：从 SVG 源文件一键生成 tabBar 图标、通用图标、分享封面等多尺寸 PNG，支持自动修复 `pages.json` 缺失的 `iconPath`。
+
+**使用场景**：
+- 小程序 / uniapp 项目图标批量生成
+- 根据 tabBar 文字自动匹配语义图标
+- 统一输出 81×81 tabBar 图标、48×48 页面图标、500×400 分享封面
+
+**使用方式**：
+
+```bash
+# 智能生成全部图标（推荐）
+node png_genernate_scripts/gen-icons.js
+
+# 预览需要生成的文件
+node png_genernate_scripts/gen-icons.js --dry-run
+
+# 批量 SVG → PNG
+node png_genernate_scripts/generate-all-icons.js
+```
+
+**详细文档**：[png_genernate_scripts/README.md](png_genernate_scripts/README.md)
+
+---
+
 ## ➕ 添加新 Skill
 
 ### 方式一：手动创建
@@ -246,6 +276,17 @@ wg-skills/
     ├── scripts/           # 4 个工具脚本
     ├── templates/         # 2 份 Token 模板
     └── demo/              # 端到端验证
+└── png_genernate_scripts/ # 图标生成工具集
+    ├── README.md          # 本文件
+    ├── package.json
+    ├── gen-icons.js
+    ├── generate-all-icons.js
+    ├── generate-all-icons.py
+    ├── svg-to-png.py
+    └── svgs/              # SVG 源文件
+        ├── *.svg
+        └── tabbar/
+            └── *.svg
 ```
 
 ---

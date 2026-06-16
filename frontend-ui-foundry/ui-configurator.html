@@ -1,0 +1,2747 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>UI 配置器 · Frontend UI Foundry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;700&family=Source+Han+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&family=Geist:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=General+Sans:wght@400;500;600;700&family=Cabinet+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Newsreader:wght@400;500;600&family=Playfair+Display:wght@400;500;600;700&family=Playfair:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   配置器自身样式（与预览内容解耦）
+   ============================================================ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  font-family: 'Geist', 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #1a1a1a;
+  background: #fafafa;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.app {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+/* === 顶部 === */
+.app-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid #e5e5e5;
+}
+.app-header h1 {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.app-header p {
+  font-size: 14px;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.app-header .logo {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 12px;
+  padding: 4px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* === 步骤选择器 === */
+.step {
+  margin-bottom: 32px;
+}
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.step-num {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: #1a1a1a;
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600;
+  flex-shrink: 0;
+}
+.step-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+.step-sub {
+  font-size: 13px;
+  color: #888;
+  margin-left: 4px;
+}
+
+/* 配色卡片网格 */
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+.palette-card {
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  background: #fff;
+}
+.palette-card:hover {
+  border-color: #999;
+  transform: translateY(-1px);
+}
+.palette-card.selected {
+  border-color: #1a1a1a;
+  border-width: 2px;
+  padding: 11px;
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+}
+.palette-swatches {
+  display: flex;
+  height: 36px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.palette-swatch {
+  flex: 1;
+  position: relative;
+}
+.palette-name {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.palette-meta {
+  font-size: 11px;
+  color: #888;
+  line-height: 1.4;
+}
+.palette-commit {
+  display: inline-block;
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  background: #f0f0f0;
+  color: #666;
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* 样式方案卡片 */
+.style-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 12px;
+}
+.style-card {
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  background: #fff;
+}
+.style-card:hover { border-color: #999; transform: translateY(-1px); }
+.style-card.selected {
+  border-color: #1a1a1a;
+  border-width: 2px;
+  padding: 15px;
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+}
+.style-name {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.style-desc {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 12px;
+}
+.style-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.style-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+}
+.style-row .label {
+  width: 56px;
+  color: #888;
+  flex-shrink: 0;
+}
+.style-row .values {
+  font-family: 'JetBrains Mono', monospace;
+  color: #333;
+  font-size: 11px;
+}
+.style-font-sample {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+.style-spacing-bar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.style-spacing-bar > div {
+  background: #ddd;
+  border-radius: 1px;
+  height: 12px;
+}
+.style-radius-samples {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.style-radius-samples > div {
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 9px;
+  padding: 3px 6px;
+}
+
+/* 布局类型卡片 */
+.layout-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+.layout-card {
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  background: #fff;
+}
+.layout-card:hover { border-color: #999; transform: translateY(-1px); }
+.layout-card.selected {
+  border-color: #1a1a1a;
+  border-width: 2px;
+  padding: 15px;
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+}
+.layout-name {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.layout-desc {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 10px;
+}
+.layout-wireframe {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  line-height: 1.3;
+  color: #999;
+  background: #fafafa;
+  padding: 8px;
+  border-radius: 4px;
+  white-space: pre;
+  overflow-x: auto;
+}
+.layout-modules {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 8px;
+}
+.layout-module-tag {
+  font-size: 10px;
+  padding: 2px 6px;
+  background: #f0f0f0;
+  color: #666;
+  border-radius: 3px;
+}
+
+/* === 模块预览区 === */
+.preview-section {
+  margin: 48px 0;
+  padding-top: 32px;
+  border-top: 1px solid #e5e5e5;
+}
+.preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.preview-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+.preview-sub {
+  font-size: 12px;
+  color: #888;
+  margin-top: 2px;
+}
+.preview-count {
+  font-size: 12px;
+  color: #888;
+  background: #f0f0f0;
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+.module-card {
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  cursor: pointer;
+  transition: all 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.module-card:hover {
+  border-color: #999;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+.module-info {
+  padding: 10px 12px;
+  border-bottom: 1px solid #e5e5e5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.module-name {
+  font-size: 12px;
+  font-weight: 600;
+}
+.module-id {
+  font-size: 10px;
+  color: #aaa;
+  font-family: 'JetBrains Mono', monospace;
+}
+.module-preview-wrap {
+  height: 240px;
+  overflow: hidden;
+  position: relative;
+  background: #fafafa;
+}
+.module-preview-inner {
+  position: absolute;
+  top: 0; left: 0;
+  transform-origin: top left;
+}
+
+/* === 提示词导出 === */
+.prompt-section {
+  margin-top: 48px;
+  padding: 24px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+}
+.prompt-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.prompt-title {
+  font-size: 16px;
+  font-weight: 600;
+  display: flex; align-items: center; gap: 8px;
+}
+.prompt-actions {
+  display: flex;
+  gap: 8px;
+}
+.btn {
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  transition: all 150ms;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn:hover { border-color: #999; background: #fafafa; }
+.btn-primary {
+  background: #1a1a1a;
+  color: #fff;
+  border-color: #1a1a1a;
+}
+.btn-primary:hover { background: #333; border-color: #333; }
+.btn-tab {
+  border-color: transparent;
+  background: transparent;
+  color: #888;
+}
+.btn-tab.active { color: #1a1a1a; border-color: #1a1a1a; }
+.prompt-textarea {
+  width: 100%;
+  min-height: 360px;
+  padding: 16px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #333;
+  background: #fafafa;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  resize: vertical;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.prompt-textarea:focus {
+  outline: none;
+  border-color: #999;
+}
+
+/* === 模态框 === */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 24px;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+  background: #fff;
+  border-radius: 12px;
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.2);
+}
+.modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e5e5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal-title { font-size: 15px; font-weight: 600; }
+.modal-close {
+  background: none; border: none;
+  font-size: 20px; cursor: pointer;
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 6px;
+  color: #666;
+}
+.modal-close:hover { background: #f0f0f0; color: #1a1a1a; }
+.modal-body {
+  flex: 1;
+  overflow: auto;
+  padding: 24px;
+  background: #fafafa;
+}
+.modal-preview-scope {
+  margin: 0 auto;
+  background: var(--c-surface);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+/* === Toast === */
+.toast {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  background: #1a1a1a;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  z-index: 10000;
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* === 折叠面板 === */
+.collapse-group {
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+.collapse-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  cursor: pointer;
+  user-select: none;
+  background: #fafafa;
+  border-bottom: 1px solid transparent;
+  transition: background-color 150ms;
+}
+.collapse-header:hover { background: #f0f0f0; }
+.collapse-header.active { border-bottom-color: #e5e5e5; }
+.collapse-title {
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.collapse-count {
+  font-size: 11px;
+  color: #888;
+  font-weight: 400;
+}
+.collapse-icon {
+  font-size: 12px;
+  color: #888;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.collapse-header.expanded .collapse-icon { transform: rotate(180deg); }
+.collapse-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.collapse-body.expanded {
+  max-height: 2000px;
+}
+.collapse-inner {
+  padding: 12px;
+}
+
+/* ============================================================
+   模块预览组件样式（CSS 变量定义在 :root，JS 动态更新）
+   ============================================================ */
+:root {
+  /* 颜色变量 - 默认回退值，JS 动态覆盖 */
+  --c-primary: #c45c48;
+  --c-primary-hover: #a84a38;
+  --c-secondary: #d4a574;
+  --c-accent: #b87333;
+  --c-surface: #f5f1e8;
+  --c-surface-tinted: #ebe5d3;
+  --c-surface-elevated: #fffbf2;
+  --c-on-surface: #1a1a1a;
+  --c-on-surface-muted: #5c5c5c;
+  --c-on-primary: #fff;
+  --c-border: #d4c8a8;
+  --c-border-strong: #b87333;
+  --c-error: #c45c48;
+  --c-success: #5b8c3e;
+  --c-warning: #d4a574;
+
+  /* 间距变量 - JS 动态覆盖 */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px;  --s-4: 16px;
+  --s-5: 20px; --s-6: 24px; --s-8: 32px;  --s-10: 40px;
+  --s-12: 48px; --s-16: 64px; --s-20: 80px; --s-24: 96px;
+
+  /* 圆角变量 - JS 动态覆盖 */
+  --r-sm: 4px;  --r-md: 8px;  --r-lg: 12px;  --r-xl: 16px;  --r-2xl: 24px;  --r-full: 9999px;
+
+  /* 字体变量 - JS 动态覆盖 */
+  --font-heading: 'Geist', 'Inter Tight', system-ui, sans-serif;
+  --font-body: 'Geist', 'Inter Tight', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* 字号变量 - JS 动态覆盖 */
+  --fs-xs: 10px; --fs-sm: 12px; --fs-base: 13px; --fs-md: 14px;
+  --fs-lg: 16px; --fs-xl: 20px; --fs-2xl: 24px; --fs-3xl: 32px;
+}
+
+.preview-scope {
+  font-family: var(--font-body);
+  color: var(--c-on-surface);
+  font-size: var(--fs-base);
+  line-height: 1.5;
+}
+
+/* === 通用原子样式 === */
+.mp-heading {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--c-on-surface);
+  line-height: 1.2;
+  margin: 0;
+}
+.mp-h1 { font-size: var(--fs-2xl); font-weight: 700; letter-spacing: -0.02em; }
+.mp-h2 { font-size: var(--fs-xl); font-weight: 600; letter-spacing: -0.01em; }
+.mp-h3 { font-size: var(--fs-lg); font-weight: 600; }
+.mp-h4 { font-size: var(--fs-base); font-weight: 600; }
+.mp-p { color: var(--c-on-surface-muted); font-size: var(--fs-sm); line-height: 1.5; margin: 0; }
+.mp-text { font-size: var(--fs-sm); }
+.mp-muted { color: var(--c-on-surface-muted); }
+.mp-small { font-size: var(--fs-xs); }
+
+.mp-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  padding: var(--s-2) var(--s-4);
+  border-radius: var(--r-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 150ms;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.mp-btn-primary { background: var(--c-primary); color: var(--c-on-primary); }
+.mp-btn-secondary { background: transparent; color: var(--c-on-surface); border-color: var(--c-border-strong); }
+.mp-btn-ghost { background: transparent; color: var(--c-on-surface-muted); }
+.mp-btn-sm { padding: var(--s-1) var(--s-2); font-size: var(--fs-xs); }
+.mp-btn-lg { padding: var(--s-3) var(--s-6); font-size: var(--fs-base); }
+.mp-btn-block { width: 100%; }
+
+.mp-input {
+  display: flex; align-items: center; gap: var(--s-2);
+  padding: var(--s-2) var(--s-3);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  background: var(--c-surface-elevated);
+  font-size: var(--fs-sm);
+  color: var(--c-on-surface-muted);
+}
+.mp-card {
+  background: var(--c-surface-elevated);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  padding: var(--s-4);
+}
+.mp-card-flat {
+  background: var(--c-surface-elevated);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  padding: var(--s-3);
+}
+.mp-badge {
+  display: inline-block;
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: var(--r-full);
+  background: var(--c-surface-tinted);
+  color: var(--c-on-surface);
+}
+.mp-badge-primary { background: var(--c-primary); color: var(--c-on-primary); }
+.mp-badge-success { background: var(--c-success); color: var(--c-on-primary); }
+.mp-badge-warning { background: var(--c-warning); color: var(--c-on-surface); }
+.mp-badge-error { background: var(--c-error); color: var(--c-on-primary); }
+
+.mp-avatar {
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--r-full);
+  background: var(--c-surface-tinted);
+  color: var(--c-on-surface);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  width: 32px; height: 32px;
+  flex-shrink: 0;
+}
+.mp-avatar-sm { width: 24px; height: 24px; font-size: var(--fs-xs); }
+.mp-avatar-lg { width: 48px; height: 48px; font-size: var(--fs-base); }
+.mp-avatar-xl { width: 64px; height: 64px; font-size: var(--fs-lg); }
+
+.mp-divider { height: 1px; background: var(--c-border); border: 0; margin: 0; }
+.mp-flex { display: flex; }
+.mp-flex-col { display: flex; flex-direction: column; }
+.mp-items-center { align-items: center; }
+.mp-justify-between { justify-content: space-between; }
+.mp-justify-center { justify-content: center; }
+.mp-gap-1 { gap: var(--s-1); }
+.mp-gap-2 { gap: var(--s-2); }
+.mp-gap-3 { gap: var(--s-3); }
+.mp-gap-4 { gap: var(--s-4); }
+.mp-gap-6 { gap: var(--s-6); }
+.mp-mt-1 { margin-top: var(--s-1); }
+.mp-mt-2 { margin-top: var(--s-2); }
+.mp-mt-3 { margin-top: var(--s-3); }
+.mp-mt-4 { margin-top: var(--s-4); }
+.mp-mb-1 { margin-bottom: var(--s-1); }
+.mp-mb-2 { margin-bottom: var(--s-2); }
+.mp-mb-3 { margin-bottom: var(--s-3); }
+.mp-mb-4 { margin-bottom: var(--s-4); }
+
+/* === 手机框架（小程序） === */
+.mp-phone {
+  width: 240px;
+  background: var(--c-surface);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--c-border);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+.mp-phone-statusbar {
+  height: 16px;
+  background: var(--c-surface-elevated);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 8px;
+  font-size: 8px;
+  color: var(--c-on-surface);
+  font-weight: 600;
+}
+.mp-phone-nav {
+  height: 28px;
+  background: var(--c-surface-elevated);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 8px;
+  border-bottom: 1px solid var(--c-border);
+  font-size: 10px;
+  font-weight: 600;
+}
+.mp-phone-body {
+  flex: 1;
+  overflow: hidden;
+  padding: var(--s-3);
+  background: var(--c-surface);
+}
+.mp-phone-tabbar {
+  height: 36px;
+  background: var(--c-surface-elevated);
+  border-top: 1px solid var(--c-border);
+  display: flex;
+}
+.mp-tab-item {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 2px;
+  font-size: 7px;
+  color: var(--c-on-surface-muted);
+}
+.mp-tab-item.active { color: var(--c-primary); }
+.mp-tab-icon {
+  width: 12px; height: 12px;
+  border-radius: 3px;
+  background: currentColor;
+  opacity: 0.7;
+}
+
+/* === 桌面框架（管理端） === */
+.mp-desktop {
+  width: 100%; height: 100%;
+  display: grid;
+  background: var(--c-surface);
+  font-size: 9px;
+}
+.mp-d-sidebar {
+  background: var(--c-surface-elevated);
+  border-right: 1px solid var(--c-border);
+  display: flex; flex-direction: column;
+}
+.mp-d-sidebar-header {
+  height: 28px;
+  padding: 0 10px;
+  display: flex; align-items: center;
+  font-weight: 600; font-size: 10px;
+  border-bottom: 1px solid var(--c-border);
+}
+.mp-d-sidebar-nav { flex: 1; padding: 6px; }
+.mp-d-nav-section { margin-bottom: 8px; }
+.mp-d-nav-title { font-size: 7px; color: var(--c-on-surface-muted); text-transform: uppercase; padding: 2px 4px; letter-spacing: 0.05em; }
+.mp-d-nav-item {
+  display: flex; align-items: center; gap: 4px;
+  padding: 4px 6px;
+  border-radius: var(--r-sm);
+  color: var(--c-on-surface-muted);
+  font-size: 9px;
+  margin-bottom: 1px;
+}
+.mp-d-nav-item.active { background: var(--c-primary); color: var(--c-on-primary); font-weight: 500; }
+.mp-d-nav-item:hover:not(.active) { background: var(--c-surface-tinted); color: var(--c-on-surface); }
+.mp-d-nav-dot { width: 8px; height: 8px; border-radius: 2px; background: currentColor; opacity: 0.5; flex-shrink: 0; }
+
+.mp-d-main { display: flex; flex-direction: column; min-width: 0; }
+.mp-d-topbar {
+  height: 28px;
+  padding: 0 10px;
+  border-bottom: 1px solid var(--c-border);
+  background: var(--c-surface-elevated);
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 9px;
+}
+.mp-d-content { flex: 1; padding: 8px; overflow: hidden; }
+
+/* === 桌面表格 === */
+.mp-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 8px;
+  background: var(--c-surface-elevated);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  border: 1px solid var(--c-border);
+}
+.mp-table th {
+  text-align: left;
+  padding: 4px 6px;
+  background: var(--c-surface-tinted);
+  font-weight: 600;
+  color: var(--c-on-surface-muted);
+  font-size: 7px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--c-border);
+}
+.mp-table td {
+  padding: 4px 6px;
+  border-bottom: 1px solid var(--c-border);
+  color: var(--c-on-surface);
+}
+.mp-table tr:last-child td { border-bottom: 0; }
+
+/* === 响应式栅格 === */
+.mp-grid { display: grid; gap: var(--s-3); }
+.mp-grid-2 { grid-template-columns: repeat(2, 1fr); }
+.mp-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.mp-grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+/* === 通用进度条 === */
+.mp-bar {
+  height: 4px;
+  background: var(--c-surface-tinted);
+  border-radius: var(--r-full);
+  overflow: hidden;
+}
+.mp-bar-fill {
+  height: 100%;
+  background: var(--c-primary);
+  border-radius: var(--r-full);
+}
+
+/* === 移动端字号 === */
+.mp-page {
+  background: var(--c-surface);
+  color: var(--c-on-surface);
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+}
+
+/* 横向滚动行 */
+.mp-scroll-x {
+  display: flex;
+  gap: var(--s-2);
+  overflow: hidden;
+}
+
+/* 模态预览框内 */
+.modal-preview-scope {
+  width: 100%;
+  max-width: 720px;
+  padding: 24px;
+}
+
+/* 隐藏滚动条但保持滚动 */
+.module-preview-wrap::-webkit-scrollbar { display: none; }
+.module-preview-wrap { scrollbar-width: none; }
+
+/* 减少动效 */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ========== 顶部 ========== -->
+<header class="app-header">
+  <span class="logo">Frontend UI Foundry</span>
+  <h1>UI 配置器</h1>
+  <p>选择配色方案、样式方案、布局类型，实时预览 48 个主流 UI 模块，一键导出 AI 提示词复现整套设计</p>
+</header>
+
+<!-- ========== 步骤一：配色方案 ========== -->
+<section class="step" id="step1">
+  <div class="step-header">
+    <span class="step-num">1</span>
+    <span class="step-title">配色方案</span>
+    <span class="step-sub" id="paletteSub">20 套主题调色板 · 决定界面色彩基调</span>
+  </div>
+  <div id="paletteCollapse"></div>
+</section>
+
+<!-- ========== 步骤二：样式方案 ========== -->
+<section class="step" id="step2">
+  <div class="step-header">
+    <span class="step-num">2</span>
+    <span class="step-title">样式方案</span>
+    <span class="step-sub">3 套预设 · margin/padding + 字体 + 圆角 + 字号阶</span>
+  </div>
+  <div class="style-grid" id="styleGrid"></div>
+</section>
+
+<!-- ========== 步骤三：布局类型 ========== -->
+<section class="step" id="step3">
+  <div class="step-header">
+    <span class="step-num">3</span>
+    <span class="step-title">布局类型</span>
+    <span class="step-sub">4 种场景 · 决定展示的 UI 模块集</span>
+  </div>
+  <div class="layout-grid" id="layoutGrid"></div>
+</section>
+
+<!-- ========== 模块预览 ========== -->
+<section class="preview-section">
+  <div class="preview-header">
+    <div>
+      <div class="preview-title">模块预览</div>
+      <div class="preview-sub" id="previewSub">点击卡片可放大查看</div>
+    </div>
+    <span class="preview-count" id="previewCount">0 个模块</span>
+  </div>
+  <div class="module-grid" id="moduleGrid"></div>
+</section>
+
+<!-- ========== 提示词导出 ========== -->
+<section class="prompt-section">
+  <div class="prompt-header">
+    <div class="prompt-title">📋 提示词导出</div>
+    <div class="prompt-actions">
+      <button class="btn btn-tab active" data-format="markdown" onclick="switchFormat('markdown')">Markdown</button>
+      <button class="btn btn-tab" data-format="plain" onclick="switchFormat('plain')">纯文本</button>
+      <button class="btn btn-primary" onclick="copyPrompt()">📑 复制提示词</button>
+    </div>
+  </div>
+  <textarea class="prompt-textarea" id="promptText" readonly></textarea>
+</section>
+
+</div>
+
+<!-- ========== 模态框 ========== -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">模块预览</div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ========== Toast ========== -->
+<div class="toast" id="toast">已复制到剪贴板</div>
+
+<!-- ========== 脚本 ========== -->
+<script>
+'use strict';
+
+/* ============================================================
+   配色方案数据（10 套）
+   ============================================================ */
+const COLOR_PALETTES = [
+  {
+    id: 'vermilion-amber', name: '赤琥金', nameEn: 'Vermilion-amber',
+    commitment: 'Committed', scenario: '中文官网 / 文创 / 文化品牌',
+    swatches: ['#c45c48', '#d4a574', '#b87333', '#f5f1e8', '#1a1a1a'],
+    primary: '#c45c48', primaryHover: '#a84a38',
+    secondary: '#d4a574', accent: '#b87333',
+    surface: '#f5f1e8', surfaceTinted: '#ebe5d3', surfaceElevated: '#fffbf2',
+    onSurface: '#1a1a1a', onSurfaceMuted: '#5c5c5c', onPrimary: '#fff',
+    border: '#d4c8a8', borderStrong: '#b87333',
+    error: '#c45c48', success: '#5b8c3e', warning: '#d4a574'
+  },
+  {
+    id: 'cold-minimal', name: '冷调极简', nameEn: 'Cold Minimal',
+    commitment: 'Restrained', scenario: '开发者工具 / 技术品牌 / SaaS',
+    swatches: ['#4f46e5', '#7c83ff', '#06b6d4', '#fafafa', '#0a0a0a'],
+    primary: '#4f46e5', primaryHover: '#4338ca',
+    secondary: '#7c83ff', accent: '#06b6d4',
+    surface: '#fafafa', surfaceTinted: '#f0f0f5', surfaceElevated: '#ffffff',
+    onSurface: '#0a0a0a', onSurfaceMuted: '#5c5c6e', onPrimary: '#ffffff',
+    border: '#e5e5ec', borderStrong: '#a8a8b8',
+    error: '#ef4444', success: '#10b981', warning: '#f59e0b'
+  },
+  {
+    id: 'warm-business', name: '暖色商务', nameEn: 'Warm Business',
+    commitment: 'Committed', scenario: '支付 / 电商 / SaaS / Stripe 风',
+    swatches: ['#e8734a', '#ffb088', '#635bff', '#fff8f3', '#1a1a1a'],
+    primary: '#e8734a', primaryHover: '#d65f33',
+    secondary: '#ffb088', accent: '#635bff',
+    surface: '#fff8f3', surfaceTinted: '#fceedf', surfaceElevated: '#ffffff',
+    onSurface: '#1a1a1a', onSurfaceMuted: '#6b5446', onPrimary: '#ffffff',
+    border: '#f0d9c5', borderStrong: '#d4a574',
+    error: '#dc2626', success: '#16a34a', warning: '#ea580c'
+  },
+  {
+    id: 'data-dark', name: '数据深色', nameEn: 'Data Dark',
+    commitment: 'Full', scenario: '监控面板 / 数据可视化 / 运维',
+    swatches: ['#3ecf8e', '#38bdf8', '#a78bfa', '#0f172a', '#f1f5f9'],
+    primary: '#3ecf8e', primaryHover: '#2db876',
+    secondary: '#38bdf8', accent: '#a78bfa',
+    surface: '#0f172a', surfaceTinted: '#1e293b', surfaceElevated: '#1e293b',
+    onSurface: '#f1f5f9', onSurfaceMuted: '#94a3b8', onPrimary: '#0f172a',
+    border: '#334155', borderStrong: '#475569',
+    error: '#f87171', success: '#4ade80', warning: '#fbbf24'
+  },
+  {
+    id: 'finance-solid', name: '金融稳重', nameEn: 'Finance Solid',
+    commitment: 'Restrained', scenario: '银行 / 财富管理 / 支付',
+    swatches: ['#14532d', '#b08840', '#1e40af', '#fbfaf6', '#0f1f14'],
+    primary: '#14532d', primaryHover: '#0d3f22',
+    secondary: '#b08840', accent: '#1e40af',
+    surface: '#fbfaf6', surfaceTinted: '#f0ece0', surfaceElevated: '#ffffff',
+    onSurface: '#0f1f14', onSurfaceMuted: '#4a5c50', onPrimary: '#ffffff',
+    border: '#d4c8a8', borderStrong: '#8a6f30',
+    error: '#b91c1c', success: '#166534', warning: '#a16207'
+  },
+  {
+    id: 'docs-fresh', name: '文档清爽', nameEn: 'Docs Fresh',
+    commitment: 'Restrained', scenario: 'API 文档 / 帮助中心 / 博客',
+    swatches: ['#6366f1', '#8b5cf6', '#f59e0b', '#fafaf9', '#1c1c1c'],
+    primary: '#6366f1', primaryHover: '#4f46e5',
+    secondary: '#8b5cf6', accent: '#f59e0b',
+    surface: '#fafaf9', surfaceTinted: '#f5f5f4', surfaceElevated: '#ffffff',
+    onSurface: '#1c1c1c', onSurfaceMuted: '#57534e', onPrimary: '#ffffff',
+    border: '#e7e5e4', borderStrong: '#a8a29e',
+    error: '#dc2626', success: '#16a34a', warning: '#d97706'
+  },
+  {
+    id: 'creative-ad', name: '创意广告', nameEn: 'Creative Ad',
+    commitment: 'Drenched', scenario: '消费电子 / 高端品牌 / 产品发布',
+    swatches: ['#1d1d1f', '#424245', '#f56300', '#ffffff', '#1d1d1f'],
+    primary: '#1d1d1f', primaryHover: '#000000',
+    secondary: '#424245', accent: '#f56300',
+    surface: '#ffffff', surfaceTinted: '#f5f5f7', surfaceElevated: '#ffffff',
+    onSurface: '#1d1d1f', onSurfaceMuted: '#6e6e73', onPrimary: '#ffffff',
+    border: '#d2d2d7', borderStrong: '#86868b',
+    error: '#bf0000', success: '#28a745', warning: '#ff9500'
+  },
+  {
+    id: 'native-mobile', name: '原生移动', nameEn: 'Native Mobile',
+    commitment: 'Restrained', scenario: 'iOS / Android App / 跨端原生',
+    swatches: ['#007aff', '#5856d6', '#ff9500', '#ffffff', '#1c1c1e'],
+    primary: '#007aff', primaryHover: '#0062cc',
+    secondary: '#5856d6', accent: '#ff9500',
+    surface: '#ffffff', surfaceTinted: '#f2f2f7', surfaceElevated: '#ffffff',
+    onSurface: '#1c1c1e', onSurfaceMuted: '#8e8e93', onPrimary: '#ffffff',
+    border: '#e5e5ea', borderStrong: '#c7c7cc',
+    error: '#ff3b30', success: '#34c759', warning: '#ff9500'
+  },
+  {
+    id: '3d-immersive', name: '3D 沉浸', nameEn: '3D Immersive',
+    commitment: 'Drenched', scenario: '3D 展示 / 创意机构 / AI 产品',
+    swatches: ['#c084fc', '#38bdf8', '#facc15', '#0c0a1f', '#f5f3ff'],
+    primary: '#c084fc', primaryHover: '#a855f7',
+    secondary: '#38bdf8', accent: '#facc15',
+    surface: '#0c0a1f', surfaceTinted: '#1a1730', surfaceElevated: '#1a1730',
+    onSurface: '#f5f3ff', onSurfaceMuted: '#a5a0c0', onPrimary: '#0c0a1f',
+    border: '#2d2845', borderStrong: '#4c3a7a',
+    error: '#f87171', success: '#4ade80', warning: '#fbbf24'
+  },
+  {
+    id: 'b2b-slate', name: '2B 灰蓝', nameEn: 'B2B Slate',
+    commitment: 'Restrained', scenario: '企业 SaaS / CRM / ERP',
+    swatches: ['#1e3a8a', '#3b82f6', '#06b6d4', '#f8fafc', '#0f172a'],
+    primary: '#1e3a8a', primaryHover: '#1e2f6b',
+    secondary: '#3b82f6', accent: '#06b6d4',
+    surface: '#f8fafc', surfaceTinted: '#eef2f7', surfaceElevated: '#ffffff',
+    onSurface: '#0f172a', onSurfaceMuted: '#475569', onPrimary: '#ffffff',
+    border: '#cbd5e1', borderStrong: '#94a3b8',
+    error: '#dc2626', success: '#16a34a', warning: '#d97706'
+  },
+
+  /* --- 扩展 10 套 --- */
+  {
+    id: 'healthcare-mint', name: '医疗薄荷', nameEn: 'Healthcare Mint',
+    commitment: 'Restrained', scenario: '医疗健康 / 健身 / 生活品质',
+    swatches: ['#14b8a6', '#5eead4', '#0f766e', '#f0fdfa', '#134e4a'],
+    primary: '#14b8a6', primaryHover: '#0d9488',
+    secondary: '#5eead4', accent: '#0f766e',
+    surface: '#f0fdfa', surfaceTinted: '#ccfbf1', surfaceElevated: '#ffffff',
+    onSurface: '#134e4a', onSurfaceMuted: '#4b807b', onPrimary: '#ffffff',
+    border: '#99f6e4', borderStrong: '#14b8a6',
+    error: '#ef4444', success: '#22c55e', warning: '#f59e0b'
+  },
+  {
+    id: 'education-bright', name: '教育活力', nameEn: 'Education Bright',
+    commitment: 'Committed', scenario: '在线教育 / 儿童产品 / 培训',
+    swatches: ['#f59e0b', '#fbbf24', '#f97316', '#fffbeb', '#451a03'],
+    primary: '#f59e0b', primaryHover: '#d97706',
+    secondary: '#fbbf24', accent: '#f97316',
+    surface: '#fffbeb', surfaceTinted: '#fef3c7', surfaceElevated: '#ffffff',
+    onSurface: '#451a03', onSurfaceMuted: '#8c6239', onPrimary: '#ffffff',
+    border: '#fde68a', borderStrong: '#f59e0b',
+    error: '#dc2626', success: '#16a34a', warning: '#ea580c'
+  },
+  {
+    id: 'food-warm', name: '美食暖棕', nameEn: 'Food Warm',
+    commitment: 'Committed', scenario: '餐饮 / 烘焙 / 生活方式',
+    swatches: ['#c2410c', '#ea580c', '#78350f', '#fff7ed', '#431407'],
+    primary: '#c2410c', primaryHover: '#9a3412',
+    secondary: '#ea580c', accent: '#78350f',
+    surface: '#fff7ed', surfaceTinted: '#ffedd5', surfaceElevated: '#ffffff',
+    onSurface: '#431407', onSurfaceMuted: '#7c2d12', onPrimary: '#ffffff',
+    border: '#fed7aa', borderStrong: '#c2410c',
+    error: '#b91c1c', success: '#15803d', warning: '#a16207'
+  },
+  {
+    id: 'travel-teal', name: '旅行青绿', nameEn: 'Travel Teal',
+    commitment: 'Committed', scenario: '旅游 / 民宿 / 生活方式',
+    swatches: ['#0d9488', '#14b8a6', '#d4a373', '#f5f5f4', '#1c1917'],
+    primary: '#0d9488', primaryHover: '#0f766e',
+    secondary: '#14b8a6', accent: '#d4a373',
+    surface: '#f5f5f4', surfaceTinted: '#e7e5e4', surfaceElevated: '#ffffff',
+    onSurface: '#1c1917', onSurfaceMuted: '#57534e', onPrimary: '#ffffff',
+    border: '#d6d3d1', borderStrong: '#0d9488',
+    error: '#dc2626', success: '#16a34a', warning: '#d97706'
+  },
+  {
+    id: 'sport-dynamic', name: '运动黑黄', nameEn: 'Sport Dynamic',
+    commitment: 'Drenched', scenario: '运动健身 / 极限运动 / 潮流',
+    swatches: ['#facc15', '#eab308', '#1a1a1a', '#262626', '#fafafa'],
+    primary: '#facc15', primaryHover: '#eab308',
+    secondary: '#eab308', accent: '#1a1a1a',
+    surface: '#1a1a1a', surfaceTinted: '#262626', surfaceElevated: '#262626',
+    onSurface: '#fafafa', onSurfaceMuted: '#a3a3a3', onPrimary: '#1a1a1a',
+    border: '#404040', borderStrong: '#facc15',
+    error: '#ef4444', success: '#22c55e', warning: '#f97316'
+  },
+  {
+    id: 'art-purple', name: '艺术紫粉', nameEn: 'Art Purple',
+    commitment: 'Full', scenario: '艺术 / 创意机构 / 女性向产品',
+    swatches: ['#9333ea', '#c084fc', '#ec4899', '#faf5ff', '#3b0764'],
+    primary: '#9333ea', primaryHover: '#7e22ce',
+    secondary: '#c084fc', accent: '#ec4899',
+    surface: '#faf5ff', surfaceTinted: '#f3e8ff', surfaceElevated: '#ffffff',
+    onSurface: '#3b0764', onSurfaceMuted: '#6b21a8', onPrimary: '#ffffff',
+    border: '#e9d5ff', borderStrong: '#9333ea',
+    error: '#dc2626', success: '#16a34a', warning: '#db2777'
+  },
+  {
+    id: 'eco-green', name: '环保绿棕', nameEn: 'Eco Green',
+    commitment: 'Committed', scenario: '环保 / 可持续 / 户外 / 农产品',
+    swatches: ['#15803d', '#65a30d', '#92400e', '#f7fee7', '#1a2e05'],
+    primary: '#15803d', primaryHover: '#166534',
+    secondary: '#65a30d', accent: '#92400e',
+    surface: '#f7fee7', surfaceTinted: '#ecfccb', surfaceElevated: '#ffffff',
+    onSurface: '#1a2e05', onSurfaceMuted: '#4d7c0f', onPrimary: '#ffffff',
+    border: '#d9f99d', borderStrong: '#15803d',
+    error: '#b91c1c', success: '#15803d', warning: '#a16207'
+  },
+  {
+    id: 'legal-navy', name: '法律深蓝', nameEn: 'Legal Navy',
+    commitment: 'Restrained', scenario: '法律 / 咨询 / 专业服务',
+    swatches: ['#1e3a8a', '#1d4ed8', '#b45309', '#eff6ff', '#172554'],
+    primary: '#1e3a8a', primaryHover: '#172554',
+    secondary: '#1d4ed8', accent: '#b45309',
+    surface: '#eff6ff', surfaceTinted: '#dbeafe', surfaceElevated: '#ffffff',
+    onSurface: '#172554', onSurfaceMuted: '#3b82f6', onPrimary: '#ffffff',
+    border: '#bfdbfe', borderStrong: '#1e3a8a',
+    error: '#991b1b', success: '#14532d', warning: '#92400e'
+  },
+  {
+    id: 'retro-american', name: '复古美式', nameEn: 'Retro American',
+    commitment: 'Full', scenario: '复古品牌 / 餐饮 / 潮牌 / 运动',
+    swatches: ['#dc2626', '#2563eb', '#f8fafc', '#f1f5f9', '#0f172a'],
+    primary: '#dc2626', primaryHover: '#b91c1c',
+    secondary: '#2563eb', accent: '#f59e0b',
+    surface: '#f8fafc', surfaceTinted: '#f1f5f9', surfaceElevated: '#ffffff',
+    onSurface: '#0f172a', onSurfaceMuted: '#475569', onPrimary: '#ffffff',
+    border: '#cbd5e1', borderStrong: '#dc2626',
+    error: '#dc2626', success: '#16a34a', warning: '#ca8a04'
+  },
+  {
+    id: 'japanese-zen', name: '日式和风', nameEn: 'Japanese Zen',
+    commitment: 'Restrained', scenario: '文创 / 茶品牌 / 生活方式 / 和风',
+    swatches: ['#be123c', '#fb7185', '#1c1917', '#fff1f2', '#292524'],
+    primary: '#be123c', primaryHover: '#9f1239',
+    secondary: '#fb7185', accent: '#292524',
+    surface: '#fff1f2', surfaceTinted: '#ffe4e6', surfaceElevated: '#ffffff',
+    onSurface: '#1c1917', onSurfaceMuted: '#57534e', onPrimary: '#ffffff',
+    border: '#fecdd3', borderStrong: '#be123c',
+    error: '#be123c', success: '#15803d', warning: '#a16207'
+  }
+];
+
+/* ============================================================
+   样式方案数据（3 套）
+   ============================================================ */
+const STYLE_SCHEMES = [
+  {
+    id: 'compact', name: '紧凑实用', nameEn: 'Compact Practical',
+    desc: '数据密集 / 效率工具 / 后台',
+    spacing: { 1: 3, 2: 6, 3: 9, 4: 12, 6: 16, 8: 24, 12: 32, 16: 48 },
+    spacingLabels: '3/6/9/12/16/24/32/48px',
+    fontHeading: "'Noto Sans SC', 'Inter Tight', system-ui, sans-serif",
+    fontBody: "'Noto Sans SC', 'Inter Tight', system-ui, sans-serif",
+    fontMono: "'JetBrains Mono', 'Fira Code', monospace",
+    fontSize: { xs: 10, sm: 12, base: 13, md: 14, lg: 15, xl: 17, '2xl': 20, '3xl': 24 },
+    fontSizeLabels: '10/12/13/14/15/17/20/24px',
+    radius: { sm: 3, md: 4, lg: 6, xl: 8, '2xl': 12, full: 9999 },
+    radiusLabels: 'button 4 / card 6 / input 4',
+    sampleText: '数据驱动',
+    sampleRadius: [3, 4, 6]
+  },
+  {
+    id: 'modern', name: '现代平衡', nameEn: 'Modern Balanced',
+    desc: 'SaaS / 企业官网 / 小程序 / 通用',
+    spacing: { 1: 4, 2: 8, 3: 12, 4: 16, 6: 24, 8: 32, 12: 48, 16: 64 },
+    spacingLabels: '4/8/12/16/24/32/48/64px',
+    fontHeading: "'Noto Sans SC', 'General Sans', 'Geist', system-ui, sans-serif",
+    fontBody: "'Noto Sans SC', 'General Sans', 'Geist', system-ui, sans-serif",
+    fontMono: "'JetBrains Mono', 'Fira Code', monospace",
+    fontSize: { xs: 12, sm: 14, base: 16, md: 16, lg: 20, xl: 24, '2xl': 32, '3xl': 40 },
+    fontSizeLabels: '12/14/16/20/24/32/40px',
+    radius: { sm: 4, md: 8, lg: 12, xl: 16, '2xl': 24, full: 9999 },
+    radiusLabels: 'button 8 / card 12 / input 8',
+    sampleText: '专业而现代',
+    sampleRadius: [4, 8, 12]
+  },
+  {
+    id: 'spacious', name: '大气留白', nameEn: 'Spacious Premium',
+    desc: '品牌官网 / 营销落地 / 创意机构 / 高端',
+    spacing: { 1: 4, 2: 8, 3: 16, 4: 24, 6: 32, 8: 48, 12: 64, 16: 96 },
+    spacingLabels: '4/8/16/24/32/48/64/96px',
+    fontHeading: "'Fraunces', 'Noto Serif SC', 'Playfair Display', serif",
+    fontBody: "'Inter Tight', 'Noto Sans SC', system-ui, sans-serif",
+    fontMono: "'JetBrains Mono', 'Fira Code', monospace",
+    fontSize: { xs: 14, sm: 16, base: 18, md: 18, lg: 22, xl: 28, '2xl': 36, '3xl': 48 },
+    fontSizeLabels: '14/16/18/22/28/36/48px',
+    radius: { sm: 6, md: 12, lg: 16, xl: 20, '2xl': 28, full: 9999 },
+    radiusLabels: 'button 12 / card 16 / input 12',
+    sampleText: '戏剧性留白',
+    sampleRadius: [6, 12, 16]
+  }
+];
+
+/* ============================================================
+   布局类型 + 模块渲染器（4 种 × 12 模块 = 48）
+   ============================================================ */
+
+/* === 工具函数 === */
+const esc = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* 通用小元素 */
+const A = {
+  h1: t => `<div class="mp-heading mp-h1">${t}</div>`,
+  h2: t => `<div class="mp-heading mp-h2">${t}</div>`,
+  h3: t => `<div class="mp-heading mp-h3">${t}</div>`,
+  h4: t => `<div class="mp-heading mp-h4">${t}</div>`,
+  p: (t, muted=true) => `<div class="mp-p ${muted?'mp-muted':''}">${t}</div>`,
+  txt: (t, c='') => `<div class="mp-text ${c}">${t}</div>`,
+  sm: t => `<div class="mp-small mp-muted">${t}</div>`,
+  btn: (t, v='primary', size='', extra='') => `<button class="mp-btn mp-btn-${v} ${size} ${extra}">${t}</button>`,
+  inp: (ph, icon='') => `<div class="mp-input">${icon?`<span>${icon}</span>`:''}<span class="mp-muted">${ph}</span></div>`,
+  card: (c, flat=false) => `<div class="mp-card${flat?'-flat':''}">${c}</div>`,
+  badge: (t, v='') => `<span class="mp-badge ${v?'mp-badge-'+v:''}">${t}</span>`,
+  av: (t='A', s='') => `<div class="mp-avatar ${s}">${t}</div>`,
+  div: () => `<div class="mp-divider"></div>`,
+  bar: (p=60) => `<div class="mp-bar"><div class="mp-bar-fill" style="width:${p}%"></div></div>`,
+  icon: (s='★', size=12) => `<span style="display:inline-block;width:${size}px;height:${size}px;line-height:${size}px;text-align:center;font-size:${Math.max(8,size-2)}px">${s}</span>`,
+  stat: (n, l, t='') => `<div class="mp-flex-col" style="gap:2px"><div style="font-size:var(--fs-xl);font-weight:700;font-family:var(--font-heading)">${n}</div><div class="mp-small mp-muted">${l}</div>${t?`<div class="mp-small" style="color:var(--c-success)">${t}</div>`:''}</div>`,
+  tr: cells => `<tr>${cells.map(c=>`<td>${c}</td>`).join('')}</tr>`,
+  navI: (i, l, active=false) => `<div class="mp-d-nav-item ${active?'active':''}"><span class="mp-d-nav-dot"></span><span>${l}</span></div>`,
+  phone: (body, tabbar='') => `<div class="mp-phone"><div class="mp-phone-statusbar"><span>9:41</span><span>•••</span></div><div class="mp-phone-nav"><span style="opacity:0.5">‹</span><span>${''}</span><span style="opacity:0.5">⚙</span></div><div class="mp-phone-body">${body}</div>${tabbar?`<div class="mp-phone-tabbar">${tabbar}</div>`:''}</div>`,
+  tab: (i, l, active=false) => `<div class="mp-tab-item ${active?'active':''}"><span class="mp-tab-icon"></span><span>${l}</span></div>`,
+  dtop: () => `<div class="mp-d-topbar"><div class="mp-flex mp-items-center mp-gap-2"><span style="color:var(--c-on-surface-muted)">≡</span><span>仪表盘 / 概览</span></div><div class="mp-flex mp-items-center mp-gap-2"><span class="mp-small mp-muted">🔍 搜索</span><span style="width:16px;height:16px;border-radius:50%;background:var(--c-surface-tinted)"></span><span class="mp-avatar mp-avatar-sm">A</span></div></div>`,
+};
+
+/* === 布局类型定义 === */
+const LAYOUT_TYPES = [
+  {
+    id: 'miniapp', name: '小程序类', nameEn: 'Mini App',
+    desc: '移动优先 · 底部 TabBar · 全屏沉浸',
+    wireframe: '┌──────────┐\n│  9:41  •  │\n│  ‹   ⚙   │\n│          │\n│  内容区  │\n│          │\n│  ━━━━━━━  │\n│ 🏠 🔍 👤  │\n└──────────┘',
+    modules: ['miniapp-login','miniapp-splash','miniapp-tabbar','miniapp-listcard','miniapp-grid','miniapp-detail','miniapp-profile','miniapp-form','miniapp-search','miniapp-empty','miniapp-message','miniapp-settings']
+  },
+  {
+    id: 'admin', name: '管理端类', nameEn: 'Admin Dashboard',
+    desc: 'PC 优先 · 侧边栏 + 顶栏 · 效率至上',
+    wireframe: '┌────┬─────────┐\n│ ⚙ │ 搜索  🔔 │\n│ ─ │─────────│\n│ 🏠│         │\n│ 👥│  内容区  │\n│ 📊│  (表格)  │\n│ ⚙ │         │\n│ ❓│         │\n└────┴─────────┘',
+    modules: ['admin-login','admin-dashboard','admin-table','admin-cards','admin-form','admin-detail','admin-sidebar','admin-topbar','admin-metric','admin-confirm','admin-permission','admin-profile']
+  },
+  {
+    id: 'website', name: '门户网站类', nameEn: 'Portal Website',
+    desc: '响应式 · 导航 + Hero + 内容 + 页脚',
+    wireframe: '┌──────────────────┐\n│ Logo  关于  登录 │\n│──────────────────│\n│                  │\n│   HERO 区域     │\n│                  │\n│ ── 功能特性 ──  │\n│ ── 用户评价 ──  │\n│ ── 立即开始 ──  │\n│   © 页脚        │\n└──────────────────┘',
+    modules: ['web-nav','web-hero','web-features','web-stats','web-product','web-testimonials','web-partners','web-cta','web-blog','web-footer','web-about','web-contact']
+  },
+  {
+    id: 'landing', name: '营销落地页', nameEn: 'Landing Page',
+    desc: '单页长滚动 · 强 CTA · 视觉冲击',
+    wireframe: '┌──────────────────┐\n│  Logo   开始 →  │\n│  ╔══ HERO ══╗   │\n│  ║ 大标题  ║   │\n│  ║ 立即试用║   │\n│  ╚═════════╝   │\n│  痛点 → 方案    │\n│  客户 Logo 墙  │\n│  定价方案      │\n│  FAQ           │\n│  最终 CTA      │\n└──────────────────┘',
+    modules: ['land-nav','land-hero','land-pain','land-features','land-compare','land-pricing','land-logos','land-social','land-faq','land-cta','land-reviews','land-footer']
+  }
+];
+
+/* === 小程序类 12 模块 === */
+const R_miniapp = {
+  'miniapp-login': () => A.phone(`
+    <div class="mp-flex-col mp-items-center mp-gap-3" style="padding-top:20px">
+      ${A.icon('🔑', 32)}
+      ${A.h2('欢迎回来')}
+      ${A.p('请登录您的账号')}
+      ${A.inp('请输入手机号')}
+      ${A.inp('请输入验证码', '🔒')}
+      ${A.btn('登 录', 'primary', 'mp-btn-block mp-btn-lg')}
+      <div class="mp-small mp-muted" style="margin-top:8px">其他登录方式 ›</div>
+    </div>
+  `),
+  'miniapp-splash': () => A.phone(`
+    <div class="mp-flex-col mp-items-center mp-justify-center" style="height:100%;gap:12px">
+      ${A.icon('✨', 48)}
+      ${A.h1('APP 名称')}
+      ${A.p('让生活更简单')}
+      <div class="mp-flex mp-gap-1" style="margin-top:12px">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--c-primary)"></span>
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--c-border-strong)"></span>
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--c-border-strong)"></span>
+      </div>
+    </div>
+  `),
+  'miniapp-tabbar': () => A.phone(`
+    <div class="mp-flex-col mp-gap-2">
+      <div class="mp-h3">首页推荐</div>
+      ${[1,2,3].map(i=>A.card(`
+        <div class="mp-flex mp-gap-3 mp-items-center">
+          <div style="width:40px;height:40px;background:var(--c-surface-tinted);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center">${A.icon('📦')}</div>
+          <div class="mp-flex-col mp-gap-1" style="flex:1">
+            <div class="mp-txt mp-h4">推荐项目 ${i}</div>
+            <div class="mp-small mp-muted">简介描述文字 · 12:3${i}</div>
+          </div>
+          ${A.badge('NEW')}
+        </div>
+      `, true)).join('')}
+    </div>
+  `, A.tab('', '🏠 首页', true) + A.tab('', '🔍 搜索') + A.tab('', '➕') + A.tab('', '💬') + A.tab('', '👤')),
+  'miniapp-listcard': () => A.phone(`
+    <div class="mp-flex-col mp-gap-3">
+      <div class="mp-flex mp-justify-between mp-items-center">
+        ${A.h4('推荐列表')}
+        ${A.btn('筛选', 'ghost', 'mp-btn-sm')}
+      </div>
+      ${[1,2,3,4].map(i=>`
+        <div class="mp-card-flat">
+          <div class="mp-flex mp-gap-2">
+            <div style="width:48px;height:48px;background:var(--c-surface-tinted);border-radius:var(--r-md);flex-shrink:0"></div>
+            <div class="mp-flex-col mp-gap-1" style="flex:1;min-width:0">
+              <div class="mp-h4" style="font-size:var(--fs-sm)">标题文字 ${i}</div>
+              <div class="mp-small mp-muted" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">描述文字最多两行展示</div>
+              <div class="mp-flex mp-gap-1 mp-mt-1">
+                ${A.badge('标签')} ${A.badge('热门', 'primary')}
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `, A.tab('🏠', '首页', true) + A.tab('🔍', '搜索') + A.tab('➕', '') + A.tab('💬', '消息') + A.tab('👤', '我')),
+  'miniapp-grid': () => A.phone(`
+    <div class="mp-flex-col mp-gap-3">
+      ${A.h4('功能宫格')}
+      <div class="mp-grid mp-grid-4" style="gap:var(--s-3)">
+        ${['🏠','💰','📊','⚙','🔔','📝','🎨','❓'].map(i=>`
+          <div class="mp-flex-col mp-items-center mp-gap-1">
+            <div style="width:36px;height:36px;background:var(--c-surface-tinted);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center">${i}</div>
+            <div class="mp-small">功能</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `, A.tab('🏠', '首页', true) + A.tab('💬', '消息') + A.tab('➕', '') + A.tab('🔔', '通知') + A.tab('👤', '我')),
+  'miniapp-detail': () => A.phone(`
+    <div class="mp-flex-col mp-gap-2">
+      <div style="height:60px;background:var(--c-surface-tinted);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;color:var(--c-on-surface-muted)">🖼 主图</div>
+      <div class="mp-h3">详情标题</div>
+      <div class="mp-flex mp-gap-2 mp-items-center">
+        <span style="color:var(--c-primary);font-weight:700">¥199</span>
+        <span class="mp-small mp-muted" style="text-decoration:line-through">¥299</span>
+        ${A.badge('特惠', 'error')}
+      </div>
+      <div class="mp-divider"></div>
+      <div class="mp-p">详情描述文字，支持多行展示，提供清晰的信息层级和视觉舒适度。</div>
+      <div class="mp-flex mp-gap-2 mp-mt-2">
+        ${A.btn('加入购物车', 'secondary', 'mp-btn-block')}
+        ${A.btn('立即购买', 'primary', 'mp-btn-block')}
+      </div>
+    </div>
+  `, A.tab('🏠', '首页', true) + A.tab('💬', '消息') + A.tab('➕', '') + A.tab('🛒', '购物') + A.tab('👤', '我')),
+  'miniapp-profile': () => A.phone(`
+    <div class="mp-flex-col mp-gap-3">
+      <div class="mp-flex mp-items-center mp-gap-3" style="padding:var(--s-2) 0">
+        <div class="mp-avatar mp-avatar-lg">王</div>
+        <div class="mp-flex-col">
+          <div class="mp-h3">王晓明</div>
+          <div class="mp-small mp-muted">ID: 12345678</div>
+        </div>
+      </div>
+      <div class="mp-card" style="padding:var(--s-3)">
+        <div class="mp-grid mp-grid-3" style="gap:var(--s-2);text-align:center">
+          <div><div class="mp-h3">12</div><div class="mp-small mp-muted">收藏</div></div>
+          <div><div class="mp-h3">3</div><div class="mp-small mp-muted">关注</div></div>
+          <div><div class="mp-h3">8</div><div class="mp-small mp-muted">粉丝</div></div>
+        </div>
+      </div>
+      ${['我的订单','地址管理','优惠券','设置','帮助中心','关于我们'].map(t=>`
+        <div class="mp-card-flat mp-flex mp-justify-between mp-items-center">
+          <span>${t}</span><span class="mp-muted">›</span>
+        </div>
+      `).join('')}
+    </div>
+  `, A.tab('🏠', '首页') + A.tab('💬', '消息') + A.tab('➕', '') + A.tab('🔍', '发现') + A.tab('👤', '我', true)),
+  'miniapp-form': () => A.phone(`
+    <div class="mp-flex-col mp-gap-3">
+      ${A.h3('表单填写')}
+      <div class="mp-card mp-flex-col mp-gap-2">
+        <div class="mp-small">姓名</div>
+        ${A.inp('请输入姓名')}
+        <div class="mp-small">手机号</div>
+        ${A.inp('请输入手机号')}
+        <div class="mp-small">性别</div>
+        <div class="mp-flex mp-gap-2">${A.btn('男', 'primary', 'mp-btn-sm')}${A.btn('女', 'secondary', 'mp-btn-sm')}</div>
+        <div class="mp-small">备注</div>
+        <div class="mp-input" style="height:50px;align-items:flex-start;padding-top:8px">请输入备注...</div>
+      </div>
+      ${A.btn('提交', 'primary', 'mp-btn-block mp-btn-lg')}
+    </div>
+  `),
+  'miniapp-search': () => A.phone(`
+    <div class="mp-flex-col mp-gap-3">
+      ${A.inp('🔍 搜索内容')}
+      <div>
+        <div class="mp-small mp-muted mp-mb-2">热门搜索</div>
+        <div class="mp-flex mp-gap-1" style="flex-wrap:wrap">
+          ${['设计','前端','AI','工具','SaaS'].map(t=>A.badge(t)).join('')}
+        </div>
+      </div>
+      <div>
+        <div class="mp-small mp-muted mp-mb-2">搜索历史</div>
+        ${['uniapp 列表页','设计 token','按钮组件'].map(t=>`
+          <div class="mp-flex mp-justify-between mp-py-2" style="padding:6px 0;border-bottom:1px solid var(--c-border)">
+            <span class="mp-small">${t}</span>
+            <span class="mp-muted mp-small">×</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `),
+  'miniapp-empty': () => A.phone(`
+    <div class="mp-flex-col mp-items-center mp-justify-center" style="height:100%;gap:12px">
+      <div style="width:80px;height:80px;border-radius:50%;background:var(--c-surface-tinted);display:flex;align-items:center;justify-content:center;font-size:32px;opacity:0.5">📭</div>
+      <div class="mp-h4">暂无数据</div>
+      <div class="mp-small mp-muted" style="text-align:center">还没有任何内容<br>快去添加吧</div>
+      ${A.btn('去添加', 'primary', 'mp-btn-sm')}
+    </div>
+  `),
+  'miniapp-message': () => A.phone(`
+    <div class="mp-flex-col mp-gap-1">
+      <div class="mp-flex mp-justify-between mp-items-center mp-mb-2">
+        ${A.h4('消息')}
+        ${A.btn('全部已读', 'ghost', 'mp-btn-sm')}
+      </div>
+      ${[
+        ['系统通知','您的订单已发货，请注意查收','5分钟前',true],
+        ['活动提醒','双11优惠活动即将开始','1小时前',true],
+        ['社区','小李评论了你的帖子','3小时前',false],
+        ['客服','您的反馈已处理','昨天',false],
+      ].map(([t,d,time,unread])=>`
+        <div class="mp-card-flat mp-flex mp-gap-2" style="padding:8px">
+          <div class="mp-avatar mp-avatar-sm" style="background:var(--c-primary);color:var(--c-on-primary)">${t[0]}</div>
+          <div class="mp-flex-col" style="flex:1;min-width:0">
+            <div class="mp-flex mp-justify-between">
+              <span class="mp-h4" style="font-size:var(--fs-sm)">${t}</span>
+              <span class="mp-small mp-muted">${time}</span>
+            </div>
+            <div class="mp-small mp-muted" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${d}</div>
+          </div>
+          ${unread?'<span style="width:6px;height:6px;border-radius:50%;background:var(--c-error);flex-shrink:0;margin-top:6px"></span>':''}
+        </div>
+      `).join('')}
+    </div>
+  `, A.tab('🏠', '首页') + A.tab('💬', '消息', true) + A.tab('➕', '') + A.tab('🔍', '发现') + A.tab('👤', '我')),
+  'miniapp-settings': () => A.phone(`
+    <div class="mp-flex-col mp-gap-1">
+      ${A.h4('设置')}
+      ${[
+        ['个人资料','›'],
+        ['账号安全','›'],
+        ['消息通知',true],
+        ['深色模式',true],
+        ['清除缓存','12.3 MB ›'],
+        ['关于我们','›'],
+        ['退出登录','','error'],
+      ].map(([t,r,v])=>`
+        <div class="mp-card-flat mp-flex mp-justify-between mp-items-center">
+          <span ${v==='error'?'style="color:var(--c-error)"':''}>${t}</span>
+          ${r===true?'<span style="width:28px;height:14px;background:var(--c-primary);border-radius:7px;position:relative"><span style="position:absolute;right:1px;top:1px;width:12px;height:12px;background:#fff;border-radius:50%"></span></span>':`<span class="mp-muted">${r}</span>`}
+        </div>
+      `).join('')}
+    </div>
+  `, A.tab('🏠', '首页') + A.tab('💬', '消息') + A.tab('➕', '') + A.tab('🔍', '发现') + A.tab('👤', '我', true)),
+};
+
+/* === 管理端类 12 模块 === */
+const R_admin = {
+  'admin-login': () => `
+    <div class="mp-desktop" style="grid-template-columns:1fr">
+      <div class="mp-flex mp-items-center mp-justify-center" style="background:var(--c-surface);height:100%">
+        <div class="mp-card mp-flex-col mp-gap-3" style="width:200px;padding:var(--s-4)">
+          <div class="mp-flex-col mp-items-center mp-gap-2">
+            <div class="mp-avatar mp-avatar-lg" style="background:var(--c-primary);color:var(--c-on-primary);font-size:var(--fs-base)">A</div>
+            <div class="mp-h3">管理后台</div>
+          </div>
+          ${A.inp('账号')}
+          ${A.inp('密码', '🔒')}
+          <div class="mp-flex mp-justify-between mp-small"><span>☐ 记住我</span><span class="mp-muted">忘记密码？</span></div>
+          ${A.btn('登 录', 'primary', 'mp-btn-block')}
+        </div>
+      </div>
+    </div>
+  `,
+  'admin-dashboard': () => `
+    <div class="mp-desktop" style="grid-template-columns:80px 1fr">
+      <div class="mp-d-sidebar">
+        <div class="mp-d-sidebar-header">⚙ Admin</div>
+        <div class="mp-d-sidebar-nav">
+          <div class="mp-d-nav-section">
+            ${A.navI('🏠','概览',true)}
+            ${A.navI('👥','用户')}
+            ${A.navI('📊','数据')}
+            ${A.navI('📦','订单')}
+          </div>
+          <div class="mp-d-nav-section">
+            <div class="mp-d-nav-title">系统</div>
+            ${A.navI('⚙','设置')}
+            ${A.navI('🔔','通知')}
+          </div>
+        </div>
+      </div>
+      <div class="mp-d-main">
+        ${A.dtop()}
+        <div class="mp-d-content mp-flex-col mp-gap-3">
+          <div class="mp-grid mp-grid-3">
+            ${A.stat('12.4k','用户数','↑ 12%')}
+            ${A.stat('¥89.2k','营收','↑ 8%')}
+            ${A.stat('98.5%','满意度','↑ 2%')}
+          </div>
+          <div class="mp-card">
+            <div class="mp-flex mp-justify-between mp-mb-2"><div class="mp-h4">近 7 日趋势</div><div class="mp-small mp-muted">最近更新：刚刚</div></div>
+            <div style="height:60px;display:flex;align-items:flex-end;gap:4px">
+              ${[30,50,40,70,55,80,65].map(h=>`<div style="flex:1;background:var(--c-primary);border-radius:2px;height:${h}%"></div>`).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
+  'admin-table': () => `
+    <div class="mp-desktop" style="grid-template-columns:80px 1fr">
+      <div class="mp-d-sidebar">
+        <div class="mp-d-sidebar-header">⚙</div>
+        <div class="mp-d-sidebar-nav">
+          ${A.navI('🏠','概览')}${A.navI('👥','用户',true)}${A.navI('📊','数据')}${A.navI('📦','订单')}
+        </div>
+      </div>
+      <div class="mp-d-main">
+        ${A.dtop()}
+        <div class="mp-d-content mp-flex-col mp-gap-2">
+          <div class="mp-flex mp-justify-between">
+            ${A.inp('🔍 搜索用户','')}
+            <div class="mp-flex mp-gap-1">${A.btn('导出','secondary','mp-btn-sm')}${A.btn('+ 新建','primary','mp-btn-sm')}</div>
+          </div>
+          <table class="mp-table">
+            <thead><tr><th>☐</th><th>姓名</th><th>状态</th><th>金额</th><th>时间</th><th>操作</th></tr></thead>
+            <tbody>
+              ${A.tr(['<input type=checkbox>','张三',A.badge('活跃','success'),'¥1,230','2024-01-15','✏ 🗑'])}
+              ${A.tr(['<input type=checkbox>','李四',A.badge('待审','warning'),'¥890','2024-01-14','✏ 🗑'])}
+              ${A.tr(['<input type=checkbox>','王五',A.badge('禁用','error'),'¥0','2024-01-13','✏ 🗑'])}
+              ${A.tr(['<input type=checkbox>','赵六',A.badge('活跃','success'),'¥3,450','2024-01-12','✏ 🗑'])}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  `,
+  'admin-cards': () => `
+    <div class="mp-desktop" style="grid-template-columns:80px 1fr">
+      <div class="mp-d-sidebar">
+        <div class="mp-d-sidebar-header">⚙</div>
+        <div class="mp-d-sidebar-nav">${A.navI('🏠','概览')}${A.navI('📦','商品',true)}</div>
+      </div>
+      <div class="mp-d-main">
+        ${A.dtop()}
+        <div class="mp-d-content">
+          <div class="mp-grid mp-grid-3">
+            ${[1,2,3,4,5,6].map(i=>`
+              <div class="mp-card-flat">
+                <div style="height:50px;background:var(--c-surface-tinted);border-radius:var(--r-sm);margin-bottom:6px"></div>
+                <div class="mp-h4" style="font-size:var(--fs-sm)">商品名称 ${i}</div>
+                <div class="mp-small mp-muted">库存: 128</div>
+                <div class="mp-flex mp-justify-between mp-mt-1">
+                  <span style="color:var(--c-primary);font-weight:600">¥99</span>
+                  ${A.badge('在售','success')}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
+  'admin-form': () => `
+    <div class="mp-desktop" style="grid-template-columns:80px 1fr">
+      <div class="mp-d-sidebar">
+        <div class="mp-d-sidebar-header">⚙</div>
+        <div class="mp-d-sidebar-nav">${A.navI('🏠','概览')}${A.navI('📝','表单',true)}</div>
+      </div>
+      <div class="mp-d-main">
+        ${A.dtop()}
+        <div class="mp-d-content">
+          <div class="mp-card mp-flex-col mp-gap-2">
+            <div class="mp-h4">基本信息</div>
+            <div class="mp-grid mp-grid-2" style="gap:var(--s-2)">
+              <div><div class="mp-small mp-mb-1">名称</div>${A.inp('产品名称')}</div>
+              <div><div class="mp-small mp-mb-1">分类</div>${A.inp('选择分类 ▼')}</div>
+              <div><div class="mp-small mp-mb-1">价格</div>${A.inp('¥ 0.00')}</div>
+              <div><div class="mp-small mp-mb-1">库存</div>${A.inp('0')}</div>
+            </div>
+            <div class="mp-small mp-mb-1">描述</div>
+            <div class="mp-input" style="height:50px;align-items:flex-start;padding-top:6px">详细描述...</div>
+            <div class="mp-flex mp-justify-between mp-mt-2">
+              ${A.btn('取消','ghost')}${A.btn('保存','primary')}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
+  'admin-detail': () => `
+    <div class="mp-desktop" style="grid-template-columns:80px 1fr">
+      <div class="mp-d-sidebar">
+        <div class="mp-d-sidebar-header">⚙</div>
+        <div class="mp-d-sidebar-nav">${A.navI('🏠','概览')}${A.navI('📦','订单')}${A.navI('📄','详情',true)}</div>
+      </div>
+      <div class="mp-d-main">
+        ${A.dtop()}
+        <div class="mp-d-content mp-flex-col mp-gap-2">
+          <div class="mp-flex mp-justify-between">
+            <div>
+              <div class="mp-h3">订单 #20240115001</div>
+              <div class="mp-small mp-muted">2024-01-15 10:30 · ${A.badge('已发货','success')}</div>
+            </div>
+            <div class="mp-flex mp-gap-1">${A.btn('打印','secondary','mp-btn-sm')}${A.btn('编辑','primary','mp-btn-sm')}</div>
+          </div>
+          <div class="mp-card">
+            <div class="mp-h4 mp-mb-2">收货信息</div>
+            <div class="mp-small">张三 · 13800138000</div>
+            <div class="mp-small mp-muted">北京市朝阳区某某街道 100 号</div>
+          </div>
+          <div class="mp-card">
+            <div class="mp-h4 mp-mb-2">商品列表</div>
+            <div class="mp-flex mp-justify-between mp-small" style="padding:4px 0;border-bottom:1px solid var(--c-border)"><span>商品 A × 2</span><span>¥198</span></div>
+            <div class="mp-flex mp-justify-between mp-small" style="padding:4px 0"><span>商品 B × 1</span><span>¥99</span></div>
+            <div class="mp-divider mp-mt-2 mp-mb-2"></div>
+            <div class="mp-flex mp-justify-between"><span class="mp-h4">合计</span><span style="color:var(--c-primary);font-weight:700">¥297</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
+  'admin-sidebar': () => `
+    <div class="mp-flex mp-gap-3" style="height:100%;padding:var(--s-3);background:var(--c-surface)">
+      <div class="mp-d-sidebar" style="width:160px;border:1px solid var(--c-border);border-radius:var(--r-md);position:relative;height:auto">
+        <div class="mp-d-sidebar-header" style="background:var(--c-primary);color:var(--c-on-primary)">⚙ Admin</div>
+        <div class="mp-d-sidebar-nav">
+          <div class="mp-d-nav-section">
+            <div class="mp-d-nav-title">主菜单</div>
+            ${A.navI('🏠','仪表盘',true)}
+            ${A.navI('👥','用户管理')}
+            ${A.navI('📦','订单管理')}
+            ${A.navI('📊','数据分析')}
+            ${A.navI('📝','内容管理')}
+            ${A.navI('💬','消息中心')}
+          </div>
+          <div class="mp-d-nav-section">
+            <div class="mp-d-nav-title">系统</div>
+            ${A.navI('⚙','系统设置')}
+            ${A.navI('🔔','通知设置')}
+            ${A.navI('❓','帮助文档')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
+  'admin-topbar': () => `
+    <div class="mp-flex-col mp-gap-2" style="padding:var(--s-3);background:var(--c-surface)">
+      <div class="mp-d-topbar" style="border-radius:var(--r-md);border:1px solid var(--c-border);height:40px;background:var(--c-surface-elevated)">
+        <div class="mp-flex mp-items-center mp-gap-2">
+          <span style="color:var(--c-on-surface-muted);font-size:14px">☰</span>
+          <span class="mp-small">首页</span>
+          <span class="mp-muted mp-small">/</span>
+          <span class="mp-small">用户管理</span>
+          <span class="mp-muted mp-small">/</span>
+          <span class="mp-small mp-h4">列表</span>
+        </div>
+        <div class="mp-flex mp-items-center mp-gap-3">
+          <div class="mp-input" style="width:160px"><span>🔍</span><span class="mp-muted">搜索...</span></div>
+          <span style="position:relative;display:inline-block"><span style="font-size:14px">🔔</span><span style="position:absolute;top:-2px;right:-4px;width:6px;height:6px;background:var(--c-error);border-radius:50%"></span></span>
+          <div class="mp-flex mp-items-center mp-gap-1">
+            <div class="mp-avatar mp-avatar-sm" style="background:var(--c-primary);color:var(--c-on-primary)">A</div>
+            <span class="mp-small">Admin</span>
+            <span class="mp-muted">▼</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
+  'admin-metric': () => `
+    <div class="mp-desktop" style="grid-template-columns:1fr">
+      <div class="mp-d-content" style="padding:var(--s-3)">
+        <div class="mp-grid mp-grid-4">
+          ${[
+            ['总营收','¥128.5k','↑ 12.4%','success'],
+            ['新增用户','1,243','↑ 8.2%','success'],
+            ['订单数','3,891','↓ 2.1%','error'],
+            ['转化率','3.2%','↑ 0.5%','success'],
+          ].map(([n,l,t,c])=>`
+            <div class="mp-card">
+              <div class="mp-small mp-muted">${n}</div>
+              <div style="font-size:var(--fs-xl);font-weight:700;font-family:var(--font-heading);margin:4px 0">${l}</div>
+              <div class="mp-small" style="color:var(--c-${c})">${t}</div>
+              <div class="mp-bar mp-mt-2"><div class="mp-bar-fill" style="width:${30+Math.random()*60}%"></div></div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `,
+  'admin-confirm': () => `
+    <div class="mp-flex mp-items-center mp-justify-center" style="height:100%;background:rgba(0,0,0,0.3);position:relative">
+      <div class="mp-card mp-flex-col mp-items-center" style="width:180px;padding:var(--s-4);background:var(--c-surface-elevated)">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--c-error);color:var(--c-on-primary);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:8px">!</div>
+        <div class="mp-h4" style="text-align:center">确认删除？</div>
+        <div class="mp-small mp-muted mp-mt-1" style="text-align:center">删除后无法恢复</div>
+        <div class="mp-flex mp-gap-2 mp-mt-3" style="width:100%">
+          ${A.btn('取消','secondary','mp-btn-block mp-btn-sm')}
+          ${A.btn('删除','primary','mp-btn-block mp-btn-sm')}
+        </div>
+      </div>
+    </div>
+  `,
+  'admin-permission': () => `
+    <div class="mp-desktop" style="grid-template-columns:80px 1fr">
+      <div class="mp-d-sidebar"><div class="mp-d-sidebar-header">⚙</div><div class="mp-d-sidebar-nav">${A.navI('🏠','概览')}${A.navI('🔐','权限',true)}</div></div>
+      <div class="mp-d-main">
+        ${A.dtop()}
+        <div class="mp-d-content mp-flex-col mp-gap-2">
+          <div class="mp-flex mp-justify-between">${A.h4('角色权限')}${A.btn('+ 新建角色','primary','mp-btn-sm')}</div>
+          <table class="mp-table">
+            <thead><tr><th>角色</th><th>用户数</th><th>权限</th><th>状态</th><th>操作</th></tr></thead>
+            <tbody>
+              ${A.tr([A.h4('超级管理员'),'1',A.badge('全部','primary'),A.badge('启用','success'),'✏ 🗑'])}
+              ${A.tr([A.h4('运营'),'5',A.badge('12 项'),A.badge('启用','success'),'✏ 🗑'])}
+              ${A.tr([A.h4('编辑'),'8',A.badge('6 项'),A.badge('启用','success'),'✏ 🗑'])}
+              ${A.tr([A.h4('访客'),'12',A.badge('只读'),A.badge('禁用','error'),'✏ 🗑'])}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  `,
+  'admin-profile': () => `
+    <div class="mp-desktop" style="grid-template-columns:80px 1fr">
+      <div class="mp-d-sidebar"><div class="mp-d-sidebar-header">⚙</div><div class="mp-d-sidebar-nav">${A.navI('🏠','概览')}${A.navI('👤','我的',true)}</div></div>
+      <div class="mp-d-main">
+        ${A.dtop()}
+        <div class="mp-d-content mp-flex-col mp-gap-2">
+          <div class="mp-card mp-flex mp-gap-3 mp-items-center">
+            <div class="mp-avatar mp-avatar-xl" style="background:var(--c-primary);color:var(--c-on-primary)">A</div>
+            <div class="mp-flex-col">
+              <div class="mp-h3">Admin User</div>
+              <div class="mp-small mp-muted">admin@example.com</div>
+              <div class="mp-flex mp-gap-1 mp-mt-1">${A.badge('超级管理员','primary')}${A.badge('已认证','success')}</div>
+            </div>
+          </div>
+          <div class="mp-card mp-flex-col mp-gap-2">
+            <div class="mp-h4">修改信息</div>
+            <div class="mp-grid mp-grid-2" style="gap:var(--s-2)">
+              <div><div class="mp-small mp-mb-1">姓名</div>${A.inp('Admin')}</div>
+              <div><div class="mp-small mp-mb-1">邮箱</div>${A.inp('admin@example.com')}</div>
+            </div>
+            ${A.btn('保存修改','primary','mp-btn-sm')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
+};
+
+/* === 门户网站类 12 模块 === */
+const R_website = {
+  'web-nav': () => `
+    <div class="mp-flex-col" style="height:100%;background:var(--c-surface)">
+      <div class="mp-flex mp-justify-between mp-items-center" style="padding:var(--s-3) var(--s-4);background:var(--c-surface-elevated);border-bottom:1px solid var(--c-border)">
+        <div class="mp-h3">LOGO</div>
+        <div class="mp-flex mp-gap-4">
+          <span class="mp-small">首页</span><span class="mp-small">产品</span><span class="mp-small">定价</span><span class="mp-small">关于</span><span class="mp-small">博客</span>
+        </div>
+        <div class="mp-flex mp-gap-2">${A.btn('登录','ghost','mp-btn-sm')}${A.btn('注册','primary','mp-btn-sm')}</div>
+      </div>
+      <div class="mp-flex mp-items-center mp-justify-center mp-flex-col" style="flex:1;padding:var(--s-6);text-align:center">
+        ${A.h1('页面标题')}
+        ${A.p('副标题描述文字 · 介绍核心价值主张')}
+        <div class="mp-flex mp-gap-2 mp-mt-3">${A.btn('立即开始','primary')}${A.btn('了解更多','secondary')}</div>
+      </div>
+    </div>
+  `,
+  'web-hero': () => `
+    <div class="mp-flex-col" style="height:100%;background:var(--c-surface)">
+      <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:var(--s-4);padding:var(--s-6);align-items:center">
+        <div>
+          <div class="mp-small mp-mb-1" style="color:var(--c-primary)">✨ 新功能</div>
+          ${A.h1('让设计更简单')}
+          ${A.p('通过 AI 驱动的设计系统，让你的产品快速拥有专业的视觉表现。')}
+          <div class="mp-flex mp-gap-2 mp-mt-3">${A.btn('免费试用','primary')}${A.btn('观看演示','secondary')}</div>
+        </div>
+        <div style="background:var(--c-surface-tinted);border-radius:var(--r-lg);height:100%;display:flex;align-items:center;justify-content:center;color:var(--c-on-surface-muted)">🖼 视觉图</div>
+      </div>
+    </div>
+  `,
+  'web-features': () => `
+    <div class="mp-flex-col mp-gap-4" style="height:100%;padding:var(--s-6);background:var(--c-surface)">
+      <div style="text-align:center">
+        ${A.h2('核心功能')}
+        ${A.p('为你的产品提供完整的设计解决方案')}
+      </div>
+      <div class="mp-grid mp-grid-3" style="gap:var(--s-3);flex:1">
+        ${[
+          ['🎨','设计系统','统一的设计 Token 与组件库'],
+          ['⚡','快速集成','一键接入，开箱即用'],
+          ['🎯','精准匹配','AI 智能推荐最适合的方案'],
+        ].map(([i,t,d])=>`
+          <div class="mp-card mp-flex-col mp-items-center" style="text-align:center;gap:6px">
+            <div style="width:32px;height:32px;border-radius:var(--r-md);background:var(--c-primary);color:var(--c-on-primary);display:flex;align-items:center;justify-content:center;font-size:14px">${i}</div>
+            <div class="mp-h4">${t}</div>
+            <div class="mp-small mp-muted">${d}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `,
+  'web-stats': () => `
+    <div class="mp-flex mp-justify-between mp-items-center" style="height:100%;padding:var(--s-6);background:var(--c-primary);color:var(--c-on-primary)">
+      ${[
+        ['10万+','活跃用户'],
+        ['99.9%','系统稳定性'],
+        ['150+','国家与地区'],
+        ['24/7','技术支持'],
+      ].map(([n,l])=>`
+        <div class="mp-flex-col mp-items-center" style="text-align:center">
+          <div style="font-size:var(--fs-3xl);font-weight:700;font-family:var(--font-heading)">${n}</div>
+          <div class="mp-small" style="opacity:0.85">${l}</div>
+        </div>
+      `).join('')}
+    </div>
+  `,
+  'web-product': () => `
+    <div class="mp-flex-col mp-gap-4" style="height:100%;padding:var(--s-6);background:var(--c-surface)">
+      ${[1,2].map(i=>`
+        <div style="display:grid;grid-template-columns:${i%2?'1fr 1fr':'1fr 1fr'};gap:var(--s-4);align-items:center;${i%2===0?'direction:rtl':''}">
+          <div style="height:80px;background:var(--c-surface-tinted);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;color:var(--c-on-surface-muted)">🖼</div>
+          <div style="${i%2===0?'direction:ltr':''}">
+            <div class="mp-small mp-mb-1" style="color:var(--c-primary)">特性 ${i}</div>
+            ${A.h3('功能标题')}
+            ${A.p('详细介绍这个功能的核心优势和使用场景')}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `,
+  'web-testimonials': () => `
+    <div class="mp-flex-col mp-gap-3" style="height:100%;padding:var(--s-6);background:var(--c-surface)">
+      <div style="text-align:center">${A.h2('用户怎么说')}</div>
+      <div class="mp-grid mp-grid-2" style="flex:1;gap:var(--s-3)">
+        ${[
+          ['这个产品彻底改变了我们的工作流程，效率提升了 3 倍。','张总监','某科技公司'],
+          ['界面美观易用，团队成员都很喜欢。','李经理','某设计公司'],
+        ].map(([q,n,c])=>`
+          <div class="mp-card mp-flex-col mp-gap-2">
+            <div style="color:var(--c-warning)">★★★★★</div>
+            <div class="mp-txt">"${q}"</div>
+            <div class="mp-flex mp-items-center mp-gap-2 mp-mt-1">
+              <div class="mp-avatar mp-avatar-sm">${n[0]}</div>
+              <div><div class="mp-small mp-h4">${n}</div><div class="mp-small mp-muted">${c}</div></div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `,
+  'web-partners': () => `
+    <div class="mp-flex-col mp-justify-center mp-items-center mp-gap-3" style="height:100%;padding:var(--s-6);background:var(--c-surface)">
+      <div class="mp-small mp-muted">值得信赖的合作伙伴</div>
+      <div class="mp-grid mp-grid-5" style="gap:var(--s-4);width:100%">
+        ${['A','B','C','D','E'].map(n=>`
+          <div class="mp-flex mp-items-center mp-justify-center" style="height:32px;background:var(--c-surface-tinted);border-radius:var(--r-md);color:var(--c-on-surface-muted);font-weight:700">LOGO ${n}</div>
+        `).join('')}
+      </div>
+    </div>
+  `,
+  'web-cta': () => `
+    <div class="mp-flex mp-justify-center mp-items-center mp-flex-col" style="height:100%;padding:var(--s-8);background:var(--c-primary);color:var(--c-on-primary);text-align:center;gap:12px">
+      ${A.h2('准备好开始了吗？')}
+      <div style="opacity:0.9">立即注册，免费体验全部功能</div>
+      ${A.btn('免费注册 →','secondary','','')}
+    </div>
+  `,
+  'web-blog': () => `
+    <div class="mp-flex-col mp-gap-3" style="height:100%;padding:var(--s-6);background:var(--c-surface)">
+      <div class="mp-flex mp-justify-between mp-items-center">
+        ${A.h3('最新文章')}
+        <span class="mp-small mp-muted">查看全部 ›</span>
+      </div>
+      <div class="mp-grid mp-grid-3" style="flex:1;gap:var(--s-3)">
+        ${[1,2,3].map(i=>`
+          <div class="mp-flex-col mp-gap-1">
+            <div style="height:60px;background:var(--c-surface-tinted);border-radius:var(--r-sm)"></div>
+            <div class="mp-h4" style="font-size:var(--fs-sm)">文章标题文字 ${i}</div>
+            <div class="mp-small mp-muted" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">文章摘要内容简要描述...</div>
+            <div class="mp-small mp-muted">2024-01-${10+i} · 5 分钟阅读</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `,
+  'web-footer': () => `
+    <div class="mp-flex-col mp-gap-3" style="height:100%;padding:var(--s-6);background:var(--c-on-surface);color:var(--c-surface)">
+      <div class="mp-grid mp-grid-4" style="flex:1;gap:var(--s-4)">
+        ${['产品','公司','资源','法律'].map(t=>`
+          <div class="mp-flex-col mp-gap-1">
+            <div class="mp-h4" style="color:var(--c-surface)">${t}</div>
+            ${[1,2,3,4].map(i=>`<div class="mp-small" style="opacity:0.7">链接 ${i}</div>`).join('')}
+          </div>
+        `).join('')}
+      </div>
+      <div class="mp-divider" style="background:rgba(255,255,255,0.1)"></div>
+      <div class="mp-flex mp-justify-between mp-small" style="opacity:0.6">
+        <span>© 2024 Company. All rights reserved.</span>
+        <span>微信公众号 · 微博 · GitHub</span>
+      </div>
+    </div>
+  `,
+  'web-about': () => `
+    <div class="mp-flex-col mp-gap-3" style="height:100%;padding:var(--s-6);background:var(--c-surface)">
+      <div style="text-align:center">
+        <div class="mp-small mp-mb-1" style="color:var(--c-primary)">关于我们</div>
+        ${A.h2('用设计改变世界')}
+        ${A.p('我们是一群相信设计力量的创造者')}
+      </div>
+      <div class="mp-grid mp-grid-4" style="gap:var(--s-3);flex:1">
+        ${['A','B','C','D'].map(n=>`
+          <div class="mp-flex-col mp-items-center mp-gap-1">
+            <div class="mp-avatar mp-avatar-xl" style="background:var(--c-surface-tinted)">${n}</div>
+            <div class="mp-h4" style="font-size:var(--fs-sm)">团队成员</div>
+            <div class="mp-small mp-muted">职位 · 某某某</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `,
+  'web-contact': () => `
+    <div class="mp-flex-col" style="height:100%;padding:var(--s-6);background:var(--c-surface);gap:var(--s-4)">
+      <div style="text-align:center">${A.h2('联系我们')}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s-4);flex:1">
+        <div class="mp-flex-col mp-gap-2">
+          <div class="mp-small">姓名</div>${A.inp('您的姓名')}
+          <div class="mp-small">邮箱</div>${A.inp('email@example.com')}
+          <div class="mp-small">留言</div>
+          <div class="mp-input" style="height:60px;align-items:flex-start;padding-top:6px">请输入留言内容...</div>
+          ${A.btn('发送留言','primary','')}
+        </div>
+        <div style="background:var(--c-surface-tinted);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;color:var(--c-on-surface-muted)">🗺 地图</div>
+      </div>
+    </div>
+  `,
+};
+
+/* === 营销落地页 12 模块 === */
+const R_landing = {
+  'land-nav': () => `
+    <div class="mp-flex mp-justify-between mp-items-center" style="padding:var(--s-3) var(--s-4);background:var(--c-surface)">
+      <div class="mp-h3">⚡ Product</div>
+      <div class="mp-flex mp-gap-4">
+        <span class="mp-small">Features</span><span class="mp-small">Pricing</span><span class="mp-small">FAQ</span>
+      </div>
+      ${A.btn('Get Started →','primary','mp-btn-sm')}
+    </div>
+  `,
+  'land-hero': () => `
+    <div class="mp-flex-col mp-items-center mp-justify-center" style="height:100%;padding:var(--s-8);background:linear-gradient(135deg,var(--c-primary),var(--c-accent));color:var(--c-on-primary);text-align:center;gap:12px">
+      <div class="mp-small" style="opacity:0.85">🚀 全新发布</div>
+      <div style="font-size:var(--fs-3xl);font-weight:700;font-family:var(--font-heading);line-height:1.1;letter-spacing:-0.02em">让产品<br>起飞</div>
+      <div style="opacity:0.9;max-width:80%">用最简单的方式，构建你梦想中的产品</div>
+      <div class="mp-flex mp-gap-2 mp-mt-2">
+        ${A.btn('立即开始','secondary','','').replace('class="mp-btn mp-btn-secondary"','class="mp-btn" style="background:var(--c-surface);color:var(--c-primary);border:none"')}
+        ${A.btn('观看视频','ghost','')}
+      </div>
+    </div>
+  `,
+  'land-pain': () => `
+    <div class="mp-flex-col mp-gap-3" style="height:100%;padding:var(--s-6);background:var(--c-surface)">
+      <div style="text-align:center">${A.h2('你还在为这些烦恼？')}</div>
+      <div class="mp-grid mp-grid-3" style="flex:1;gap:var(--s-3)">
+        ${[
+          ['😩','设计耗时','每次设计都要重新来过'],
+          ['😵','风格不统一','多个页面看起来割裂'],
+          ['😢','效率低下','重复劳动占用大量时间'],
+        ].map(([e,t,d])=>`
+          <div class="mp-card-flat mp-flex-col mp-items-center" style="text-align:center;gap:6px">
+            <div style="font-size:24px">${e}</div>
+            <div class="mp-h4">${t}</div>
+            <div class="mp-small mp-muted">${d}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `,
+  'land-features': () => `
+    <div class="mp-flex-col mp-gap-4" style="height:100%;padding:var(--s-6);background:var(--c-surface)">
+      <div style="text-align:center">${A.h2('核心特性')}</div>
+      ${[1,2].map(i=>`
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s-4);align-items:center">
+          <div>
+            <div class="mp-small mp-mb-1" style="color:var(--c-primary)">特性 0${i}</div>
+            ${A.h3('功能亮点')}
+            ${A.p('详细描述这个功能如何解决用户问题，带来什么价值。')}
+          </div>
+          <div style="height:60px;background:var(--c-surface-tinted);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;color:var(--c-on-surface-muted)">🖼 截图</div>
+        </div>
+      `).join('')}
+    </div>
+  `,
+  'land-compare': () => `
+    <div class="mp-flex-col mp-gap-3" style="height:100%;padding:var(--s-6);background:var(--c-surface)">
+      ${A.h3('为什么选我们？')}
+      <table class="mp-table" style="font-size:var(--fs-xs)">
+        <thead><tr><th>功能</th><th style="color:var(--c-primary)">我们</th><th>竞品 A</th><th>传统方案</th></tr></thead>
+        <tbody>
+          ${A.tr([A.h4('AI 智能推荐'),A.badge('✓','success'),A.badge('✗','error'),A.badge('✗','error')])}
+          ${A.tr([A.h4('一键导出'),A.badge('✓','success'),A.badge('✓','success'),A.badge('✗','error')])}
+          ${A.tr([A.h4('实时预览'),A.badge('✓','success'),A.badge('✗','error'),A.badge('✗','error')])}
+          ${A.tr([A.h4('价格友好'),A.badge('✓','success'),A.badge('✗','error'),A.badge('✗','error')])}
+        </tbody>
+      </table>
+    </div>
+  `,
+  'land-pricing': () => `
+    <div class="mp-flex-col mp-gap-3" style="height:100%;padding:var(--s-6);background:var(--c-surface)">
+      <div style="text-align:center">${A.h2('选择适合你的方案')}</div>
+      <div class="mp-grid mp-grid-3" style="flex:1;gap:var(--s-3)">
+        ${[
+          ['免费','¥0','基础功能','secondary',false],
+          ['专业','¥99','全部功能','primary',true],
+          ['企业','¥499','定制服务','secondary',false],
+        ].map(([n,p,d,v,rec])=>`
+          <div class="mp-card mp-flex-col" style="gap:6px;${rec?'border:2px solid var(--c-primary);position:relative':''}">
+            ${rec?'<div style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);background:var(--c-primary);color:var(--c-on-primary);font-size:9px;padding:2px 8px;border-radius:8px">推荐</div>':''}
+            <div class="mp-h4">${n}</div>
+            <div style="font-size:var(--fs-xl);font-weight:700">${p}<span class="mp-small mp-muted">/月</span></div>
+            <div class="mp-small mp-muted">${d}</div>
+            <div class="mp-flex-col mp-gap-1 mp-mt-1" style="font-size:var(--fs-xs)">
+              ${['功能 A','功能 B','功能 C'].map(f=>`<div>✓ ${f}</div>`).join('')}
+            </div>
+            <div class="mp-mt-1">${A.btn('选择','primary','')}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `,
+  'land-logos': () => `
+    <div class="mp-flex-col mp-justify-center mp-items-center mp-gap-2" style="height:100%;padding:var(--s-6);background:var(--c-surface)">
+      <div class="mp-small mp-muted">已被知名企业采用</div>
+      <div class="mp-grid mp-grid-6" style="width:100%;gap:var(--s-3)">
+        ${['A','B','C','D','E','F'].map(n=>`
+          <div class="mp-flex mp-items-center mp-justify-center" style="height:28px;background:var(--c-surface-tinted);border-radius:var(--r-sm);color:var(--c-on-surface-muted);font-weight:700;font-size:10px">LOGO ${n}</div>
+        `).join('')}
+      </div>
+    </div>
+  `,
+  'land-social': () => `
+    <div class="mp-flex mp-justify-between mp-items-center" style="height:100%;padding:var(--s-6);background:var(--c-accent);color:var(--c-on-primary)">
+      ${[
+        ['10,000+','用户'],
+        ['4.9★','评分'],
+        ['98%','满意度'],
+        ['24/7','支持'],
+      ].map(([n,l])=>`
+        <div class="mp-flex-col mp-items-center" style="text-align:center">
+          <div style="font-size:var(--fs-2xl);font-weight:700;font-family:var(--font-heading)">${n}</div>
+          <div class="mp-small" style="opacity:0.9">${l}</div>
+        </div>
+      `).join('')}
+    </div>
+  `,
+  'land-faq': () => `
+    <div class="mp-flex-col mp-gap-2" style="height:100%;padding:var(--s-6);background:var(--c-surface)">
+      ${A.h3('常见问题')}
+      ${[
+        ['如何开始使用？','注册账号即可免费试用所有功能，无需信用卡。'],
+        ['支持哪些技术栈？','支持 HTML+Tailwind、React、Vue、uniapp 等主流技术栈。'],
+        ['可以退款吗？','提供 30 天无理由退款，让你放心购买。'],
+        ['如何获取支持？','提供 24/7 邮件支持，企业用户享受专属客服。'],
+      ].map(([q,a])=>`
+        <div class="mp-card-flat">
+          <div class="mp-flex mp-justify-between mp-items-center">
+            <span class="mp-h4" style="font-size:var(--fs-sm)">${q}</span>
+            <span class="mp-muted">+</span>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `,
+  'land-cta': () => `
+    <div class="mp-flex-col mp-items-center mp-justify-center" style="height:100%;padding:var(--s-8);background:linear-gradient(135deg,var(--c-primary),var(--c-accent));color:var(--c-on-primary);text-align:center;gap:12px">
+      ${A.h1('立即开始')}
+      <div style="opacity:0.9;font-size:var(--fs-lg)">限时优惠，前 100 名享受 50% 折扣</div>
+      ${A.btn('立即抢购 →','secondary','','')}
+      <div class="mp-small" style="opacity:0.7">✓ 无需信用卡 · ✓ 30 天试用</div>
+    </div>
+  `,
+  'land-reviews': () => `
+    <div class="mp-flex-col mp-gap-2" style="height:100%;padding:var(--s-6);background:var(--c-surface)">
+      ${A.h3('用户评价')}
+      <div class="mp-flex-col mp-gap-2" style="flex:1">
+        ${[
+          ['真正改变了我工作方式的产品，强烈推荐！','张先生','产品经理','★★★★★'],
+          ['界面美观，功能强大，性价比超高。','李女士','设计师','★★★★★'],
+        ].map(([q,n,r,s])=>`
+          <div class="mp-card-flat">
+            <div style="color:var(--c-warning);font-size:var(--fs-xs)">${s}</div>
+            <div class="mp-txt mp-mt-1">"${q}"</div>
+            <div class="mp-flex mp-items-center mp-gap-2 mp-mt-1">
+              <div class="mp-avatar mp-avatar-sm">${n[0]}</div>
+              <div><div class="mp-small mp-h4">${n}</div><div class="mp-small mp-muted">${r}</div></div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `,
+  'land-footer': () => `
+    <div class="mp-flex-col mp-gap-2" style="height:100%;padding:var(--s-4) var(--s-6);background:var(--c-on-surface);color:var(--c-surface)">
+      <div class="mp-flex mp-justify-between">
+        <div class="mp-h4" style="color:var(--c-surface)">⚡ Product</div>
+        <div class="mp-flex mp-gap-3">
+          <span class="mp-small" style="opacity:0.7">Twitter</span>
+          <span class="mp-small" style="opacity:0.7">GitHub</span>
+          <span class="mp-small" style="opacity:0.7">Discord</span>
+        </div>
+      </div>
+      <div class="mp-divider" style="background:rgba(255,255,255,0.1)"></div>
+      <div class="mp-flex mp-justify-between mp-small" style="opacity:0.5">
+        <span>© 2024 Product. All rights reserved.</span>
+        <span>Privacy · Terms</span>
+      </div>
+    </div>
+  `,
+};
+
+/* 模块 id → 渲染器 */
+const RENDERERS = { ...R_miniapp, ...R_admin, ...R_website, ...R_landing };
+
+/* 模块中文名 */
+const MODULE_NAMES = {
+  'miniapp-login':'登录页','miniapp-splash':'启动页','miniapp-tabbar':'首页 TabBar',
+  'miniapp-listcard':'列表页(卡片)','miniapp-grid':'列表页(宫格)','miniapp-detail':'详情页',
+  'miniapp-profile':'个人中心','miniapp-form':'表单页','miniapp-search':'搜索页',
+  'miniapp-empty':'空状态页','miniapp-message':'消息通知','miniapp-settings':'设置页',
+  'admin-login':'登录页','admin-dashboard':'仪表盘','admin-table':'列表页(表格)',
+  'admin-cards':'列表页(卡片)','admin-form':'表单页','admin-detail':'详情页',
+  'admin-sidebar':'侧边栏导航','admin-topbar':'顶栏','admin-metric':'数据卡片',
+  'admin-confirm':'确认弹窗','admin-permission':'权限管理','admin-profile':'个人设置',
+  'web-nav':'导航栏','web-hero':'Hero 区域','web-features':'功能特性','web-stats':'数据展示',
+  'web-product':'产品展示','web-testimonials':'用户评价','web-partners':'合作伙伴','web-cta':'CTA 区域',
+  'web-blog':'博客列表','web-footer':'页脚','web-about':'关于我们','web-contact':'联系页',
+  'land-nav':'顶部导航','land-hero':'Hero 主视觉','land-pain':'痛点描述','land-features':'核心功能',
+  'land-compare':'对比表格','land-pricing':'定价方案','land-logos':'客户 Logo','land-social':'社会证明',
+  'land-faq':'FAQ','land-cta':'最终 CTA','land-reviews':'用户评价','land-footer':'页脚',
+};
+
+/* ============================================================
+   状态管理
+   ============================================================ */
+const state = {
+  colorId: 'vermilion-amber',
+  styleId: 'modern',
+  layoutId: 'admin',
+  promptFormat: 'markdown',
+};
+
+function getColor() { return COLOR_PALETTES.find(c => c.id === state.colorId); }
+function getStyle() { return STYLE_SCHEMES.find(s => s.id === state.styleId); }
+function getLayout() { return LAYOUT_TYPES.find(l => l.id === state.layoutId); }
+
+/* ============================================================
+   渲染：步骤一 配色卡片（Collapse 分组）
+   ============================================================ */
+const PALETTE_GROUPS = [
+  { id: 'default', title: '默认推荐', palettes: COLOR_PALETTES.slice(0, 10), expanded: true },
+  { id: 'extended', title: '扩展配色', palettes: COLOR_PALETTES.slice(10, 20), expanded: false },
+];
+
+function renderPaletteGrid(palettes) {
+  return `
+    <div class="palette-grid">
+      ${palettes.map(p => `
+        <div class="palette-card ${p.id === state.colorId ? 'selected' : ''}" data-id="${p.id}" onclick="selectColor('${p.id}')">
+          <div class="palette-swatches">
+            ${p.swatches.map(c => `<div class="palette-swatch" style="background:${c}"></div>`).join('')}
+          </div>
+          <div class="palette-name">${p.name} <span style="color:#999;font-weight:400;font-size:11px">${p.nameEn}</span></div>
+          <div class="palette-meta">${p.scenario}</div>
+          <div class="palette-commit">${p.commitment}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderPalettes() {
+  const container = document.getElementById('paletteCollapse');
+  container.innerHTML = PALETTE_GROUPS.map(g => `
+    <div class="collapse-group">
+      <div class="collapse-header ${g.expanded ? 'expanded' : ''}" onclick="togglePaletteGroup('${g.id}')">
+        <div class="collapse-title">
+          ${g.title}
+          <span class="collapse-count">${g.palettes.length} 套</span>
+        </div>
+        <span class="collapse-icon">▼</span>
+      </div>
+      <div class="collapse-body ${g.expanded ? 'expanded' : ''}" id="palette-group-${g.id}">
+        <div class="collapse-inner">
+          ${renderPaletteGrid(g.palettes)}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function togglePaletteGroup(groupId) {
+  const group = PALETTE_GROUPS.find(g => g.id === groupId);
+  if (group) {
+    group.expanded = !group.expanded;
+    renderPalettes();
+  }
+}
+
+function selectColor(id) {
+  state.colorId = id;
+  renderPalettes();
+  applyTokens();
+  renderModules();
+  updatePrompt();
+}
+
+/* ============================================================
+   渲染：步骤二 样式方案卡片
+   ============================================================ */
+function renderStyles() {
+  const grid = document.getElementById('styleGrid');
+  grid.innerHTML = STYLE_SCHEMES.map(s => {
+    const spacingArr = Object.values(s.spacing);
+    const maxSpace = Math.max(...spacingArr);
+    const sample = s.sampleRadius.map(r => `<div style="border-radius:${r}px">${r}px</div>`).join('');
+    return `
+    <div class="style-card ${s.id === state.styleId ? 'selected' : ''}" data-id="${s.id}" onclick="selectStyle('${s.id}')">
+      <div class="style-name">${s.name} <span style="color:#999;font-weight:400;font-size:11px">${s.nameEn}</span></div>
+      <div class="style-desc">${s.desc}</div>
+      <div class="style-preview">
+        <div class="style-row">
+          <span class="label">字体</span>
+          <span class="style-font-sample" style="font-family:${s.fontHeading}">${s.sampleText}</span>
+        </div>
+        <div class="style-row">
+          <span class="label">字号阶</span>
+          <span class="style-row" style="font-family:${s.fontMono};color:#333">
+            ${s.fontSize.xs}/${s.fontSize.sm}/${s.fontSize.base}/${s.fontSize.lg}/${s.fontSize.xl}/${s.fontSize['2xl']}px
+          </span>
+        </div>
+        <div class="style-row">
+          <span class="label">间距</span>
+          <span class="values">${s.spacingLabels}</span>
+        </div>
+        <div class="style-row">
+          <span class="label">间距条</span>
+          <div class="style-spacing-bar">
+            ${spacingArr.map(v => `<div style="width:${(v/maxSpace)*80}px"></div>`).join('')}
+          </div>
+        </div>
+        <div class="style-row">
+          <span class="label">圆角</span>
+          <div class="style-radius-samples">${sample}</div>
+          <span class="mp-small mp-muted" style="margin-left:8px">${s.radiusLabels}</span>
+        </div>
+      </div>
+    </div>
+  `;}).join('');
+}
+
+function selectStyle(id) {
+  state.styleId = id;
+  renderStyles();
+  applyTokens();
+  renderModules();
+  updatePrompt();
+}
+
+/* ============================================================
+   渲染：步骤三 布局类型卡片
+   ============================================================ */
+function renderLayouts() {
+  const grid = document.getElementById('layoutGrid');
+  grid.innerHTML = LAYOUT_TYPES.map(l => `
+    <div class="layout-card ${l.id === state.layoutId ? 'selected' : ''}" data-id="${l.id}" onclick="selectLayout('${l.id}')">
+      <div class="layout-name">${l.name} <span style="color:#999;font-weight:400;font-size:11px">${l.nameEn}</span></div>
+      <div class="layout-desc">${l.desc}</div>
+      <div class="layout-wireframe">${esc(l.wireframe)}</div>
+      <div class="layout-modules">
+        ${l.modules.slice(0, 6).map(m => `<span class="layout-module-tag">${MODULE_NAMES[m]}</span>`).join('')}
+        <span class="layout-module-tag">+${l.modules.length - 6} 更多</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectLayout(id) {
+  state.layoutId = id;
+  renderLayouts();
+  renderModules();
+  updatePrompt();
+}
+
+/* ============================================================
+   Token 应用：更新 CSS 变量
+   ============================================================ */
+function applyTokens() {
+  const c = getColor();
+  const s = getStyle();
+  const root = document.documentElement;
+  root.style.setProperty('--c-primary', c.primary);
+  root.style.setProperty('--c-primary-hover', c.primaryHover);
+  root.style.setProperty('--c-secondary', c.secondary);
+  root.style.setProperty('--c-accent', c.accent);
+  root.style.setProperty('--c-surface', c.surface);
+  root.style.setProperty('--c-surface-tinted', c.surfaceTinted);
+  root.style.setProperty('--c-surface-elevated', c.surfaceElevated);
+  root.style.setProperty('--c-on-surface', c.onSurface);
+  root.style.setProperty('--c-on-surface-muted', c.onSurfaceMuted);
+  root.style.setProperty('--c-on-primary', c.onPrimary);
+  root.style.setProperty('--c-border', c.border);
+  root.style.setProperty('--c-border-strong', c.borderStrong);
+  root.style.setProperty('--c-error', c.error);
+  root.style.setProperty('--c-success', c.success);
+  root.style.setProperty('--c-warning', c.warning);
+
+  root.style.setProperty('--s-1', s.spacing[1] + 'px');
+  root.style.setProperty('--s-2', s.spacing[2] + 'px');
+  root.style.setProperty('--s-3', s.spacing[3] + 'px');
+  root.style.setProperty('--s-4', s.spacing[4] + 'px');
+  root.style.setProperty('--s-6', s.spacing[6] + 'px');
+  root.style.setProperty('--s-8', s.spacing[8] + 'px');
+  root.style.setProperty('--s-12', s.spacing[12] + 'px');
+  root.style.setProperty('--s-16', s.spacing[16] + 'px');
+
+  root.style.setProperty('--r-sm', s.radius.sm + 'px');
+  root.style.setProperty('--r-md', s.radius.md + 'px');
+  root.style.setProperty('--r-lg', s.radius.lg + 'px');
+  root.style.setProperty('--r-xl', s.radius.xl + 'px');
+  root.style.setProperty('--r-2xl', s.radius['2xl'] + 'px');
+  root.style.setProperty('--r-full', s.radius.full + 'px');
+
+  root.style.setProperty('--font-heading', s.fontHeading);
+  root.style.setProperty('--font-body', s.fontBody);
+  root.style.setProperty('--font-mono', s.fontMono);
+
+  root.style.setProperty('--fs-xs', s.fontSize.xs + 'px');
+  root.style.setProperty('--fs-sm', s.fontSize.sm + 'px');
+  root.style.setProperty('--fs-base', s.fontSize.base + 'px');
+  root.style.setProperty('--fs-md', s.fontSize.md + 'px');
+  root.style.setProperty('--fs-lg', s.fontSize.lg + 'px');
+  root.style.setProperty('--fs-xl', s.fontSize.xl + 'px');
+  root.style.setProperty('--fs-2xl', s.fontSize['2xl'] + 'px');
+  root.style.setProperty('--fs-3xl', s.fontSize['3xl'] + 'px');
+}
+
+/* ============================================================
+   渲染：模块预览卡片
+   ============================================================ */
+function renderModules() {
+  const layout = getLayout();
+  const grid = document.getElementById('moduleGrid');
+  document.getElementById('previewCount').textContent = `${layout.modules.length} 个模块`;
+
+  const layoutNameMap = {
+    miniapp: '移动端',
+    admin: '管理端',
+    website: '门户',
+    landing: '营销'
+  };
+  const isMobile = state.layoutId === 'miniapp';
+  const previewWidth = isMobile ? 240 : 320;
+  const previewHeight = isMobile ? 220 : 220;
+  const scaleX = 320 / previewWidth;
+  const scaleY = 220 / previewHeight;
+  const scale = Math.min(scaleX, scaleY);
+
+  grid.innerHTML = layout.modules.map(id => {
+    const renderer = RENDERERS[id];
+    if (!renderer) return '';
+    const inner = renderer();
+    return `
+      <div class="module-card" onclick="openModal('${id}')">
+        <div class="module-info">
+          <div class="module-name">${MODULE_NAMES[id] || id}</div>
+          <div class="module-id">${id}</div>
+        </div>
+        <div class="module-preview-wrap">
+          <div class="module-preview-inner preview-scope" style="width:${previewWidth}px;height:${previewHeight}px;transform:scale(${scale})">
+            ${inner}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+/* ============================================================
+   模态框：放大预览
+   ============================================================ */
+function openModal(id) {
+  const renderer = RENDERERS[id];
+  if (!renderer) return;
+  const overlay = document.getElementById('modalOverlay');
+  document.getElementById('modalTitle').textContent = MODULE_NAMES[id] || id;
+  const isMobile = state.layoutId === 'miniapp';
+  const previewWidth = isMobile ? 280 : 720;
+  const inner = renderer();
+  document.getElementById('modalBody').innerHTML = `
+    <div class="modal-preview-scope preview-scope" style="width:${previewWidth}px;margin:0 auto">
+      ${inner}
+    </div>
+  `;
+  overlay.classList.add('active');
+}
+
+function closeModal(e) {
+  if (e && e.target.closest('.modal') && !e.target.classList.contains('modal-overlay') && !e.target.classList.contains('modal-close')) return;
+  document.getElementById('modalOverlay').classList.remove('active');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+
+/* ============================================================
+   提示词生成
+   ============================================================ */
+function buildPromptMarkdown() {
+  const c = getColor();
+  const s = getStyle();
+  const l = getLayout();
+
+  return `# UI 设计规范（AI 提示词）
+
+> 自动生成于 UI 配置器 · Frontend UI Foundry
+> 复制此提示词，粘贴到任意 AI 编程助手，即可复现相同的 UI 设计。
+
+## 一、配色方案
+
+**调色板**：${c.name}（${c.nameEn}）
+**承诺度**：${c.commitment}
+**适用场景**：${c.scenario}
+
+### HEX 颜色
+| 角色 | HEX | 说明 |
+|------|-----|------|
+| primary | \`${c.primary}\` | 主色 / CTA / 链接 |
+| primary-hover | \`${c.primaryHover}\` | 主色 hover |
+| secondary | \`${c.secondary}\` | 辅色 / 次要强调 |
+| accent | \`${c.accent}\` | 强调色 / 高亮 |
+| surface | \`${c.surface}\` | 背景色 |
+| surface-tinted | \`${c.surfaceTinted}\` | 浅背景（卡片底层、hover） |
+| surface-elevated | \`${c.surfaceElevated}\` | 抬升表面（弹窗、模态） |
+| on-surface | \`${c.onSurface}\` | 文字主色 |
+| on-surface-muted | \`${c.onSurfaceMuted}\` | 文字次色 |
+| on-primary | \`${c.onPrimary}\` | 主色上的文字 |
+| border | \`${c.border}\` | 边框 |
+| border-strong | \`${c.borderStrong}\` | 强边框 / 聚焦 |
+| error | \`${c.error}\` | 错误 |
+| success | \`${c.success}\` | 成功 |
+| warning | \`${c.warning}\` | 警告 |
+
+### CSS 变量
+\`\`\`css
+:root {
+  --c-primary: ${c.primary};
+  --c-primary-hover: ${c.primaryHover};
+  --c-secondary: ${c.secondary};
+  --c-accent: ${c.accent};
+  --c-surface: ${c.surface};
+  --c-surface-tinted: ${c.surfaceTinted};
+  --c-surface-elevated: ${c.surfaceElevated};
+  --c-on-surface: ${c.onSurface};
+  --c-on-surface-muted: ${c.onSurfaceMuted};
+  --c-on-primary: ${c.onPrimary};
+  --c-border: ${c.border};
+  --c-border-strong: ${c.borderStrong};
+  --c-error: ${c.error};
+  --c-success: ${c.success};
+  --c-warning: ${c.warning};
+}
+\`\`\`
+
+---
+
+## 二、样式方案
+
+**方案**：${s.name}（${s.nameEn}）
+**定位**：${s.desc}
+
+### 间距 Token
+| Token | 值 |
+|-------|---|
+| --s-1 | ${s.spacing[1]}px |
+| --s-2 | ${s.spacing[2]}px |
+| --s-3 | ${s.spacing[3]}px |
+| --s-4 | ${s.spacing[4]}px |
+| --s-6 | ${s.spacing[6]}px |
+| --s-8 | ${s.spacing[8]}px |
+| --s-12 | ${s.spacing[12]}px |
+| --s-16 | ${s.spacing[16]}px |
+
+**节奏参考**：\n- 列表项：${s.spacing[2]}px\n- 卡片内：${s.spacing[4]}px\n- 区块内：${s.spacing[6]}px\n- 区块间：${s.spacing[12]}px
+
+### 字体配对
+| 角色 | 字体栈 |
+|------|------|
+| 标题 | \`${s.fontHeading}\` |
+| 正文 | \`${s.fontBody}\` |
+| 等宽 | \`${s.fontMono}\` |
+
+### 字号阶
+| Token | 值 |
+|-------|---|
+| --fs-xs | ${s.fontSize.xs}px |
+| --fs-sm | ${s.fontSize.sm}px |
+| --fs-base | ${s.fontSize.base}px |
+| --fs-md | ${s.fontSize.md}px |
+| --fs-lg | ${s.fontSize.lg}px |
+| --fs-xl | ${s.fontSize.xl}px |
+| --fs-2xl | ${s.fontSize['2xl']}px |
+| --fs-3xl | ${s.fontSize['3xl']}px |
+
+### 圆角 Token
+| Token | 值 |
+|-------|---|
+| --r-sm | ${s.radius.sm}px |
+| --r-md | ${s.radius.md}px |
+| --r-lg | ${s.radius.lg}px |
+| --r-xl | ${s.radius.xl}px |
+| --r-2xl | ${s.radius['2xl']}px |
+| --r-full | ${s.radius.full}px |
+
+**语义映射**：
+- 按钮圆角：--r-md (${s.radius.md}px)
+- 卡片圆角：--r-lg (${s.radius.lg}px)
+- 输入框圆角：--r-md (${s.radius.md}px)
+
+### 完整 CSS
+\`\`\`css
+:root {
+  --s-1: ${s.spacing[1]}px;  --s-2: ${s.spacing[2]}px;  --s-3: ${s.spacing[3]}px;
+  --s-4: ${s.spacing[4]}px;  --s-6: ${s.spacing[6]}px;  --s-8: ${s.spacing[8]}px;
+  --s-12: ${s.spacing[12]}px; --s-16: ${s.spacing[16]}px;
+  --r-sm: ${s.radius.sm}px;   --r-md: ${s.radius.md}px;  --r-lg: ${s.radius.lg}px;
+  --r-xl: ${s.radius.xl}px;  --r-2xl: ${s.radius['2xl']}px; --r-full: ${s.radius.full}px;
+  --font-heading: ${s.fontHeading};
+  --font-body: ${s.fontBody};
+  --font-mono: ${s.fontMono};
+  --fs-xs: ${s.fontSize.xs}px;  --fs-sm: ${s.fontSize.sm}px;
+  --fs-base: ${s.fontSize.base}px; --fs-md: ${s.fontSize.md}px;
+  --fs-lg: ${s.fontSize.lg}px;  --fs-xl: ${s.fontSize.xl}px;
+  --fs-2xl: ${s.fontSize['2xl']}px; --fs-3xl: ${s.fontSize['3xl']}px;
+}
+\`\`\`
+
+---
+
+## 三、布局类型
+
+**类型**：${l.name}（${l.nameEn}）
+**定位**：${l.desc}
+
+---
+
+## 四、生成要求
+
+请基于以上 Token 和规范，生成以下 ${l.modules.length} 个 ${l.name} UI 模块：
+
+${l.modules.map((m, i) => `${i + 1}. **${MODULE_NAMES[m]}**（\`${m}\`）`).join('\n')}
+
+### 通用规范
+1. 所有颜色 / 间距 / 圆角 / 字号 / 字体必须使用上述 Token，禁止硬编码
+2. 间距严格遵循 4pt 网格
+3. 字号阶比例 ≥1.25
+4. 桌面端行长 65-75ch，移动端 35-60ch
+5. 触摸目标 ≥44×44pt
+6. 文字对比度 ≥4.5:1（AA）
+7. 圆角统一，子元素圆角 < 容器圆角 - padding
+8. 阴影克制，深色主题使用专用 shadow token
+9. 动效时长 ≤400ms，使用 ease-out 曲线，无 bounce
+10. 必须支持 \`prefers-reduced-motion\`
+
+### 响应式
+- 移动端（< 768px）：单列布局，触摸目标 ≥44px
+- 平板（768-1023px）：适度分栏
+- 桌面（≥ 1024px）：完整布局
+
+### 输出格式
+每个模块输出为独立的可运行代码片段，使用 HTML + CSS（变量驱动），无需任何框架依赖。
+`;
+}
+
+function buildPromptPlain() {
+  const c = getColor();
+  const s = getStyle();
+  const l = getLayout();
+  return `【UI 设计规范 - ${c.name} + ${s.name} + ${l.name}】
+
+【配色方案】${c.name}（${c.commitment}）
+- 主色 primary: ${c.primary}
+- 辅色 secondary: ${c.secondary}
+- 强调色 accent: ${c.accent}
+- 背景 surface: ${c.surface}
+- 浅背景 surface-tinted: ${c.surfaceTinted}
+- 抬升 surface-elevated: ${c.surfaceElevated}
+- 文字主色 on-surface: ${c.onSurface}
+- 文字次色 on-surface-muted: ${c.onSurfaceMuted}
+- 主色文字 on-primary: ${c.onPrimary}
+- 边框 border: ${c.border}
+- 强边框 border-strong: ${c.borderStrong}
+- 错误 error: ${c.error} | 成功 success: ${c.success} | 警告 warning: ${c.warning}
+适用场景：${c.scenario}
+
+【样式方案】${s.name}（${s.desc}）
+间距节奏：${s.spacingLabels}（基于 4pt 网格）
+字体配对：
+- 标题：${s.fontHeading}
+- 正文：${s.fontBody}
+- 等宽：${s.fontMono}
+字号阶：${s.fontSizeLabels}（比例 ≥1.25）
+圆角方案：${s.radiusLabels}
+
+【布局类型】${l.name}（${l.desc}）
+
+【请生成以下 ${l.modules.length} 个 UI 模块】
+${l.modules.map((m, i) => `${i + 1}. ${MODULE_NAMES[m]} (${m})`).join('\n')}
+
+【要求】
+1. 所有视觉属性必须使用上述 Token
+2. 间距严格遵循 4pt 网格
+3. 字号阶比例 ≥1.25
+4. 桌面行长 65-75ch，移动 35-60ch
+5. 触摸目标 ≥44pt
+6. 文字对比度 ≥4.5:1
+7. 圆角统一，子元素圆角 < 容器圆角 - padding
+8. 动效 ≤400ms，ease-out，无 bounce
+9. 支持 prefers-reduced-motion
+
+【输出】HTML + CSS 变量驱动，无需框架。
+`;
+}
+
+function updatePrompt() {
+  const text = state.promptFormat === 'markdown' ? buildPromptMarkdown() : buildPromptPlain();
+  document.getElementById('promptText').value = text;
+}
+
+function switchFormat(fmt) {
+  state.promptFormat = fmt;
+  document.querySelectorAll('[data-format]').forEach(b => {
+    b.classList.toggle('active', b.dataset.format === fmt);
+  });
+  updatePrompt();
+}
+
+function copyPrompt() {
+  const textarea = document.getElementById('promptText');
+  textarea.select();
+  textarea.setSelectionRange(0, 99999);
+  try {
+    navigator.clipboard.writeText(textarea.value).then(showToast);
+  } catch (e) {
+    document.execCommand('copy');
+    showToast();
+  }
+}
+
+function showToast() {
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+/* ============================================================
+   初始化
+   ============================================================ */
+function init() {
+  applyTokens();
+  renderPalettes();
+  renderStyles();
+  renderLayouts();
+  renderModules();
+  updatePrompt();
+}
+
+init();
+</script>
+
+</body>
+</html>
