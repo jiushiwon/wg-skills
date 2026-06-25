@@ -1,0 +1,10 @@
+{
+  "name": "icon-forge",
+  "version": "1.0.0",
+  "private": true,
+  "description": "配置驱动的 SVG path → PNG 图标批量生成器",
+  "bin": { "forge-icons": "./forge-icons.js" },
+  "dependencies": {
+    "sharp": "^0.33.0"
+  }
+}

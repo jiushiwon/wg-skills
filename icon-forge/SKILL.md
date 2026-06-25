@@ -7,21 +7,28 @@ description: Generate PNG icons from SVG paths (heroicons-style) or full SVG str
 
 把 SVG path（或完整 SVG）批量渲染成 PNG。用户只需说清「要哪些图标、什么颜色、放哪个目录」，由你写好配置并运行生成器，无需用户每次指定脚本文件。
 
-## 生成器
+## 生成器位置
 
-固定路径（已自带 sharp 依赖，勿改动）：
-`D:\projects\wg-skills\png_genernate_scripts\forge-icons.js`
+脚本 `forge-icons.js` 与本 SKILL.md **在同一目录**。设该目录为 `$SKILL_DIR`（运行时即本技能所在目录的绝对路径，例如 `~/.claude/skills/icon-forge`）。
 
-调用方式（从该目录运行，让 `require('sharp')` 解析）：
+首次使用前需在该目录装一次依赖（sharp）：
 ```bash
-cd /d/projects/wg-skills/png_genernate_scripts && echo '<JSON>' | node forge-icons.js -
+cd "$SKILL_DIR" && npm install
 ```
+
+## 调用方式
+
+从技能目录运行，让 `require('sharp')` 能解析到本地依赖：
+```bash
+cd "$SKILL_DIR" && echo '<JSON>' | node forge-icons.js -
+```
+或写入临时文件再传入：`node forge-icons.js /path/to/spec.json`
 
 ## 配置格式
 
 ```json
 {
-  "outDir": "D:/projects/xxx/src/static/icons/login",
+  "outDir": "<目标项目>/src/static/icons/login",
   "size": 72,
   "color": "#059669",
   "strokeWidth": 2,
