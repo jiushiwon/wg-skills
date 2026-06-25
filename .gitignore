@@ -1,5 +1,7 @@
-# 文档目录（已单独管理）
+# 文档 / demo / Claude 配置（不纳入仓库）
 docs/
+demo/
+.claude/
 
 # 依赖目录
 node_modules/
