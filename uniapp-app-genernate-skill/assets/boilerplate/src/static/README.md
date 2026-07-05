@@ -20,13 +20,8 @@
 boilerplate 已包含一组默认图标，可直接使用或后续替换：
 
 - `tab-bar/home.png` / `tab-bar/home-active.png`
-- `tab-bar/profile.png` / `tab-bar/profile-active.png`
-- `tab-bar/shop.png` / `tab-bar/shop-active.png`
-- `tab-bar/cart.png` / `tab-bar/cart-active.png`
 - `tab-bar/data.png` / `tab-bar/data-active.png`
-- `tab-bar/discover.png` / `tab-bar/discover-active.png`
-- `tab-bar/message.png` / `tab-bar/message-active.png`
-- `tab-bar/settings.png` / `tab-bar/settings-active.png`
+- `tab-bar/profile.png` / `tab-bar/profile-active.png`
 - `images/empty-data.png`
 - `avatar-placeholder.png`
 

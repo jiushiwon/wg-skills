@@ -1,3 +1,10 @@
+/**
+ * Pexels 图片搜索工具（可选）
+ *
+ * 如果你的项目不需要从 Pexels 获取真实照片，可以直接删除本文件。
+ * 需要使用时，在 .env 中配置 VITE_PEXELS_API_KEY。
+ */
+
 import { PEXELS_API_KEY } from '@/constants/env';
 
 const PEXELS_API_BASE = 'https://api.pexels.com/v1';
@@ -37,7 +44,9 @@ export async function searchPexelsPhotos(
   perPage = 10,
 ): Promise<PexelsPhoto[]> {
   if (!PEXELS_API_KEY) {
-    console.warn('[pexels] PEXELS_API_KEY is empty');
+    if (import.meta.env.DEV) {
+      console.warn('[pexels] PEXELS_API_KEY is empty, skip search');
+    }
     return [];
   }
 

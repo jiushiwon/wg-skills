@@ -76,6 +76,10 @@ function handleBack() {
 </template>
 
 <style lang="scss" scoped>
+:root {
+  --navbar-height: v-bind(navBarHeight + 'px');
+}
+
 .app-navbar {
   position: fixed;
   top: 0;

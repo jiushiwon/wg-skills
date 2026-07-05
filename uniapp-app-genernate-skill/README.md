@@ -268,7 +268,8 @@ npm run theme:sync
 1. **不要直接提交规范文件**：`AGENTS.md`、`CLAUDE.md` 及 `docs/rules/` 下的修改须经项目负责人审阅后由维护者手动合入。
 2. **占位符替换**：生成项目时，注意同时兼容 `{{PROJECT_NAME}}` 和 `{{ PROJECT_NAME }}` 两种形式。
 3. **环境变量**：Pexels API Key 使用 `VITE_PEXELS_API_KEY`，baseURL 使用 `VITE_BASE_URL` / `VITE_H5_BASE_URL` / `VITE_APP_BASE_URL`。
-4. **深色模式**：当前未引入深色模式；如后续需要，建议统一通过 `theme.json` 扩展并由 `theme:sync` 生成对应变量。
+4. **依赖版本**：当前 `@dcloudio/uni-*` 使用的是 `3.0.0-5010420260703001`（alpha/nightly），适合原型开发；生产环境请评估是否升级到稳定版。
+5. **深色模式**：当前未引入深色模式；如后续需要，建议统一通过 `theme.json` 扩展并由 `theme:sync` 生成对应变量。
 
 ---
 

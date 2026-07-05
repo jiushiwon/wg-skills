@@ -4,6 +4,7 @@ import { onPullDownRefresh } from '@dcloudio/uni-app';
 import { AppButton } from '@/components/AppButton';
 import { AppCard } from '@/components/AppCard';
 import { AppEmpty } from '@/components/AppEmpty';
+import { AppNavbar } from '@/components/AppNavbar';
 import { getDemoList, type DemoItem } from '@/api/modules/demo';
 import { formatDateTime } from '@/utils/date';
 
@@ -35,9 +36,11 @@ onPullDownRefresh(() => loadList(true));
 
 <template>
   <view class="page list-page">
+    <AppNavbar title="示例列表" :show-back="false" />
+
     <view class="list-page__header">
       <text class="list-page__title">
-        示例列表
+        数据列表
       </text>
       <AppButton
         type="primary"
@@ -80,14 +83,15 @@ onPullDownRefresh(() => loadList(true));
 
 <style lang="scss" scoped>
 .list-page {
-  padding: $comp-page-padding;
+  min-height: 100vh;
+  padding-top: var(--navbar-height, 0px);
   background: $color-bg-secondary;
 
   &__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: $spacing-lg;
+    padding: $comp-page-padding;
   }
 
   &__title {
@@ -100,6 +104,7 @@ onPullDownRefresh(() => loadList(true));
     display: flex;
     flex-direction: column;
     gap: $spacing-md;
+    padding: 0 $comp-page-padding $comp-page-padding;
   }
 
   &__card {
