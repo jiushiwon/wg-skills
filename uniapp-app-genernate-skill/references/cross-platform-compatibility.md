@@ -167,6 +167,62 @@ console.log('App');
 }
 ```
 
+## 微信小程序自定义导航栏
+
+当页面使用 `"navigationStyle": "custom"` 时，必须自己实现导航栏，并确保**标题与右上角胶囊按钮处于同一行**，且不被遮挡。
+
+### 错误做法
+
+直接写一个固定高度的标题栏，不获取胶囊按钮位置：
+
+```vue
+<!-- 错误：高度写死，标题可能与胶囊按钮错位或被遮挡 -->
+<view class="custom-nav" style="height: 88rpx;">
+  <text class="title">标题</text>
+</view>
+```
+
+### 正确做法
+
+使用项目内置的 `AppNavbar` 组件，它会根据胶囊按钮位置自动计算高度和边距：
+
+```vue
+<script setup lang="ts">
+import { AppNavbar } from '@/components/AppNavbar';
+</script>
+
+<template>
+  <view class="page">
+    <AppNavbar title="页面标题" />
+    <view class="page__content">
+      <!-- 页面内容 -->
+    </view>
+  </view>
+</template>
+```
+
+对应的 `pages.json`：
+
+```json
+{
+  "path": "pages/demo/index",
+  "style": {
+    "navigationStyle": "custom"
+  }
+}
+```
+
+### 组件实现要点
+
+1. 通过 `uni.getMenuButtonBoundingClientRect()` 获取胶囊按钮位置；
+2. 通过 `uni.getSystemInfoSync()` 获取状态栏高度；
+3. 导航栏总高度 = 状态栏高度 + 胶囊按钮占用区域高度；
+4. 标题区右侧保留 `screenWidth - menuButton.right + menuButton.width` 的安全间距，避免与胶囊按钮重叠。
+
+### 源码位置
+
+`src/components/AppNavbar/AppNavbar.vue`
+
 ## 表单与输入
 
 - 使用 `input`、`textarea`、`picker` 等 uni-app 组件。
