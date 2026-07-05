@@ -1,0 +1,83 @@
+{
+  "name": "{{PROJECT_NAME}}",
+  "appid": "__UNI__XXXXXXX",
+  "description": "{{PROJECT_DESC}}",
+  "versionName": "1.0.0",
+  "versionCode": "100",
+  "transformPx": false,
+  "app-plus": {
+    "usingComponents": true,
+    "nvueStyleCompiler": "uni-app",
+    "compilerVersion": 3,
+    "splashscreen": {
+      "alwaysShowBeforeRender": true,
+      "waiting": true,
+      "autoclose": true,
+      "delay": 0
+    },
+    "modules": {},
+    "distribute": {
+      "android": {
+        "permissions": [
+          "<uses-permission android:name=\"android.permission.INTERNET\" />",
+          "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+          "<uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\" />"
+        ]
+      },
+      "ios": {},
+      "sdkConfigs": {
+        "payment": {},
+        "share": {},
+        "push": {}
+      }
+    },
+    "screenOrientation": ["portrait-primary"]
+  },
+  "h5": {
+    "title": "{{PROJECT_NAME}}",
+    "router": {
+      "mode": "hash",
+      "base": "./"
+    },
+    "optimization": {
+      "treeShaking": {
+        "enable": true
+      }
+    },
+    "publicPath": "./",
+    "template": "index.html"
+  },
+  "mp-weixin": {
+    "appid": "{{WECHAT_APPID}}",
+    "setting": {
+      "urlCheck": false,
+      "es6": true,
+      "enhance": true,
+      "postcss": true,
+      "preloadBackgroundData": false,
+      "minified": true,
+      "newFeature": false,
+      "coverView": true,
+      "nodeModules": false,
+      "autoAudits": false,
+      "showShadowRootInWkwebview": true,
+      "uglifyFileName": false
+    },
+    "usingComponents": true,
+    "permission": {},
+    "requiredPrivateInfos": []
+  },
+  "mp-alipay": {
+    "usingComponents": true
+  },
+  "mp-baidu": {
+    "usingComponents": true
+  },
+  "mp-toutiao": {
+    "usingComponents": true
+  },
+  "uniStatistics": {
+    "enable": false
+  },
+  "vueVersion": "3"
+}

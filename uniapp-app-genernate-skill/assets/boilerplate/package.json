@@ -1,0 +1,47 @@
+{
+  "name": "{{PROJECT_NAME}}",
+  "version": "1.0.0",
+  "description": "{{PROJECT_DESC}}",
+  "scripts": {
+    "theme:sync": "node scripts/sync-theme.js",
+    "predev:mp-weixin": "npm run theme:sync",
+    "dev:mp-weixin": "uni --platform mp-weixin",
+    "prebuild:mp-weixin": "npm run theme:sync",
+    "build:mp-weixin": "uni build --platform mp-weixin",
+    "predev:h5": "npm run theme:sync",
+    "dev:h5": "uni --open --platform h5",
+    "prebuild:h5": "npm run theme:sync",
+    "build:h5": "uni build --platform h5",
+    "predev:app": "npm run theme:sync",
+    "dev:app": "uni --open --platform app",
+    "prebuild:app": "npm run theme:sync",
+    "build:app": "uni build --platform app",
+    "lint": "eslint src --ext .ts,.vue",
+    "verify": "node scripts/verify.js"
+  },
+  "dependencies": {
+    "@dcloudio/uni-app": "3.0.0-5010420260703001",
+    "@dcloudio/uni-app-plus": "3.0.0-5010420260703001",
+    "@dcloudio/uni-components": "3.0.0-5010420260703001",
+    "@dcloudio/uni-h5": "3.0.0-5010420260703001",
+    "@dcloudio/uni-mp-weixin": "3.0.0-5010420260703001",
+    "pinia": "^2.1.7",
+    "vue": "^3.4.21"
+  },
+  "devDependencies": {
+    "@dcloudio/types": "^3.4.31",
+    "@dcloudio/uni-automator": "3.0.0-5010420260703001",
+    "@dcloudio/uni-cli-shared": "3.0.0-5010420260703001",
+    "@dcloudio/uni-stacktracey": "3.0.0-5010420260703001",
+    "@dcloudio/vite-plugin-uni": "3.0.0-5010420260703001",
+    "@rushstack/eslint-patch": "^1.7.2",
+    "@types/node": "^20.11.30",
+    "@typescript-eslint/eslint-plugin": "^7.3.1",
+    "@typescript-eslint/parser": "^7.3.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-vue": "^9.24.0",
+    "sass": "^1.72.0",
+    "typescript": "^5.4.3",
+    "vite": "^5.2.6"
+  }
+}

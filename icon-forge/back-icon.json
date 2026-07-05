@@ -1,0 +1,9 @@
+{
+  "outDir": "d:\\projects\\heli-daoshu-uniapp\\frontend\\src\\static\\icons",
+  "size": 72,
+  "color": "#FFFFFF",
+  "strokeWidth": 2,
+  "icons": [
+    { "name": "icon-back.png", "path": "M15 19l-7-7 7-7" }
+  ]
+}

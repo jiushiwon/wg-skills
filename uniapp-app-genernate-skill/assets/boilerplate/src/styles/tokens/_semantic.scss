@@ -1,0 +1,46 @@
+@import "primitive";
+
+// 语义颜色 Token
+$color-primary: $primary-500;
+$color-primary-light: $primary-100;
+$color-primary-dark: $primary-700;
+
+$color-text-primary: $gray-900;
+$color-text-secondary: $gray-500;
+$color-text-tertiary: $gray-400;
+$color-text-placeholder: $gray-300;
+
+$color-bg-primary: #ffffff;
+$color-bg-secondary: $gray-50;
+$color-bg-tertiary: $gray-100;
+
+$color-border: $gray-200;
+$color-border-light: $gray-100;
+
+$color-success: $theme-success;
+$color-warning: $theme-warning;
+$color-error: $theme-error;
+$color-info: $theme-info;
+
+// 语义间距 Token
+$spacing-xs: $space-1;
+$spacing-sm: $space-2;
+$spacing-default: $space-3;
+$spacing-md: $space-4;
+$spacing-lg: $space-5;
+$spacing-xl: $space-6;
+$spacing-xxl: $space-8;
+
+// 语义字体 Token
+$font-caption: $font-xs;
+$font-body: $font-sm;
+$font-subtitle: $font-md;
+$font-title: $font-lg;
+$font-headline: $font-xl;
+$font-display: $font-xxl;
+
+// 语义圆角 Token
+$radius-small: $radius-sm;
+$radius-default: $radius-md;
+$radius-large: $radius-lg;
+$radius-xlarge: $radius-xl;

@@ -1,0 +1,12 @@
+{
+  "outDir": "d:\\projects\\heli-daoshu-uniapp\\frontend\\src\\static\\icons",
+  "size": 72,
+  "color": "#FFFFFF",
+  "strokeWidth": 2,
+  "icons": [
+    { "name": "icon-home.png", "path": "M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" },
+    { "name": "icon-calc.png", "path": "M12 8v2l3 3m-3-3l-3 3m12 0l-3-3m3 3V8M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z" },
+    { "name": "icon-check.png", "path": "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" },
+    { "name": "icon-user.png", "path": "M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z" }
+  ]
+}

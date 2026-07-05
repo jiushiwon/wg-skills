@@ -1,0 +1,61 @@
+{
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "首页"
+      }
+    },
+    {
+      "path": "pages/list/index",
+      "style": {
+        "navigationBarTitleText": "列表",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/form/index",
+      "style": {
+        "navigationBarTitleText": "表单"
+      }
+    },
+    {
+      "path": "pages/profile/index",
+      "style": {
+        "navigationBarTitleText": "我的"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "{{PROJECT_NAME}}",
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#f5f5f5"
+  },
+  "tabBar": {
+    "color": "#9ca3af",
+    "selectedColor": "#10b981",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "static/tab-bar/home.png",
+        "selectedIconPath": "static/tab-bar/home-active.png"
+      },
+      {
+        "pagePath": "pages/list/index",
+        "text": "列表",
+        "iconPath": "static/tab-bar/data.png",
+        "selectedIconPath": "static/tab-bar/data-active.png"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的",
+        "iconPath": "static/tab-bar/profile.png",
+        "selectedIconPath": "static/tab-bar/profile-active.png"
+      }
+    ]
+  }
+}

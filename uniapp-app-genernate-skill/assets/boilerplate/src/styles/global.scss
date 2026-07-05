@@ -1,0 +1,43 @@
+@import "variables";
+
+/* 页面级通用容器 */
+.page {
+  min-height: $comp-page-min-height;
+  box-sizing: border-box;
+}
+
+/* 安全区 */
+.safe-area-top {
+  @include safe-area-top;
+}
+
+.safe-area-bottom {
+  @include safe-area-bottom;
+}
+
+/* 通用文本 */
+.text-primary {
+  color: $color-text-primary;
+}
+
+.text-secondary {
+  color: $color-text-secondary;
+}
+
+.text-tertiary {
+  color: $color-text-tertiary;
+}
+
+/* 通用 flex */
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  @include flex-center;
+}
+
+/* 文本省略 */
+.ellipsis {
+  @include text-ellipsis;
+}

@@ -1,0 +1,43 @@
+@import "semantic";
+
+// 按钮组件
+$comp-button-height-sm: 56rpx;
+$comp-button-height-md: 80rpx;
+$comp-button-height-lg: 104rpx;
+
+$comp-button-padding-x-sm: $spacing-sm;
+$comp-button-padding-x-md: $spacing-md;
+$comp-button-padding-x-lg: $spacing-lg;
+
+$comp-button-radius: $radius-md;
+
+// 导航 / TabBar
+$comp-tab-bar-height: 100rpx;
+$comp-navbar-height: 88rpx;
+
+// 头像
+$comp-avatar-size-sm: 80rpx;
+$comp-avatar-size-md: 120rpx;
+$comp-avatar-size-lg: 160rpx;
+
+// 列表项
+$comp-list-item-min-height: 96rpx;
+$comp-list-item-padding-x: $spacing-md;
+$comp-list-item-border-width: 1rpx;
+
+// 空状态
+$comp-empty-image-size: 240rpx;
+
+// 用户信息区
+$comp-user-info-padding-y: $spacing-xl;
+
+// 页面
+$comp-page-min-height: 100vh;
+$comp-page-padding: $spacing-md;
+
+// 卡片
+$comp-card-padding: $spacing-lg;
+$comp-card-radius: $radius-lg;
+
+// 通用细边框
+$comp-hairline-width: 1rpx;
