@@ -1,6 +1,6 @@
 # 三端应用开发上线检查清单
 
-> 本检查清单供 `uniapp-app-genernate-skill` 生成的项目在每个阶段结束时自查，覆盖微信小程序、H5、App 三端。
+> 本检查清单供 `uniapp-app-generate-skill` 生成的项目在每个阶段结束时自查，覆盖微信小程序、H5、App 三端。
 
 ## 一、启动阶段
 

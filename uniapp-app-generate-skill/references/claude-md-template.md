@@ -1,6 +1,6 @@
 # CLAUDE.md 模板
 
-> 本模板供 `uniapp-app-genernate-skill` 在初始化项目时生成 `CLAUDE.md` 使用。请根据实际项目替换 `{{PROJECT_NAME}}`、`{{PROJECT_DESC}}` 等占位符。
+> 本模板供 `uniapp-app-generate-skill` 在初始化项目时生成 `CLAUDE.md` 使用。请根据实际项目替换 `{{PROJECT_NAME}}`、`{{PROJECT_DESC}}` 等占位符。
 
 ```markdown
 # CLAUDE.md - {{PROJECT_NAME}} AI 开发规范

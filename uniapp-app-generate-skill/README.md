@@ -1,4 +1,4 @@
-# uniapp-app-genernate-skill
+# uniapp-app-generate-skill
 
 一个用于 **从零生成标准化 uni-app 项目** 的 Claude Skill，支持微信小程序、H5、App 三端。
 
@@ -136,7 +136,7 @@ Phase 4: Post-development
 ## 目录结构
 
 ```
-uniapp-app-genernate-skill/
+uniapp-app-generate-skill/
 ├── SKILL.md                  # 技能主文档：触发条件、四阶段流程、详细步骤
 ├── README.md                 # 本文件
 ├── assets/

@@ -1,6 +1,6 @@
 # 标准 UniApp 小程序项目结构
 
-> 本参考文档定义使用 `uniapp-app-genernate-skill` 初始化项目时应采用的目录结构与文件组织约定。结构以 **uni-app（Vue3 + TypeScript）** 为基础，兼顾微信小程序与 H5 编译。
+> 本参考文档定义使用 `uniapp-app-generate-skill` 初始化项目时应采用的目录结构与文件组织约定。结构以 **uni-app（Vue3 + TypeScript）** 为基础，兼顾微信小程序与 H5 编译。
 
 ```
 project-root/

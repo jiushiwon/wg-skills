@@ -1,6 +1,6 @@
 # 设计技能集成指南
 
-> 本参考文档定义 `uniapp-app-genernate-skill` 在开发小程序页面与组件时，应如何调用 `ponytail`、`ui-ux-pro-max`、`frontend-design` 等技能，以兼顾代码精简与界面质量。
+> 本参考文档定义 `uniapp-app-generate-skill` 在开发小程序页面与组件时，应如何调用 `ponytail`、`ui-ux-pro-max`、`frontend-design` 等技能，以兼顾代码精简与界面质量。
 
 ## 调用原则
 

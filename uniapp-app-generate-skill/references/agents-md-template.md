@@ -1,6 +1,6 @@
 # AGENTS.md 模板
 
-> 本模板供 `uniapp-app-genernate-skill` 在初始化项目时生成 `AGENTS.md` 使用。`AGENTS.md` 是项目规范的完整入口，包含所有开发、主题、接口、资源规则。
+> 本模板供 `uniapp-app-generate-skill` 在初始化项目时生成 `AGENTS.md` 使用。`AGENTS.md` 是项目规范的完整入口，包含所有开发、主题、接口、资源规则。
 
 ```markdown
 # AGENTS.md - {{PROJECT_NAME}} 开发规范

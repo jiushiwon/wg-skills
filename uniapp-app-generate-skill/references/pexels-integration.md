@@ -1,6 +1,6 @@
 # Pexels 图片资源集成
 
-> 本参考文档定义 `uniapp-app-genernate-skill` 如何从 Pexels 获取真实照片作为小程序静态图片资源，并禁止用 CSS 渐变或纯色块充当图片。
+> 本参考文档定义 `uniapp-app-generate-skill` 如何从 Pexels 获取真实照片作为小程序静态图片资源，并禁止用 CSS 渐变或纯色块充当图片。
 
 ## 核心规则
 

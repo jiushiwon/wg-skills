@@ -1,5 +1,5 @@
 ---
-name: uniapp-app-genernate-skill
+name: uniapp-app-generate-skill
 description: This skill should be used when the user wants to create a standardized uni-app project for WeChat mini-program, H5, and App from scratch. It guides through pre-development brainstorming, project initialization with uni-app + Vue3 + TypeScript + Pinia, dynamic theme system setup, static asset generation, layout design, cross-platform compatibility, and post-development verification. Invoke when the user says "帮我做一个 uniapp 小程序/三端应用"、"初始化 uniapp 项目"、"uniapp 构建" or similar requests.
 ---
 
