@@ -25,8 +25,8 @@
 | 主题色/间距/字体硬编码遍地都是 | 以 `theme.json` 为唯一源头，自动生成 SCSS Token 和 JS 常量 |
 | 微信/H5/App 三端代码写法混乱 | 内置平台抽象层，把差异收敛到 `utils/platform*.ts` |
 | 图标、图片资源不规范 | 引导使用 `icon-forge` 生成图标，Pexels 获取真实照片 |
-| 自定义导航栏标题被胶囊按钮遮挡 | 内置 `AppNavbar` 组件，自动根据胶囊按钮位置计算安全区域 |
-| 生成完代码不知道能不能跑 | `npm run verify` 一键自检：lint + build + 产物检查 |
+| 自定义导航栏内容被胶囊按钮覆盖 | 内置 `AppNavbar`：胶囊独占一行、仅返回图标同排、标题/内容在下方，绝不覆盖 |
+| 生成完代码不知道能不能跑 | `npm run verify` 一键自检：主题同步 + 色阶校验 + lint + build + 产物检查 |
 
 ---
 
@@ -85,8 +85,9 @@ npm run dev:app          # App
 | `npm run dev:h5` | H5 开发 |
 | `npm run build:h5` | H5 打包 |
 | `npm run lint` | ESLint 检查 |
-| `npm run verify` | lint + build 一键自检 |
-| `npm run theme:sync` | 根据 theme.json 同步主题文件 |
+| `npm run verify` | theme:sync → theme:check → lint → build:h5 一键自检 |
+| `npm run theme:sync` | 根据 theme.json 同步主题文件（生成色阶与色阶白名单） |
+| `npm run theme:check` | 硬卡：扫描业务代码，禁止色阶之外的颜色 |
 
 ---
 
@@ -96,11 +97,13 @@ npm run dev:app          # App
 |------|------|
 | **项目脚手架** | 复制 `assets/boilerplate/` 到目标目录，自动生成目录结构、规范文件、页面与组件。 |
 | **主题系统** | 以 `theme.json` 为唯一人工源头，自动生成 SCSS Token 与 JS 常量，支持颜色、间距、字体、圆角、阴影、组件级尺寸。 |
-| **组件级尺寸统一** | 提供 `$comp-*` Token，统一按钮、TabBar、导航栏、头像、列表项、卡片、空状态、页面边距、细边框等尺寸。 |
+| **主题色阶与硬卡** | 改 `theme.json` 主色即可全量重生成主色阶/灰阶 50~900 与语义色；`npm run theme:check` 硬卡，**禁止色阶之外的颜色**。 |
+| **组件级尺寸统一** | 提供 `$comp-*` Token，统一按钮、Tab、弹窗、TabBar、导航栏、头像、列表项、卡片、空状态等尺寸。 |
+| **复用组件强一致** | 内置 `AppButton/AppTab/AppPopup/AppCard/AppEmpty/AppInput/AppNavbar`，多页面同类 UI 必须复用同一组件，主题色/尺寸/圆角严格一致。 |
 | **跨平台抽象** | 内置 `platform.ts`、`platform-auth.ts`、`platform-share.ts`、`platform-image.ts`、`request.ts`，把平台差异收敛到一处。 |
-| **自定义导航栏** | 内置 `AppNavbar` 组件，自动适配微信小程序胶囊按钮位置，标题与胶囊按钮保持同一行。 |
+| **自定义导航栏** | 内置 `AppNavbar` 组件，自动适配微信小程序胶囊按钮：**胶囊独占一行、仅返回图标可同排、标题与内容在下方、绝不覆盖胶囊**；默认导航栏无需处理。 |
 | **静态资源规范** | 引导使用 `icon-forge` 生成图标，使用 Pexels API 获取真实图片，禁止用 CSS 渐变/色块代替图片。 |
-| **一键自检** | 生成后的项目支持 `npm run verify`，自动跑 lint + build + 产物检查。 |
+| **一键自检** | 生成后的项目支持 `npm run verify`，自动跑 主题同步 → 色阶校验 → lint → build:h5 → 产物检查。 |
 | **示例页面完整** | 样板包含首页、列表页、表单页、我的页，演示下拉刷新、空状态、表单校验、本地草稿、登录抽象。 |
 
 ---
@@ -126,7 +129,7 @@ Phase 3: Development
 
 Phase 4: Post-development
   → npm run lint
-  → npm run verify（lint + build + 产物检查）
+  → npm run verify（主题同步 → 色阶校验 → lint → build:h5 → 产物检查）
   → 对照 mini-program-checklist.md 自查
   → 交付并总结
 ```
@@ -143,11 +146,14 @@ uniapp-app-generate-skill/
 │   └── boilerplate/          # 可直接复制的最小可运行 uni-app 项目模板
 │       ├── theme.json        # 主题唯一人工源头
 │       ├── scripts/
-│       │   ├── sync-theme.js # 自动生成 SCSS/TS 主题文件
-│       │   └── verify.js     # lint + build 一键自检
+│       │   ├── sync-theme.js # 生成 SCSS/TS 主题文件 + 色阶白名单
+│       │   ├── check-colors.js # 色阶外颜色硬卡
+│       │   ├── verify.js     # sync → check → lint → build 一键自检
+│       │   ├── .theme-scale.json # (生成) 色阶白名单，禁止手改
+│       │   └── color-allowlist.json # (可选) 受审阅的例外白名单
 │       ├── src/
 │       │   ├── api/          # 接口封装与类型
-│       │   ├── components/   # 公共组件（AppButton / AppCard / AppEmpty / AppInput / AppNavbar）
+│       │   ├── components/   # 公共组件（AppButton / AppTab / AppPopup / AppCard / AppEmpty / AppInput / AppNavbar）
 │       │   ├── constants/    # 常量（colors / enums / env / pages）
 │       │   ├── pages/        # 首页 / 列表 / 表单 / 我的
 │       │   ├── static/       # 静态资源
@@ -163,6 +169,7 @@ uniapp-app-generate-skill/
 └── references/               # 规范参考文档
     ├── agents-md-template.md
     ├── claude-md-template.md
+    ├── component-standards.md
     ├── cross-platform-compatibility.md
     ├── design-skills-guide.md
     ├── layout-patterns.md
@@ -184,7 +191,7 @@ uniapp-app-generate-skill/
 cd assets/boilerplate
 rm -rf node_modules package-lock.json dist
 npm install
-npm run verify      # lint + build:h5 + 产物检查
+npm run verify      # theme:sync → theme:check → lint → build:h5 → 产物检查
 npm run build:mp-weixin
 ```
 
@@ -193,6 +200,58 @@ npm run build:mp-weixin
 - `npm run verify` 输出 `[verify] all checks passed`。
 - `npm run build:mp-weixin` 输出 `DONE Build complete.`。
 - `npm run lint` 0 error 0 warning。
+
+---
+
+## 共享组件（强制复用）
+
+多页面出现的同类 UI 必须使用 `src/components/` 下的共享组件，保证 A/B/C 页面的 button / tab / popup 主题色、尺寸、圆角完全一致。**页面只 import，不手写同类结构。**
+
+| 需求 | 组件 | 关键 props |
+|------|------|-----------|
+| 按钮 | `AppButton` | `type: primary/secondary/ghost`，`size: small/medium/large` |
+| 分段 / 顶部 Tab | `AppTab` | `v-model` 选中 key，`items: [{ key, label }]` |
+| 弹窗 / 动作面板 | `AppPopup` | `v-model` 显隐，`position: bottom/center`，`title` |
+| 内容卡片 | `AppCard` | — |
+| 空状态 | `AppEmpty` | `title`，`description` |
+| 输入框 | `AppInput` | `v-model`，`placeholder` |
+| 自定义导航栏 | `AppNavbar` | `title`，`showBack` |
+
+示例：
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue';
+import { AppButton } from '@/components/AppButton';
+import { AppTab } from '@/components/AppTab';
+import { AppPopup } from '@/components/AppPopup';
+
+const tab = ref('all');
+const tabs = [
+  { key: 'all', label: '全部' },
+  { key: 'done', label: '已完成' },
+];
+const show = ref(false);
+</script>
+
+<template>
+  <view>
+    <AppTab v-model="tab" :items="tabs" />
+    <AppButton type="primary" size="medium" @tap="show = true">打开弹窗</AppButton>
+    <AppPopup v-model="show" position="bottom" title="选择">
+      <!-- 弹窗内容 -->
+    </AppPopup>
+  </view>
+</template>
+```
+
+红线：
+
+- 禁止页面内手写 `<button>`、tab 栏、popup 遮罩或复制共享组件结构（自检：`grep -rn "<button" src/pages` 应为空）。
+- 禁止用页面 scoped 样式覆盖共享组件的尺寸/主题色，差异走 props / token。
+- 新增可复用 UI 先沉淀到 `src/components/` 并登记 `references/component-standards.md`。
+
+完整规范见 [`references/component-standards.md`](references/component-standards.md)。
 
 ---
 
@@ -213,6 +272,13 @@ import { AppNavbar } from '@/components/AppNavbar';
     </view>
   </view>
 </template>
+
+<style lang="scss" scoped>
+.page {
+  // 内容整体下移，避开状态栏 + 胶囊带 + 标题行，绝不覆盖胶囊
+  padding-top: var(--navbar-height, 0px);
+}
+</style>
 ```
 
 对应 `pages.json`：
@@ -226,30 +292,61 @@ import { AppNavbar } from '@/components/AppNavbar';
 }
 ```
 
-组件会根据 `uni.getMenuButtonBoundingClientRect()` 自动计算标题高度和右侧安全间距，避免标题超出屏幕或被胶囊按钮遮挡。
+组件会根据 `uni.getMenuButtonBoundingClientRect()` 自动计算高度：**胶囊按钮独占一行**，仅左侧返回图标与胶囊同排对齐；标题位于胶囊带下方独立一行；页面内容用 `padding-top: var(--navbar-height)` 下移，绝不覆盖胶囊。使用默认导航栏（非 `custom`）的页面无需处理。
 
 ---
 
 ## 主题定制
 
-编辑 `assets/boilerplate/theme.json`：
+`theme.json` 是唯一人工源头，**只含 `colors/spacing/font/radius`**（语义色由色阶自动派生，不再手写）：
 
 ```json
 {
-  "colors": { "primary": "#10b981" },
+  "colors": {
+    "primary": "#10b981",
+    "success": "#4caf50",
+    "warning": "#ff9800",
+    "error": "#f44336",
+    "info": "#2196f3",
+    "grayBase": "#6b7280"
+  },
   "spacing": { "base": "4rpx" },
   "font": { "base": "12rpx" },
   "radius": { "base": "4rpx" }
 }
 ```
 
-然后运行：
+改色后固定两步：
 
 ```bash
-npm run theme:sync
+npm run theme:sync   # 重生成 _theme-config.scss、colors.ts、.theme-scale.json
+npm run theme:check  # 硬卡：业务代码不得出现色阶之外的颜色
 ```
 
-脚本会自动重写 `src/styles/config/_theme-config.scss` 与 `src/constants/colors.ts`。
+### 色阶
+
+`primary` 与 `grayBase` 各自动生成 50~900 十档色阶（JS 与 SCSS 同一套 mix 公式），语义色全部由色阶派生：
+
+| 语义 | 来源 | 用途 |
+|------|------|------|
+| `COLOR_PRIMARY` / `$color-primary` | `PRIMARY_500` | 主按钮、强调 |
+| `COLOR_PRIMARY_LIGHT` / `$color-primary-light` | `PRIMARY_100` | 浅底、secondary 按钮 |
+| `COLOR_PRIMARY_DARK` / `$color-primary-dark` | `PRIMARY_700` | 按下态 |
+| `COLOR_TEXT_SECONDARY` / `$color-text-secondary` | `GRAY_500` | 次要文字 |
+| `COLOR_BORDER` / `$color-border` | `GRAY_200` | 边框 |
+
+业务代码**只用** `$primary-*/$gray-*/$color-*`（SCSS）或 `PRIMARY_*/GRAY_*/COLOR_*`（TS），禁止裸色值。
+
+### 色阶校验（硬卡）
+
+`npm run theme:check` 扫描 `src/pages/`、`src/components/` 等业务代码（豁免 `src/styles/` 与生成的 `colors.ts`），凡不在白名单内的 `#hex`、`rgb()/rgba()/hsl()/hsla()` 一律失败：
+
+```text
+[check-colors] 发现 1 处色阶外颜色：
+  src/pages/index/index.vue:75: #123456
+```
+
+中性色（`#fff/#000/transparent/currentColor`）与全透明 `rgba(*,0)` 自动豁免；确需引入品牌中性色，写入 `scripts/color-allowlist.json` 的 `allowed` 数组（受审阅兜底，勿滥用）。
 
 ---
 
@@ -276,3 +373,4 @@ npm run theme:sync
 ## 维护记录
 
 - 2026-07-05：完成收尾优化 — Lint 全绿、主题自动同步、一键 verify、示例页面补齐。
+- 2026-07-10：升级三点 — ① 主题色改为色阶动态生成（JS/SCSS 同源），新增 `theme:check` 硬卡禁止色阶外颜色；② 新增 `AppTab`/`AppPopup` 共享组件与复用红线（`references/component-standards.md`），tab/button/popup 等组件样式强制统一；③ `AppNavbar` 改为胶囊独占一行、仅返回图标同排、标题/内容在下方且不覆盖胶囊。**行为变更**：旧项目若已用 `AppNavbar`，标题会从胶囊行移到下方一行。

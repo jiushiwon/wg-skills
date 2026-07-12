@@ -14,6 +14,21 @@ $comp-button-radius: $radius-md;
 // 导航 / TabBar
 $comp-tab-bar-height: 100rpx;
 $comp-navbar-height: 88rpx;
+// 自定义导航栏：胶囊带独占一行，标题在其下方独立一行
+$comp-navbar-title-height: 88rpx;
+
+// 分段 / 顶部 Tab（共享组件 AppTab 使用）
+$comp-tab-height: 88rpx;
+$comp-tab-item-padding-x: $spacing-md;
+$comp-tab-indicator-width: 40rpx;
+$comp-tab-indicator-height: 4rpx;
+
+// 弹窗（共享组件 AppPopup 使用）
+$comp-popup-radius: $radius-xl;
+$comp-popup-padding: $spacing-lg;
+$comp-popup-width-center: 600rpx;
+$comp-popup-sheet-max-height: 80vh;
+$comp-popup-mask-bg: rgba-with-alpha($gray-900, 0.5);
 
 // 头像
 $comp-avatar-size-sm: 80rpx;

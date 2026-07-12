@@ -11,6 +11,43 @@
 - **内容区**：距离顶部导航栏底部 `0`，底部距离 TabBar 顶部 `0`，左右内边距 `$comp-page-padding`（默认 16rpx）。
 - **我的页面**：必须包含用户头像、昵称、设置入口，以及若干功能列表项。
 
+## 自定义导航栏与胶囊按钮（硬性约束）
+
+仅当页面 `pages.json` 使用 `"navigationStyle": "custom"` 时适用；**使用默认导航栏的页面无需处理**（系统自带标题栏，不存在胶囊遮挡问题）。自定义导航栏必须使用共享组件 `AppNavbar`，并遵守：
+
+1. **胶囊独占一行**：微信小程序右上角胶囊按钮所在区域为独立一行，除左侧**返回图标**可与胶囊同排对齐外，标题、菜单、操作按钮等任何元素**不得**进入该胶囊带。
+2. **标题在胶囊带下方**：标题位于胶囊带下方独立一行（高度 `$comp-navbar-title-height`，默认 88rpx），从根本上杜绝与胶囊左右并排导致的覆盖。
+3. **内容不覆盖胶囊**：页面主体内容通过 `padding-top: var(--navbar-height)` 整体下移，导航栏总高 = 状态栏 + 胶囊带 + 标题行，确保内容永不侵入胶囊带。
+4. **返回图标对齐**：返回图标在胶囊带内垂直居中，与系统胶囊左右对称。
+
+正确用法：
+
+```vue
+<template>
+  <view class="page">
+    <AppNavbar title="页面标题" />
+    <view class="page__content">
+      <!-- 主体内容：已被 --navbar-height 下移，不会覆盖胶囊 -->
+    </view>
+  </view>
+</template>
+
+<style lang="scss" scoped>
+.page {
+  padding-top: var(--navbar-height, 0px);
+}
+</style>
+```
+
+错误做法（标题与胶囊并排、靠右 padding 躲胶囊，仍可能被长标题顶进胶囊区）：
+
+```vue
+<!-- 错误：标题居中 + 右侧安全间距，与胶囊同一行 -->
+<view class="custom-nav" style="height: 88rpx;">
+  <text class="title" style="padding-right: 200rpx;">很长很长的标题</text>
+</view>
+```
+
 ## 风格一：清新健康风（默认推荐）
 
 **适用场景**：健康、运动、生活方式类小程序。

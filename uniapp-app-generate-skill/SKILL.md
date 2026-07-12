@@ -278,22 +278,30 @@ Before generating theme files, ask the user for the following values. Use defaul
 
 Required files:
 
-- `src/styles/config/_theme-config.scss` — single manual config entry
-- `src/styles/tokens/_primitive.scss` — generated primitive tokens
+- `theme.json` — single human-edited source (`colors/spacing/font/radius` only; no semantic block)
+- `src/styles/config/_theme-config.scss` — generated base `$theme-*` vars (do not edit by hand)
+- `src/styles/tokens/_primitive.scss` — primitive tokens (palette 50~900 computed by SCSS)
 - `src/styles/tokens/_semantic.scss` — semantic tokens
-- `src/styles/_functions.scss` — SCSS utilities
-- `src/styles/_mixins.scss` — common mixins
+- `src/styles/tokens/_components.scss` — component-level size tokens
+- `src/styles/_functions.scss` / `_mixins.scss` — SCSS utilities
 - `src/styles/variables.scss` — auto-injected entry
-- `src/constants/colors.ts` — JS-side color constants synced with SCSS
+- `src/constants/colors.ts` — generated JS constants: full `PRIMARY_50..900` / `GRAY_50..900` plus semantic colors derived from the scale
+- `scripts/sync-theme.js` — generates the files above and `scripts/.theme-scale.json` (allowlist)
+- `scripts/check-colors.js` — hard gate that fails on any off-scale color
 
 Principles:
 
-- One primary color generates a full palette (50~900).
-- One spacing base generates a spacing scale.
-- One font base generates a font scale.
-- Business code uses only semantic tokens.
+- One primary color generates a full palette (50~900); JS and SCSS share one mix formula.
+- Semantic colors are derived from the scale — never hand-picked (no drifting `#d1fae5`/`#111827`).
+- Business code uses only `$primary-*/$gray-*/$color-*` (SCSS) or `PRIMARY_*/GRAY_*/COLOR_*` (TS).
+- **Off-scale colors are forbidden and enforced.**
 
-After the user changes `_theme-config.scss`, regenerate `tokens/_primitive.scss` and update `src/constants/colors.ts` accordingly.
+After the user changes `theme.json`, always run:
+
+```bash
+npm run theme:sync   # regenerate config + colors.ts + allowlist
+npm run theme:check  # must pass: no off-scale colors in business code
+```
 
 ### 3.2 Design Pages (Optional but Recommended)
 
@@ -378,9 +386,14 @@ Use the theme tokens and generated assets. Follow the rules in CLAUDE.md / AGENT
 Common components to create:
 
 - `AppButton` — primary/secondary/ghost variants
+- `AppTab` — segmented/top tab, `v-model` + `items`
+- `AppPopup` — bottom/center popup with mask
 - `AppCard` — content card with shadow and radius
 - `AppEmpty` — empty state with real image and text
+- `AppInput` — input with border/focus tokens
 - `AppAvatar` — user avatar with placeholder
+
+**Reuse rule (strict):** pages must import these shared components and must not hand-roll `<button>`, tab bars, or popups. Identical UI across pages A/B/C must come from the same component so theme color, size, and radius stay consistent. See `references/component-standards.md` for the canonical component table and grep checks.
 
 ### 3.7 Implement State Management
 
@@ -483,7 +496,8 @@ This skill includes the following reference documents and bundled assets. Load t
 
 - `assets/boilerplate/` — minimal runnable uni-app project template with theme system, stores, request util, and sample pages
 - `references/project-structure.md` — standard directory structure and naming conventions
-- `references/theme-system.md` — dynamic theme system specification and configuration prompts
+- `references/theme-system.md` — dynamic theme system specification, scale generation, and the off-scale color gate
+- `references/component-standards.md` — canonical shared components and the strict reuse rule
 - `references/cross-platform-compatibility.md` — rules for WeChat / H5 / App compatibility
 - `references/design-skills-guide.md` — when and how to use ponytail, ui-ux-pro-max, frontend-design
 - `references/pexels-integration.md` — Pexels API setup, .env template, and fetch utility
@@ -510,5 +524,9 @@ This skill includes the following reference documents and bundled assets. Load t
 - Invoke `frontend-design` or `ui-ux-pro-max` before key pages when available.
 - Invoke `ponytail` during implementation when available, or apply its principles manually.
 - Ask the user for theme configuration (colors, spacing, font, radius) and regenerate tokens accordingly.
+- After editing `theme.json`, always run `npm run theme:sync` then `npm run theme:check`; never hand-edit `colors.ts` or `.theme-scale.json`.
+- Never use off-scale colors: business code may only use `$primary-*/$gray-*/$color-*` or `PRIMARY_*/GRAY_*/COLOR_*`; no raw `#hex`/`rgb()`/`hsl()`.
+- Reuse shared components strictly: pages import `AppButton/AppTab/AppPopup/AppCard/AppEmpty/AppInput/AppNavbar` and never hand-roll the same UI; see `references/component-standards.md`.
+- For custom navigation bars (`"navigationStyle": "custom"`), the capsule button must occupy its own row — only the back icon may share that row; title and content sit below it, and page content must never overlap the capsule. Default (non-custom) navigation bars need no handling.
 - Use the `references/mini-program-checklist.md` before claiming the project is done.
 - After every code generation pass, run `npm run lint`.

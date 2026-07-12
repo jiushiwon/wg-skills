@@ -7,18 +7,6 @@
     "info": "#2196f3",
     "grayBase": "#6b7280"
   },
-  "semantic": {
-    "primaryLight": "#d1fae5",
-    "primaryDark": "#047857",
-    "textPrimary": "#111827",
-    "textSecondary": "#6b7280",
-    "textTertiary": "#9ca3af",
-    "bgPrimary": "#ffffff",
-    "bgSecondary": "#f9fafb",
-    "bgTertiary": "#f3f4f6",
-    "border": "#e5e7eb",
-    "borderLight": "#f3f4f6"
-  },
   "spacing": {
     "base": "4rpx"
   },

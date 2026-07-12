@@ -169,14 +169,14 @@ console.log('App');
 
 ## 微信小程序自定义导航栏
 
-当页面使用 `"navigationStyle": "custom"` 时，必须自己实现导航栏，并确保**标题与右上角胶囊按钮处于同一行**，且不被遮挡。
+当页面使用 `"navigationStyle": "custom"` 时，必须自己实现导航栏，并确保**胶囊按钮独占一行、内容不被胶囊覆盖**。使用默认导航栏（非 custom）的页面无需处理。
 
 ### 错误做法
 
-直接写一个固定高度的标题栏，不获取胶囊按钮位置：
+直接写一个固定高度的标题栏，或把标题与胶囊放在同一行、靠右侧 padding 躲胶囊（长标题仍可能顶进胶囊区）：
 
 ```vue
-<!-- 错误：高度写死，标题可能与胶囊按钮错位或被遮挡 -->
+<!-- 错误：高度写死，标题与胶囊同一行，可能被遮挡 -->
 <view class="custom-nav" style="height: 88rpx;">
   <text class="title">标题</text>
 </view>
@@ -184,7 +184,7 @@ console.log('App');
 
 ### 正确做法
 
-使用项目内置的 `AppNavbar` 组件，它会根据胶囊按钮位置自动计算高度和边距：
+使用项目内置的 `AppNavbar` 组件，它会根据胶囊按钮位置自动计算高度，并让标题落在胶囊带下方独立一行：
 
 ```vue
 <script setup lang="ts">
@@ -199,6 +199,12 @@ import { AppNavbar } from '@/components/AppNavbar';
     </view>
   </view>
 </template>
+
+<style lang="scss" scoped>
+.page {
+  padding-top: var(--navbar-height, 0px);
+}
+</style>
 ```
 
 对应的 `pages.json`：
@@ -214,10 +220,10 @@ import { AppNavbar } from '@/components/AppNavbar';
 
 ### 组件实现要点
 
-1. 通过 `uni.getMenuButtonBoundingClientRect()` 获取胶囊按钮位置；
-2. 通过 `uni.getSystemInfoSync()` 获取状态栏高度；
-3. 导航栏总高度 = 状态栏高度 + 胶囊按钮占用区域高度；
-4. 标题区右侧保留 `screenWidth - menuButton.right + menuButton.width` 的安全间距，避免与胶囊按钮重叠。
+1. 通过 `uni.getMenuButtonBoundingClientRect()` 获取胶囊按钮位置，通过 `uni.getSystemInfoSync()` 获取状态栏高度；
+2. **胶囊带独占一行**：该带内仅放左侧返回图标，右侧留给系统胶囊，标题/菜单/操作一律不得进入；
+3. 标题放在胶囊带**下方**独立一行（高度 `$comp-navbar-title-height`）；
+4. 导航栏总高 = 状态栏 + 胶囊带 + 标题行，页面用 `padding-top: var(--navbar-height)` 下移内容，确保不覆盖胶囊。
 
 ### 源码位置
 

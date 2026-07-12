@@ -24,6 +24,8 @@ function exists(p) {
 let failed = false;
 
 try {
+  run('npm run theme:sync');
+  run('npm run theme:check');
   run('npm run lint');
   run('npm run build:h5');
 

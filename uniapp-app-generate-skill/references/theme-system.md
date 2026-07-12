@@ -25,14 +25,15 @@
 | 字体基数 | `12rpx` | 派生 12/14/16/18/24/30rpx |
 | 圆角基数 | `4rpx` | 派生 4/8/12/16rpx |
 
-收集回答后写入 `theme.json`（项目根目录唯一人工源头），然后运行 `npm run theme:sync`，由 `scripts/sync-theme.js` 自动生成：
+收集回答后写入 `theme.json`（项目根目录唯一人工源头，仅含 `colors/spacing/font/radius`），然后运行 `npm run theme:sync`，由 `scripts/sync-theme.js` 自动生成：
 
-1. `src/styles/config/_theme-config.scss`；
-2. `src/constants/colors.ts`。
+1. `src/styles/config/_theme-config.scss`（基础 `$theme-*` 变量）；
+2. `src/constants/colors.ts`（**完整**主色阶/灰阶 50~900 + 由色阶派生的语义色）；
+3. `scripts/.theme-scale.json`（色阶白名单，供 `theme:check` 校验）。
 
 `_primitive.scss` 与 `_semantic.scss` 中的原始变量通过引用 `$theme-*` 配置间接生效，无需单独重新生成。
 
-`npm run dev:*` / `npm run build:*` 前会自动执行同步。
+`npm run dev:*` / `npm run build:*` 前会自动执行同步；改色后务必再跑 `npm run theme:check`，确认无色阶外颜色。
 
 ## SCSS 配置入口
 
@@ -233,16 +234,53 @@ $shadow-3: 0 8rpx 24rpx rgba-with-alpha($gray-900, 0.12);
 
 ## JS 侧同步
 
-`src/constants/colors.ts` 中定义与 SCSS 同值的常量：
+`src/constants/colors.ts` 由 `scripts/sync-theme.js` 直接生成，包含**完整色阶**与**由色阶派生的语义色**，与 SCSS 端 `primary-palette()/gray-palette()` 使用同一套 mix 公式，禁止手动修改：
 
 ```typescript
-export const COLOR_PRIMARY = '#10b981';
-export const COLOR_TEXT_PRIMARY = '#111827';
-export const COLOR_TEXT_SECONDARY = '#6b7280';
+// 主色阶 / 灰阶（50 ~ 900 全量）
+export const PRIMARY_500 = '#10b981';
+export const GRAY_500 = '#6b7280';
+export const PRIMARY = { 50: PRIMARY_50, /* ... */ 900: PRIMARY_900 };
+export const GRAY = { 50: GRAY_50, /* ... */ 900: GRAY_900 };
+
+// 语义色全部由色阶派生（不再手写 #d1fae5、#111827 等死值）
+export const COLOR_PRIMARY = PRIMARY_500;
+export const COLOR_PRIMARY_LIGHT = PRIMARY_100;
+export const COLOR_PRIMARY_DARK = PRIMARY_700;
+export const COLOR_TEXT_PRIMARY = GRAY_900;
+export const COLOR_TEXT_SECONDARY = GRAY_500;
+export const COLOR_BORDER = GRAY_200;
 // ...
 ```
 
-当修改 `_theme-config.scss` 的主色时，必须同步修改 `colors.ts` 顶部常量。未来可接入构建脚本自动生成。
+同步脚本还会写出 `scripts/.theme-scale.json`，作为色阶白名单供校验使用（自动生成，禁止手改）。
+
+## 色阶生成与校验（硬卡）
+
+> 核心红线：**只允许使用色阶内的颜色**。改色只需改 `theme.json`，其余全量重生成。
+
+### 流程
+
+```bash
+# 1) 改 theme.json 的 colors.primary（或 success/warning/error/info/grayBase）
+# 2) 同步：重生成 _theme-config.scss、colors.ts、.theme-scale.json
+npm run theme:sync
+# 3) 校验：扫描业务代码，凡色阶外颜色一律失败
+npm run theme:check
+```
+
+`npm run verify` 已在 lint 之前自动执行 `theme:check`，作为交付前的硬门；`predev` 不接校验，避免打断实时开发。
+
+### 白名单
+
+- 合法色 = 主色阶 50~900 + 灰阶 50~900 + 功能色（success/warning/error/info），由 `scripts/.theme-scale.json` 给出。
+- 中性豁免：`#ffffff`、`#000000`、`transparent`、`currentColor`。
+- 业务代码中禁止出现 `rgb()/rgba()/hsl()/hsla()` 字面量（`rgba(*,0)` 全透明除外），颜色必须走 token。
+- 例外：确需引入品牌中性色，写入 `scripts/color-allowlist.json` 的 `allowed` 数组（受审阅的兜底口，勿滥用）。
+
+### 扫描范围
+
+`src/**/*.{vue,scss,ts}`，但**豁免** `src/styles/`（token 定义自身）与 `src/constants/colors.ts`（生成的色阶常量）。
 
 ## 使用示例
 
@@ -327,6 +365,7 @@ export const COLOR_TEXT_SECONDARY = '#6b7280';
 
 ## 禁止事项
 
-- 禁止在 `.vue` / `.scss` 中直接写 `#10b981`、`rgb(16, 185, 129)`、具体 `24rpx`。
-- 禁止新增 Token 时不经过 `_theme-config.scss` 或 `tokens/`。
+- **禁止使用色阶之外的颜色**：业务代码（`src/pages/`、`src/components/` 等）只允许出现 `$primary-*/$gray-*/$color-*`（SCSS）或 `PRIMARY_*/GRAY_*/COLOR_*`（TS）；不得手写 `#hex`、`rgb()/rgba()/hsl()/hsla()`（`rgba(*,0)` 全透明除外）。`npm run theme:check` 与 `npm run verify` 会硬卡违规。
+- 禁止新增 Token 时不经过 `theme.json` → `npm run theme:sync` 或 `tokens/`。
 - 禁止业务代码使用 `_primitive.scss` 中的基础变量，必须通过语义 Token。
+- 禁止直接改 `src/constants/colors.ts`、`scripts/.theme-scale.json`：二者均由 `theme:sync` 生成。

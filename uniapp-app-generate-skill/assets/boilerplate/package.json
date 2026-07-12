@@ -4,6 +4,7 @@
   "description": "{{PROJECT_DESC}}",
   "scripts": {
     "theme:sync": "node scripts/sync-theme.js",
+    "theme:check": "node scripts/check-colors.js",
     "predev:mp-weixin": "npm run theme:sync",
     "dev:mp-weixin": "uni --platform mp-weixin",
     "prebuild:mp-weixin": "npm run theme:sync",
