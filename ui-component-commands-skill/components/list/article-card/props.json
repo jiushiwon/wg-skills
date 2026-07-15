@@ -1,0 +1,18 @@
+{
+  "name": "article-card",
+  "title": "文章卡片",
+  "category": "list",
+  "description": "文章卡片，支持封面图、标题、描述、作者、日期、浏览量",
+  "aliases": ["文章", "文章块", "article", "news-card"],
+  "props": [
+    { "name": "mode", "type": "string", "default": "thumb", "desc": "模式: thumb/cover" },
+    { "name": "image", "type": "string", "default": "", "desc": "封面图" },
+    { "name": "title", "type": "string", "default": "", "desc": "标题" },
+    { "name": "desc", "type": "string", "default": "", "desc": "描述" },
+    { "name": "author", "type": "string", "default": "", "desc": "作者" },
+    { "name": "date", "type": "string", "default": "", "desc": "日期" },
+    { "name": "views", "type": "string|number", "default": "", "desc": "浏览量" }
+  ],
+  "events": ["click"],
+  "slots": []
+}

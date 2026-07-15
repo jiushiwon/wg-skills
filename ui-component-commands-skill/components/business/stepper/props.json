@@ -1,0 +1,16 @@
+{
+  "name": "stepper",
+  "title": "步进器",
+  "category": "business",
+  "description": "数量加减器",
+  "aliases": ["计数器", "数量加减", "stepper", "counter"],
+  "props": [
+    { "name": "modelValue", "type": "number", "default": 0, "desc": "绑定值" },
+    { "name": "min", "type": "number", "default": 0, "desc": "最小值" },
+    { "name": "max", "type": "number", "default": 999, "desc": "最大值" },
+    { "name": "step", "type": "number", "default": 1, "desc": "步长" },
+    { "name": "editable", "type": "boolean", "default": true, "desc": "可编辑" }
+  ],
+  "events": ["update:modelValue", "change"],
+  "slots": []
+}

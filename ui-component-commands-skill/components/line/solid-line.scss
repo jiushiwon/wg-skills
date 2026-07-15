@@ -1,0 +1,36 @@
+// 线条类组件
+
+// 实线
+.solid-line {
+  width: 100%;
+  height: 1px;
+  background: #eee;
+}
+
+// 虚线
+.dashed-line {
+  width: 100%;
+  height: 0;
+  border-top: 1px dashed #eee;
+}
+
+// 渐变线
+.gradient-line {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, #007AFF, #00C853);
+}
+
+// 带间距的线
+.space-line {
+  width: 100%;
+  height: 16px;
+  background: var(--bg-secondary, #f2f2f7);
+}
+
+// 竖线
+.v-solid-line {
+  width: 1px;
+  height: 100%;
+  background: #eee;
+}

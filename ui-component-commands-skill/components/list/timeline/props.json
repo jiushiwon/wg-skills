@@ -1,0 +1,12 @@
+{
+  "name": "timeline",
+  "title": "时间线",
+  "category": "list",
+  "description": "时间线，展示时间节点和事件",
+  "aliases": ["时间轴", "process", "进度"],
+  "props": [
+    { "name": "items", "type": "array", "default": [], "desc": "时间线项 [{time, title, desc, active}]" }
+  ],
+  "events": [],
+  "slots": ["default"]
+}

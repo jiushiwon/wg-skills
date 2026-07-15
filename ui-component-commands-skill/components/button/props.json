@@ -1,0 +1,19 @@
+{
+  "name": "btn",
+  "title": "按钮",
+  "category": "button",
+  "description": "按钮 CSS 类",
+  "aliases": ["按钮", "button", "btn"],
+  "props": [],
+  "events": [],
+  "slots": [],
+  "classes": {
+    "btn-primary": "主按钮 - 主要操作",
+    "btn-secondary": "次按钮 - 次要操作",
+    "btn-ghost": "幽灵按钮 - 边框样式",
+    "btn-icon": "图标按钮 - 纯图标按钮",
+    "btn--small": "小号按钮",
+    "btn--large": "大号按钮",
+    "btn--block": "块级按钮 - 宽度100%"
+  }
+}

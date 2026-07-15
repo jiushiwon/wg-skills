@@ -1,0 +1,449 @@
+/**
+ * UI Component Commands - Components Styles
+ * 组件样式定义 - 基于 ui-variables.scss 的变量
+ *
+ * 使用方式：在全局样式中引入
+ * @import '@/styles/ui-components.scss';
+ */
+
+/* ==================== 按钮类 ==================== */
+
+/* 主按钮 */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--btn-height-md);
+  padding: 0 var(--btn-padding-md);
+  background: var(--primary);
+  color: var(--text-inverse);
+  font-size: var(--btn-font-md);
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+
+  &:active {
+    background: var(--primary-dark);
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    background: var(--text-disabled);
+    cursor: not-allowed;
+  }
+
+  &--small {
+    height: var(--btn-height-sm);
+    font-size: var(--btn-font-sm);
+    padding: 0 var(--btn-padding-sm);
+  }
+
+  &--large {
+    height: var(--btn-height-lg);
+    font-size: var(--btn-font-lg);
+    padding: 0 var(--btn-padding-lg);
+  }
+
+  &--block {
+    width: 100%;
+  }
+}
+
+/* 次按钮 */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--btn-height-md);
+  padding: 0 var(--btn-padding-md);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: var(--btn-font-md);
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+
+  &:active {
+    background: var(--bg-tertiary);
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    color: var(--text-disabled);
+    cursor: not-allowed;
+  }
+
+  &--small {
+    height: var(--btn-height-sm);
+    font-size: var(--btn-font-sm);
+  }
+
+  &--large {
+    height: var(--btn-height-lg);
+    font-size: var(--btn-font-lg);
+  }
+
+  &--block {
+    width: 100%;
+  }
+}
+
+/* 幽灵按钮 */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--btn-height-md);
+  padding: 0 var(--btn-padding-md);
+  background: transparent;
+  color: var(--primary);
+  font-size: var(--btn-font-md);
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--primary);
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+
+  &:active {
+    background: var(--primary-alpha);
+    transform: scale(0.98);
+  }
+
+  &--small {
+    height: var(--btn-height-sm);
+    font-size: var(--btn-font-sm);
+  }
+
+  &--large {
+    height: var(--btn-height-lg);
+    font-size: var(--btn-font-lg);
+  }
+}
+
+/* 图标按钮 */
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--btn-height-md);
+  height: var(--btn-height-md);
+  background: transparent;
+  color: var(--text-primary);
+  font-size: var(--btn-font-lg);
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+
+  &:active {
+    background: var(--bg-secondary);
+  }
+
+  &--small {
+    width: var(--btn-height-sm);
+    height: var(--btn-height-sm);
+    font-size: var(--btn-font-md);
+  }
+
+  &--large {
+    width: var(--btn-height-lg);
+    height: var(--btn-height-lg);
+    font-size: var(--btn-font-xl);
+  }
+}
+
+/* ==================== 线条类 ==================== */
+
+/* 实线 */
+.solid-line {
+  width: 100%;
+  height: 1px;
+  background: var(--line-color);
+}
+
+/* 虚线 */
+.dashed-line {
+  width: 100%;
+  height: 0;
+  border-top: 1px dashed var(--line-color);
+}
+
+/* 渐变线 */
+.gradient-line {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 50%, var(--primary) 100%);
+}
+
+/* 带间距的线 */
+.space-line {
+  width: 100%;
+  height: 1px;
+  background: var(--line-color);
+  margin: var(--space-md) 0;
+}
+
+.space-line--small {
+  margin: var(--space-sm) 0;
+}
+
+.space-line--large {
+  margin: var(--space-lg) 0;
+}
+
+/* 垂直实线 */
+.v-solid-line {
+  width: 1px;
+  height: 100%;
+  background: var(--line-color);
+}
+
+/* ==================== 图形类 ==================== */
+
+/* 半圆 - 默认朝上 */
+.semi-circle {
+  width: 100px;
+  height: 50px;
+  border-radius: 50px 50px 0 0;
+  background: var(--primary);
+
+  &--down {
+    border-radius: 0 0 50px 50px;
+  }
+
+  &--left {
+    width: 50px;
+    height: 100px;
+    border-radius: 50px 0 0 50px;
+  }
+
+  &--right {
+    width: 50px;
+    height: 100px;
+    border-radius: 0 50px 50px 0;
+  }
+}
+
+/* 圆形 */
+.circle {
+  border-radius: var(--radius-full);
+  background: var(--primary);
+
+  &--small {
+    width: 24px;
+    height: 24px;
+  }
+
+  &--medium {
+    width: 40px;
+    height: 40px;
+  }
+
+  &--large {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+/* 圆点 */
+.dot {
+  border-radius: var(--radius-full);
+  background: var(--text-secondary);
+
+  &--small {
+    width: 4px;
+    height: 4px;
+  }
+
+  &--medium {
+    width: 8px;
+    height: 8px;
+  }
+
+  &--large {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+/* ==================== 组合类 ==================== */
+
+/* 图标+文字标签 */
+.icon-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-size: var(--btn-font-sm);
+  border-radius: var(--radius-sm);
+
+  .iconfont {
+    font-size: var(--btn-font-sm);
+  }
+
+  &--primary {
+    background: var(--primary-alpha);
+    color: var(--primary);
+  }
+
+  &--success {
+    background: rgba(52, 199, 89, 0.1);
+    color: var(--success);
+  }
+
+  &--warning {
+    background: rgba(255, 149, 0, 0.1);
+    color: var(--warning);
+  }
+
+  &--error {
+    background: rgba(255, 59, 48, 0.1);
+    color: var(--error);
+  }
+}
+
+/* 徽章/角标 */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  background: var(--error);
+  color: var(--text-inverse);
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+
+  &--small {
+    min-width: 14px;
+    height: 14px;
+    padding: 0 3px;
+    font-size: 8px;
+  }
+
+  &--large {
+    min-width: 22px;
+    height: 22px;
+    padding: 0 7px;
+    font-size: 12px;
+  }
+}
+
+/* ==================== 卡片类 ==================== */
+
+/* 基础卡片 */
+.card-basic {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+/* 高海拔卡片 */
+.card-elevated {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+/* 玻璃拟态卡片 */
+.card-glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+}
+
+@media (prefers-color-scheme: dark) {
+  .card-glass {
+    background: rgba(30, 30, 30, 0.7);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* 卡片内容区 */
+.card-body {
+  padding: var(--space-md);
+}
+
+.card-body--small {
+  padding: var(--space-sm);
+}
+
+.card-body--large {
+  padding: var(--space-lg);
+}
+
+/* 卡片头部 */
+.card-header {
+  padding: var(--space-md);
+  border-bottom: 1px solid var(--line-color);
+}
+
+.card-header--small {
+  padding: var(--space-sm);
+}
+
+.card-header--large {
+  padding: var(--space-lg);
+}
+
+/* 卡片底部 */
+.card-footer {
+  padding: var(--space-md);
+  border-top: 1px solid var(--line-color);
+}
+
+/* ==================== 实用工具类 ==================== */
+
+/* 文字省略 */
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 多行省略 */
+.text-ellipsis-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 弹性居中 */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 弹性两端 */
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 禁用选择 */
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* 点击穿透 */
+.touch-none {
+  pointer-events: none;
+}

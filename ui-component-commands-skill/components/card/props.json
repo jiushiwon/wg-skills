@@ -1,0 +1,15 @@
+{
+  "name": "card",
+  "title": "卡片",
+  "category": "card",
+  "description": "卡片 CSS 类",
+  "aliases": ["卡片", "card", "panel"],
+  "props": [],
+  "events": [],
+  "slots": [],
+  "classes": {
+    "card-basic": "基础卡片 - 轻微阴影",
+    "card-elevated": "高海拔卡片 - 明显阴影",
+    "card-glass": "玻璃拟态卡片 - 半透明模糊效果"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "coupon",
+  "title": "优惠券",
+  "category": "business",
+  "description": "优惠券组件",
+  "aliases": ["券", "优惠卡", "coupon", "ticket"],
+  "props": [
+    { "name": "type", "type": "string", "default": "money", "desc": "类型: money/discount" },
+    { "name": "value", "type": "string|number", "default": 0, "desc": "优惠值" },
+    { "name": "condition", "type": "string", "default": "", "desc": "使用条件" },
+    { "name": "title", "type": "string", "default": "", "desc": "标题" },
+    { "name": "desc", "type": "string", "default": "", "desc": "描述" },
+    { "name": "date", "type": "string", "default": "", "desc": "有效期" },
+    { "name": "disabled", "type": "boolean", "default": false, "desc": "禁用" },
+    { "name": "showReceive", "type": "boolean", "default": false, "desc": "显示领取" },
+    { "name": "received", "type": "boolean", "default": false, "desc": "已领取" }
+  ],
+  "events": ["click"],
+  "slots": []
+}

@@ -1,0 +1,16 @@
+{
+  "name": "switch",
+  "title": "开关",
+  "category": "form",
+  "description": "开关选择器",
+  "aliases": ["切换开关", "toggle", "switch"],
+  "props": [
+    { "name": "modelValue", "type": "boolean", "default": false, "desc": "绑定值" },
+    { "name": "label", "type": "string", "default": "", "desc": "标签" },
+    { "name": "activeColor", "type": "string", "default": "#007AFF", "desc": "选中颜色" },
+    { "name": "inactiveColor", "type": "string", "default": "#e0e0e0", "desc": "未选中颜色" },
+    { "name": "disabled", "type": "boolean", "default": false, "desc": "禁用" }
+  ],
+  "events": ["update:modelValue", "change"],
+  "slots": []
+}

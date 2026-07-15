@@ -1,0 +1,16 @@
+{
+  "name": "count-down",
+  "title": "倒计时",
+  "category": "business",
+  "description": "倒计时组件",
+  "aliases": ["计时", "countdown", "timer"],
+  "props": [
+    { "name": "timestamp", "type": "number", "default": 0, "desc": "结束时间戳(ms)" },
+    { "name": "showDay", "type": "boolean", "default": false, "desc": "显示天数" },
+    { "name": "showUnit", "type": "boolean", "default": true, "desc": "显示单位" },
+    { "name": "endText", "type": "string", "default": "已结束", "desc": "结束文本" },
+    { "name": "autostart", "type": "boolean", "default": true, "desc": "自动开始" }
+  ],
+  "events": ["end"],
+  "slots": ["end"]
+}

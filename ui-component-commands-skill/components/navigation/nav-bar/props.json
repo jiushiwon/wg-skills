@@ -1,0 +1,17 @@
+{
+  "name": "nav-bar",
+  "title": "自定义导航栏",
+  "category": "navigation",
+  "description": "自定义顶部导航栏，支持返回按钮、标题、右侧操作、胶囊按钮",
+  "aliases": ["导航栏", "header", "头部", "顶部菜单", "顶部导航"],
+  "props": [
+    { "name": "title", "type": "string", "default": "", "desc": "标题文字" },
+    { "name": "showBack", "type": "boolean", "default": true, "desc": "显示返回按钮" },
+    { "name": "fixed", "type": "boolean", "default": false, "desc": "固定顶部" },
+    { "name": "background", "type": "string", "default": "#ffffff", "desc": "背景色" },
+    { "name": "titleColor", "type": "string", "default": "#1C1C1E", "desc": "标题颜色" },
+    { "name": "capsuleRight", "type": "array", "default": [], "desc": "右侧胶囊按钮 [{text, action}]" }
+  ],
+  "events": ["back", "rightClick", "capsuleClick"],
+  "slots": ["default", "left", "right"]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "picker",
+  "title": "选择器",
+  "category": "form",
+  "description": "下拉选择器",
+  "aliases": ["下拉选择", "select", "dropdown"],
+  "props": [
+    { "name": "modelValue", "type": "string|number", "default": "", "desc": "绑定值" },
+    { "name": "label", "type": "string", "default": "", "desc": "标签" },
+    { "name": "placeholder", "type": "string", "default": "请选择", "desc": "占位符" },
+    { "name": "range", "type": "array", "default": [], "desc": "选项数组" },
+    { "name": "rangeKey", "type": "string", "default": "name", "desc": "选项文本字段" },
+    { "name": "disabled", "type": "boolean", "default": false, "desc": "禁用" }
+  ],
+  "events": ["update:modelValue", "click"],
+  "slots": []
+}

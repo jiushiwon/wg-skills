@@ -1,0 +1,17 @@
+{
+  "name": "toast",
+  "title": "轻提示",
+  "category": "feedback",
+  "description": "轻提示，短暂显示后自动消失",
+  "aliases": ["提示", "轻反馈", "tips", "alert"],
+  "props": [
+    { "name": "show", "type": "boolean", "default": false, "desc": "显示状态" },
+    { "name": "message", "type": "string", "default": "", "desc": "提示内容" },
+    { "name": "type", "type": "string", "default": "text", "desc": "类型: text/success/error/warning/loading" },
+    { "name": "icon", "type": "string", "default": "", "desc": "自定义图标" },
+    { "name": "duration", "type": "number", "default": 2000, "desc": "显示时长(ms)" },
+    { "name": "position", "type": "string", "default": "center", "desc": "位置: top/center/bottom" }
+  ],
+  "events": ["close"],
+  "slots": []
+}

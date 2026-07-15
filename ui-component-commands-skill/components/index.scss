@@ -1,0 +1,21 @@
+/**
+ * UI Component Commands - 统一样式入口
+ *
+ * 使用方式：
+ * 1. Vue 组件：已在组件内部内联样式，无需额外引入
+ * 2. CSS 类：按需引入对应模块
+ * 3. CSS 变量：引入全局变量定义
+ *
+ * @import 'ui-component-commands-skill/components/index.scss';
+ */
+
+// ========== CSS 变量（全局主题） ==========
+// 如项目未定义 CSS 变量，可从 templates 引入
+// @import '../templates/ui-variables.scss';
+
+// ========== CSS 类组件样式 ==========
+@import './button/btn.scss';
+@import './line/solid-line.scss';
+@import './shape/shape.scss';
+@import './combo/combo.scss';
+@import './card/card.scss';

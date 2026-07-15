@@ -1,0 +1,46 @@
+// 组合类组件
+
+// 图标标签
+.icon-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  font-size: 12px;
+  background: var(--bg-secondary, #f2f2f7);
+  border-radius: 4px;
+
+  &__icon {
+    font-size: 14px;
+  }
+}
+
+// 徽章
+.badge {
+  position: relative;
+  display: inline-block;
+
+  &__inner {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    font-size: 10px;
+    line-height: 16px;
+    text-align: center;
+    color: #fff;
+    background: #ff4d4f;
+    border-radius: 8px;
+  }
+
+  // 红点
+  &--dot &__inner {
+    width: 8px;
+    height: 8px;
+    min-width: 8px;
+    padding: 0;
+    border-radius: 50%;
+  }
+}

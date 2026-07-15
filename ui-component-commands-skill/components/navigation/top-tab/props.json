@@ -1,0 +1,16 @@
+{
+  "name": "top-tab",
+  "title": "顶部Tab切换",
+  "category": "navigation",
+  "description": "顶部Tab横向滚动切换",
+  "aliases": ["顶部tab", "分类切换", "顶部切换", "category-tab"],
+  "props": [
+    { "name": "tabs", "type": "array", "default": [], "desc": "Tab配置 [{name, id}] 或 ['Tab1', 'Tab2']" },
+    { "name": "current", "type": "number", "default": 0, "desc": "当前选中" },
+    { "name": "scroll", "type": "boolean", "default": true, "desc": "超出滚动" },
+    { "name": "activeColor", "type": "string", "default": "#007AFF", "desc": "选中颜色" },
+    { "name": "inactiveColor", "type": "string", "default": "#6C6C70", "desc": "未选中颜色" }
+  ],
+  "events": ["change"],
+  "slots": []
+}

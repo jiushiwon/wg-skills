@@ -1,0 +1,13 @@
+{
+  "name": "breadcrumb",
+  "title": "面包屑",
+  "category": "navigation",
+  "description": "路径导航",
+  "aliases": ["路径导航", "breadcrumbs"],
+  "props": [
+    { "name": "items", "type": "array", "default": [], "desc": "路径项 [{name, path}]" },
+    { "name": "separator", "type": "string", "default": "/", "desc": "分隔符" }
+  ],
+  "events": ["click"],
+  "slots": []
+}

@@ -1,0 +1,19 @@
+{
+  "name": "modal",
+  "title": "模态框",
+  "category": "feedback",
+  "description": "模态对话框",
+  "aliases": ["弹窗", "对话框", "dialog", "popup"],
+  "props": [
+    { "name": "show", "type": "boolean", "default": false, "desc": "显示状态" },
+    { "name": "title", "type": "string", "default": "", "desc": "标题" },
+    { "name": "message", "type": "string", "default": "", "desc": "内容" },
+    { "name": "showCancel", "type": "boolean", "default": true, "desc": "显示取消按钮" },
+    { "name": "showConfirm", "type": "boolean", "default": true, "desc": "显示确定按钮" },
+    { "name": "cancelText", "type": "string", "default": "取消", "desc": "取消按钮文字" },
+    { "name": "confirmText", "type": "string", "default": "确定", "desc": "确定按钮文字" },
+    { "name": "closeOnMask", "type": "boolean", "default": true, "desc": "点击遮罩关闭" }
+  ],
+  "events": ["close", "cancel", "confirm"],
+  "slots": ["default"]
+}

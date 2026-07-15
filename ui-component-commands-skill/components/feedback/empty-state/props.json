@@ -1,0 +1,17 @@
+{
+  "name": "empty-state",
+  "title": "空状态",
+  "category": "feedback",
+  "description": "空数据状态展示",
+  "aliases": ["无数据", "空列表", "empty", "nodata"],
+  "props": [
+    { "name": "image", "type": "string", "default": "", "desc": "图片" },
+    { "name": "icon", "type": "string", "default": "📭", "desc": "图标" },
+    { "name": "title", "type": "string", "default": "", "desc": "标题" },
+    { "name": "desc", "type": "string", "default": "", "desc": "描述" },
+    { "name": "buttonText", "type": "string", "default": "", "desc": "按钮文字" },
+    { "name": "showButton", "type": "boolean", "default": false, "desc": "显示按钮" }
+  ],
+  "events": ["click"],
+  "slots": []
+}
