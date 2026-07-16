@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>我的会议 - 移动端样例</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#F3F4F6] text-[#111827] max-w-md mx-auto">
+  <!-- TopNav -->
+  <div class="bg-white px-4 py-3 flex items-center justify-between sticky top-0 z-10">
+    <span class="text-lg font-semibold">我的会议</span>
+    <div class="w-8 h-8 bg-[#EFF6FF] rounded-full flex items-center justify-center">
+      <div class="w-4 h-4 bg-[#2563EB] rounded"></div>
+    </div>
+  </div>
+
+  <!-- Search -->
+  <div class="px-4 py-3">
+    <div class="bg-white rounded-xl px-4 py-3 flex items-center">
+      <div class="w-5 h-5 bg-[#D1D5DB] rounded-full mr-3"></div>
+      <input type="text" placeholder="搜索会议名称" class="flex-1 bg-transparent outline-none text-sm">
+    </div>
+  </div>
+
+  <!-- Filter Tabs -->
+  <div class="px-4 mb-3 flex space-x-2">
+    <button class="px-4 py-1.5 bg-[#2563EB] text-white text-sm rounded-full">全部</button>
+    <button class="px-4 py-1.5 bg-white text-[#6B7280] text-sm rounded-full">进行中</button>
+    <button class="px-4 py-1.5 bg-white text-[#6B7280] text-sm rounded-full">已结束</button>
+  </div>
+
+  <!-- Card List -->
+  <div class="px-4 pb-24 space-y-3">
+    <div class="bg-white rounded-xl p-4">
+      <div class="flex items-start justify-between">
+        <div>
+          <h3 class="font-semibold">2024 医学学术年会</h3>
+          <p class="text-sm text-[#6B7280] mt-1">2024.03.15 09:00 · 北京国际会议中心</p>
+        </div>
+        <span class="px-2 py-1 bg-[#EFF6FF] text-[#2563EB] text-xs rounded">进行中</span>
+      </div>
+      <div class="flex items-center mt-4 pt-4 border-t border-[#F3F4F6]">
+        <div class="flex -space-x-2">
+          <div class="w-7 h-7 bg-[#D1D5DB] rounded-full border-2 border-white"></div>
+          <div class="w-7 h-7 bg-[#9CA3AF] rounded-full border-2 border-white"></div>
+          <div class="w-7 h-7 bg-[#6B7280] rounded-full border-2 border-white"></div>
+        </div>
+        <span class="text-sm text-[#6B7280] ml-3">128 人已报名</span>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl p-4">
+      <div class="flex items-start justify-between">
+        <div>
+          <h3 class="font-semibold">心血管介入新技术研讨会</h3>
+          <p class="text-sm text-[#6B7280] mt-1">2024.02.28 14:00 · 线上直播</p>
+        </div>
+        <span class="px-2 py-1 bg-[#F3F4F6] text-[#6B7280] text-xs rounded">已结束</span>
+      </div>
+      <div class="flex items-center mt-4 pt-4 border-t border-[#F3F4F6]">
+        <div class="flex -space-x-2">
+          <div class="w-7 h-7 bg-[#D1D5DB] rounded-full border-2 border-white"></div>
+          <div class="w-7 h-7 bg-[#9CA3AF] rounded-full border-2 border-white"></div>
+        </div>
+        <span class="text-sm text-[#6B7280] ml-3">86 人已报名</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TabBar -->
+  <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-[#E5E7EB] max-w-md mx-auto">
+    <div class="flex justify-around py-2">
+      <div class="flex flex-col items-center text-[#2563EB]">
+        <div class="w-6 h-6 bg-[#2563EB] rounded"></div>
+        <span class="text-xs mt-1">首页</span>
+      </div>
+      <div class="flex flex-col items-center text-[#6B7280]">
+        <div class="w-6 h-6 bg-[#D1D5DB] rounded"></div>
+        <span class="text-xs mt-1">会议</span>
+      </div>
+      <div class="flex flex-col items-center text-[#6B7280]">
+        <div class="w-6 h-6 bg-[#D1D5DB] rounded"></div>
+        <span class="text-xs mt-1">我的</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
