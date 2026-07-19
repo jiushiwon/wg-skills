@@ -51,7 +51,8 @@ description: Use when 用户需要按语义搜索并下载专业 SVG 图标。
 5. **挑选最优**：按优先级 `lucide → tabler → heroicons → ph → ri → feather → simple-icons → mdi` 挑选，同库时优先选名称与搜索词最匹配的图标。
 6. **下载 SVG**：`GET https://api.iconify.design/{prefix}/{name}.svg?color=%23{颜色}&width={尺寸}&height={尺寸}`
 7. **落地保存**：保存到项目图标目录（uniapp 默认 `static/icons/`，Web 项目 `src/assets/icons/` 或用户指定目录）。
-8. **批量场景**：逐个语义词执行，保持颜色、尺寸一致，确保风格统一。
+8. **展示图标询问（可选）**：下载完成后，询问用户是否需要输出一个「图标展示」公共 class（居中 icon + 圆角正方形浅色背景）。需要则按下方「图标展示」规范输出。
+9. **批量场景**：逐个语义词执行，保持颜色、尺寸一致，确保风格统一。
 
 ## 参数规范
 
@@ -61,6 +62,68 @@ description: Use when 用户需要按语义搜索并下载专业 SVG 图标。
 | `color` | 图标颜色（hex，不带 `#`） | `666` / `3B82F6` |
 | `size` | 宽高（px） | `24` |
 | `name` | 自定义文件名（不含扩展名） | `icon-home` |
+
+## 图标展示（可选）
+
+当用户需要把下载的图标以「居中 icon + 圆角正方形浅色背景」形式展示时，输出一个公共 CSS class。
+
+### 触发时机
+
+单图标或批量图标下载完成后，Claude 主动询问：
+
+> 图标已下载到 `{outDir}`。是否需要输出一个「图标展示」公共 class（居中 icon + 圆角正方形浅色背景）？
+
+用户也可在抓图前直接说：
+- 「图标展示」
+- 「展示图标」
+- 「图标样式」
+- 「图标 icon」
+- 「给图标加个背景」
+- 「图标容器样式」
+
+### CSS 规范
+
+统一 class 名 `.icon-box`（若项目已有命名约定，可替换为项目前缀）：
+
+```css
+.icon-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;          /* 容器默认 48px */
+  height: 48px;
+  border-radius: 12px;  /* 统一圆角 */
+  background-color: var(--color-primary-light, rgba(59, 130, 246, 0.12)); /* 浅色主题色 */
+}
+
+.icon-box svg,
+.icon-box image,
+.icon-box img {
+  width: 24px;          /* 图标默认 24px */
+  height: 24px;
+  color: var(--color-primary, #3B82F6); /* 图标色跟随主题色 */
+}
+```
+
+### 约定
+
+- 背景色使用主题色的 12% 透明度（`rgba(主色, 0.12)`），无 CSS 变量时回退到 `rgba(59, 130, 246, 0.12)`。
+- 容器默认 48×48px，图标默认 24×24px。
+- 容器圆角 12px（约 25% 圆角）。
+- 优先使用 CSS 变量 `var(--color-primary)`，无变量时回退到默认蓝色 `#3B82F6`。
+- uniapp / 小程序项目：建议把 class 放入 `App.vue` 的 `<style>` 或 `static/common.css`；Web 项目：建议放入 `src/styles/common.css` 或对应的全局样式文件。
+
+### 输出物
+
+1. 公共 class 代码（如上）。
+2. 推荐放置位置。
+3. 使用示例：
+
+```html
+<view class="icon-box">
+  <image src="/static/icons/home.svg" />
+</view>
+```
 
 ## SVG → PNG
 

@@ -48,7 +48,10 @@ description: Use when 用户需要按语义搜索并下载高清图片。
 1. **明确主题**：从需求提取图片内容词（如「团队配图」→ `teamwork`），越具体越好。
 2. **询问图源**：向用户展示可选源及风格推荐，确认后执行；用户已指定则跳过。
 3. **英文关键词**：优先使用英文搜索；中文需求参考 `references/image-sources.md` 的中英文映射表。
-4. **定规格**：按使用位置定方向（横版/竖版/方形）与尺寸。参考 `../references/image-sizes.md`。
+4. **定规格**：按使用位置定方向（横版/竖版/方形）与尺寸。
+   - 若项目已执行过素材审计，优先使用 `assets-requirements-report.md` 中的平台与推荐尺寸。
+   - 若未审计，根据项目关键文件探测平台（参考 `../references/project-type-detection.md`），再匹配 `../references/image-sizes.md` 中的默认尺寸。
+   - 用户已明确指定尺寸时，以用户为准。
 5. **询问压缩**：下载图片时先询问是否压缩。若需要本地压缩/裁剪/格式转换，转 `image-forge-skill`；若仅需远程缩放，使用各图源支持的缩放参数。
 6. **选源降级**：优先使用用户自定义源；未配置则尝试 Pexels/Pixabay/Unsplash；仍无则使用 Lorem Flickr 和 Picsum 兜底。
 7. **落地保存**：保存到项目图片目录（uniapp 默认 `static/images/`）。
