@@ -153,7 +153,38 @@ Claude 会根据你的需求自动匹配并调用对应的 Skill。
 
 ---
 
-### 4. backend-generate-skill 🖥️
+### 4. ui-replica-skill 🖼️
+
+> UI 原型图复刻技能：把 AI 生成的 UI 截图/原型图系统化复刻成生产级 HTML/Vue 代码
+
+**功能**：读图 → 结构化拆解 → 设计 Token 收敛 → 组件抽象 → 代码生成 → 验证补全。专门解决"看图复刻效果一般"的问题，强制加入中间的结构化和收敛层，让还原结果更精确、更可维护。
+
+**使用场景**：
+- 复刻 AI UI 生成器产出的原型图（Stitch、v0、Galileo AI、Uizard、Figma/AI 等）
+- 把设计稿截图转成可运行的 HTML/Vue/uniapp/React 代码
+- 之前复刻效果差，需要系统化方法提升还原度
+
+**使用方式**：
+
+```
+/ui-replica-skill
+```
+
+或自然语言：
+
+```
+复刻这张图
+把这张原型图转成 Vue 代码
+Figma 转代码
+Stitch 转代码
+照着设计稿写页面
+```
+
+**详细文档**：[ui-replica-skill/README.md](ui-replica-skill/README.md)
+
+---
+
+### 5. backend-generate-skill 🖥️
 
 > 后端项目骨架生成技能集合（父目录 + 7 嵌套子技能）
 
@@ -195,7 +226,7 @@ Claude 会根据你的需求自动匹配并调用对应的 Skill。
 
 ---
 
-### 5. uniapp-app-generate-skill 📱
+### 6. uniapp-app-generate-skill 📱
 
 > uni-app 项目生成技能
 
@@ -224,7 +255,7 @@ Claude 会根据你的需求自动匹配并调用对应的 Skill。
 
 ---
 
-### 6. icon-forge 🎨
+### 7. icon-forge 🎨
 
 > 图标生成技能
 
@@ -254,7 +285,7 @@ Claude 会根据你的需求自动匹配并调用对应的 Skill。
 
 ---
 
-### 7. super-deploy-skills 🚀
+### 8. super-deploy-skills 🚀
 
 > 一键部署技能套件（父技能 + 5 个子技能，统一放在 `super-deploy-skills/` 目录下）
 
@@ -293,7 +324,7 @@ Claude 会根据你的需求自动匹配并调用对应的 Skill。
 
 ---
 
-### 8. backend-analysis-skill 🔍
+### 9. backend-analysis-skill 🔍
 
 > 后端项目全景分析技能：不运行项目，静态扫描源码，一次产出 4 份报告
 
@@ -327,21 +358,22 @@ Claude 会根据你的需求自动匹配并调用对应的 Skill。
 
 ---
 
-### 9. icon-image-catch-skill 🖼️
+### 10. icon-image-catch-skill 🖼️
 
-> 远程素材抓取套件（父技能 + 2 个子技能）：说「一只猫的图片」就去找猫的图，说「home 图标」就去找合适的 home icon
+> 远程素材抓取套件（父技能 + 2 个子技能）：说「一只猫的图片」就去找猫的图，说「home 图标」就去找合适的 home icon；也支持项目素材需求审计。
 
-**功能**：根据自然语言语义，动态从远程抓取**专业图标**与**正版高清图片**，根治 VibeCoding 页面两大顽疾：粗糙 Emoji 图标 + 渐变占位。
+**功能**：根据自然语言语义，动态抓取**专业图标**与**高清图片**，根治 VibeCoding 页面两大顽疾：粗糙 Emoji 图标 + 渐变占位。支持图标展示公共 class、本地压缩/切图、SVG→PNG 一键渲染、项目素材需求报告、自动探测项目类型与平台尺寸、**可配置远程图片源**。
 
 | 子技能 | 职责 | 数据源 | 配置 |
 |--------|------|--------|------|
-| [icon-catch-skill](icon-image-catch-skill/icon-catch-skill/) | 语义搜图标 → 下载 SVG（可换色/改尺寸） | Iconify（20 万+ 图标，含 lucide/tabler/heroicons 等 100+ 图标集） | **零配置，免费无需 Key** |
-| [image-catch-skill](icon-image-catch-skill/image-catch-skill/) | 语义搜图片 → 下载高清图，三源自动降级 | Pexels / Pixabay / Unsplash | 免费 Key，1 分钟申请 |
+| [icon-catch-skill](icon-image-catch-skill/icon-catch-skill/) | 语义搜图标 → 下载 SVG；一键转 PNG；抓图后可输出 `.icon-box` 图标展示公共 class | Iconify（20 万+ 图标，含 lucide/tabler/heroicons 等 100+ 图标集） | **零配置，免费无需 Key** |
+| [image-catch-skill](icon-image-catch-skill/image-catch-skill/) | 语义搜图片 → 下载高清图；本地压缩/切图/格式转换；按项目类型自动推荐尺寸；**支持自定义远程源** | 自定义源 / Pexels / Pixabay / Unsplash / Lorem Flickr / Picsum 兜底 | 可选 Key + `npm install` |
 
 **使用场景**：
 - 把页面中的 Emoji 全部替换为专业图标
 - 给 Hero 区域 / 卡片 / banner 配真实高清图片
-- 批量抓取成套图标（tabBar、功能入口）
+- 批量抓取成套图标（tabBar、功能入口），并输出 `.icon-box` 展示样式
+- 审计项目素材需求，自动探测框架/平台/主题色，输出 `assets-requirements-report.md`
 
 **使用方式**：
 
@@ -349,9 +381,314 @@ Claude 会根据你的需求自动匹配并调用对应的 Skill。
 帮我抓一个 home 图标，放到 static/icons
 给首页 Hero 区域抓一张科技感办公背景图
 把这个页面的 Emoji 全部换成 lucide 风格的专业图标
+帮我审计一下这个项目需要哪些素材
+扫描一下这个项目，把需要图的地方都补上
+图标展示
 ```
 
 **详细文档**：[icon-image-catch-skill/README.md](icon-image-catch-skill/README.md)
+
+---
+
+### 11. image-forge-skill 🛠️
+
+> 本地图片处理工具：压缩、转格式、改尺寸、裁剪、base64、水印、遮罩、多图合成
+
+**功能**：对项目本地图片进行**压缩、转格式、改尺寸、裁剪、base64 编码、水印、遮罩、多图合成**。与 `icon-image-catch-skill` 互补：后者负责找图，本技能负责处理图。
+
+**使用场景**：
+- 把项目里的 JPG 批量转 WebP 并压缩
+- 把大图裁剪成指定比例的封面图
+- 给图片加文字/Logo 水印或黑色半透明遮罩
+- 把多张图合成 banner 或分享卡
+- 生成 base64 Data URI 内联使用
+
+**使用方式**：
+
+```
+把 photo.jpg 压缩成 800 宽的 webp
+给 banner 加黑色遮罩和白色标题文字
+把 logo.png 合成到 photo.jpg 右上角
+```
+
+**详细文档**：[image-forge-skill/README.md](image-forge-skill/README.md)
+
+---
+
+### 12. module-generate-skill 🧩
+
+> 后端业务模块生成套件（父技能 + 5 个子技能）：骨架之上，按统一规范长出具体业务模块
+
+**功能**：与 `backend-generate-skill` 互补——后者搭骨架，本套件在骨架上生成**业务模块**：领域模型、表结构 DDL、接口契约增量（追加进项目 `api-contract.md`）、四语言（Java/Go/Python/Node）实现要点。自动检测已有项目技术栈；无骨架时串联 backend-generate-skill 先生成。所有模块强制遵循 backend-convention-skill（响应信封/错误码/JWT/契约模板，引用不复制）。
+
+| 子技能 | 模块 | 内容 |
+|--------|------|------|
+| [auth-skill](module-generate-skill/auth-skill/) | 登录鉴权 | JWT 双令牌 + 轮换重放检测、密码/验证码登录、登出拉黑、失败锁定 |
+| [org-permission-skill](module-generate-skill/org-permission-skill/) | 组织与权限 | 组织树、RBAC、菜单/按钮权限、数据权限 |
+| [ai-chat-skill](module-generate-skill/ai-chat-skill/) | AI 聊天（带记忆） | 会话管理、消息持久化、短期+长期记忆、SSE 流式、上下文裁剪 |
+| [notification-skill](module-generate-skill/notification-skill/) | 短信邮箱通知 | 阿里云短信参考实现、SMTP 邮件、模板、限流、发送记录 |
+| [payment-skill](module-generate-skill/payment-skill/) | 支付 | 微信/支付宝下单、回调验签、退款、幂等、对账（金额一律整数分） |
+
+**使用场景**：
+- 在已有后端项目里加登录鉴权 / RBAC 权限
+- 对接微信支付、支付宝，要退款和对账
+- 做带记忆的 AI 聊天后端（会话持久化 + 流式输出）
+- 接入阿里云短信验证码 / 邮件通知
+- 新建项目时与 backend-generate-skill 串联：先骨架后模块
+
+**使用方式**：
+
+```
+帮我加一个登录鉴权模块，手机号 + 验证码登录
+现有 Spring Boot 项目里加一套 RBAC 权限，要菜单权限和数据权限
+对接微信支付和支付宝，需要退款和对账
+做一个带记忆的 AI 聊天模块，会话要持久化
+用 Go 搭个后端，然后加上组织权限和短信通知模块
+```
+
+**设计原则**：
+- 每个模块内置「红线」：把该模块最容易做错的事（支付验签幂等、令牌安全、短信限流…）写成强制约束
+- 模块为主、语言为参考：12 模块规划下避免「模块×语言」技能爆炸
+- 二期规划：电商、工作流与定时任务、三方 API 对接、文件存储
+
+**详细文档**：[module-generate-skill/README.md](module-generate-skill/README.md)
+
+---
+
+### 13. skill-auditor 🔒
+
+> Skill 安全审计技能(基础版)。对任意 Claude Code / Agent Skill 做投毒与恶意行为审查,识别数据外泄链、隐藏脚本/供应链投毒、破坏性命令、Prompt 注入话术、权限放大、货不对板 6 大维度,产出结构化风险报告。
+
+**使用场景**：
+- 安装外部 Skill 前做安全检查
+- 审计自己仓库里的 Skill 是否有风险
+- 排查「货不对板」的克隆品
+
+**使用方式**：
+
+```
+审查这个 skill 有没有毒
+检测这个 skill 安全吗
+skill 安全审计
+```
+
+**详细文档**：[skill-auditor/README.md](skill-auditor/README.md)
+
+---
+
+### 14. xhs-style-writer-skill ✍️
+
+> 小红书个人风格写作技能
+
+**功能**：学习本人/对标账号的 3-10 篇笔记提取可复用风格档案（语气、口头禅、emoji 习惯、排版、标题套路，全部带原文例句），按档案写出"像本人写的"笔记并强制去 AI 味自检。
+
+**使用场景**：
+- 给账号建立风格档案（一次建档，长期复用）
+- 按档案写小红书笔记：3 标题候选 + 正文 + 标签 + 首图文案
+- 给现成文案去 AI 味、改写降重
+
+**使用方式**：
+
+```
+这是我的 5 篇笔记：<粘贴原文>，帮我建风格档案
+按我的风格档案，写一篇"打工人带饭"的笔记
+这篇文案帮我改得像人写的：<粘贴文案>
+```
+
+**详细文档**：[xhs-style-writer-skill/README.md](xhs-style-writer-skill/README.md)
+
+---
+
+### 15. frontend-style-harmonizer-skill 🎯
+
+> 前端样式一致性治理技能
+
+**功能**：发现跨页面样式重复、同类组件（按钮/tab/输入框）尺寸不一致、硬编码裸值，给出收敛方案并可自动落地为公共 CSS / 公共组件 / CSS 变量。
+
+**使用场景**：
+- 多页面公共样式抽取（复用）
+- 同类组件跨页面对齐（按钮/tab/输入框/标签/列表项高度统一）
+- 硬编码值（`14rpx`、`#c45c48`）变量化
+- 消除固定高度容器（头部 tab）跨页面不一致导致的跳变
+
+**使用方式**：
+
+```
+统一各页面样式
+样式对齐
+抽取公共样式
+去硬编码
+按钮对齐
+tab高度不一致
+样式治理
+样式审查
+```
+
+**详细文档**：[frontend-style-harmonizer-skill/README.md](frontend-style-harmonizer-skill/README.md)
+
+---
+
+### 16. ui-component-commands-skill 🎯
+
+> 前端UI组件指令系统 - 通过预定义指令+CSS变量绑定，一句话生成精确样式的UI组件
+
+**功能**：解决AI生成UI时的反复拉扯问题。通过预定义指令（如 `btn-primary`、`solid-line`、`icon-tag`）绑定具体CSS class，AI直接调用而非自由发挥。
+
+**核心优势**：
+- **确定性**：AI调用预定义class，结果可预测
+- **一致性**：所有按钮都用同一个class，项目风格统一
+- **可维护性**：改一次CSS，全项目生效
+- **对抗幻觉**：预定义代码就在那里，AI无法凭空创造
+
+**使用场景**：
+- 说"做一个按钮" → 自动使用项目主题色、border-radius:10px、height:40px、font-size:16px
+- 说"加个分割线" → 直接输出 `<view class="solid-line"></view>`
+- 说"图标+标签" → 输出 `<view class="icon-tag">...</view>`
+
+**指令示例**：
+
+| 指令 | 效果 |
+|------|------|
+| `btn-primary` | 主按钮（主题色、圆角10px、高40px） |
+| `btn-secondary` | 次按钮（灰色） |
+| `btn-ghost` | 幽灵按钮（透明背景+边框） |
+| `solid-line` | 1px实线分割线 |
+| `dashed-line` | 虚线 |
+| `semi-circle` | 半圆图形 |
+| `icon-tag` | 图标+文字标签组合 |
+| `badge` | 徽章/角标 |
+| `card-basic` | 基础卡片 |
+
+**使用方式**：
+
+```
+做一个主按钮
+帮我加个分割线
+显示一个半圆
+图标+文字的标签
+```
+
+**详细文档**：[ui-component-commands-skill/README.md](ui-component-commands-skill/README.md)
+
+---
+
+### 17. uniapp-crossplatform-audit-skill 🌐
+
+> uniapp 跨平台兼容性审计技能
+
+**功能**：审计 uniapp 项目的跨平台兼容性，检测 H5/小程序/App 差异问题。包括模板标签检查（div/span/img → view/text/image）、CSS 兼容性检查（background-image/var()/calc()）、API 检查（fetch/window/document → uni API），输出按文件维度组织的兼容性问题清单。
+
+**使用场景**：
+- 检查项目能否同时跑小程序和 App
+- 审计 H5 标签在小程序的兼容性问题
+- 修复跨平台 API 调用差异
+- 生成兼容性修复报告
+
+**使用方式**：
+
+```
+/uniapp-crossplatform-audit-skill
+```
+
+或自然语言：
+
+```
+审计多端兼容性
+检查 uniapp 跨平台问题
+小程序 App 兼容性问题
+```
+
+**详细文档**：[uniapp-crossplatform-audit-skill/README.md](uniapp-crossplatform-audit-skill/README.md)
+
+---
+
+### 18. uniapp-code-audit-skill 🔍
+
+> uniapp 代码安全和 UI 审计技能
+
+**功能**：审计 uniapp 项目的代码质量、安全漏洞、性能问题和 UI 规范。包含安全扫描（敏感信息硬编码、域名配置、隐私合规）、性能扫描（图片压缩、包体积、长列表优化）、代码质量（any 滥用、硬编码、重复代码）、UI 一致性（颜色/字号/间距不统一），输出按严重程度分级的问题清单。
+
+**使用场景**：
+- 全面审计小程序代码质量
+- 检测安全漏洞和风险
+- 扫描性能问题
+- 检查 UI 一致性
+
+**使用方式**：
+
+```
+/uniapp-code-audit-skill
+```
+
+或自然语言：
+
+```
+审计 uniapp 代码
+帮我看看这个项目有什么问题
+小程序代码质量审计
+```
+
+**详细文档**：[uniapp-code-audit-skill/README.md](uniapp-code-audit-skill/README.md)
+
+---
+
+### 19. uniapp-standardization-skill 📐
+
+> uniapp 项目规范化技能
+
+**功能**：诊断现有 uniapp 项目与标准骨架的差距，出具规范化诊断报告和重构计划。对比当前目录结构 vs 标准骨架（api/stores/components/pages/styles 等），检测 API 层/状态管理/组件/样式规范，输出缺失目录/文件清单和按优先级排序的调整建议。
+
+**使用场景**：
+- 项目结构混乱，需要规范化
+- 接手老项目，需要诊断问题
+- 重构前了解现状
+- 制定规范化调整计划
+
+**使用方式**：
+
+```
+/uniapp-standardization-skill
+```
+
+或自然语言：
+
+```
+项目规范化
+uniapp 规范化
+帮我看看项目结构有什么问题
+```
+
+**详细文档**：[uniapp-standardization-skill/README.md](uniapp-standardization-skill/README.md)
+
+---
+
+### 20. uniapp-vue2-upgrade-skill ⬆️
+
+> uniapp Vue2 升级到 Vue3 技能
+
+**功能**：将 Vue2 小程序或 uniapp Vue2 项目迁移到 Vue3+TypeScript+Pinia。包含现状扫描（技术栈检测、依赖兼容性评估）、语法对照（v2→v3 语法差异）、脚手架升级（Vite + TS + Pinia）、代码迁移（按优先级迁移），输出迁移难度评估和详细步骤。
+
+**使用场景**：
+- Vue2 项目升级到 Vue3
+- uniapp 项目从 Vue2 迁移
+- 小程序项目升级
+- 技术栈升级
+
+**使用方式**：
+
+```
+/uniapp-vue2-upgrade-skill
+```
+
+或自然语言：
+
+```
+vue2 升级 vue3
+uniapp 迁移
+帮我把这个项目从 Vue2 升级到 Vue3
+```
+
+**详细文档**：[uniapp-vue2-upgrade-skill/README.md](uniapp-vue2-upgrade-skill/README.md)
 
 ---
 
@@ -362,12 +699,23 @@ Claude 会根据你的需求自动匹配并调用对应的 Skill。
 | [frontend-code-doctor](frontend-code-doctor/) | 前端代码审查 | `审查代码`、`code review` |
 | [ai-speech-detector](ai-speech-detector/) | AI 风检测 | `AI风`、`AI味`、`像AI写的` |
 | [frontend-ui-foundry](frontend-ui-foundry/) | 综合前端 UI | `生成 UI`、`优化项目`、`Token 统一` |
+| [ui-replica-skill](ui-replica-skill/) | UI 原型图复刻（读图→结构化→Token→组件→代码） | `复刻这张图`、`Figma 转代码`、`Stitch 转代码`、`原型图复刻` |
 | [backend-generate-skill](backend-generate-skill/) | 后端项目骨架生成（7 子技能：选型/规范/Java/Go/Python/Node/数据库） | `生成后端`、`backend generate`、`用 Java/Go/Python/Node 写后端` |
 | [uniapp-app-generate-skill](uniapp-app-generate-skill/) | uni-app 项目生成 | `uniapp 小程序`、`初始化微信小程序` |
 | [icon-forge](icon-forge/) | 图标生成 | `生成图标`、`icon 生成`、`png 图标` |
 | [super-deploy-skills](super-deploy-skills/) | 一键部署套件（5 子技能：检测/装机/Nginx/原生/Docker） | `部署项目`、`一键部署`、`deploy`、`Docker 部署` |
 | [backend-analysis-skill](backend-analysis-skill/) | 后端项目全景分析（接口/技术栈/数据库/业务 4 份报告） | `分析后端项目`、`梳理接口`、`盘点技术栈`、`出数据库文档`、`接手老项目` |
-| [icon-image-catch-skill](icon-image-catch-skill/) | 素材抓取套件（2 子技能：图标抓取 Iconify 免 Key / 图片抓取 Pexels·Pixabay·Unsplash 自动降级） | `抓图标`、`下载 icon`、`抓图片`、`找配图`、`背景图` |
+| [icon-image-catch-skill](icon-image-catch-skill/) | 素材抓取套件（2 子技能：图标抓取 Iconify 免 Key + SVG→PNG + 图标展示 class / 图片抓取自定义源·三源自动降级·Lorem Flickr 无 Key 语义兜底·Picsum 占位兜底 + 本地压缩切图 + 项目素材审计·自动探测项目类型与平台尺寸·扫描项目自动抓取） | `抓图标`、`下载 icon`、`抓图片`、`找配图`、`背景图`、`项目素材审计`、`图标展示`、`扫描项目` |
+| [image-forge-skill](image-forge-skill/) | 本地图片处理工具：压缩/转格式/改尺寸/裁剪/base64/水印/遮罩/多图合成 | `压缩图片`、`转 webp`、`改尺寸`、`裁剪图片`、`加水印`、`图片合成`、`base64 图片`、`处理图片` |
+| [module-generate-skill](module-generate-skill/) | 后端业务模块生成套件（5 子技能：登录鉴权/组织权限/AI 聊天/短信邮箱/支付） | `加登录`、`加权限`、`RBAC`、`对接支付`、`短信验证码`、`AI 聊天`、`带记忆的对话` |
+| [skill-auditor](skill-auditor/) | Skill 安全审计（6 维度：数据外泄/供应链/破坏命令/注入话术/权限放大/货不对板） | `审查 skill`、`检测有毒吗`、`skill 安全审计`、`audit skill` |
+| [xhs-style-writer-skill](xhs-style-writer-skill/) | 小红书个人风格写作（建档/写作/去 AI 味三模式） | `写小红书笔记`、`种草笔记`、`爆款标题`、`学我的风格写`、`去 AI 味` |
+| [frontend-style-harmonizer-skill](frontend-style-harmonizer-skill/) | 前端样式一致性治理（复用抽取/对齐收敛/硬编码变量化） | `统一各页面样式`、`样式对齐`、`去硬编码`、`按钮对齐`、`tab高度不一致`、`样式治理` |
+| [ui-component-commands-skill](ui-component-commands-skill/) | UI组件指令系统（按钮/线条/图形/组合） | `做按钮`、`加分割线`、`图标+标签`、`半圆`、`徽章` |
+| [uniapp-crossplatform-audit-skill](uniapp-crossplatform-audit-skill/) | uniapp 跨平台兼容性审计 | `多端兼容`、`跨平台审计`、`小程序 App 兼容` |
+| [uniapp-code-audit-skill](uniapp-code-audit-skill/) | uniapp 代码安全和 UI 审计 | `uniapp 审计`、`小程序代码审计`、`漏洞扫描` |
+| [uniapp-standardization-skill](uniapp-standardization-skill/) | uniapp 项目规范化 | `uniapp 规范化`、`项目结构诊断`、`代码规范` |
+| [uniapp-vue2-upgrade-skill](uniapp-vue2-upgrade-skill/) | uniapp Vue2 升级到 Vue3 | `vue2 升级 vue3`、`uniapp 迁移`、`小程序升级` |
 
 > 注：`demo/foundry-demo` 是 [frontend-ui-foundry](frontend-ui-foundry/) 的端到端示例，不是独立 Skill。
 > 注：`super-deploy-skills` 是父技能，包含 5 个子技能，统一放在 `super-deploy-skills/` 目录下；`deploy-detect-skill` 是其余子技能的共享前置。
@@ -490,6 +838,18 @@ wg-skills/
 │   ├── scripts/                # 工具脚本
 │   ├── templates/              # Token 模板
 │   └── demo/                   # 端到端验证
+├── ui-replica-skill/           # UI 原型图复刻技能
+│   ├── SKILL.md                # 技能入口与核心流程
+│   ├── README.md               # 使用说明与示例
+│   ├── examples/               # 复刻样例（中后台/移动端/营销页）
+│   └── references/             # 复刻流程/检查清单/Token模板/结构模板/复杂组件/集成指引/多图梳理
+│       ├── workflow.md
+│       ├── checklist.md
+│       ├── token-template.md
+│       ├── structure-template.md
+│       ├── complex-components.md
+│       ├── integration-guide.md
+│       └── multi-mockups.md
 ├── backend-generate-skill/     # 后端项目骨架生成技能集合（父目录 + 7 嵌套子技能）
 │   ├── SKILL.md
 │   ├── README.md
@@ -610,19 +970,88 @@ wg-skills/
 │       ├── database-scan-patterns.md # 各 ORM 实体扫描 + SQL/迁移收集
 │       └── report-templates.md       # 4 份报告 + 总览的输出模板
 ├── icon-image-catch-skill/     # 素材抓取套件（父技能 + 2 子技能）
-│   ├── SKILL.md                # 父入口：意图判断与路由
+│   ├── SKILL.md                # 父入口：意图判断、路由、素材审计
 │   ├── README.md
+│   ├── package.json            # sharp 依赖
 │   ├── .env.example            # 图片源 API Key 模板
+│   ├── scripts/assets-audit.js # 项目素材需求审计
 │   ├── icon-catch-skill/       # 子技能：图标抓取（Iconify，免 Key）
 │   │   ├── SKILL.md
 │   │   ├── README.md
 │   │   ├── scripts/icon-catch.js    # 零依赖抓取脚本
+│   │   ├── scripts/icon-to-png.js   # SVG → PNG 渲染
 │   │   └── references/icon-sources.md
-│   └── image-catch-skill/      # 子技能：图片抓取（三源自动降级）
+│   └── image-catch-skill/      # 子技能：图片抓取（三源自动降级 + 压缩切图）
 │       ├── SKILL.md
 │       ├── README.md
-│       ├── scripts/image-catch.js   # 零依赖抓取脚本
+│       ├── scripts/image-catch.js   # 抓取 + 本地压缩/切图
 │       └── references/image-sources.md
+├── image-forge-skill/          # 本地图片处理工具
+│   ├── SKILL.md                # 技能定义
+│   ├── README.md
+│   ├── image-forge.js          # 主处理脚本
+│   ├── package.json            # sharp 依赖
+│   └── references/
+│       └── operation-schema.md # JSON Spec 字段说明
+├── module-generate-skill/      # 后端业务模块生成套件（父技能 + 5 子技能）
+│   ├── SKILL.md                # 父入口：模块识别 + 分流 + 技术栈检测
+│   ├── README.md
+│   ├── auth-skill/             # 登录鉴权（JWT 双令牌/验证码登录/登出拉黑）
+│   ├── org-permission-skill/   # 组织与权限（组织树/RBAC/菜单/数据权限）
+│   ├── ai-chat-skill/          # AI 聊天（会话/记忆/流式/上下文裁剪）
+│   ├── notification-skill/     # 短信邮箱（阿里云短信/SMTP/模板/限流）
+│   └── payment-skill/          # 支付（微信/支付宝/回调验签/退款/对账）
+│       # 每个子技能同构：SKILL.md + README.md + references/
+│       # （domain-model.md 表结构、api-contract.md 契约增量、java/go/python/nodejs.md）
+├── skill-auditor/              # Skill 安全审计（6 维度语义审查）
+│   ├── SKILL.md                # 触发条件 + 审查流程
+│   ├── README.md               # 使用文档
+│   └── references/
+│       ├── threat-cases.md     # 真实投毒案例库
+│       └── audit-dimensions.md # 6 维判断细则 + 信号词表 + 报告模板
+├── ui-component-commands-skill/   # UI组件指令系统
+│   ├── SKILL.md                 # 技能核心定义
+│   ├── README.md                # 使用文档
+│   ├── templates/
+│   │   ├── ui-variables.scss   # CSS变量模板
+│   │   └── ui-components.scss  # 组件class定义
+│   ├── commands/
+│   │   ├── button.md           # 按钮指令
+│   │   ├── line.md             # 线条指令
+│   │   ├── shape.md            # 图形指令
+│   │   └── combo.md            # 组合指令
+│   └── references/
+│       └── matching-rules.md    # 模糊匹配规则
+├── uniapp-crossplatform-audit-skill/   # uniapp 跨平台兼容性审计
+│   ├── SKILL.md
+│   ├── README.md
+│   └── references/
+│       ├── cross-platform-checklist.md
+│       ├── tag-mapping.md
+│       └── api-mapping.md
+├── uniapp-code-audit-skill/           # uniapp 代码安全和 UI 审计
+│   ├── SKILL.md
+│   ├── README.md
+│   └── references/
+│       ├── security-checklist.md
+│       ├── performance-checklist.md
+│       ├── code-quality-checklist.md
+│       └── ui-consistency-checklist.md
+├── uniapp-standardization-skill/       # uniapp 项目规范化
+│   ├── SKILL.md
+│   ├── README.md
+│   └── references/
+│       ├── standard-structure.md
+│       ├── api-spec.md
+│       ├── store-spec.md
+│       └── component-spec.md
+├── uniapp-vue2-upgrade-skill/         # uniapp Vue2 升级到 Vue3
+│   ├── SKILL.md
+│   ├── README.md
+│   └── references/
+│       ├── vue2-vue3-diff.md
+│       ├── upgrade-steps.md
+│       └── dependency-compat.md
 └── demo/
     └── foundry-demo/           # frontend-ui-foundry 端到端示例
         ├── index.html

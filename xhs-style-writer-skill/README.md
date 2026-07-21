@@ -1,4 +1,4 @@
-# xhs-style-writer - 小红书个人风格写作
+# xhs-style-writer-skill - 小红书个人风格写作
 
 > 通用爆款公式人人都在用，用出来就是 AI 味 2.0。真正带流量的是“像这个人写的”。
 
@@ -40,7 +40,7 @@
 
 ## 快速开始
 
-1. 把本目录复制到 `~/.claude/skills/xhs-style-writer/`（个人级）或项目 `.claude/skills/` 下。
+1. 把本目录复制到 `~/.claude/skills/xhs-style-writer-skill/`（个人级）或项目 `.claude/skills/` 下。
 2. 对 Claude 说任意触发语句即可，例如：
    - “写小红书笔记”
    - “帮我建风格档案”
@@ -50,7 +50,7 @@
 ## 目录说明
 
 ```
-xhs-style-writer/
+xhs-style-writer-skill/
 ├── SKILL.md                      # 技能入口：三种模式 + 输出规格 + 红线
 ├── README.md                     # 本文件
 └── references/

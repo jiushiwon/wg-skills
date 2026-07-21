@@ -1,9 +1,9 @@
 ---
-name: xhs-style-writer
+name: xhs-style-writer-skill
 description: Use when 用户需要写小红书笔记/文案、建立可复用的个人风格档案、生成爆款标题、给种草文案去 AI 味，或按已有风格改写降重。
 ---
 
-# xhs-style-writer - 小红书个人风格写作
+# xhs-style-writer-skill - 小红书个人风格写作
 
 核心原则：**通用爆款公式人人都在用，用出来就是 AI 味 2.0。真正带来流量的是“像这个人写的”。** 本技能的一切产出都以风格档案为准，公式只作兜底。
 
