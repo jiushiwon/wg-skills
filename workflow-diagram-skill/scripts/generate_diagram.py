@@ -83,10 +83,50 @@ def icon_rocket(cx, cy, stroke, fill):
         f'<path d="M {cx-3} {cy+8} L {cx-1} {cy+14} L {cx} {cy+11} L {cx+1} {cy+14} L {cx+3} {cy+8} Z" fill="#f97316"/>'
     ]
 
+def icon_robot(cx, cy, stroke, fill):
+    return [
+        f'<rect x="{cx-7}" y="{cy-8}" width="14" height="14" rx="3" fill="none" stroke="{stroke}" stroke-width="1.5"/>',
+        f'<circle cx="{cx-3}" cy="{cy-3}" r="1.5" fill="{stroke}"/>',
+        f'<circle cx="{cx+3}" cy="{cy-3}" r="1.5" fill="{stroke}"/>',
+        f'<path d="M {cx-2} {cy+2} L {cx} {cy+4} L {cx+2} {cy+2}" stroke="{stroke}" stroke-width="1.2" fill="none" stroke-linecap="round"/>',
+        f'<rect x="{cx-2}" y="{cy-10}" width="4" height="3" fill="{stroke}"/>',
+    ]
+
+def icon_file(cx, cy, stroke, fill):
+    return [
+        f'<path d="M {cx-6} {cy-8} L {cx+2} {cy-8} L {cx+6} {cy-4} L {cx+6} {cy+8} L {cx-6} {cy+8} Z" fill="none" stroke="{stroke}" stroke-width="1.5"/>',
+        f'<path d="M {cx+2} {cy-8} L {cx+2} {cy-4} L {cx+6} {cy-4}" stroke="{stroke}" stroke-width="1.5" fill="none"/>',
+        f'<line x1="{cx-3}" y1="{cy}" x2="{cx+3}" y2="{cy}" stroke="{stroke}" stroke-width="1.2"/>',
+        f'<line x1="{cx-3}" y1="{cy+3}" x2="{cx+3}" y2="{cy+3}" stroke="{stroke}" stroke-width="1.2"/>',
+    ]
+
+def icon_checkmark(cx, cy, stroke, fill):
+    return [
+        f'<circle cx="{cx}" cy="{cy}" r="10" fill="none" stroke="{stroke}" stroke-width="2"/>',
+        f'<path d="M {cx-4} {cy} L {cx-1} {cy+4} L {cx+5} {cy-4}" stroke="{stroke}" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+    ]
+
+def icon_bolt(cx, cy, stroke, fill):
+    return [
+        f'<path d="M {cx+1} {cy-9} L {cx-5} {cy-1} L {cx-1} {cy-1} L {cx-3} {cy+9} L {cx+5} {cy+1} L {cx+1} {cy+1} Z" fill="{stroke}"/>',
+    ]
+
+def icon_cloud(cx, cy, stroke, fill):
+    return [
+        f'<path d="M {cx-7} {cy+2} C {cx-10} {cy+2}, {cx-10} {cy-4}, {cx-6} {cy-4} C {cx-6} {cy-9}, {cx+2} {cy-10}, {cx+4} {cy-5} C {cx+8} {cy-6}, {cx+9} {cy+1}, {cx+6} {cy+3} Z" fill="none" stroke="{stroke}" stroke-width="1.5"/>',
+    ]
+
+def icon_star(cx, cy, stroke, fill):
+    return [
+        f'<path d="M {cx} {cy-8} L {cx+2} {cy-3} L {cx+7} {cy-3} L {cx+3} {cy} L {cx+5} {cy+6} L {cx} {cy+3} L {cx-5} {cy+6} L {cx-3} {cy} L {cx-7} {cy-3} L {cx-2} {cy-3} Z" fill="{stroke}"/>',
+    ]
+
 ICON_FUNCS = {
     "user": icon_user, "brain": icon_brain, "code": icon_code, "play": icon_play,
     "eye": icon_eye, "loop": icon_loop, "chat": icon_chat, "git": icon_git,
     "server": icon_server, "rocket": icon_rocket,
+    "robot": icon_robot, "file": icon_file, "checkmark": icon_checkmark,
+    "bolt": icon_bolt, "cloud": icon_cloud, "star": icon_star,
 }
 
 
@@ -146,6 +186,27 @@ STYLES = {
             "eye": ("rgba(248,113,113,0.15)", "#f87171"), "loop": ("rgba(45,212,191,0.15)", "#2dd4bf"),
             "chat": ("rgba(96,165,250,0.15)", "#60a5fa"), "git": ("rgba(96,165,250,0.15)", "#60a5fa"),
             "server": ("rgba(251,146,60,0.15)", "#fb923c"), "rocket": ("rgba(45,212,191,0.15)", "#2dd4bf"),
+        }
+    },
+    "cute": {
+        "bg": "#fff8f3",
+        "container_bg": "#fff0e8",
+        "container_stroke": "#f4d7c4",
+        "node_fill": "#ffffff",
+        "node_stroke": "#f4c2c2",
+        "title": "#5c4b51",
+        "subtitle": "#9d8a8f",
+        "primary_arrow": "#ff9aa2",
+        "loop_arrow": "#b5b9ff",
+        "shadow": "rgba(255, 154, 162, 0.18)",
+        "font": "'Nunito', 'Quicksand', 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif",
+        "icon_tints": {
+            "user": ("#ffe9ec", "#ff9aa2"), "brain": ("#e6e6fa", "#b5b9ff"), "code": ("#e0f7fa", "#80deea"),
+            "play": ("#fff9c4", "#fff176"), "eye": ("#e8f5e9", "#a5d6a7"), "loop": ("#fce4ec", "#f48fb1"),
+            "chat": ("#ffe9ec", "#ff9aa2"), "git": ("#e3f2fd", "#90caf9"), "server": ("#fff9c4", "#fff176"),
+            "rocket": ("#e3f2fd", "#90caf9"), "robot": ("#e6e6fa", "#b5b9ff"), "file": ("#fff3e0", "#ffcc80"),
+            "checkmark": ("#e8f5e9", "#a5d6a7"), "bolt": ("#fff9c4", "#fff176"), "cloud": ("#e3f2fd", "#90caf9"),
+            "star": ("#fff9c4", "#fff176"),
         }
     }
 }
@@ -243,6 +304,7 @@ def render_svg(title, nodes, edges, groups=None, style_name="flat"):
     lines.append('  <defs>')
     lines.append(f'    <marker id="arrow-primary" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="{primary_arrow}"/></marker>')
     lines.append(f'    <marker id="arrow-loop" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="{loop_arrow}"/></marker>')
+    lines.append(f'    <filter id="drop-shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="{style.get("shadow", "rgba(0,0,0,0.1)")}" flood-opacity="0.5"/></filter>')
     lines.append('  </defs>')
     lines.append(f'  <rect width="{view_w}" height="{view_h}" fill="{bg}"/>')
 
@@ -262,7 +324,12 @@ def render_svg(title, nodes, edges, groups=None, style_name="flat"):
         icon = node.get("icon", "brain")
         icon_fill, icon_stroke = style["icon_tints"].get(icon, ("#f3f4f6", "#6b7280"))
 
-        lines.append(f'  <rect x="{x}" y="{y}" width="{w}" height="{h}" rx="8" ry="8" fill="{node_fill}" stroke="{node_stroke}" stroke-width="1.5"/>')
+        if style_name == "cute":
+            lines.append(f'  <g filter="url(#drop-shadow)">')
+            lines.append(f'    <rect x="{x}" y="{y}" width="{w}" height="{h}" rx="16" ry="16" fill="{node_fill}" stroke="{node_stroke}" stroke-width="2"/>')
+            lines.append(f'  </g>')
+        else:
+            lines.append(f'  <rect x="{x}" y="{y}" width="{w}" height="{h}" rx="8" ry="8" fill="{node_fill}" stroke="{node_stroke}" stroke-width="1.5"/>')
         lines.append(f'  <circle cx="{cx}" cy="{cy}" r="16" fill="{icon_fill}" stroke="{icon_stroke}" stroke-width="1.5"/>')
 
         func = ICON_FUNCS.get(icon, icon_brain)
@@ -310,7 +377,7 @@ def render_svg(title, nodes, edges, groups=None, style_name="flat"):
 def main():
     parser = argparse.ArgumentParser(description="generate workflow diagram SVG")
     parser.add_argument("--template", help="template ID")
-    parser.add_argument("--style", default="flat", help="style: flat | sketchy | dark")
+    parser.add_argument("--style", default="flat", help="style: flat | sketchy | dark | cute")
     parser.add_argument("-o", "--output", required=True, help="output SVG path")
     parser.add_argument("--title", help="diagram title")
     parser.add_argument("--nodes-json", help="custom nodes JSON")
