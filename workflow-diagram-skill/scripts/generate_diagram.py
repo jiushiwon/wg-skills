@@ -363,7 +363,8 @@ def render_svg(title, nodes, edges, groups=None, style_name="flat"):
             else:
                 path_d = f"M {sx} {src[1]+src[3]} L {dx} {dst[1]-5}"
 
-        lines.append(f'  <path d="{path_d}" stroke="{color}" stroke-width="2" fill="none" marker-end="{marker}"{dashattr}/>')
+        stroke_width = "3" if style_name == "cute" else "2"
+        lines.append(f'  <path d="{path_d}" stroke="{color}" stroke-width="{stroke_width}" fill="none" marker-end="{marker}"{dashattr}/>')
 
         if label:
             mid_x = (src[0] + dst[0]) // 2

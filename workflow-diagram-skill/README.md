@@ -49,6 +49,7 @@ workflow-diagram-skill/
 │   ├── style-flat-icon.md          # Flat Icon 风格规范
 │   ├── style-sketchy.md            # 手绘草图风格规范
 │   ├── style-dark.md               # Dark 风格规范
+│   ├── style-cute.md               # Cute 插画风格规范
 │   ├── icon-library.md             # 图标定义
 │   └── layout-rules.md             # 布局与箭头规则
 └── assets/
@@ -127,4 +128,4 @@ npm install puppeteer-core --no-save
 
 ## 更新记录
 
-- 2026-07-22：初版，支持 flat / sketchy / dark 三种风格，内置 12+ 模板
+- 2026-07-22：初版，支持 flat / sketchy / dark / cute 四种风格，内置 12+ 模板
