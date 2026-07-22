@@ -23,4 +23,6 @@ Agent 面试题
 
 ## 参考资料
 
-见 [references/](references/) 目录，Phase 2 逐步填充。
+- [面试知识树](references/interview-knowledge-tree.md)
+- [项目简历包装指南](references/project-packaging.md)
+- [模拟面试题](references/interview-questions.md)

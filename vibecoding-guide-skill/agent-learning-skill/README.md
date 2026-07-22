@@ -20,4 +20,7 @@ Agent 学习路线
 
 ## 参考资料
 
-见 [references/](references/) 目录，Phase 2 逐步填充。
+- [Agent 核心概念](references/agent-concepts.md)
+- [最小 Agent 实现](references/min-agent-implementation.md)
+- [模型底层知识](references/model底层知识.md)
+- [Claude Code Skill 编写指南](references/claude-code-skill-guide.md)

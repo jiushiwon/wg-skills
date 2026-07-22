@@ -24,4 +24,10 @@
 
 ## 参考资料
 
-见 [references/](references/) 目录，Phase 2 逐步填充。
+- [模型选型](references/model-selection.md)
+- [IDE 选型](references/ide-selection.md)
+- [提示词工程](references/prompt-engineering.md)
+- [产品模块拆解](references/product-modules.md)
+- [前后端联调](references/frontend-backend-integration.md)
+- [测试指南](references/testing-guide.md)
+- [部署指南](references/deployment-guide.md)
