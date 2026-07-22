@@ -430,7 +430,7 @@ def render_svg(title, nodes, edges, groups=None, style_name="flat"):
 def main():
     parser = argparse.ArgumentParser(description="generate workflow diagram SVG")
     parser.add_argument("--template", help="template ID")
-    parser.add_argument("--style", default="flat", help="style: flat | sketchy | dark | cute")
+    parser.add_argument("--style", default=None, help="style: flat | sketchy | dark | cute (defaults to template's default_style)")
     parser.add_argument("-o", "--output", required=True, help="output SVG path")
     parser.add_argument("--title", help="diagram title")
     parser.add_argument("--nodes-json", help="custom nodes JSON")
@@ -442,6 +442,7 @@ def main():
 
     nodes, edges, groups = [], [], None
     title = args.title or "流程图"
+    style = args.style or "flat"
 
     if args.template:
         templates = load_templates(templates_path)
@@ -453,6 +454,7 @@ def main():
         edges = tmpl.get("edges", [])
         groups = tmpl.get("groups")
         title = args.title or tmpl.get("name", "流程图")
+        style = args.style or tmpl.get("default_style", "flat")
     elif args.nodes_json:
         nodes = json.loads(args.nodes_json)
         edges = json.loads(args.edges_json or "[]")
@@ -460,7 +462,7 @@ def main():
         print("ERROR: need --template or --nodes-json")
         sys.exit(1)
 
-    svg = render_svg(title, nodes, edges, groups, args.style)
+    svg = render_svg(title, nodes, edges, groups, style)
     Path(args.output).write_text(svg, encoding="utf-8")
     print(f"SVG generated: {args.output}")
 
