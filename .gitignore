@@ -16,6 +16,12 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
 # 环境变量
 .env
 .env.local
