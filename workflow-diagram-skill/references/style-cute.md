@@ -17,12 +17,28 @@
 投影:       rgba(255, 154, 162, 0.18)
 ```
 
+## 字体
+
+```
+font-family: 'Nunito', 'Quicksand', 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+```
+
+## 节点尺寸
+
+- 节点默认宽度 230px，高度 70px
+- 图标圆形背景直径 32px，半径 16px，圆心位于节点左侧 28px 处
+- 标题 font-size: 15px，font-weight: 600
+- 副标题 font-size: 12px
+
 ## 节点样式
 
 - 胶囊形圆角矩形，rx=16, ry=16
-- 左侧 56px 处放置圆形图标背景
-- 标题 15px 加粗，副标题 12px
 - 节点下方加柔边投影：filter="drop-shadow(0 4px 6px rgba(255,154,162,0.18))"
+
+## 图标
+
+- 图标本体默认使用对应语义描边色
+- 图标在圆形背景中居中
 
 ## 图标背景色
 
@@ -35,6 +51,12 @@
 | 检查/验收 | #e8f5e9 | #a5d6a7 |
 | 循环/反馈 | #fce4ec | #f48fb1 |
 | 部署/上线 | #e3f2fd | #90caf9 |
+
+## 箭头 marker
+
+- markerWidth="10"，markerHeight="7"，refX="9"，refY="3.5"
+- 主流程 marker 填充 `#ff9aa2`
+- 迭代 marker 填充 `#b5b9ff`
 
 ## 箭头
 
