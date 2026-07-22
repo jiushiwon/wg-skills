@@ -169,6 +169,7 @@ STYLES = {
         "node_stroke": "#d1d5db",
         "title": "#111827",
         "subtitle": "#6b7280",
+        "container_title": "#6b7280",
         "primary_arrow": "#2563eb",
         "loop_arrow": "#9333ea",
         "font": "'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', 'Microsoft JhengHei', 'SimHei', sans-serif",
@@ -192,6 +193,7 @@ STYLES = {
         "node_stroke": "#8b7e66",
         "title": "#3d3d3d",
         "subtitle": "#7a7a7a",
+        "container_title": "#7a7a7a",
         "primary_arrow": "#4a7c59",
         "loop_arrow": "#a35c5c",
         "font": "'Comic Sans MS', 'Chalkboard SE', 'Marker Felt', 'PingFang SC', 'Microsoft YaHei', sans-serif",
@@ -215,6 +217,7 @@ STYLES = {
         "node_stroke": "#3f3f5f",
         "title": "#e4e4f0",
         "subtitle": "#9ca3af",
+        "container_title": "#9ca3af",
         "primary_arrow": "#60a5fa",
         "loop_arrow": "#c084fc",
         "font": "'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', 'Microsoft JhengHei', 'SimHei', sans-serif",
@@ -239,6 +242,7 @@ STYLES = {
         "node_stroke": "#f4c2c2",
         "title": "#5c4b51",
         "subtitle": "#9d8a8f",
+        "container_title": "#9d8a8f",
         "primary_arrow": "#ff9aa2",
         "loop_arrow": "#b5b9ff",
         "shadow": "rgba(255, 154, 162, 0.18)",
@@ -247,9 +251,12 @@ STYLES = {
             "user": ("#ffe9ec", "#ff9aa2"), "brain": ("#e6e6fa", "#b5b9ff"), "code": ("#e0f7fa", "#80deea"),
             "play": ("#fff9c4", "#fff176"), "eye": ("#e8f5e9", "#a5d6a7"), "loop": ("#fce4ec", "#f48fb1"),
             "chat": ("#ffe9ec", "#ff9aa2"), "git": ("#e3f2fd", "#90caf9"), "server": ("#fff9c4", "#fff176"),
-            "rocket": ("#e3f2fd", "#90caf9"), "robot": ("#e6e6fa", "#b5b9ff"), "file": ("#fff3e0", "#ffcc80"),
-            "checkmark": ("#e8f5e9", "#a5d6a7"), "bolt": ("#fff9c4", "#fff176"), "cloud": ("#e3f2fd", "#90caf9"),
-            "star": ("#fff9c4", "#fff176"),
+            "rocket": ("#e3f2fd", "#90caf9"),
+            "database": ("#e3f2fd", "#90caf9"), "search": ("#e8f5e9", "#a5d6a7"),
+            "document": ("#fff3e0", "#ffcc80"), "check": ("#e8f5e9", "#a5d6a7"),
+            "robot": ("#e6e6fa", "#b5b9ff"), "file": ("#fff3e0", "#ffcc80"),
+            "checkmark": ("#e8f5e9", "#a5d6a7"), "bolt": ("#fff9c4", "#fff176"),
+            "cloud": ("#e3f2fd", "#90caf9"), "star": ("#fff9c4", "#fff176"),
         }
     }
 }
@@ -274,12 +281,13 @@ def layout_nodes(nodes, groups=None):
         for i in range(0, len(nodes), 3):
             grouped.append((f"阶段 {i//3 + 1}", nodes[i:i+3]))
 
-    node_w, node_h = 230, 70
+    node_w_default, node_h = 230, 70
     top_margin = 90
     start_x = [90, 360, 630]
 
     for gi, (name, group_nodes) in enumerate(grouped):
         n_count = len(group_nodes)
+        node_w = node_w_default
         if n_count == 1:
             xs = [480 - node_w // 2]
         elif n_count == 2:
@@ -287,8 +295,8 @@ def layout_nodes(nodes, groups=None):
         elif n_count == 3:
             xs = start_x
         elif n_count == 4:
-            # 压缩节点宽度以容纳 4 列
-            node_w = 195
+            # 压缩节点宽度，确保不超出容器右边界（容器 x=60, width=840, 右边界=900）
+            node_w = 165
             xs = [60, 285, 510, 735]
         else:
             raise ValueError(f"每组最多 4 个节点，当前组 '{name}' 有 {n_count} 个节点，请拆分")
@@ -333,6 +341,7 @@ def render_svg(title, nodes, edges, groups=None, style_name="flat"):
     bg = style["bg"]
     title_color = style["title"]
     subtitle_color = style["subtitle"]
+    container_title_color = style.get("container_title", "#6b7280")
     container_bg = style["container_bg"]
     container_stroke = style["container_stroke"]
     node_fill = style["node_fill"]
@@ -364,7 +373,7 @@ def render_svg(title, nodes, edges, groups=None, style_name="flat"):
     for gi, (name, group_nodes) in enumerate(grouped):
         gx, gy = 60, 80 + gi * 170
         lines.append(f'  <rect x="{gx}" y="{gy}" width="840" height="140" rx="12" ry="12" fill="{container_bg}" stroke="{container_stroke}" stroke-width="1.5" stroke-dasharray="6,4"/>')
-        lines.append(f'  <text x="{gx+15}" y="{gy+25}" class="box-title" fill="#6b7280">{name}</text>')
+        lines.append(f'  <text x="{gx+15}" y="{gy+25}" class="box-title" fill="{container_title_color}">{name}</text>')
 
     # 节点
     for node in nodes:
