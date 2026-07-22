@@ -50,10 +50,9 @@ workflow-diagram-skill/
 │   ├── style-sketchy.md            # 手绘草图风格规范
 │   ├── style-dark.md               # Dark 风格规范
 │   ├── style-cute.md               # Cute 插画风格规范
-│   ├── icon-library.md             # 图标定义
-│   └── layout-rules.md             # 布局与箭头规则
+│   └── icon-library.md             # 图标定义
 └── assets/
-    └── (output files go here)
+    └── (运行时输出目录，已被 gitignore)
 ```
 
 ## 支持风格

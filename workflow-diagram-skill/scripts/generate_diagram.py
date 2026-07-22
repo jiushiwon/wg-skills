@@ -83,6 +83,32 @@ def icon_rocket(cx, cy, stroke, fill):
         f'<path d="M {cx-3} {cy+8} L {cx-1} {cy+14} L {cx} {cy+11} L {cx+1} {cy+14} L {cx+3} {cy+8} Z" fill="#f97316"/>'
     ]
 
+def icon_database(cx, cy, stroke, fill):
+    return [
+        f'<ellipse cx="{cx}" cy="{cy-5}" rx="7" ry="3" fill="none" stroke="{stroke}" stroke-width="1.5"/>',
+        f'<path d="M {cx-7} {cy-5} L {cx-7} {cy+4} C {cx-7} {cy+7}, {cx+7} {cy+7}, {cx+7} {cy+4} L {cx+7} {cy-5}" fill="none" stroke="{stroke}" stroke-width="1.5"/>',
+        f'<path d="M {cx-7} {cy} C {cx-7} {cy+3}, {cx+7} {cy+3}, {cx+7} {cy}" fill="none" stroke="{stroke}" stroke-width="1.5"/>',
+    ]
+
+def icon_search(cx, cy, stroke, fill):
+    return [
+        f'<circle cx="{cx-2}" cy="{cy-2}" r="6" fill="none" stroke="{stroke}" stroke-width="2"/>',
+        f'<line x1="{cx+3}" y1="{cy+3}" x2="{cx+8}" y2="{cy+8}" stroke="{stroke}" stroke-width="2" stroke-linecap="round"/>',
+    ]
+
+def icon_document(cx, cy, stroke, fill):
+    return [
+        f'<path d="M {cx-5} {cy-8} L {cx+2} {cy-8} L {cx+5} {cy-5} L {cx+5} {cy+8} L {cx-5} {cy+8} Z" fill="none" stroke="{stroke}" stroke-width="1.5"/>',
+        f'<path d="M {cx+2} {cy-8} L {cx+2} {cy-5} L {cx+5} {cy-5}" stroke="{stroke}" stroke-width="1.5" fill="none"/>',
+        f'<line x1="{cx-2}" y1="{cy-1}" x2="{cx+2}" y2="{cy-1}" stroke="{stroke}" stroke-width="1.2"/>',
+        f'<line x1="{cx-2}" y1="{cy+2}" x2="{cx+2}" y2="{cy+2}" stroke="{stroke}" stroke-width="1.2"/>',
+    ]
+
+def icon_check(cx, cy, stroke, fill):
+    return [
+        f'<path d="M {cx-6} {cy} L {cx-2} {cy+5} L {cx+6} {cy-5}" stroke="{stroke}" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+    ]
+
 def icon_robot(cx, cy, stroke, fill):
     return [
         f'<rect x="{cx-7}" y="{cy-8}" width="14" height="14" rx="3" fill="none" stroke="{stroke}" stroke-width="1.5"/>',
@@ -125,6 +151,7 @@ ICON_FUNCS = {
     "user": icon_user, "brain": icon_brain, "code": icon_code, "play": icon_play,
     "eye": icon_eye, "loop": icon_loop, "chat": icon_chat, "git": icon_git,
     "server": icon_server, "rocket": icon_rocket,
+    "database": icon_database, "search": icon_search, "document": icon_document, "check": icon_check,
     "robot": icon_robot, "file": icon_file, "checkmark": icon_checkmark,
     "bolt": icon_bolt, "cloud": icon_cloud, "star": icon_star,
 }
@@ -149,6 +176,11 @@ STYLES = {
             "play": ("#fff7ed", "#ea580c"), "eye": ("#fef2f2", "#dc2626"), "loop": ("#f0fdfa", "#0d9488"),
             "chat": ("#eff6ff", "#2563eb"), "git": ("#eff6ff", "#2563eb"), "server": ("#fff7ed", "#ea580c"),
             "rocket": ("#f0fdfa", "#0d9488"),
+            "database": ("#fff7ed", "#ea580c"), "search": ("#fef2f2", "#dc2626"),
+            "document": ("#f3f4f6", "#6b7280"), "check": ("#e8f5e9", "#16a34a"),
+            "robot": ("#faf5ff", "#9333ea"), "file": ("#fff7ed", "#ea580c"),
+            "checkmark": ("#e8f5e9", "#16a34a"), "bolt": ("#fff7ed", "#ea580c"),
+            "cloud": ("#eff6ff", "#2563eb"), "star": ("#fff7ed", "#ea580c"),
         }
     },
     "sketchy": {
@@ -167,6 +199,11 @@ STYLES = {
             "play": ("#fff7ed", "#a35c5c"), "eye": ("#fef2f2", "#a35c5c"), "loop": ("#f0fdfa", "#4a7c59"),
             "chat": ("#fefce8", "#4a7c59"), "git": ("#eff6ff", "#4a7c59"), "server": ("#fff7ed", "#a35c5c"),
             "rocket": ("#f0fdfa", "#4a7c59"),
+            "database": ("#fff7ed", "#a35c5c"), "search": ("#fef2f2", "#a35c5c"),
+            "document": ("#fffdf5", "#8b7e66"), "check": ("#f0fdf4", "#4a7c59"),
+            "robot": ("#fff7ed", "#a35c5c"), "file": ("#fffdf5", "#8b7e66"),
+            "checkmark": ("#f0fdf4", "#4a7c59"), "bolt": ("#fff7ed", "#a35c5c"),
+            "cloud": ("#eff6ff", "#4a7c59"), "star": ("#fff7ed", "#a35c5c"),
         }
     },
     "dark": {
@@ -186,6 +223,11 @@ STYLES = {
             "eye": ("rgba(248,113,113,0.15)", "#f87171"), "loop": ("rgba(45,212,191,0.15)", "#2dd4bf"),
             "chat": ("rgba(96,165,250,0.15)", "#60a5fa"), "git": ("rgba(96,165,250,0.15)", "#60a5fa"),
             "server": ("rgba(251,146,60,0.15)", "#fb923c"), "rocket": ("rgba(45,212,191,0.15)", "#2dd4bf"),
+            "database": ("rgba(251,146,60,0.15)", "#fb923c"), "search": ("rgba(248,113,113,0.15)", "#f87171"),
+            "document": ("rgba(156,163,175,0.15)", "#9ca3af"), "check": ("rgba(74,222,128,0.15)", "#4ade80"),
+            "robot": ("rgba(192,132,252,0.15)", "#c084fc"), "file": ("rgba(251,146,60,0.15)", "#fb923c"),
+            "checkmark": ("rgba(74,222,128,0.15)", "#4ade80"), "bolt": ("rgba(251,146,60,0.15)", "#fb923c"),
+            "cloud": ("rgba(96,165,250,0.15)", "#60a5fa"), "star": ("rgba(251,146,60,0.15)", "#fb923c"),
         }
     },
     "cute": {
@@ -244,9 +286,11 @@ def layout_nodes(nodes, groups=None):
         elif n_count == 3:
             xs = start_x
         elif n_count == 4:
-            xs = [90, 300, 510, 720]
+            # 压缩节点宽度以容纳 4 列
+            node_w = 195
+            xs = [60, 285, 510, 735]
         else:
-            xs = start_x[:n_count]
+            raise ValueError(f"每组最多 4 个节点，当前组 '{name}' 有 {n_count} 个节点，请拆分")
         y = top_margin + gi * 170
         for idx, node in enumerate(group_nodes):
             x = xs[idx]
@@ -265,7 +309,11 @@ def render_svg(title, nodes, edges, groups=None, style_name="flat"):
         for i in range(len(group_nodes) - 1):
             auto_edges.append({"from": group_nodes[i]["id"], "to": group_nodes[i+1]["id"]})
     for i in range(len(grouped) - 1):
-        auto_edges.append({"from": grouped[i][1][-1]["id"], "to": grouped[i+1][1][0]["id"]})
+        auto_edges.append({
+            "from": grouped[i][1][-1]["id"],
+            "to": grouped[i+1][1][0]["id"],
+            "cross_group": True,
+        })
 
     # 合并用户/模板提供的边（如迭代循环），去重
     seen = set((e["from"], e["to"]) for e in auto_edges)
@@ -357,6 +405,10 @@ def render_svg(title, nodes, edges, groups=None, style_name="flat"):
         if dashed:
             # 循环边：从源节点左侧绕回目标节点左侧
             path_d = f"M {src[0]} {sy} C {src[0]-80} {sy}, {dst[0]-80} {dy}, {dst[0]-5} {dy}"
+        elif edge.get("cross_group"):
+            # 跨组边：先向下再横向，避免对角回折
+            mid_y = (src[1] + src[3] + dst[1]) // 2
+            path_d = f"M {sx} {src[1]+src[3]} L {sx} {mid_y} L {dx} {mid_y} L {dx} {dst[1]-5}"
         else:
             if abs(src[1] - dst[1]) < 10:
                 path_d = f"M {src[0]+src[2]} {sy} L {dst[0]-5} {dy}"
