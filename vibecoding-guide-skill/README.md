@@ -26,6 +26,7 @@ AI 编程怎么入门
 ## 素材说明
 
 - `assets/humeng.png`：「狐獴笔记」小程序二维码占位图，后续可替换为真实二维码。
+- `assets/vibecoding.png`：VibeCoding 学习小程序二维码占位图，后续可替换为真实二维码。
 
 ## 欠缺技能清单
 
