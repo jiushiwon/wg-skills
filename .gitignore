@@ -35,3 +35,6 @@ out/
 # 临时文件
 *.tmp
 *.temp
+
+# 工作区
+.worktrees/
