@@ -304,7 +304,7 @@ def render_svg(title, nodes, edges, groups=None, style_name="flat"):
     lines.append('  <defs>')
     lines.append(f'    <marker id="arrow-primary" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="{primary_arrow}"/></marker>')
     lines.append(f'    <marker id="arrow-loop" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="{loop_arrow}"/></marker>')
-    lines.append(f'    <filter id="drop-shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="{style.get("shadow", "rgba(0,0,0,0.1)")}" flood-opacity="0.5"/></filter>')
+    lines.append(f'    <filter id="drop-shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="{style.get("shadow", "rgba(0,0,0,0.1)")}" flood-opacity="0.5"/></filter>')
     lines.append('  </defs>')
     lines.append(f'  <rect width="{view_w}" height="{view_h}" fill="{bg}"/>')
 

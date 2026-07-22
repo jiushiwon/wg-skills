@@ -10,7 +10,7 @@
   <defs>
     <marker id="arrow-primary" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#ff9aa2"/></marker>
     <marker id="arrow-loop" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#b5b9ff"/></marker>
-    <filter id="drop-shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="rgba(255, 154, 162, 0.18)" flood-opacity="0.5"/></filter>
+    <filter id="drop-shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="rgba(255, 154, 162, 0.18)" flood-opacity="0.5"/></filter>
   </defs>
   <rect width="960" height="1060" fill="#fff8f3"/>
   <text x="480" y="45" text-anchor="middle" class="title" fill="#5c4b51">Vibe Coding 流程</text>
