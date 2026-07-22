@@ -47,7 +47,7 @@ workflow-diagram-skill/
 ├── references/
 │   ├── templates.md                # 现成模板库
 │   ├── style-flat-icon.md          # Flat Icon 风格规范
-│   ├── style-sketchy.md            # 手绘草图风格规范
+│   ├── style-sketchy.md            # 暖白手账风格规范
 │   ├── style-dark.md               # Dark 风格规范
 │   ├── style-cute.md               # Cute 插画风格规范
 │   └── icon-library.md             # 图标定义
