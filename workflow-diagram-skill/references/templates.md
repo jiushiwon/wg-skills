@@ -329,3 +329,239 @@ templates:
       - { from: post, to: data }
       - { from: data, to: iterate }
       - { from: iterate, to: content, label: 继续产出, dashed: true }
+
+  # ============ 学习流程 ============
+  - id: english-learning
+    name: 英语学习路径
+    category: 学习流程
+    tags: [英语, 学习, 外语, 语言学习]
+    default_style: flat
+    nodes:
+      - { id: phase1, label: 音标入门, sub: 48个音标/发音规则, icon: user }
+      - { id: phase2, label: 基础词汇, sub: 2000核心词/词根记忆, icon: brain }
+      - { id: phase3, label: 语法入门, sub: 时态/从句/基本句型, icon: brain }
+      - { id: phase4, label: 听力入门, sub: 慢速VOA/听力材料, icon: eye }
+      - { id: phase5, label: 口语基础, sub: 跟读/影子法/发音, icon: chat }
+      - { id: phase6, label: 阅读提升, sub: 外刊/原版书/分级阅读, icon: document }
+      - { id: phase7, label: 写作入门, sub: 句子/段落/模板, icon: document }
+      - { id: phase8, label: 高级提升, sub: 雅思/托福/商务英语, icon: rocket }
+    edges:
+      - { from: phase1, to: phase2 }
+      - { from: phase2, to: phase3 }
+      - { from: phase3, to: phase4 }
+      - { from: phase4, to: phase5 }
+      - { from: phase5, to: phase6 }
+      - { from: phase6, to: phase7 }
+      - { from: phase7, to: phase8 }
+
+  - id: finance-learning
+    name: 理财学习路径
+    category: 学习流程
+    tags: [理财, 投资, 金融, 钱]
+    default_style: flat
+    nodes:
+      - { id: f1, label: 存钱基础, sub: 记账/预算/紧急备用金, icon: brain }
+      - { id: f2, label: 理财观念, sub: 复利/风险/资产配置, icon: brain }
+      - { id: f3, label: 基金入门, sub: 货币基金/债券基金, icon: star }
+      - { id: f4, label: 股票基础, sub: 财报/估值/基本面, icon: code }
+      - { id: f5, label: 保险配置, sub: 医疗/寿险/意外险, icon: star }
+      - { id: f6, label: 可转债, sub: 打新/套利/双低策略, icon: star }
+      - { id: f7, label: 资产配置, sub: 分散投资/定投, icon: brain }
+      - { id: f8, label: 财务自由, sub: 被动收入/FIRE, icon: rocket }
+    edges:
+      - { from: f1, to: f2 }
+      - { from: f2, to: f3 }
+      - { from: f3, to: f4 }
+      - { from: f4, to: f5 }
+      - { from: f5, to: f6 }
+      - { from: f6, to: f7 }
+      - { from: f7, to: f8 }
+
+  - id: coding-learning
+    name: 编程学习路径
+    category: 学习流程
+    tags: [编程, 程序员, 开发, 码农]
+    default_style: flat
+    nodes:
+      - { id: c1, label: 编程入门, sub: Python/变量/循环, icon: code }
+      - { id: c2, label: 数据结构, sub: 数组/链表/栈/队列, icon: brain }
+      - { id: c3, label: 算法基础, sub: 排序/查找/递归, icon: brain }
+      - { id: c4, label: 计算机基础, sub: 计网/操作系统/数据库, icon: server }
+      - { id: c5, label: 前端入门, sub: HTML/CSS/JS, icon: code }
+      - { id: c6, label: 后端入门, sub: Java/Go/数据库, icon: server }
+      - { id: c7, label: 项目实战, sub: 毕设/开源/实习, icon: rocket }
+      - { id: c8, label: 求职准备, sub: 刷题/八股/项目, icon: chat }
+    edges:
+      - { from: c1, to: c2 }
+      - { from: c2, to: c3 }
+      - { from: c3, to: c4 }
+      - { from: c4, to: c5 }
+      - { from: c4, to: c6 }
+      - { from: c5, to: c7 }
+      - { from: c6, to: c7 }
+      - { from: c7, to: c8 }
+
+  - id: fitness-flow
+    name: 健身流程
+    category: 日常流程
+    tags: [健身, 运动, 锻炼, 减肥]
+    default_style: cute
+    nodes:
+      - { id: g1, label: 热身, sub: 动态拉伸/跑步机, icon: play }
+      - { id: g2, label: 力量训练, sub: 哑铃/杠铃/自重, icon: bolt }
+      - { id: g3, label: 有氧训练, sub: 跑步/划船/单车, icon: star }
+      - { id: g4, label: 核心训练, sub: 卷腹/平板支撑, icon: star }
+      - { id: g5, label: 拉伸放松, sub: 静态拉伸/泡沫轴, icon: user }
+      - { id: g6, label: 蛋白质补充, sub: 蛋白粉/鸡胸/鸡蛋, icon: cloud }
+    edges:
+      - { from: g1, to: g2 }
+      - { from: g2, to: g3 }
+      - { from: g3, to: g4 }
+      - { from: g4, to: g5 }
+      - { from: g5, to: g6 }
+
+  - id: morning-routine
+    name: 早起流程
+    category: 日常流程
+    tags: [早起, 晨间, 习惯, 自律]
+    default_style: sketchy
+    nodes:
+      - { id: m1, label: 闹钟响起, sub: 立即起床/不赖床, icon: user }
+      - { id: m2, label: 喝杯温水, sub: 补充水分/唤醒身体, icon: cloud }
+      - { id: m3, label: 简单拉伸, sub: 舒展筋骨/清醒大脑, icon: user }
+      - { id: m4, label: 晨读/学习, sub: 看书/背单词/听播客, icon: brain }
+      - { id: m5, label: 早餐准备, sub: 营养均衡/自己做, icon: star }
+      - { id: m6, label: 出门准备, sub: 穿搭/整理/检查, icon: rocket }
+    edges:
+      - { from: m1, to: m2 }
+      - { from: m2, to: m3 }
+      - { from: m3, to: m4 }
+      - { from: m4, to: m5 }
+      - { from: m5, to: m6 }
+
+  - id: house-buying
+    name: 买房流程
+    category: 日常流程
+    tags: [买房, 房产, 购房, 安家]
+    default_style: flat
+    nodes:
+      - { id: h1, label: 预算评估, sub: 首付/月供/税费, icon: brain }
+      - { id: h2, label: 需求梳理, sub: 地段/户型/学区, icon: brain }
+      - { id: h3, label: 看房选房, sub: 新房/二手房/法拍, icon: eye }
+      - { id: h4, label: 谈判签约, sub: 谈价/签合同/付定金, icon: document }
+      - { id: h5, label: 贷款办理, sub: 银行面签/批贷, icon: star }
+      - { id: h6, label: 过户交房, sub: 缴税/过户/拿房本, icon: rocket }
+      - { id: h7, label: 装修入住, sub: 装修/散味/搬家, icon: rocket }
+    edges:
+      - { from: h1, to: h2 }
+      - { from: h2, to: h3 }
+      - { from: h3, to: h4 }
+      - { from: h4, to: h5 }
+      - { from: h5, to: h6 }
+      - { from: h6, to: h7 }
+
+  - id: travel-flow
+    name: 自助旅行流程
+    category: 日常流程
+    tags: [旅行, 旅游, 自助游, 出行]
+    default_style: sketchy
+    nodes:
+      - { id: t1, label: 确定目的地, sub: 预算/天数/季节, icon: brain }
+      - { id: t2, label: 机票酒店, sub: 抢票/预订/比价, icon: star }
+      - { id: t3, label: 行程规划, sub: 景点/交通/美食, icon: eye }
+      - { id: t4, label: 签证材料, sub: 护照/签证/保险, icon: document }
+      - { id: t5, label: 物品准备, sub: 行李/转换插/现金, icon: user }
+      - { id: t6, label: 出发旅行, sub: 打卡/拍照/体验, icon: rocket }
+      - { id: t7, label: 回顾分享, sub: 发朋友圈/写游记, icon: chat }
+    edges:
+      - { from: t1, to: t2 }
+      - { from: t2, to: t3 }
+      - { from: t3, to: t4 }
+      - { from: t4, to: t5 }
+      - { from: t5, to: t6 }
+      - { from: t6, to: t7 }
+
+  - id: exam-cert
+    name: 考证流程
+    category: 学习流程
+    tags: [考证, 考试, 证书, 职业]
+    default_style: flat
+    nodes:
+      - { id: e1, label: 选证, sub: 行业认可度/含金量, icon: brain }
+      - { id: e2, label: 了解考试, sub: 科目/时间/题型, icon: eye }
+      - { id: e3, label: 制定计划, sub: 周期/重点/方法, icon: document }
+      - { id: e4, label: 第一轮复习, sub: 看书/听课/打基础, icon: brain }
+      - { id: e5, label: 第二轮复习, sub: 刷题/重点/错题, icon: code }
+      - { id: e6, label: 冲刺押题, sub: 模拟卷/背诵, icon: star }
+      - { id: e7, label: 考前准备, sub: 准考证/考场, icon: user }
+      - { id: e8, label: 查分领证, sub: 等成绩/拿证书, icon: rocket }
+    edges:
+      - { from: e1, to: e2 }
+      - { from: e2, to: e3 }
+      - { from: e3, to: e4 }
+      - { from: e4, to: e5 }
+      - { from: e5, to: e6 }
+      - { from: e6, to: e7 }
+      - { from: e7, to: e8 }
+
+  - id: side-hustle
+    name: 副业赚钱流程
+    category: 日常流程
+    tags: [副业, 赚钱, 兼职, 变现]
+    default_style: flat
+    nodes:
+      - { id: s1, label: 技能盘点, sub: 会什么/能做什么, icon: brain }
+      - { id: s2, label: 市场调研, sub: 需求/竞品/定价, icon: eye }
+      - { id: s3, label: 选方向, sub: 带货/接单/知识付费, icon: star }
+      - { id: s4, label: 搭建基础, sub: 账号/工具/作品集, icon: code }
+      - { id: s5, label: 冷启动, sub: 引流/内容/积累, icon: play }
+      - { id: s6, label: 变现尝试, sub: 接单/卖货/收会员, icon: star }
+      - { id: s7, label: 放大复制, sub: 规模化/团队化, icon: rocket }
+    edges:
+      - { from: s1, to: s2 }
+      - { from: s2, to: s3 }
+      - { from: s3, to: s4 }
+      - { from: s4, to: s5 }
+      - { from: s5, to: s6 }
+      - { from: s6, to: s7 }
+
+  - id: healthy-life
+    name: 健康生活流程
+    category: 日常流程
+    tags: [健康, 养生, 习惯, 生活方式]
+    default_style: cute
+    nodes:
+      - { id: hl1, label: 早起, sub: 固定时间/不赖床, icon: user }
+      - { id: hl2, label: 运动, sub: 每周3次/30分钟, icon: bolt }
+      - { id: hl3, label: 饮食, sub: 均衡营养/七分饱, icon: star }
+      - { id: hl4, label: 工作, sub: 专注/番茄钟/休息, icon: code }
+      - { id: hl5, label: 睡眠, sub: 固定作息/睡前不玩手机, icon: cloud }
+      - { id: hl6, label: 复盘, sub: 每日总结/习惯追踪, icon: document }
+    edges:
+      - { from: hl1, to: hl2 }
+      - { from: hl2, to: hl3 }
+      - { from: hl3, to: hl4 }
+      - { from: hl4, to: hl5 }
+      - { from: hl5, to: hl6 }
+
+  - id: product-launch
+    name: 产品上线流程
+    category: 工作流程
+    tags: [产品, 上线, 发布, 开发]
+    default_style: flat
+    nodes:
+      - { id: p1, label: 需求评审, sub: PRD/原型/优先级, icon: brain }
+      - { id: p2, label: 设计评审, sub: UI/UX/交互, icon: eye }
+      - { id: p3, label: 开发联调, sub: 前端/后端/接口, icon: code }
+      - { id: p4, label: 测试验收, sub: 功能/性能/回归, icon: play }
+      - { id: p5, label: 灰度发布, sub: 小流量/监控/回滚, icon: cloud }
+      - { id: p6, label: 全量上线, sub: 公告/推广/监控, icon: rocket }
+      - { id: p7, label: 复盘总结, sub: 数据/问题/迭代, icon: document }
+    edges:
+      - { from: p1, to: p2 }
+      - { from: p2, to: p3 }
+      - { from: p3, to: p4 }
+      - { from: p4, to: p5 }
+      - { from: p5, to: p6 }
+      - { from: p6, to: p7 }
+

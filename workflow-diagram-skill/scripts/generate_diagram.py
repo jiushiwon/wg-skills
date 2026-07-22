@@ -268,8 +268,8 @@ def get_style(style_name):
 
 # ---------------- 布局与生成 ----------------
 
-def layout_nodes(nodes, groups=None):
-    """按 groups 或每 3 个一组布局。"""
+def layout_nodes(nodes, groups=None, direction="vertical"):
+    """按 groups 或每 3 个一组布局。direction: vertical(默认上下) 或 horizontal(左右)"""
     node_map = {n["id"]: n for n in nodes}
     positions = {}
 
@@ -278,13 +278,28 @@ def layout_nodes(nodes, groups=None):
                    for i, g in enumerate(groups)]
     else:
         grouped = []
-        for i in range(0, len(nodes), 3):
-            grouped.append((f"阶段 {i//3 + 1}", nodes[i:i+3]))
+        if direction == "horizontal":
+            # 横向：所有节点放一行
+            grouped = [("流程", nodes)]
+        else:
+            # 纵向：每 3 个一组
+            for i in range(0, len(nodes), 3):
+                grouped.append((f"阶段 {i//3 + 1}", nodes[i:i+3]))
 
     node_w_default, node_h = 230, 70
     top_margin = 90
     start_x = [90, 360, 630]
 
+    if direction == "horizontal":
+        # 横向布局
+        node_w = node_w_default
+        y = top_margin + 45
+        for idx, node in enumerate(nodes):
+            x = 90 + idx * (node_w + 40)
+            positions[node["id"]] = (x, y, node_w, node_h)
+        return positions, grouped
+
+    # 纵向布局（默认）
     for gi, (name, group_nodes) in enumerate(grouped):
         n_count = len(group_nodes)
         node_w = node_w_default
@@ -308,21 +323,29 @@ def layout_nodes(nodes, groups=None):
     return positions, grouped
 
 
-def render_svg(title, nodes, edges, groups=None, style_name="flat"):
+def render_svg(title, nodes, edges, groups=None, style_name="flat", direction="vertical", arrow_style="straight"):
+    """渲染 SVG。direction: vertical(上下) / horizontal(左右); arrow_style: straight(直线) / curved(曲线)"""
     style = get_style(style_name)
-    positions, grouped = layout_nodes(nodes, groups)
+    positions, grouped = layout_nodes(nodes, groups, direction)
 
     # 自动生成主流程边
     auto_edges = []
-    for _, group_nodes in grouped:
-        for i in range(len(group_nodes) - 1):
-            auto_edges.append({"from": group_nodes[i]["id"], "to": group_nodes[i+1]["id"]})
-    for i in range(len(grouped) - 1):
-        auto_edges.append({
-            "from": grouped[i][1][-1]["id"],
-            "to": grouped[i+1][1][0]["id"],
-            "cross_group": True,
-        })
+
+    if direction == "horizontal":
+        # 横向：所有节点依次连接
+        for i in range(len(nodes) - 1):
+            auto_edges.append({"from": nodes[i]["id"], "to": nodes[i+1]["id"]})
+    else:
+        # 纵向
+        for _, group_nodes in grouped:
+            for i in range(len(group_nodes) - 1):
+                auto_edges.append({"from": group_nodes[i]["id"], "to": group_nodes[i+1]["id"]})
+        for i in range(len(grouped) - 1):
+            auto_edges.append({
+                "from": grouped[i][1][-1]["id"],
+                "to": grouped[i+1][1][0]["id"],
+                "cross_group": True,
+            })
 
     # 合并用户/模板提供的边（如迭代循环），去重
     seen = set((e["from"], e["to"]) for e in auto_edges)
@@ -334,9 +357,14 @@ def render_svg(title, nodes, edges, groups=None, style_name="flat"):
 
     edges = auto_edges
 
-    num_groups = len(grouped)
-    view_h = 90 + num_groups * 170 + 120
-    view_w = 960
+    # 计算画布尺寸
+    if direction == "horizontal":
+        view_w = 90 + len(nodes) * 270 + 60
+        view_h = 280
+    else:
+        num_groups = len(grouped)
+        view_h = 90 + num_groups * 170 + 120
+        view_w = 960
 
     bg = style["bg"]
     title_color = style["title"]
@@ -369,11 +397,12 @@ def render_svg(title, nodes, edges, groups=None, style_name="flat"):
     # 标题
     lines.append(f'  <text x="{view_w//2}" y="45" text-anchor="middle" class="title" fill="{title_color}">{title}</text>')
 
-    # 容器
-    for gi, (name, group_nodes) in enumerate(grouped):
-        gx, gy = 60, 80 + gi * 170
-        lines.append(f'  <rect x="{gx}" y="{gy}" width="840" height="140" rx="12" ry="12" fill="{container_bg}" stroke="{container_stroke}" stroke-width="1.5" stroke-dasharray="6,4"/>')
-        lines.append(f'  <text x="{gx+15}" y="{gy+25}" class="box-title" fill="{container_title_color}">{name}</text>')
+    # 容器（横向布局不画容器）
+    if direction != "horizontal":
+        for gi, (name, group_nodes) in enumerate(grouped):
+            gx, gy = 60, 80 + gi * 170
+            lines.append(f'  <rect x="{gx}" y="{gy}" width="840" height="140" rx="12" ry="12" fill="{container_bg}" stroke="{container_stroke}" stroke-width="1.5" stroke-dasharray="6,4"/>')
+            lines.append(f'  <text x="{gx+15}" y="{gy+25}" class="box-title" fill="{container_title_color}">{name}</text>')
 
     # 节点
     for node in nodes:
@@ -417,13 +446,31 @@ def render_svg(title, nodes, edges, groups=None, style_name="flat"):
             path_d = f"M {src[0]} {sy} C {src[0]-80} {sy}, {dst[0]-80} {dy}, {dst[0]-5} {dy}"
         elif edge.get("cross_group"):
             # 跨组边：先向下再横向，避免对角回折
-            mid_y = (src[1] + src[3] + dst[1]) // 2
-            path_d = f"M {sx} {src[1]+src[3]} L {sx} {mid_y} L {dx} {mid_y} L {dx} {dst[1]-5}"
-        else:
-            if abs(src[1] - dst[1]) < 10:
-                path_d = f"M {src[0]+src[2]} {sy} L {dst[0]-5} {dy}"
+            if arrow_style == "curved":
+                mid_y = (src[1] + src[3] + dst[1]) // 2
+                path_d = f"M {sx} {src[1]+src[3]} C {sx} {mid_y+30}, {dx} {mid_y-30}, {dx} {dst[1]-5}"
             else:
-                path_d = f"M {sx} {src[1]+src[3]} L {dx} {dst[1]-5}"
+                mid_y = (src[1] + src[3] + dst[1]) // 2
+                path_d = f"M {sx} {src[1]+src[3]} L {sx} {mid_y} L {dx} {mid_y} L {dx} {dst[1]-5}"
+        else:
+            if direction == "horizontal":
+                # 横向：左到右
+                if arrow_style == "curved":
+                    path_d = f"M {src[0]+src[2]} {sy} C {src[0]+src[2]+40} {sy}, {dst[0]-40} {dy}, {dst[0]-5} {dy}"
+                else:
+                    path_d = f"M {src[0]+src[2]} {sy} L {dst[0]-5} {dy}"
+            elif abs(src[1] - dst[1]) < 10:
+                # 同行直线
+                if arrow_style == "curved":
+                    path_d = f"M {src[0]+src[2]} {sy} C {src[0]+src[2]+40} {sy}, {dst[0]-40} {dy}, {dst[0]-5} {dy}"
+                else:
+                    path_d = f"M {src[0]+src[2]} {sy} L {dst[0]-5} {dy}"
+            else:
+                # 上下
+                if arrow_style == "curved":
+                    path_d = f"M {sx} {src[1]+src[3]} C {sx} {sy+50}, {dx} {dy-50}, {dx} {dst[1]-5}"
+                else:
+                    path_d = f"M {sx} {src[1]+src[3]} L {dx} {dst[1]-5}"
 
         stroke_width = "3" if style_name == "cute" else "2"
         lines.append(f'  <path d="{path_d}" stroke="{color}" stroke-width="{stroke_width}" fill="none" marker-end="{marker}"{dashattr}/>')
@@ -445,6 +492,8 @@ def main():
     parser.add_argument("--title", help="diagram title")
     parser.add_argument("--nodes-json", help="custom nodes JSON")
     parser.add_argument("--edges-json", help="custom edges JSON")
+    parser.add_argument("--direction", default="vertical", help="layout: vertical (上下) | horizontal (左右)")
+    parser.add_argument("--arrow-style", default="straight", help="arrow: straight | curved")
     parser.add_argument("--png", action="store_true", help="also render PNG using svg2png.py")
     args = parser.parse_args()
 
@@ -473,7 +522,7 @@ def main():
         print("ERROR: need --template or --nodes-json")
         sys.exit(1)
 
-    svg = render_svg(title, nodes, edges, groups, style)
+    svg = render_svg(title, nodes, edges, groups, style, args.direction, args.arrow_style)
     Path(args.output).write_text(svg, encoding="utf-8")
     print(f"SVG generated: {args.output}")
 
