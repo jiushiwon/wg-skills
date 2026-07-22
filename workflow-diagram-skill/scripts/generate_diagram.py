@@ -10,6 +10,7 @@ Usage:
 import argparse
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -435,6 +436,7 @@ def main():
     parser.add_argument("--title", help="diagram title")
     parser.add_argument("--nodes-json", help="custom nodes JSON")
     parser.add_argument("--edges-json", help="custom edges JSON")
+    parser.add_argument("--png", action="store_true", help="also render PNG using svg2png.py")
     args = parser.parse_args()
 
     script_dir = Path(__file__).parent.resolve()
@@ -465,6 +467,10 @@ def main():
     svg = render_svg(title, nodes, edges, groups, style)
     Path(args.output).write_text(svg, encoding="utf-8")
     print(f"SVG generated: {args.output}")
+
+    if args.png:
+        svg2png = script_dir / "svg2png.py"
+        subprocess.run([sys.executable, str(svg2png), str(Path(args.output).resolve())], check=True)
 
 
 if __name__ == "__main__":

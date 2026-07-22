@@ -6,6 +6,7 @@ Usage:
   python3 scripts/init_skill_assets.py
 """
 
+import platform
 import subprocess
 import sys
 from pathlib import Path
@@ -22,28 +23,45 @@ def check_python_deps():
 
 
 def check_node_deps(skill_dir: Path):
-    if (skill_dir / "node_modules" / "puppeteer-core").exists():
-        print("[OK] puppeteer-core installed")
-    else:
+    try:
+        subprocess.run(["node", "-e", "require('puppeteer-core')"], cwd=skill_dir, check=True,
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        print("[OK] puppeteer-core resolvable")
+    except (subprocess.CalledProcessError, FileNotFoundError):
         print("[MISSING] puppeteer-core, installing...")
         subprocess.run(["npm", "install", "puppeteer-core", "--no-save"], cwd=skill_dir, check=True)
         print("[OK] puppeteer-core installed")
 
 
 def check_browser():
-    import platform
-    if platform.system() == "Windows":
+    """搜索 Edge/Chrome，找到则返回路径，否则返回 None。"""
+    system = platform.system()
+    candidates = []
+    if system == "Windows":
         candidates = [
             r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
             r"C:\Program Files\Microsoft\Edge\Application\msedge.exe",
             r"C:\Program Files\Google\Chrome\Application\chrome.exe",
             r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",
         ]
-        for c in candidates:
-            if Path(c).exists():
-                print(f"[OK] browser found: {c}")
-                return
+    elif system == "Darwin":
+        candidates = [
+            "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge",
+            "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        ]
+    else:  # Linux
+        candidates = [
+            "/usr/bin/microsoft-edge",
+            "/usr/bin/google-chrome",
+            "/usr/bin/chromium",
+            "/usr/bin/chromium-browser",
+        ]
+    for c in candidates:
+        if Path(c).exists():
+            print(f"[OK] browser found: {c}")
+            return c
     print("[WARN] Edge/Chrome not found, PNG rendering may fail.")
+    return None
 
 
 def main():
