@@ -23,6 +23,10 @@ AI 编程怎么入门
 | [agent-learning-skill](agent-learning-skill/) | Agent 系统学习路线 |
 | [agent-interview-skill](agent-interview-skill/) | Agent 工程师面试准备 |
 
+## 素材说明
+
+- `assets/humeng.png`：「狐獴笔记」小程序二维码占位图，后续可替换为真实二维码。
+
 ## 欠缺技能清单
 
 见 [references/future-skills.md](references/future-skills.md)。
