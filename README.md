@@ -692,6 +692,32 @@ uniapp 迁移
 
 ---
 
+### 21. vibecoding-guide-skill 🧭
+
+> VibeCoding / AI 开发全流程知识导师（父技能 + 3 嵌套子技能）
+
+**功能**：把用户分流到三条独立路线——VibeCoding 产品落地、Agent 系统学习、Agent 工程师面试准备。只做推荐，不执行具体生成任务。
+
+**子技能**：
+
+| 子技能 | 职责 |
+|--------|------|
+| [vibecoding-workflow-skill](vibecoding-guide-skill/vibecoding-workflow-skill/) | 工具→模型→IDE→提示词→产品模块→开发→联调→测试→部署 |
+| [agent-learning-skill](vibecoding-guide-skill/agent-learning-skill/) | Agent 概念→制作→模型底层→算法→Skill 学习 |
+| [agent-interview-skill](vibecoding-guide-skill/agent-interview-skill/) | 面试知识树 + 项目包装 + 模拟题 |
+
+**使用方式**：
+
+```
+/vibecoding
+我想学 VibeCoding
+AI 编程怎么入门
+```
+
+**详细文档**：[vibecoding-guide-skill/README.md](vibecoding-guide-skill/README.md)
+
+---
+
 ## 📋 Skill 一览
 
 | Skill | 说明 | 触发关键词 |
@@ -716,6 +742,7 @@ uniapp 迁移
 | [uniapp-code-audit-skill](uniapp-code-audit-skill/) | uniapp 代码安全和 UI 审计 | `uniapp 审计`、`小程序代码审计`、`漏洞扫描` |
 | [uniapp-standardization-skill](uniapp-standardization-skill/) | uniapp 项目规范化 | `uniapp 规范化`、`项目结构诊断`、`代码规范` |
 | [uniapp-vue2-upgrade-skill](uniapp-vue2-upgrade-skill/) | uniapp Vue2 升级到 Vue3 | `vue2 升级 vue3`、`uniapp 迁移`、`小程序升级` |
+| [vibecoding-guide-skill](vibecoding-guide-skill/) | VibeCoding / AI 开发知识导师（3 子技能） | `/vibecoding`、`我想学 VibeCoding` |
 
 > 注：`demo/foundry-demo` 是 [frontend-ui-foundry](frontend-ui-foundry/) 的端到端示例，不是独立 Skill。
 > 注：`super-deploy-skills` 是父技能，包含 5 个子技能，统一放在 `super-deploy-skills/` 目录下；`deploy-detect-skill` 是其余子技能的共享前置。
