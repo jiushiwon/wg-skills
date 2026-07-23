@@ -1,0 +1,77 @@
+{
+  "name": "高端商务",
+  "id": "premium",
+  "description": "深色系，金色点缀，精致感。适合金融、奢侈品、高端服务。",
+  "tokens": {
+    "colors": {
+      "primary": "#1A1A2E",
+      "primaryLight": "#2D2D44",
+      "primaryDark": "#0F0F1A",
+      "secondary": "#D4AF37",
+      "secondaryLight": "#E5C76B",
+      "accent": "#D4AF37",
+      "background": "#0F0F1A",
+      "backgroundSecondary": "#16162A",
+      "surface": "#1A1A2E",
+      "surfaceSecondary": "#232340",
+      "border": "#2D2D44",
+      "textPrimary": "#FFFFFF",
+      "textSecondary": "#B8B8C8",
+      "textTertiary": "#6B6B7B",
+      "success": "#10B981",
+      "warning": "#F59E0B",
+      "error": "#EF4444",
+      "info": "#3B82F6",
+      "gold": "#D4AF37",
+      "goldLight": "#E5C76B"
+    },
+    "typography": {
+      "fontFamily": "-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', serif",
+      "fontSizeXs": "10px",
+      "fontSizeSm": "12px",
+      "fontSizeMd": "14px",
+      "fontSizeLg": "16px",
+      "fontSizeXl": "18px",
+      "fontSize2xl": "22px",
+      "fontSize3xl": "28px",
+      "fontWeightNormal": "300",
+      "fontWeightMedium": "400",
+      "fontWeightSemibold": "500",
+      "fontWeightBold": "600"
+    },
+    "spacing": {
+      "xs": "4px",
+      "sm": "8px",
+      "md": "16px",
+      "lg": "20px",
+      "xl": "24px",
+      "2xl": "32px",
+      "3xl": "40px",
+      "4xl": "56px"
+    },
+    "radius": {
+      "none": "0px",
+      "sm": "4px",
+      "md": "8px",
+      "lg": "12px",
+      "xl": "16px",
+      "full": "9999px"
+    },
+    "shadow": {
+      "sm": "0 2px 8px rgba(0, 0, 0, 0.3)",
+      "md": "0 4px 16px rgba(0, 0, 0, 0.4)",
+      "lg": "0 8px 24px rgba(0, 0, 0, 0.5)",
+      "gold": "0 0 20px rgba(212, 175, 55, 0.3)"
+    },
+    "transition": {
+      "fast": "200ms",
+      "normal": "300ms",
+      "slow": "400ms"
+    }
+  },
+  "usage": {
+    "scenarios": ["金融应用", "奢侈品电商", "高端会员", "企业服务"],
+    "avoid": ["儿童产品", "社交娱乐", "工具类"]
+  },
+  "examples": ["招商银行", "网易云音乐(黑胶)", "Apple Card", "铂涛"]
+}

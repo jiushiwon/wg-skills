@@ -1,0 +1,120 @@
+{
+  "name": "订单相关Mock",
+  "description": "订单模块Mock数据模板，包含订单信息、状态、物流等",
+  "filename": "order.json",
+  "structure": {
+    "order": {
+      "id": "订单ID",
+      "orderNo": "订单号",
+      "userId": "用户ID",
+      "status": "订单状态",
+      "totalAmount": "订单总金额",
+      "payAmount": "实付金额",
+      "freight": "运费",
+      "discount": "优惠金额",
+      "items": "订单商品列表",
+      "address": "收货地址",
+      "payTime": "支付时间",
+      "createTime": "创建时间",
+      "payMethod": "支付方式"
+    },
+    "orderItem": {
+      "id": "订单项ID",
+      "orderId": "订单ID",
+      "productId": "商品ID",
+      "productName": "商品名称",
+      "image": "商品图片",
+      "price": "单价",
+      "quantity": "数量",
+      "specs": "规格"
+    },
+    "express": {
+      "id": "物流ID",
+      "orderId": "订单ID",
+      "company": "物流公司",
+      "number": "快递单号",
+      "traces": "物流轨迹"
+    },
+    "trace": {
+      "time": "时间",
+      "status": "状态",
+      "location": "地点"
+    }
+  },
+  "example": {
+    "orders": [
+      {
+        "id": "o001",
+        "orderNo": "202401151234567890",
+        "userId": "u001",
+        "status": 2,
+        "statusText": "待收货",
+        "totalAmount": 299.00,
+        "payAmount": 279.00,
+        "freight": 0,
+        "discount": 20,
+        "items": [
+          {
+            "id": "oi001",
+            "productId": "p001",
+            "productName": "无线蓝牙耳机",
+            "image": "https://picsum.photos/100/100?random=10",
+            "price": 199.00,
+            "quantity": 1,
+            "specs": "黑色"
+          }
+        ],
+        "address": {
+          "name": "张三",
+          "phone": "13800138000",
+          "province": "广东省",
+          "city": "深圳市",
+          "district": "南山区",
+          "detail": "科技园南路88号"
+        },
+        "createTime": "2024-01-15 10:00:00",
+        "payTime": "2024-01-15 10:05:00"
+      }
+    ],
+    "orderStatuses": [
+      { "value": 0, "label": "待付款" },
+      { "value": 1, "label": "待发货" },
+      { "value": 2, "label": "待收货" },
+      { "value": 3, "label": "已完成" },
+      { "value": 4, "label": "已取消" }
+    ],
+    "express": {
+      "id": "e001",
+      "orderId": "o001",
+      "company": "顺丰速运",
+      "number": "SF1234567890",
+      "traces": [
+        {
+          "time": "2024-01-16 14:30:00",
+          "status": "已签收",
+          "location": "深圳市南山区科技园分部"
+        },
+        {
+          "time": "2024-01-16 09:00:00",
+          "status": "正在派送中",
+          "location": "深圳市南山区科技园分部"
+        },
+        {
+          "time": "2024-01-15 20:00:00",
+          "status": "已到达目的地",
+          "location": "深圳市"
+        }
+      ]
+    }
+  },
+  "states": {
+    "normal": "10-20条订单数据，覆盖各状态",
+    "empty": "空数组",
+    "loading": "延迟500ms响应",
+    "error": "返回错误码500",
+    "pendingPay": "待付款订单",
+    "pendingShip": "待发货订单",
+    "pendingReceive": "待收货订单",
+    "completed": "已完成订单"
+  }
+}

@@ -1,0 +1,406 @@
+/**
+ * 主题系统 - 多主题支持
+ *
+ * 使用方式：
+ * <html data-theme="modern">  -> 现代简约
+ * <html data-theme="vibrant">  -> 活力炫彩
+ * <html data-theme="premium">  -> 高端商务
+ * <html data-theme="nature">   -> 清新自然
+ * <html data-theme="dark">    -> 暗黑科技
+ *
+ * JavaScript 切换：
+ * document.documentElement.setAttribute('data-theme', 'vibrant')
+ */
+
+/* ============================================
+   主题 1: 现代简约 (Modern)
+   适用场景：工具类、效率类、企业后台
+   ============================================ */
+[data-theme="modern"] {
+  /* 主色 */
+  --color-primary: #333333;
+  --color-primary-light: #666666;
+  --color-primary-dark: #000000;
+  --color-primary-hover: #1a1a1a;
+  --color-primary-active: #000000;
+
+  /* 色阶 */
+  --primary-50: #f9fafb;
+  --primary-100: #f3f4f6;
+  --primary-200: #e5e7eb;
+  --primary-300: #d1d5db;
+  --primary-400: #9ca3af;
+  --primary-500: #6b7280;
+  --primary-600: #4b5563;
+  --primary-700: #374151;
+  --primary-800: #1f2937;
+  --primary-900: #111827;
+
+  /* 背景色 */
+  --color-bg: #ffffff;
+  --color-bg-page: #f9fafb;
+  --color-bg-surface: #ffffff;
+  --color-bg-surface-hover: #f9fafb;
+  --color-bg-surface-active: #f3f4f6;
+  --color-bg-mask: rgba(0, 0, 0, 0.5);
+
+  /* 边框色 */
+  --color-border: #e5e7eb;
+  --color-border-light: #f3f4f6;
+  --color-border-focus: var(--color-primary);
+
+  /* 文字色 */
+  --color-text-primary: #111827;
+  --color-text-secondary: #6b7280;
+  --color-text-tertiary: #9ca3af;
+  --color-text-disabled: #d1d5db;
+  --color-text-placeholder: #9ca3af;
+  --color-text-inverse: #ffffff;
+
+  /* 语义色 */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+
+  /* 阴影 */
+  --shadow-card: var(--shadow-base);
+  --shadow-popup: var(--shadow-lg);
+  --shadow-dropdown: var(--shadow-md);
+
+  /* 圆角 */
+  --radius-card: var(--radius-lg);
+  --radius-button: var(--radius-md);
+  --radius-input: var(--radius-md);
+
+  /* 渐变 */
+  --gradient-primary: linear-gradient(135deg, #333333 0%, #666666 100%);
+}
+
+/* ============================================
+   主题 2: 活力炫彩 (Vibrant)
+   适用场景：电商、社交、娱乐
+   ============================================ */
+[data-theme="vibrant"] {
+  /* 主色 */
+  --color-primary: #f43f5e;
+  --color-primary-light: #fb7185;
+  --color-primary-dark: #e11d48;
+  --color-primary-hover: #fb3640;
+  --color-primary-active: #be123c;
+
+  /* 色阶 */
+  --primary-50: #fff1f2;
+  --primary-100: #ffe4e6;
+  --primary-200: #fecdd3;
+  --primary-300: #fda4af;
+  --primary-400: #fb7185;
+  --primary-500: #f43f5e;
+  --primary-600: #e11d48;
+  --primary-700: #be123c;
+  --primary-800: #9f1239;
+  --primary-900: #881337;
+
+  /* 背景色 */
+  --color-bg: #ffffff;
+  --color-bg-page: #fff1f2;
+  --color-bg-surface: #ffffff;
+  --color-bg-surface-hover: #fff1f2;
+  --color-bg-surface-active: #ffe4e6;
+  --color-bg-mask: rgba(0, 0, 0, 0.6);
+
+  /* 边框色 */
+  --color-border: #fda4af;
+  --color-border-light: #ffe4e6;
+  --color-border-focus: var(--color-primary);
+
+  /* 文字色 */
+  --color-text-primary: #1f2937;
+  --color-text-secondary: #4b5563;
+  --color-text-tertiary: #9ca3af;
+  --color-text-disabled: #d1d5db;
+  --color-text-placeholder: #9ca3af;
+  --color-text-inverse: #ffffff;
+
+  /* 语义色 */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+
+  /* 阴影 */
+  --shadow-card: 0 4px 14px -1px rgba(244, 63, 94, 0.15);
+  --shadow-popup: 0 10px 25px -3px rgba(244, 63, 94, 0.2);
+  --shadow-dropdown: 0 4px 12px -2px rgba(244, 63, 94, 0.15);
+
+  /* 圆角 */
+  --radius-card: var(--radius-xl);
+  --radius-button: var(--radius-lg);
+  --radius-input: var(--radius-lg);
+
+  /* 渐变 */
+  --gradient-primary: linear-gradient(135deg, #f43f5e 0%, #fb7185 50%, #fb3640 100%);
+}
+
+/* ============================================
+   主题 3: 高端商务 (Premium)
+   适用场景：金融、高端服务、企业官网
+   ============================================ */
+[data-theme="premium"] {
+  /* 主色 */
+  --color-primary: #1a1a2e;
+  --color-primary-light: #2d2d44;
+  --color-primary-dark: #0f0f1a;
+  --color-primary-hover: #252542;
+  --color-primary-active: #0a0a12;
+
+  /* 辅助色 - 金色点缀 */
+  --color-accent: #d4af37;
+  --color-accent-light: #e8c547;
+  --color-accent-dark: #b8962e;
+
+  /* 色阶 */
+  --primary-50: #e8e8ed;
+  --primary-100: #d1d1db;
+  --primary-200: #a3a3b8;
+  --primary-300: #757594;
+  --primary-400: #474771;
+  --primary-500: #1a1a2e;
+  --primary-600: #171729;
+  --primary-700: #141421;
+  --primary-800: #0f0f1a;
+  --primary-900: #08080d;
+
+  /* 背景色 */
+  --color-bg: #0f0f1a;
+  --color-bg-page: #08080d;
+  --color-bg-surface: #141421;
+  --color-bg-surface-hover: #1a1a2e;
+  --color-bg-surface-active: #252542;
+  --color-bg-mask: rgba(0, 0, 0, 0.8);
+
+  /* 边框色 */
+  --color-border: #2d2d44;
+  --color-border-light: #1a1a2e;
+  --color-border-focus: var(--color-accent);
+
+  /* 文字色 */
+  --color-text-primary: #f5f5f5;
+  --color-text-secondary: #a3a3b8;
+  --color-text-tertiary: #757594;
+  --color-text-disabled: #474771;
+  --color-text-placeholder: #474771;
+  --color-text-inverse: #1a1a2e;
+
+  /* 语义色 */
+  --color-success: #10b981;
+  --color-warning: #d4af37;
+  --color-error: #ef4444;
+  --color-info: #60a5fa;
+
+  /* 阴影 */
+  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+  --shadow-popup: 0 10px 40px -5px rgba(0, 0, 0, 0.5);
+  --shadow-dropdown: 0 4px 20px -3px rgba(0, 0, 0, 0.4);
+
+  /* 圆角 */
+  --radius-card: var(--radius-sm);
+  --radius-button: var(--radius-sm);
+  --radius-input: var(--radius-sm);
+
+  /* 渐变 */
+  --gradient-primary: linear-gradient(135deg, #1a1a2e 0%, #2d2d44 50%, #1a1a2e 100%);
+  --gradient-accent: linear-gradient(135deg, #d4af37 0%, #e8c547 100%);
+}
+
+/* ============================================
+   主题 4: 清新自然 (Nature)
+   适用场景：健康、母婴、生活服务
+   ============================================ */
+[data-theme="nature"] {
+  /* 主色 */
+  --color-primary: #10b981;
+  --color-primary-light: #34d399;
+  --color-primary-dark: #059669;
+  --color-primary-hover: #059669;
+  --color-primary-active: #047857;
+
+  /* 色阶 */
+  --primary-50: #ecfdf5;
+  --primary-100: #d1fae5;
+  --primary-200: #a7f3d0;
+  --primary-300: #6ee7b7;
+  --primary-400: #34d399;
+  --primary-500: #10b981;
+  --primary-600: #059669;
+  --primary-700: #047857;
+  --primary-800: #065f46;
+  --primary-900: #064e3b;
+
+  /* 背景色 */
+  --color-bg: #ffffff;
+  --color-bg-page: #ecfdf5;
+  --color-bg-surface: #ffffff;
+  --color-bg-surface-hover: #f0fdf4;
+  --color-bg-surface-active: #d1fae5;
+  --color-bg-mask: rgba(0, 0, 0, 0.4);
+
+  /* 边框色 */
+  --color-border: #a7f3d0;
+  --color-border-light: #d1fae5;
+  --color-border-focus: var(--color-primary);
+
+  /* 文字色 */
+  --color-text-primary: #064e3b;
+  --color-text-secondary: #047857;
+  --color-text-tertiary: #6ee7b7;
+  --color-text-disabled: #a7f3d0;
+  --color-text-placeholder: #6ee7b7;
+  --color-text-inverse: #ffffff;
+
+  /* 语义色 */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+
+  /* 阴影 */
+  --shadow-card: 0 4px 14px -1px rgba(16, 185, 129, 0.1);
+  --shadow-popup: 0 10px 25px -3px rgba(16, 185, 129, 0.15);
+  --shadow-dropdown: 0 4px 12px -2px rgba(16, 185, 129, 0.1);
+
+  /* 圆角 */
+  --radius-card: var(--radius-xl);
+  --radius-button: var(--radius-lg);
+  --radius-input: var(--radius-lg);
+
+  /* 渐变 */
+  --gradient-primary: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+}
+
+/* ============================================
+   主题 5: 暗黑科技 (Dark Tech)
+   适用场景：游戏、科技产品、开发者工具
+   ============================================ */
+[data-theme="dark"] {
+  /* 主色 - 赛博朋克青色 */
+  --color-primary: #06b6d4;
+  --color-primary-light: #22d3ee;
+  --color-primary-dark: #0891b2;
+  --color-primary-hover: #22d3ee;
+  --color-primary-active: #0891b2;
+
+  /* 霓虹点缀 */
+  --color-accent: #a855f7;
+  --color-accent-light: #c084fc;
+  --color-accent-dark: #9333ea;
+
+  /* 色阶 */
+  --primary-50: #ecfeff;
+  --primary-100: #cffafe;
+  --primary-200: #a5f3fc;
+  --primary-300: #67e8f9;
+  --primary-400: #22d3ee;
+  --primary-500: #06b6d4;
+  --primary-600: #0891b2;
+  --primary-700: #0e7490;
+  --primary-800: #155e75;
+  --primary-900: #164e63;
+
+  /* 背景色 */
+  --color-bg: #09090b;
+  --color-bg-page: #000000;
+  --color-bg-surface: #18181b;
+  --color-bg-surface-hover: #27272a;
+  --color-bg-surface-active: #3f3f46;
+  --color-bg-mask: rgba(0, 0, 0, 0.8);
+
+  /* 边框色 */
+  --color-border: #27272a;
+  --color-border-light: #18181b;
+  --color-border-focus: var(--color-primary);
+
+  /* 文字色 */
+  --color-text-primary: #fafafa;
+  --color-text-secondary: #a1a1aa;
+  --color-text-tertiary: #71717a;
+  --color-text-disabled: #52525b;
+  --color-text-placeholder: #52525b;
+  --color-text-inverse: #000000;
+
+  /* 语义色 */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #06b6d4;
+
+  /* 阴影 - 霓虹发光效果 */
+  --shadow-card: 0 0 20px -5px rgba(6, 182, 212, 0.2);
+  --shadow-popup: 0 0 40px -10px rgba(6, 182, 212, 0.3);
+  --shadow-dropdown: 0 0 20px -5px rgba(6, 182, 212, 0.2);
+  --shadow-glow: 0 0 20px rgba(6, 182, 212, 0.5);
+
+  /* 圆角 */
+  --radius-card: var(--radius-lg);
+  --radius-button: var(--radius-md);
+  --radius-input: var(--radius-md);
+
+  /* 渐变 */
+  --gradient-primary: linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%);
+  --gradient-accent: linear-gradient(135deg, #a855f7 0%, #c084fc 100%);
+}
+
+/* ============================================
+   兼容旧版 light 主题（默认）
+   ============================================ */
+[data-theme="light"] {
+  --color-primary: #16baaa;
+  --color-primary-light: #1dd1b8;
+  --color-primary-dark: #129a8e;
+  --color-primary-hover: #14a99b;
+  --color-primary-active: #129a8e;
+
+  --primary-50: #f0fdfa;
+  --primary-100: #ccfbf1;
+  --primary-200: #99f6e4;
+  --primary-300: #5eead4;
+  --primary-400: #2dd4bf;
+  --primary-500: #14b8a6;
+  --primary-600: #0d9488;
+  --primary-700: #0f766e;
+  --primary-800: #115e59;
+  --primary-900: #134e4a;
+
+  --color-bg: #ffffff;
+  --color-bg-page: #fafafa;
+  --color-bg-surface: #ffffff;
+  --color-bg-surface-hover: #f8f8f8;
+  --color-bg-surface-active: #f0f0f0;
+  --color-bg-mask: rgba(0, 0, 0, 0.5);
+
+  --color-border: #e5e5e5;
+  --color-border-light: #f0f0f0;
+  --color-border-focus: var(--color-primary);
+
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #5a5a5a;
+  --color-text-tertiary: #999999;
+  --color-text-disabled: #cccccc;
+  --color-text-placeholder: #999999;
+  --color-text-inverse: #ffffff;
+
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+
+  --shadow-card: var(--shadow-base);
+  --shadow-popup: var(--shadow-lg);
+  --shadow-dropdown: var(--shadow-md);
+
+  --radius-card: var(--radius-lg);
+  --radius-button: var(--radius-md);
+  --radius-input: var(--radius-md);
+
+  --gradient-primary: linear-gradient(135deg, #16baaa 0%, #1dd1b8 100%);
+}

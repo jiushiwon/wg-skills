@@ -1,0 +1,16 @@
+{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "title": "Vue3 组合式 API 最佳实践",
+    "category": "技术",
+    "date": "2024-01-15",
+    "author": {
+      "name": "编辑者",
+      "avatar": "https://picsum.photos/100/100"
+    },
+    "cover": "https://picsum.photos/750/400",
+    "content": "Vue3 的组合式 API 提供了更灵活的代码组织方式...",
+    "tags": ["Vue3", "前端"]
+  }
+}

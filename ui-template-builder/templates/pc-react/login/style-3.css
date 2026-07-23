@@ -1,0 +1,115 @@
+/* 风格3：深色科技 - 深蓝背景，霓虹点缀 */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0A0E27;
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(124, 77, 255, 0.08) 0%, transparent 50%);
+}
+
+.login-container {
+  width: 100%;
+  max-width: 380px;
+  padding: 20px;
+}
+
+.login-card {
+  background: rgba(22, 22, 46, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 217, 255, 0.2);
+  border-radius: 20px;
+  padding: 40px 32px;
+  box-shadow: 0 0 40px rgba(0, 217, 255, 0.1);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.logo-box {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 20px;
+  background: linear-gradient(135deg, #00D9FF, #7C4DFF);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 30px rgba(0, 217, 255, 0.4);
+}
+
+.logo-icon {
+  font-size: 28px;
+  color: #FFFFFF;
+}
+
+.login-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.form-item {
+  margin-bottom: 20px;
+}
+
+.form-input {
+  width: 100%;
+  height: 50px;
+  padding: 0 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  font-size: 14px;
+  color: #FFFFFF;
+  background: rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #00D9FF;
+  box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.1);
+}
+
+.form-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.submit-btn {
+  width: 100%;
+  height: 50px;
+  background: linear-gradient(135deg, #00D9FF, #7C4DFF);
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 8px;
+}
+
+.submit-btn:hover {
+  box-shadow: 0 0 30px rgba(0, 217, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 24px;
+}
+
+.login-footer a {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.login-footer a:hover {
+  color: #00D9FF;
+}

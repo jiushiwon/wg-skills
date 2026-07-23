@@ -1,0 +1,77 @@
+{
+  "name": "简约现代",
+  "id": "modern",
+  "description": "白色为主，文字为主，少装饰。适合工具类、效率类应用。",
+  "tokens": {
+    "colors": {
+      "primary": "#333333",
+      "primaryLight": "#666666",
+      "primaryDark": "#000000",
+      "secondary": "#666666",
+      "accent": "#2563EB",
+      "background": "#FFFFFF",
+      "backgroundSecondary": "#F5F5F5",
+      "surface": "#FFFFFF",
+      "surfaceSecondary": "#F9FAFB",
+      "border": "#E5E5E5",
+      "textPrimary": "#333333",
+      "textSecondary": "#999999",
+      "textTertiary": "#CCCCCC",
+      "success": "#10B981",
+      "warning": "#F59E0B",
+      "error": "#EF4444",
+      "info": "#3B82F6"
+    },
+    "typography": {
+      "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+      "fontSizeXs": "10px",
+      "fontSizeSm": "12px",
+      "fontSizeMd": "14px",
+      "fontSizeLg": "16px",
+      "fontSizeXl": "18px",
+      "fontSize2xl": "20px",
+      "fontSize3xl": "24px",
+      "fontWeightNormal": "400",
+      "fontWeightMedium": "500",
+      "fontWeightSemibold": "600",
+      "fontWeightBold": "700",
+      "lineHeightTight": "1.25",
+      "lineHeightNormal": "1.5",
+      "lineHeightRelaxed": "1.75"
+    },
+    "spacing": {
+      "xs": "4px",
+      "sm": "8px",
+      "md": "12px",
+      "lg": "16px",
+      "xl": "20px",
+      "2xl": "24px",
+      "3xl": "32px",
+      "4xl": "48px"
+    },
+    "radius": {
+      "none": "0px",
+      "sm": "4px",
+      "md": "8px",
+      "lg": "12px",
+      "xl": "16px",
+      "full": "9999px"
+    },
+    "shadow": {
+      "sm": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+      "md": "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+      "lg": "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+      "xl": "0 20px 25px -5px rgba(0, 0, 0, 0.1)"
+    },
+    "transition": {
+      "fast": "150ms",
+      "normal": "200ms",
+      "slow": "300ms"
+    }
+  },
+  "usage": {
+    "scenarios": ["工具类App", "效率类App", "企业内部系统", "后台管理"],
+    "avoid": ["电商促销", "游戏", "社交娱乐"]
+  },
+  "examples": ["支付宝", "钉钉", "Notion", "Linear"]
+}

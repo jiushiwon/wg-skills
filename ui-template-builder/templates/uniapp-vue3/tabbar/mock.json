@@ -1,0 +1,12 @@
+{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "items": [
+      { "key": "home", "label": "首页", "icon": "ri-home-fill", "active": true },
+      { "key": "category", "label": "分类", "icon": "ri-app-store-fill", "active": false },
+      { "key": "cart", "label": "购物车", "icon": "ri-shopping-cart-fill", "active": false, "badge": 3 },
+      { "key": "profile", "label": "我的", "icon": "ri-user-fill", "active": false }
+    ]
+  }
+}

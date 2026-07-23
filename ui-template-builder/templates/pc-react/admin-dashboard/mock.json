@@ -1,0 +1,15 @@
+{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "title": "仪表盘",
+    "stats": [
+      { "label": "总用户", "value": "12,856", "trend": "+12.5%", "up": true },
+      { "label": "活跃用户", "value": "8,432", "trend": "+8.2%", "up": true },
+      { "label": "总订单", "value": "3,652", "trend": "-2.1%", "up": false },
+      { "label": "总收入", "value": "¥128,560", "trend": "+18.6%", "up": true }
+    ],
+    "menu": ["仪表盘", "用户管理", "订单管理", "商品管理", "内容管理", "系统设置"],
+    "chartData": [65, 45, 78, 52, 90, 68, 85]
+  }
+}

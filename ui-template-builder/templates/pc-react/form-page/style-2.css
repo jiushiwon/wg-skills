@@ -1,0 +1,12 @@
+/* Form Page - 填充风格 */
+.form-page-filled { min-height: 100vh; padding: 40px 20px; background: #f0f2f5; }
+.form-page-filled__card { max-width: 560px; margin: 0 auto; background: #fff; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); padding: 36px; }
+.form-page-filled__title { font-size: 22px; font-weight: 600; color: #1a1a1a; margin: 0 0 28px; text-align: center; }
+.form-page-filled__field { margin-bottom: 20px; }
+.form-page-filled__label { display: block; font-size: 14px; font-weight: 500; color: #666; margin-bottom: 8px; }
+.form-page-filled__input { width: 100%; height: 46px; padding: 0 16px; font-size: 15px; color: #333; background: #f5f7fa; border: 2px solid transparent; border-radius: 12px; outline: none; transition: all 0.2s; }
+.form-page-filled__input:focus { background: #fff; border-color: #667eea; }
+.form-page-filled__actions { display: flex; gap: 12px; margin-top: 28px; }
+.form-page-filled__btn { flex: 1; height: 46px; font-size: 15px; font-weight: 500; color: #fff; background: linear-gradient(135deg, #667eea, #764ba2); border: none; border-radius: 12px; cursor: pointer; }
+.form-page-filled__btn:hover { box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4); }
+.form-page-filled__btn--secondary { color: #666; background: #f5f7fa; }

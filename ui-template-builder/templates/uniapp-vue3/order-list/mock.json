@@ -1,0 +1,32 @@
+{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "title": "订单列表",
+    "tabs": ["全部", "待付款", "待发货", "待收货", "已完成"],
+    "orders": [
+      {
+        "id": "O20240115001",
+        "shopName": "官方旗舰店",
+        "status": "待发货",
+        "statusCode": "pending",
+        "items": [
+          { "id": "i1", "name": "无线蓝牙耳机", "spec": "黑色", "price": 299, "count": 1, "image": "https://picsum.photos/100/100" }
+        ],
+        "total": 299,
+        "createdAt": "2024-01-15 10:30"
+      },
+      {
+        "id": "O20240110002",
+        "shopName": "数码专营店",
+        "status": "已完成",
+        "statusCode": "done",
+        "items": [
+          { "id": "i2", "name": "便携充电宝", "spec": "白色 10000mAh", "price": 99, "count": 2, "image": "https://picsum.photos/100/101" }
+        ],
+        "total": 198,
+        "createdAt": "2024-01-10 14:20"
+      }
+    ]
+  }
+}

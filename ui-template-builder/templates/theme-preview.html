@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>主题换肤演示 - UI Template Builder</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <style>
+    /* 基础样式 */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+
+    /* ========================================
+       CSS 变量定义（默认现代风格）
+       ======================================== */
+    :root {
+      /* 颜色 - 现代风格 */
+      --color-primary: #333333;
+      --color-primary-light: #666666;
+      --color-bg: #ffffff;
+      --color-bg-secondary: #f5f7fa;
+      --color-text: #333333;
+      --color-text-secondary: #666666;
+      --color-border: #e5e5e5;
+      --color-success: #10b981;
+      --color-warning: #f59e0b;
+      --color-error: #ef4444;
+
+      /* 尺寸 */
+      --font-size-base: 14px;
+      --font-size-sm: 12px;
+      --font-size-lg: 16px;
+      --space-base: 16px;
+      --space-sm: 8px;
+      --space-lg: 24px;
+      --radius-base: 8px;
+    }
+
+    /* 主题2: 活力炫彩 */
+    [data-theme="vibrant"] {
+      --color-primary: #FF6B6B;
+      --color-primary-light: #FF8E53;
+      --color-success: #10B981;
+      --color-error: #EF4444;
+    }
+
+    /* 主题3: 高端暗金 */
+    [data-theme="premium"] {
+      --color-primary: #D4AF37;
+      --color-primary-light: #E5C76B;
+      --color-bg: #0F0F1A;
+      --color-bg-secondary: #16162A;
+      --color-text: #E5E5F0;
+      --color-text-secondary: #8888A0;
+      --color-border: #2A2A40;
+    }
+
+    /* 主题4: 清新自然 */
+    [data-theme="nature"] {
+      --color-primary: #2ECC71;
+      --color-primary-light: #27AE60;
+      --color-success: #2ECC71;
+    }
+
+    /* 主题5: 暗黑科技 */
+    [data-theme="dark-tech"] {
+      --color-primary: #00D9FF;
+      --color-primary-light: #7C4DFF;
+      --color-bg: #0A0E27;
+      --color-bg-secondary: #0D1238;
+      --color-text: #E5E5F0;
+      --color-text-secondary: #8892B0;
+      --color-border: #1A237E;
+    }
+
+    /* ========================================
+       尺寸档位
+       ======================================== */
+    /* 小号 */
+    [data-size="sm"] {
+      --font-size-base: 12px;
+      --font-size-sm: 10px;
+      --font-size-lg: 14px;
+      --space-base: 12px;
+      --space-sm: 6px;
+      --space-lg: 18px;
+      --radius-base: 6px;
+    }
+
+    /* 大号 */
+    [data-size="lg"] {
+      --font-size-base: 16px;
+      --font-size-sm: 14px;
+      --font-size-lg: 18px;
+      --space-base: 20px;
+      --space-sm: 12px;
+      --space-lg: 32px;
+      --radius-base: 10px;
+    }
+
+    /* ========================================
+       页面样式
+       ======================================== */
+    .theme-demo { background: var(--color-bg-secondary); min-height: 100vh; padding: 40px 20px; }
+    .container { max-width: 900px; margin: 0 auto; }
+    h1 { text-align: center; margin-bottom: 8px; color: var(--color-text); }
+    .subtitle { text-align: center; color: var(--color-text-secondary); margin-bottom: 32px; }
+
+    /* 控制面板 */
+    .controls {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .control-group { flex: 1; min-width: 200px; }
+    .control-label { display: block; font-size: 13px; font-weight: 600; color: var(--color-text); margin-bottom: 10px; }
+    .control-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+    .control-btn {
+      padding: 8px 16px;
+      font-size: 13px;
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      background: var(--color-bg);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .control-btn:hover { border-color: var(--color-primary); color: var(--color-primary); }
+    .control-btn.active { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+
+    /* 预览卡片 */
+    .preview-card {
+      background: var(--color-bg);
+      border-radius: var(--radius-base);
+      padding: var(--space-lg);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      margin-bottom: var(--space-lg);
+    }
+    .preview-title { font-size: var(--font-size-lg); font-weight: 600; color: var(--color-text); margin-bottom: var(--space-base); }
+
+    /* 按钮预览 */
+    .btn-group { display: flex; gap: var(--space-sm); flex-wrap: wrap; margin-bottom: var(--space-base); }
+    .demo-btn {
+      padding: 10px 20px;
+      font-size: var(--font-size-base);
+      border-radius: var(--radius-base);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .demo-btn-primary { background: var(--color-primary); color: #fff; }
+    .demo-btn-primary:hover { opacity: 0.9; }
+    .demo-btn-secondary { background: var(--color-bg-secondary); color: var(--color-text); border: 1px solid var(--color-border); }
+
+    /* 输入框预览 */
+    .input-group { display: flex; gap: var(--space-sm); flex-wrap: wrap; margin-bottom: var(--space-base); }
+    .demo-input {
+      padding: 10px 14px;
+      font-size: var(--font-size-base);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-base);
+      background: var(--color-bg);
+      color: var(--color-text);
+      min-width: 160px;
+    }
+    .demo-input:focus { outline: none; border-color: var(--color-primary); }
+
+    /* 标签预览 */
+    .tag-group { display: flex; gap: var(--space-sm); flex-wrap: wrap; }
+    .demo-tag {
+      padding: 4px 10px;
+      font-size: var(--font-size-sm);
+      border-radius: 4px;
+    }
+    .demo-tag-success { background: rgba(16, 185, 129, 0.1); color: var(--color-success); }
+    .demo-tag-warning { background: rgba(245, 158, 11, 0.1); color: var(--color-warning); }
+    .demo-tag-error { background: rgba(239, 68, 68, 0.1); color: var(--color-error); }
+
+    /* 代码展示 */
+    .code-block {
+      background: #1e1e1e;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: var(--space-base);
+      overflow-x: auto;
+    }
+    .code-block pre { margin: 0; color: #d4d4d4; font-size: 12px; font-family: 'Consolas', monospace; }
+    .code-block .comment { color: #6a9955; }
+    .code-block .keyword { color: #569cd6; }
+    .code-block .string { color: #ce9178; }
+
+    /* 尺寸对比 */
+    .size-compare { display: flex; gap: var(--space-lg); }
+    .size-item { flex: 1; text-align: center; padding: var(--space-base); background: var(--color-bg-secondary); border-radius: var(--radius-base); }
+    .size-label { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <div class="theme-demo" id="app">
+    <div class="container">
+      <h1>🎨 主题换肤 & 尺寸切换演示</h1>
+      <p class="subtitle">选择主题色和尺寸档位，实时预览效果</p>
+
+      <!-- 控制面板 -->
+      <div class="controls">
+        <div class="control-group">
+          <span class="control-label">🎨 选择主题色</span>
+          <div class="control-btns">
+            <button class="control-btn active" data-theme-btn="modern">现代灰</button>
+            <button class="control-btn" data-theme-btn="vibrant">活力橙</button>
+            <button class="control-btn" data-theme-btn="premium">暗金</button>
+            <button class="control-btn" data-theme-btn="nature">清新绿</button>
+            <button class="control-btn" data-theme-btn="dark-tech">科技蓝</button>
+          </div>
+        </div>
+        <div class="control-group">
+          <span class="control-label">📏 选择尺寸</span>
+          <div class="control-btns">
+            <button class="control-btn" data-size-btn="sm">小号</button>
+            <button class="control-btn active" data-size-btn="md">中号</button>
+            <button class="control-btn" data-size-btn="lg">大号</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 预览区域 -->
+      <div class="preview-card">
+        <h3 class="preview-title">组件预览</h3>
+
+        <!-- 按钮 -->
+        <div class="btn-group">
+          <button class="demo-btn demo-btn-primary">主要按钮</button>
+          <button class="demo-btn demo-btn-secondary">次要按钮</button>
+        </div>
+
+        <!-- 输入框 -->
+        <div class="input-group">
+          <input type="text" class="demo-input" placeholder="输入框">
+          <input type="text" class="demo-input" placeholder="禁用" disabled>
+        </div>
+
+        <!-- 标签 -->
+        <div class="tag-group">
+          <span class="demo-tag demo-tag-success">成功</span>
+          <span class="demo-tag demo-tag-warning">警告</span>
+          <span class="demo-tag demo-tag-error">错误</span>
+        </div>
+      </div>
+
+      <!-- 尺寸对比 -->
+      <div class="preview-card">
+        <h3 class="preview-title">📏 尺寸档位对比</h3>
+        <div class="size-compare">
+          <div class="size-item" data-size="sm" style="display:none;">
+            <div class="size-label">小号 (sm)</div>
+            <button class="demo-btn demo-btn-primary">按钮</button>
+            <input type="text" class="demo-input" style="margin-top:8px;width:100%;" placeholder="输入框">
+          </div>
+          <div class="size-item" data-size="md" style="display:none;">
+            <div class="size-label">中号 (md)</div>
+            <button class="demo-btn demo-btn-primary">按钮</button>
+            <input type="text" class="demo-input" style="margin-top:8px;width:100%;" placeholder="输入框">
+          </div>
+          <div class="size-item" data-size="lg" style="display:none;">
+            <div class="size-label">大号 (lg)</div>
+            <button class="demo-btn demo-btn-primary">按钮</button>
+            <input type="text" class="demo-input" style="margin-top:8px;width:100%;" placeholder="输入框">
+          </div>
+        </div>
+      </div>
+
+      <!-- 使用代码 -->
+      <div class="preview-card">
+        <h3 class="preview-title">💻 一键换肤代码</h3>
+        <div class="code-block">
+          <pre><span class="comment">// 1. 引入主题生成器</span>
+<span class="keyword">import</span> { generateTokens, generateCSSVariables } <span class="keyword">from</span> <span class="string">'./references/theme-generator'</span>
+
+<span class="comment">// 2. 生成自定义主题（任意颜色）</span>
+<span class="keyword">const</span> tokens = generateTokens({
+  primaryColor: <span class="string">'#FF4444'</span>  <span class="comment">// 换成任意颜色</span>
+})
+
+<span class="comment">// 3. 生成 CSS 变量</span>
+<span class="keyword">const</span> css = generateCSSVariables(tokens)
+
+<span class="comment">// 4. 注入页面即可全局换肤</span>
+document.head.insertAdjacentHTML(<span class="string">'beforeend'</span>,
+  <span class="string">`<style>:root {${css}}</style>`</span>)
+</pre>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // 主题切换
+    const themeBtns = document.querySelectorAll('[data-theme-btn]')
+    themeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        themeBtns.forEach(b => b.classList.remove('active'))
+        btn.classList.add('active')
+        const theme = btn.dataset.themeBtn
+        document.body.setAttribute('data-theme', theme)
+      })
+    })
+
+    // 尺寸切换
+    const sizeBtns = document.querySelectorAll('[data-size-btn]')
+    sizeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        sizeBtns.forEach(b => b.classList.remove('active'))
+        btn.classList.add('active')
+        const size = btn.dataset.sizeBtn
+        document.body.setAttribute('data-size', size)
+
+        // 显示对应的尺寸对比
+        document.querySelectorAll('.size-item').forEach(item => {
+          item.style.display = item.dataset.size === size ? 'block' : 'none'
+        })
+      })
+    })
+
+    // 初始化显示中号
+    document.querySelector('.size-item[data-size="md"]').style.display = 'block'
+  </script>
+</body>
+</html>
