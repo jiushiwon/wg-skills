@@ -1,0 +1,191 @@
+/**
+ * Design Tokens - CSS 变量版本
+ *
+ * 本文件是全局 Design Tokens 的 CSS 变量实现。
+ * 支持 Less / SCSS / 原生 CSS 项目。
+ *
+ * 使用方式：
+ * 1. 在 App.vue 或 main.js 中引入本文件
+ * 2. 在业务代码中使用 var(--xxx) 引用变量
+ *
+ * 换肤方式：
+ *   - 方式1：修改本文件的 CSS 变量值
+ *   - 方式2：使用 [data-theme="xxx"] 覆盖变量
+ */
+
+/* ==================== 主题色阶（50-900）==================== */
+/* 主色 */
+:root,
+page {
+  --primary-50: #f0fdfa;
+  --primary-100: #ccfbf1;
+  --primary-200: #99f6e4;
+  --primary-300: #5eead4;
+  --primary-400: #2dd4bf;
+  --primary-500: #14b8a6;
+  --primary-600: #0d9488;
+  --primary-700: #0f766e;
+  --primary-800: #115e59;
+  --primary-900: #134e4a;
+
+  /* ==================== 功能色 ==================== */
+  --success: #16ac57;
+  --success-light: #86efac;
+  --success-dark: #16a34a;
+
+  --warning: #f59e0b;
+  --warning-light: #fbbf24;
+  --warning-dark: #d97706;
+
+  --error: #dc2626;
+  --error-light: #f87171;
+  --error-dark: #dc2626;
+
+  --info: #3b82f6;
+  --info-light: #60a5fa;
+  --info-dark: #2563eb;
+
+  /* ==================== 灰度 ==================== */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+
+  /* ==================== 文字色 ==================== */
+  --text-primary: var(--gray-900);
+  --text-secondary: var(--gray-600);
+  --text-tertiary: var(--gray-400);
+  --text-disabled: var(--gray-400);
+  --text-placeholder: var(--gray-400);
+  --text-white: #ffffff;
+
+  /* ==================== 背景色 ==================== */
+  --bg-page: var(--gray-50);
+  --bg-card: #ffffff;
+  --bg-secondary: var(--gray-50);
+  --bg-tertiary: var(--gray-100);
+  --bg-hover: var(--gray-100);
+  --bg-light: var(--gray-100);
+
+  /* ==================== 边框色 ==================== */
+  --border: var(--gray-200);
+  --border-light: var(--gray-100);
+  --border-dark: var(--gray-300);
+
+  /* ==================== 字号阶梯（rpx） ==================== */
+  --font-2xs: 21rpx;
+  --font-xs: 24rpx;
+  --font-sm: 26rpx;
+  --font-md: 28rpx;
+  --font-lg: 30rpx;
+  --font-xl: 34rpx;
+  --font-2xl: 40rpx;
+  --font-3xl: 48rpx;
+  --font-4xl: 56rpx;
+
+  /* ==================== 间距阶梯（rpx） ==================== */
+  --space-0: 0rpx;
+  --space-1: 4rpx;
+  --space-2: 8rpx;
+  --space-3: 12rpx;
+  --space-4: 16rpx;
+  --space-5: 20rpx;
+  --space-6: 24rpx;
+  --space-8: 32rpx;
+  --space-10: 40rpx;
+  --space-12: 48rpx;
+  --space-16: 64rpx;
+  --space-20: 80rpx;
+  --space-24: 96rpx;
+
+  /* ==================== 圆角阶梯（rpx） ==================== */
+  --radius-none: 0rpx;
+  --radius-sm: 8rpx;
+  --radius-md: 16rpx;
+  --radius-lg: 24rpx;
+  --radius-xl: 32rpx;
+  --radius-full: 9999rpx;
+
+  /* ==================== 阴影 ==================== */
+  --shadow-sm: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 6rpx 20rpx rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 12rpx 32rpx rgba(0, 0, 0, 0.08);
+
+  /* ==================== 语义化变量 ==================== */
+  --color-primary: var(--primary-500);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-info: var(--info);
+
+  /* 按钮高度 */
+  --height-btn-sm: 56rpx;
+  --height-btn-md: 72rpx;
+  --height-btn-lg: 88rpx;
+
+  /* 图标尺寸 */
+  --icon-xs: 24rpx;
+  --icon-sm: 36rpx;
+  --icon-md: 48rpx;
+  --icon-lg: 72rpx;
+  --icon-xl: 96rpx;
+
+  /* 常用圆角 */
+  --radius-btn: var(--radius-full);
+  --radius-input: var(--radius-md);
+  --radius-card: var(--radius-lg);
+}
+
+/* ==================== 主题切换覆盖 ==================== */
+
+/* 切换主题色 */
+[data-theme="cute"] {
+  --primary-500: #FF8FB1;
+  --primary-600: #FF7AA3;
+  --radius-btn: 9999rpx;
+}
+
+[data-theme="business"] {
+  --primary-500: #2563EB;
+  --primary-600: #1D4ED8;
+  --radius-btn: 8rpx;
+}
+
+[data-theme="cyber"] {
+  --primary-500: #00F0FF;
+  --primary-600: #00D0E0;
+  --radius-btn: 0rpx;
+}
+
+/* ==================== 页面基础样式 ==================== */
+
+page {
+  background-color: var(--bg-page);
+  font-size: var(--font-md);
+  color: var(--text-primary);
+}
+
+/* ==================== 通用工具类 ==================== */
+
+/* 文字颜色 */
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-tertiary { color: var(--text-tertiary); }
+.text-white { color: var(--text-white); }
+.text-theme { color: var(--color-primary); }
+
+/* 背景 */
+.bg-page { background-color: var(--bg-page); }
+.bg-card { background-color: var(--bg-card); }
+.bg-light { background-color: var(--bg-light); }
+
+/* 渐变背景 */
+.bg-gradient {
+  background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-500) 100%);
+}

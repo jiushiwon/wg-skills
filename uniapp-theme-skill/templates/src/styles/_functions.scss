@@ -1,0 +1,83 @@
+/**
+ * 主题生成函数
+ *
+ * 提供色阶生成、尺寸计算等工具函数。
+ * 这些函数会被 tokens 层调用，自动生成完整的 Design Tokens。
+ */
+
+@use 'sass:map';
+
+// ============================================
+// 工具函数
+// ============================================
+
+/**
+ * 从 map 获取值，如果不存在则返回默认值
+ */
+@function theme-get($map, $key, $default: null) {
+  @if map.has-key($map, $key) {
+    @return map.get($map, $key);
+  }
+  @return $default;
+}
+
+// ============================================
+// 色阶生成器
+// ============================================
+
+/**
+ * 生成主色色阶（50-900）
+ * 使用内置的 scale-color 函数（兼容 node-sass 和 dart-sass）
+ */
+@function primary-palette($color, $level) {
+  @if $level == 500 {
+    @return $color;
+  } @else if $level < 500 {
+    // 浅色：向白色混合，使用内置 scale-color
+    $lightness: (100 - (100 - 95) * (500 - $level) / 450) * 1%;
+    @return scale-color($color, $lightness: $lightness - 50%);
+  } @else {
+    // 深色：向黑色混合
+    $lightness: (50 - (50 - 10) * ($level - 500) / 400) * 1%;
+    @return scale-color($color, $lightness: $lightness - 50%);
+  }
+}
+
+/**
+ * 生成灰度色阶
+ */
+@function gray-palette($level) {
+  $lightness: 97% - (($level - 50) / 8.5);
+  @return hsl(0, 0%, $lightness);
+}
+
+// ============================================
+// 尺寸计算
+// ============================================
+
+/**
+ * 间距网格计算
+ * @param {Number} $scale - 阶梯倍数
+ */
+@function grid($scale) {
+  @return $scale * 1rpx;
+}
+
+// ============================================
+// 阴影生成
+// ============================================
+
+/**
+ * 生成阴影
+ * @param {String} $level - 层级 (sm/md/lg)
+ */
+@function shadow($level, $opacity: 0.06) {
+  @if $level == 'sm' {
+    @return 0 2rpx 8rpx rgba(0, 0, 0, $opacity);
+  } @else if $level == 'md' {
+    @return 0 6rpx 20rpx rgba(0, 0, 0, $opacity * 1.5);
+  } @else if $level == 'lg' {
+    @return 0 12rpx 32rpx rgba(0, 0, 0, $opacity * 2);
+  }
+  @return none;
+}

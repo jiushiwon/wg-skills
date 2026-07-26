@@ -1,0 +1,147 @@
+/**
+ * Design Tokens 统一入口
+ *
+ * 本文件是全局样式体系的最终聚合层。
+ * 通过 vite.config.ts 的 additionalData 自动注入到每个 .scss 文件。
+ *
+ * 架构层级：
+ *   config/_theme-config.scss  → 唯一配置（用户只改这里）
+ *   _functions.scss            → 生成算法
+ *   tokens/_primitive.scss     → 基础变量（自动生成）
+ *   tokens/_semantic.scss      → 语义变量（业务代码引用）
+ *
+ * 使用示例：
+ *   .my-btn {
+ *     background: $color-primary;
+ *     padding: $spacing-md;
+ *     font-size: $font-body;
+ *     border-radius: $radius-btn;
+ *   }
+ */
+
+// ============================================
+// 引入所有 Token 层
+// ============================================
+
+@use 'config/theme-config' as *;
+@use 'tokens/primitive' as *;
+@use 'tokens/semantic' as *;
+@use 'functions' as *;
+
+// ============================================
+// 转发所有模块
+// ============================================
+
+@forward 'config/theme-config';
+@forward 'tokens/primitive';
+@forward 'tokens/semantic';
+@forward 'functions';
+
+// ============================================
+// CSS 自定义属性（供 JS 运行时读取）
+// ============================================
+
+page {
+  // 主题色
+  --color-primary: #{$color-primary};
+  --color-primary-light: #{$color-primary-light};
+  --color-primary-dark: #{$color-primary-dark};
+
+  // 功能色
+  --color-success: #{$color-success};
+  --color-warning: #{$color-warning};
+  --color-error: #{$color-error};
+  --color-info: #{$color-info};
+
+  // 文字色
+  --text-primary: #{$color-text-primary};
+  --text-secondary: #{$color-text-secondary};
+  --text-tertiary: #{$color-text-tertiary};
+
+  // 背景色
+  --bg-page: #{$color-bg-page};
+  --bg-card: #{$color-bg-card};
+  --bg-light: #{$color-bg-secondary};
+
+  // 边框
+  --border: #{$color-border};
+  --border-light: #{$color-border-light};
+
+  // 字号
+  --font-caption: #{$font-caption};
+  --font-body: #{$font-body};
+  --font-subhead: #{$font-subhead};
+  --font-title: #{$font-title};
+
+  // 间距
+  --spacing-xs: #{$spacing-xs};
+  --spacing-sm: #{$spacing-sm};
+  --spacing-md: #{$spacing-md};
+  --spacing-lg: #{$spacing-lg};
+  --spacing-xl: #{$spacing-xl};
+
+  // 圆角
+  --radius-sm: #{$radius-sm};
+  --radius-md: #{$radius-md};
+  --radius-lg: #{$radius-lg};
+  --radius-full: #{$radius-full};
+
+  // 阴影
+  --shadow-sm: #{$shadow-sm};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
+}
+
+// ============================================
+// 兼容性别名（快速迁移旧代码）
+// ============================================
+
+// 颜色别名
+$primary: $color-primary;
+$primary-light: $color-primary-light;
+$primary-dark: $color-primary-dark;
+$success: $color-success;
+$warning: $color-warning;
+$error: $color-error;
+$info: $color-info;
+
+// 文字别名
+$text-primary: $color-text-primary;
+$text-secondary: $color-text-secondary;
+$text-tertiary: $color-text-tertiary;
+
+// 背景别名
+$bg-page: $color-bg-page;
+$bg-card: $color-bg-card;
+$bg-light: $color-bg-secondary;
+
+// 字号别名（rpx 数值）
+$font-size-xs: $font-xs;
+$font-size-sm: $font-sm;
+$font-size-md: $font-md;
+$font-size-lg: $font-lg;
+$font-size-xl: $font-xl;
+
+// 间距别名
+$space-xs: $spacing-xs;
+$space-sm: $spacing-sm;
+$space-md: $spacing-md;
+$space-lg: $spacing-lg;
+$space-xl: $spacing-xl;
+
+// 圆角别名
+$radius-btn: $radius-btn;
+$radius-input: $radius-input;
+$radius-card: $radius-card;
+
+// 按钮高度
+$height-btn-sm: $height-btn-sm;
+$height-btn-md: $height-btn-md;
+$height-btn-lg: $height-btn-lg;
+
+// 图标尺寸
+$icon-xs: $icon-xs;
+$icon-sm: $icon-sm;
+$icon-md: $icon-md;
+$icon-lg: $icon-lg;
+$icon-xl: $icon-xl;

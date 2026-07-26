@@ -1,0 +1,164 @@
+/**
+ * Semantic Tokens — 语义设计令牌
+ *
+ * 本层将 Primitive Token 映射为有业务语义的变量。
+ * 业务代码应主要引用这一层的变量。
+ *
+ * 命名约定：
+ *   - 颜色：$color-{用途}
+ *   - 间距：$spacing-{松紧程度}
+ *   - 圆角：$radius-{大小}
+ *   - 字号：$font-{用途}
+ *   - 阴影：$shadow-{层级}
+ */
+
+@use '../primitive' as *;
+
+// ============================================
+// 主题色语义
+// ============================================
+
+$color-primary: $color-primary-500;
+$color-primary-light: $color-primary-300;
+$color-primary-lighter: $color-primary-100;
+$color-primary-lightest: $color-primary-50;
+$color-primary-dark: $color-primary-700;
+$color-primary-darker: $color-primary-800;
+$color-primary-darkest: $color-primary-900;
+
+// ============================================
+// 功能色语义
+// ============================================
+
+$color-success: $success-500;
+$color-warning: $warning-500;
+$color-error: $error-500;
+$color-info: $info-500;
+
+$color-success-light: $success-400;
+$color-warning-light: $warning-400;
+$color-error-light: $error-400;
+$color-info-light: $info-400;
+
+// ============================================
+// 文字色语义
+// ============================================
+
+$color-text-primary: $gray-800;
+$color-text-secondary: $gray-600;
+$color-text-tertiary: $gray-500;
+$color-text-disabled: $gray-400;
+$color-text-placeholder: $gray-400;
+$color-text-inverse: $white;
+
+// ============================================
+// 背景色语义
+// ============================================
+
+$color-bg-primary: $white;
+$color-bg-page: $gray-50;
+$color-bg-secondary: $gray-50;
+$color-bg-tertiary: $gray-100;
+$color-bg-hover: $gray-100;
+$color-bg-card: $white;
+$color-bg-overlay: rgba($gray-900, 0.5);
+
+// ============================================
+// 边框色语义
+// ============================================
+
+$color-border: $gray-200;
+$color-border-light: $gray-100;
+$color-border-dark: $gray-300;
+
+// ============================================
+// 间距语义（业务常用）
+// ============================================
+
+$spacing-xs: $space-2;
+$spacing-sm: $space-3;
+$spacing-md: $space-4;
+$spacing-lg: $space-6;
+$spacing-xl: $space-8;
+$spacing-2xl: $space-12;
+$spacing-3xl: $space-16;
+
+// ============================================
+// 圆角语义
+// ============================================
+
+$radius-none: $radius-none;
+$radius-sm: $radius-sm;
+$radius-md: $radius-md;
+$radius-lg: $radius-lg;
+$radius-xl: $radius-xl;
+$radius-full: $radius-full;
+
+// 按钮常用圆角
+$radius-btn: $radius-full;
+$radius-input: $radius-md;
+$radius-card: $radius-lg;
+
+// ============================================
+// 字号语义（业务常用）
+// ============================================
+
+$font-caption: $font-2xs;
+$font-body-sm: $font-xs;
+$font-body: $font-sm;
+$font-body-lg: $font-md;
+$font-subhead: $font-md;
+$font-title-sm: $font-lg;
+$font-title: $font-xl;
+$font-title-lg: $font-2xl;
+$font-display: $font-3xl;
+
+// ============================================
+// 阴影语义
+// ============================================
+
+$shadow-sm: $shadow-sm;
+$shadow-md: $shadow-md;
+$shadow-lg: $shadow-lg;
+
+// ============================================
+// 字重语义
+// ============================================
+
+$weight-normal: $weight-normal;
+$weight-medium: $weight-medium;
+$weight-semibold: $weight-semibold;
+$weight-bold: $weight-bold;
+
+// ============================================
+// 行高语义
+// ============================================
+
+$line-tight: $line-tight;
+$line-normal: $line-normal;
+$line-relaxed: $line-relaxed;
+
+// ============================================
+// 常用复合变量
+// ============================================
+
+// 按钮高度
+$height-btn-sm: 56rpx;
+$height-btn-md: 72rpx;
+$height-btn-lg: 88rpx;
+
+// 图标尺寸
+$icon-xs: 24rpx;
+$icon-sm: 36rpx;
+$icon-md: 48rpx;
+$icon-lg: 72rpx;
+$icon-xl: 96rpx;
+
+// 页面内边距
+$page-padding: $space-6;
+
+// 卡片内边距
+$card-padding: $space-6;
+
+// 列表项高度
+$list-item-height: 88rpx;

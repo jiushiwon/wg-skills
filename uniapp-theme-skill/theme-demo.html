@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>uniapp 主题模板 & 设计系统演示</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; background: #f5f5f5; }
+
+    /* ========== 控制面板 ========== */
+    .control-panel {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+      z-index: 1000;
+      padding: 12px 16px;
+    }
+    .panel-top { display: flex; align-items: center; justify-content: space-between; }
+    .panel-title { font-size: 15px; font-weight: 600; color: #333; }
+    .panel-actions { display: flex; gap: 8px; }
+    .btn-panel {
+      padding: 6px 12px;
+      border: 1px solid #ddd;
+      background: #fff;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .btn-panel:hover { background: #f5f5f5; }
+
+    /* ========== 控制面板展开区域 ========== */
+    .panel-content {
+      display: none;
+      padding-top: 12px;
+      margin-top: 12px;
+      border-top: 1px solid #eee;
+    }
+    .panel-content.show { display: block; }
+
+    .control-row { margin-bottom: 16px; }
+    .control-label { font-size: 12px; color: #666; margin-bottom: 8px; display: flex; justify-content: space-between; }
+    .control-label span:last-child { font-weight: 500; color: #333; }
+
+    /* 主题选择 */
+    .theme-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+    .theme-tab {
+      padding: 6px 12px;
+      border: 1px solid #ddd;
+      background: #fff;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .theme-tab.active { background: #333; color: #fff; border-color: #333; }
+
+    /* 尺寸滑块 */
+    .size-slider { width: 100%; height: 4px; -webkit-appearance: none; background: #e5e5e5; border-radius: 2px; outline: none; }
+    .size-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      background: #333;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    /* 圆角滑块 */
+    .radius-slider { width: 100%; height: 4px; -webkit-appearance: none; background: #e5e5e5; border-radius: 2px; }
+    .radius-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      background: #333;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    /* 尺寸预设按钮 */
+    .size-presets { display: flex; gap: 6px; flex-wrap: wrap; }
+    .size-preset, .radius-preset {
+      padding: 4px 10px;
+      border: 1px solid #ddd;
+      background: #fff;
+      border-radius: 4px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .size-preset.active, .radius-preset.active { background: #333; color: #fff; border-color: #333; }
+
+    /* 主题色选择 */
+    .color-options { display: flex; gap: 8px; flex-wrap: wrap; }
+    .color-option {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+    .color-option.active { border-color: #333; transform: scale(1.1); }
+
+    /* 色阶抽屉 */
+    .drawer-toggle {
+      position: fixed;
+      right: 16px;
+      bottom: 80px;
+      width: 48px;
+      height: 48px;
+      background: #333;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      z-index: 999;
+    }
+    .drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1001;
+      display: none;
+    }
+    .drawer-overlay.show { display: block; }
+    .drawer {
+      position: fixed;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 85%;
+      max-width: 400px;
+      background: #fff;
+      z-index: 1002;
+      transform: translateX(100%);
+      transition: transform 0.3s;
+      overflow-y: auto;
+    }
+    .drawer.show { transform: translateX(0); }
+    .drawer-header {
+      padding: 16px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      background: #fff;
+    }
+    .drawer-title { font-size: 16px; font-weight: 600; }
+    .drawer-close { font-size: 24px; color: #999; cursor: pointer; }
+    .drawer-content { padding: 16px; }
+
+    /* 色阶展示 */
+    .color-scale-group { margin-bottom: 20px; }
+    .scale-title { font-size: 13px; font-weight: 500; color: #333; margin-bottom: 8px; }
+    .scale-row { display: flex; height: 28px; border-radius: 4px; overflow: hidden; margin-bottom: 4px; }
+    .scale-item { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #fff; cursor: pointer; }
+
+    /* 主色预设 */
+    .preset-colors { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .preset-btn {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      background: #fff;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .preset-btn.active { background: #333; color: #fff; border-color: #333; }
+
+    /* 尺寸预设 */
+    .size-scale { display: flex; gap: 4px; margin-bottom: 16px; }
+    .size-item { flex: 1; text-align: center; padding: 8px 4px; background: #f5f5f5; border-radius: 4px; font-size: 10px; }
+
+    /* 主内容区 */
+    .main-content { padding-top: 180px; padding-bottom: 60px; }
+    .demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; max-width: 1400px; margin: 0 auto; padding: 16px; }
+    .demo-section { background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .demo-title { text-align: center; padding: 10px; background: var(--primary); color: #fff; font-size: 13px; }
+
+    /* ========== CSS 变量定义 ========== */
+    :root {
+      --primary: #FF8FB1;
+      --primary-light: #FFB6D9;
+      --bg: #FFF5F8;
+      --surface: #FFFFFF;
+      --surface-tinted: #FFEDF3;
+      --border: #FFD6E4;
+      --text: #4A3B4A;
+      --text-secondary: #8B7A8B;
+      --text-tertiary: #B8A8B5;
+      --radius-card: 24px;
+      --radius-btn: 999px;
+      --radius-sm: 12px;
+      --shadow-card: 0 8px 24px rgba(255,143,177,0.12);
+      --shadow-btn: 0 4px 16px rgba(255,143,177,0.25);
+      --spacing: 24px;
+      --font-title: 36px;
+      --font-body: 28px;
+      --spacing-base: 8px;
+    }
+
+    /* 组件样式 */
+    .component { padding: 16px; border-bottom: 1px dashed #eee; }
+    .component:last-child { border-bottom: none; }
+    .component-label { font-size: 11px; color: #999; margin-bottom: 8px; }
+
+    .page { background: var(--bg); min-height: 400px; }
+
+    /* 按钮 */
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 12px 20px; border: none; cursor: pointer; font-size: 14px; font-weight: 500; }
+    .btn-primary { background: var(--primary); color: #fff; border-radius: var(--radius-btn); box-shadow: var(--shadow-btn); }
+    .btn-secondary { background: var(--surface-tinted); color: var(--text); border: 1px solid var(--border); border-radius: var(--radius-btn); }
+    .btn-block { width: 100%; }
+
+    /* 卡片 */
+    .card { background: var(--surface); border-radius: var(--radius-card); box-shadow: var(--shadow-card); border: 1px solid var(--border); padding: 16px; }
+
+    /* 输入框 */
+    .input { width: 100%; padding: 12px; border: 1px solid var(--border); font-size: 14px; background: var(--surface); color: var(--text); border-radius: var(--radius-sm); }
+    .input::placeholder { color: var(--text-tertiary); }
+
+    /* 搜索框 */
+    .search-box { display: flex; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 8px 12px; }
+    .search-icon { margin-right: 8px; font-size: 14px; }
+    .search-input { flex: 1; border: none; background: none; font-size: 14px; color: var(--text); }
+
+    /* 标签 */
+    .tag { display: inline-flex; align-items: center; padding: 4px 10px; font-size: 12px; background: var(--surface-tinted); color: var(--primary); border-radius: var(--radius-sm); }
+
+    /* 列表 */
+    .list-item { display: flex; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border); }
+    .list-item-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--surface-tinted); margin-right: 12px; flex-shrink: 0; }
+    .list-item-content { flex: 1; }
+    .list-item-title { font-size: 14px; color: var(--text); font-weight: 500; }
+    .list-item-desc { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+
+    /* 媒体列表 */
+    .media-item { display: flex; padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .media-thumb { width: 80px; height: 80px; border-radius: var(--radius-sm); background: var(--surface-tinted); margin-right: 12px; flex-shrink: 0; }
+    .media-content { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+    .media-title { font-size: 14px; color: var(--text); line-height: 1.4; }
+    .media-meta { font-size: 12px; color: var(--text-secondary); margin-top: 6px; }
+
+    /* 复选框 */
+    .checkbox { display: flex; align-items: center; margin-bottom: 10px; cursor: pointer; }
+    .checkbox-box { width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 4px; margin-right: 10px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #fff; }
+    .checkbox.checked .checkbox-box { background: var(--primary); border-color: var(--primary); }
+    .checkbox-label { font-size: 14px; color: var(--text); }
+
+    /* 单选框 */
+    .radio { display: flex; align-items: center; margin-bottom: 10px; cursor: pointer; }
+    .radio-box { width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 50%; margin-right: 10px; display: flex; align-items: center; justify-content: center; }
+    .radio-box::after { content: ''; width: 10px; height: 10px; border-radius: 50%; background: transparent; }
+    .radio.checked .radio-box { border-color: var(--primary); }
+    .radio.checked .radio-box::after { background: var(--primary); }
+    .radio-label { font-size: 14px; color: var(--text); }
+
+    /* 开关 */
+    .switch { width: 44px; height: 24px; background: var(--border); border-radius: 12px; position: relative; cursor: pointer; }
+    .switch::after { content: ''; position: absolute; width: 20px; height: 20px; background: #fff; border-radius: 50%; top: 2px; left: 2px; }
+    .switch.active { background: var(--primary); }
+    .switch.active::after { left: 22px; }
+
+    /* 进度条 */
+    .progress { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+    .progress-bar { height: 100%; background: var(--primary); }
+
+    /* 底部导航 */
+    .tabbar { display: flex; background: var(--surface); border-top: 1px solid var(--border); padding: 8px 0; }
+    .tabbar-item { flex: 1; display: flex; flex-direction: column; align-items: center; font-size: 10px; color: var(--text-tertiary); }
+    .tabbar-item.active { color: var(--primary); }
+    .tabbar-icon { font-size: 20px; margin-bottom: 2px; }
+
+    /* 头部导航 */
+    .navbar { display: flex; align-items: center; justify-content: space-between; background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 16px; }
+    .navbar-title { font-size: 16px; font-weight: 600; color: var(--text); }
+    .navbar-action { font-size: 14px; color: var(--primary); }
+
+    /* 标签栏 */
+    .tabs-scroll { display: flex; background: var(--surface); border-bottom: 1px solid var(--border); overflow-x: auto; }
+    .tabs-item { padding: 12px 16px; font-size: 14px; color: var(--text-secondary); white-space: nowrap; border-bottom: 2px solid transparent; }
+    .tabs-item.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+    /* Picker */
+    .picker { display: flex; align-items: center; justify-content: space-between; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; }
+    .picker-value { font-size: 14px; color: var(--text); }
+    .picker-arrow { color: var(--text-tertiary); }
+
+    /* 头像 */
+    .avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--surface-tinted); display: flex; align-items: center; justify-content: center; }
+
+    /* 标题 */
+    .title { font-size: var(--font-title); font-weight: 600; color: var(--text); }
+    .desc { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+  </style>
+</head>
+<body>
+  <!-- 控制面板 -->
+  <div class="control-panel">
+    <!-- 主题色行 -->
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+      <button class="btn-panel active" onclick="setEmotion('cute')">可爱</button>
+      <button class="btn-panel" onclick="setEmotion('minimal')">极简</button>
+      <button class="btn-panel" onclick="setEmotion('business')">商务</button>
+      <button class="btn-panel" onclick="setEmotion('fresh')">清新</button>
+      <button class="btn-panel" onclick="setEmotion('cyber')">硬核</button>
+      <button class="btn-panel" onclick="setEmotion('glass')">玻璃</button>
+    </div>
+
+    <!-- 尺寸行 -->
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+      <span style="font-size:11px;color:#666;white-space:nowrap;">尺寸:</span>
+      <div style="display:flex;gap:4px;flex:1;" id="sizeButtons">
+        <button class="size-preset" data-value="4" onclick="setSpacing(4, this)">4</button>
+        <button class="size-preset active" data-value="8" onclick="setSpacing(8, this)">8</button>
+        <button class="size-preset" data-value="12" onclick="setSpacing(12, this)">12</button>
+        <button class="size-preset" data-value="16" onclick="setSpacing(16, this)">16</button>
+      </div>
+    </div>
+
+    <!-- 圆角行 -->
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span style="font-size:11px;color:#666;white-space:nowrap;">圆角:</span>
+      <div style="display:flex;gap:4px;flex:1;" id="radiusButtons">
+        <button class="radius-preset" data-value="0" onclick="setCardRadius(0, this)">0</button>
+        <button class="radius-preset" data-value="8" onclick="setCardRadius(8, this)">8</button>
+        <button class="radius-preset active" data-value="24" onclick="setCardRadius(24, this)">24</button>
+        <button class="radius-preset" data-value="48" onclick="setCardRadius(48, this)">48</button>
+        <button class="radius-preset" data-value="999" onclick="setCardRadius(999, this)">999</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 色阶抽屉 -->
+  <div class="drawer-overlay" onclick="closeDrawer()"></div>
+  <div class="drawer" id="drawer">
+    <div class="drawer-header">
+      <span class="drawer-title">📋 设计系统色阶</span>
+      <span class="drawer-close" onclick="closeDrawer()">×</span>
+    </div>
+    <div class="drawer-content">
+      <div class="control-row">
+        <div class="control-label">主色阶（当前主题）</div>
+        <div class="preset-colors">
+          <button class="preset-btn active" onclick="showScale('cute')">可爱风</button>
+          <button class="preset-btn" onclick="showScale('minimal')">极简风</button>
+          <button class="preset-btn" onclick="showScale('business')">商务风</button>
+          <button class="preset-btn" onclick="showScale('fresh')">清新风</button>
+          <button class="preset-btn" onclick="showScale('retro')">复古风</button>
+          <button class="preset-btn" onclick="showScale('cyber')">硬核风</button>
+          <button class="preset-btn" onclick="showScale('glass')">玻璃风</button>
+        </div>
+      </div>
+      <!-- 自定义颜色选择器 -->
+      <div class="control-row">
+        <div class="control-label">自定义主题色</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <input type="color" id="customColorPicker" value="#FF8FB1"
+            style="width:48px;height:32px;padding:0;border:none;cursor:pointer;border-radius:6px;"
+            onchange="applyCustomColor(this.value)">
+          <input type="text" id="customColorText" value="#FF8FB1"
+            style="flex:1;padding:8px 12px;border:1px solid #ddd;border-radius:6px;font-size:14px;"
+            onchange="applyCustomColor(this.value)">
+          <button onclick="applyCustomColor(document.getElementById('customColorPicker').value)"
+            style="padding:8px 16px;background:#333;color:#fff;border:none;border-radius:6px;font-size:12px;cursor:pointer;">
+            应用
+          </button>
+        </div>
+      </div>
+      <div id="colorScaleContainer"></div>
+      <div class="color-scale-group">
+        <div class="scale-title">灰色阶</div>
+        <div class="scale-row" id="grayScale"></div>
+      </div>
+      <div class="color-scale-group">
+        <div class="scale-title">尺寸系统</div>
+        <div class="size-scale" id="sizeScale"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 抽屉开关 -->
+  <div class="drawer-toggle" onclick="openDrawer()">🎨</div>
+
+  <!-- 主内容区 -->
+  <div class="main-content">
+    <div class="demo-grid" id="demoContainer">
+      <!-- Demo内容由JS生成 -->
+    </div>
+  </div>
+
+  <script>
+    // 主题配置
+    const themes = {
+      cute: {
+        name: '可爱风',
+        primary: '#FF8FB1',
+        bg: '#FFF5F8',
+        surface: '#FFFFFF',
+        border: '#FFD6E4',
+        text: '#4A3B4A',
+        textSecondary: '#8B7A8B',
+        colors: ['#FFF5F8','#FFEDF3','#FFD6E4','#FFB6D9','#E8A8C4','#FF8FB1','#FF7AA3','#FF6B8A','#4A3B4A']
+      },
+      minimal: {
+        name: '极简风',
+        primary: '#333333',
+        bg: '#FFFFFF',
+        surface: '#FFFFFF',
+        border: '#E5E5E5',
+        text: '#333333',
+        textSecondary: '#666666',
+        colors: ['#FAFAFA','#F5F5F5','#E5E5E5','#D4D4D4','#A3A3A3','#737373','#525252','#404040','#171717']
+      },
+      business: {
+        name: '商务风',
+        primary: '#2563EB',
+        bg: '#F8FAFC',
+        surface: '#FFFFFF',
+        border: '#E2E8F0',
+        text: '#1E293B',
+        textSecondary: '#475569',
+        colors: ['#EFF6FF','#DBEAFE','#BFDBFE','#93C5FD','#60A5FA','#3B82F6','#2563EB','#1D4ED8','#1E3A8A']
+      },
+      fresh: {
+        name: '清新风',
+        primary: '#34D399',
+        bg: '#F0FDF9',
+        surface: '#FFFFFF',
+        border: '#D1FAE5',
+        text: '#064E3B',
+        textSecondary: '#374151',
+        colors: ['#ECFDF5','#D1FAE5','#A7F3D0','#6EE7B7','#34D399','#10B981','#059669','#047857','#064E3B']
+      },
+      retro: {
+        name: '复古风',
+        primary: '#D97706',
+        bg: '#FFFBEB',
+        surface: '#FFFFFF',
+        border: '#FDE68A',
+        text: '#451A03',
+        textSecondary: '#78350F',
+        colors: ['#FFFBEB','#FEF3C7','#FDE68A','#FCD34D','#FBBF24','#F59E0B','#D97706','#B45309','#451A03']
+      },
+      cyber: {
+        name: '硬核风',
+        primary: '#00F0FF',
+        bg: '#0A0A0A',
+        surface: '#141414',
+        border: '#2A2A2A',
+        text: '#FFFFFF',
+        textSecondary: '#A0A0A0',
+        colors: ['#1A1A1A','#141414','#2A2A2A','#3A3A3A','#4A4A4A','#666666','#00F0FF','#00D0E0','#007A80']
+      },
+      glass: {
+        name: '玻璃风',
+        primary: '#8B5CF6',
+        bg: '#0F172A',
+        surface: 'rgba(255,255,255,0.08)',
+        border: 'rgba(255,255,255,0.15)',
+        text: '#F8FAFC',
+        textSecondary: '#CBD5E1',
+        colors: ['#1E293B','#334155','#475569','#64748B','#94A3B8','#CBD5E1','#8B5CF6','#7C3AED','#4C1D95']
+      }
+    };
+
+    let currentTheme = 'cute';
+    let customColor = '#FF8FB1';
+    let spacingBase = 8;
+    let fontBase = 24;
+    let cardRadius = 24;
+    let btnRadius = 999;
+
+    // 切换面板
+    function togglePanel(panel) {
+      document.querySelectorAll('.panel-content').forEach(p => p.classList.remove('show'));
+      document.getElementById('panel-' + panel).classList.add('show');
+    }
+
+    // 设置主题
+    function setEmotion(name) {
+      currentTheme = name;
+      document.querySelectorAll('.btn-panel').forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+      customColor = themes[name].primary;
+
+      // 重新渲染 Demo 内容
+      renderDemo();
+
+      // 调用 updateStyles 刷新所有样式
+      updateStyles();
+
+      updateScaleDisplay();
+    }
+
+    // 设置主题色
+    function setColor(color) {
+      customColor = color;
+      updateStyles();
+    }
+
+    // 应用自定义颜色
+    function applyCustomColor(color) {
+      // 验证颜色格式
+      if (!/^#[0-9A-Fa-f]{6}$/.test(color)) {
+        color = '#' + color.replace(/[^0-9A-Fa-f]/g, '').padStart(6, '0').slice(0, 6);
+        if (!/^#[0-9A-Fa-f]{6}$/.test(color)) return;
+      }
+
+      // 同步输入框
+      document.getElementById('customColorPicker').value = color;
+      document.getElementById('customColorText').value = color;
+
+      // 清除预设按钮的选中状态
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+
+      // 应用自定义颜色
+      customColor = color;
+      renderDemo();
+      updateStyles();
+
+      // 关闭抽屉
+      closeDrawer();
+    }
+
+    // 设置间距
+    function setSpacing(v, btn) {
+      spacingBase = parseInt(v);
+
+      // 更新尺寸按钮选中状态
+      document.querySelectorAll('#sizeButtons .size-preset').forEach(b => b.classList.remove('active'));
+      if (btn) {
+        btn.classList.add('active');
+      } else if (event) {
+        event.target.classList.add('active');
+      }
+
+      renderDemo();
+      updateStyles();
+    }
+
+    // 设置卡片圆角
+    function setCardRadius(v, btn) {
+      cardRadius = parseInt(v);
+
+      // 更新圆角按钮选中状态
+      document.querySelectorAll('#radiusButtons .radius-preset').forEach(b => b.classList.remove('active'));
+      if (btn) {
+        btn.classList.add('active');
+      } else if (event) {
+        event.target.classList.add('active');
+      }
+
+      renderDemo();
+      updateStyles();
+    }
+
+    // 设置按钮圆角
+    function setBtnRadius(v) {
+      btnRadius = parseInt(v);
+      document.documentElement.style.setProperty('--radius-btn', v + 'px');
+      renderDemo();
+      updateStyles();
+    }
+
+    // 更新CSS变量
+    function updateStyles() {
+      const root = document.documentElement;
+      const theme = themes[currentTheme];
+
+      root.style.setProperty('--primary', customColor || theme.primary);
+      root.style.setProperty('--bg', theme.bg);
+      root.style.setProperty('--surface', theme.surface);
+      root.style.setProperty('--border', theme.border);
+      root.style.setProperty('--text', theme.text);
+      root.style.setProperty('--text-secondary', theme.textSecondary);
+      root.style.setProperty('--surface-tinted', theme.colors[1]);
+      root.style.setProperty('--text-tertiary', theme.colors[4]);
+      root.style.setProperty('--radius-card', cardRadius + 'px');
+      root.style.setProperty('--radius-btn', btnRadius + 'px');
+      root.style.setProperty('--radius-sm', Math.max(4, Math.floor(cardRadius/2)) + 'px');
+      root.style.setProperty('--spacing', spacingBase * 3 + 'px');
+      root.style.setProperty('--font-title', (fontBase + 12) + 'px');
+      root.style.setProperty('--font-body', fontBase + 'px');
+
+      // 计算阴影
+      const shadowColor = customColor || theme.primary;
+      root.style.setProperty('--shadow-card', `0 ${spacingBase}px ${spacingBase*3}px rgba(${hexToRgb(shadowColor)}, 0.12)`);
+      root.style.setProperty('--shadow-btn', `0 ${spacingBase/2}px ${spacingBase*2}px rgba(${hexToRgb(shadowColor)}, 0.25)`);
+
+      // 更新标题
+      const titleEl = document.querySelector('.demo-title');
+      if (titleEl) {
+        titleEl.textContent = theme.name;
+        titleEl.style.background = customColor || theme.primary;
+      }
+    }
+
+    // HEX转RGB
+    function hexToRgb(hex) {
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '255,143,177';
+    }
+
+    // 打开抽屉
+    function openDrawer() {
+      document.querySelector('.drawer-overlay').classList.add('show');
+      document.getElementById('drawer').classList.add('show');
+      updateScaleDisplay();
+    }
+
+    // 关闭抽屉
+    function closeDrawer() {
+      document.querySelector('.drawer-overlay').classList.remove('show');
+      document.getElementById('drawer').classList.remove('show');
+    }
+
+    // 显示色阶
+    function showScale(name, btn) {
+      // 更新按钮选中状态
+      if (btn) {
+        document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      } else if (event && event.target) {
+        document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+      }
+
+      // 同步颜色选择器的值
+      const theme = themes[name];
+      document.getElementById('customColorPicker').value = theme.primary;
+      document.getElementById('customColorText').value = theme.primary;
+
+      updateScaleDisplay(name);
+    }
+
+    // 更新色阶显示
+    function updateScaleDisplay(overrideName) {
+      const name = overrideName || currentTheme;
+      const theme = themes[name];
+      const container = document.getElementById('colorScaleContainer');
+
+      if (!container) return;
+
+      // 主色阶 - 使用 flexbox 横向排列
+      let html = '<div class="color-scale-group"><div class="scale-title">主色阶 Primary Scale</div>';
+      html += '<div class="scale-row">';
+      theme.colors.forEach((color, i) => {
+        const textColor = i > 5 ? '#fff' : '#000';
+        html += `<div class="scale-item" style="background:${color};color:${textColor}" title="${color}" onclick="applyCustomColor('${color}')">${(i+1)*100}</div>`;
+      });
+      html += '</div></div>';
+
+      // 灰色阶
+      const grayColors = ['#F5F5F5','#E5E5E5','#D4D4D4','#A3A3A3','#737373','#525252','#404040','#262626','#171717'];
+      let grayHtml = '';
+      grayColors.forEach((color, i) => {
+        const textColor = i > 4 ? '#fff' : '#000';
+        grayHtml += `<div class="scale-item" style="background:${color};color:${textColor}">${(i+1)*100}</div>`;
+      });
+      document.getElementById('grayScale').innerHTML = grayHtml;
+
+      // 尺寸系统
+      const sizes = [
+        { name: 'xs', value: spacingBase + 'rpx' },
+        { name: 'sm', value: spacingBase*2 + 'rpx' },
+        { name: 'md', value: spacingBase*3 + 'rpx' },
+        { name: 'lg', value: spacingBase*4 + 'rpx' },
+        { name: 'xl', value: spacingBase*6 + 'rpx' }
+      ];
+      let sizeHtml = '';
+      sizes.forEach(s => {
+        sizeHtml += `<div class="size-item"><div style="font-weight:600;">${s.name}</div><div>${s.value}</div></div>`;
+      });
+      document.getElementById('sizeScale').innerHTML = sizeHtml;
+
+      container.innerHTML = html;
+    }
+
+    // 生成Demo内容
+    function renderDemo() {
+      const container = document.getElementById('demoContainer');
+      const theme = themes[currentTheme];
+
+      container.innerHTML = `
+        <div class="demo-section">
+          <div class="demo-title">${theme.name}</div>
+
+          <div class="component">
+            <div class="component-label">头部导航 Navbar</div>
+            <div class="navbar">
+              <span class="navbar-title">首页</span>
+              <span class="navbar-action">编辑</span>
+            </div>
+          </div>
+
+          <div class="component">
+            <div class="component-label">搜索框 Search</div>
+            <div class="search-box">
+              <span class="search-icon">🔍</span>
+              <input class="search-input" placeholder="搜索商品..." />
+            </div>
+          </div>
+
+          <div class="component">
+            <div class="component-label">标签栏 Tabs</div>
+            <div class="tabs-scroll">
+              <div class="tabs-item active">推荐</div>
+              <div class="tabs-item">热销</div>
+              <div class="tabs-item">新品</div>
+            </div>
+          </div>
+
+          <div class="component">
+            <div class="component-label">按钮 Button</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;">
+              <button class="btn btn-primary">主按钮</button>
+              <button class="btn btn-secondary">次按钮</button>
+            </div>
+            <button class="btn btn-primary btn-block">块级按钮</button>
+          </div>
+
+          <div class="component">
+            <div class="component-label">卡片 Card</div>
+            <div class="card">
+              <div class="title">卡片标题</div>
+              <div class="desc">这是一段描述文字，描述卡片的内容。</div>
+            </div>
+          </div>
+
+          <div class="component">
+            <div class="component-label">列表项 List Item</div>
+            <div class="list-item">
+              <div class="list-item-avatar">👤</div>
+              <div class="list-item-content">
+                <div class="list-item-title">用户名</div>
+                <div class="list-item-desc">用户描述信息</div>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="list-item-avatar">👤</div>
+              <div class="list-item-content">
+                <div class="list-item-title">另一个用户</div>
+                <div class="list-item-desc">这是另一条描述</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="component">
+            <div class="component-label">媒体列表 Media List</div>
+            <div class="media-item">
+              <div class="media-thumb">🖼️</div>
+              <div class="media-content">
+                <div class="media-title">商品标题名称，最多显示两行</div>
+                <div class="media-meta">¥99.00 · 已售1000+</div>
+              </div>
+            </div>
+            <div class="media-item">
+              <div class="media-thumb">🖼️</div>
+              <div class="media-content">
+                <div class="media-title">另一个商品标题</div>
+                <div class="media-meta">¥199.00 · 已售500+</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="component">
+            <div class="component-label">复选框 Checkbox</div>
+            <label class="checkbox checked">
+              <div class="checkbox-box">✓</div>
+              <span class="checkbox-label">已选中状态</span>
+            </label>
+            <label class="checkbox">
+              <div class="checkbox-box"></div>
+              <span class="checkbox-label">未选中状态</span>
+            </label>
+          </div>
+
+          <div class="component">
+            <div class="component-label">单选框 Radio</div>
+            <label class="radio checked">
+              <div class="radio-box"></div>
+              <span class="radio-label">选项一（选中）</span>
+            </label>
+            <label class="radio">
+              <div class="radio-box"></div>
+              <span class="radio-label">选项二</span>
+            </label>
+          </div>
+
+          <div class="component">
+            <div class="component-label">开关 Switch</div>
+            <div style="display:flex;gap:20px;align-items:center;">
+              <span style="font-size:14px;color:var(--text);">关闭</span>
+              <div class="switch"></div>
+            </div>
+            <div style="display:flex;gap:20px;align-items:center;margin-top:10px;">
+              <span style="font-size:14px;color:var(--text);">开启</span>
+              <div class="switch active"></div>
+            </div>
+          </div>
+
+          <div class="component">
+            <div class="component-label">输入框 Input</div>
+            <input class="input" placeholder="请输入内容..." style="margin-bottom:10px;" />
+            <input class="input" value="已填写的内容" />
+          </div>
+
+          <div class="component">
+            <div class="component-label">底部选择器 Picker</div>
+            <div class="picker">
+              <span class="picker-value">请选择分类</span>
+              <span class="picker-arrow">›</span>
+            </div>
+          </div>
+
+          <div class="component">
+            <div class="component-label">进度条 Progress</div>
+            <div class="progress" style="margin-bottom:8px;">
+              <div class="progress-bar" style="width:60%;"></div>
+            </div>
+            <div class="progress">
+              <div class="progress-bar" style="width:30%;"></div>
+            </div>
+          </div>
+
+          <div class="component">
+            <div class="component-label">标签 Tag</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <span class="tag">标签一</span>
+              <span class="tag">标签二</span>
+              <span class="tag">标签三</span>
+            </div>
+          </div>
+
+          <div class="component" style="padding:0;border:none;">
+            <div class="component-label">底部导航 Tabbar</div>
+            <div class="tabbar">
+              <div class="tabbar-item">
+                <span class="tabbar-icon">🏠</span>
+                <span>首页</span>
+              </div>
+              <div class="tabbar-item">
+                <span class="tabbar-icon">📋</span>
+                <span>分类</span>
+              </div>
+              <div class="tabbar-item active">
+                <span class="tabbar-icon">🛒</span>
+                <span>购物车</span>
+              </div>
+              <div class="tabbar-item">
+                <span class="tabbar-icon">👤</span>
+                <span>我的</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 初始化
+    renderDemo();
+    updateStyles();
+    updateScaleDisplay();
+  </script>
+</body>
+</html>

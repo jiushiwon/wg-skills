@@ -1,0 +1,135 @@
+/**
+ * Primitive Tokens — 基础设计令牌
+ *
+ * 本层只定义最基础的颜色值、尺寸值，不承载业务语义。
+ * 所有值从 config/_theme-config.scss 读取，由 _functions.scss 自动生成。
+ *
+ * 开发时不应直接引用这一层变量，应通过 tokens/_semantic.scss 使用语义变量。
+ */
+
+// ============================================
+// 引入配置和函数
+// ============================================
+
+@use 'sass:map';
+@use '../config/theme-config' as cfg;
+@use '../functions' as *;
+
+// ============================================
+// 主色色阶（自动生成）
+// ============================================
+
+$color-primary-50: primary-palette(cfg.$theme-primary, 50);
+$color-primary-100: primary-palette(cfg.$theme-primary, 100);
+$color-primary-200: primary-palette(cfg.$theme-primary, 200);
+$color-primary-300: primary-palette(cfg.$theme-primary, 300);
+$color-primary-400: primary-palette(cfg.$theme-primary, 400);
+$color-primary-500: primary-palette(cfg.$theme-primary, 500);
+$color-primary-600: primary-palette(cfg.$theme-primary, 600);
+$color-primary-700: primary-palette(cfg.$theme-primary, 700);
+$color-primary-800: primary-palette(cfg.$theme-primary, 800);
+$color-primary-900: primary-palette(cfg.$theme-primary, 900);
+
+// ============================================
+// 功能色
+// ============================================
+
+$success-400: #86efac;
+$success-500: cfg.$theme-success;
+$success-600: #16a34a;
+
+$warning-400: #fbbf24;
+$warning-500: cfg.$theme-warning;
+$warning-600: #d97706;
+
+$error-400: #f87171;
+$error-500: cfg.$theme-error;
+$error-600: #dc2626;
+
+$info-400: #60a5fa;
+$info-500: cfg.$theme-info;
+$info-600: #2563eb;
+
+// ============================================
+// 灰度色阶
+// ============================================
+
+$white: #ffffff;
+$gray-50: gray-palette(50);
+$gray-100: gray-palette(100);
+$gray-200: gray-palette(200);
+$gray-300: gray-palette(300);
+$gray-400: gray-palette(400);
+$gray-500: gray-palette(500);
+$gray-600: gray-palette(600);
+$gray-700: gray-palette(700);
+$gray-800: gray-palette(800);
+$gray-900: gray-palette(900);
+
+// ============================================
+// 字号阶梯（自动生成）
+// ============================================
+
+$font-2xs: calc(cfg.$theme-font-base * theme-get(cfg.$theme-font-scale, '2xs'));
+$font-xs: calc(cfg.$theme-font-base * theme-get(cfg.$theme-font-scale, 'xs'));
+$font-sm: calc(cfg.$theme-font-base * theme-get(cfg.$theme-font-scale, 'sm'));
+$font-md: calc(cfg.$theme-font-base * theme-get(cfg.$theme-font-scale, 'md'));
+$font-lg: calc(cfg.$theme-font-base * theme-get(cfg.$theme-font-scale, 'lg'));
+$font-xl: calc(cfg.$theme-font-base * theme-get(cfg.$theme-font-scale, 'xl'));
+$font-2xl: calc(cfg.$theme-font-base * theme-get(cfg.$theme-font-scale, '2xl'));
+$font-3xl: calc(cfg.$theme-font-base * theme-get(cfg.$theme-font-scale, '3xl'));
+$font-4xl: calc(cfg.$theme-font-base * theme-get(cfg.$theme-font-scale, '4xl'));
+
+// ============================================
+// 间距阶梯（自动生成）
+// ============================================
+
+$space-0: grid(theme-get(cfg.$theme-spacing-scale, '0'));
+$space-1: grid(theme-get(cfg.$theme-spacing-scale, '1'));
+$space-2: grid(theme-get(cfg.$theme-spacing-scale, '2'));
+$space-3: grid(theme-get(cfg.$theme-spacing-scale, '3'));
+$space-4: grid(theme-get(cfg.$theme-spacing-scale, '4'));
+$space-5: grid(theme-get(cfg.$theme-spacing-scale, '5'));
+$space-6: grid(theme-get(cfg.$theme-spacing-scale, '6'));
+$space-8: grid(theme-get(cfg.$theme-spacing-scale, '8'));
+$space-10: grid(theme-get(cfg.$theme-spacing-scale, '10'));
+$space-12: grid(theme-get(cfg.$theme-spacing-scale, '12'));
+$space-16: grid(theme-get(cfg.$theme-spacing-scale, '16'));
+$space-20: grid(theme-get(cfg.$theme-spacing-scale, '20'));
+$space-24: grid(theme-get(cfg.$theme-spacing-scale, '24'));
+
+// ============================================
+// 圆角阶梯（自动生成）
+// ============================================
+
+$radius-none: theme-get(cfg.$theme-radius-scale, 'none');
+$radius-sm: calc(cfg.$theme-radius-base * theme-get(cfg.$theme-radius-scale, 'sm'));
+$radius-md: calc(cfg.$theme-radius-base * theme-get(cfg.$theme-radius-scale, 'md'));
+$radius-lg: calc(cfg.$theme-radius-base * theme-get(cfg.$theme-radius-scale, 'lg'));
+$radius-xl: calc(cfg.$theme-radius-base * theme-get(cfg.$theme-radius-scale, 'xl'));
+$radius-full: theme-get(cfg.$theme-radius-scale, 'full');
+
+// ============================================
+// 阴影
+// ============================================
+
+$shadow-sm: shadow('sm', cfg.$theme-shadow-opacity);
+$shadow-md: shadow('md', cfg.$theme-shadow-opacity);
+$shadow-lg: shadow('lg', cfg.$theme-shadow-opacity);
+
+// ============================================
+// 字重
+// ============================================
+
+$weight-normal: theme-get(cfg.$theme-font-weight-scale, 'normal');
+$weight-medium: theme-get(cfg.$theme-font-weight-scale, 'medium');
+$weight-semibold: theme-get(cfg.$theme-font-weight-scale, 'semibold');
+$weight-bold: theme-get(cfg.$theme-font-weight-scale, 'bold');
+
+// ============================================
+// 行高
+// ============================================
+
+$line-tight: theme-get(cfg.$theme-line-height-scale, 'tight');
+$line-normal: theme-get(cfg.$theme-line-height-scale, 'normal');
+$line-relaxed: theme-get(cfg.$theme-line-height-scale, 'relaxed');
