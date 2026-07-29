@@ -572,7 +572,42 @@ tab高度不一致
 
 ---
 
-### 17. uniapp-crossplatform-audit-skill 🌐
+### 17. ui-template-builder 📄
+
+> UI 页面模板构建器 - 固化常见页面模板，多套风格可选，支持 mock 数据
+
+**功能**：把常见页面（个人中心、商品详情、登录页、数据大屏等）固化下来，每次生成基于模板，确保效果稳定。提供 3 个必须确认的配置：
+
+| 配置 | 默认值 | 说明 |
+|------|--------|------|
+| 页面类型 | 用户输入 | 覆盖移动端/PC端 15+ 场景 |
+| 风格 | 简约现代 | 5套风格可选 |
+| Mock数据 | 是 | 可选开启/关闭 |
+
+**5 套风格**：
+- 简约现代（白色为主，工具类App）
+- 活力炫彩（渐变色，电商/社交）
+- 高端商务（深色系，金色点缀）
+- 清新自然（绿/蓝色系，健康/母婴）
+- 暗黑科技（霓虹点缀，游戏/科技）
+
+**页面模板**：
+- 移动端：个人中心、商品详情、商品列表、分类页、底部TabBar、购物车、订单列表、表单页
+- PC端：登录页、数据大屏、管理后台、表格列表、文章详情
+
+**使用方式**：
+
+```
+做个个人中心页面
+帮我做一个数据大屏，科技感强一点
+生成商品详情页，活力炫彩风格
+```
+
+**详细文档**：[ui-template-builder/README.md](ui-template-builder/README.md)
+
+---
+
+### 18. uniapp-crossplatform-audit-skill 🌐
 
 > uniapp 跨平台兼容性审计技能
 
@@ -692,7 +727,94 @@ uniapp 迁移
 
 ---
 
-### 21. vibecoding-guide-skill 🧭
+### 21. uniapp-standard-skill 📐
+
+> uniapp 小程序开发通用规范
+
+**功能**：20 条红线规则、8 份详细规范文档（接口/状态管理/路由/性能/存储/埋点/组件通信）、标准项目模板。
+
+**使用场景**：
+- uniapp 开发规范
+- 小程序代码审查
+- 项目结构规范化
+
+**使用方式**：
+
+```
+/uniapp-standard
+```
+
+或自然语言：
+
+```
+uniapp 开发规范
+接口怎么写
+```
+
+**详细文档**：[uniapp-standard-skill/README.md](uniapp-standard-skill/README.md)
+
+---
+
+### 22. uniapp-design-skill 🎨
+
+> uniapp 设计系统与组件规范
+
+**功能**：Design Tokens 四层架构、主题配置、语义变量、SCSS 函数与混入、按钮组件规范、屏幕适配。
+
+**使用场景**：
+- 样式规范是什么
+- Design Tokens
+- 组件开发规范
+- 屏幕适配
+
+**使用方式**：
+
+```
+/uniapp-design
+```
+
+或自然语言：
+
+```
+样式规范是什么
+Design Tokens
+组件规范
+```
+
+**详细文档**：[uniapp-design-skill/README.md](uniapp-design-skill/README.md)
+
+---
+
+### 23. uniapp-theme-skill 🎨
+
+> uni-app 主题系统：一键换肤
+
+**功能**：动态色阶生成（输入任意 HEX 颜色）、7 种预设主题、尺寸阶梯、强制统一硬编码、配合 icon-forge 生成主题图标。
+
+**使用场景**：
+- 添加主题系统
+- 换主题
+- 统一硬编码
+
+**使用方式**：
+
+```
+/uniapp-theme
+```
+
+或自然语言：
+
+```
+给项目添加主题系统，主色 #2563EB
+切换到商务风
+统一所有硬编码
+```
+
+**详细文档**：[uniapp-theme-skill/README.md](uniapp-theme-skill/README.md)
+
+---
+
+### 24. vibecoding-guide-skill 🧭
 
 > VibeCoding / AI 开发全流程知识导师（父技能 + 3 嵌套子技能）
 
@@ -743,6 +865,7 @@ AI 编程怎么入门
 | [uniapp-standardization-skill](uniapp-standardization-skill/) | uniapp 项目规范化 | `uniapp 规范化`、`项目结构诊断`、`代码规范` |
 | [uniapp-vue2-upgrade-skill](uniapp-vue2-upgrade-skill/) | uniapp Vue2 升级到 Vue3 | `vue2 升级 vue3`、`uniapp 迁移`、`小程序升级` |
 | [vibecoding-guide-skill](vibecoding-guide-skill/) | VibeCoding / AI 开发知识导师（3 子技能） | `/vibecoding`、`我想学 VibeCoding` |
+| [ui-template-builder](ui-template-builder/) | UI 页面模板构建器（5 套风格 + 15+ 场景 + Mock 数据） | `生成页面`、`做个个人中心`、`数据大屏` |
 
 > 注：`demo/foundry-demo` 是 [frontend-ui-foundry](frontend-ui-foundry/) 的端到端示例，不是独立 Skill。
 > 注：`super-deploy-skills` 是父技能，包含 5 个子技能，统一放在 `super-deploy-skills/` 目录下；`deploy-detect-skill` 是其余子技能的共享前置。
