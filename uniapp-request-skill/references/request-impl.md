@@ -126,11 +126,13 @@ function stableStringify(value: unknown): string {
 
 // ===== 请求拦截器 =====
 function requestInterceptor(options: RequestOptions): RequestOptions {
-  // options.header 会覆盖默认 Content-Type，如需强制默认头需调整合并顺序
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-    ...options.header,
-  };
+  const headers: Record<string, string> = { ...options.header };
+
+  // 未手动指定 Content-Type，且 data 为普通对象/字符串时，默认 application/json
+  // FormData / ArrayBuffer / Blob 等二进制数据不设置，由运行时自动填充 boundary
+  if (!headers['Content-Type'] && shouldSetJsonContentType(options.data)) {
+    headers['Content-Type'] = 'application/json';
+  }
 
   if (options.needAuth !== false) {
     const token = getToken();
@@ -145,6 +147,13 @@ function requestInterceptor(options: RequestOptions): RequestOptions {
   }
 
   return { ...options, header: headers };
+}
+
+function shouldSetJsonContentType(data: any): boolean {
+  if (data === undefined || data === null) return false;
+  if (typeof data === 'string') return true;
+  if (data instanceof FormData || data instanceof ArrayBuffer || data instanceof Blob) return false;
+  return typeof data === 'object';
 }
 
 // ===== 响应拦截器 =====

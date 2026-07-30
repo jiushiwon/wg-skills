@@ -193,6 +193,39 @@ MOCK_MAP['GET:/user/info'] = {
 
 开关开启后，所有请求自动走 Mock；关闭后全部走真实接口。详见 [mock-guide.md](references/mock-guide.md)。
 
+### 文件上传
+
+```typescript
+import { upload } from '@/api/upload';
+
+const res = await upload<{ url: string }>({
+  url: '/api/upload/avatar',
+  filePath: tempFilePath,
+  name: 'avatar',
+  formData: { userId: '123' },
+  onProgress: (progress) => console.log(`上传进度：${progress}%`),
+});
+```
+
+上传独立封装，不走 `request` 的并发去重，避免大文件被错误合并。
+
+### 错误处理
+
+```typescript
+import { get } from '@/api/request';
+import { safeRequest } from '@/utils/toast';
+
+// 方式一：safeRequest 自动提示错误
+const userInfo = await safeRequest<UserInfo>({ url: '/user/info' });
+if (!userInfo) return;
+
+// 方式二：request 自行处理错误
+get<UserInfo>('/user/info').catch((err) => {
+  console.log('错误码：', err.code);    // 例如 -1001、UNAUTHORIZED、TIMEOUT
+  console.log('错误信息：', err.message);
+});
+```
+
 ### SSE 流式请求
 
 ```typescript

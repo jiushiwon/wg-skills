@@ -23,6 +23,10 @@ export function setToken(token: string): void {
 export function clearToken(): void {
   uni.removeStorageSync('token');
 }
+
+export function getRefreshToken(): string | null {
+  return uni.getStorageSync('refresh_token') || null;
+}
 ```
 
 ### 方案 B：Pinia userStore（推荐）
@@ -43,6 +47,16 @@ export function setToken(token: string): void {
   userStore.setToken(token);
 }
 
+export function setRefreshToken(token: string): void {
+  const userStore = useUserStore();
+  userStore.setRefreshToken(token);
+}
+
+export function getRefreshToken(): string | null {
+  const userStore = useUserStore();
+  return userStore.refreshToken || null;
+}
+
 export function clearToken(): void {
   const userStore = useUserStore();
   userStore.clearToken();
@@ -56,18 +70,26 @@ import { ref } from 'vue';
 
 export const useUserStore = defineStore('user', () => {
   const token = ref<string | null>(uni.getStorageSync('token') || null);
+  const refreshToken = ref<string | null>(uni.getStorageSync('refresh_token') || null);
 
   function setToken(value: string) {
     token.value = value;
     uni.setStorageSync('token', value);
   }
 
-  function clearToken() {
-    token.value = null;
-    uni.removeStorageSync('token');
+  function setRefreshToken(value: string) {
+    refreshToken.value = value;
+    uni.setStorageSync('refresh_token', value);
   }
 
-  return { token, setToken, clearToken };
+  function clearToken() {
+    token.value = null;
+    refreshToken.value = null;
+    uni.removeStorageSync('token');
+    uni.removeStorageSync('refresh_token');
+  }
+
+  return { token, refreshToken, setToken, setRefreshToken, clearToken };
 });
 ```
 
@@ -102,10 +124,12 @@ if (options.needAuth !== false && isTokenExpired()) {
 
 ```typescript
 function requestInterceptor(options: RequestOptions): RequestOptions {
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-    ...options.header,
-  };
+  const headers: Record<string, string> = { ...options.header };
+
+  // 普通对象/字符串默认 application/json；FormData / ArrayBuffer / Blob 等不设置
+  if (!headers['Content-Type'] && shouldSetJsonContentType(options.data)) {
+    headers['Content-Type'] = 'application/json';
+  }
 
   if (options.needAuth !== false) {
     const token = getToken();
@@ -120,6 +144,13 @@ function requestInterceptor(options: RequestOptions): RequestOptions {
   }
 
   return { ...options, header: headers };
+}
+
+function shouldSetJsonContentType(data: any): boolean {
+  if (data === undefined || data === null) return false;
+  if (typeof data === 'string') return true;
+  if (data instanceof FormData || data instanceof ArrayBuffer || data instanceof Blob) return false;
+  return typeof data === 'object';
 }
 ```
 
@@ -136,7 +167,7 @@ function responseInterceptor<T>(res: any, options: RequestOptions): ApiResponse<
   const { statusCode, data } = res;
 
   if (statusCode === 401) {
-    // 只抛错，不调用 handleUnauthorized；跳转统一在请求层 catch 中处理
+    // 抛出 UNAUTHORIZED，由 request.ts 的 catch 触发 refreshToken 或 handleUnauthorized
     throw formatError('UNAUTHORIZED', data?.message || '登录已过期', res);
   }
 
@@ -152,6 +183,9 @@ function responseInterceptor<T>(res: any, options: RequestOptions): ApiResponse<
 
 ```typescript
 // src/services/auth.service.ts
+import { BASE_URL } from '@/config/api.config';
+import { getRefreshToken, setToken, clearToken } from '@/utils/auth';
+
 let isRefreshing = false;
 let refreshQueue: Array<{
   resolve: (token: string) => void;
@@ -197,6 +231,25 @@ export async function refreshToken(): Promise<string> {
 ```
 
 **注意**：refresh 接口直接调用 `uni.request`，避免循环使用本 skill 封装的 `request`。
+
+## handleUnauthorized 实现
+
+当 Token 刷新失败或收到明确的 401 需要强制登出时，由 `handleUnauthorized()` 统一清理登录态并跳转登录页：
+
+```typescript
+// src/services/auth.service.ts
+export function handleUnauthorized() {
+  clearToken();
+
+  // 方案 A：直接跳转登录页
+  uni.reLaunch({ url: '/pages/login/login' });
+
+  // 方案 B：触发全局事件，让 App.vue 或登录拦截器处理
+  // uni.$emit('auth:logout');
+}
+```
+
+> **注意**：登录页路径、是否保留当前页面栈、是否记录回跳地址，都属于业务决策，本 skill 只给出最小示例，项目需自行调整。
 
 ## 请求层集成重试
 
