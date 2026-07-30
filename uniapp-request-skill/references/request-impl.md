@@ -30,8 +30,8 @@ export const DEFAULT_PREFIX = '/api/v1';
 export const REQUEST_TIMEOUT = 30000;
 export const REQUEST_RETRY_COUNT = 0;
 
-// 业务成功码：按后端契约配置，避免误判
-export const SUCCESS_CODES: (string | number)[] = [0, 200];
+// 业务成功码：按后端契约配置。本示例约定 code=0 为成功，code<0 为业务异常
+export const SUCCESS_CODES: (string | number)[] = [0];
 
 // 与 401 同等处理的业务失败码，为空数组表示不启用
 export const AUTH_FAILURE_CODES: (string | number)[] = [];
@@ -52,7 +52,7 @@ import {
   DEFAULT_PREFIX,
   REQUEST_TIMEOUT,
   USE_MOCK,
-  SUCCESS_CODES,           // 项目自定义业务成功码，默认 [0, 200]
+  SUCCESS_CODES,           // 项目自定义业务成功码，本示例约定 code=0 为成功
   REQUEST_RETRY_COUNT,     // 网络错误/超时重试次数，默认 0
   AUTH_FAILURE_CODES,      // 与 401 同等处理的业务失败码（可选）
 } from '@/config/api.config';
@@ -401,7 +401,7 @@ task.__abort?.();
 
 1. **并发去重策略**：同一 key 的并发请求只发一次，返回同一 Promise；请求完成后清理 `pendingRequests`，释放内存。
 2. **请求 key 稳定化**：使用 `stableStringify` 递归排序对象 key，避免同一对象因属性顺序不同产生不同 key。对于不可序列化数据（FormData、ArrayBuffer、循环引用等），`generateRequestKey` 会回退到时间戳，自动放弃去重，避免错误合并。
-3. **成功状态码**：HTTP 层 `200 <= statusCode < 300` 均视为成功；业务层通过 `SUCCESS_CODES` 配置成功码，默认 `[0, 200]`，项目需按后端契约调整。
+3. **成功状态码**：HTTP 层 `200 <= statusCode < 300` 均视为请求成功；业务层通过 `SUCCESS_CODES` 配置成功码。本示例约定 `code = 0` 为业务成功，`code < 0` 为业务异常，项目需按实际后端契约调整。
 4. **失败重试**：仅对 `TIMEOUT` / `NETWORK_ERROR` 自动重试，默认不重试；可在 `api.config.ts` 配置全局 `REQUEST_RETRY_COUNT`，或单请求设置 `retry`。
 5. **401 处理**：HTTP 401 时先调用 `refreshToken()` 刷新，成功后以 `isRetry = true` 重试原请求；刷新失败调用 `handleUnauthorized()` 并抛出原错误。
 6. **取消请求**：返回的 Promise 挂载 `__abort` 方法，页面卸载时可调用避免回调执行。

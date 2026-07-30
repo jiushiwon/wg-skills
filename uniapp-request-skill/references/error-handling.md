@@ -36,12 +36,18 @@ export function extractMessage(data: any, fallback = '请求失败'): string {
 ```typescript
 // src/config/error.config.ts
 export const ERROR_CODE_MAP: Record<string, string> = {
+  // HTTP 状态异常（请求层）
   NO_AUTH_TOKEN: '请先登录',
   UNAUTHORIZED: '登录已过期，请重新登录',
   FORBIDDEN: '权限不足',
   TIMEOUT: '请求超时，请检查网络',
   NETWORK_ERROR: '网络异常，请稍后重试',
   UPLOAD_ERROR: '上传失败',
+
+  // 业务异常（按后端 code 约定，例如 code < 0）
+  '-1001': '手机号已存在',
+  '-1002': '必填项不能为空',
+  '-1003': '重复提交，请稍后再试',
 };
 
 export function resolveErrorMessage(err: RequestError): string {
@@ -52,6 +58,12 @@ export function resolveErrorMessage(err: RequestError): string {
   return ERROR_CODE_MAP[key] || err.message || '未知错误';
 }
 ```
+
+**code 约定说明**：
+
+- `code = 0`：业务成功，由 `SUCCESS_CODES` 判定。
+- `code < 0`：业务异常（如参数错误、重复新增等），会在 `ERROR_CODE_MAP` 中按字符串 key（如 `'-1001'`）查找对应提示。
+- HTTP 状态异常（401/403/500/断网等）：错误码为 `UNAUTHORIZED` / `FORBIDDEN` / `HTTP_ERROR` / `TIMEOUT` / `NETWORK_ERROR` 等字符串，与业务 code 互不干扰。
 
 ## 错误提示工具
 

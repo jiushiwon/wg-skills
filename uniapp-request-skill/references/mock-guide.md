@@ -75,6 +75,13 @@ MOCK_MAP['GET:/user/:id'] = {
     nickname: '张三',
   },
 } satisfies MockEntry<Partial<UserInfo>>;
+
+// 业务异常 Mock 示例（code < 0）
+MOCK_MAP['POST:/order/create'] = {
+  code: -1003,
+  message: '重复提交，请稍后再试',
+  data: null,
+} satisfies MockEntry<null>;
 ```
 
 > **TypeScript 版本说明**：示例使用 TypeScript 4.9+ 的 `satisfies` 运算符。如果项目使用更低版本，可改为显式类型标注：
