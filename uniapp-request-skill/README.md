@@ -120,6 +120,24 @@ const { data: userInfo } = await get<UserInfo>('/user/info');
 await post<void>('/user/update', { nickname: '张三' });
 ```
 
+### 响应约定
+
+统一返回结构：
+
+```typescript
+interface ApiResponse<T> {
+  code: number;    // 0 成功，<0 业务异常
+  message: string; // 提示信息
+  data: T;         // 业务数据
+}
+```
+
+- `code = 0`：业务成功，返回 `data`。
+- `code < 0`：业务异常，由 `ERROR_CODE_MAP` 映射提示文案。
+- `401 / 403 / 500 / 超时 / 断网`：走 HTTP 状态异常分支，错误码为 `UNAUTHORIZED`、`FORBIDDEN`、`HTTP_ERROR`、`TIMEOUT`、`NETWORK_ERROR`。
+
+> 本 skill 内置的 `-1001`、`-1002`、`-1003` 等错误码仅为示例，接入真实项目时请替换为后端实际约定。
+
 ### 游客拦截
 
 ```typescript

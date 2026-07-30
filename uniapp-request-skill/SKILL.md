@@ -88,6 +88,60 @@ src/
     └── useTypewriter.ts     # 打字机效果 Hook
 ```
 
+## 响应信封与错误约定
+
+本 skill 采用统一的响应结构（响应信封）：
+
+```typescript
+export interface ApiResponse<T = any> {
+  code: number;    // 业务状态码
+  message: string; // 提示信息
+  data: T;         // 业务数据
+}
+```
+
+### 业务状态码约定
+
+| code 范围 | 含义 | 处理方式 |
+|-----------|------|----------|
+| `code = 0` | 业务成功 | 正常返回 `data` |
+| `code < 0` | 业务异常 | 抛出 `RequestError`，错误码为对应的负数值 |
+| `code > 0` | 按项目约定（若存在） | 默认也视为业务异常 |
+
+> 本项目示例默认 `SUCCESS_CODES = [0]`。如果你的后端约定不同（例如同时用 `200` 表示成功），请在 `src/config/api.config.ts` 中调整。
+
+### HTTP 状态异常
+
+HTTP 层错误与业务 code 互不干扰，统一由 `statusCode` 判断：
+
+| HTTP 状态 | 错误码 | 场景 |
+|-----------|--------|------|
+| 401 | `UNAUTHORIZED` | 登录过期，触发 Token 刷新 |
+| 403 | `FORBIDDEN` | 权限不足 |
+| 400 / 404 / 500 等 | `HTTP_ERROR` | 请求异常 |
+| 超时 / 断网 | `TIMEOUT` / `NETWORK_ERROR` | 网络异常 |
+
+### 错误码映射约定
+
+`src/config/error.config.ts` 中的 `ERROR_CODE_MAP` 用于把错误码转成用户友好文案。本 skill 内置的映射仅为**示例**，你必须按自己后端的真实 code 约定替换：
+
+```typescript
+export const ERROR_CODE_MAP: Record<string, string> = {
+  // HTTP 状态异常（请求层）
+  UNAUTHORIZED: '登录已过期，请重新登录',
+  FORBIDDEN: '权限不足',
+  TIMEOUT: '请求超时，请检查网络',
+  NETWORK_ERROR: '网络异常，请稍后重试',
+
+  // 业务异常示例（按 code < 0 约定）
+  '-1001': '手机号已存在',
+  '-1002': '必填项不能为空',
+  '-1003': '重复提交，请稍后再试',
+};
+```
+
+> **重要**：`-1001`、`-1002`、`-1003` 只是示例占位符。接入真实项目时，请与后端确认错误码表并替换。
+
 ## 设计要点
 
 ### 1. 统一入口
