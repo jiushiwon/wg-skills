@@ -140,6 +140,8 @@ interface ApiResponse<T> {
 
 ### 游客拦截
 
+默认所有请求需要登录，未登录时直接拒绝：
+
 ```typescript
 const { checkLogin } = useAuth();
 
@@ -148,6 +150,8 @@ function handleLike() {
   post('/api/like', { id });
 }
 ```
+
+登录态默认从 Storage 读取，也支持从 Pinia `userStore` 读取。详见 [auth-patterns.md](references/auth-patterns.md)。
 
 ### 防抖
 

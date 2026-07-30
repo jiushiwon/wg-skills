@@ -217,6 +217,9 @@ export function upload<T = any>(options: UploadOptions): Promise<T>; // 直接�
 - 支持 `needAuth: false` 跳过（如登录接口本身）
 - 支持 `authMode: 'bearer' | 'customer-token'` 切换鉴权头格式
 - 401/403 响应交给 `auth.service.ts` 统一处理
+- 登录态来源可由项目自行选择：Storage 最小化方案 或 Pinia `userStore` 方案
+
+> **重要**：本 skill 示例默认使用 Storage 最小化方案（`uni.getStorageSync('token')`）。如果你使用 Pinia 管理登录态，请参考 [references/auth-patterns.md](references/auth-patterns.md) 替换为 `userStore` 方案，请求层代码无需改动。
 
 详细 Token 管理、401/403 处理、Token 刷新队列、登出回跳等见 [references/auth-patterns.md](references/auth-patterns.md)。
 

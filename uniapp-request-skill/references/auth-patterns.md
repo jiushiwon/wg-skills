@@ -2,6 +2,77 @@
 
 > 本文件提供与请求层衔接的最小鉴权模式。完整登录态、权限设计、登出回跳等不在 `uniapp-request-skill` 范围内，需由项目自行统一收口。
 
+## 登录态存储方案选择
+
+请求层只依赖 `getToken()` 的返回值，不关心 token 具体存在哪里。项目可按实际情况选择以下两种方案之一。
+
+### 方案 A：本地 Storage（最小化）
+
+适合简单项目或没有 Pinia 状态管理的场景：
+
+```typescript
+// src/utils/auth.ts
+export function getToken(): string | null {
+  return uni.getStorageSync('token') || null;
+}
+
+export function setToken(token: string): void {
+  uni.setStorageSync('token', token);
+}
+
+export function clearToken(): void {
+  uni.removeStorageSync('token');
+}
+```
+
+### 方案 B：Pinia userStore（推荐）
+
+适合使用 Pinia 管理全局状态的项目。请求层仍通过 `getToken()` 读取，但内部从 store 获取：
+
+```typescript
+// src/utils/auth.ts
+import { useUserStore } from '@/stores/user';
+
+export function getToken(): string | null {
+  const userStore = useUserStore();
+  return userStore.token || null;
+}
+
+export function setToken(token: string): void {
+  const userStore = useUserStore();
+  userStore.setToken(token);
+}
+
+export function clearToken(): void {
+  const userStore = useUserStore();
+  userStore.clearToken();
+}
+```
+
+```typescript
+// src/stores/user.ts
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
+
+export const useUserStore = defineStore('user', () => {
+  const token = ref<string | null>(uni.getStorageSync('token') || null);
+
+  function setToken(value: string) {
+    token.value = value;
+    uni.setStorageSync('token', value);
+  }
+
+  function clearToken() {
+    token.value = null;
+    uni.removeStorageSync('token');
+  }
+
+  return { token, setToken, clearToken };
+});
+```
+
+> **重要**：本 skill 示例默认采用**方案 A**。如果你使用 Pinia，请替换为方案 B，但请求层代码本身不需要改动。
+
 ## Token 失效前置判断
 
 在发起需要鉴权的请求前，若本地 Token 已过期，可直接拒绝或触发刷新，避免无意义请求打到后端。
