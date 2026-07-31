@@ -25,6 +25,11 @@
 "uniapp 安全审计"
 "uniapp 性能审计"
 "检查 uniapp 规范符合性"
+"uniapp UI/主题审计"
+"uniapp 代码质量审计"
+"uniapp 架构审计"
+"uniapp API 契约审计"
+"uniapp 小程序合规审计"
 "帮我看看这个 uniapp 项目有什么问题"
 ```
 
