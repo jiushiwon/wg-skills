@@ -1,10 +1,10 @@
 # wg-skills 🛠️
 
-> Claude Code 技能集合，让 AI 更懂你的开发需求
+> AI 技能集合，让 AI 更懂你的开发需求
 
 ## 什么是 Skills？
 
-Skills 是 Claude Code 的能力扩展，通过预先定义的规则和指令，让 AI 在特定场景下表现更专业、更精准。
+Skills 是 AI 编程助手（Claude Code、Cline、Cursor 等）的能力扩展，通过预先定义的规则和指令，让 AI 在特定场景下表现更专业、更精准。
 
 每个 Skill 包含：
 - **触发条件**：什么情况下调用
@@ -16,11 +16,11 @@ Skills 是 Claude Code 的能力扩展，通过预先定义的规则和指令，
 
 ### 安装 Skills
 
-skills 已经随 Claude Code 一起安装，无需额外操作。
+skills 已经随 AI 编程助手一起安装，无需额外操作。
 
 ### 使用方式
 
-直接告诉 Claude 你要做什么：
+直接告诉 AI 编程助手你要做什么：
 
 ```
 帮我审查前端代码
@@ -29,7 +29,7 @@ skills 已经随 Claude Code 一起安装，无需额外操作。
 生成后端项目
 ```
 
-Claude 会根据你的需求自动匹配并调用对应的 Skill。
+AI 会根据你的需求自动匹配并调用对应的 Skill。
 
 ### 显示可用技能
 
@@ -415,7 +415,31 @@ Stitch 转代码
 
 ---
 
-### 12. module-generate-skill 🧩
+### 12. workflow-diagram-skill 📊
+
+> 一句话生成流程图：SVG + PNG，多风格多布局
+
+**功能**：不用画节点和箭头，说一句话就能生成多风格流程图。内置 4 种风格（flat / sketchy / dark / cute）、2 种布局（纵向/横向）、2 种箭头（直线/曲线）、24 个现成模板，支持自定义步骤与模糊主题智能推断，输出 SVG + PNG（中文正常显示）。
+
+**使用场景**：
+- 公众号、视频、PPT 配图
+- 开发流程 / 学习路径 / 副业赚钱流程图
+- 一键出图，无需 draw.io / Excalidraw
+
+**使用方式**：
+
+```
+画个 vibe coding 流程图
+生成英语学习流程图
+画一个副业赚钱流程，用 cute 风格
+画个项目上线流程：代码评审 -> 合并 -> 构建 -> 部署 -> 验证
+```
+
+**详细文档**：[workflow-diagram-skill/README.md](workflow-diagram-skill/README.md)
+
+---
+
+### 13. module-generate-skill 🧩
 
 > 后端业务模块生成套件（父技能 + 5 个子技能）：骨架之上，按统一规范长出具体业务模块
 
@@ -455,7 +479,7 @@ Stitch 转代码
 
 ---
 
-### 13. skill-auditor 🔒
+### 14. skill-auditor 🔒
 
 > Skill 安全审计技能(基础版)。对任意 Claude Code / Agent Skill 做投毒与恶意行为审查,识别数据外泄链、隐藏脚本/供应链投毒、破坏性命令、Prompt 注入话术、权限放大、货不对板 6 大维度,产出结构化风险报告。
 
@@ -476,7 +500,7 @@ skill 安全审计
 
 ---
 
-### 14. xhs-style-writer-skill ✍️
+### 15. xhs-style-writer-skill ✍️
 
 > 小红书个人风格写作技能
 
@@ -499,7 +523,7 @@ skill 安全审计
 
 ---
 
-### 15. frontend-style-harmonizer-skill 🎯
+### 16. frontend-style-harmonizer-skill 🎯
 
 > 前端样式一致性治理技能
 
@@ -528,7 +552,7 @@ tab高度不一致
 
 ---
 
-### 16. ui-component-commands-skill 🎯
+### 17. ui-component-commands-skill 🎯
 
 > 前端UI组件指令系统 - 通过预定义指令+CSS变量绑定，一句话生成精确样式的UI组件
 
@@ -572,11 +596,11 @@ tab高度不一致
 
 ---
 
-### 17. ui-template-builder 📄
+### 18. ui-template-builder-skill 📄
 
 > UI 页面模板构建器 - 固化常见页面模板，多套风格可选，支持 mock 数据
 
-**功能**：把常见页面（个人中心、商品详情、登录页、数据大屏等）固化下来，每次生成基于模板，确保效果稳定。提供 3 个必须确认的配置：
+**功能**：把常见页面（个人中心、商品详情、登录页、数据大屏等）固化下来，每次生成基于模板，确保效果稳定。提供 37 套页面模板、5 套风格、Mock 数据、一键换肤（CSS 变量 + 主题生成器）、三档尺寸，覆盖移动端（uniapp）与 PC 端（React）。提供 3 个必须确认的配置：
 
 | 配置 | 默认值 | 说明 |
 |------|--------|------|
@@ -592,7 +616,7 @@ tab高度不一致
 - 暗黑科技（霓虹点缀，游戏/科技）
 
 **页面模板**：
-- 移动端：个人中心、商品详情、商品列表、分类页、底部TabBar、购物车、订单列表、表单页
+- 移动端：个人中心、商品详情、商品列表、分类页、底部TabBar、购物车、订单列表、表单页、朋友圈、聊天列表
 - PC端：登录页、数据大屏、管理后台、表格列表、文章详情
 
 **使用方式**：
@@ -601,13 +625,14 @@ tab高度不一致
 做个个人中心页面
 帮我做一个数据大屏，科技感强一点
 生成商品详情页，活力炫彩风格
+换个主题色 #FF6B6B
 ```
 
-**详细文档**：[ui-template-builder/README.md](ui-template-builder/README.md)
+**详细文档**：[ui-template-builder-skill/README.md](ui-template-builder-skill/README.md)
 
 ---
 
-### 18. uniapp-crossplatform-audit-skill 🌐
+### 19. uniapp-crossplatform-audit-skill 🌐
 
 > uniapp 跨平台兼容性审计技能
 
@@ -637,17 +662,21 @@ tab高度不一致
 
 ---
 
-### 18. uniapp-code-audit-skill 🔍
+### 20. uniapp-code-audit-skill 🔍
 
-> uniapp 代码安全和 UI 审计技能
+> uniapp 代码审计技能（8 大维度体检，报告-only）
 
-**功能**：审计 uniapp 项目的代码质量、安全漏洞、性能问题和 UI 规范。包含安全扫描（敏感信息硬编码、域名配置、隐私合规）、性能扫描（图片压缩、包体积、长列表优化）、代码质量（any 滥用、硬编码、重复代码）、UI 一致性（颜色/字号/间距不统一），输出按严重程度分级的问题清单。
+**功能**：审计 uniapp 项目（Vue3 + TS + Pinia 优先，Vue2 亦可），按 8 大维度扫描并输出分级报告：安全合规、性能、代码质量（含测试/埋点）、架构与规范、UI/主题一致性、跨平台兼容、小程序专项、API 契约。问题按 P0/P1/P2/P3 风险等级归类，每条标注位置、判定依据、参考标准。
+
+**扩展能力**：增量审计（仅扫 git 未提交改动）、抽样审计（指定模块/文件）、平台过滤（小程序专属检查仅在目标含小程序时执行）、按文件分组问题清单、问题闭环对比（与上次报告量化进度）。
+
+> 本 skill 只输出 `uniapp-audit-report.md`，不修改、不修复、不重构项目代码。
 
 **使用场景**：
-- 全面审计小程序代码质量
-- 检测安全漏洞和风险
-- 扫描性能问题
-- 检查 UI 一致性
+- 上线前体检（审核合规、安全、包体积）
+- 安全专项 / 性能排查
+- 存量项目摸底、Vue2 升级前评估
+- 只查最新改动（增量审计）
 
 **使用方式**：
 
@@ -660,14 +689,15 @@ tab高度不一致
 ```
 审计 uniapp 代码
 帮我看看这个项目有什么问题
-小程序代码质量审计
+uniapp 安全审计
+只审计我还没提交的改动
 ```
 
 **详细文档**：[uniapp-code-audit-skill/README.md](uniapp-code-audit-skill/README.md)
 
 ---
 
-### 19. uniapp-standardization-skill 📐
+### 21. uniapp-standardization-skill 📐
 
 > uniapp 项目规范化技能
 
@@ -697,7 +727,7 @@ uniapp 规范化
 
 ---
 
-### 20. uniapp-vue2-upgrade-skill ⬆️
+### 22. uniapp-vue2-upgrade-skill ⬆️
 
 > uniapp Vue2 升级到 Vue3 技能
 
@@ -727,7 +757,7 @@ uniapp 迁移
 
 ---
 
-### 21. uniapp-standard-skill 📐
+### 23. uniapp-standard-skill 📐
 
 > uniapp 小程序开发通用规范
 
@@ -755,7 +785,7 @@ uniapp 开发规范
 
 ---
 
-### 22. uniapp-design-skill 🎨
+### 24. uniapp-design-skill 🎨
 
 > uniapp 设计系统与组件规范
 
@@ -785,7 +815,7 @@ Design Tokens
 
 ---
 
-### 23. uniapp-theme-skill 🎨
+### 25. uniapp-theme-skill 🎨
 
 > uni-app 主题系统：一键换肤
 
@@ -814,7 +844,71 @@ Design Tokens
 
 ---
 
-### 24. vibecoding-guide-skill 🧭
+### 26. uniapp-components-skill 🔐
+
+> uniapp 登录鉴权与安全规范
+
+**功能**：认证服务（Bootstrap 启动、登录态判断、requireLogin）、Token 管理（获取 Token、用户上下文、存储 Key）、401/403 处理（并发去重、统一跳转）、登出流程（状态清理、回跳机制）、安全规范（接口安全、数据安全、代码安全）。
+
+**使用场景**：
+- 小程序登录鉴权
+- Token 与 401/403 统一处理
+- 接口/数据/代码安全规范
+
+**使用方式**：
+
+```
+/uniapp-components
+```
+
+或自然语言：
+
+```
+登录鉴权怎么做
+uniapp 登录
+token 管理
+401 处理
+安全规范
+```
+
+**详细文档**：[uniapp-components-skill/README.md](uniapp-components-skill/README.md)
+
+---
+
+### 27. uniapp-request-skill 📡
+
+> uniapp 请求层设计：统一 request.ts 封装
+
+**功能**：从 `request.ts` 出发，解决鉴权、Token、游客、防抖、Mock、错误处理、文件上传、SSE 流式请求、失败重试等实战问题。鉴权拦截自动注入 Token，401 触发刷新后自动重试原请求，并发请求入队避免多次登录；游客模式拦截未登录请求；同一请求防抖去重；支持 Mock 与 SSE 打字机效果。
+
+**使用场景**：
+- 统一请求封装与拦截
+- Token 刷新衔接 / 401 处理
+- 接口防抖去重、失败重试
+- 文件上传、SSE 流式（AI 聊天打字机）
+
+**使用方式**：
+
+```
+/uniapp-request
+```
+
+或自然语言：
+
+```
+请求封装
+request.ts 怎么写
+uniapp 请求统一处理
+Token 刷新
+SSE 流式请求
+AI 聊天流式回复
+```
+
+**详细文档**：[uniapp-request-skill/README.md](uniapp-request-skill/README.md)
+
+---
+
+### 28. vibecoding-guide-skill 🧭
 
 > VibeCoding / AI 开发全流程知识导师（父技能 + 3 嵌套子技能）
 
@@ -855,17 +949,23 @@ AI 编程怎么入门
 | [backend-analysis-skill](backend-analysis-skill/) | 后端项目全景分析（接口/技术栈/数据库/业务 4 份报告） | `分析后端项目`、`梳理接口`、`盘点技术栈`、`出数据库文档`、`接手老项目` |
 | [icon-image-catch-skill](icon-image-catch-skill/) | 素材抓取套件（2 子技能：图标抓取 Iconify 免 Key + SVG→PNG + 图标展示 class / 图片抓取自定义源·三源自动降级·Lorem Flickr 无 Key 语义兜底·Picsum 占位兜底 + 本地压缩切图 + 项目素材审计·自动探测项目类型与平台尺寸·扫描项目自动抓取） | `抓图标`、`下载 icon`、`抓图片`、`找配图`、`背景图`、`项目素材审计`、`图标展示`、`扫描项目` |
 | [image-forge-skill](image-forge-skill/) | 本地图片处理工具：压缩/转格式/改尺寸/裁剪/base64/水印/遮罩/多图合成 | `压缩图片`、`转 webp`、`改尺寸`、`裁剪图片`、`加水印`、`图片合成`、`base64 图片`、`处理图片` |
+| [workflow-diagram-skill](workflow-diagram-skill/) | 一句话生成流程图（4 风格 + 24 模板 + SVG/PNG） | `画个流程图`、`生成流程图`、`vibe coding 流程图`、`cute 风格` |
 | [module-generate-skill](module-generate-skill/) | 后端业务模块生成套件（5 子技能：登录鉴权/组织权限/AI 聊天/短信邮箱/支付） | `加登录`、`加权限`、`RBAC`、`对接支付`、`短信验证码`、`AI 聊天`、`带记忆的对话` |
 | [skill-auditor](skill-auditor/) | Skill 安全审计（6 维度：数据外泄/供应链/破坏命令/注入话术/权限放大/货不对板） | `审查 skill`、`检测有毒吗`、`skill 安全审计`、`audit skill` |
 | [xhs-style-writer-skill](xhs-style-writer-skill/) | 小红书个人风格写作（建档/写作/去 AI 味三模式） | `写小红书笔记`、`种草笔记`、`爆款标题`、`学我的风格写`、`去 AI 味` |
 | [frontend-style-harmonizer-skill](frontend-style-harmonizer-skill/) | 前端样式一致性治理（复用抽取/对齐收敛/硬编码变量化） | `统一各页面样式`、`样式对齐`、`去硬编码`、`按钮对齐`、`tab高度不一致`、`样式治理` |
 | [ui-component-commands-skill](ui-component-commands-skill/) | UI组件指令系统（按钮/线条/图形/组合） | `做按钮`、`加分割线`、`图标+标签`、`半圆`、`徽章` |
 | [uniapp-crossplatform-audit-skill](uniapp-crossplatform-audit-skill/) | uniapp 跨平台兼容性审计 | `多端兼容`、`跨平台审计`、`小程序 App 兼容` |
-| [uniapp-code-audit-skill](uniapp-code-audit-skill/) | uniapp 代码安全和 UI 审计 | `uniapp 审计`、`小程序代码审计`、`漏洞扫描` |
+| [uniapp-code-audit-skill](uniapp-code-audit-skill/) | uniapp 代码审计（8 维度体检：安全/性能/代码质量/架构/UI/跨平台/小程序/API 契约，P0-P3 分级，报告-only） | `uniapp 审计`、`小程序代码审计`、`漏洞扫描`、`uniapp 安全审计`、`只审计未提交改动` |
 | [uniapp-standardization-skill](uniapp-standardization-skill/) | uniapp 项目规范化 | `uniapp 规范化`、`项目结构诊断`、`代码规范` |
 | [uniapp-vue2-upgrade-skill](uniapp-vue2-upgrade-skill/) | uniapp Vue2 升级到 Vue3 | `vue2 升级 vue3`、`uniapp 迁移`、`小程序升级` |
+| [uniapp-standard-skill](uniapp-standard-skill/) | uniapp 开发规范（20 红线 + 8 文档） | `uniapp 开发规范`、`接口怎么写` |
+| [uniapp-design-skill](uniapp-design-skill/) | uniapp 设计系统与组件规范 | `Design Tokens`、`组件规范`、`样式规范` |
+| [uniapp-theme-skill](uniapp-theme-skill/) | uni-app 主题系统：一键换肤 | `添加主题系统`、`换主题`、`统一硬编码` |
+| [uniapp-components-skill](uniapp-components-skill/) | uniapp 登录鉴权与安全规范 | `登录鉴权怎么做`、`token 管理`、`401 处理`、`安全规范` |
+| [uniapp-request-skill](uniapp-request-skill/) | uniapp 请求层设计（request.ts 封装/鉴权拦截/防抖/Mock/SSE） | `请求封装`、`request.ts 怎么写`、`Token 刷新`、`SSE 流式请求` |
 | [vibecoding-guide-skill](vibecoding-guide-skill/) | VibeCoding / AI 开发知识导师（3 子技能） | `/vibecoding`、`我想学 VibeCoding` |
-| [ui-template-builder](ui-template-builder/) | UI 页面模板构建器（5 套风格 + 15+ 场景 + Mock 数据） | `生成页面`、`做个个人中心`、`数据大屏` |
+| [ui-template-builder-skill](ui-template-builder-skill/) | UI 页面模板构建器（37 套模板 + 5 套风格 + Mock 数据 + 一键换肤） | `生成页面`、`做个个人中心`、`数据大屏`、`换个主题色` |
 
 > 注：`demo/foundry-demo` 是 [frontend-ui-foundry](frontend-ui-foundry/) 的端到端示例，不是独立 Skill。
 > 注：`super-deploy-skills` 是父技能，包含 5 个子技能，统一放在 `super-deploy-skills/` 目录下；`deploy-detect-skill` 是其余子技能的共享前置。
@@ -941,7 +1041,7 @@ xxx
 
 ### 方式二：使用 skill-creator
 
-直接告诉 Claude：
+直接告诉 AI 编程助手：
 
 ```
 帮我创建一个 xxx 技能
@@ -1143,6 +1243,11 @@ wg-skills/
 │   ├── package.json            # sharp 依赖
 │   └── references/
 │       └── operation-schema.md # JSON Spec 字段说明
+├── workflow-diagram-skill/     # 一句话生成流程图（4 风格 + 24 模板）
+│   ├── SKILL.md                # 触发词 + 工作模式 + 规则
+│   ├── README.md
+│   ├── scripts/                # SVG 生成 / PNG 渲染 / 依赖初始化脚本
+│   └── references/             # 模板库 + 4 套风格规范 + 图标库
 ├── module-generate-skill/      # 后端业务模块生成套件（父技能 + 5 子技能）
 │   ├── SKILL.md                # 父入口：模块识别 + 分流 + 技术栈检测
 │   ├── README.md
@@ -1172,6 +1277,12 @@ wg-skills/
 │   │   └── combo.md            # 组合指令
 │   └── references/
 │       └── matching-rules.md    # 模糊匹配规则
+├── ui-template-builder-skill/  # UI 页面模板构建器（37 套模板 + 5 风格）
+│   ├── SKILL.md
+│   ├── README.md
+│   ├── references/             # 主题生成器 + 风格定义 + Mock 模板
+│   ├── components/             # uniapp-vue3 / pc-react 组件模板
+│   └── templates/              # uniapp-vue3 / pc-react 页面模板
 ├── uniapp-crossplatform-audit-skill/   # uniapp 跨平台兼容性审计
 │   ├── SKILL.md
 │   ├── README.md
@@ -1179,14 +1290,19 @@ wg-skills/
 │       ├── cross-platform-checklist.md
 │       ├── tag-mapping.md
 │       └── api-mapping.md
-├── uniapp-code-audit-skill/           # uniapp 代码安全和 UI 审计
+├── uniapp-code-audit-skill/           # uniapp 代码审计（8 维度体检，报告-only）
 │   ├── SKILL.md
 │   ├── README.md
 │   └── references/
-│       ├── security-checklist.md
-│       ├── performance-checklist.md
-│       ├── code-quality-checklist.md
-│       └── ui-consistency-checklist.md
+│       ├── security-checklist.md      # 安全合规检查清单
+│       ├── performance-checklist.md   # 性能检查清单
+│       ├── code-quality-checklist.md  # 代码质量检查清单（含测试/埋点）
+│       ├── ui-consistency-checklist.md# UI/主题一致性检查清单
+│       ├── architecture-checklist.md  # 架构与规范检查清单
+│       ├── api-contract-checklist.md  # API 契约检查清单
+│       ├── cross-platform-checklist.md# 跨平台兼容性检查清单
+│       ├── mini-program-checklist.md  # 小程序专项检查清单
+│       └── self-audit-checklist.md    # 本技能自我审计清单
 ├── uniapp-standardization-skill/       # uniapp 项目规范化
 │   ├── SKILL.md
 │   ├── README.md
@@ -1195,6 +1311,21 @@ wg-skills/
 │       ├── api-spec.md
 │       ├── store-spec.md
 │       └── component-spec.md
+├── uniapp-components-skill/            # uniapp 登录鉴权与安全规范
+│   ├── SKILL.md
+│   ├── README.md
+│   └── references/
+│       ├── auth-framework.md          # 鉴权框架详解
+│       └── security.md                # 安全规范详解
+├── uniapp-request-skill/               # uniapp 请求层设计
+│   ├── SKILL.md
+│   ├── README.md
+│   └── references/
+│       ├── request-impl.md            # request.ts 完整实现参考
+│       ├── auth-patterns.md           # 请求层鉴权衔接模式
+│       ├── mock-guide.md              # Mock 机制配置与使用
+│       ├── error-handling.md          # 错误处理与文件上传封装
+│       └── sse-guide.md               # SSE 流式请求与打字机效果
 ├── uniapp-vue2-upgrade-skill/         # uniapp Vue2 升级到 Vue3
 │   ├── SKILL.md
 │   ├── README.md
