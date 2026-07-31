@@ -77,6 +77,21 @@
 | tabBar 图标尺寸非 81×81 | P2 | 小程序 tabBar 图标显示异常 | tabBar 图标尺寸不符合规范 | `uniapp-app-generate-skill/references/mini-program-checklist.md` | 检查 `static/tab-bar/` 图片尺寸 |
 | 使用 emoji 作为图标 | P2 | 跨端显示不一致 | 代码/文案中直接使用 emoji | `uniapp-app-generate-skill` 最佳实践 | `grep -rnP '[\x{1F300}-\x{1F9FF}]' src/` |
 
+## 10. 三端表现差异对比（H5 / 小程序 / App）
+
+> 目的：识别"H5 表现正常，但小程序/App 端表现异常或相反"的**端间表现差异**问题。该类问题无法通过单一"违禁用法"扫描发现，需按端逐一核对关键表现点。
+
+| 检查项 | 风险等级 | 风险描述 | 判定依据 | 参考标准 | 检测命令 |
+|--------|----------|----------|----------|----------|----------|
+| 图片/字体未按端适配 | P2 | 小程序端图片过大、App 端字体渲染偏差 | 同一页面资源在 H5 正常但小程序/App 端加载慢或错位 | `uniapp-app-generate-skill/references/cross-platform-compatibility.md` | 按端核对图片资源引用与字体设置 |
+| 样式 `var()`/`calc()` 未按端验证 | P2 | 主题变量在小程序/App 端失效 | 使用 `var(--xxx)`/`calc()` 未在三端逐一验证 | `uniapp-crossplatform-audit-skill` | 检查 `var(`/`calc(` 出现处并核对各端构建产物 |
+| 动态样式/条件渲染差异 | P2 | 小程序端 `:style` 绑定与 H5 表现不一致 | 复杂动态样式绑定未按端验证 | 通用跨端经验 | 人工核对关键动态样式 |
+| 原生组件层级问题 | P1 | 小程序端原生组件覆盖普通视图 | `video`/`map`/`camera` 等原生组件未处理层级覆盖 | 微信小程序原生组件规范 | 检查 `video`/`map`/`camera` 使用场景 |
+| 滚动行为差异 | P3 | 小程序端滚动穿透/回弹表现不一致 | `page` 级滚动与局部滚动混用未按端验证 | 通用跨端经验 | 检查滚动容器与页面滚动配置 |
+| 键盘弹起遮挡差异 | P2 | 小程序/App 端输入框被键盘遮挡 | 表单页仅 H5 验证过，未处理小程序/App 键盘高度 | `uniapp-app-generate-skill/references/mini-program-checklist.md` | 检查表单页键盘处理 |
+| 分享/支付回调差异 | P1 | 小程序/App 端回调未处理，H5 无此问题 | 三端分享/支付回调处理不一致或缺失 | `uniapp-app-generate-skill/references/wechat-common-patterns.md` | 检查分享/支付相关页面各端分支 |
+| 平台 API 降级处理缺失 | P2 | 同一逻辑在部分端无对应 API 时未降级 | 使用仅 H5 可用 API 且未对小程序/App 做降级 | `uniapp-app-generate-skill/references/cross-platform-compatibility.md` | 检查浏览器 API 调用处是否降级 |
+
 ## 跨平台兼容性评分参考
 
 | 级别 | 描述 |

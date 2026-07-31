@@ -25,15 +25,18 @@ description: 当用户要求审计 uniapp 项目、排查小程序代码质量�
 - "uniapp 架构审计"
 - "uniapp API 契约审计"
 - "uniapp 小程序合规审计"
+- "uniapp App 端审计"
+- "安卓/苹果端兼容性审计"
 - "帮我看看这个 uniapp 项目有什么问题"
+- "审计这个项目有没有冗余代码或没用的页面组件"
 
 ## Workflow
 
 ```
 Phase 1: 审计范围确认
   → 全量审计 or 指定模块/页面
-  → 目标平台：微信小程序 / H5 / App（小程序专属检查项仅在目标平台包含小程序时执行）
-  → 重点维度：安全 / 性能 / 代码质量 / 架构 / UI/主题 / 跨平台 / 小程序专项
+  → 目标平台：微信小程序 / H5 / App（小程序专属检查项仅在目标平台包含小程序时执行；App 端专项检查项仅在目标平台包含 App 时执行）
+  → 重点维度：安全 / 性能 / 代码质量 / 架构 / UI/主题 / 跨平台 / 小程序专项 / App 端专项 / 冗余与死代码 / API 契约
   → 增量审计（可选）：仅扫描 git 未提交改动，输出差异问题
   → 抽样审计（可选）：大项目可指定模块/文件范围，避免全量噪音
 
@@ -56,8 +59,8 @@ Phase 4: 输出报告
 根据上下文选择性询问（不必全问）：
 
 1. "审计范围：全量项目，还是指定模块/页面？"
-2. "目标平台：微信小程序 / H5 / App？小程序专属检查（包体积、合法域名、审核合规、分包）仅在目标包含小程序时执行。"
-3. "重点维度：安全 / 性能 / 代码质量 / 架构 / UI/主题 / 跨平台 / 小程序专项 / API 契约？"
+2. "目标平台：微信小程序 / H5 / App？小程序专属检查（包体积、合法域名、审核合规、分包）仅在目标包含小程序时执行；App 端专项检查（Android/iOS 差异、原生能力、热更新、App 包体积）仅在目标包含 App 时执行。"
+3. "重点维度：安全 / 性能 / 代码质量 / 架构 / UI/主题 / 跨平台 / 小程序专项 / App 端专项 / 冗余与死代码 / API 契约？"
 4. "是否需要增量审计（只查未提交改动）或抽样审计（大项目指定范围）？"
 
 ## 审计维度与参考清单
@@ -71,6 +74,8 @@ Phase 4: 输出报告
 | **UI/主题一致性** | `references/ui-consistency-checklist.md` | `uniapp-app-generate-skill/references/theme-system.md`、`component-standards.md` |
 | **跨平台兼容** | `references/cross-platform-checklist.md` | `uniapp-crossplatform-audit-skill`、`cross-platform-compatibility.md` |
 | **小程序专项** | `references/mini-program-checklist.md` | 微信小程序官方限制、`uniapp-standard-skill` 性能规范 |
+| **App 端专项** | `references/app-platform-checklist.md` | uni-app 官方文档、Android/iOS 平台规范、`manifest.json` `app-plus` 配置 |
+| **冗余与死代码** | `references/dead-code-checklist.md` | 通用工程规范、`uniapp-app-generate-skill` 静态资源规范 |
 | **API 契约** | `references/api-contract-checklist.md` | `uniapp-request-skill`、`uniapp-standard-skill` 接口规范 |
 
 ## 风险等级
@@ -96,16 +101,16 @@ Phase 4: 输出报告
 - 审计时间：2024-01-01
 - 审计范围：全量 / 指定模块
 - 目标平台：微信小程序 / H5 / App
-- 审计维度：安全、性能、代码质量、架构、UI/主题、跨平台、小程序专项、API 契约
+- 审计维度：安全、性能、代码质量、架构、UI/主题、跨平台、小程序专项、App 端专项、冗余与死代码、API 契约
 
 ## 问题统计
 
-| 风险等级 | 安全 | 性能 | 代码质量 | 架构 | UI/主题 | 跨平台 | 小程序专项 | API 契约 | 合计 |
-|----------|------|------|----------|------|---------|--------|------------|----------|------|
-| P0       | ...  | ...  | ...      | ...  | ...     | ...    | ...        | ...      | ...  |
-| P1       | ...  | ...  | ...      | ...  | ...     | ...    | ...        | ...      | ...  |
-| P2       | ...  | ...  | ...      | ...  | ...     | ...    | ...        | ...      | ...  |
-| P3       | ...  | ...  | ...      | ...  | ...     | ...    | ...        | ...      | ...  |
+| 风险等级 | 安全 | 性能 | 代码质量 | 架构 | UI/主题 | 跨平台 | 小程序专项 | App 端专项 | 冗余与死代码 | API 契约 | 合计 |
+|----------|------|------|----------|------|---------|--------|------------|------------|--------------|----------|------|
+| P0       | ...  | ...  | ...      | ...  | ...     | ...    | ...        | ...        | ...          | ...      | ...  |
+| P1       | ...  | ...  | ...      | ...  | ...     | ...    | ...        | ...        | ...          | ...      | ...  |
+| P2       | ...  | ...  | ...      | ...  | ...     | ...    | ...        | ...        | ...          | ...      | ...  |
+| P3       | ...  | ...  | ...      | ...  | ...     | ...    | ...        | ...        | ...          | ...      | ...  |
 
 ## 问题详情
 
@@ -218,4 +223,6 @@ grep -rnE 'eval\(|new Function\(' src/
 - `references/api-contract-checklist.md` — API 契约检查清单
 - `references/cross-platform-checklist.md` — 跨平台兼容性检查清单
 - `references/mini-program-checklist.md` — 小程序专项检查清单
+- `references/app-platform-checklist.md` — App 端专项检查清单（Android/iOS）
+- `references/dead-code-checklist.md` — 冗余与死代码检查清单
 - `references/self-audit-checklist.md` — 本 skill 自我审计清单

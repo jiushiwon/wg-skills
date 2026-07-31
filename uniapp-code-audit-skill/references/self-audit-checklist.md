@@ -60,14 +60,14 @@
 | 检查项 | 判定标准 | 检查方式 |
 |--------|----------|----------|
 | 入口文件齐全 | 存在 `SKILL.md`、`README.md` | `ls uniapp-code-audit-skill/SKILL.md uniapp-code-audit-skill/README.md` |
-| references 完整 | 存在 9 个 reference 文件 | `ls uniapp-code-audit-skill/references/` |
-| 新增文件已登记 | `SKILL.md` 与 `README.md` 的 References/目录说明包含新增文件 | 检查对应段落 |
+| references 完整 | 存在 11 个 reference 文件 | `ls uniapp-code-audit-skill/references/` |
+| 新增文件已登记 | `SKILL.md` 与 `README.md` 的 References/目录说明包含新增文件（app-platform-checklist.md、dead-code-checklist.md） | 检查对应段落 |
 
 ## 9. 无重复内容
 
 | 检查项 | 判定标准 | 检查方式 |
 |--------|----------|----------|
-| 各 reference 职责清晰 | 安全、性能、代码质量、UI、架构、API、跨平台、小程序、自审 9 个文件不大量重复 | 人工比对相邻清单 |
+| 各 reference 职责清晰 | 安全、性能、代码质量、UI、架构、API、跨平台、小程序、App 端、冗余与死代码、自审 11 个文件不大量重复 | 人工比对相邻清单 |
 | SKILL.md 不重复 reference 内容 | `SKILL.md` 只列维度与参考文件，不展开具体检查项 | 检查 `SKILL.md` 审计维度表 |
 
 ## 10. 触发词一致
