@@ -4,7 +4,7 @@
 
 ## 什么是 Skills？
 
-Skills 是 AI 编程助手（Claude Code、Cline、Cursor 等）的能力扩展，通过预先定义的规则和指令，让 AI 在特定场景下表现更专业、更精准。
+Skills 是 AI 编程助手（如 Cline、Cursor 等）的能力扩展，通过预先定义的规则和指令，让 AI 在特定场景下表现更专业、更精准。
 
 每个 Skill 包含：
 - **触发条件**：什么情况下调用
@@ -481,7 +481,7 @@ Stitch 转代码
 
 ### 14. skill-auditor 🔒
 
-> Skill 安全审计技能(基础版)。对任意 Claude Code / Agent Skill 做投毒与恶意行为审查,识别数据外泄链、隐藏脚本/供应链投毒、破坏性命令、Prompt 注入话术、权限放大、货不对板 6 大维度,产出结构化风险报告。
+> Skill 安全审计技能(基础版)。对任意 AI Skill 做投毒与恶意行为审查,识别数据外泄链、隐藏脚本/供应链投毒、破坏性命令、Prompt 注入话术、权限放大、货不对板 6 大维度,产出结构化风险报告。
 
 **使用场景**：
 - 安装外部 Skill 前做安全检查
@@ -1055,7 +1055,7 @@ xxx
 wg-skills/
 ├── README.md                   # 本文件：仓库总览
 ├── CLAUDE.md                   # 项目级规范
-├── .claudeignore               # Claude 索引忽略配置
+├── .claudeignore               # AI 索引忽略配置
 ├── .gitignore
 ├── LICENSE
 ├── frontend-code-doctor/       # 前端代码审查技能
