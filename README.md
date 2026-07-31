@@ -255,37 +255,7 @@ Stitch 转代码
 
 ---
 
-### 7. icon-forge 🎨
-
-> 图标生成技能
-
-**功能**：把 SVG path 或完整 SVG 批量渲染成 PNG。适合 uni-app / 小程序 / React Native / H5 等需要成套单色 PNG 图标的场景。
-
-**使用场景**：
-- 批量生成 tabBar 图标
-- 生成登录页功能图标
-- 统一应用图标风格与尺寸
-
-**使用方式**：
-
-```
-/icon-forge
-```
-
-或自然语言：
-
-```
-生成图标
-做一套图标
-生成 png 图标
-给我加几个图标
-```
-
-**详细文档**：[icon-forge/README.md](icon-forge/README.md)
-
----
-
-### 8. super-deploy-skills 🚀
+### 7. super-deploy-skills 🚀
 
 > 一键部署技能套件（父技能 + 5 个子技能，统一放在 `super-deploy-skills/` 目录下）
 
@@ -324,7 +294,7 @@ Stitch 转代码
 
 ---
 
-### 9. backend-analysis-skill 🔍
+### 8. backend-analysis-skill 🔍
 
 > 后端项目全景分析技能：不运行项目，静态扫描源码，一次产出 4 份报告
 
@@ -358,7 +328,7 @@ Stitch 转代码
 
 ---
 
-### 10. icon-image-catch-skill 🖼️
+### 9. icon-image-catch-skill 🖼️
 
 > 远程素材抓取套件（父技能 + 2 个子技能）：说「一只猫的图片」就去找猫的图，说「home 图标」就去找合适的 home icon；也支持项目素材需求审计。
 
@@ -390,11 +360,11 @@ Stitch 转代码
 
 ---
 
-### 11. image-forge-skill 🛠️
+### 10. image-forge-skill 🛠️
 
-> 本地图片处理工具：压缩、转格式、改尺寸、裁剪、base64、水印、遮罩、多图合成
+> 图片处理 + 图标生成技能：压缩、转格式、改尺寸、裁剪、base64、水印、遮罩、多图合成 + SVG→PNG 图标渲染
 
-**功能**：对项目本地图片进行**压缩、转格式、改尺寸、裁剪、base64 编码、水印、遮罩、多图合成**。与 `icon-image-catch-skill` 互补：后者负责找图，本技能负责处理图。
+**功能**：对项目本地图片进行**压缩、转格式、改尺寸、裁剪、base64 编码、水印、遮罩、多图合成**（jobs 模式），同时支持**图标生成**（icons 模式）：把 SVG path / 完整 SVG 批量渲染成 PNG，适合 tabBar、登录页等成套单色图标。内置可执行脚本 `image-forge.js`（基于 sharp），配置驱动。与 `icon-image-catch-skill` 互补：后者负责找图，本技能负责处理图/生成图标。
 
 **使用场景**：
 - 把项目里的 JPG 批量转 WebP 并压缩
@@ -402,6 +372,7 @@ Stitch 转代码
 - 给图片加文字/Logo 水印或黑色半透明遮罩
 - 把多张图合成 banner 或分享卡
 - 生成 base64 Data URI 内联使用
+- 生成 tabBar / 登录页成套 PNG 图标（uniapp / 小程序 / RN / H5）
 
 **使用方式**：
 
@@ -409,13 +380,15 @@ Stitch 转代码
 把 photo.jpg 压缩成 800 宽的 webp
 给 banner 加黑色遮罩和白色标题文字
 把 logo.png 合成到 photo.jpg 右上角
+给登录页生成一套图标，绿色 #059669，放 src/static/icons/login
+做一套 tabBar 图标
 ```
 
 **详细文档**：[image-forge-skill/README.md](image-forge-skill/README.md)
 
 ---
 
-### 12. workflow-diagram-skill 📊
+### 11. workflow-diagram-skill 📊
 
 > 一句话生成流程图：SVG + PNG，多风格多布局
 
@@ -439,7 +412,7 @@ Stitch 转代码
 
 ---
 
-### 13. module-generate-skill 🧩
+### 12. module-generate-skill 🧩
 
 > 后端业务模块生成套件（父技能 + 5 个子技能）：骨架之上，按统一规范长出具体业务模块
 
@@ -479,7 +452,7 @@ Stitch 转代码
 
 ---
 
-### 14. skill-auditor 🔒
+### 13. skill-auditor 🔒
 
 > Skill 安全审计技能(基础版)。对任意 AI Skill 做投毒与恶意行为审查,识别数据外泄链、隐藏脚本/供应链投毒、破坏性命令、Prompt 注入话术、权限放大、货不对板 6 大维度,产出结构化风险报告。
 
@@ -500,7 +473,7 @@ skill 安全审计
 
 ---
 
-### 15. xhs-style-writer-skill ✍️
+### 14. xhs-style-writer-skill ✍️
 
 > 小红书个人风格写作技能
 
@@ -523,7 +496,7 @@ skill 安全审计
 
 ---
 
-### 16. frontend-style-harmonizer-skill 🎯
+### 15. frontend-style-harmonizer-skill 🎯
 
 > 前端样式一致性治理技能
 
@@ -552,7 +525,7 @@ tab高度不一致
 
 ---
 
-### 17. ui-component-commands-skill 🎯
+### 16. ui-component-commands-skill 🎯
 
 > 前端UI组件指令系统 - 通过预定义指令+CSS变量绑定，一句话生成精确样式的UI组件
 
@@ -596,7 +569,7 @@ tab高度不一致
 
 ---
 
-### 18. ui-template-builder-skill 📄
+### 17. ui-template-builder-skill 📄
 
 > UI 页面模板构建器 - 固化常见页面模板，多套风格可选，支持 mock 数据
 
@@ -632,7 +605,7 @@ tab高度不一致
 
 ---
 
-### 19. uniapp-crossplatform-audit-skill 🌐
+### 18. uniapp-crossplatform-audit-skill 🌐
 
 > uniapp 跨平台兼容性审计技能
 
@@ -662,7 +635,7 @@ tab高度不一致
 
 ---
 
-### 20. uniapp-code-audit-skill 🔍
+### 19. uniapp-code-audit-skill 🔍
 
 > uniapp 代码审计技能（8 大维度体检，报告-only）
 
@@ -697,7 +670,7 @@ uniapp 安全审计
 
 ---
 
-### 21. uniapp-standardization-skill 📐
+### 20. uniapp-standardization-skill 📐
 
 > uniapp 项目规范化技能
 
@@ -727,7 +700,7 @@ uniapp 规范化
 
 ---
 
-### 22. uniapp-vue2-upgrade-skill ⬆️
+### 21. uniapp-vue2-upgrade-skill ⬆️
 
 > uniapp Vue2 升级到 Vue3 技能
 
@@ -757,7 +730,7 @@ uniapp 迁移
 
 ---
 
-### 23. uniapp-standard-skill 📐
+### 22. uniapp-standard-skill 📐
 
 > uniapp 小程序开发通用规范
 
@@ -785,7 +758,7 @@ uniapp 开发规范
 
 ---
 
-### 24. uniapp-design-skill 🎨
+### 23. uniapp-design-skill 🎨
 
 > uniapp 设计系统与组件规范
 
@@ -815,11 +788,11 @@ Design Tokens
 
 ---
 
-### 25. uniapp-theme-skill 🎨
+### 24. uniapp-theme-skill 🎨
 
 > uni-app 主题系统：一键换肤
 
-**功能**：动态色阶生成（输入任意 HEX 颜色）、7 种预设主题、尺寸阶梯、强制统一硬编码、配合 icon-forge 生成主题图标。
+**功能**：动态色阶生成（输入任意 HEX 颜色）、7 种预设主题、尺寸阶梯、强制统一硬编码、配合 image-forge-skill 生成主题图标。
 
 **使用场景**：
 - 添加主题系统
@@ -844,7 +817,7 @@ Design Tokens
 
 ---
 
-### 26. uniapp-components-skill 🔐
+### 25. uniapp-components-skill 🔐
 
 > uniapp 登录鉴权与安全规范
 
@@ -875,7 +848,7 @@ token 管理
 
 ---
 
-### 27. uniapp-request-skill 📡
+### 26. uniapp-request-skill 📡
 
 > uniapp 请求层设计：统一 request.ts 封装
 
@@ -908,7 +881,7 @@ AI 聊天流式回复
 
 ---
 
-### 28. vibecoding-guide-skill 🧭
+### 27. vibecoding-guide-skill 🧭
 
 > VibeCoding / AI 开发全流程知识导师（父技能 + 3 嵌套子技能）
 
@@ -944,11 +917,10 @@ AI 编程怎么入门
 | [ui-replica-skill](ui-replica-skill/) | UI 原型图复刻（读图→结构化→Token→组件→代码） | `复刻这张图`、`Figma 转代码`、`Stitch 转代码`、`原型图复刻` |
 | [backend-generate-skill](backend-generate-skill/) | 后端项目骨架生成（7 子技能：选型/规范/Java/Go/Python/Node/数据库） | `生成后端`、`backend generate`、`用 Java/Go/Python/Node 写后端` |
 | [uniapp-app-generate-skill](uniapp-app-generate-skill/) | uni-app 项目生成 | `uniapp 小程序`、`初始化微信小程序` |
-| [icon-forge](icon-forge/) | 图标生成 | `生成图标`、`icon 生成`、`png 图标` |
 | [super-deploy-skills](super-deploy-skills/) | 一键部署套件（5 子技能：检测/装机/Nginx/原生/Docker） | `部署项目`、`一键部署`、`deploy`、`Docker 部署` |
 | [backend-analysis-skill](backend-analysis-skill/) | 后端项目全景分析（接口/技术栈/数据库/业务 4 份报告） | `分析后端项目`、`梳理接口`、`盘点技术栈`、`出数据库文档`、`接手老项目` |
 | [icon-image-catch-skill](icon-image-catch-skill/) | 素材抓取套件（2 子技能：图标抓取 Iconify 免 Key + SVG→PNG + 图标展示 class / 图片抓取自定义源·三源自动降级·Lorem Flickr 无 Key 语义兜底·Picsum 占位兜底 + 本地压缩切图 + 项目素材审计·自动探测项目类型与平台尺寸·扫描项目自动抓取） | `抓图标`、`下载 icon`、`抓图片`、`找配图`、`背景图`、`项目素材审计`、`图标展示`、`扫描项目` |
-| [image-forge-skill](image-forge-skill/) | 本地图片处理工具：压缩/转格式/改尺寸/裁剪/base64/水印/遮罩/多图合成 | `压缩图片`、`转 webp`、`改尺寸`、`裁剪图片`、`加水印`、`图片合成`、`base64 图片`、`处理图片` |
+| [image-forge-skill](image-forge-skill/) | 图片处理 + 图标生成工具：压缩/转格式/改尺寸/裁剪/base64/水印/遮罩/多图合成 + SVG→PNG 成套图标渲染 | `压缩图片`、`转 webp`、`改尺寸`、`裁剪图片`、`加水印`、`图片合成`、`base64 图片`、`处理图片`、`生成图标`、`做一套 tabBar 图标` |
 | [workflow-diagram-skill](workflow-diagram-skill/) | 一句话生成流程图（4 风格 + 24 模板 + SVG/PNG） | `画个流程图`、`生成流程图`、`vibe coding 流程图`、`cute 风格` |
 | [module-generate-skill](module-generate-skill/) | 后端业务模块生成套件（5 子技能：登录鉴权/组织权限/AI 聊天/短信邮箱/支付） | `加登录`、`加权限`、`RBAC`、`对接支付`、`短信验证码`、`AI 聊天`、`带记忆的对话` |
 | [skill-auditor](skill-auditor/) | Skill 安全审计（6 维度：数据外泄/供应链/破坏命令/注入话术/权限放大/货不对板） | `审查 skill`、`检测有毒吗`、`skill 安全审计`、`audit skill` |
@@ -1163,12 +1135,6 @@ wg-skills/
 │       ├── static-assets-guide.md
 │       ├── theme-system.md
 │       └── wechat-common-patterns.md
-├── icon-forge/                 # 图标生成技能
-│   ├── SKILL.md
-│   ├── README.md
-│   ├── forge-icons.js          # 基于 sharp 的 PNG 渲染器
-│   ├── package.json
-│   └── svgs/                   # 示例 SVG 源文件
 ├── super-deploy-skills/        # 一键部署技能套件（父技能 + 5 子技能）
 │   ├── SKILL.md                # 父入口：路由规则
 │   ├── README.md               # 完整使用走查
@@ -1236,13 +1202,13 @@ wg-skills/
 │       ├── README.md
 │       ├── scripts/image-catch.js   # 抓取 + 本地压缩/切图
 │       └── references/image-sources.md
-├── image-forge-skill/          # 本地图片处理工具
-│   ├── SKILL.md                # 技能定义
+├── image-forge-skill/          # 图片处理 + 图标生成（v2 合并 icon-forge）
+│   ├── SKILL.md                # 技能定义（jobs 图片处理 + icons 图标生成）
 │   ├── README.md
-│   ├── image-forge.js          # 主处理脚本
+│   ├── image-forge.js          # 可执行脚本（sharp：icons + jobs 双模式）
 │   ├── package.json            # sharp 依赖
 │   └── references/
-│       └── operation-schema.md # JSON Spec 字段说明
+│       └── operation-schema.md # JSON Spec 字段说明（jobs / icons 配置）
 ├── workflow-diagram-skill/     # 一句话生成流程图（4 风格 + 24 模板）
 │   ├── SKILL.md                # 触发词 + 工作模式 + 规则
 │   ├── README.md

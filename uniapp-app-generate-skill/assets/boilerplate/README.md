@@ -102,4 +102,4 @@ npm run verify
 - `static/images/empty-data.png`：空状态占位图
 - `static/avatar-placeholder.png`：头像占位图
 
-这些默认图标来自 icon-forge，后续可替换为项目真实图标。
+这些默认图标来自 image-forge-skill，后续可替换为项目真实图标。

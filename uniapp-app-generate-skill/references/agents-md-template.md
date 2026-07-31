@@ -108,7 +108,7 @@
 ## 七、静态资源规范
 
 1. 禁止使用 emoji 作为图标或 UI 元素。
-2. 图标统一为 PNG，tabBar 图标建议 81×81px；优先使用 `icon-forge` 技能生成。
+2. 图标统一为 PNG，tabBar 图标建议 81×81px；优先使用 `image-forge-skill` 技能生成。
 3. **真实照片/Banner/空状态图优先从 Pexels API 获取**。
 4. **禁止用 CSS 渐变（`linear-gradient`）或纯色块充当图片资源**。
 5. Pexels API Key 写入 `.env`，代码通过 `import.meta.env.VITE_PEXELS_API_KEY` 读取，禁止硬编码。
@@ -139,7 +139,7 @@
 1. 修改接口字段前，先读取 `src/api/` 对应文件确认后端契约。
 2. 涉及时间字段时，先检查 `src/utils/date.ts` 中的格式化函数。
 3. 涉及颜色时，先检查 `src/styles/variables.scss` 和 `src/constants/colors.ts`。
-4. 生成静态图标时，调用 `icon-forge` 技能。
+4. 生成静态图标时，调用 `image-forge-skill` 技能。
 5. 需要真实照片时，调用 Pexels 工具（`src/utils/pexels.ts`）；禁止用渐变色/色块替代图片。
 6. 设计关键页面前，调用 `frontend-design` 或 `ui-ux-pro-max` 产出设计方案。
 7. 实现功能时，调用 `ponytail` 保持代码最简，避免过度抽象。

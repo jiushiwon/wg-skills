@@ -69,5 +69,5 @@ Claude 会输出一个 `.icon-box` 公共 class（居中 icon + 圆角正方形�
 ## 备注
 
 - 默认优先级：Iconify 聚合 → lucide → tabler → heroicons → phosphor → remix → feather → simple-icons → mdi
-- 搜不到时换英文词重试；仍不行建议改用 `icon-forge` 技能生成
-- 需要 PNG 时，建议优先使用 SVG；确需 PNG 可用 `icon-forge` 或其他渲染工具
+- 搜不到时换英文词重试；仍不行建议改用 `image-forge-skill` 技能生成
+- 需要 PNG 时，建议优先使用 SVG；确需 PNG 可用 `image-forge-skill` 或其他渲染工具

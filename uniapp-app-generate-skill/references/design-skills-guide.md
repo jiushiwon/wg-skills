@@ -91,7 +91,7 @@
   → 调用 ui-ux-pro-max 确定信息架构与风格
   → 调用 frontend-design 生成页面模板
   → 调用 ponytail 审查并精简代码
-  → 用 icon-forge 生成图标
+  → 用 image-forge-skill 生成图标
   → 用 Pexels 工具获取真实图片
   → 写入项目并跑 lint
 ```

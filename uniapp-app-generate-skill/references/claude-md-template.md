@@ -77,7 +77,7 @@
 
 ## 静态资源
 
-- 图标统一为 PNG，使用 `icon-forge` 技能生成。
+- 图标统一为 PNG，使用 `image-forge-skill` 技能生成。
 - 真实照片/装饰图/空状态图优先通过 **Pexels API** 获取，禁止用 CSS 渐变或纯色块替代。
 - Pexels API Key 写入 `.env`，代码通过 `import.meta.env.VITE_PEXELS_API_KEY` 读取，禁止硬编码。
 - 禁止使用 emoji 作为图标或 UI 元素。
@@ -100,7 +100,7 @@
 1. 修改接口字段前，先读取 `src/api/` 对应文件确认后端契约。
 2. 涉及时间字段时，先检查 `src/utils/date.ts` 中的格式化函数。
 3. 涉及颜色时，先检查 `src/styles/variables.scss` 和 `src/constants/colors.ts`。
-4. 生成静态图标时，调用 `icon-forge` 技能。
+4. 生成静态图标时，调用 `image-forge-skill` 技能。
 5. 需要真实照片/Banner/空状态图时，优先通过 Pexels API 获取；禁止用渐变色或纯色块替代。
 6. 设计关键页面前，调用 `frontend-design` 或 `ui-ux-pro-max`；实现时调用 `ponytail` 保持代码精简。
 7. 编写模板时，必须使用 uni-app 组件，禁止使用 H5 标签；图片使用 `image` 组件，禁止使用 `background-image`。

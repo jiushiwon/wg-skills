@@ -36,7 +36,7 @@ wg-skills/
 ├── backend-analysis-skill/  # 后端项目全景分析（接口/技术栈/数据库/业务 4 份报告）
 ├── icon-image-catch-skill/  # 素材抓取套件（父技能 + icon/image 2 嵌套子技能）
 ├── module-generate-skill/   # 后端业务模块生成套件（父技能 + 5 嵌套子技能）
-└── icon-forge/
+└── image-forge-skill/       # 图片处理 + 图标生成（v2 合并 icon-forge）
 ```
 
 > 说明：`super-deploy-skills/` 是父技能目录，内含 5 个嵌套子技能；`backend-generate-skill/` 也是父技能目录，内含 7 个嵌套子技能（`backend-select-skill`、`backend-convention-skill`、`java-backend-skill`、`go-backend-skill`、`python-backend-skill`、`nodejs-backend-skill`、`database-skill`）；`icon-image-catch-skill/` 同为父技能目录，内含 2 个嵌套子技能（`icon-catch-skill`、`image-catch-skill`）；`module-generate-skill/` 同为父技能目录，内含 5 个嵌套子技能（`auth-skill`、`org-permission-skill`、`ai-chat-skill`、`notification-skill`、`payment-skill`）。这四个目录采用「父子嵌套」结构；其他技能仍为扁平目录。

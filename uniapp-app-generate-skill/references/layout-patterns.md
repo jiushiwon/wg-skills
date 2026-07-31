@@ -156,7 +156,7 @@
 - `static/tab-bar/profile.png` / `profile-active.png`
 - 可选：`static/tab-bar/message.png` / `message-active.png`、`static/tab-bar/publish.png` / `publish-active.png`
 
-生成方式：调用 `icon-forge` 技能，输入 SVG path 或描述词，批量渲染为 PNG。
+生成方式：调用 `image-forge-skill` 技能，输入 SVG path 或描述词，批量渲染为 PNG。
 
 ## 我的页面通用模块
 

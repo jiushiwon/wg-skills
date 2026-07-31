@@ -1,0 +1,10 @@
+{
+  "name": "image-forge-skill",
+  "version": "2.0.0",
+  "private": true,
+  "description": "配置驱动的图片处理 + SVG→PNG 图标生成器（基于 sharp）",
+  "bin": { "image-forge": "./image-forge.js" },
+  "dependencies": {
+    "sharp": "^0.33.0"
+  }
+}

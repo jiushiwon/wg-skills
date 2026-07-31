@@ -24,7 +24,7 @@
 | 每次新建小程序都要从零搭结构 | 提供可直接复制的 `boilerplate` 模板，含目录、依赖、脚本、示例页面 |
 | 主题色/间距/字体硬编码遍地都是 | 以 `theme.json` 为唯一源头，自动生成 SCSS Token 和 JS 常量 |
 | 微信/H5/App 三端代码写法混乱 | 内置平台抽象层，把差异收敛到 `utils/platform*.ts` |
-| 图标、图片资源不规范 | 引导使用 `icon-forge` 生成图标，Pexels 获取真实照片 |
+| 图标、图片资源不规范 | 引导使用 `image-forge-skill` 生成图标，Pexels 获取真实照片 |
 | 自定义导航栏内容被胶囊按钮覆盖 | 内置 `AppNavbar`：胶囊独占一行、仅返回图标同排、标题/内容在下方，绝不覆盖 |
 | 生成完代码不知道能不能跑 | `npm run verify` 一键自检：主题同步 + 色阶校验 + lint + build + 产物检查 |
 
@@ -56,7 +56,7 @@ Phase 2: 项目初始化
 
 Phase 3: 开发实现
   → 同步 theme.json 主题
-  → 生成图标（调用 icon-forge）
+  → 生成图标（调用 image-forge-skill）
   → 实现 TabBar、页面、组件
   → 复杂页面可先调用 frontend-design 出方案
 
@@ -102,7 +102,7 @@ npm run dev:app          # App
 | **复用组件强一致** | 内置 `AppButton/AppTab/AppPopup/AppCard/AppEmpty/AppInput/AppNavbar`，多页面同类 UI 必须复用同一组件，主题色/尺寸/圆角严格一致。 |
 | **跨平台抽象** | 内置 `platform.ts`、`platform-auth.ts`、`platform-share.ts`、`platform-image.ts`、`request.ts`，把平台差异收敛到一处。 |
 | **自定义导航栏** | 内置 `AppNavbar` 组件，自动适配微信小程序胶囊按钮：**胶囊独占一行、仅返回图标可同排、标题与内容在下方、绝不覆盖胶囊**；默认导航栏无需处理。 |
-| **静态资源规范** | 引导使用 `icon-forge` 生成图标，使用 Pexels API 获取真实图片，禁止用 CSS 渐变/色块代替图片。 |
+| **静态资源规范** | 引导使用 `image-forge-skill` 生成图标，使用 Pexels API 获取真实图片，禁止用 CSS 渐变/色块代替图片。 |
 | **一键自检** | 生成后的项目支持 `npm run verify`，自动跑 主题同步 → 色阶校验 → lint → build:h5 → 产物检查。 |
 | **示例页面完整** | 样板包含首页、列表页、表单页、我的页，演示下拉刷新、空状态、表单校验、本地草稿、登录抽象。 |
 
@@ -356,7 +356,7 @@ npm run theme:check  # 硬卡：业务代码不得出现色阶之外的颜色
 
 - `ponytail`：保持实现最小化，避免过度设计。
 - `frontend-design` / `ui-ux-pro-max`：关键页面的 UI/UX 方案。
-- `icon-forge`：生成 TabBar 与页面图标。
+- `image-forge-skill`：生成 TabBar 与页面图标。
 
 ---
 

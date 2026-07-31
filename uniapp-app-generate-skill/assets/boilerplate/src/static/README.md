@@ -11,7 +11,7 @@
 
 ## 生成方式
 
-- 图标：使用 `icon-forge` 技能生成。
+- 图标：使用 `image-forge-skill` 技能生成。
 - 真实照片：使用 Pexels API 搜索下载，Key 配置在 `.env`。
 - 禁止：用 CSS 渐变或纯色块替代图片。
 
@@ -25,4 +25,4 @@ boilerplate 已包含一组默认图标，可直接使用或后续替换：
 - `images/empty-data.png`
 - `avatar-placeholder.png`
 
-默认图标使用 `icon-forge` 生成，风格为线性 outline。如需替换，可用 `icon-forge` 重新生成或设计师提供。
+默认图标使用 `image-forge-skill` 生成，风格为线性 outline。如需替换，可用 `image-forge-skill` 重新生成或设计师提供。

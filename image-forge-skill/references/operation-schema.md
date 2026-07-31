@@ -1,5 +1,7 @@
 # image-forge JSON Spec 完整字段说明
 
+> 两种模式：**jobs**（图片处理，本文档主体）与 **icons**（图标生成，见文末「icons 模式」）。
+
 ## 顶层结构
 
 ```json
@@ -21,6 +23,8 @@
   ]
 }
 ```
+
+> 若顶层包含 `icons` 数组，则进入 icons 模式（见文末）。`jobs` 与 `icons` 二选一。
 
 | 字段 | 必填 | 类型 | 默认值 | 说明 |
 |---|---|---|---|---|
@@ -215,3 +219,36 @@
 ```json
 { "type": "image", "error": "错误信息" }
 ```
+
+## icons 模式（图标生成）
+
+> 原 `icon-forge` 能力。顶层含 `icons` 数组即触发，与 `jobs` 互斥。
+
+```json
+{
+  "outDir": "D:/项目/src/static/icons",
+  "size": 72,
+  "color": "#059669",
+  "strokeWidth": 2,
+  "icons": [
+    { "name": "home.png", "path": "M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" },
+    { "name": "brand.png", "svg": "<svg ...>...</svg>" }
+  ]
+}
+```
+
+| 字段 | 必填 | 默认值 | 说明 |
+|------|------|--------|------|
+| `outDir` | 是 | — | 输出目录，自动创建 |
+| `size` | 否 | `72` | 输出像素（正方形） |
+| `color` | 否 | `#059669` | 描边色（仅对 `path` 模式生效） |
+| `strokeWidth` | 否 | `2` | 描边宽度 |
+| `icons[].name` | 是 | — | 输出文件名（含 `.png`） |
+| `icons[].path` | ※ | — | heroicons/feather 风格 path（viewBox `0 0 24 24`，stroke 风格） |
+| `icons[].svg` | ※ | — | 完整 SVG 字符串（可彩色/多色，自带 fill/stroke） |
+
+※ `path` 与 `svg` 二选一。
+
+- `path` 模式：脚本自动包裹为 `<svg viewBox="0 0 24 24" fill="none" stroke="color" stroke-width="strokeWidth">`，再以 `contain` 适配输出 `size × size` PNG。
+- `svg` 模式：原样使用完整 SVG，`color`/`strokeWidth` 不生效。
+- 输出始终为 PNG。

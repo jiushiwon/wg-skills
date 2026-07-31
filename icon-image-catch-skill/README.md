@@ -82,7 +82,7 @@ icon-image-catch-skill/
 
 ## 与其他技能的关系
 
-- **icon-forge**：抓不到合适图标时，建议转 `icon-forge` 生成。
+- **image-forge-skill**：抓不到合适图标时，建议转 `image-forge-skill` 的 icons 模式生成。
 - **image-forge-skill**：需要本地压缩、裁剪、格式转换、水印、合成时，转 `image-forge-skill`。
 - **uniapp-app-generate-skill / frontend-ui-foundry**：生成页面时若需要图标与配图，应调用本技能获取真实素材。
 
