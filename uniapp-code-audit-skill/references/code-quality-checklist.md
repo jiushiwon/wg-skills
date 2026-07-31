@@ -71,7 +71,7 @@
 | 检查项 | 风险等级 | 风险描述 | 判定依据 | 参考标准 | 检测命令 |
 |--------|----------|----------|----------|----------|----------|
 | 未使用 `script setup` | P3 | 代码冗余 | 新项目组件仍使用 Options API 或冗长 setup 函数 | `uniapp-app-generate-skill` 3.6 | 抽样检查 `.vue` 文件 |
-| 生命周期未清理副作用 | P1 | 内存泄漏 | `watch`、`setTimeout`、`uni.$on` 等未在 `onUnmounted` 清理 | `uniapp-standard-skill` 4.4 | 检查组件生命周期 |
+| 生命周期未清理副作用 | P1 | 内存泄漏 | `watch`、`setTimeout`、`uni.$on` 等未在 `onUnmounted` 清理 | 通用代码规范（内存与生命周期） | 检查组件生命周期 |
 | `ref` 与 `reactive` 混用不当 | P2 | 响应式行为难以预测 | 应使用 `ref` 的场景使用了 `reactive` 解构 | 通用 Vue3 规范 | 人工检查组合式函数 |
 | `watch` 监听大对象 | P2 | 性能开销大 | `watch` 直接监听整个响应式对象 | 通用 Vue3 规范 | `grep -rnE 'watch\(' src/` |
 

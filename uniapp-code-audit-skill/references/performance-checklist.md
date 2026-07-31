@@ -7,7 +7,7 @@
 
 | 检查项 | 风险等级 | 风险描述 | 判定依据 | 参考标准 | 检测命令 |
 |--------|----------|----------|----------|----------|----------|
-| 主包 > 2MB | P0 | 微信小程序主包超过限制，审核被拒 | 编译后 `dist/dev/mp-weixin` 或 `dist/build/mp-weixin` 主包大小 > 2MB | `uniapp-standard-skill` 4.1 / 微信小程序官方限制 | `du -sh dist/dev/mp-weixin` |
+| 主包 > 2MB | P0 | 微信小程序主包超过限制，审核被拒 | 编译后主包大小 > 2MB | `uniapp-standard-skill` 4.1 / 微信小程序官方限制 | `du -sh dist/build/mp-weixin` |
 | 总包 > 20MB | P0 | 小程序总包超过限制 | 编译后总包大小 > 20MB | 微信小程序官方限制 | `du -sh dist/build/mp-weixin` |
 | `node_modules` 过大 | P2 | 依赖体积膨胀 | `node_modules` 占用明显过大 | `uniapp-app-generate-skill` | `du -sh node_modules` |
 | 存在无用图片/资源 | P2 | 未引用资源仍被打包 | `static/` 或 `src/static/` 中存在未被引用的图片 | 通用工程规范 | 检查 `static/` 与 `src/static/` 中文件引用情况 |
@@ -61,9 +61,9 @@
 
 | 检查项 | 风险等级 | 风险描述 | 判定依据 | 参考标准 | 检测命令 |
 |--------|----------|----------|----------|----------|----------|
-| 定时器未清理 | P1 | 页面卸载后仍运行，导致内存泄漏 | `setInterval`/`setTimeout` 未在 `onUnmounted` 中清理 | `uniapp-standard-skill` 4.4 | `grep -rnE 'setInterval\|setTimeout' src/ \| grep -v 'clear'` |
-| 事件未解绑 | P1 | 页面卸载后事件仍触发 | `uni.$on` 等全局事件未在 `onUnmounted` 中 off | `uniapp-standard-skill` 4.4 | 检查 `uni.$on` 与 `uni.$off` 配对 |
-| 页面栈超限 | P1 | 调用 `navigateTo` 深度 > 10 导致跳转失败 | 页面跳转未合理选择 `redirectTo`/`reLaunch` | `uniapp-standard-skill` 4.4 | 检查 `uni.navigateTo` 使用场景 |
+| 定时器未清理 | P1 | 页面卸载后仍运行，导致内存泄漏 | `setInterval`/`setTimeout` 未在 `onUnmounted` 中清理 | 通用代码规范（内存与生命周期） | `grep -rnE 'setInterval\|setTimeout' src/ \| grep -v 'clear'` |
+| 事件未解绑 | P1 | 页面卸载后事件仍触发 | `uni.$on` 等全局事件未在 `onUnmounted` 中 off | 通用代码规范（内存与生命周期） | 检查 `uni.$on` 与 `uni.$off` 配对 |
+| 页面栈超限 | P1 | 调用 `navigateTo` 深度 > 10 导致跳转失败 | 页面跳转未合理选择 `redirectTo`/`reLaunch` | 微信小程序页面栈限制 | 检查 `uni.navigateTo` 使用场景 |
 
 ## 性能优化优先级参考
 

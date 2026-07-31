@@ -98,7 +98,7 @@ Phase 4: 输出报告
 - 风险等级：P0
 - 位置：第 10 行
 - 风险描述：源代码中直接写入 API Key，存在泄露风险
-- 判定依据：安全清单 S01 — 禁止敏感信息硬编码
+- 判定依据：安全清单 1. 敏感信息硬编码
 - 参考标准：`uniapp-components-skill` 安全规范
 
 ### P1 / P2 / P3（同上格式）
@@ -117,6 +117,8 @@ Phase 4: 输出报告
 - `uniapp-request-skill`
 - `uniapp-components-skill`
 - `uniapp-crossplatform-audit-skill`
+
+> 可按审计范围追加参考 `uniapp-standardization-skill`、`uniapp-vue2-upgrade-skill`、`uniapp-theme-skill`、`frontend-code-doctor` 等协作技能。
 
 ## 可配合技能
 

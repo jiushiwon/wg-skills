@@ -59,19 +59,19 @@
 | 嵌套 `v-for` | P0 | 违反 R01 红线 | 模板中存在嵌套 `v-for` | `uniapp-standard-skill` R01 | `grep -rnE 'v-for.*v-for' src/` |
 | `data` 直接存放接口原始数据 | P1 | 违反 R02 红线 | 页面 data 中存储未转换的接口响应 | `uniapp-standard-skill` R02 | 检查页面 `ref`/`data` 定义 |
 | 使用私有 API | P1 | 违反 R03 红线 | 代码中调用非 `uni.xxx` 官方 API | `uniapp-standard-skill` R03 | 人工检查 API 调用 |
-| 存在硬编码配置 | P1 | 违反 R08 红线 | 配置项未放 `src/constants/` 或 `src/config/` | `uniapp-standard-skill` R08 | `grep -rnE '["\'][^"\']{20,}["\']' src/` |
+| 存在硬编码配置 | P1 | 违反 R08 红线 | 配置项未放 `src/constants/` 或 `src/config/` | `uniapp-standard-skill` R08 | `grep -rnE "['\"][^'\"]{20,}['\"]" src/` |
 | 同一接口 1 秒内重复请求 | P1 | 违反 R09 红线 | 无防抖/去重逻辑 | `uniapp-standard-skill` R09 | 检查 `src/api/request.ts` |
 | 失败场景无用户提示 | P1 | 违反 R10 红线 | 请求/操作失败后未调用 Toast/Modal | `uniapp-standard-skill` R10 | 检查错误处理逻辑 |
 | Mock 数据写在 API 文件或页面中 | P1 | 违反 R16 红线 | `src/api/modules/*.ts` 或 `src/pages/` 中出现 Mock 数据 | `uniapp-standard-skill` R16 | `grep -rnE 'MOCK\|mockData\|mock' src/api/modules/ src/pages/` |
 | 请求传递完整域名或 `/api/v1` 前缀 | P1 | 违反 R17 红线 | API 调用中写死域名或 prefix | `uniapp-standard-skill` R17 | `grep -rnE 'https?://.*/api\|/api/v1' src/api/ src/pages/` |
-| SCSS 未使用 Token | P2 | 违反 R15 红线 | 样式中写死色值/尺寸 | `uniapp-standard-skill` R15 | `grep -rnE '#[0-9a-fA-F]{3,6}\|\d+px' src/` |
+| SCSS 未使用 Token | P2 | 违反 R15 红线 | 样式中写死色值/尺寸 | `uniapp-standard-skill` R15 | `grep -rnE '#[0-9a-fA-F]{3,6}\|[0-9]+px' src/` |
 
 ## 4. Vue3 / Composition API 规范
 
 | 检查项 | 风险等级 | 风险描述 | 判定依据 | 参考标准 | 检测命令 |
 |--------|----------|----------|----------|----------|----------|
 | 组件未使用 `script setup` | P3 | 代码冗余 | 新项目组件仍使用 Options API | `uniapp-app-generate-skill` 3.6 | 抽样检查 `.vue` 文件 |
-| 生命周期副作用未清理 | P1 | 内存泄漏 | `watch`、`setInterval`、`uni.$on` 未在 `onUnmounted` 清理 | `uniapp-standard-skill` 4.4 | 检查 `.vue` 文件生命周期 |
+| 生命周期副作用未清理 | P1 | 内存泄漏 | `watch`、`setInterval`、`uni.$on` 未在 `onUnmounted` 清理 | 通用代码规范（内存与生命周期） | 检查 `.vue` 文件生命周期 |
 | 大量使用 `any` | P1 | 类型系统失效 | 源码中 `: any` / `as any` 过多 | `uniapp-standard-skill` R11 | `grep -rnE ': any\|as any' src/` |
 
 ## 5. 状态管理

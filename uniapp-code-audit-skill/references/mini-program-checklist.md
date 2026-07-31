@@ -16,7 +16,7 @@
 
 | 检查项 | 风险等级 | 风险描述 | 判定依据 | 参考标准 | 检测命令 |
 |--------|----------|----------|----------|----------|----------|
-| 滥用 `navigateTo` | P1 | 页面栈深度 > 10 导致跳转失败 | 大量连续跳转未使用 `redirectTo`/`reLaunch` | `uniapp-standard-skill` 4.4 / 微信小程序限制 | 检查 `uni.navigateTo` 使用场景 |
+| 滥用 `navigateTo` | P1 | 页面栈深度 > 10 导致跳转失败 | 大量连续跳转未使用 `redirectTo`/`reLaunch` | 微信小程序页面栈限制 | 检查 `uni.navigateTo` 使用场景 |
 | 返回逻辑不当 | P2 | 用户无法回到预期页面 | 登录/提交后未合理使用 `redirectTo` | `uniapp-components-skill` 登录回跳 | 检查登录与提交后跳转逻辑 |
 
 ## 3. WXS / 渲染脚本
@@ -30,7 +30,7 @@
 
 | 检查项 | 风险等级 | 风险描述 | 判定依据 | 参考标准 | 检测命令 |
 |--------|----------|----------|----------|----------|----------|
-| 主包 > 2MB | P0 | 审核被拒 | 编译后主包体积超过 2MB | `uniapp-standard-skill` 4.1 / 微信小程序限制 | `du -sh dist/dev/mp-weixin` |
+| 主包 > 2MB | P0 | 审核被拒 | 编译后主包体积超过 2MB | `uniapp-standard-skill` 4.1 / 微信小程序限制 | `du -sh dist/build/mp-weixin` |
 | 总包 > 20MB | P0 | 审核被拒 | 编译后总包体积超过 20MB | 微信小程序限制 | `du -sh dist/build/mp-weixin` |
 | 页面较多但未分包 | P2 | 主包体积易超限 | `pages.json` 未配置 `subPackages` | `uniapp-app-generate-skill/references/mini-program-checklist.md` | 检查 `src/pages.json` |
 | 分包大小超过 2MB | P1 | 分包无法加载 | 单个分包体积超过 2MB | 微信小程序限制 | 编译后检查各分包大小 |
@@ -65,7 +65,7 @@
 | 检查项 | 风险等级 | 风险描述 | 判定依据 | 参考标准 | 检测命令 |
 |--------|----------|----------|----------|----------|----------|
 | 页面生命周期使用错误 | P2 | 逻辑在错误时机执行 | 使用 Vue 生命周期替代小程序页面生命周期 | 微信小程序官方文档 | 检查 `.vue` 文件生命周期 |
-| 事件未解绑 | P1 | 内存泄漏 | `uni.$on`/`setInterval` 未在 `onUnmounted` 清理 | `uniapp-standard-skill` 4.4 | `grep -rnE 'uni\.\$on\|setInterval' src/` |
+| 事件未解绑 | P1 | 内存泄漏 | `uni.$on`/`setInterval` 未在 `onUnmounted` 清理 | 通用代码规范（内存与生命周期） | `grep -rnE 'uni\.\$on\|setInterval' src/` |
 
 ## 9. 表单与输入
 

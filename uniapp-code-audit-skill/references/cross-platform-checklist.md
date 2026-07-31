@@ -17,9 +17,9 @@
 | 使用 `background-image: url()` | P1 | 小程序端图片表现不一致 | 样式中出现 `background-image: url(...)` | `uniapp-crossplatform-audit-skill` / `uniapp-app-generate-skill` 3.9 | `grep -rnE 'background-image:' src/` |
 | 使用 CSS 自定义属性 `var(--xxx)` | P1 | 主题切换与跨端兼容性差 | 样式中出现 `var(--` | `uniapp-crossplatform-audit-skill` / `uniapp-app-generate-skill` 3.9 | `grep -rnE 'var\(' src/` |
 | 使用 `calc()` | P2 | 多端计算结果不一致 | 样式中出现 `calc(` | `uniapp-crossplatform-audit-skill` | `grep -rnE 'calc\(' src/` |
-| 使用 `vw`/`vh` | P2 | 小程序端适配问题 | 样式中出现 `vw`/`vh` | `uniapp-crossplatform-audit-skill` | `grep -rnE '\dvw\|\dvh' src/` |
-| 使用 `px` | P2 | 未统一使用 `rpx` | 样式中出现 `px` | `uniapp-app-generate-skill/references/cross-platform-compatibility.md` | `grep -rnE '\d+px' src/ \| grep -v 'upx'` |
-| `z-index` 过大 | P3 | 各端层级表现不一致 | 出现 `z-index: 9999` 等极大值 | `uniapp-app-generate-skill/references/cross-platform-compatibility.md` | `grep -rnE 'z-index:\s*\d{4,}' src/` |
+| 使用 `vw`/`vh` | P2 | 小程序端适配问题 | 样式中出现 `vw`/`vh` | `uniapp-crossplatform-audit-skill` | `grep -rnE '[0-9]+vw\|[0-9]+vh' src/` |
+| 使用 `px` | P2 | 未统一使用 `rpx` | 样式中出现 `px` | `uniapp-app-generate-skill/references/cross-platform-compatibility.md` | `grep -rnE '[0-9]+px' src/ \| grep -v 'upx'` |
+| `z-index` 过大 | P3 | 各端层级表现不一致 | 出现 `z-index: 9999` 等极大值 | `uniapp-app-generate-skill/references/cross-platform-compatibility.md` | `grep -rnE 'z-index:\s*[0-9]{4,}' src/` |
 | 使用 `position: fixed` | P2 | 小程序端 z-index 与层级差异 | 样式中出现 `position: fixed` | `uniapp-crossplatform-audit-skill` | `grep -rnE 'position:\s*fixed' src/` |
 
 ## 3. API 调用
@@ -43,8 +43,8 @@
 
 | 检查项 | 风险等级 | 风险描述 | 判定依据 | 参考标准 | 检测命令 |
 |--------|----------|----------|----------|----------|----------|
-| 混用 `px` 与 `rpx` | P2 | 跨端尺寸不一致 | 同一项目同时出现 `px` 与 `rpx` | `uniapp-app-generate-skill/references/cross-platform-compatibility.md` | `grep -rnE '\d+px' src/` |
-| 尺寸未使用 Token | P2 | 主题/适配难以维护 | 直接写具体 `rpx` 尺寸 | `uniapp-app-generate-skill/references/theme-system.md` | `grep -rnE '(width\|height\|font-size\|margin\|padding)[^:]*:\s*\d+rpx' src/` |
+| 混用 `px` 与 `rpx` | P2 | 跨端尺寸不一致 | 同一项目同时出现 `px` 与 `rpx` | `uniapp-app-generate-skill/references/cross-platform-compatibility.md` | `grep -rnE '[0-9]+px' src/` |
+| 尺寸未使用 Token | P2 | 主题/适配难以维护 | 直接写具体 `rpx` 尺寸 | `uniapp-app-generate-skill/references/theme-system.md` | `grep -rnE '(width\|height\|font-size\|margin\|padding)[^:]*:\s*[0-9]+rpx' src/` |
 
 ## 6. 安全区与刘海屏
 

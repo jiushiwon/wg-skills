@@ -8,11 +8,11 @@
 | 检查项 | 风险等级 | 风险描述 | 判定依据 | 参考标准 | 检测命令 |
 |--------|----------|----------|----------|----------|----------|
 | API Key 硬编码 | P0 | 密钥写入源码，存在泄露与被滥用风险 | 源代码中出现 `apiKey`、`API_KEY`、`secretKey` 等敏感字段赋值 | `uniapp-components-skill` 安全规范 | `grep -rnE '(apiKey\|apikey\|API_KEY\|secret\|token\|password\|passwd\|pwd\|appSecret\|APP_SECRET)' src/` |
-| Token 硬编码 | P0 | 长期有效凭证写入源码 | 源代码中出现固定 Token 字符串 | `uniapp-components-skill` A02 | 同上 |
-| Secret/密码 硬编码 | P0 | 账号密码等敏感信息写入源码 | 源代码中出现密码类字符串赋值 | `uniapp-components-skill` A03 | 同上 |
+| Token 硬编码 | P0 | 长期有效凭证写入源码 | 源代码中出现固定 Token 字符串 | `uniapp-components-skill` A02 / 通用安全规范 | 同上 |
+| Secret/密码 硬编码 | P0 | 账号密码等敏感信息写入源码 | 源代码中出现密码类字符串赋值 | 通用安全规范 | 同上 |
 | AppSecret 硬编码 | P0 | 小程序/第三方平台密钥泄露 | 源代码中出现 `AppSecret`、`appSecret` | `uniapp-components-skill` 安全规范 | 同上 |
 | 私钥/证书硬编码 | P0 | 非对称密钥或证书文件内容写入源码 | 源代码中出现 RSA 私钥、证书头尾标记 | 通用安全规范 | `grep -rnE 'BEGIN.*PRIVATE KEY\|BEGIN CERTIFICATE' src/` |
-| Base64 编码敏感串 | P1 | 敏感信息经 base64 编码后仍可能泄露 | 源代码中出现长 base64 串且变量名暗示密钥 | `uniapp-components-skill` A03 | `grep -rnE 'base64.*[A-Za-z0-9+/=]{20,}' src/` |
+| Base64 编码敏感串 | P1 | 敏感信息经 base64 编码后仍可能泄露 | 源代码中出现长 base64 串且变量名暗示密钥 | 通用安全规范 | `grep -rnE 'base64.*[A-Za-z0-9+/=]{20,}' src/` |
 | `.env` 含真实密钥且未忽略 | P1 | 环境变量文件误提交仓库 | 项目根目录存在 `.env` 且未加入 `.gitignore` | `uniapp-app-generate-skill` 2.6 | `grep -E '^\.env(\.|$)' .gitignore` |
 
 ## 2. 网络与域名
