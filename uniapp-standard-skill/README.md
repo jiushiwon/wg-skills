@@ -20,7 +20,7 @@
 - **框架**：uni-app + Vue3
 - **语言**：TypeScript
 - **状态管理**：Pinia
-- **样式**：SCSS（需配合 uniapp-design-skill）
+- **样式**：SCSS（需配合 uniapp-style-skill）
 - **构建工具**：Vite
 
 ## 快速开始
@@ -73,11 +73,11 @@ npm install
 | R12 | **提交前必须 lint** | 通过后才能提交 |
 | R13 | **commit 必须用中文** | 禁止纯英文 commit |
 | R14 | **commit 长度限制** | subject ≤ 50 字 |
-| R15 | **SCSS 必须用 Token** | 详见 uniapp-design-skill |
+| R15 | **SCSS 必须用 Token** | 详见 uniapp-style-skill |
 | R16 | **Mock 放 _mocks_/** | 禁止写在 API 文件或页面中 |
 | R17 | **请求只传业务路径** | 传 `/user/info` 不传 `/api/v1/user/info` |
-| R18 | **屏幕适配走规范** | 详见 uniapp-design-skill |
-| R19 | **鸿蒙降级规范** | 详见 uniapp-design-skill |
+| R18 | **屏幕适配走规范** | 详见 uniapp-style-skill |
+| R19 | **鸿蒙降级规范** | 详见 uniapp-style-skill |
 | R20 | **认证服务收口** | 详见 uniapp-auth-skill |
 
 ## 目录结构
@@ -154,7 +154,7 @@ uniapp-standard-skill/
 | 技能 | 用途 |
 |------|------|
 | [uniapp-auth-skill](../../uniapp-auth-skill/) | 登录鉴权与安全规范 |
-| [uniapp-design-skill](../../uniapp-design-skill/) | 设计系统与组件规范 |
+| [uniapp-style-skill](../../uniapp-style-skill/) | 设计系统与组件规范 |
 
 ## 常见问题
 

@@ -758,17 +758,20 @@ uniapp 开发规范
 
 ---
 
-### 23. uniapp-design-skill 🎨
+### 23. uniapp-style-skill 🎨
 
-> uniapp 设计系统与组件规范
+> uniapp 设计系统与组件规范（视觉层/皮肉层）
 
-**功能**：Design Tokens 四层架构、主题配置、语义变量、SCSS 函数与混入、按钮组件规范、屏幕适配。
+**功能**：Design Tokens 四层架构、主题配置、排版系统（字号/行高/字重/字体）、间距阶梯、语义变量（文字/背景/边框/圆角/阴影/Z 层级）、SCSS 函数与混入（tint/shade 色板、布局/安全区/细线混入）、动画过渡 Token、10+ 组件规范（Button/Card/Modal/Toast/Input/NavBar/Loading/Skeleton/Empty/ErrorState）、交互状态规范、屏幕适配（顶部/安全区/rpx 换算/横屏/鸿蒙）、深色模式。**支持设计合规审计**：扫描硬编码颜色/字号/间距并自动修复为 Token 变量。
 
 **使用场景**：
 - 样式规范是什么
 - Design Tokens
 - 组件开发规范
 - 屏幕适配
+- 字体大小/间距规范
+- 深色模式
+- 扫描硬编码样式 / 设计审计
 
 **使用方式**：
 
@@ -780,11 +783,11 @@ uniapp 开发规范
 
 ```
 样式规范是什么
-Design Tokens
-组件规范
+设计审计
+替换硬编码颜色
 ```
 
-**详细文档**：[uniapp-design-skill/README.md](uniapp-design-skill/README.md)
+**详细文档**：[uniapp-style-skill/README.md](uniapp-style-skill/README.md)
 
 ---
 
@@ -907,6 +910,41 @@ AI 编程怎么入门
 
 ---
 
+### 28. fastapi-init-skill 🚀
+
+> FastAPI 一键初始化技能——面向零基础小白
+
+**功能**：一条命令完成从零到跑的完整 FastAPI 项目搭建。内置环境探测与自动安装、SSE 流式框架、JWT 鉴权、统一响应封装、Swagger 文档、一键启动/重启脚本。默认使用 MySQL 数据库（可选 PostgreSQL / MongoDB）。
+
+**使用场景**：
+- 完全不懂编程、想搭建 API 服务的小白
+- 需要标准化的 FastAPI 项目骨架
+- 需要 SSE 流式推送（AI 聊天、实时通知）
+- 需要一个开箱即用的 Python Web 后端
+
+**使用方式**：
+
+```
+帮我搭一个 FastAPI 项目
+初始化 FastAPI 项目
+FastAPI 脚手架
+FastAPI 零基础起步
+```
+
+**内置能力**：
+| 能力 | 说明 |
+|------|------|
+| 环境探测 | 自动检测 Python 版本、操作系统，给出安装指引 |
+| 一键启动 | `./setup.sh` 或 `setup.bat` 全自动完成 |
+| SSE 流式 | `sse-starlette`，示例端点 `/api/sse/chat` |
+| JWT 鉴权 | 注册 / 登录 / 刷新 / 登出 / 当前用户 |
+| Swagger | `/docs`（Swagger UI）+ `/redoc` |
+| 数据库 | MySQL 默认 / PostgreSQL / MongoDB 可选 |
+
+**详细文档**：[fastapi-init-skill/README.md](fastapi-init-skill/README.md)
+
+---
+
 ## 📋 Skill 一览
 
 | Skill | 说明 | 触发关键词 |
@@ -932,12 +970,13 @@ AI 编程怎么入门
 | [uniapp-standardization-skill](uniapp-standardization-skill/) | uniapp 项目规范化 | `uniapp 规范化`、`项目结构诊断`、`代码规范` |
 | [uniapp-vue2-upgrade-skill](uniapp-vue2-upgrade-skill/) | uniapp Vue2 升级到 Vue3 | `vue2 升级 vue3`、`uniapp 迁移`、`小程序升级` |
 | [uniapp-standard-skill](uniapp-standard-skill/) | uniapp 开发规范（20 红线 + 8 文档） | `uniapp 开发规范`、`接口怎么写` |
-| [uniapp-design-skill](uniapp-design-skill/) | uniapp 设计系统与组件规范 | `Design Tokens`、`组件规范`、`样式规范` |
+| [uniapp-style-skill](uniapp-style-skill/) | uniapp 设计系统与组件规范（14 红线 + 审计修复） | `Design Tokens`、`组件规范`、`样式规范`、`深色模式`、`设计审计` |
 | [uniapp-theme-skill](uniapp-theme-skill/) | uni-app 主题系统：一键换肤 | `添加主题系统`、`换主题`、`统一硬编码` |
 | [uniapp-components-skill](uniapp-components-skill/) | uniapp 登录鉴权与安全规范 | `登录鉴权怎么做`、`token 管理`、`401 处理`、`安全规范` |
 | [uniapp-request-skill](uniapp-request-skill/) | uniapp 请求层设计（request.ts 封装/鉴权拦截/防抖/Mock/SSE） | `请求封装`、`request.ts 怎么写`、`Token 刷新`、`SSE 流式请求` |
 | [vibecoding-guide-skill](vibecoding-guide-skill/) | VibeCoding / AI 开发知识导师（3 子技能） | `/vibecoding`、`我想学 VibeCoding` |
 | [ui-template-builder-skill](ui-template-builder-skill/) | UI 页面模板构建器（37 套模板 + 5 套风格 + Mock 数据 + 一键换肤） | `生成页面`、`做个个人中心`、`数据大屏`、`换个主题色` |
+| [fastapi-init-skill](fastapi-init-skill/) | FastAPI 一键初始化（环境探测 + 自动安装 + SSE 流式 + JWT 鉴权 + 一键脚本 + MySQL/PG/Mongo） | `FastAPI 脚手架`、`初始化 FastAPI 项目`、`fastapi init`、`搭建 FastAPI 服务`、`Python Web 骨架` |
 
 > 注：`demo/foundry-demo` 是 [frontend-ui-foundry](frontend-ui-foundry/) 的端到端示例，不是独立 Skill。
 > 注：`super-deploy-skills` 是父技能，包含 5 个子技能，统一放在 `super-deploy-skills/` 目录下；`deploy-detect-skill` 是其余子技能的共享前置。
@@ -1299,6 +1338,16 @@ wg-skills/
 │       ├── vue2-vue3-diff.md
 │       ├── upgrade-steps.md
 │       └── dependency-compat.md
+├── fastapi-init-skill/          # FastAPI 一键初始化（环境探测 + SSE + 一键脚本）
+│   ├── SKILL.md                 # 触发条件 + 生成流程 + 18 项能力清单 + 红线
+│   ├── README.md                # 用户文档 + 使用示例
+│   └── references/              # 5 个参考文件
+│       ├── skeleton.md          # 完整骨架（42 个文件代码模板）
+│       ├── env-setup.md         # 环境探测与自动安装流程
+│       ├── sse-guide.md         # SSE 流式框架集成 + 客户端对接
+│       ├── db-guide.md          # MySQL/PG/Mongo 数据库选型与配置
+│       ├── middleware-guide.md  # 中间件链 + JWT 鉴权 + 限流/压缩
+│       └── startup-scripts.md   # setup/dev/restart 脚本模板（Linux + Windows）
 └── demo/
     └── foundry-demo/           # frontend-ui-foundry 端到端示例
         ├── index.html

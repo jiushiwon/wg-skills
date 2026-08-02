@@ -39,7 +39,7 @@
 |--------|----------|----------|
 | 引用 skill 存在 | 文中引用的 `uniapp-standard-skill`、`uniapp-app-generate-skill`、`uniapp-request-skill`、`uniapp-components-skill`、`uniapp-crossplatform-audit-skill`、`uniapp-standardization-skill`、`uniapp-vue2-upgrade-skill`、`uniapp-theme-skill` 均存在于仓库 | `ls uniapp-*-skill` |
 | 引用 reference 存在 | 引用的 `theme-system.md`、`project-structure.md`、`component-standards.md`、`cross-platform-compatibility.md`、`mini-program-checklist.md` 等存在于对应 skill 目录 | `ls uniapp-app-generate-skill/references/` |
-| 无死链 | 不引用 `uniapp-common-skill` 等已删除/重命名 skill；与 `uniapp-design-skill` 等已存在同类 skill 保持职责边界，避免误引用 | `grep -rnE 'uniapp-design-skill\|uniapp-common-skill' uniapp-code-audit-skill/` |
+| 无死链 | 不引用 `uniapp-common-skill` 等已删除/重命名 skill；与 `uniapp-style-skill` 等已存在同类 skill 保持职责边界，避免误引用 | `grep -rnE 'uniapp-style-skill\|uniapp-common-skill' uniapp-code-audit-skill/` |
 
 ## 6. 协作措辞
 

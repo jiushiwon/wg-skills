@@ -14,7 +14,7 @@ trigger: /uniapp-standard
 
 **配套技能**：
 - [uniapp-auth-skill](../../uniapp-auth-skill/) — 登录鉴权与安全规范
-- [uniapp-design-skill](../../uniapp-design-skill/) — 设计系统与组件规范
+- [uniapp-style-skill](../../uniapp-style-skill/) — 设计系统与组件规范
 
 ## When to Use
 
@@ -59,11 +59,11 @@ trigger: /uniapp-standard
 | R12 | **提交前必须 lint** | 通过后才能提交 |
 | R13 | **commit 必须用中文** | 禁止纯英文 |
 | R14 | **commit 长度限制** | subject ≤ 50 字 |
-| R15 | **SCSS 必须用 Token** | 详见 [uniapp-design-skill](../../uniapp-design-skill/) |
+| R15 | **SCSS 必须用 Token** | 详见 [uniapp-style-skill](../../uniapp-style-skill/) |
 | R16 | **Mock 放 _mocks_/** | 禁止写在 API 文件或页面中 |
 | R17 | **请求只传业务路径** | 传 `/user/info` 不传 `/api/v1/user/info`，prefix 从 @/config 导入 |
-| R18 | **屏幕适配走规范** | 详见 [uniapp-design-skill](../../uniapp-design-skill/) |
-| R19 | **鸿蒙降级规范** | 详见 [uniapp-design-skill](../../uniapp-design-skill/) |
+| R18 | **屏幕适配走规范** | 详见 [uniapp-style-skill](../../uniapp-style-skill/) |
+| R19 | **鸿蒙降级规范** | 详见 [uniapp-style-skill](../../uniapp-style-skill/) |
 | R20 | **认证服务收口** | 详见 [uniapp-auth-skill](../../uniapp-auth-skill/) |
 
 ---
@@ -108,7 +108,7 @@ uniapp-project/
 │   │   └── index.ts          # 常量导出
 │   ├── types/                  # TypeScript 类型
 │   │   └── index.d.ts        # 全局类型
-│   ├── styles/                 # SCSS 样式系统（详见 uniapp-design-skill）
+│   ├── styles/                 # SCSS 样式系统（详见 uniapp-style-skill）
 │   │   ├── config/           # 主题配置
 │   │   │   └── _theme-config.scss  # 唯一人工配置
 │   │   ├── tokens/           # Token 定义
@@ -407,4 +407,4 @@ cp -r templates/* /path/to/new-project/
 
 ### 配套技能
 - [uniapp-auth-skill](../../uniapp-auth-skill/) — 登录鉴权与安全规范
-- [uniapp-design-skill](../../uniapp-design-skill/) — 设计系统与组件规范
+- [uniapp-style-skill](../../uniapp-style-skill/) — 设计系统与组件规范
