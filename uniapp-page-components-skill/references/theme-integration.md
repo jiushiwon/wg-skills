@@ -64,10 +64,10 @@
 | `--font-xs/sm/md/lg/xl/2xl` | `22rpx / 24rpx / 28rpx / 32rpx / 36rpx / 44rpx` |
 | `--height-btn-md/lg/xl` | `72rpx / 88rpx / 96rpx` |
 | `--height-avatar-sm/md/lg` | `64rpx / 96rpx / 128rpx` |
-| `--icon-md/lg` | `40rpx / 48rpx` |
+| `--icon-sm/md/lg` | `32rpx / 40rpx / 48rpx` |
 | `--radius-card` | `16rpx` |
 | `--radius-btn` | `16rpx` |
-| `--radius-avatar` | `50%` |
+| `--radius-avatar` | `9999rpx`（对齐主题 `--radius-full`，正方形头像下等同圆形） |
 | `--radius-image` | `8rpx` |
 | `--radius-tag` | `8rpx` |
 | `--radius-sm` | `8rpx` |

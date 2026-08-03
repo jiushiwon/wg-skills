@@ -64,7 +64,7 @@ interface Props {
   image?: string
   /** 图片裁剪模式 */
   imageMode?: 'aspectFill' | 'aspectFit' | 'widthFix' | 'scaleToFill'
-  /** 图片高度（rpx / 主题变量），默认 --spacing-24 * 4 ≈ 384rpx */
+  /** 图片高度（rpx / 主题变量），默认 calc(var(--spacing-2xl) * 6) ≈ 384rpx */
   imageHeight?: string
   /** 是否懒加载 */
   lazyLoad?: boolean

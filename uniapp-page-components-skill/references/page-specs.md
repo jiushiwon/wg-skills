@@ -381,6 +381,12 @@ const feeds = ref([
 function previewImage(feed: any, index: number) {
   uni.previewImage({ urls: feed.images, current: index })
 }
+function onComment(feed: any, comment: any) {
+  uni.showToast({ title: `${feed.nickname} 评论了这条动态`, icon: 'none' })
+}
+function onMore(feed: any) {
+  // 更多操作（复制 / 举报 / 删除等）
+}
 </script>
 ```
 
@@ -484,6 +490,9 @@ const actions = [
 function onAction(act: any) {
   uni.showToast({ title: act.text, icon: 'none' })
 }
+function goBack() {
+  uni.navigateBack({ delta: 1 })
+}
 </script>
 ```
 
@@ -562,6 +571,9 @@ const groups = [
 
 function onItemClick(item: any) {
   uni.showToast({ title: item.label, icon: 'none' })
+}
+function goLogin() {
+  uni.navigateTo({ url: '/pages/login/index' })
 }
 </script>
 ```
