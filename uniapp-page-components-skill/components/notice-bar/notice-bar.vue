@@ -104,7 +104,8 @@ const emit = defineEmits<{ click: []; close: [] }>()
   align-items: center;
   justify-content: center;
   min-width: 88rpx;
-  min-height: 44rpx;
+  min-height: 88rpx;
+  margin: calc(-1 * var(--spacing-sm)) 0;
   margin-right: calc(-1 * var(--spacing-sm));
 }
 

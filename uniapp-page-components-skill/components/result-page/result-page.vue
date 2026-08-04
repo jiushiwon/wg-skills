@@ -121,7 +121,7 @@ const iconMap: Record<string, string> = {
   }
 
   .is-warning & {
-    color: #F59E0B;
+    color: var(--color-warning);
   }
 
   .is-info & {

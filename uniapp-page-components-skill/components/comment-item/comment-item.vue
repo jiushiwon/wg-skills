@@ -188,7 +188,8 @@ const avatarError = ref(false)
   display: flex;
   align-items: center;
   min-width: 88rpx;
-  min-height: 44rpx;
+  min-height: 88rpx;
+  margin: calc(-1 * var(--spacing-md)) 0;
 
   &.is-liked .ci-like-icon {
     color: var(--color-primary);
@@ -208,7 +209,8 @@ const avatarError = ref(false)
 
 .ci-reply {
   min-width: 88rpx;
-  min-height: 44rpx;
+  min-height: 88rpx;
+  margin: calc(-1 * var(--spacing-md)) 0;
   display: flex;
   align-items: center;
 }
