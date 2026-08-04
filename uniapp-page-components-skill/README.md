@@ -1,10 +1,10 @@
 # uniapp 常用组件化页面 Skill
 
-> 独立 uniapp 组件化页面技能：15 个组件（5 基础 + 10 页面）覆盖小程序高频页面，复制进项目、往 slot 填内容即可用。自动接入 `uniapp-theme-skill` 主题系统（CSS 变量、禁止写死），支持自动检测项目主题对齐、自动替换 tabBar/导航栏。
+> 独立 uniapp 组件化页面技能：21 个组件（5 基础 + 6 业务 + 10 页面）覆盖小程序高频页面，复制进项目、往 slot 填内容即可用。自动接入 `uniapp-theme-skill` 主题系统（CSS 变量、禁止写死），支持自动检测项目主题对齐、自动替换 tabBar/导航栏、触发词一键扩展业务组件。
 
 ## 功能
 
-- **15 个组件**：5 基础（空卡片 / 按钮 / 头部导航 / 底部菜单 / 表单行）+ 10 页面（Tab+列表 / 聊天 / 朋友圈 / 详情 / 我的 / 图片卡 / 搜索 / 表单 / 登录 / 首页）
+- **21 个组件**：5 基础（空卡片 / 按钮 / 头部导航 / 底部菜单 / 表单行）+ 6 业务（用户卡片 / 评论条 / 通知栏 / 设置行 / 空状态 / 结果页，组合空壳实现）+ 10 页面（Tab+列表 / 聊天 / 朋友圈 / 详情 / 我的 / 图片卡 / 搜索 / 表单 / 登录 / 首页）
 - **空卡片托底组件** `base-card`：统一圆角/内边距/背景/描边/阴影，其余卡片类组件入参包含它的入参（`cardProps` 透传）
 - **高度自由化**：内容全走 slot，可加新 prop，默认数据跑通即替换
 - **主题自动检测对齐**：接入时自动定位变量文件、识别命名风格（CSS/SCSS/LESS）、读取主色与尺寸；命名一致直接用，命名不同自动生成桥接层，无主题系统自动提取项目品牌色（详见 `references/theme-detect.md`）
@@ -14,20 +14,12 @@
 
 ## 使用方式
 
-技能共 15 个组件，触发词无需说组件名，描述"要做的页面/操作"即可：
+技能共 21 个组件，触发词无需说组件名，描述"要做的页面/操作"即可：
 
 **按组件**：
-- **Tab+列表**：我的订单 / 订单列表页 / 待付款已发货列表 / 消息列表 / 商品列表 / 优惠券列表 / "顶部几个 Tab 切换下面卡片列表"
-- **聊天**：聊天页 / 会话页 / IM 对话 / 客服聊天 / 私信页 / 微信聊天样式
-- **朋友圈**：朋友圈 / 动态列表 / 社区动态 / 带点赞评论的列表
-- **商品详情**：商品详情页 / 详情页 / 产品介绍页 / "底部有购物车/立即购买的详情"
-- **我的/设置/购物车**：我的页面 / 个人中心 / 设置页 / 通知中心 / 收货地址 / 购物车列表 / 账户设置
-- **图片卡片**：图片卡片 / 图文卡片 / 商品卡 / Banner 卡
-- **搜索页**：搜索 / 搜索框 + 历史 / 热门搜索 / 搜索结果页
-- **表单页**：填写资料 / 发布页 / 意见反馈 / 地址填写
-- **登录页**：登录 / 注册 / 手机号验证码登录 / 微信登录
-- **首页**：首页 / 商城首页 / 工作台 / 带轮播金刚区的首页
+- **Tab+列表**：... 
 - **基础组件**：自定义按钮 / 头部导航 / 底部菜单 / 表单行
+- **业务组件**：用户卡片 / 评论条 / 通知栏 / 设置行 / 空状态 / 结果页 / "带关注按钮的头像卡片"
 - **自动替换**：用自定义底部菜单替换现有 tabBar / tab 页面换自定义头部菜单
 
 **调参数与内容**：
@@ -47,6 +39,12 @@
 | 基础 | `base-navbar` | `<base-navbar>` | 自定义头部导航（标题 + 返回 + 右侧 slot + 状态栏适配 + 吸顶） |
 | 基础 | `base-tabbar` | `<base-tabbar>` | 自定义底部菜单（2~5 项 + 图标/角标 + 激活主题色 + 安全区） |
 | 基础 | `base-form-item` | `<base-form-item>` | 表单行（label + 必填星号 + 控件 slot + 错误提示） |
+| 业务 | `user-card` | `<user-card>` | 用户卡片：头像/昵称/签名/右侧按钮（基于 base-card + base-button） |
+| 业务 | `comment-item` | `<comment-item>` | 评论条：头像/昵称/时间/内容/点赞/回复（基于 base-card） |
+| 业务 | `notice-bar` | `<notice-bar>` | 通知/公告栏：icon/文案/可关闭/跑马灯（轻量） |
+| 业务 | `setting-item` | `<setting-item>` | 设置/菜单行：图标/label/描述/箭头/角标/开关（独立） |
+| 业务 | `empty` | `<empty>` | 空状态：图/文案/操作按钮（轻量 + base-button） |
+| 业务 | `result-page` | `<result-page>` | 结果页：成功/失败/警告/信息 + 操作按钮（基于 base-button） |
 | 页面 | `tab-list-page` | `<tab-list-page>` | Tab 吸顶 + 卡片列表（我的订单/消息中心/商品列表） |
 | 页面 | `chat-page` | `<chat-page>` | 微信风格聊天（底部输入栏 + 左右气泡，自己的消息主题色高亮） |
 | 页面 | `moments-page` | `<moments-page>` | 微信风格朋友圈（封面头图 + 动态 + 点赞评论） |
@@ -94,12 +92,18 @@
 uniapp-page-components-skill/
 ├── SKILL.md                    # 技能定义：触发词、工作流、主题绑定、自动替换、红线
 ├── README.md                   # 本文件
-├── components/                 # 15 个组件模板（复制到项目 src/components/ 即可用）
+├── components/                 # 21 个组件模板（复制到项目 src/components/ 即可用）
 │   ├── base-card/base-card.vue
 │   ├── base-button/base-button.vue
 │   ├── base-navbar/base-navbar.vue
 │   ├── base-tabbar/base-tabbar.vue
 │   ├── base-form-item/base-form-item.vue
+│   ├── user-card/user-card.vue
+│   ├── comment-item/comment-item.vue
+│   ├── notice-bar/notice-bar.vue
+│   ├── setting-item/setting-item.vue
+│   ├── empty/empty.vue
+│   ├── result-page/result-page.vue
 │   ├── tab-list-page/tab-list-page.vue
 │   ├── chat-page/chat-page.vue
 │   ├── moments-page/moments-page.vue
@@ -124,6 +128,9 @@ uniapp-page-components-skill/
 | `home-page` | `base-navbar`、`base-tabbar` |
 | `login-page` | `base-button` |
 | `tab-list-page` / `profile-page` / `image-card` | `base-card` |
+| `user-card` | `base-card`、`base-button` |
+| `comment-item` | `base-card` |
+| `empty` / `result-page` | `base-button` |
 
 ## 依赖与组合链路
 

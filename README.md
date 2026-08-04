@@ -853,7 +853,7 @@ token 管理
 
 ### 26. uniapp-page-components-skill 🧱
 
-> uniapp 常用组件化页面技能（独立、自成体系）：15 个组件，覆盖列表 / 聊天 / 朋友圈 / 详情 / 我的 / 图片卡 / 搜索 / 表单 / 登录 / 首页 + 基础组件
+> uniapp 常用组件化页面技能（独立、自成体系）：21 个组件（5 基础 + 6 业务 + 10 页面），覆盖列表 / 聊天 / 朋友圈 / 详情 / 我的 / 图片卡 / 搜索 / 表单 / 登录 / 首页 + 业务组件
 
 **功能**：把最高频、结构最固定的页面抽象为可复用组件，复制进项目、往 slot 填内容即可用。空卡片 `base-card` 托底（圆角/内边距/背景参数化，`cardProps` 透传）；自动检测项目主题系统并对齐颜色尺寸（命名不同自动桥接、无主题系统自动提取品牌色）；支持自动替换 tabBar / 导航栏；默认使用 `uniapp-theme-skill` 的 CSS 变量（动态颜色尺寸，禁止写死），遵循 `uniapp-style-skill` 红线。
 
@@ -1029,7 +1029,7 @@ FastAPI 零基础起步
 | [uniapp-standard-skill](uniapp-standard-skill/) | uniapp 开发规范（20 红线 + 8 文档） | `uniapp 开发规范`、`接口怎么写` |
 | [uniapp-style-skill](uniapp-style-skill/) | uniapp 设计系统与组件规范（14 红线 + 审计修复） | `Design Tokens`、`组件规范`、`样式规范`、`深色模式`、`设计审计` |
 | [uniapp-theme-skill](uniapp-theme-skill/) | uni-app 主题系统：一键换肤 | `添加主题系统`、`换主题`、`统一硬编码` |
-| [uniapp-page-components-skill](uniapp-page-components-skill/) | uniapp 常用组件化页面技能（15 组件：5 基础 + 10 页面，BaseCard 托底 + 主题自动检测对齐 + 替换 tabBar/导航栏） | `组件化页面`、`聊天页/会话页`、`朋友圈/动态列表`、`商品详情页`、`订单列表页`、`我的页面/设置页/购物车列表`、`搜索页`、`登录页`、`首页/商城首页`、`图片卡片`、`自定义按钮`、`头部导航/底部菜单/TabBar`、`卡片圆角调整`、`BaseCard` |
+| [uniapp-page-components-skill](uniapp-page-components-skill/) | uniapp 常用组件化页面技能（21 组件：5 基础 + 6 业务 + 10 页面，BaseCard 托底 + 主题自动检测对齐 + 替换 tabBar/导航栏） | `组件化页面`、`聊天页`、`朋友圈`、`商品详情页`、`订单列表页`、`我的页面/设置页`、`搜索页`、`登录页`、`首页`、`用户卡片/评论条`、`通知栏`、`空状态/结果页`、`自定义按钮/底部菜单`、`卡片圆角调整` |
 | [uniapp-components-skill](uniapp-components-skill/) | uniapp 登录鉴权与安全规范 | `登录鉴权怎么做`、`token 管理`、`401 处理`、`安全规范` |
 | [uniapp-request-skill](uniapp-request-skill/) | uniapp 请求层设计（request.ts 封装/鉴权拦截/防抖/Mock/SSE） | `请求封装`、`request.ts 怎么写`、`Token 刷新`、`SSE 流式请求` |
 | [vibecoding-guide-skill](vibecoding-guide-skill/) | VibeCoding / AI 开发知识导师（3 子技能） | `/vibecoding`、`我想学 VibeCoding` |
@@ -1451,7 +1451,7 @@ wg-skills/
 ├── uniapp-page-components-skill/       # uniapp 常用组件化页面技能（5 基础组件 + 10 页面组件）
 │   ├── SKILL.md
 │   ├── README.md
-│   ├── components/                     # 15 个组件模板（复制到项目 src/components/ 即可用）
+│   ├── components/                     # 21 个组件模板（复制到项目 src/components/ 即可用）
 │   │   ├── base-card/base-card.vue
 │   │   ├── base-button/base-button.vue
 │   │   ├── base-navbar/base-navbar.vue

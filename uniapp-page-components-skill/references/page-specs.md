@@ -1,6 +1,6 @@
 # 各组件 API 速查
 
-本文档给出 `components/` 下 15 个组件的 Props / Slots / Emits / 默认数据、mock 数据与完整页面示例。
+本文档给出 `components/` 下 21 个组件的 Props / Slots / Emits / 默认数据、mock 数据与完整页面示例。
 所有组件默认使用 uniapp-theme-skill 主题变量，复制进项目后无需改样式。
 
 ## 通用使用前提
@@ -979,6 +979,178 @@ function sendCode(phone: string) {
     </template>
   </home-page>
 </view>
+```
+
+---
+
+## 16. user-card（用户卡片 / 作者卡）
+
+**目录**：`src/components/user-card/user-card.vue` · **依赖**：`base-card`、`base-button`
+
+### Props
+
+| Prop | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `avatar` / `nickname` / `subtitle` | `string` | 占位 | 头像/昵称/副标题 |
+| `desc` | `string` | `''` | 简介/签名 |
+| `actionText` | `string` | `''` | 右侧按钮文案 |
+| `actionType` | `primary\|ghost\|text` | `ghost` | 按钮类型 |
+| `actionLoading` | `boolean` | `false` | 按钮 loading |
+| `radius` / `padding` / `margin` / `border` / `shadow` / `clickable` | — | 见 base-card | base-card 透传入参 |
+
+### Slots / Emits
+
+- 默认 `slot`：自定义内容区；`#action`：右侧按钮
+- Emits：`click`、`avatarClick`、`actionClick`
+
+### 使用示例
+
+```vue
+<user-card avatar="/static/avatar/1.jpg" nickname="小李" subtitle="iOS 开发" desc="热爱技术" action-text="关注" @action-click="onFollow" @avatar-click="goProfile" />
+```
+
+---
+
+## 17. comment-item（评论条）
+
+**目录**：`src/components/comment-item/comment-item.vue` · **依赖**：`base-card`
+
+### Props
+
+| Prop | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `avatar` / `nickname` / `time` / `content` | `string` | 占位 | 头像/昵称/时间/内容 |
+| `replyTo` | `string` | `''` | 回复对象（显示"XX："前缀） |
+| `likeCount` | `string\|number` | `''` | 点赞数 |
+| `liked` | `boolean` | `false` | 已点赞 |
+| `likeable` / `replyable` | `boolean` | `true` | 显示点赞/回复 |
+| `radius` / `padding` / `margin` / `border` / `shadow` | — | 见 base-card | base-card 透传 |
+
+### Slots / Emits
+
+- 默认 `slot`：自定义内容区
+- Emits：`click`、`avatarClick`、`contentClick`、`likeClick`、`replyClick`
+
+### 使用示例
+
+```vue
+<comment-item avatar="/static/avatar/2.jpg" nickname="小美" time="10 分钟前" content="好美！" reply-to="阿伟" :like-count="5" @like-click="onLike" @reply-click="onReply" />
+```
+
+---
+
+## 18. notice-bar（通知/公告栏）
+
+**目录**：`src/components/notice-bar/notice-bar.vue` · **依赖**：无
+
+### Props
+
+| Prop | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `text` | `string` | `''` | 通知文案 |
+| `icon` | `string` | `''` | 左侧图标 |
+| `closable` | `boolean` | `true` | 可关闭 |
+| `scrollable` | `boolean` | `false` | 跑马灯滚动 |
+| `bg` | `string` | `''` | 背景色（默认 `--color-bg-tinted`） |
+
+### Slots / Emits
+
+- 默认 `slot`：自定义内容；`#icon`：左侧图标
+- Emits：`click`、`close`
+
+### 使用示例
+
+```vue
+<notice-bar text="本周新品已上线，快去看看吧！" :closable="true" @click="goActive" @close="showBar=false" />
+<notice-bar icon="⚠" text="网络连接失败，请检查网络" :closable="false" :bg="'#FEF2F2'" />
+```
+
+---
+
+## 19. setting-item（设置/菜单行）
+
+**目录**：`src/components/setting-item/setting-item.vue` · **依赖**：无
+
+### Props
+
+| Prop | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `icon` / `iconText` | `string` | `''` | 左侧图标（图片URL/文字图标） |
+| `label` / `desc` | `string` | `''` | 标题/描述 |
+| `value` | `string` | `''` | 右侧文字 |
+| `badge` | `string\|number` | `''` | 角标 |
+| `arrow` | `boolean` | `true` | 显示右侧箭头 |
+| `clickable` | `boolean` | `true` | 可点击 |
+| `showSwitch` / `modelValue` | `boolean` | `false` | 显示开关（v-model） |
+
+### Slots / Emits
+
+- 无 slot（item 本身就是最小单元，配合 `base-card` 用）
+- Emits：`click`、`update:modelValue`、`switchChange`
+
+### 使用示例
+
+```vue
+<setting-item icon-text="设" label="设置" arrow @click="goSetting" />
+<setting-item icon-text="通" label="消息通知" :show-switch="true" v-model="notify" @switch-change="onSwitch" />
+<setting-item label="版本号" value="1.2.0" :arrow="false" :clickable="false" />
+```
+
+---
+
+## 20. empty（空状态）
+
+**目录**：`src/components/empty/empty.vue` · **依赖**：`base-button`
+
+### Props
+
+| Prop | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `text` | `string` | `暂无数据` | 主文案 |
+| `description` | `string` | `''` | 描述 |
+| `image` | `string` | `''` | 图片地址（无则显示 icon 字符） |
+| `icon` | `string` | `空` | 占位字符 |
+| `actionText` | `string` | `''` | 按钮文案（空不显示） |
+
+### Slots / Emits
+
+- 默认 `slot`：图片与按钮之间的自定义内容
+- Emits：`actionClick`
+
+### 使用示例
+
+```vue
+<empty text="购物车是空的" description="去挑选心仪的商品吧" action-text="去逛逛" @action-click="goShop" />
+<empty text="暂无收藏" icon="★" />
+```
+
+---
+
+## 21. result-page（结果页）
+
+**目录**：`src/components/result-page/result-page.vue` · **依赖**：`base-button`
+
+### Props
+
+| Prop | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `status` | `success\|error\|warning\|info` | `success` | 状态（图标+颜色） |
+| `title` | `string` | `操作成功` | 标题 |
+| `description` | `string` | `''` | 描述 |
+| `primaryText` | `string` | `完成` | 主按钮文案 |
+| `secondaryText` | `string` | `''` | 次按钮文案 |
+| `loading` | `boolean` | `false` | 主按钮 loading |
+
+### Slots / Emits
+
+- 默认 `slot`：图标与按钮之间的自定义内容；`#actions`：按钮区
+- Emits：`primaryClick`、`secondaryClick`
+
+### 使用示例
+
+```vue
+<result-page status="success" title="支付成功" description="订单号 A20260804" primary-text="查看订单" secondary-text="返回首页" @primary-click="goOrder" @secondary-click="goHome" />
+<result-page status="error" title="支付失败" description="余额不足，请更换支付方式" primary-text="重新支付" />
 ```
 
 ---

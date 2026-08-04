@@ -1,13 +1,13 @@
 ---
 name: uniapp-page-components-skill
-description: uniapp 常用「组件化页面」技能（独立、自成体系）。内置 15 个组件：5 个基础组件（空卡片 base-card / 自定义按钮 base-button / 自定义头部导航 base-navbar / 自定义底部菜单 base-tabbar / 表单行 base-form-item）+ 10 个页面组件（Tab+列表 / 聊天 / 朋友圈 / 商品详情 / 我的 / 图片卡片 / 搜索 / 表单 / 登录 / 首页）。组件 slot 自由填充、可加新 prop、自动接入 uniapp-theme-skill 主题系统（CSS 变量、禁止写死），支持自动检测项目主题并对齐颜色尺寸、自动替换 tabBar/导航栏。触发词："组件化页面"、"聊天页/会话页"、"朋友圈/动态列表"、"商品详情页"、"我的页面/个人中心"、"订单列表/Tab列表"、"搜索页"、"表单页"、"登录页"、"首页/商城首页"、"图片卡片"、"空卡片/BaseCard"、"自定义按钮"、"头部导航/底部菜单/TabBar"、"表单行"、"卡片圆角调整"、"替换 tabBar"、"uniapp 页面组件"
+description: uniapp 常用「组件化页面」技能（独立、自成体系）。内置 21 个组件：5 个基础组件（空卡片 base-card / 自定义按钮 base-button / 自定义头部导航 base-navbar / 自定义底部菜单 base-tabbar / 表单行 base-form-item）+ 6 个业务组件（用户卡片 / 评论条 / 通知栏 / 设置行 / 空状态 / 结果页，组合空壳组件实现）+ 10 个页面组件（Tab+列表 / 聊天 / 朋友圈 / 商品详情 / 我的 / 图片卡片 / 搜索 / 表单 / 登录 / 首页）。组件 slot 自由填充、可加新 prop、自动接入 uniapp-theme-skill 主题系统（CSS 变量、禁止写死），支持自动检测项目主题并对齐颜色尺寸、自动替换 tabBar/导航栏、触发词一键扩展业务组件。触发词："组件化页面"、"聊天页/会话页"、"朋友圈/动态列表"、"商品详情页"、"我的页面/个人中心"、"订单列表/Tab列表"、"搜索页"、"表单页"、"登录页"、"首页/商城首页"、"图片卡片"、"空卡片/BaseCard"、"自定义按钮"、"头部导航/底部菜单/TabBar"、"表单行"、"用户卡片/作者卡"、"评论条/评论项"、"通知栏/公告栏"、"设置行/菜单项"、"空状态/暂无数据"、"结果页/支付结果"、"卡片圆角调整"、"替换 tabBar"、"uniapp 页面组件"
 ---
 
 # uniapp 常用组件化页面 Skill
 
 ## 定位
 
-本 skill 是**独立**的 uniapp 组件化页面技能，覆盖 15 个高频组件——把最高频、结构最固定的页面抽象成可复用组件，复制进项目、往 slot 填内容即可用，自由化高、无需重写布局。
+本 skill 是**独立**的 uniapp 组件化页面技能，覆盖 21 个高频组件——把最高频、结构最固定的页面抽象成可复用组件，复制进项目、往 slot 填内容即可用，自由化高、无需重写布局。
 
 **与相关 skill 的定位边界**：
 
@@ -44,7 +44,7 @@ description: uniapp 常用「组件化页面」技能（独立、自成体系）
 
 ## 组件清单
 
-组件模板位于本 skill 的 `components/` 目录，共 **15 个（5 基础 + 10 页面）**：
+组件模板位于本 skill 的 `components/` 目录，共 **21 个（5 基础 + 6 业务 + 10 页面）**：
 
 ### 基础组件（5）
 
@@ -55,6 +55,17 @@ description: uniapp 常用「组件化页面」技能（独立、自成体系）
 | `base-navbar` | `<base-navbar>` | 自定义头部导航：标题 + 返回 + 右侧菜单 slot，状态栏适配 + 吸顶占位 |
 | `base-tabbar` | `<base-tabbar>` | 自定义底部菜单：2~5 项，图标/角标，激活主题色，安全区适配 |
 | `base-form-item` | `<base-form-item>` | 表单行：label + 必填星号 + 控件 slot + 错误提示 |
+
+### 业务组件（6）—— 组合空壳组件实现，不改空壳
+
+| 组件 | 标签 | 用途 | 基于哪个空壳 |
+|------|------|------|--------------|
+| `user-card` | `<user-card>` | 用户卡片：头像/昵称/签名/右侧按钮 | `base-card` + `base-button` |
+| `comment-item` | `<comment-item>` | 评论条：头像/昵称/时间/内容/点赞/回复 | `base-card` |
+| `notice-bar` | `<notice-bar>` | 通知/公告栏：icon/文案/可关闭/跑马灯 | 轻量（不依赖空壳） |
+| `setting-item` | `<setting-item>` | 设置/菜单行：图标/label/描述/箭头/角标/开关 | 独立（可放 `base-card` 内） |
+| `empty` | `<empty>` | 空状态：图/文案/操作按钮 | 轻量 + `base-button` |
+| `result-page` | `<result-page>` | 结果页：成功/失败/警告/信息 + 操作按钮 | `base-button` |
 
 ### 页面组件（10）
 
@@ -74,12 +85,13 @@ description: uniapp 常用「组件化页面」技能（独立、自成体系）
 **设计要点**：
 - **BaseCard 是托底组件**：`image-card` 直接继承其入参；`tab-list-page` / `profile-page` 内部引用 BaseCard，并暴露 `cardProps` 透传。
 - **高度自由化**：每个组件核心内容都由 `slot` 决定，内置"默认参数 + 默认数据"，可整体替换或逐项覆盖，也可给组件新增 props/emit。
-- **内部依赖**：`form-page` 依赖 `base-navbar` + `base-button`；`home-page` 依赖 `base-navbar` + `base-tabbar`；`login-page` 依赖 `base-button`；`tab-list-page` / `profile-page` / `image-card` 依赖 `base-card`。复制时连带。
+- **内部依赖**：`form-page` 依赖 `base-navbar` + `base-button`；`home-page` 依赖 `base-navbar` + `base-tabbar`；`login-page` 依赖 `base-button`；`tab-list-page` / `profile-page` / `image-card` 依赖 `base-card`；`user-card` 依赖 `base-card` + `base-button`；`comment-item` 依赖 `base-card`；`empty` / `result-page` 依赖 `base-button`。复制时连带。
 - **默认数据**：每个组件带贴合场景的默认数据，复制即可跑通，替换真实数据即可上线。
+- **业务组件扩展机制**：业务组件 = **组合空壳组件实现，不改空壳**，颗粒度小于页面组件。当用户说"帮我做个 XX 卡片/列表项/状态页"等具体原型需求时，先在本技能的业务组件清单中查找；若有则生成对应组件，若无则按此模式基于空壳组合出新的业务组件（见「组件调整模式」）。
 
 ## When to Use（触发词）
 
-技能共 **15 个组件**，一句话描述"要做的页面/组件/操作"即可命中，不要求说组件名：
+技能共 **21 个组件**，一句话描述"要做的页面/组件/操作"即可命中，不要求说组件名：
 
 ### 按组件触发
 
@@ -100,6 +112,18 @@ description: uniapp 常用「组件化页面」技能（独立、自成体系）
 | `form-page`<br>表单 | 表单页 / 填写资料 / 发布页 / 意见反馈 / 地址填写 / 带提交按钮的页面 |
 | `login-page`<br>登录 | 登录页 / 登录 / 注册页 / 手机号验证码登录 / 微信登录页 |
 | `home-page`<br>首页 | 首页 / 商城首页 / 工作台 / 带轮播金刚区的首页 / 底部菜单首页 |
+| `user-card`<br>用户卡片 | 用户卡片 / 作者卡 / 好友卡 / 关注列表项 / "头像+昵称+关注按钮的卡片" |
+| `comment-item`<br>评论条 | 评论条 / 评论项 / 回复列表项 / 评价项 / "带点赞回复的评论" |
+| `notice-bar`<br>通知栏 | 通知栏 / 公告栏 / 跑马灯 / 提示条 / "可关闭的通知消息条" |
+| `setting-item`<br>设置行 | 设置行 / 菜单项 / 设置项 / "带开关的列表行" / "带角标的菜单" |
+| `empty`<br>空状态 | 空状态 / 空列表 / 暂无数据 / 空购物车 / 没有内容 / "空页面提示" |
+| `result-page`<br>结果页 | 结果页 / 支付结果 / 提交成功 / 操作失败 / 成功页 / "支付完成页面" |
+
+### 组件扩展机制（业务组件）
+
+业务组件 = **组合空壳组件实现，不改空壳**，颗粒度小于页面组件。当用户说"帮我做个 XX 卡片/列表项/状态页"等具体原型需求时：
+1. 先在上方「按组件触发」表中查找——有则生成该业务组件；
+2. 若无，按「组件调整模式」基于空壳组件（`base-card` / `base-button` / `base-form-item` 等）组合出新业务组件，放 `components/` 下，同样 slot + TS Props + 主题变量。
 
 ### 参数与内容调整（任何组件）
 
@@ -123,7 +147,7 @@ description: uniapp 常用「组件化页面」技能（独立、自成体系）
 
 ### Step 1：确认目标与自动检测主题系统
 
-1. 与用户确认要生成哪些组件（可多选，共 15 个）。
+1. 与用户确认要生成哪些组件（可多选，共 21 个）。
 2. **自动检测项目主题系统并自动对齐颜色/尺寸**（完整流程见 `references/theme-detect.md`）：
    - **定位变量文件**：扫描 `App.vue` 的 `<style>`、`src/styles/`、`static/css/`、`uni.scss`，找到主题变量定义位置；
    - **识别命名风格**：CSS 变量（`--color-primary`/`--primary-500`/`--brand-*`）还是 SCSS（`$primary`）/ LESS（`@primary`）；
@@ -292,4 +316,4 @@ description: uniapp 常用「组件化页面」技能（独立、自成体系）
 - `references/page-specs.md` — 各组件 API 速查（Props / Slots / Emits / 默认数据 / mock 数据 / 完整页面示例 / 扩展建议）
 - `references/theme-integration.md` — 主题变量清单、无主题系统 fallback 硬编码替换表、easycom 注册方式、状态栏适配说明、主题变量覆盖示例
 - `references/theme-detect.md` — **主题系统自动检测与对齐**：变量定位、命名风格识别、值读取、三场景处理（桥接/替换/品牌色提取）
-- `components/` — 15 个组件模板（5 基础 + 10 页面）
+- `components/` — 21 个组件模板（5 基础 + 6 业务 + 10 页面）

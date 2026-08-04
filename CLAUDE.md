@@ -39,7 +39,7 @@ wg-skills/
 ├── uniapp-theme-skill/                 # uni-app 主题系统
 ├── uniapp-standardization-skill/       # uniapp 项目规范化
 ├── uniapp-components-skill/            # uniapp 登录鉴权与安全规范
-├── uniapp-page-components-skill/       # uniapp 常用组件化页面（BaseCard 托底 + 15 个组件）
+├── uniapp-page-components-skill/       # uniapp 常用组件化页面（BaseCard 托底 + 21 个组件：5基础+6业务+10页面）
 ├── uniapp-request-skill/               # uniapp 请求层设计
 ├── uniapp-crossplatform-audit-skill/   # uniapp 跨平台兼容性审计
 ├── uniapp-code-audit-skill/            # uniapp 代码审计
