@@ -22,24 +22,42 @@
 
 ```
 wg-skills/
-├── CLAUDE.md              # 本文件：项目级规范
-├── .claudeignore          # Claude 索引忽略配置
-├── README.md              # 仓库总览
+├── CLAUDE.md                           # 本文件：项目级规范
+├── .claudeignore                       # Claude 索引忽略配置
+├── README.md                           # 仓库总览
 ├── .gitignore
-├── frontend-code-doctor/  # 前端代码审查技能
-├── ai-speech-detector/    # AI 风检测技能
-├── frontend-ui-foundry/   # 综合前端 UI 技能
-├── ui-replica-skill/      # UI 原型图复刻技能
-├── uniapp-app-generate-skill/
-├── backend-generate-skill/
-├── super-deploy-skills/     # 一键部署套件（父技能 + 5 嵌套子技能）
-├── backend-analysis-skill/  # 后端项目全景分析（接口/技术栈/数据库/业务 4 份报告）
-├── icon-image-catch-skill/  # 素材抓取套件（父技能 + icon/image 2 嵌套子技能）
-├── module-generate-skill/   # 后端业务模块生成套件（父技能 + 5 嵌套子技能）
-└── image-forge-skill/       # 图片处理 + 图标生成（v2 合并 icon-forge）
+├── frontend-code-doctor/               # 前端代码审查技能
+├── frontend-style-harmonizer-skill/    # 前端样式一致性治理
+├── ai-speech-detector/                 # AI 风检测技能
+├── frontend-ui-foundry/                # 综合前端 UI 技能
+├── ui-replica-skill/                   # UI 原型图复刻技能
+├── ui-component-commands-skill/        # UI 组件指令系统
+├── ui-template-builder-skill/          # UI 页面模板构建器
+├── uniapp-app-generate-skill/          # uni-app 项目生成
+├── uniapp-standard-skill/              # uniapp 开发通用规范
+├── uniapp-style-skill/                 # uniapp 设计系统与组件规范
+├── uniapp-theme-skill/                 # uni-app 主题系统
+├── uniapp-standardization-skill/       # uniapp 项目规范化
+├── uniapp-components-skill/            # uniapp 登录鉴权与安全规范
+├── uniapp-page-components-skill/       # uniapp 常用组件化页面（BaseCard 托底 + 15 个组件）
+├── uniapp-request-skill/               # uniapp 请求层设计
+├── uniapp-crossplatform-audit-skill/   # uniapp 跨平台兼容性审计
+├── uniapp-code-audit-skill/            # uniapp 代码审计
+├── uniapp-vue2-upgrade-skill/          # uniapp Vue2 升级到 Vue3
+├── backend-generate-skill/             # 后端项目骨架生成（父技能 + 7 嵌套子技能）
+├── backend-analysis-skill/             # 后端项目全景分析
+├── super-deploy-skills/                # 一键部署套件（父技能 + 5 嵌套子技能）
+├── icon-image-catch-skill/             # 素材抓取套件（父技能 + icon/image 2 嵌套子技能）
+├── module-generate-skill/              # 后端业务模块生成套件（父技能 + 5 嵌套子技能）
+├── image-forge-skill/                  # 图片处理 + 图标生成
+├── workflow-diagram-skill/             # 一句话生成流程图
+├── skill-auditor/                      # Skill 安全审计
+├── xhs-style-writer-skill/             # 小红书个人风格写作
+├── vibecoding-guide-skill/             # VibeCoding / AI 开发知识导师（父技能 + 3 嵌套子技能）
+└── fastapi-init-skill/                 # FastAPI 一键初始化
 ```
 
-> 说明：`super-deploy-skills/` 是父技能目录，内含 5 个嵌套子技能；`backend-generate-skill/` 也是父技能目录，内含 7 个嵌套子技能（`backend-select-skill`、`backend-convention-skill`、`java-backend-skill`、`go-backend-skill`、`python-backend-skill`、`nodejs-backend-skill`、`database-skill`）；`icon-image-catch-skill/` 同为父技能目录，内含 2 个嵌套子技能（`icon-catch-skill`、`image-catch-skill`）；`module-generate-skill/` 同为父技能目录，内含 5 个嵌套子技能（`auth-skill`、`org-permission-skill`、`ai-chat-skill`、`notification-skill`、`payment-skill`）。这四个目录采用「父子嵌套」结构；其他技能仍为扁平目录。
+> 说明：`super-deploy-skills/` 是父技能目录，内含 5 个嵌套子技能；`backend-generate-skill/` 也是父技能目录，内含 7 个嵌套子技能（`backend-select-skill`、`backend-convention-skill`、`java-backend-skill`、`go-backend-skill`、`python-backend-skill`、`nodejs-backend-skill`、`database-skill`）；`icon-image-catch-skill/` 同为父技能目录，内含 2 个嵌套子技能（`icon-catch-skill`、`image-catch-skill`）；`module-generate-skill/` 同为父技能目录，内含 5 个嵌套子技能（`auth-skill`、`org-permission-skill`、`ai-chat-skill`、`notification-skill`、`payment-skill`）；`vibecoding-guide-skill/` 同为父技能目录，内含 3 个嵌套子技能（`vibecoding-workflow-skill`、`agent-learning-skill`、`agent-interview-skill`）。这五个目录采用「父子嵌套」结构；其他技能仍为扁平目录。
 
 ## 新增 Skill 流程
 

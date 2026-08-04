@@ -851,7 +851,64 @@ token 管理
 
 ---
 
-### 26. uniapp-request-skill 📡
+### 26. uniapp-page-components-skill 🧱
+
+> uniapp 常用组件化页面技能（独立、自成体系）：15 个组件，覆盖列表 / 聊天 / 朋友圈 / 详情 / 我的 / 图片卡 / 搜索 / 表单 / 登录 / 首页 + 基础组件
+
+**功能**：把最高频、结构最固定的页面抽象为可复用组件，复制进项目、往 slot 填内容即可用。空卡片 `base-card` 托底（圆角/内边距/背景参数化，`cardProps` 透传）；自动检测项目主题系统并对齐颜色尺寸（命名不同自动桥接、无主题系统自动提取品牌色）；支持自动替换 tabBar / 导航栏；默认使用 `uniapp-theme-skill` 的 CSS 变量（动态颜色尺寸，禁止写死），遵循 `uniapp-style-skill` 红线。
+
+**基础组件（5）**：
+
+| 组件 | 用途 |
+|------|------|
+| `base-card` | 空卡片托底（圆角/内边距/背景/描边/阴影） |
+| `base-button` | 自定义按钮（4 类型 × 3 尺寸 + loading/禁用） |
+| `base-navbar` | 自定义头部导航（状态栏适配 + 吸顶 + 右侧菜单） |
+| `base-tabbar` | 自定义底部菜单（2~5 项 + 角标 + 安全区） |
+| `base-form-item` | 表单行（label + 必填星号 + 错误提示） |
+
+**页面组件（10）**：
+
+| 组件 | 用途 |
+|------|------|
+| `tab-list-page` | Tab 吸顶 + 卡片列表（我的订单/消息中心/商品列表） |
+| `chat-page` | 微信风格聊天（底部输入栏 + 左右气泡） |
+| `moments-page` | 微信风格朋友圈（封面头图 + 动态 + 点赞评论） |
+| `product-detail-page` | 商品详情（多卡片 sections + 底部操作栏） |
+| `profile-page` | 我的/设置/通知/购物车（信息头 + 分组列表） |
+| `image-card` | 图片卡片（顶部图 + 标题 + 描述 + 标签） |
+| `search-page` | 搜索页（历史/热门/结果 + 防抖） |
+| `form-page` | 表单页（表单区 + 底部提交） |
+| `login-page` | 登录页（手机号验证码 + 微信登录 + 协议） |
+| `home-page` | 首页（区块 slots + 下拉刷新 + 底部菜单） |
+
+**使用场景**：
+- 做聊天页 / 朋友圈 / 商品详情 / 我的 / 订单列表 / 搜索 / 表单 / 登录 / 首页
+- 需要"组件化页面"：页面入参自由、slot 填充、能加新入参
+- 替换原生 tabBar 为自定义底部菜单、tab 页面换自定义头部导航
+- 配合主题系统统一配色换肤
+
+**使用方式**：
+
+```
+/uniapp-page-components
+```
+
+或自然语言：
+
+```
+帮我做个聊天页 / 朋友圈 / 商品详情页 / 我的页面
+订单列表页，底部是卡片
+做一个 Tab+列表的页面
+图片卡片组件 / 空卡片组件 / BaseCard
+把页面做成组件，我能自己填内容
+```
+
+**详细文档**：[uniapp-page-components-skill/README.md](uniapp-page-components-skill/README.md)
+
+---
+
+### 27. uniapp-request-skill 📡
 
 > uniapp 请求层设计：统一 request.ts 封装
 
@@ -884,7 +941,7 @@ AI 聊天流式回复
 
 ---
 
-### 27. vibecoding-guide-skill 🧭
+### 28. vibecoding-guide-skill 🧭
 
 > VibeCoding / AI 开发全流程知识导师（父技能 + 3 嵌套子技能）
 
@@ -910,7 +967,7 @@ AI 编程怎么入门
 
 ---
 
-### 28. fastapi-init-skill 🚀
+### 29. fastapi-init-skill 🚀
 
 > FastAPI 一键初始化技能——面向零基础小白
 
@@ -972,6 +1029,7 @@ FastAPI 零基础起步
 | [uniapp-standard-skill](uniapp-standard-skill/) | uniapp 开发规范（20 红线 + 8 文档） | `uniapp 开发规范`、`接口怎么写` |
 | [uniapp-style-skill](uniapp-style-skill/) | uniapp 设计系统与组件规范（14 红线 + 审计修复） | `Design Tokens`、`组件规范`、`样式规范`、`深色模式`、`设计审计` |
 | [uniapp-theme-skill](uniapp-theme-skill/) | uni-app 主题系统：一键换肤 | `添加主题系统`、`换主题`、`统一硬编码` |
+| [uniapp-page-components-skill](uniapp-page-components-skill/) | uniapp 常用组件化页面技能（15 组件：5 基础 + 10 页面，BaseCard 托底 + 主题自动检测对齐 + 替换 tabBar/导航栏） | `组件化页面`、`聊天页/会话页`、`朋友圈/动态列表`、`商品详情页`、`订单列表页`、`我的页面/设置页/购物车列表`、`搜索页`、`登录页`、`首页/商城首页`、`图片卡片`、`自定义按钮`、`头部导航/底部菜单/TabBar`、`卡片圆角调整`、`BaseCard` |
 | [uniapp-components-skill](uniapp-components-skill/) | uniapp 登录鉴权与安全规范 | `登录鉴权怎么做`、`token 管理`、`401 处理`、`安全规范` |
 | [uniapp-request-skill](uniapp-request-skill/) | uniapp 请求层设计（request.ts 封装/鉴权拦截/防抖/Mock/SSE） | `请求封装`、`request.ts 怎么写`、`Token 刷新`、`SSE 流式请求` |
 | [vibecoding-guide-skill](vibecoding-guide-skill/) | VibeCoding / AI 开发知识导师（3 子技能） | `/vibecoding`、`我想学 VibeCoding` |
@@ -1081,6 +1139,15 @@ wg-skills/
 │       ├── a11y-rules.md
 │       ├── performance.md
 │       └── uniapp-rules.md
+├── frontend-style-harmonizer-skill/  # 前端样式一致性治理
+│   ├── SKILL.md
+│   ├── README.md
+│   └── references/
+│       ├── detection-rules.md
+│       ├── align-checklist.md
+│       ├── hardcode-patterns.md
+│       ├── token-conventions.md
+│       └── report-template.md
 ├── ai-speech-detector/         # AI 风检测技能
 │   ├── SKILL.md
 │   ├── README.md
@@ -1253,6 +1320,15 @@ wg-skills/
 │   ├── README.md
 │   ├── scripts/                # SVG 生成 / PNG 渲染 / 依赖初始化脚本
 │   └── references/             # 模板库 + 4 套风格规范 + 图标库
+├── xhs-style-writer-skill/      # 小红书个人风格写作（建档/写作/去AI味）
+│   ├── SKILL.md
+│   ├── README.md
+│   └── references/
+│       ├── style-analysis.md
+│       ├── note-structure.md
+│       ├── title-formulas.md
+│       ├── topic-angles.md
+│       └── anti-ai-flavor.md
 ├── module-generate-skill/      # 后端业务模块生成套件（父技能 + 5 子技能）
 │   ├── SKILL.md                # 父入口：模块识别 + 分流 + 技术栈检测
 │   ├── README.md
@@ -1316,12 +1392,85 @@ wg-skills/
 │       ├── api-spec.md
 │       ├── store-spec.md
 │       └── component-spec.md
+├── uniapp-standard-skill/            # uniapp 开发通用规范（20 红线 + 8 文档）
+│   ├── SKILL.md
+│   ├── README.md
+│   ├── references/
+│   │   ├── api-architecture.md
+│   │   ├── component-communication.md
+│   │   ├── performance.md
+│   │   ├── router-guide.md
+│   │   ├── storage-guide.md
+│   │   ├── store-guide.md
+│   │   └── analytics.md
+│   └── templates/
+│       ├── main.ts
+│       ├── package.json
+│       ├── pages.json
+│       ├── pages-sub.json
+│       ├── tsconfig.json
+│       ├── vite.config.ts
+│       ├── env.d.ts
+│       └── .env.example
+├── uniapp-style-skill/               # uniapp 设计系统与组件规范（Design Tokens + 组件规范 + 深色模式）
+│   ├── SKILL.md
+│   ├── README.md
+│   └── references/
+│       ├── design-tokens.md
+│       └── design-audit-checklist.md
+├── uniapp-theme-skill/               # uni-app 主题系统：一键换肤
+│   ├── SKILL.md
+│   ├── README.md
+│   ├── theme-demo.html
+│   ├── references/
+│   │   ├── color-scale.md
+│   │   ├── size-scale.md
+│   │   ├── radius-scale.md
+│   │   ├── hardcode-replace-rules.md
+│   │   └── theme-generator.js
+│   └── templates/
+│       ├── vite.config.ts
+│       ├── scripts/generate-tokens.js
+│       └── src/
+│           ├── main.js
+│           ├── static/css/base.css
+│           └── styles/
+│               ├── _functions.scss
+│               ├── index.less
+│               ├── variables.scss
+│               ├── config/_theme-config.scss
+│               └── tokens/
+│                   ├── _primitive.scss
+│                   └── _semantic.scss
 ├── uniapp-components-skill/            # uniapp 登录鉴权与安全规范
 │   ├── SKILL.md
 │   ├── README.md
 │   └── references/
 │       ├── auth-framework.md          # 鉴权框架详解
 │       └── security.md                # 安全规范详解
+├── uniapp-page-components-skill/       # uniapp 常用组件化页面技能（5 基础组件 + 10 页面组件）
+│   ├── SKILL.md
+│   ├── README.md
+│   ├── components/                     # 15 个组件模板（复制到项目 src/components/ 即可用）
+│   │   ├── base-card/base-card.vue
+│   │   ├── base-button/base-button.vue
+│   │   ├── base-navbar/base-navbar.vue
+│   │   ├── base-tabbar/base-tabbar.vue
+│   │   ├── base-form-item/base-form-item.vue
+│   │   ├── tab-list-page/tab-list-page.vue
+│   │   ├── chat-page/chat-page.vue
+│   │   ├── moments-page/moments-page.vue
+│   │   ├── product-detail-page/product-detail-page.vue
+│   │   ├── profile-page/profile-page.vue
+│   │   ├── image-card/image-card.vue
+│   │   ├── search-page/search-page.vue
+│   │   ├── form-page/form-page.vue
+│   │   ├── login-page/login-page.vue
+│   │   └── home-page/home-page.vue
+│   └── references/
+│       ├── page-specs.md              # 各组件 API + 默认数据 + 完整页面示例
+│       ├── theme-integration.md       # 主题变量清单 + 无主题系统 fallback 表 + easycom + 状态栏适配
+│       └── theme-detect.md            # 主题系统自动检测与对齐
 ├── uniapp-request-skill/               # uniapp 请求层设计
 │   ├── SKILL.md
 │   ├── README.md
@@ -1348,6 +1497,24 @@ wg-skills/
 │       ├── db-guide.md          # MySQL/PG/Mongo 数据库选型与配置
 │       ├── middleware-guide.md  # 中间件链 + JWT 鉴权 + 限流/压缩
 │       └── startup-scripts.md   # setup/dev/restart 脚本模板（Linux + Windows）
+├── vibecoding-guide-skill/       # VibeCoding / AI 开发知识导师（父技能 + 3 子技能）
+│   ├── SKILL.md                  # 父入口：分流到三条路线
+│   ├── README.md
+│   ├── assets/                   # 配图资源
+│   ├── references/
+│   │   └── future-skills.md
+│   ├── vibecoding-workflow-skill/   # 子技能：VibeCoding 产品落地全流程
+│   │   ├── SKILL.md
+│   │   ├── README.md
+│   │   └── references/              # 模型选择/提示词工程/前后端联调/测试/部署等
+│   ├── agent-learning-skill/        # 子技能：Agent 系统学习路线
+│   │   ├── SKILL.md
+│   │   ├── README.md
+│   │   └── references/              # Agent 概念/最小实现/模型底层知识等
+│   └── agent-interview-skill/       # 子技能：Agent 工程师面试准备
+│       ├── SKILL.md
+│       ├── README.md
+│       └── references/              # 知识树/模拟题/项目包装
 └── demo/
     └── foundry-demo/           # frontend-ui-foundry 端到端示例
         ├── index.html

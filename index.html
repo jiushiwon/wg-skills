@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wg-skills — 前端/uniapp 技能体系</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --blue: #2563eb;
+            --blue-light: #eff6ff;
+            --blue-dark: #1d4ed8;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-500: #6b7280;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --green: #059669;
+            --amber: #d97706;
+            --purple: #7c3aed;
+            --red: #dc2626;
+            --radius: 8px;
+        }
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            color: var(--gray-900);
+            background: var(--gray-50);
+            line-height: 1.6;
+        }
+
+        /* ── Header ── */
+        .header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1e40af 100%);
+            color: #fff;
+            padding: 64px 24px 56px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        .header h1 span { color: #60a5fa; }
+        .header .subtitle {
+            margin-top: 12px;
+            font-size: 1.1rem;
+            color: #94a3b8;
+            max-width: 640px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .header .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 28px;
+        }
+        .header .stat {
+            text-align: center;
+        }
+        .header .stat-num {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #60a5fa;
+        }
+        .header .stat-label {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        /* ── Container ── */
+        .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+        /* ── Phase Sections ── */
+        .phase { margin: 48px 0; }
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--gray-200);
+        }
+        .phase-num {
+            width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        .phase-1 .phase-num { background: var(--blue); }
+        .phase-2 .phase-num { background: var(--green); }
+        .phase-3 .phase-num { background: var(--amber); }
+        .phase-4 .phase-num { background: var(--purple); }
+        .phase-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+        .phase-desc {
+            font-size: 0.9rem;
+            color: var(--gray-500);
+            margin-left: 52px;
+            margin-bottom: 20px;
+        }
+
+        /* ── Skill Cards ── */
+        .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+        .card {
+            background: #fff;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
+            padding: 20px 22px;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+        .card:hover {
+            border-color: var(--blue);
+            box-shadow: 0 2px 12px rgba(37, 99, 235, 0.08);
+        }
+        .card-icon {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 32px; height: 32px; border-radius: 6px;
+            font-size: 1rem; margin-bottom: 10px;
+        }
+        .card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+        .card p {
+            font-size: 0.85rem;
+            color: var(--gray-500);
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        .card .triggers {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .card .tag {
+            font-family: 'Cascadia Code', 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 0.78rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: var(--gray-100);
+            color: var(--gray-700);
+            border: 1px solid var(--gray-200);
+        }
+
+        /* ── Interconnection Diagram ── */
+        .interconn {
+            background: #fff;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
+            padding: 32px;
+            margin: 48px 0;
+        }
+        .interconn h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .flow-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .flow-box {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+            white-space: nowrap;
+        }
+        .flow-box.fb-blue { background: var(--blue-light); color: var(--blue); border: 1px solid #bfdbfe; }
+        .flow-box.fb-green { background: #ecfdf5; color: var(--green); border: 1px solid #a7f3d0; }
+        .flow-box.fb-amber { background: #fffbeb; color: var(--amber); border: 1px solid #fde68a; }
+        .flow-box.fb-purple { background: #f5f3ff; color: var(--purple); border: 1px solid #ddd6fe; }
+        .flow-arrow {
+            font-size: 1.1rem;
+            color: var(--gray-300);
+            font-weight: 700;
+        }
+
+        /* ── Typical Workflows ── */
+        .workflows {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+            gap: 20px;
+            margin: 48px 0;
+        }
+        .wf-card {
+            background: #fff;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .wf-card-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--gray-100);
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+        .wf-card-body { padding: 16px 20px; }
+        .wf-step {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            padding: 6px 0;
+            font-size: 0.88rem;
+        }
+        .wf-step-num {
+            width: 24px; height: 24px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%;
+            background: var(--blue-light);
+            color: var(--blue);
+            font-weight: 700;
+            font-size: 0.78rem;
+            flex-shrink: 0;
+        }
+        .wf-step .skill-ref {
+            font-family: 'Cascadia Code', 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 0.78rem;
+            color: var(--blue);
+        }
+        .wf-step .skill-desc {
+            color: var(--gray-500);
+        }
+
+        /* ── Footer ── */
+        .footer {
+            text-align: center;
+            padding: 40px 24px;
+            color: var(--gray-500);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--gray-200);
+            margin-top: 48px;
+        }
+        .footer a { color: var(--blue); text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.6rem; }
+            .header .stats { gap: 20px; }
+            .cards { grid-template-columns: 1fr; }
+            .workflows { grid-template-columns: 1fr; }
+            .flow-row { flex-direction: column; }
+            .flow-arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════ Header ═══════════ -->
+<header class="header">
+    <h1><span>wg-skills</span> 前端/uniapp 技能体系</h1>
+    <p class="subtitle">一套覆盖项目启动、开发编码、质量保障到维护升级全生命周期的 AI 编程技能集合。让 AI 更懂你的 uniapp 与前端开发需求。</p>
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-num">16</div>
+            <div class="stat-label">前端/uniapp 技能</div>
+        </div>
+        <div class="stat">
+            <div class="stat-num">4</div>
+            <div class="stat-label">开发阶段</div>
+        </div>
+        <div class="stat">
+            <div class="stat-num">6+10</div>
+            <div class="stat-label">通用前端 + uniapp 专属</div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- ═══════════ Interconnection Overview ═══════════ -->
+    <section class="interconn">
+        <h2>技能协作全景</h2>
+        <div class="flow-row">
+            <span class="flow-box fb-blue">项目初始化</span>
+            <span class="flow-arrow">→</span>
+            <span class="flow-box fb-green">规范驱动开发</span>
+            <span class="flow-arrow">→</span>
+            <span class="flow-box fb-amber">审计与治理</span>
+            <span class="flow-arrow">→</span>
+            <span class="flow-box fb-purple">升级与维护</span>
+        </div>
+        <p style="text-align:center;color:var(--gray-500);font-size:0.85rem;margin-top:12px;">
+            每个阶段有专门的技能负责执行、规范和审查，阶段之间通过共享规范文件（api-contract.md、Design Tokens、component-commands）串联。
+        </p>
+    </section>
+
+    <!-- ═══════════ Phase 1: 项目启动 ═══════════ -->
+    <section class="phase phase-1">
+        <div class="phase-header">
+            <div class="phase-num">1</div>
+            <h2 class="phase-title">项目启动 — 从零到一的脚手架</h2>
+        </div>
+        <p class="phase-desc">快速搭建标准化 uniapp 项目骨架，或从零生成 UI 页面。解决「新建项目不知道该做什么」的问题。</p>
+        <div class="cards">
+
+            <div class="card">
+                <div class="card-icon" style="background:#dbeafe;">📱</div>
+                <h3>uniapp-app-generate-skill</h3>
+                <p>从零生成标准化 uni-app 项目（微信小程序/H5/App 三端），Vue3 + TS + Pinia + SCSS，内置主题色阶与跨平台抽象层。</p>
+                <div class="triggers">
+                    <span class="tag">帮我做一个 uniapp 小程序</span>
+                    <span class="tag">初始化 uniapp 项目</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon" style="background:#dbeafe;">🧱</div>
+                <h3>ui-template-builder-skill</h3>
+                <p>37 套预置页面模板（个人中心/商品详情/登录页/数据大屏等），5 套风格可选，内置 Mock 数据，一键换肤。</p>
+                <div class="triggers">
+                    <span class="tag">做个个人中心页面</span>
+                    <span class="tag">生成商品详情页</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon" style="background:#dbeafe;">🎨</div>
+                <h3>frontend-ui-foundry</h3>
+                <p>综合性前端 UI 技能：8 大场景、6 大技术栈、品牌套用、Design Token 提取。forge / optimize / audit 等 8 子命令。</p>
+                <div class="triggers">
+                    <span class="tag">用 foundry 做一个落地页</span>
+                    <span class="tag">/frontend-ui-foundry</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════ Phase 2: 开发编码 ═══════════ -->
+    <section class="phase phase-2">
+        <div class="phase-header">
+            <div class="phase-num">2</div>
+            <h2 class="phase-title">开发编码 — 规范驱动的高效编写</h2>
+        </div>
+        <p class="phase-desc">通过开发规范、设计系统、主题系统、请求层封装和组件指令，确保团队编写风格统一的代码。</p>
+        <div class="cards">
+
+            <div class="card">
+                <div class="card-icon" style="background:#d1fae5;">📐</div>
+                <h3>uniapp-standard-skill</h3>
+                <p>20 条红线规则、目录结构、接口封装、状态管理、路由规范、组件通信、埋点等 8 份详细规范文档。</p>
+                <div class="triggers">
+                    <span class="tag">/uniapp-standard</span>
+                    <span class="tag">接口怎么写</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon" style="background:#d1fae5;">🎯</div>
+                <h3>uniapp-style-skill</h3>
+                <p>Design Tokens 四层架构、排版/间距/语义变量、SCSS 函数、10+ 组件规范、深色模式与屏幕适配。支持设计审计与自动修复。</p>
+                <div class="triggers">
+                    <span class="tag">/uniapp-design</span>
+                    <span class="tag">设计审计</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon" style="background:#d1fae5;">🖌️</div>
+                <h3>uniapp-theme-skill</h3>
+                <p>动态色阶生成（任意 HEX 输入）、7 种预设主题、三维度一键切换换肤，强制统一硬编码颜色。</p>
+                <div class="triggers">
+                    <span class="tag">/uniapp-theme</span>
+                    <span class="tag">添加主题系统，主色 #2563EB</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon" style="background:#d1fae5;">📡</div>
+                <h3>uniapp-request-skill</h3>
+                <p>统一 request.ts 封装：鉴权拦截自动注入 Token、401 刷新重试、并发去重、防抖、Mock、SSE 流式请求。</p>
+                <div class="triggers">
+                    <span class="tag">/uniapp-request</span>
+                    <span class="tag">request.ts 怎么写</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon" style="background:#d1fae5;">🔐</div>
+                <h3>uniapp-components-skill</h3>
+                <p>登录鉴权与安全规范：认证服务架构、Token 管理、401/403 并发去重、登出回跳、接口/数据/代码安全。</p>
+                <div class="triggers">
+                    <span class="tag">/uniapp-components</span>
+                    <span class="tag">登录鉴权怎么做</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon" style="background:#d1fae5;">🧱</div>
+                <h3>uniapp-page-components-skill</h3>
+                <p>常用组件化页面技能：15 个组件（空卡片/按钮/头部导航/底部菜单/表单行 + 列表/聊天/朋友圈/详情/我的/图片卡/搜索/表单/登录/首页）。BaseCard 托底，slot 自由填充，主题自动检测对齐 + 替换 tabBar/导航栏。</p>
+                <div class="triggers">
+                    <span class="tag">/uniapp-page-components</span>
+                    <span class="tag">帮我做个聊天页</span>
+                    <span class="tag">订单列表页</span>
+                    <span class="tag">朋友圈 / 我的页面</span>
+                    <span class="tag">登录页 / 搜索页</span>
+                    <span class="tag">卡片圆角调整</span>
+                    <span class="tag">自定义按钮 / 底部菜单</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon" style="background:#d1fae5;">🎯</div>
+                <h3>ui-component-commands-skill</h3>
+                <p>预定义指令 + CSS 变量绑定，一句话生成精确样式组件。btn-primary / solid-line / icon-tag / badge 等。</p>
+                <div class="triggers">
+                    <span class="tag">做一个主按钮</span>
+                    <span class="tag">加个分割线</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon" style="background:#d1fae5;">🖼️</div>
+                <h3>ui-replica-skill</h3>
+                <p>原型图 → 结构化分析 → Token 收敛 → 代码生成。专门复刻 AI UI 生成器的截图（v0/Stitch/Galileo 等）。</p>
+                <div class="triggers">
+                    <span class="tag">/ui-replica-skill</span>
+                    <span class="tag">复刻这张图</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════ Phase 3: 质量保障 ═══════════ -->
+    <section class="phase phase-3">
+        <div class="phase-header">
+            <div class="phase-num">3</div>
+            <h2 class="phase-title">质量保障 — 上线前的全面体检</h2>
+        </div>
+        <p class="phase-desc">代码审计、跨平台兼容检查、样式一致性治理，确保项目在安全、性能、合规上达到生产标准。</p>
+        <div class="cards">
+
+            <div class="card">
+                <div class="card-icon" style="background:#fef3c7;">🔍</div>
+                <h3>uniapp-code-audit-skill</h3>
+                <p>10 维度全面体检：安全合规、性能、代码质量、架构、UI/主题一致性、跨平台、小程序专项、App 端专项、冗余死代码、三端差异。P0-P3 分级，报告 only。</p>
+                <div class="triggers">
+                    <span class="tag">/uniapp-code-audit-skill</span>
+                    <span class="tag">审计 uniapp 代码</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon" style="background:#fef3c7;">🌐</div>
+                <h3>uniapp-crossplatform-audit-skill</h3>
+                <p>审计 H5/小程序/App 三端差异：模板标签检查、CSS 兼容性、API 调用差异，按文件维度输出修复指南。</p>
+                <div class="triggers">
+                    <span class="tag">/uniapp-crossplatform-audit-skill</span>
+                    <span class="tag">审计多端兼容性</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon" style="background:#fef3c7;">🩺</div>
+                <h3>frontend-code-doctor</h3>
+                <p>前端代码审查：类型安全、uniapp 特有规范、Vue3/React 最佳实践、性能、安全、i18n、无障碍 7 维度。</p>
+                <div class="triggers">
+                    <span class="tag">/frontend-code-review</span>
+                    <span class="tag">审查下这个前端项目</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon" style="background:#fef3c7;">🎯</div>
+                <h3>frontend-style-harmonizer-skill</h3>
+                <p>跨页面样式重复检测、同类组件尺寸对齐、硬编码裸值变量化。报告模式 + 自动落地，uniapp 优先。</p>
+                <div class="triggers">
+                    <span class="tag">统一各页面样式</span>
+                    <span class="tag">去硬编码</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════ Phase 4: 维护升级 ═══════════ -->
+    <section class="phase phase-4">
+        <div class="phase-header">
+            <div class="phase-num">4</div>
+            <h2 class="phase-title">维护升级 — 存量项目的持续演进</h2>
+        </div>
+        <p class="phase-desc">项目规范化诊断与 Vue2→Vue3 迁移，帮助存量项目保持健康、跟上技术栈迭代。</p>
+        <div class="cards">
+
+            <div class="card">
+                <div class="card-icon" style="background:#ede9fe;">📐</div>
+                <h3>uniapp-standardization-skill</h3>
+                <p>对比现有项目 vs 标准骨架，出具规范化诊断报告和按优先级排序的重构计划。涵盖目录结构、API 层、状态管理、组件规范。</p>
+                <div class="triggers">
+                    <span class="tag">/uniapp-standardization-skill</span>
+                    <span class="tag">项目规范化</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon" style="background:#ede9fe;">⬆️</div>
+                <h3>uniapp-vue2-upgrade-skill</h3>
+                <p>Vue2→Vue3+TS+Pinia 迁移：现状扫描、依赖兼容评估、语法对照、脚手架升级、按优先级分步代码迁移。</p>
+                <div class="triggers">
+                    <span class="tag">/uniapp-vue2-upgrade-skill</span>
+                    <span class="tag">vue2 升级 vue3</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════ Typical Workflows ═══════════ -->
+    <section>
+        <div style="text-align:center;margin:48px 0 24px;">
+            <h2 style="font-size:1.25rem;font-weight:700;">典型协作流程</h2>
+            <p style="color:var(--gray-500);font-size:0.9rem;margin-top:4px;">技能不是孤立的 — 下面是两个最常见的端到端使用场景</p>
+        </div>
+        <div class="workflows">
+
+            <!-- 新建项目流程 -->
+            <div class="wf-card">
+                <div class="wf-card-header" style="background:var(--blue-light);color:var(--blue);">🆕 从零搭建 uniapp 小程序</div>
+                <div class="wf-card-body">
+                    <div class="wf-step">
+                        <div class="wf-step-num">1</div>
+                        <div>
+                            <span class="skill-ref">uniapp-app-generate-skill</span>
+                            <span class="skill-desc">— 生成标准化项目骨架 + 主题系统</span>
+                        </div>
+                    </div>
+                    <div class="wf-step">
+                        <div class="wf-step-num">2</div>
+                        <div>
+                            <span class="skill-ref">uniapp-standard-skill</span>
+                            <span class="skill-desc">— 建立开发规范，团队对齐 20 条红线</span>
+                        </div>
+                    </div>
+                    <div class="wf-step">
+                        <div class="wf-step-num">3</div>
+                        <div>
+                            <span class="skill-ref">uniapp-request-skill</span>
+                            <span class="skill-desc">— 封装 request.ts，配置 Token/防抖/Mock</span>
+                        </div>
+                    </div>
+                    <div class="wf-step">
+                        <div class="wf-step-num">4</div>
+                        <div>
+                            <span class="skill-ref">uniapp-components-skill</span>
+                            <span class="skill-desc">— 实现登录鉴权流程与 401 统一处理</span>
+                        </div>
+                    </div>
+                    <div class="wf-step">
+                        <div class="wf-step-num">5</div>
+                        <div>
+                            <span class="skill-ref">ui-template-builder-skill</span>
+                            <span class="skill-desc">— 快速生成列表/详情/个人中心等业务页面</span>
+                        </div>
+                    </div>
+                    <div class="wf-step">
+                        <div class="wf-step-num">6</div>
+                        <div>
+                            <span class="skill-ref">uniapp-code-audit-skill</span>
+                            <span class="skill-desc">— 上线前全面体检，修复安全/性能/合规问题</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 存量项目治理流程 -->
+            <div class="wf-card">
+                <div class="wf-card-header" style="background:#ede9fe;color:var(--purple);">🔧 存量 uniapp 项目治理</div>
+                <div class="wf-card-body">
+                    <div class="wf-step">
+                        <div class="wf-step-num">1</div>
+                        <div>
+                            <span class="skill-ref">uniapp-code-audit-skill</span>
+                            <span class="skill-desc">— 10 维度审计，定位 P0/P1 高危问题</span>
+                        </div>
+                    </div>
+                    <div class="wf-step">
+                        <div class="wf-step-num">2</div>
+                        <div>
+                            <span class="skill-ref">uniapp-standardization-skill</span>
+                            <span class="skill-desc">— 诊断项目结构差距，出具重构优先级计划</span>
+                        </div>
+                    </div>
+                    <div class="wf-step">
+                        <div class="wf-step-num">3</div>
+                        <div>
+                            <span class="skill-ref">frontend-style-harmonizer-skill</span>
+                            <span class="skill-desc">— 发现跨页面样式重复、硬编码收敛为 CSS 变量</span>
+                        </div>
+                    </div>
+                    <div class="wf-step">
+                        <div class="wf-step-num">4</div>
+                        <div>
+                            <span class="skill-ref">uniapp-style-skill</span>
+                            <span class="skill-desc">— 将散落的颜色/字号/间距统一为 Design Tokens</span>
+                        </div>
+                    </div>
+                    <div class="wf-step">
+                        <div class="wf-step-num">5</div>
+                        <div>
+                            <span class="skill-ref">uniapp-crossplatform-audit-skill</span>
+                            <span class="skill-desc">— 修复 H5/小程序/App 三端兼容性问题</span>
+                        </div>
+                    </div>
+                    <div class="wf-step">
+                        <div class="wf-step-num">6</div>
+                        <div>
+                            <span class="skill-ref">uniapp-vue2-upgrade-skill</span>
+                            <span class="skill-desc">— Vue2 项目迁移到 Vue3+TS+Pinia（如适用）</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════ Cross-cutting Table ═══════════ -->
+    <section style="margin:48px 0;">
+        <div style="text-align:center;margin-bottom:24px;">
+            <h2 style="font-size:1.25rem;font-weight:700;">技能速查表</h2>
+        </div>
+        <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.88rem;background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);overflow:hidden;">
+                <thead>
+                    <tr style="background:var(--gray-50);">
+                        <th style="padding:10px 14px;text-align:left;border-bottom:1px solid var(--gray-200);">技能</th>
+                        <th style="padding:10px 14px;text-align:left;border-bottom:1px solid var(--gray-200);">阶段</th>
+                        <th style="padding:10px 14px;text-align:left;border-bottom:1px solid var(--gray-200);">一句话简介</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-app-generate-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">启动</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">从零生成标准化 uniapp 三端项目</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">ui-template-builder-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">启动</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">37 套页面模板一键生成</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">frontend-ui-foundry</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">启动</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">多场景 UI 生成/优化/审计/品牌套用</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-standard-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">编码</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">20 条红线 + 8 份开发规范文档</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-style-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">编码</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">Design Tokens + 组件规范 + 深色模式</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-theme-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">编码</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">动态色阶生成 + 一键换肤</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-request-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">编码</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">request.ts 统一封装 + Token/防抖/Mock/SSE</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-components-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">编码</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">登录鉴权 + Token 管理 + 安全规范</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-page-components-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">编码</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">常用组件化页面（15 组件：基础 + 列表/聊天/朋友圈/详情/我的/搜索/表单/登录/首页）</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">ui-component-commands-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">编码</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">预定义指令驱动组件生成</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">ui-replica-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">编码</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">原型图 → 代码高还原度复刻</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-code-audit-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">质量</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">10 维度代码审计，报告 only</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-crossplatform-audit-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">质量</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">三端兼容性审计 + 修复指南</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">frontend-code-doctor</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">质量</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">7 维度前端代码审查</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">frontend-style-harmonizer-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">质量</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">样式重复检测 + 硬编码收敛</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-standardization-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">维护</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">项目结构诊断 + 规范化重构计划</td></tr>
+                    <tr><td style="padding:8px 14px;font-weight:600;">uniapp-vue2-upgrade-skill</td><td style="padding:8px 14px;"><span class="tag">维护</span></td><td style="padding:8px 14px;">Vue2 → Vue3+TS+Pinia 迁移</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</div>
+
+<!-- ═══════════ Footer ═══════════ -->
+<footer class="footer">
+    <p>
+        <strong>wg-skills</strong> — AI 编程技能集合 ·
+        <a href="https://github.com/jiushiwon/wg-skills" target="_blank">GitHub</a>
+    </p>
+    <p style="margin-top:4px;">专注 uniapp/前端开发全流程 · 让 AI 更懂你的代码</p>
+</footer>
+
+</body>
+</html>
