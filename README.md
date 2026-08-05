@@ -853,7 +853,7 @@ token 管理
 
 ### 26. uniapp-page-components-skill 🧱
 
-> uniapp 常用组件化页面技能（独立、自成体系）：21 个组件（5 基础 + 6 业务 + 10 页面），覆盖列表 / 聊天 / 朋友圈 / 详情 / 我的 / 图片卡 / 搜索 / 表单 / 登录 / 首页 + 业务组件
+> uniapp 常用组件化页面技能（独立、自成体系）：21 个组件 + 3 个数据流 Composable，覆盖列表 / 聊天 / 朋友圈 / 详情 / 我的 / 图片卡 / 搜索 / 表单 / 登录 / 首页 + 业务组件
 
 **功能**：把最高频、结构最固定的页面抽象为可复用组件，复制进项目、往 slot 填内容即可用。空卡片 `base-card` 托底（圆角/内边距/背景参数化，`cardProps` 透传）；自动检测项目主题系统并对齐颜色尺寸（命名不同自动桥接、无主题系统自动提取品牌色）；支持自动替换 tabBar / 导航栏；默认使用 `uniapp-theme-skill` 的 CSS 变量（动态颜色尺寸，禁止写死），遵循 `uniapp-style-skill` 红线。
 
@@ -1470,6 +1470,8 @@ wg-skills/
 │   └── references/
 │       ├── page-specs.md              # 各组件 API + 默认数据 + 完整页面示例
 │       ├── theme-integration.md       # 主题变量清单 + 无主题系统 fallback 表 + easycom + 状态栏适配
+│       ├── theme-detect.md            # 主题系统自动检测与对齐
+│       └── composables/               # 页面数据流模板（usePageList / useForm / useSearch）
 │       └── theme-detect.md            # 主题系统自动检测与对齐
 ├── uniapp-request-skill/               # uniapp 请求层设计
 │   ├── SKILL.md
