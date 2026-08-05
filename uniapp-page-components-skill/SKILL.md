@@ -206,6 +206,9 @@ const { keyword, history, results, search, clearHistory } = useSearch(kw => api.
 | `home-page` | `base-navbar`、`base-tabbar` |
 | `login-page` | `base-button` |
 | `tab-list-page` / `profile-page` / `image-card` | `base-card` |
+| `user-card` | `base-card`、`base-button` |
+| `comment-item` | `base-card` |
+| `empty` / `result-page` | `base-button` |
 
 ### Step 3：注册组件
 
@@ -349,6 +352,7 @@ const { keyword, history, results, search, clearHistory } = useSearch(kw => api.
 ## References
 
 - `references/page-specs.md` — 各组件 API 速查（Props / Slots / Emits / 默认数据 / mock 数据 / 完整页面示例 / 扩展建议）
-- `references/theme-integration.md` — 主题变量清单、无主题系统 fallback 硬编码替换表、easycom 注册方式、状态栏适配说明、主题变量覆盖示例
-- `references/theme-detect.md` — **主题系统自动检测与对齐**：变量定位、命名风格识别、值读取、三场景处理（桥接/替换/品牌色提取）
+- `references/theme-integration.md` — 主题变量清单、无主题系统 fallback 表、easycom 注册、状态栏适配
+- `references/theme-detect.md` — 主题系统自动检测与对齐（变量定位、命名风格识别、三场景处理）
+- `references/composables/` — 页面数据流模板（usePageList / useForm / useSearch），组件 + composable = 完整页面块
 - `components/` — 21 个组件模板（5 基础 + 6 业务 + 10 页面）
