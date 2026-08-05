@@ -1190,6 +1190,75 @@ $ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 </view>
 ```
 
+### 8.4.1 导入与触发方式
+
+#### 导入
+
+动画预设类统一在 `_animations.scss` 中定义，通过 `variables.scss` 末尾全局引入：
+
+```scss
+// src/styles/variables.scss
+@import './tokens/primitive';
+@import './tokens/semantic';
+@import './functions';
+@import './mixins';
+@import './animations';  // ← 最后一行
+```
+
+> 如果 `vite.config.ts` 已配 `additionalData: '@use "@/styles/variables.scss" as *;'`，则无需额外操作，所有组件和页面自动可用。
+
+#### 三种触发模式
+
+| 模式 | 适用 class | 机制 | 写法 |
+|------|-----------|------|------|
+| **Mount 触发** | `animate-fade-in` `animate-slide-up` `animate-slide-down` `animate-scale-in` | 元素挂载到 DOM 时自动播放 | `<view class="animate-slide-up">内容</view>` |
+| **交互触发** | 同上 | 用 `v-if` 开关重新挂载元素，每次挂载重播动画 | 见下方示例 |
+| **持续循环** | `animate-shimmer` `animate-spin` | `animation: ... infinite` 自动无限循环 | `<view class="animate-shimmer">` |
+
+#### 交互触发（点击后播放）
+
+小程序不支持 CSS `:hover`，交互动画的核心技巧：**用 `v-if` 重新挂载元素**。
+
+```vue
+<template>
+  <view class="page">
+    <!-- 按钮点击后，弹出动画元素从无到有，触发 mount -->
+    <Button @click="show = true">提交</Button>
+
+    <view v-if="show" class="animate-scale-in">
+      <text class="text-h2">提交成功</text>
+    </view>
+
+    <!-- 点遮罩关闭：先 v-if="false" 移除，下次打开重新挂载再播 -->
+    <view v-if="show" class="animate-fade-out" @click="show = false" />
+  </view>
+</template>
+```
+
+> **原理**：`v-if` 控制的是元素的创建与销毁。元素每次被创建（挂载），`animation` 从头播放。不需要 JS 操作 DOM，也不需要 Vue transition 组件。
+
+#### 逐项延迟飞入
+
+用于列表页：每个列表项依次飞入，不是同时出现。
+
+```vue
+<template>
+  <view v-for="(item, index) in list" :key="item.id"
+    class="animate-slide-up"
+    :style="{ animationDelay: index * 60 + 'ms' }"
+  >
+    {{ item.name }}
+  </view>
+</template>
+```
+
+**为什么 `animation-fill-mode: both` 很重要**：所有预设类都生效了 `both`：
+
+- `backwards`：动画播放**前**，元素保持在 `from` 的样式（`opacity: 0`）——解决延迟等待期间元素短暂可见的闪烁问题
+- `forwards`：动画播放**后**，元素保持在 `to` 的样式（`opacity: 1`）——解决播完后跳回初始态的 bug
+
+所以 `.animate-slide-up` 第 3 项 `animation-delay: 120ms` 时：前 120ms 透明不可见 → 播放 250ms → 终态保持可见。整个过程流畅无闪烁。
+
 > **关键约束**：项目内任何地方**禁止新定义 `@keyframes`**（Popup 组件级动画除外）。所有进出场动画必须从本预设库选取。
 
 ### 8.5 Skeleton 骨架屏动画 Token

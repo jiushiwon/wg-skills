@@ -14,7 +14,7 @@
 - **间距系统**：基于 4rpx 基数的完整间距阶梯（0~64rpx）+ Page Gutter + 模块间距统一
 - **语义变量**：文字色（基色自动派生）/ 背景色 / 功能色 / 边框 / 圆角 / 阴影 / Z 层级
 - **SCSS 函数与混入**：tint/shade 色板生成、布局/文本/安全区/细线混入
-- **动画过渡**：时长 Token + 缓动曲线 + **6 个开箱即用动画预设类**（fade-in / slide-up / slide-down / scale-in / shimmer / spin）
+- **动画过渡**：时长 Token + 缓动曲线 + **6 个开箱即用动画预设类**（fade-in / slide-up / slide-down / scale-in / shimmer / spin）。支持 3 种触发模式（Mount 触发 / 交互触发 / 持续循环），通过 `v-if` 重新挂载元素实现点击播放
 - **页面布局**：10 个通用 layout zone 类（lyt-page/lyt-body/lyt-hero/lyt-footer 等） + 5 种页面骨架（列表/详情/表单/设置/首页）
 - **无障碍**：WCAG AA 文字背景对比度规范（正文 ≥ 4.5:1，大字 ≥ 3:1）
 
