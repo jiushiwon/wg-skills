@@ -1,6 +1,6 @@
 ---
 name: uniapp-page-components-skill
-description: uniapp 常用「组件化页面」技能（独立、自成体系）。内置 21 个组件（5 基础 + 6 业务 + 10 页面）+ 3 个数据流 Composable（usePageList/useForm/useSearch），组件 + composable = 完整页面块。组件 slot 自由填充、可加新 prop、自动接入 uniapp-theme-skill 主题系统，支持自动检测项目主题对齐、自动替换 tabBar/导航栏、触发词一键扩展业务组件。触发词："组件化页面"、"聊天页"、"朋友圈"、"商品详情页"、"订单列表"、"搜索页"、"表单页"、"登录页"、"首页"、"图片卡片"、"BaseCard"、"自定义按钮"、"头部导航/底部菜单/TabBar"、"用户卡片/评论条"、"通知栏"、"设置行"、"空状态/结果页"、"分页列表"、"表单校验/提交"、"搜索防抖"、"卡片圆角调整"、"替换 tabBar"、"页面逻辑标准化"、"uniapp 页面组件"
+description: uniapp 常用「组件化页面」技能（独立、自成体系）。内置 21 个组件（5 基础 + 6 业务 + 10 页面），以空卡片 base-card 为万能抽象，业务组件全部组合空壳实现、不改空壳。组件 slot 自由填充、可加新 prop、自动接入 uniapp-theme-skill 主题系统，支持自动检测项目主题对齐、自动替换 tabBar/导航栏、触发词一键扩展业务组件。触发词："组件化页面"、"聊天页"、"朋友圈"、"商品详情页"、"订单列表"、"搜索页"、"表单页"、"登录页"、"首页"、"图片卡片"、"BaseCard"、"自定义按钮"、"头部导航/底部菜单/TabBar"、"用户卡片/评论条"、"通知栏"、"设置行"、"空状态/结果页"、"卡片圆角调整"、"替换 tabBar"、"uniapp 页面组件"
 ---
 
 # uniapp 常用组件化页面 Skill
@@ -89,37 +89,6 @@ description: uniapp 常用「组件化页面」技能（独立、自成体系）
 - **默认数据**：每个组件带贴合场景的默认数据，复制即可跑通，替换真实数据即可上线。
 - **业务组件扩展机制**：业务组件 = **组合空壳组件实现，不改空壳**，颗粒度小于页面组件。当用户说"帮我做个 XX 卡片/列表项/状态页"等具体原型需求时，先在本技能的业务组件清单中查找；若有则生成对应组件，若无则按此模式基于空壳组合出新的业务组件（见「组件调整模式」）。
 
-## 数据流 Composables（页面逻辑标准化）
-
-配合页面组件使用的标准化 composition API，放在项目 `src/composables/` 下。**组件 + Composable = 完整页面块**。
-
-| Composable | 配合组件 | 用途 |
-|-----------|---------|------|
-| `usePageList` | `tab-list-page` / `home-page` / `search-page` | 分页 + 刷新 + 加载更多 + 列表重置（切换 tab 自动重载） |
-| `useForm` | `form-page` / `login-page` + `base-form-item` | 表单数据 + 校验（内置 required/isPhone/minLength）+ 提交 loading + 重置 |
-| `useSearch` | `search-page` | 搜索 + 历史持久化（storage）+ 防抖 |
-
-**使用示例**（页面逻辑从手写 50 行 → 3 行引入）：
-
-```ts
-// 订单列表：之前手写分页/刷新/重置 ~50 行，现在：
-const { list, loading, finished, loadMore, refresh, reset } = usePageList(
-  (page, size) => api.getOrders(activeTab.value, page, size),
-)
-
-// 资料表单：之前手写校验/提交 ~30 行，现在：
-const { form, errors, submitting, rules, submit } = useForm(
-  { nickname: '', bio: '' },
-  (data) => api.saveProfile(data),
-)
-rules({ nickname: required('请输入昵称') })
-
-// 搜索：之前手写防抖/历史 ~20 行，现在：
-const { keyword, history, results, search, clearHistory } = useSearch(kw => api.search(kw))
-```
-
-> Composables 模板在 `references/composables/` 下，技能触发时复制到项目 `src/composables/`。组件本身不依赖 composable（展示层独立），composable 由页面层调用、数据通过 props 传入组件。
-
 ## When to Use（触发词）
 
 技能共 **21 个组件**，一句话描述"要做的页面/组件/操作"即可命中，不要求说组件名：
@@ -173,10 +142,6 @@ const { keyword, history, results, search, clearHistory } = useSearch(kw => api.
 - "我项目里没这些页面，帮我生成几个常用的"
 - "用自定义底部菜单替换现有 tabBar" / "tab 页面换自定义头部菜单"
 - "加基础组件：按钮、导航栏、底部菜单、表单"
-- "分页列表" / "列表加载更多" / "表格分页" / "刷新/加载"（`usePageList`）
-- "表单校验" / "表单提交" / "表单验证" / "表单重置"（`useForm`）
-- "搜索防抖" / "搜索历史" / "搜索记录持久化"（`useSearch`）
-- "页面逻辑标准化" / "用 composable 管理页面数据"
 
 ## 工作流程
 
@@ -354,5 +319,4 @@ const { keyword, history, results, search, clearHistory } = useSearch(kw => api.
 - `references/page-specs.md` — 各组件 API 速查（Props / Slots / Emits / 默认数据 / mock 数据 / 完整页面示例 / 扩展建议）
 - `references/theme-integration.md` — 主题变量清单、无主题系统 fallback 表、easycom 注册、状态栏适配
 - `references/theme-detect.md` — 主题系统自动检测与对齐（变量定位、命名风格识别、三场景处理）
-- `references/composables/` — 页面数据流模板（usePageList / useForm / useSearch），组件 + composable = 完整页面块
 - `components/` — 21 个组件模板（5 基础 + 6 业务 + 10 页面）
