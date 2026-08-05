@@ -69,7 +69,10 @@ const imgError = ref(false)
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--spacing-3xl) var(--spacing-lg);
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 .empty-img {

@@ -79,6 +79,7 @@ const iconMap: Record<string, string> = {
   align-items: center;
   min-height: 100%;
   padding: var(--spacing-3xl) var(--spacing-xl);
+  overflow: hidden;
   box-sizing: border-box;
   background: var(--color-bg-page);
 }
