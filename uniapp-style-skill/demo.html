@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>uniapp-style-skill — Design Token 速查盘</title>
+<style>
+:root {
+  /* ===== 主题配置 ===== */
+  --theme-primary: #1cc8c4;
+  --theme-success: #22c55e;
+  --theme-warning: #f59e0b;
+  --theme-error: #ef4444;
+  --theme-info: #3b82f6;
+  --theme-spacing-base: 4;
+  --theme-radius-base: 8;
+  --theme-font-size-base: 2;
+
+  /* ===== 中性色阶（不依赖主题，由基色自动派生） ===== */
+  --color-text-primary: #2b2e31;
+  --color-text-secondary: #5b6167;
+  --color-text-tertiary: #737a82;
+  --color-text-disabled: #b5b9bf;
+  --color-text-placeholder: #b5b9bf;
+  --color-text-inverse: #ffffff;
+  --color-text-link: #3498db;
+
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #fafafa;
+  --color-bg-tertiary: #f5f5f5;
+
+  --color-border: #e5e7eb;
+  --color-border-light: #f0f0f0;
+  --border-width-base: 2px;
+
+  /* ===== 主题色色阶（由 theme-primary 动态生成） ===== */
+  --color-primary-50: color-mix(in srgb, var(--theme-primary) 5%, white);
+  --color-primary-100: color-mix(in srgb, var(--theme-primary) 10%, white);
+  --color-primary-200: color-mix(in srgb, var(--theme-primary) 30%, white);
+  --color-primary-300: color-mix(in srgb, var(--theme-primary) 50%, white);
+  --color-primary-400: color-mix(in srgb, var(--theme-primary) 70%, white);
+  --color-primary-500: var(--theme-primary);
+  --color-primary-600: color-mix(in srgb, var(--theme-primary) 90%, black);
+  --color-primary-700: color-mix(in srgb, var(--theme-primary) 80%, black);
+  --color-primary-800: color-mix(in srgb, var(--theme-primary) 60%, black);
+  --color-primary-900: color-mix(in srgb, var(--theme-primary) 40%, black);
+
+  --color-success-50: color-mix(in srgb, var(--theme-success) 5%, white);
+  --color-success-100: color-mix(in srgb, var(--theme-success) 10%, white);
+  --color-success-700: color-mix(in srgb, var(--theme-success) 80%, black);
+  --color-warning-50: color-mix(in srgb, var(--theme-warning) 5%, white);
+  --color-warning-100: color-mix(in srgb, var(--theme-warning) 10%, white);
+  --color-warning-700: color-mix(in srgb, var(--theme-warning) 80%, black);
+  --color-error-50: color-mix(in srgb, var(--theme-error) 5%, white);
+  --color-error-100: color-mix(in srgb, var(--theme-error) 10%, white);
+  --color-error-700: color-mix(in srgb, var(--theme-error) 80%, black);
+  --color-info-50: color-mix(in srgb, var(--theme-info) 5%, white);
+  --color-info-100: color-mix(in srgb, var(--theme-info) 10%, white);
+  --color-info-700: color-mix(in srgb, var(--theme-info) 80%, black);
+
+  /* ===== 圆角 ===== */
+  --radius-small: calc(var(--theme-radius-base) * 1px);
+  --radius-medium: calc(var(--theme-radius-base) * 2px);
+  --radius-large: calc(var(--theme-radius-base) * 3px);
+  --radius-round: 999px;
+  --radius-circle: 50%;
+
+  /* ===== 阴影 ===== */
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+
+  /* ===== 间距 ===== */
+  --spacing-1: calc(var(--theme-spacing-base) * 1px);
+  --spacing-2: calc(var(--theme-spacing-base) * 2px);
+  --spacing-3: calc(var(--theme-spacing-base) * 3px);
+  --spacing-4: calc(var(--theme-spacing-base) * 4px);
+  --spacing-5: calc(var(--theme-spacing-base) * 5px);
+  --spacing-6: calc(var(--theme-spacing-base) * 6px);
+  --spacing-8: calc(var(--theme-spacing-base) * 8px);
+  --spacing-10: calc(var(--theme-spacing-base) * 10px);
+  --spacing-12: calc(var(--theme-spacing-base) * 12px);
+  --spacing-16: calc(var(--theme-spacing-base) * 16px);
+
+  /* ===== 字号 ===== */
+  --font-size-xs: calc(var(--theme-font-size-base) * 10px);
+  --font-size-sm: calc(var(--theme-font-size-base) * 12px);
+  --font-size-md: calc(var(--theme-font-size-base) * 14px);
+  --font-size-lg: calc(var(--theme-font-size-base) * 16px);
+  --font-size-xl: calc(var(--theme-font-size-base) * 18px);
+  --font-size-xxl: calc(var(--theme-font-size-base) * 20px);
+
+  /* ===== 组件 Token ===== */
+  --btn-height-normal: 48px;
+  --btn-height-small: 32px;
+  --avatar-size-sm: 32px;
+  --avatar-size-md: 48px;
+  --avatar-size-lg: 64px;
+  --skeleton-row-height: 16px;
+
+  --bg: var(--color-bg-secondary);
+  --card-bg: var(--color-bg-primary);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-md);
+  line-height: 1.5;
+  padding: 24px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+header {
+  text-align: center;
+  padding: 40px 0 32px;
+}
+header h1 {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+header p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* Card */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius-medium);
+  box-shadow: var(--shadow-sm);
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.card-title {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+/* Swatch row */
+.swatch-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 12px;
+}
+.swatch {
+  border-radius: var(--radius-small);
+  padding: 12px 10px;
+  text-align: center;
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+.swatch .label { font-weight: 600; margin-bottom: 4px; }
+.swatch .hex { opacity: 0.75; font-size: 10px; font-family: monospace; }
+.swatch .desc { opacity: 0.6; font-size: 10px; margin-top: 2px; }
+.swatch.dark-text { color: var(--color-text-primary); }
+.swatch.light-text { color: var(--color-text-inverse); }
+
+/* Neutral ramp */
+.ramp-table {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  border-radius: var(--radius-small);
+  overflow: hidden;
+}
+.ramp-row {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  font-size: var(--font-size-sm);
+  gap: 12px;
+  min-height: 44px;
+}
+.ramp-row .var { flex: 1; font-family: monospace; font-weight: 600; }
+.ramp-row .hex { width: 60px; color: var(--color-text-tertiary); font-family: monospace; }
+.ramp-row .usage { width: 160px; color: var(--color-text-secondary); }
+.ramp-row.divider-row {
+  border-top: 2px dashed var(--color-border);
+  margin-top: 4px;
+  padding-top: 12px;
+}
+
+/* Theme section */
+.theme-control {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.theme-control label { font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+.theme-control input[type="color"] {
+  width: 40px; height: 40px; border: none; border-radius: var(--radius-small); cursor: pointer;
+}
+.theme-control input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+.theme-control input[type="color"]::-webkit-color-swatch { border-radius: 4px; border: 1px solid var(--color-border); }
+.theme-control .preset { font-size: var(--font-size-xs); padding: 4px 10px; border-radius: var(--radius-round);
+  border: 1px solid var(--color-border); cursor: pointer; background: var(--card-bg); }
+.theme-control .preset:hover { border-color: var(--color-primary-500); }
+
+/* Size scale bars */
+.scale-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.scale-bar-row .label {
+  width: 120px;
+  font-size: var(--font-size-xs);
+  font-family: monospace;
+  color: var(--color-text-secondary);
+}
+.scale-bar-row .bar {
+  height: 16px;
+  background: var(--color-primary-200);
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+.scale-bar-row .val {
+  width: 40px;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  text-align: right;
+}
+
+/* Font scale preview */
+.font-row {
+  display: flex;
+  align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+.font-row .var-name { width: 140px; font-family: monospace; font-size: var(--font-size-xs); color: var(--color-text-secondary); }
+.font-row .size-val { width: 60px; font-size: var(--font-size-xs); color: var(--color-text-tertiary); }
+.font-row .preview { flex: 1; }
+.font-row .usage { width: 120px; font-size: var(--font-size-xs); color: var(--color-text-tertiary); text-align: right; }
+
+/* Radius preview */
+.radius-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.radius-row .box {
+  width: 48px; height: 48px;
+  background: var(--color-primary-100);
+  border: 1px solid var(--color-primary-300);
+  flex-shrink: 0;
+}
+.radius-row .info { flex: 1; }
+.radius-row .info .main { font-weight: 600; font-size: var(--font-size-sm); }
+.radius-row .info .sub { font-size: var(--font-size-xs); color: var(--color-text-tertiary); }
+
+/* Shadow preview */
+.shadow-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.shadow-row .box {
+  width: 60px; height: 60px;
+  background: var(--card-bg);
+  border-radius: var(--radius-small);
+  flex-shrink: 0;
+}
+
+/* Component token row */
+.comp-row {
+  display: flex;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--color-border-light);
+  font-size: var(--font-size-sm);
+}
+.comp-row .token { width: 220px; font-family: monospace; color: var(--color-text-primary); }
+.comp-row .val { width: 80px; color: var(--color-text-secondary); }
+.comp-row .vis {
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.comp-row .vis-bar {
+  height: 24px;
+  background: var(--color-primary-200);
+  border-radius: 4px;
+}
+
+/* Trigger section */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tag {
+  display: inline-flex;
+  padding: 4px 12px;
+  border-radius: var(--radius-round);
+  font-size: var(--font-size-xs);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border-light);
+}
+.tag.hot {
+  background: var(--color-primary-50);
+  color: var(--color-primary-700);
+  border-color: var(--color-primary-200);
+}
+
+/* Tabs */
+.tab-bar {
+  display: flex;
+  gap: 0;
+  margin-bottom: 16px;
+  border-radius: var(--radius-small);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+.tab-btn {
+  flex: 1;
+  padding: 8px 16px;
+  font-size: var(--font-size-sm);
+  text-align: center;
+  cursor: pointer;
+  background: var(--card-bg);
+  color: var(--color-text-secondary);
+  border: none;
+  border-right: 1px solid var(--color-border);
+  transition: all 0.15s;
+}
+.tab-btn:last-child { border-right: none; }
+.tab-btn.active { background: var(--color-primary-500); color: #fff; font-weight: 600; }
+.tab-btn:hover:not(.active) { background: var(--color-bg-tertiary); }
+
+.section { display: none; }
+.section.active { display: block; }
+
+/* Live theme badge */
+.theme-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: var(--radius-round);
+  font-size: var(--font-size-xs);
+  background: var(--color-primary-500);
+  color: #fff;
+  font-weight: 600;
+}
+.theme-badge .dot { width: 10px; height: 10px; border-radius: var(--radius-circle); background: #fff; }
+
+footer {
+  text-align: center;
+  padding: 32px 0 16px;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .swatch-row { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
+  .ramp-row .usage { display: none; }
+  .comp-row .vis { display: none; }
+}
+
+/* ===== 动画预设 @keyframes ===== */
+@keyframes fade-in-demo  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fade-out-demo { from { opacity: 1; } to { opacity: 0; } }
+@keyframes slide-up-in-demo   { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes slide-down-in-demo { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes scale-in-demo      { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes shimmer-demo       { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+@keyframes spin-demo          { to { transform: rotate(360deg); } }
+
+.anim-fade-in  { animation: fade-in-demo  250ms cubic-bezier(0,0,0.2,1) both; }
+.anim-slide-up { animation: slide-up-in-demo 250ms cubic-bezier(0,0,0.2,1) both; }
+.anim-slide-dn { animation: slide-down-in-demo 250ms cubic-bezier(0,0,0.2,1) both; }
+.anim-scale-in { animation: scale-in-demo 250ms cubic-bezier(0.34,1.56,0.64,1) both; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>uniapp-style-skill</h1>
+  <p>Design Token 速查盘 &nbsp;·&nbsp; 与
+    <span class="theme-badge">
+      <span class="dot"></span>
+      <span id="themeName">默认主题 #1CC8C4</span>
+    </span>
+    联动
+  </p>
+</header>
+
+<!-- 主题色选择器 -->
+<div class="card">
+  <div class="theme-control">
+    <label>主题色：</label>
+    <input type="color" id="themePicker" value="#1cc8c4" onchange="setTheme(this.value)">
+    <button class="preset" onclick="setTheme('#1cc8c4')" style="border-color:var(--color-primary-700)">默认 #1CC8C4</button>
+    <button class="preset" onclick="setTheme('#6366f1')">靛蓝 #6366F1</button>
+    <button class="preset" onclick="setTheme('#f97316')">橙色 #F97316</button>
+    <button class="preset" onclick="setTheme('#ec4899')">粉色 #EC4899</button>
+    <button class="preset" onclick="setTheme('#22c55e')">翠绿 #22C55E</button>
+  </div>
+  <p style="font-size:var(--font-size-xs); color:var(--color-text-tertiary);">
+    改主题色 → 下方色阶自动重算（css color-mix 动态派生）。中性色阶不受影响。
+  </p>
+</div>
+
+<!-- Tabs -->
+<div class="tab-bar" id="tabBar">
+  <button class="tab-btn active" onclick="switchTab('colors')">🎨 色彩</button>
+  <button class="tab-btn" onclick="switchTab('sizes')">📐 尺寸</button>
+  <button class="tab-btn" onclick="switchTab('components')">🧩 组件</button>
+  <button class="tab-btn" onclick="switchTab('animations')">🎬 动效</button>
+  <button class="tab-btn" onclick="switchTab('triggers')">💬 触发词</button>
+</div>
+
+<!-- ====== 色彩 tab ====== -->
+<div class="section active" id="tab-colors">
+
+  <!-- 中性色阶 -->
+  <div class="card">
+    <div class="card-title">中性色阶总览（不依赖主题色，始终不变）</div>
+    <div class="ramp-table">
+      <div class="ramp-row divider-row" style="font-weight:600;background:var(--color-bg-tertiary)">
+        <span class="var">文字色</span><span class="hex">hex</span><span class="usage">场景</span>
+      </div>
+      <div class="ramp-row" style="background:#2b2e31; color:#fff">
+        <span class="var">$color-text-primary</span><span class="hex" style="color:rgba(255,255,255,0.6)">#2b2e31</span><span class="usage" style="color:rgba(255,255,255,0.6)">正文标题</span>
+      </div>
+      <div class="ramp-row" style="background:#5b6167; color:#fff">
+        <span class="var">$color-text-secondary</span><span class="hex" style="color:rgba(255,255,255,0.6)">#5b6167</span><span class="usage" style="color:rgba(255,255,255,0.6)">副标题说明</span>
+      </div>
+      <div class="ramp-row" style="background:#737a82; color:#fff">
+        <span class="var">$color-text-tertiary</span><span class="hex" style="color:rgba(255,255,255,0.6)">#737a82</span><span class="usage" style="color:rgba(255,255,255,0.6)">时间戳辅助</span>
+      </div>
+      <div class="ramp-row" style="background:#b5b9bf">
+        <span class="var">$color-text-disabled</span><span class="hex">#b5b9bf</span><span class="usage">禁用占位符</span>
+      </div>
+      <div class="ramp-row divider-row" style="font-weight:600;background:var(--color-bg-tertiary)">
+        <span class="var">反转/独立色</span><span class="hex">hex</span><span class="usage">场景</span>
+      </div>
+      <div class="ramp-row" style="background:var(--color-primary-500)">
+        <span class="var" style="color:#fff">$color-text-inverse</span><span class="hex" style="color:rgba(255,255,255,0.6)">#ffffff</span><span class="usage" style="color:rgba(255,255,255,0.6)">深色底反白</span>
+      </div>
+      <div class="ramp-row" style="background:#3498db">
+        <span class="var" style="color:#fff">$color-text-link</span><span class="hex" style="color:rgba(255,255,255,0.6)">#3498db</span><span class="usage" style="color:rgba(255,255,255,0.6)">链接色</span>
+      </div>
+      <div class="ramp-row divider-row" style="font-weight:600;background:var(--color-bg-tertiary)">
+        <span class="var">背景色</span><span class="hex">hex</span><span class="usage">场景</span>
+      </div>
+      <div class="ramp-row" style="background:#fff">
+        <span class="var">$color-bg-primary</span><span class="hex">#ffffff</span><span class="usage">卡片弹窗</span>
+      </div>
+      <div class="ramp-row" style="background:#fafafa">
+        <span class="var">$color-bg-secondary</span><span class="hex">#fafafa</span><span class="usage">页面底色</span>
+      </div>
+      <div class="ramp-row" style="background:#f5f5f5">
+        <span class="var">$color-bg-tertiary</span><span class="hex">#f5f5f5</span><span class="usage">输入框/Skele</span>
+      </div>
+      <div class="ramp-row divider-row" style="font-weight:600;background:var(--color-bg-tertiary)">
+        <span class="var">边框</span><span class="hex">hex</span><span class="usage">场景</span>
+      </div>
+      <div class="ramp-row" style="background:#fff; border:2px solid #e5e7eb; border-left-width:0; border-right-width:0;">
+        <span class="var">$color-border</span><span class="hex">#e5e7eb</span><span class="usage">分割线</span>
+      </div>
+      <div class="ramp-row" style="background:#fff; border:1px solid #f0f0f0; border-left-width:0; border-right-width:0;">
+        <span class="var">$color-border-light</span><span class="hex">#f0f0f0</span><span class="usage">弱分割</span>
+      </div>
+    </div>
+    <p style="margin-top:12px; font-size:var(--font-size-xs); color:var(--color-text-tertiary);">
+      文字色阶由 <code>$color-text-primary</code> 动态派生（tint 混白 30%→50%→70%）。背景色独立三阶，不受主题色影响。
+    </p>
+  </div>
+
+  <!-- 主题色阶 -->
+  <div class="card">
+    <div class="card-title">主题色色阶（随主题色联动）</div>
+    <div class="swatch-row" id="primarySwatches"></div>
+  </div>
+
+  <!-- 功能色 -->
+  <div class="card">
+    <div class="card-title">功能色</div>
+    <div class="swatch-row">
+      <div class="swatch" style="background:var(--theme-success); color:#fff">
+        <div class="label">$color-success</div><div class="hex" style="color:rgba(255,255,255,0.6)">#22c55e</div><div class="desc" style="color:rgba(255,255,255,0.6)">成功</div>
+      </div>
+      <div class="swatch" style="background:var(--theme-warning); color:#fff">
+        <div class="label">$color-warning</div><div class="hex" style="color:rgba(255,255,255,0.6)">#f59e0b</div><div class="desc" style="color:rgba(255,255,255,0.6)">警告</div>
+      </div>
+      <div class="swatch" style="background:var(--theme-error); color:#fff">
+        <div class="label">$color-error</div><div class="hex" style="color:rgba(255,255,255,0.6)">#ef4444</div><div class="desc" style="color:rgba(255,255,255,0.6)">错误</div>
+      </div>
+      <div class="swatch" style="background:var(--theme-info); color:#fff">
+        <div class="label">$color-info</div><div class="hex" style="color:rgba(255,255,255,0.6)">#3b82f6</div><div class="desc" style="color:rgba(255,255,255,0.6)">信息</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 阴影 -->
+  <div class="card">
+    <div class="card-title">阴影 $shadow-*</div>
+    <div class="shadow-row">
+      <div class="box" style="box-shadow:var(--shadow-sm)"></div>
+      <div class="info"><div class="main">$shadow-sm</div><div class="sub">0 2px 4px rgba(0,0,0,0.06) — 卡片/列表</div></div>
+    </div>
+    <div class="shadow-row">
+      <div class="box" style="box-shadow:var(--shadow-md)"></div>
+      <div class="info"><div class="main">$shadow-md</div><div class="sub">0 4px 12px rgba(0,0,0,0.08) — 浮层/下拉</div></div>
+    </div>
+    <div class="shadow-row">
+      <div class="box" style="box-shadow:var(--shadow-lg)"></div>
+      <div class="info"><div class="main">$shadow-lg</div><div class="sub">0 8px 24px rgba(0,0,0,0.12) — 弹窗/大卡片</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ====== 尺寸 tab ====== -->
+<div class="section" id="tab-sizes">
+
+  <!-- 间距阶梯 -->
+  <div class="card">
+    <div class="card-title">间距阶梯 $spacing-*（基数: 4rpx）</div>
+    <div id="spacingBars"></div>
+  </div>
+
+  <!-- 字号阶梯 -->
+  <div class="card">
+    <div class="card-title">字号阶梯 $font-size-*（基数: 2rpx）</div>
+    <div id="fontSizes"></div>
+  </div>
+
+  <!-- 圆角 -->
+  <div class="card">
+    <div class="card-title">圆角 $radius-*（基数: 8rpx）</div>
+    <div class="radius-row"><div class="box" style="border-radius:0"></div><div class="info"><div class="main">$radius-none (0)</div><div class="sub">无圆角</div></div></div>
+    <div class="radius-row"><div class="box" style="border-radius:var(--radius-small)"></div><div class="info"><div class="main">$radius-small (8rpx)</div><div class="sub">标签、小按钮</div></div></div>
+    <div class="radius-row"><div class="box" style="border-radius:var(--radius-medium)"></div><div class="info"><div class="main">$radius-medium (16rpx)</div><div class="sub">卡片、弹窗</div></div></div>
+    <div class="radius-row"><div class="box" style="border-radius:var(--radius-large)"></div><div class="info"><div class="main">$radius-large (24rpx)</div><div class="sub">大卡片</div></div></div>
+    <div class="radius-row"><div class="box" style="border-radius:var(--radius-round)"></div><div class="info"><div class="main">$radius-round (999rpx)</div><div class="sub">胶囊按钮</div></div></div>
+    <div class="radius-row"><div class="box" style="border-radius:var(--radius-circle)"></div><div class="info"><div class="main">$radius-circle (50%)</div><div class="sub">圆形头像</div></div></div>
+  </div>
+
+  <!-- 按钮高度 -->
+  <div class="card">
+    <div class="card-title">组件高度对比</div>
+    <div style="display:flex; align-items:flex-end; gap:24px; padding:16px 0;">
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px">
+        <div style="width:80px; height:var(--btn-height-small); background:var(--color-primary-500); border-radius:16px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:var(--font-size-sm);">小</div>
+        <span style="font-size:var(--font-size-xs); color:var(--color-text-secondary);">$btn-height-small<br>64rpx / 32px</span>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px">
+        <div style="width:120px; height:var(--btn-height-normal); background:var(--color-primary-500); border-radius:24px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:var(--font-size-md); font-weight:600;">标准</div>
+        <span style="font-size:var(--font-size-xs); color:var(--color-text-secondary);">$btn-height-normal<br>96rpx / 48px</span>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px">
+        <div style="display:flex; gap:4px;">
+          <div style="width:var(--avatar-size-sm); height:var(--avatar-size-sm); border-radius:50%; background:var(--color-primary-200);"></div>
+          <div style="width:var(--avatar-size-md); height:var(--avatar-size-md); border-radius:50%; background:var(--color-primary-300);"></div>
+          <div style="width:var(--avatar-size-lg); height:var(--avatar-size-lg); border-radius:50%; background:var(--color-primary-400);"></div>
+        </div>
+        <span style="font-size:var(--font-size-xs); color:var(--color-text-secondary);">$avatar-size-sm/md/lg<br>64/96/128rpx</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ====== 组件 tab ====== -->
+<div class="section" id="tab-components">
+  <div class="card">
+    <div class="card-title">组件级 Token 速查</div>
+    <div class="ramp-table" style="font-size:var(--font-size-sm);">
+      <div class="ramp-row" style="font-weight:600;background:var(--color-bg-tertiary)">
+        <span class="var" style="flex:1">Token</span><span style="width:70px">值</span><span style="width:160px">所属组件</span>
+      </div>
+      <div class="ramp-row"><span class="var">$btn-height-normal</span><span style="width:70px;color:var(--color-text-tertiary)">96rpx</span><span style="width:160px;color:var(--color-text-secondary)">Button</span></div>
+      <div class="ramp-row"><span class="var">$btn-height-small</span><span style="width:70px;color:var(--color-text-tertiary)">64rpx</span><span style="width:160px;color:var(--color-text-secondary)">Button</span></div>
+      <div class="ramp-row"><span class="var">$btn-radius-normal</span><span style="width:70px;color:var(--color-text-tertiary)">48rpx</span><span style="width:160px;color:var(--color-text-secondary)">Button</span></div>
+      <div class="ramp-row"><span class="var">$card-padding</span><span style="width:70px;color:var(--color-text-tertiary)">24rpx</span><span style="width:160px;color:var(--color-text-secondary)">Card</span></div>
+      <div class="ramp-row"><span class="var">$card-radius</span><span style="width:70px;color:var(--color-text-tertiary)">16rpx</span><span style="width:160px;color:var(--color-text-secondary)">Card/Modal</span></div>
+      <div class="ramp-row"><span class="var">$modal-width-ratio</span><span style="width:70px;color:var(--color-text-tertiary)">80%</span><span style="width:160px;color:var(--color-text-secondary)">Modal</span></div>
+      <div class="ramp-row"><span class="var">$input-height</span><span style="width:70px;color:var(--color-text-tertiary)">96rpx</span><span style="width:160px;color:var(--color-text-secondary)">Input</span></div>
+      <div class="ramp-row"><span class="var">$navbar-back-hit-area</span><span style="width:70px;color:var(--color-text-tertiary)">60rpx</span><span style="width:160px;color:var(--color-text-secondary)">NavBar</span></div>
+      <div class="ramp-row"><span class="var">$popup-right-width</span><span style="width:70px;color:var(--color-text-tertiary)">80%</span><span style="width:160px;color:var(--color-text-secondary)">Popup</span></div>
+      <div class="ramp-row"><span class="var">$btn-fixed-height</span><span style="width:70px;color:var(--color-text-tertiary)">96rpx</span><span style="width:160px;color:var(--color-text-secondary)">固定底按钮</span></div>
+      <div class="ramp-row"><span class="var">$avatar-size-md</span><span style="width:70px;color:var(--color-text-tertiary)">96rpx</span><span style="width:160px;color:var(--color-text-secondary)">Avatar</span></div>
+      <div class="ramp-row"><span class="var">$empty-icon-size</span><span style="width:70px;color:var(--color-text-tertiary)">240rpx</span><span style="width:160px;color:var(--color-text-secondary)">Empty</span></div>
+      <div class="ramp-row"><span class="var">$loading-spinner-size</span><span style="width:70px;color:var(--color-text-tertiary)">64rpx</span><span style="width:160px;color:var(--color-text-secondary)">Loading</span></div>
+      <div class="ramp-row"><span class="var">$skeleton-row-height</span><span style="width:70px;color:var(--color-text-tertiary)">32rpx</span><span style="width:160px;color:var(--color-text-secondary)">Skeleton</span></div>
+      <div class="ramp-row"><span class="var">$control-size</span><span style="width:70px;color:var(--color-text-tertiary)">40rpx</span><span style="width:160px;color:var(--color-text-secondary)">Checkbox</span></div>
+      <div class="ramp-row"><span class="var">$badge-dot-size</span><span style="width:70px;color:var(--color-text-tertiary)">16rpx</span><span style="width:160px;color:var(--color-text-secondary)">Badge</span></div>
+      <div class="ramp-row"><span class="var">$list-item-icon-size</span><span style="width:70px;color:var(--color-text-tertiary)">48rpx</span><span style="width:160px;color:var(--color-text-secondary)">ListItem</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 动效 tab ====== -->
+<div class="section" id="tab-animations">
+
+  <div class="card">
+    <div class="card-title">动画预设类（§8.4）— 开箱即用，禁止重复定义 @keyframes</div>
+
+    <!-- fps-in / fade-out -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+      <div id="demoFadeIn" style="background:var(--color-primary-500); color:#fff; border-radius:var(--radius-small); padding:20px; text-align:center; font-weight:600; opacity:0;">
+        .animate-fade-in
+      </div>
+      <div style="background:var(--color-bg-tertiary); border-radius:var(--radius-small); padding:20px; text-align:center; font-size:var(--font-size-xs); color:var(--color-text-secondary);">
+        <div style="font-weight:600;margin-bottom:6px;">.animate-fade-out</div>
+        <div style="font-size:10px;">淡出（常用于弹窗关闭）</div>
+      </div>
+    </div>
+
+    <!-- slide-up / slide-down -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+      <div id="demoSlideUp" style="background:var(--color-primary-400); color:#fff; border-radius:var(--radius-small); padding:20px; text-align:center; font-weight:600; opacity:0; transform:translateY(20px);">
+        .animate-slide-up
+      </div>
+      <div id="demoSlideDown" style="background:var(--color-primary-300); color:#fff; border-radius:var(--radius-small); padding:20px; text-align:center; font-weight:600; opacity:0; transform:translateY(-20px);">
+        .animate-slide-down
+      </div>
+    </div>
+
+    <!-- scale-in -->
+    <div id="demoScaleIn" style="background:var(--color-primary-200); color:var(--color-text-primary); border-radius:var(--radius-small); padding:20px; text-align:center; font-weight:600; margin-bottom:12px; opacity:0; transform:scale(0.9);">
+      .animate-scale-in
+    </div>
+
+    <!-- shimmer (skeleton) -->
+    <div style="margin-bottom:12px;">
+      <div style="font-weight:600; font-size:var(--font-size-sm); margin-bottom:8px;">.animate-shimmer &nbsp;<span style="font-weight:400;color:var(--color-text-tertiary);font-size:var(--font-size-xs);">（骨架屏专属闪耀）</span></div>
+      <div id="demoShimmer" style="background:linear-gradient(90deg, var(--color-bg-tertiary) 25%, var(--color-bg-secondary) 50%, var(--color-bg-tertiary) 75%); background-size:200% 100%; border-radius:var(--radius-small); height:40px; animation:shimmer-demo 1.5s ease-in-out infinite;"></div>
+    </div>
+
+    <!-- spin -->
+    <div style="display:flex; align-items:center; gap:12px;">
+      <div id="demoSpin" style="width:48px; height:48px; border:4px solid var(--color-border-light); border-top-color:var(--color-primary-500); border-radius:50%; animation:spin-demo 0.8s linear infinite;"></div>
+      <div>
+        <div style="font-weight:600; font-size:var(--font-size-sm);">.animate-spin</div>
+        <div style="font-size:var(--font-size-xs); color:var(--color-text-tertiary);">无限旋转加载指示器</div>
+      </div>
+    </div>
+
+    <button class="preset" onclick="replayAnimations()" style="margin-top:16px; font-size:var(--font-size-sm);">▶ 重播动画</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title">场景映射</div>
+    <table style="width:100%; font-size:var(--font-size-sm); border-collapse:collapse;">
+      <tr style="background:var(--color-bg-tertiary); font-weight:600;">
+        <td style="padding:8px 12px;">场景</td><td style="padding:8px 12px;">推荐</td><td style="padding:8px 12px;">技巧</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--color-border-light);">
+        <td style="padding:8px 12px;">列表项依次出现</td><td style="padding:8px 12px; font-family:monospace; color:var(--color-primary-700);">.animate-slide-up</td><td style="padding:8px 12px; font-size:var(--font-size-xs);">逐项 animation-delay 递增 50-80ms</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--color-border-light);">
+        <td style="padding:8px 12px;">弹窗内容二次动画</td><td style="padding:8px 12px; font-family:monospace; color:var(--color-primary-700);">.animate-scale-in</td><td style="padding:8px 12px; font-size:var(--font-size-xs);">delay: 100ms</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--color-border-light);">
+        <td style="padding:8px 12px;">页面首次内容</td><td style="padding:8px 12px; font-family:monospace; color:var(--color-primary-700);">.animate-fade-in</td><td style="padding:8px 12px; font-size:var(--font-size-xs);">最轻量无位移</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--color-border-light);">
+        <td style="padding:8px 12px;">下拉菜单展开</td><td style="padding:8px 12px; font-family:monospace; color:var(--color-primary-700);">.animate-slide-down</td><td style="padding:8px 12px; font-size:var(--font-size-xs);">从上方落下</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--color-border-light);">
+        <td style="padding:8px 12px;">骨架屏加载中</td><td style="padding:8px 12px; font-family:monospace; color:var(--color-primary-700);">.animate-shimmer</td><td style="padding:8px 12px; font-size:var(--font-size-xs);">专属闪耀</td>
+      </tr>
+      <tr>
+        <td style="padding:8px 12px;">loading 旋转</td><td style="padding:8px 12px; font-family:monospace; color:var(--color-primary-700);">.animate-spin</td><td style="padding:8px 12px; font-size:var(--font-size-xs);">800ms linear infinite</td>
+      </tr>
+    </table>
+  </div>
+
+</div>
+
+<!-- ====== 触发词 tab ====== -->
+<div class="section" id="tab-triggers">
+  <div class="card">
+    <div class="card-title">触发词 — 色彩相关</div>
+    <div class="tags">
+      <span class="tag hot">文字颜色</span>
+      <span class="tag hot">文字层级</span>
+      <span class="tag hot">色阶</span>
+      <span class="tag hot">中性色</span>
+      <span class="tag hot">背景颜色</span>
+      <span class="tag">颜色变量</span>
+      <span class="tag">主题配置</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">触发词 — 尺寸相关</div>
+    <div class="tags">
+      <span class="tag">字体大小规范</span>
+      <span class="tag">间距规范</span>
+      <span class="tag">屏幕适配</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">触发词 — 规范相关</div>
+    <div class="tags">
+      <span class="tag hot">样式规范</span>
+      <span class="tag">uniapp 设计系统</span>
+      <span class="tag">Design Tokens</span>
+      <span class="tag">组件规范</span>
+      <span class="tag">深色模式</span>
+      <span class="tag">dark mode</span>
+      <span class="tag">设计审计</span>
+      <span class="tag">扫描硬编码样式</span>
+      <span class="tag">修复硬编码</span>
+    </div>
+  </div>
+</div>
+
+<footer>
+  uniapp-style-skill Design Token 速查盘 &nbsp;·&nbsp; 与 <a href="#" style="color:var(--color-text-link)">uniapp-theme-skill</a> 联动 &nbsp;·&nbsp; 主题色变更 → 色阶自动重算
+</footer>
+
+<script>
+// ===== Theme switching =====
+function setTheme(hex) {
+  document.documentElement.style.setProperty('--theme-primary', hex);
+  document.getElementById('themeName').textContent = '主题色 ' + hex.toUpperCase();
+  renderPrimarySwatches();
+}
+
+// ===== Primary color swatches =====
+function renderPrimarySwatches() {
+  const container = document.getElementById('primarySwatches');
+  const hex = getComputedStyle(document.documentElement).getPropertyValue('--theme-primary').trim();
+  const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
+  let html = '';
+  shades.forEach(s => {
+    const bg = getComputedStyle(document.documentElement).getPropertyValue('--color-primary-' + s).trim();
+    const isDark = s >= 600;
+    const textColor = isDark ? '#fff' : 'var(--color-text-primary)';
+    html += '<div class="swatch" style="background:' + bg + '; color:' + textColor + '">';
+    html += '<div class="label">primary-' + s + '</div>';
+    html += '<div class="hex">' + bg + '</div>';
+    if (s === 500) html += '<div class="desc">= $theme-primary</div>';
+    html += '</div>';
+  });
+  container.innerHTML = html;
+}
+
+// ===== Spacing bars =====
+function renderSpacingBars() {
+  const container = document.getElementById('spacingBars');
+  const steps = [1, 2, 3, 4, 5, 6, 8, 10, 12, 16];
+  let html = '';
+  steps.forEach(s => {
+    const px = s * 4;
+    html += '<div class="scale-bar-row">';
+    html += '<span class="label">$spacing-' + s + '</span>';
+    html += '<div class="bar" style="width:' + (s * 18) + 'px"></div>';
+    html += '<span class="val">' + px + 'rpx</span>';
+    html += '</div>';
+  });
+  container.innerHTML = html;
+}
+
+// ===== Font sizes =====
+function renderFontSizes() {
+  const container = document.getElementById('fontSizes');
+  const fonts = [
+    { name: '$font-size-xs', px: 20, cls: '辅助文字' },
+    { name: '$font-size-sm', px: 24, cls: '标签、说明' },
+    { name: '$font-size-md', px: 28, cls: '正文、列表' },
+    { name: '$font-size-lg', px: 32, cls: '标题、按钮' },
+    { name: '$font-size-xl', px: 36, cls: '大标题' },
+    { name: '$font-size-xxl', px: 40, cls: '页面主标题' },
+    { name: '$font-size-xxxl', px: 48, cls: '营销数字' },
+  ];
+  let html = '';
+  fonts.forEach(f => {
+    html += '<div class="font-row">';
+    html += '<span class="var-name">' + f.name + '</span>';
+    html += '<span class="size-val">' + f.px + 'rpx</span>';
+    html += '<span class="preview" style="font-size:' + (f.px * 2) / 2 + 'px">敏捷开发</span>';
+    html += '<span class="usage">' + f.cls + '</span>';
+    html += '</div>';
+  });
+  container.innerHTML = html;
+}
+
+// ===== Tab switching =====
+function switchTab(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// Init
+renderPrimarySwatches();
+renderSpacingBars();
+renderFontSizes();
+replayAnimations();
+
+// auto-replay when switching to animations tab
+var origSwitchTab = switchTab;
+switchTab = function(name) {
+  origSwitchTab(name);
+  if (name === 'animations') setTimeout(replayAnimations, 50);
+};
+
+function replayAnimations() {
+  var el = document.getElementById('demoFadeIn');   el.classList.remove('anim-fade-in'); void el.offsetWidth; el.classList.add('anim-fade-in');
+  var el2 = document.getElementById('demoSlideUp');  el2.classList.remove('anim-slide-up'); void el2.offsetWidth; el2.classList.add('anim-slide-up');
+  var el3 = document.getElementById('demoSlideDown');el3.classList.remove('anim-slide-dn'); void el3.offsetWidth; el3.classList.add('anim-slide-dn');
+  var el4 = document.getElementById('demoScaleIn');  el4.classList.remove('anim-scale-in'); void el4.offsetWidth; el4.classList.add('anim-scale-in');
+}
+</script>
+
+</body>
+</html>
