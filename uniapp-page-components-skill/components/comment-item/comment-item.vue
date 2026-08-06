@@ -9,16 +9,7 @@
   <base-card :radius="radius" :padding="padding" :background="background" :margin="margin" :border="border" :shadow="shadow" :clickable="clickable" @click="$emit('click')">
     <view class="ci">
       <view class="ci-avatar" @click="$emit('avatarClick')">
-        <image
-          v-if="avatar && !avatarError"
-          class="ci-avatar-img"
-          :src="avatar"
-          mode="aspectFill"
-          @error="avatarError = true"
-        />
-        <view v-else class="ci-avatar-ph">
-          <text class="ci-avatar-ph-text">{{ (nickname || '友').slice(0, 1) }}</text>
-        </view>
+        <base-avatar :src="avatar" :nickname="nickname" size="sm" />
       </view>
 
       <view class="ci-main">
@@ -52,8 +43,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-
 interface Props {
   avatar?: string
   nickname?: string
@@ -101,8 +90,6 @@ const emit = defineEmits<{
   likeClick: []
   replyClick: []
 }>()
-
-const avatarError = ref(false)
 </script>
 
 <style lang="scss" scoped>
@@ -114,29 +101,6 @@ const avatarError = ref(false)
 
 .ci-avatar {
   flex-shrink: 0;
-  width: var(--height-avatar-sm);
-  height: var(--height-avatar-sm);
-  border-radius: var(--radius-avatar);
-  overflow: hidden;
-}
-
-.ci-avatar-img {
-  width: 100%;
-  height: 100%;
-}
-
-.ci-avatar-ph {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  background: var(--color-bg-tinted);
-}
-
-.ci-avatar-ph-text {
-  font-size: var(--font-lg);
-  color: var(--color-primary);
 }
 
 .ci-main {

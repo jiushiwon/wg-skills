@@ -1,10 +1,10 @@
 # uniapp 常用组件化页面 Skill
 
-> 独立 uniapp 组件化页面技能：21 个组件（5 基础 + 6 业务 + 10 页面）覆盖小程序高频页面，复制进项目、往 slot 填内容即可用。自动接入 `uniapp-theme-skill` 主题系统（CSS 变量、禁止写死），支持自动检测项目主题对齐、自动替换 tabBar/导航栏、触发词一键扩展业务组件。
+> 独立 uniapp 组件化页面技能：22 个组件（6 基础 + 6 业务 + 10 页面）覆盖小程序高频页面，复制进项目、往 slot 填内容即可用。以 base-card 万能抽象 + base-avatar 统一头像，自动接入 `uniapp-theme-skill` 主题系统（CSS 变量、禁止写死），支持自动检测项目主题对齐、自动替换 tabBar/导航栏、触发词一键扩展业务组件。
 
 ## 功能
 
-- **21 个组件**：5 基础（空卡片 / 按钮 / 头部导航 / 底部菜单 / 表单行）+ 6 业务（用户卡片 / 评论条 / 通知栏 / 设置行 / 空状态 / 结果页，组合空壳实现）+ 10 页面（Tab+列表 / 聊天 / 朋友圈 / 详情 / 我的 / 图片卡 / 搜索 / 表单 / 登录 / 首页）
+- **22 个组件**：6 基础（空卡片 / 按钮 / 头部导航 / 底部菜单 / 表单行 / 头像）+ 6 业务 + 10 页面
 - **空卡片托底组件** `base-card`：统一圆角/内边距/背景/描边/阴影，其余卡片类组件入参包含它的入参（`cardProps` 透传）
 - **高度自由化**：内容全走 slot，可加新 prop，默认数据跑通即替换
 - **主题自动检测对齐**：接入时自动定位变量文件、识别命名风格（CSS/SCSS/LESS）、读取主色与尺寸；命名一致直接用，命名不同自动生成桥接层，无主题系统自动提取项目品牌色（详见 `references/theme-detect.md`）
@@ -39,7 +39,8 @@
 | 基础 | `base-navbar` | `<base-navbar>` | 自定义头部导航（标题 + 返回 + 右侧 slot + 状态栏适配 + 吸顶） |
 | 基础 | `base-tabbar` | `<base-tabbar>` | 自定义底部菜单（2~5 项 + 图标/角标 + 激活主题色 + 安全区） |
 | 基础 | `base-form-item` | `<base-form-item>` | 表单行（label + 必填星号 + 控件 slot + 错误提示） |
-| 业务 | `user-card` | `<user-card>` | 用户卡片：头像/昵称/签名/右侧按钮（基于 base-card + base-button） |
+| 基础 | `base-avatar` | `<base-avatar>` | 头像：图片/兜底首字，sm/md/lg 尺寸，user-card/comment/chat/moments/profile 共用 |
+| 业务 | `user-card` | `<user-card>` | 用户卡片：头像/昵称/签名/右侧按钮（基于 base-card + base-button + base-avatar） |
 | 业务 | `comment-item` | `<comment-item>` | 评论条：头像/昵称/时间/内容/点赞/回复（基于 base-card） |
 | 业务 | `notice-bar` | `<notice-bar>` | 通知/公告栏：icon/文案/可关闭/跑马灯（轻量） |
 | 业务 | `setting-item` | `<setting-item>` | 设置/菜单行：图标/label/描述/箭头/角标/开关（独立） |
@@ -98,6 +99,7 @@ uniapp-page-components-skill/
 │   ├── base-navbar/base-navbar.vue
 │   ├── base-tabbar/base-tabbar.vue
 │   ├── base-form-item/base-form-item.vue
+│   ├── base-avatar/base-avatar.vue
 │   ├── user-card/user-card.vue
 │   ├── comment-item/comment-item.vue
 │   ├── notice-bar/notice-bar.vue
@@ -128,8 +130,9 @@ uniapp-page-components-skill/
 | `home-page` | `base-navbar`、`base-tabbar` |
 | `login-page` | `base-button` |
 | `tab-list-page` / `profile-page` / `image-card` | `base-card` |
-| `user-card` | `base-card`、`base-button` |
-| `comment-item` | `base-card` |
+| `user-card` | `base-card`、`base-button`、`base-avatar` |
+| `comment-item` | `base-card`、`base-avatar` |
+| `chat-page` / `moments-page` / `profile-page` | `base-avatar` |
 | `empty` / `result-page` | `base-button` |
 
 ## 依赖与组合链路

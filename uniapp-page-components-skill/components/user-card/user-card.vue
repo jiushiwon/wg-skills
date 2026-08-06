@@ -9,16 +9,7 @@
   <base-card :radius="radius" :padding="padding" :background="background" :margin="margin" :border="border" :shadow="shadow" :clickable="clickable" @click="$emit('click')">
     <view class="uc">
       <view class="uc-avatar" @click="$emit('avatarClick')">
-        <image
-          v-if="avatar && !avatarError"
-          class="uc-avatar-img"
-          :src="avatar"
-          mode="aspectFill"
-          @error="avatarError = true"
-        />
-        <view v-else class="uc-avatar-ph">
-          <text class="uc-avatar-ph-text">{{ (nickname || '用').slice(0, 1) }}</text>
-        </view>
+        <base-avatar :src="avatar" :nickname="nickname" size="sm" />
       </view>
 
       <view class="uc-main">
@@ -43,8 +34,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-
 interface Props {
   avatar?: string
   nickname?: string
@@ -83,8 +72,6 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{ click: []; avatarClick: []; actionClick: [] }>()
-
-const avatarError = ref(false)
 </script>
 
 <style lang="scss" scoped>
@@ -96,29 +83,6 @@ const avatarError = ref(false)
 
 .uc-avatar {
   flex-shrink: 0;
-  width: var(--height-avatar-sm);
-  height: var(--height-avatar-sm);
-  border-radius: var(--radius-avatar);
-  overflow: hidden;
-}
-
-.uc-avatar-img {
-  width: 100%;
-  height: 100%;
-}
-
-.uc-avatar-ph {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  background: var(--color-bg-tinted);
-}
-
-.uc-avatar-ph-text {
-  font-size: var(--font-lg);
-  color: var(--color-primary);
 }
 
 .uc-main {

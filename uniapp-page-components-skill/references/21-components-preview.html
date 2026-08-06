@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>uniapp-page-components-skill · 21 组件效果预览</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  :root {
+    --primary: #2563EB;
+    --bg-page: #F5F6F8;
+    --surface: #FFFFFF;
+    --tinted: #EFF6FF;
+    --text-1: #171717;
+    --text-2: #737373;
+    --text-3: #A3A3A3;
+    --border: #F0F0F0;
+    --error: #EF4444;
+    --radius-card: 16rpx;
+    --radius-btn: 16rpx;
+    --radius-tag: 8rpx;
+    --radius-full: 9999rpx;
+    --radius-avatar: 50%;
+    --radius-image: 8rpx;
+    --sp-xs: 8rpx;
+    --sp-sm: 16rpx;
+    --sp-md: 24rpx;
+    --sp-lg: 32rpx;
+    --sp-xl: 48rpx;
+    --font-xs: 22rpx;
+    --font-sm: 24rpx;
+    --font-md: 28rpx;
+    --font-lg: 32rpx;
+    --font-xl: 36rpx;
+    --h-btn-md: 72rpx;
+    --h-btn-lg: 88rpx;
+    --h-btn-xl: 96rpx;
+    --h-av-sm: 64rpx;
+    --h-av-md: 96rpx;
+    --h-av-lg: 128rpx;
+    --icon-sm: 32rpx;
+    --icon-md: 40rpx;
+    --icon-lg: 48rpx;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+  body { background: #e8eaef; padding: 20px; }
+  h1 { text-align: center; color: #333; font-size: 18px; margin-bottom: 3px; }
+  .sub { text-align: center; color: #888; font-size: 11px; margin-bottom: 18px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; justify-items: center; }
+  .device { width: 390px; max-width: 100%; }
+  .device-label { text-align: center; font-size: 11px; color: #666; margin-bottom: 6px; font-weight: 600; background: var(--surface); padding: 3px 10px; border-radius: 6px; }
+  .screen { width: 390px; max-width: 100%; height: 840px; background: var(--bg-page); border-radius: 28px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 8px 28px rgba(0,0,0,.12); }
+  .page { padding: 12px; flex: 1; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+
+  /* === base-card === */
+  .card { background: var(--surface); border-radius: 12px; padding: 12px; }
+  .card-h { font-size: 13px; font-weight: 600; color: var(--text-1); margin-bottom: 4px; }
+  .card-b { font-size: 11px; color: var(--text-2); line-height: 1.6; }
+  .card-f { font-size: 10px; color: var(--text-3); margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border); }
+
+  /* === base-button === */
+  .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0 18px; border-radius: 12px; height: 36px; font-size: 13px; cursor: default; gap: 6px; }
+  .btn-pri { background: var(--primary); color: #fff; }
+  .btn-gho { background: var(--tinted); color: var(--primary); border: 1px solid var(--border); }
+  .btn-txt { background: transparent; color: var(--primary); }
+  .btn-dan { background: var(--error); color: #fff; }
+  .btn-sm { height: 28px; font-size: 11px; padding: 0 12px; }
+  .btn-lg { height: 44px; font-size: 15px; }
+  .btn-blk { display: flex; width: 100%; }
+  .btn-dis { opacity: .5; }
+
+  /* === base-navbar === */
+  .nb-status { height: 26px; background: var(--surface); }
+  .nb-bar { display: flex; align-items: center; height: 44px; padding: 0 10px; background: var(--surface); border-bottom: 1px solid var(--border); }
+  .nb-left { width: 44px; display: flex; align-items: center; font-size: 22px; color: var(--text-1); }
+  .nb-title { flex: 1; text-align: center; font-size: 15px; font-weight: 600; color: var(--text-1); }
+  .nb-right { width: 44px; display: flex; align-items: center; justify-content: flex-end; font-size: 13px; color: var(--primary); }
+
+  /* === base-tabbar === */
+  .tb { display: flex; background: var(--surface); border-top: 1px solid var(--border); padding-bottom: 12px; }
+  .tb-i { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 48px; color: var(--text-3); gap: 2px; }
+  .tb-i.on { color: var(--primary); font-weight: 600; }
+  .tb-i .fa-solid { font-size: 18px; position: relative; }
+  .tb-s { font-size: 9px; }
+  .badge { position: absolute; top: -4px; right: -9px; min-width: 14px; height: 14px; padding: 0 3px; border-radius: 7px; background: var(--error); color: #fff; font-size: 8px; display: flex; align-items: center; justify-content: center; }
+
+  /* === base-form-item === */
+  .fi { display: flex; align-items: center; min-height: 44px; border-bottom: 1px solid var(--border); }
+  .fi-lb { width: 80px; flex-shrink: 0; font-size: 13px; color: var(--text-1); }
+  .fi-star { color: var(--error); }
+  .fi-ct { flex: 1; font-size: 12px; color: var(--text-3); }
+  .fi-err { font-size: 10px; color: var(--error); margin-top: 3px; }
+
+  /* === user-card === */
+  .uc { display: flex; align-items: center; }
+  .uc-av { width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0; overflow: hidden; }
+  .uc-av img { width: 100%; height: 100%; object-fit: cover; }
+  .uc-main { flex: 1; margin: 0 10px; min-width: 0; }
+  .uc-name { font-size: 14px; font-weight: 600; color: var(--text-1); }
+  .uc-sub { font-size: 10px; color: var(--text-3); margin-top: 1px; }
+  .uc-desc { font-size: 11px; color: var(--text-2); margin-top: 3px; }
+
+  /* === comment-item === */
+  .ci { display: flex; }
+  .ci-av { width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0; overflow: hidden; }
+  .ci-av img { width: 100%; height: 100%; object-fit: cover; }
+  .ci-m { flex: 1; margin-left: 10px; }
+  .ci-h { display: flex; justify-content: space-between; }
+  .ci-n { font-size: 12px; font-weight: 600; color: var(--primary); }
+  .ci-t { font-size: 10px; color: var(--text-3); }
+  .ci-c { font-size: 13px; color: var(--text-1); line-height: 1.6; margin-top: 3px; }
+  .ci-foot { display: flex; align-items: center; margin-top: 6px; gap: 14px; }
+  .ci-l { font-size: 10px; color: var(--text-3); }
+  .ci-l.on { color: var(--primary); }
+  .ci-r { font-size: 10px; color: var(--text-2); }
+
+  /* === notice-bar === */
+  .nb { display: flex; align-items: center; min-height: 38px; padding: 5px 10px; border-radius: 7px; background: var(--tinted); }
+  .nb-ic { margin-right: 7px; font-size: 14px; }
+  .nb-t { flex: 1; font-size: 12px; color: var(--text-1); white-space: nowrap; overflow: hidden; }
+  .nb-x { font-size: 15px; color: var(--text-3); margin-left: 8px; }
+
+  /* === setting-item === */
+  .si { display: flex; align-items: center; min-height: 48px; border-bottom: 1px solid var(--border); }
+  .si:last-child { border-bottom: none; }
+  .si-ic { width: 36px; height: 36px; border-radius: 7px; background: var(--tinted); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--primary); margin-right: 10px; flex-shrink: 0; }
+  .si-lb { flex: 1; font-size: 14px; color: var(--text-1); }
+  .si-vl { font-size: 12px; color: var(--text-3); }
+  .si-aw { font-size: 16px; color: var(--text-3); margin-left: 5px; }
+  .si-bd { min-width: 16px; height: 16px; padding: 0 4px; border-radius: 8px; background: var(--error); color: #fff; font-size: 9px; display: flex; align-items: center; justify-content: center; margin-left: 5px; }
+
+  /* === empty === */
+  .em { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
+  .em-ph { width: 120px; height: 120px; border-radius: 50%; background: var(--tinted); display: flex; align-items: center; justify-content: center; font-size: 48px; color: var(--text-3); }
+  .em-t { font-size: 14px; color: var(--text-2); margin-top: 12px; }
+  .em-d { font-size: 11px; color: var(--text-3); margin-top: 3px; }
+
+  /* === result-page === */
+  .rp { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 48px 24px 20px; }
+  .rp-ic { width: 90px; height: 90px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; }
+  .rp-ic.ok { background: var(--tinted); color: var(--primary); }
+  .rp-ic.err { background: rgba(239,68,68,.1); color: var(--error); }
+  .rp-t { margin-top: 14px; font-size: 17px; font-weight: 600; color: var(--text-1); }
+  .rp-d { margin-top: 5px; font-size: 11px; color: var(--text-3); text-align: center; }
+  .rp-btns { width: 100%; margin-top: auto; display: flex; flex-direction: column; gap: 8px; }
+
+  /* === tab-list-page === */
+  .tabs { display: flex; height: 40px; background: var(--surface); border-bottom: 1px solid var(--border); }
+  .tab { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--text-2); position: relative; }
+  .tab.on { color: var(--primary); font-weight: 600; }
+  .tab.on::after { content: ''; position: absolute; bottom: 0; width: 20px; height: 3px; border-radius: 2px; background: var(--primary); }
+  .ord { background: var(--surface); border-radius: 12px; padding: 12px; }
+  .ord-h { display: flex; justify-content: space-between; }
+  .ord-no { font-size: 10px; color: var(--text-3); }
+  .ord-st { font-size: 10px; color: var(--primary); }
+  .ord-g { display: flex; margin-top: 8px; gap: 10px; }
+  .ord-img { width: 50px; height: 50px; border-radius: 7px; flex-shrink: 0; overflow: hidden; }
+  .ord-img img { width: 100%; height: 100%; object-fit: cover; }
+  .ord-ti { font-size: 12px; color: var(--text-1); }
+  .ord-pr { font-size: 13px; color: var(--error); font-weight: 600; margin-top: 4px; }
+
+  /* === chat-page === */
+  .ch-row { display: flex; align-items: flex-start; gap: 8px; }
+  .ch-row.me { flex-direction: row-reverse; }
+  .ch-av { width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; overflow: hidden; }
+  .ch-av img { width: 100%; height: 100%; object-fit: cover; }
+  .ch-bub { max-width: 65%; padding: 8px 12px; border-radius: 14px; font-size: 12px; line-height: 1.5; }
+  .ch-row.other .ch-bub { background: var(--surface); color: var(--text-1); border-bottom-left-radius: 4px; }
+  .ch-row.me .ch-bub { background: var(--primary); color: #fff; border-bottom-right-radius: 4px; }
+  .ch-in { display: flex; align-items: center; gap: 8px; background: var(--surface); border-top: 1px solid var(--border); padding: 7px 10px; }
+  .ch-plus { width: 34px; font-size: 18px; color: var(--text-2); text-align: center; }
+  .ch-ipt { flex: 1; height: 32px; border-radius: 16px; background: var(--bg-page); display: flex; align-items: center; padding: 0 12px; font-size: 12px; color: var(--text-3); }
+  .ch-send { height: 32px; padding: 0 14px; border-radius: 16px; background: var(--primary); color: #fff; font-size: 12px; display: flex; align-items: center; }
+
+  /* === moments === */
+  .mo-cv { height: 100px; background: linear-gradient(160deg,#2563eb,#7c3aed); position: relative; }
+  .mo-me { position: absolute; right: 10px; bottom: 6px; display: flex; align-items: center; gap: 6px; color: #fff; font-size: 12px; font-weight: 600; }
+  .mo-me-av { width: 34px; height: 34px; border-radius: 5px; border: 2px solid #fff; overflow: hidden; }
+  .mo-me-av img { width: 100%; height: 100%; object-fit: cover; }
+  .mo-av { width: 34px; height: 34px; border-radius: 7px; flex-shrink: 0; overflow: hidden; }
+  .mo-av img { width: 100%; height: 100%; object-fit: cover; }
+  .mo-n { font-size: 11px; font-weight: 600; color: var(--primary); }
+  .mo-t { font-size: 12px; color: var(--text-1); line-height: 1.6; margin-top: 3px; }
+  .mo-img { width: 64px; height: 64px; border-radius: 5px; overflow: hidden; display: inline-block; margin-right: 3px; margin-top: 6px; }
+  .mo-img img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* === product-detail === */
+  .pd-g { height: 90px; overflow: hidden; }
+  .pd-g img { width: 100%; height: 100%; object-fit: cover; }
+  .pd-pr { font-size: 18px; color: var(--error); font-weight: 700; }
+  .pd-ti { font-size: 14px; font-weight: 600; color: var(--text-1); margin-top: 3px; }
+  .pd-ds { font-size: 11px; color: var(--text-2); margin-top: 3px; }
+  .pd-ft { display: flex; align-items: center; gap: 6px; background: var(--surface); border-top: 1px solid var(--border); padding: 8px 10px; }
+  .pd-a { flex: 1; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-size: 11px; color: var(--text-2); }
+  .pd-a.gho { background: var(--tinted); color: var(--primary); flex: 1.2; }
+  .pd-a.pri { background: var(--primary); color: #fff; font-weight: 600; flex: 1.5; }
+
+  /* === profile-page === */
+  .pf-h { background: var(--primary); padding: 18px 14px; display: flex; align-items: center; gap: 10px; }
+  .pf-av { width: 50px; height: 50px; border-radius: 50%; border: 2px solid rgba(255,255,255,.7); overflow: hidden; }
+  .pf-av img { width: 100%; height: 100%; object-fit: cover; }
+  .pf-n { color: #fff; font-size: 16px; font-weight: 600; }
+  .pf-s { color: rgba(255,255,255,.85); font-size: 10px; margin-top: 2px; }
+
+  /* === image-card === */
+  .imc { background: var(--surface); border-radius: 12px; overflow: hidden; }
+  .imc-img { height: 120px; overflow: hidden; }
+  .imc-img img { width: 100%; height: 100%; object-fit: cover; }
+  .imc-b { padding: 10px 12px; }
+  .imc-ti { font-size: 13px; font-weight: 600; color: var(--text-1); }
+  .imc-ds { font-size: 10px; color: var(--text-2); margin-top: 3px; }
+  .imc-tag { display: inline-block; padding: 2px 7px; border-radius: 5px; background: var(--tinted); color: var(--primary); font-size: 9px; margin-right: 4px; margin-top: 6px; }
+
+  /* === search-page === */
+  .sp-bar { display: flex; align-items: center; gap: 8px; padding: 9px 10px; background: var(--surface); border-bottom: 1px solid var(--border); }
+  .sp-src { flex: 1; display: flex; align-items: center; height: 32px; background: var(--bg-page); border-radius: 16px; padding: 0 12px; font-size: 12px; color: var(--text-3); gap: 6px; }
+  .sp-act { font-size: 13px; color: var(--primary); }
+  .sp-tag { display: inline-flex; align-items: center; height: 26px; padding: 0 12px; border-radius: 13px; background: var(--surface); font-size: 11px; color: var(--text-2); margin-right: 6px; margin-bottom: 6px; }
+  .sp-tag.ht { background: var(--tinted); }
+
+  /* === login-page === */
+  .lg { flex: 1; display: flex; flex-direction: column; padding: 40px 22px 18px; }
+  .lg-logo { width: 50px; height: 50px; border-radius: 12px; background: var(--tinted); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; }
+  .lg-ti { font-size: 20px; font-weight: 700; color: var(--text-1); margin-top: 12px; }
+  .lg-su { font-size: 11px; color: var(--text-3); margin-top: 4px; }
+  .lg-ck { width: 14px; height: 14px; border-radius: 3px; background: var(--primary); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 9px; }
+
+  /* === home-page === */
+  .hp-src { height: 32px; background: var(--surface); border-radius: 16px; display: flex; align-items: center; padding: 0 14px; font-size: 11px; color: var(--text-3); gap: 6px; }
+  .hp-bn { height: 80px; border-radius: 10px; overflow: hidden; }
+  .hp-bn img { width: 100%; height: 100%; object-fit: cover; }
+  .hp-cat { display: flex; background: var(--surface); border-radius: 10px; padding: 8px 6px; }
+  .hp-ca { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .hp-ca-ic { width: 32px; height: 32px; border-radius: 8px; background: var(--tinted); display: flex; align-items: center; justify-content: center; font-size: 13px; }
+  .hp-ca-t { font-size: 8px; color: var(--text-2); }
+  .hp-goods { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .hp-gi { background: var(--surface); border-radius: 10px; overflow: hidden; }
+  .hp-gi-img { height: 70px; overflow: hidden; }
+  .hp-gi-img img { width: 100%; height: 100%; object-fit: cover; }
+  .hp-gi-b { padding: 7px 9px; }
+  .hp-gi-t { font-size: 11px; color: var(--text-1); }
+  .hp-gi-p { font-size: 13px; color: var(--error); font-weight: 600; margin-top: 3px; }
+</style>
+</head>
+<body>
+<h1>uniapp-page-components-skill · 21 组件效果预览</h1>
+<div class="sub">5 基础 + 6 业务 + 10 页面 · iPhone 12 (390×840) · 远程图片资源</div>
+<div class="grid">
+
+  <!-- === 1. base-card === -->
+  <div class="device"><div class="device-label">1. base-card · 空卡片托底</div><div class="screen">
+    <div class="page">
+      <div class="card"><div class="card-h">订单卡片（可点击）</div><div class="card-b">圆角/内边距/背景/描边/阴影全参数化，slot 自由填充。</div><div class="card-f">2026-08-05 · footer 插槽</div></div>
+      <div class="card" style="border:1px solid var(--border)"><div class="card-h">带描边 + 标题</div><div class="card-b">border="true"，1rpx 细线。</div></div>
+      <div class="card" style="box-shadow:0 4px 16px rgba(0,0,0,.08)"><div class="card-h">带阴影</div><div class="card-b">shadow="true"，按压反馈 scale/opacity。</div></div>
+    </div>
+  </div></div>
+
+  <!-- === 2. base-button === -->
+  <div class="device"><div class="device-label">2. base-button · 自定义按钮</div><div class="screen">
+    <div class="page">
+      <div class="card"><div class="card-h">类型 × 尺寸</div><div style="display:flex;gap:8px;flex-wrap:wrap"><span class="btn btn-pri">primary</span><span class="btn btn-gho">ghost</span><span class="btn btn-txt">text</span><span class="btn btn-dan">danger</span></div></div>
+      <div class="card"><div class="card-h">尺寸 sm / md / lg</div><div style="display:flex;gap:8px;align-items:center"><span class="btn btn-pri btn-sm">sm</span><span class="btn btn-pri">md</span><span class="btn btn-pri btn-lg">lg</span></div></div>
+      <div class="card"><div class="card-h">状态</div><div style="display:flex;gap:8px"><span class="btn btn-pri btn-dis">disabled</span><span class="btn btn-gho btn-dis">disabled</span></div></div>
+      <div class="card"><div class="card-h">通栏 block</div><span class="btn btn-pri btn-lg btn-blk">提交表单</span></div>
+    </div>
+  </div></div>
+
+  <!-- === 3. base-navbar === -->
+  <div class="device"><div class="device-label">3. base-navbar · 头部导航</div><div class="screen">
+    <div class="nb-status"></div>
+    <div class="nb-bar"><div class="nb-left"><i class="fa-solid fa-chevron-left"></i></div><div class="nb-title">设置</div><div class="nb-right">保存</div></div>
+    <div class="page">
+      <div class="card"><div class="card-h">状态栏适配</div><div class="card-b">status-bar-height CSS 变量 / prop 传入，吸顶+占位自动处理。</div></div>
+      <div class="card"><div class="card-h">fixed + placeholder</div><div class="card-b">fixed="true" 吸顶，placeholder="true" 占位避免内容遮挡。</div></div>
+      <div class="card"><div class="card-h">#left / #title / #right</div><div class="card-b">三个 slot 自定义任意内容。</div></div>
+    </div>
+  </div></div>
+
+  <!-- === 4. base-tabbar === -->
+  <div class="device"><div class="device-label">4. base-tabbar · 底部菜单</div><div class="screen">
+    <div class="page">
+      <div class="card"><div class="card-b">2~5 项，图标/角标，激活主题色，safe-area 适配。配合 pages.json "custom":true 替换原生 tabBar。</div></div>
+    </div>
+    <div class="tb">
+      <div class="tb-i on"><span class="fa-solid fa-house"></span><span class="tb-s">首页</span></div>
+      <div class="tb-i"><span class="fa-solid fa-layer-group"></span><span class="tb-s">分类</span></div>
+      <div class="tb-i"><span class="fa-solid fa-cart-shopping" style="position:relative"><span class="badge">3</span></span><span class="tb-s">购物车</span></div>
+      <div class="tb-i"><span class="fa-solid fa-user"></span><span class="tb-s">我的</span></div>
+    </div>
+  </div></div>
+
+  <!-- === 5. base-form-item === -->
+  <div class="device"><div class="device-label">5. base-form-item · 表单行</div><div class="screen">
+    <div class="page">
+      <div class="card">
+        <div class="fi"><div class="fi-lb"><span class="fi-star">*</span> 昵称</div><div class="fi-ct">请输入昵称</div></div>
+        <div class="fi"><div class="fi-lb">简介</div><div class="fi-ct">介绍一下自己…</div></div>
+        <div class="fi" style="border-bottom:none"><div class="fi-lb">性别</div><div class="fi-ct">请选择</div></div>
+      </div>
+      <div class="card" style="border:1px solid var(--error)">
+        <div class="fi" style="border-bottom:none"><div class="fi-lb"><span class="fi-star">*</span> 手机号</div><div class="fi-ct">请输入手机号</div></div>
+        <div class="fi-err">手机号格式不正确</div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- === 6. user-card === -->
+  <div class="device"><div class="device-label">6. user-card · 用户卡片</div><div class="screen">
+    <div class="page">
+      <div class="card"><div class="uc">
+        <div class="uc-av"><img src="https://picsum.photos/seed/user1/80" alt=""></div>
+        <div class="uc-main"><div class="uc-name">小李</div><div class="uc-sub">iOS 开发工程师</div></div>
+        <span class="btn btn-gho btn-sm">关注</span>
+      </div></div>
+      <div class="card"><div class="uc">
+        <div class="uc-av"><img src="https://picsum.photos/seed/user2/80" alt=""></div>
+        <div class="uc-main"><div class="uc-name">阿伟</div><div class="uc-sub">ID: 10086</div></div>
+        <span class="btn btn-pri btn-sm">私信</span>
+      </div></div>
+      <div class="card"><div class="uc">
+        <div class="uc-av"><img src="https://picsum.photos/seed/user3/80" alt=""></div>
+        <div class="uc-main"><div class="uc-name">小明</div><div class="uc-sub">全栈</div></div>
+      </div></div>
+    </div>
+  </div></div>
+
+  <!-- === 7. comment-item === -->
+  <div class="device"><div class="device-label">7. comment-item · 评论条</div><div class="screen">
+    <div class="page">
+      <div class="card"><div class="ci">
+        <div class="ci-av"><img src="https://picsum.photos/seed/cmt1/80" alt=""></div>
+        <div class="ci-m"><div class="ci-h"><span class="ci-n">小美</span><span class="ci-t">10 分钟前</span></div><div class="ci-c">好美！这个地方在哪里，下次一起去。</div><div class="ci-foot"><span class="ci-l on"><i class="fa-solid fa-heart" style="font-size:10px"></i> 12</span><span class="ci-r">回复</span></div></div>
+      </div></div>
+      <div class="card"><div class="ci">
+        <div class="ci-av"><img src="https://picsum.photos/seed/cmt2/80" alt=""></div>
+        <div class="ci-m"><div class="ci-h"><span class="ci-n">小李</span><span class="ci-t">5 分钟前</span></div><div class="ci-c"><span style="color:var(--primary)">小美</span><span style="color:var(--text-3)">：</span>在西湖附近，导航搜"湖畔咖啡馆"</div><div class="ci-foot"><span class="ci-l">3</span><span class="ci-r">回复</span></div></div>
+      </div></div>
+    </div>
+  </div></div>
+
+  <!-- === 8. notice-bar === -->
+  <div class="device"><div class="device-label">8. notice-bar · 通知栏</div><div class="screen">
+    <div class="page">
+      <div class="nb"><span class="nb-ic"><i class="fa-solid fa-bell"></i></span><span class="nb-t">本周新品已上线，快去看看吧！</span><span class="nb-x"><i class="fa-solid fa-xmark"></i></span></div>
+      <div class="nb" style="background:#FEF2F2"><span class="nb-ic"><i class="fa-solid fa-triangle-exclamation"></i></span><span class="nb-t">网络连接失败，请检查网络</span><span class="nb-x"><i class="fa-solid fa-xmark"></i></span></div>
+      <div class="nb"><span class="nb-ic"><i class="fa-solid fa-gift"></i></span><span class="nb-t" style="animation:nb-run 6s linear infinite">限时优惠活动进行中，全场低至5折！</span></div>
+      <div class="nb" style="background:var(--primary)"><span class="nb-ic" style="color:#fff"><i class="fa-solid fa-bullhorn"></i></span><span class="nb-t" style="color:#fff">系统升级通知：今晚 02:00-04:00</span><span class="nb-x" style="color:rgba(255,255,255,.6)"><i class="fa-solid fa-xmark"></i></span></div>
+    </div>
+  </div></div>
+
+  <!-- === 9. setting-item === -->
+  <div class="device"><div class="device-label">9. setting-item · 设置行</div><div class="screen">
+    <div class="page">
+      <div class="card">
+        <div class="si"><div class="si-ic"><i class="fa-solid fa-gear"></i></div><div class="si-lb">设置</div><span class="si-aw"><i class="fa-solid fa-chevron-right"></i></span></div>
+        <div class="si"><div class="si-ic" style="background:linear-gradient(135deg,#fecaca,#f87171);color:#fff"><i class="fa-solid fa-bell"></i></div><div class="si-lb">消息通知</div></div>
+        <div class="si"><div class="si-ic" style="background:linear-gradient(135deg,#d1fae5,#6ee7b7);color:#065f46"><i class="fa-solid fa-ticket"></i></div><div class="si-lb">优惠券</div><span class="si-bd">5</span><span class="si-aw"><i class="fa-solid fa-chevron-right"></i></span></div>
+        <div class="si"><div class="si-ic"><i class="fa-solid fa-code-branch"></i></div><div class="si-lb">版本号</div><span class="si-vl">1.2.0</span></div>
+      </div>
+      <div class="card">
+        <div class="si"><div class="si-lb">收货地址</div><span class="si-aw"><i class="fa-solid fa-chevron-right"></i></span></div>
+        <div class="si"><div class="si-lb">我的收藏</div><span class="si-aw"><i class="fa-solid fa-chevron-right"></i></span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- === 10. empty === -->
+  <div class="device"><div class="device-label">10. empty · 空状态</div><div class="screen" style="background:var(--bg-page)">
+    <div class="em"><div class="em-ph"><i class="fa-solid fa-inbox"></i></div><div class="em-t">购物车是空的</div><div class="em-d">去挑选心仪的商品吧</div><span class="btn btn-gho" style="margin-top:14px">去逛逛</span></div>
+  </div></div>
+
+  <!-- === 11. result-page === -->
+  <div class="device"><div class="device-label">11. result-page · 结果页</div><div class="screen">
+    <div class="rp"><div class="rp-ic ok"><i class="fa-solid fa-check"></i></div><div class="rp-t">支付成功</div><div class="rp-d">订单号 A20260804 · 预计 3 天内发货</div><div class="rp-btns"><span class="btn btn-pri btn-lg btn-blk">查看订单</span><span class="btn btn-gho btn-lg btn-blk">返回首页</span></div></div>
+  </div></div>
+  <div class="device"><div class="device-label">11b. result-page · 失败态</div><div class="screen">
+    <div class="rp"><div class="rp-ic err"><i class="fa-solid fa-xmark"></i></div><div class="rp-t">支付失败</div><div class="rp-d">余额不足，请更换支付方式</div><div class="rp-btns"><span class="btn btn-pri btn-lg btn-blk">重新支付</span></div></div>
+  </div></div>
+
+  <!-- === 12. tab-list-page === -->
+  <div class="device"><div class="device-label">12. tab-list-page · 订单列表</div><div class="screen">
+    <div class="tabs"><div class="tab on">全部</div><div class="tab">待付款</div><div class="tab">已发货</div><div class="tab">已完成</div></div>
+    <div class="page">
+      <div class="ord"><div class="ord-h"><span class="ord-no">订单号：A20260801001</span><span class="ord-st">已发货</span></div><div class="ord-g"><div class="ord-img"><img src="https://picsum.photos/seed/goods1/200" alt=""></div><div><div class="ord-ti">智能保温杯 500ml</div><div class="ord-pr">¥129.00</div></div></div></div>
+      <div class="ord"><div class="ord-h"><span class="ord-no">订单号：A20260801002</span><span style="font-size:10px;color:var(--error)">待付款</span></div><div class="ord-g"><div class="ord-img"><img src="https://picsum.photos/seed/goods2/200" alt=""></div><div><div class="ord-ti">无线蓝牙耳机</div><div class="ord-pr">¥399.00</div></div></div></div>
+    </div>
+  </div></div>
+
+  <!-- === 13. chat-page === -->
+  <div class="device"><div class="device-label">13. chat-page · 聊天</div><div class="screen">
+    <div class="nb-status"></div>
+    <div class="nb-bar"><div class="nb-left"><i class="fa-solid fa-chevron-left"></i></div><div class="nb-title">小明</div><div class="nb-right"><i class="fa-solid fa-ellipsis"></i></div></div>
+    <div style="flex:1;padding:14px;display:flex;flex-direction:column;gap:12px;overflow:hidden">
+      <div class="ch-row other"><div class="ch-av"><img src="https://picsum.photos/seed/chat1/80" alt=""></div><div class="ch-bub">你好，在吗？</div></div>
+      <div class="ch-row me"><div class="ch-av"><img src="https://picsum.photos/seed/chat2/80" alt=""></div><div class="ch-bub">在的，刚忙完</div></div>
+      <div class="ch-row other"><div class="ch-av"><img src="https://picsum.photos/seed/chat1/80" alt=""></div><div class="ch-bub">晚上一起吃饭？</div></div>
+    </div>
+    <div class="ch-in"><div class="ch-plus"><i class="fa-solid fa-plus"></i></div><div class="ch-ipt">输入消息</div><div class="ch-send">发送</div></div>
+  </div></div>
+
+  <!-- === 14. moments-page === -->
+  <div class="device"><div class="device-label">14. moments-page · 朋友圈</div><div class="screen">
+    <div class="mo-cv"><div class="mo-me">阿伟<div class="mo-me-av"><img src="https://picsum.photos/seed/me/80" alt=""></div></div></div>
+    <div style="flex:1;overflow:auto;padding:0;">
+      <div style="display:flex;gap:10px;padding:12px 14px"><div class="mo-av"><img src="https://picsum.photos/seed/friend1/80" alt=""></div><div style="flex:1"><div class="mo-n">小李</div><div class="mo-t">今天天气真好，出来走走</div><div><span class="mo-img"><img src="https://picsum.photos/seed/pic1a/200" alt=""></span><span class="mo-img"><img src="https://picsum.photos/seed/pic1b/200" alt=""></span><span class="mo-img"><img src="https://picsum.photos/seed/pic1c/200" alt=""></span></div></div></div>
+    </div>
+  </div></div>
+
+  <!-- === 15. product-detail-page === -->
+  <div class="device"><div class="device-label">15. product-detail-page · 商品详情</div><div class="screen">
+    <div class="pd-g"><img src="https://picsum.photos/seed/prod-detail/390/200" alt=""></div>
+    <div class="page">
+      <div class="card"><div class="pd-pr">¥129.00</div><div class="pd-ti">智能保温杯 500ml</div><div class="pd-ds">316 不锈钢内胆，保温 12 小时</div></div>
+      <div class="card"><div class="card-h">商品参数</div><div class="fi"><div class="si-lb">容量</div><span class="si-vl">500ml</span></div><div class="fi" style="border-bottom:none"><div class="si-lb">材质</div><span class="si-vl">316 不锈钢</span></div></div>
+    </div>
+    <div class="pd-ft"><div class="pd-a">客服</div><div class="pd-a">购物车</div><div class="pd-a gho">加入购物车</div><div class="pd-a pri">立即购买</div></div>
+  </div></div>
+
+  <!-- === 16. profile-page === -->
+  <div class="device"><div class="device-label">16. profile-page · 我的</div><div class="screen">
+    <div class="pf-h"><div class="pf-av"><img src="https://picsum.photos/seed/me/80" alt=""></div><div><div class="pf-n">阿伟</div><div class="pf-s">ID: 10086</div></div></div>
+    <div class="page" style="margin-top:-10px">
+      <div class="card">
+        <div class="si"><div class="si-ic"><i class="fa-solid fa-receipt"></i></div><div class="si-lb">我的订单</div><span class="si-vl">3</span><span class="si-aw"><i class="fa-solid fa-chevron-right"></i></span></div>
+        <div class="si"><div class="si-ic"><i class="fa-solid fa-location-dot"></i></div><div class="si-lb">收货地址</div><span class="si-aw"><i class="fa-solid fa-chevron-right"></i></span></div>
+        <div class="si"><div class="si-ic"><i class="fa-solid fa-heart"></i></div><div class="si-lb">我的收藏</div><span class="si-aw"><i class="fa-solid fa-chevron-right"></i></span></div>
+      </div>
+      <div class="card">
+        <div class="si"><div class="si-ic"><i class="fa-solid fa-ticket"></i></div><div class="si-lb">优惠券</div><span class="si-bd">5</span><span class="si-aw"><i class="fa-solid fa-chevron-right"></i></span></div>
+        <div class="si"><div class="si-ic"><i class="fa-solid fa-gear"></i></div><div class="si-lb">设置</div><span class="si-aw"><i class="fa-solid fa-chevron-right"></i></span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- === 17. image-card === -->
+  <div class="device"><div class="device-label">17. image-card · 图片卡片</div><div class="screen">
+    <div class="page">
+      <div class="imc"><div class="imc-img"><img src="https://picsum.photos/seed/imgcard1/400/300" alt=""></div><div class="imc-b"><div class="imc-ti">智能保温杯 500ml</div><div class="imc-ds">316 不锈钢内胆，保温 12 小时</div><span class="imc-tag">热卖</span><span class="imc-tag">包邮</span></div></div>
+      <div class="imc"><div class="imc-img"><img src="https://picsum.photos/seed/imgcard2/400/300" alt=""></div><div class="imc-b"><div class="imc-ti">无线蓝牙耳机</div><div class="imc-ds">Hi-Fi 音质，40 小时续航</div></div></div>
+    </div>
+  </div></div>
+
+  <!-- === 18. search-page === -->
+  <div class="device"><div class="device-label">18. search-page · 搜索</div><div class="screen">
+    <div class="sp-bar"><div class="sp-src"><i class="fa-solid fa-magnifying-glass"></i> 搜索商品</div><div class="sp-act">搜索</div></div>
+    <div style="flex:1;overflow:auto;padding:14px">
+      <div style="font-size:12px;font-weight:600;color:var(--text-1);margin-bottom:8px"><i class="fa-solid fa-fire"></i> 热门搜索</div>
+      <span class="sp-tag ht"># 保温杯</span><span class="sp-tag ht"># 蓝牙音箱</span><span class="sp-tag"># 数据线</span>
+      <div style="margin-top:14px"><div style="font-size:12px;font-weight:600;color:var(--text-1);margin-bottom:6px">搜索结果</div>
+        <div class="si"><span class="si-lb">智能保温杯 500ml</span><span style="color:var(--error);font-size:13px">¥129.00</span></div>
+        <div class="si" style="border-bottom:none"><span class="si-lb">无线蓝牙耳机</span><span style="color:var(--error);font-size:13px">¥399.00</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- === 19. form-page === -->
+  <div class="device"><div class="device-label">19. form-page · 表单页</div><div class="screen">
+    <div class="nb-status"></div>
+    <div class="nb-bar"><div class="nb-left"><i class="fa-solid fa-chevron-left"></i></div><div class="nb-title">编辑资料</div><div class="nb-right"></div></div>
+    <div class="page">
+      <div class="card">
+        <div class="fi"><div class="fi-lb"><span class="fi-star">*</span> 昵称</div><div class="fi-ct">请输入昵称</div></div>
+        <div class="fi"><div class="fi-lb">简介</div><div class="fi-ct">介绍一下自己…</div></div>
+        <div class="fi" style="border-bottom:none"><div class="fi-lb">性别</div><div class="fi-ct">请选择</div></div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;background:var(--surface);border-top:1px solid var(--border);padding:8px 12px;padding-bottom:calc(8px + 12px)"><span class="btn btn-pri btn-lg btn-blk">提交</span></div>
+  </div></div>
+
+  <!-- === 20. login-page === -->
+  <div class="device"><div class="device-label">20. login-page · 登录</div><div class="screen">
+    <div class="lg">
+      <div style="display:flex;flex-direction:column;align-items:center">
+        <div class="lg-logo"><i class="fa-solid fa-user-large"></i></div>
+        <div class="lg-ti">欢迎登录</div><div class="lg-su">新用户默认注册</div>
+      </div>
+      <div style="margin-top:24px">
+        <div class="fi"><div class="fi-lb">手机号</div><div class="fi-ct">请输入手机号</div></div>
+        <div class="fi"><div class="fi-lb">验证码</div><div class="fi-ct" style="flex:1">请输入验证码</div><span style="font-size:11px;color:var(--primary)">获取验证码</span></div>
+      </div>
+      <div style="margin-top:auto">
+        <div style="display:flex;align-items:center;justify-content:center;gap:5px;margin:12px 0"><div class="lg-ck"><i class="fa-solid fa-check"></i></div><span style="font-size:9px;color:var(--text-3)">我已阅读并同意《用户协议》和《隐私政策》</span></div>
+        <span class="btn btn-pri btn-lg btn-blk">登录</span>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:18px"><div style="flex:1;height:1px;background:var(--border)"></div><span style="font-size:11px;color:var(--text-2)">微信一键登录</span><div style="flex:1;height:1px;background:var(--border)"></div></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- === 21. home-page === -->
+  <div class="device"><div class="device-label">21. home-page · 商城首页</div><div class="screen">
+    <div class="nb-status"></div>
+    <div class="nb-bar"><div class="nb-left"></div><div class="nb-title">商城</div><div class="nb-right"><i class="fa-solid fa-magnifying-glass"></i></div></div>
+    <div class="page">
+      <div class="hp-src"><i class="fa-solid fa-magnifying-glass"></i> 搜索商品</div>
+      <div class="hp-bn"><img src="https://picsum.photos/seed/banner/390/200" alt=""></div>
+      <div class="hp-cat">
+        <div class="hp-ca"><div class="hp-ca-ic"><i class="fa-solid fa-house"></i></div><span class="hp-ca-t">首页</span></div>
+        <div class="hp-ca"><div class="hp-ca-ic"><i class="fa-solid fa-layer-group"></i></div><span class="hp-ca-t">分类</span></div>
+        <div class="hp-ca"><div class="hp-ca-ic"><i class="fa-solid fa-cart-shopping"></i></div><span class="hp-ca-t">购物车</span></div>
+        <div class="hp-ca"><div class="hp-ca-ic"><i class="fa-solid fa-user"></i></div><span class="hp-ca-t">我的</span></div>
+      </div>
+      <div class="hp-goods">
+        <div class="hp-gi"><div class="hp-gi-img"><img src="https://picsum.photos/seed/hp1/200" alt=""></div><div class="hp-gi-b"><div class="hp-gi-t">智能保温杯</div><div class="hp-gi-p">¥129</div></div></div>
+        <div class="hp-gi"><div class="hp-gi-img"><img src="https://picsum.photos/seed/hp2/200" alt=""></div><div class="hp-gi-b"><div class="hp-gi-t">无线耳机</div><div class="hp-gi-p">¥399</div></div></div>
+      </div>
+    </div>
+    <div class="tb">
+      <div class="tb-i on"><span class="fa-solid fa-house"></span><span class="tb-s">首页</span></div>
+      <div class="tb-i"><span class="fa-solid fa-layer-group"></span><span class="tb-s">分类</span></div>
+      <div class="tb-i"><span class="fa-solid fa-cart-shopping" style="position:relative"><span class="badge">3</span></span><span class="tb-s">购物车</span></div>
+      <div class="tb-i"><span class="fa-solid fa-user"></span><span class="tb-s">我的</span></div>
+    </div>
+  </div></div>
+
+</div>
+
+<style>
+  @keyframes nb-run { 0% { transform: translateX(0); } 100% { transform: translateX(-30%); } }
+</style>
+</body>
+</html>

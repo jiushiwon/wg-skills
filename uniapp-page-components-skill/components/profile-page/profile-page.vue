@@ -13,16 +13,7 @@
       <slot name="header">
         <view class="profile-user" @click="$emit('headerClick')">
           <view class="profile-avatar">
-            <image
-              v-if="userInfo.avatar && !avatarError"
-              class="profile-avatar-img"
-              :src="userInfo.avatar"
-              mode="aspectFill"
-              @error="avatarError = true"
-            />
-            <view v-else class="profile-avatar-ph">
-              <text class="profile-avatar-ph-text">{{ (userInfo.nickname || '我').slice(0, 1) }}</text>
-            </view>
+            <base-avatar :src="userInfo.avatar" :nickname="userInfo.nickname || '我'" size="lg" />
           </view>
           <view class="profile-user-info">
             <text class="profile-user-name">{{ userInfo.nickname || '未登录' }}</text>
@@ -78,8 +69,6 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
-
 interface UserInfo {
   avatar?: string
   nickname?: string
@@ -153,7 +142,6 @@ const emit = defineEmits<{
   itemClick: [item: ProfileItem, group: ProfileGroup]
 }>()
 
-const avatarError = ref(false)
 const itemIconErrors = reactive(new Set<string | number>())
 
 function onItemIconError(item: ProfileItem) {
@@ -179,30 +167,9 @@ function onItemIconError(item: ProfileItem) {
 
 .profile-avatar {
   flex-shrink: 0;
-  width: var(--height-avatar-lg);
-  height: var(--height-avatar-lg);
   border-radius: var(--radius-avatar);
   overflow: hidden;
   border: 4rpx solid rgba(255, 255, 255, 0.6);
-}
-
-.profile-avatar-img {
-  width: 100%;
-  height: 100%;
-}
-
-.profile-avatar-ph {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  background: var(--color-bg-tinted);
-}
-
-.profile-avatar-ph-text {
-  font-size: var(--font-2xl);
-  color: var(--color-primary);
 }
 
 .profile-user-info {

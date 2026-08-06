@@ -52,16 +52,7 @@
           >
             <slot name="message" :msg="msg" :index="index">
               <view class="chat-avatar" @click="$emit('avatarClick', msg)">
-                <image
-                  v-if="msg.avatar && !isAvatarError(msg)"
-                  class="chat-avatar-img"
-                  :src="msg.avatar"
-                  mode="aspectFill"
-                  @error="onAvatarError(msg)"
-                />
-                <view v-else class="chat-avatar-ph">
-                  <text class="chat-avatar-ph-text">{{ (msg.nickname || (msg.isSelf ? '我' : '友')).slice(0, 1) }}</text>
-                </view>
+                <base-avatar :src="msg.avatar" :nickname="msg.nickname || (msg.isSelf ? '我' : '友')" size="sm" />
               </view>
 
               <view class="chat-main">
@@ -116,7 +107,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
 
 interface ChatMessage {
   id: string | number
@@ -175,7 +166,6 @@ const inputText = ref('')
 const inputFocus = ref(false)
 const plusOpen = ref(false)
 const scrollIntoView = ref('')
-const avatarErrors = reactive(new Set<string | number>())
 let upperGuard = 0
 
 const sendButtonVisible = computed(
@@ -197,14 +187,6 @@ function onSend() {
   emit('send', text)
   inputText.value = ''
   plusOpen.value = false
-}
-
-function isAvatarError(msg: ChatMessage) {
-  return avatarErrors.has(msg.id)
-}
-
-function onAvatarError(msg: ChatMessage) {
-  avatarErrors.add(msg.id)
 }
 
 function scrollToBottom() {
@@ -307,29 +289,6 @@ onMounted(scrollToBottom)
 
 .chat-avatar {
   flex-shrink: 0;
-  width: var(--height-avatar-sm);
-  height: var(--height-avatar-sm);
-  border-radius: var(--radius-avatar);
-  overflow: hidden;
-}
-
-.chat-avatar-img {
-  width: 100%;
-  height: 100%;
-}
-
-.chat-avatar-ph {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  background: var(--color-bg-tinted);
-}
-
-.chat-avatar-ph-text {
-  font-size: var(--font-lg);
-  color: var(--color-primary);
 }
 
 .chat-main {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>wg-skills — 前端/uniapp 技能体系</title>
+    <title>wg-skills 鈥?鍓嶇/uniapp 鎶€鑳戒綋绯?/title>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
@@ -30,7 +30,7 @@
             line-height: 1.6;
         }
 
-        /* ── Header ── */
+        /* 鈹€鈹€ Header 鈹€鈹€ */
         .header {
             background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1e40af 100%);
             color: #fff;
@@ -71,10 +71,10 @@
             margin-top: 2px;
         }
 
-        /* ── Container ── */
+        /* 鈹€鈹€ Container 鈹€鈹€ */
         .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
 
-        /* ── Phase Sections ── */
+        /* 鈹€鈹€ Phase Sections 鈹€鈹€ */
         .phase { margin: 48px 0; }
         .phase-header {
             display: flex;
@@ -109,7 +109,7 @@
             margin-bottom: 20px;
         }
 
-        /* ── Skill Cards ── */
+        /* 鈹€鈹€ Skill Cards 鈹€鈹€ */
         .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
         .card {
             background: #fff;
@@ -154,7 +154,7 @@
             border: 1px solid var(--gray-200);
         }
 
-        /* ── Interconnection Diagram ── */
+        /* 鈹€鈹€ Interconnection Diagram 鈹€鈹€ */
         .interconn {
             background: #fff;
             border: 1px solid var(--gray-200);
@@ -194,7 +194,7 @@
             font-weight: 700;
         }
 
-        /* ── Typical Workflows ── */
+        /* 鈹€鈹€ Typical Workflows 鈹€鈹€ */
         .workflows {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
@@ -240,7 +240,7 @@
             color: var(--gray-500);
         }
 
-        /* ── Footer ── */
+        /* 鈹€鈹€ Footer 鈹€鈹€ */
         .footer {
             text-align: center;
             padding: 40px 24px;
@@ -252,7 +252,7 @@
         .footer a { color: var(--blue); text-decoration: none; }
         .footer a:hover { text-decoration: underline; }
 
-        /* ── Responsive ── */
+        /* 鈹€鈹€ Responsive 鈹€鈹€ */
         @media (max-width: 768px) {
             .header h1 { font-size: 1.6rem; }
             .header .stats { gap: 20px; }
@@ -265,80 +265,79 @@
 </head>
 <body>
 
-<!-- ═══════════ Header ═══════════ -->
+<!-- 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?Header 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?-->
 <header class="header">
-    <h1><span>wg-skills</span> 前端/uniapp 技能体系</h1>
-    <p class="subtitle">一套覆盖项目启动、开发编码、质量保障到维护升级全生命周期的 AI 编程技能集合。让 AI 更懂你的 uniapp 与前端开发需求。</p>
+    <h1><span>wg-skills</span> 鍓嶇/uniapp 鎶€鑳戒綋绯?/h1>
+    <p class="subtitle">涓€濂楄鐩栭」鐩惎鍔ㄣ€佸紑鍙戠紪鐮併€佽川閲忎繚闅滃埌缁存姢鍗囩骇鍏ㄧ敓鍛藉懆鏈熺殑 AI 缂栫▼鎶€鑳介泦鍚堛€傝 AI 鏇存噦浣犵殑 uniapp 涓庡墠绔紑鍙戦渶姹傘€?/p>
     <div class="stats">
         <div class="stat">
             <div class="stat-num">16</div>
-            <div class="stat-label">前端/uniapp 技能</div>
+            <div class="stat-label">鍓嶇/uniapp 鎶€鑳?/div>
         </div>
         <div class="stat">
             <div class="stat-num">4</div>
-            <div class="stat-label">开发阶段</div>
+            <div class="stat-label">寮€鍙戦樁娈?/div>
         </div>
         <div class="stat">
             <div class="stat-num">6+10</div>
-            <div class="stat-label">通用前端 + uniapp 专属</div>
+            <div class="stat-label">閫氱敤鍓嶇 + uniapp 涓撳睘</div>
         </div>
     </div>
 </header>
 
 <div class="container">
 
-    <!-- ═══════════ Interconnection Overview ═══════════ -->
+    <!-- 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?Interconnection Overview 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?-->
     <section class="interconn">
-        <h2>技能协作全景</h2>
+        <h2>鎶€鑳藉崗浣滃叏鏅?/h2>
         <div class="flow-row">
-            <span class="flow-box fb-blue">项目初始化</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-box fb-green">规范驱动开发</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-box fb-amber">审计与治理</span>
-            <span class="flow-arrow">→</span>
-            <span class="flow-box fb-purple">升级与维护</span>
+            <span class="flow-box fb-blue">椤圭洰鍒濆鍖?/span>
+            <span class="flow-arrow">鈫?/span>
+            <span class="flow-box fb-green">瑙勮寖椹卞姩寮€鍙?/span>
+            <span class="flow-arrow">鈫?/span>
+            <span class="flow-box fb-amber">瀹¤涓庢不鐞?/span>
+            <span class="flow-arrow">鈫?/span>
+            <span class="flow-box fb-purple">鍗囩骇涓庣淮鎶?/span>
         </div>
         <p style="text-align:center;color:var(--gray-500);font-size:0.85rem;margin-top:12px;">
-            每个阶段有专门的技能负责执行、规范和审查，阶段之间通过共享规范文件（api-contract.md、Design Tokens、component-commands）串联。
-        </p>
+            姣忎釜闃舵鏈変笓闂ㄧ殑鎶€鑳借礋璐ｆ墽琛屻€佽鑼冨拰瀹℃煡锛岄樁娈典箣闂撮€氳繃鍏变韩瑙勮寖鏂囦欢锛坅pi-contract.md銆丏esign Tokens銆乧omponent-commands锛変覆鑱斻€?        </p>
     </section>
 
-    <!-- ═══════════ Phase 1: 项目启动 ═══════════ -->
+    <!-- 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?Phase 1: 椤圭洰鍚姩 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?-->
     <section class="phase phase-1">
         <div class="phase-header">
             <div class="phase-num">1</div>
-            <h2 class="phase-title">项目启动 — 从零到一的脚手架</h2>
+            <h2 class="phase-title">椤圭洰鍚姩 鈥?浠庨浂鍒颁竴鐨勮剼鎵嬫灦</h2>
         </div>
-        <p class="phase-desc">快速搭建标准化 uniapp 项目骨架，或从零生成 UI 页面。解决「新建项目不知道该做什么」的问题。</p>
+        <p class="phase-desc">蹇€熸惌寤烘爣鍑嗗寲 uniapp 椤圭洰楠ㄦ灦锛屾垨浠庨浂鐢熸垚 UI 椤甸潰銆傝В鍐炽€屾柊寤洪」鐩笉鐭ラ亾璇ュ仛浠€涔堛€嶇殑闂銆?/p>
         <div class="cards">
 
             <div class="card">
-                <div class="card-icon" style="background:#dbeafe;">📱</div>
+                <div class="card-icon" style="background:#dbeafe;">馃摫</div>
                 <h3>uniapp-app-generate-skill</h3>
-                <p>从零生成标准化 uni-app 项目（微信小程序/H5/App 三端），Vue3 + TS + Pinia + SCSS，内置主题色阶与跨平台抽象层。</p>
+                <p>浠庨浂鐢熸垚鏍囧噯鍖?uni-app 椤圭洰锛堝井淇″皬绋嬪簭/H5/App 涓夌锛夛紝Vue3 + TS + Pinia + SCSS锛屽唴缃富棰樿壊闃朵笌璺ㄥ钩鍙版娊璞″眰銆?/p>
                 <div class="triggers">
-                    <span class="tag">帮我做一个 uniapp 小程序</span>
-                    <span class="tag">初始化 uniapp 项目</span>
+                    <span class="tag">甯垜鍋氫竴涓?uniapp 灏忕▼搴?/span>
+                    <span class="tag">鍒濆鍖?uniapp 椤圭洰</span>
                 </div>
             </div>
 
             <div class="card">
-                <div class="card-icon" style="background:#dbeafe;">🧱</div>
+                <div class="card-icon" style="background:#dbeafe;">馃П</div>
                 <h3>ui-template-builder-skill</h3>
-                <p>37 套预置页面模板（个人中心/商品详情/登录页/数据大屏等），5 套风格可选，内置 Mock 数据，一键换肤。</p>
+                <p>37 濂楅缃〉闈㈡ā鏉匡紙涓汉涓績/鍟嗗搧璇︽儏/鐧诲綍椤?鏁版嵁澶у睆绛夛級锛? 濂楅鏍煎彲閫夛紝鍐呯疆 Mock 鏁版嵁锛屼竴閿崲鑲ゃ€?/p>
                 <div class="triggers">
-                    <span class="tag">做个个人中心页面</span>
-                    <span class="tag">生成商品详情页</span>
+                    <span class="tag">鍋氫釜涓汉涓績椤甸潰</span>
+                    <span class="tag">鐢熸垚鍟嗗搧璇︽儏椤?/span>
                 </div>
             </div>
 
             <div class="card">
-                <div class="card-icon" style="background:#dbeafe;">🎨</div>
+                <div class="card-icon" style="background:#dbeafe;">馃帹</div>
                 <h3>frontend-ui-foundry</h3>
-                <p>综合性前端 UI 技能：8 大场景、6 大技术栈、品牌套用、Design Token 提取。forge / optimize / audit 等 8 子命令。</p>
+                <p>缁煎悎鎬у墠绔?UI 鎶€鑳斤細8 澶у満鏅€? 澶ф妧鏈爤銆佸搧鐗屽鐢ㄣ€丏esign Token 鎻愬彇銆俧orge / optimize / audit 绛?8 瀛愬懡浠ゃ€?/p>
                 <div class="triggers">
-                    <span class="tag">用 foundry 做一个落地页</span>
+                    <span class="tag">鐢?foundry 鍋氫竴涓惤鍦伴〉</span>
                     <span class="tag">/frontend-ui-foundry</span>
                 </div>
             </div>
@@ -346,288 +345,288 @@
         </div>
     </section>
 
-    <!-- ═══════════ Phase 2: 开发编码 ═══════════ -->
+    <!-- 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?Phase 2: 寮€鍙戠紪鐮?鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?-->
     <section class="phase phase-2">
         <div class="phase-header">
             <div class="phase-num">2</div>
-            <h2 class="phase-title">开发编码 — 规范驱动的高效编写</h2>
+            <h2 class="phase-title">寮€鍙戠紪鐮?鈥?瑙勮寖椹卞姩鐨勯珮鏁堢紪鍐?/h2>
         </div>
-        <p class="phase-desc">通过开发规范、设计系统、主题系统、请求层封装和组件指令，确保团队编写风格统一的代码。</p>
+        <p class="phase-desc">閫氳繃寮€鍙戣鑼冦€佽璁＄郴缁熴€佷富棰樼郴缁熴€佽姹傚眰灏佽鍜岀粍浠舵寚浠わ紝纭繚鍥㈤槦缂栧啓椋庢牸缁熶竴鐨勪唬鐮併€?/p>
         <div class="cards">
 
             <div class="card">
-                <div class="card-icon" style="background:#d1fae5;">📐</div>
+                <div class="card-icon" style="background:#d1fae5;">馃搻</div>
                 <h3>uniapp-standard-skill</h3>
-                <p>20 条红线规则、目录结构、接口封装、状态管理、路由规范、组件通信、埋点等 8 份详细规范文档。</p>
+                <p>20 鏉＄孩绾胯鍒欍€佺洰褰曠粨鏋勩€佹帴鍙ｅ皝瑁呫€佺姸鎬佺鐞嗐€佽矾鐢辫鑼冦€佺粍浠堕€氫俊銆佸煁鐐圭瓑 8 浠借缁嗚鑼冩枃妗ｃ€?/p>
                 <div class="triggers">
                     <span class="tag">/uniapp-standard</span>
-                    <span class="tag">接口怎么写</span>
+                    <span class="tag">鎺ュ彛鎬庝箞鍐?/span>
                 </div>
             </div>
 
             <div class="card">
-                <div class="card-icon" style="background:#d1fae5;">🎯</div>
+                <div class="card-icon" style="background:#d1fae5;">馃幆</div>
                 <h3>uniapp-style-skill</h3>
-                <p>Design Tokens 四层架构、排版/间距/语义变量、SCSS 函数、10+ 组件规范、深色模式与屏幕适配。支持设计审计与自动修复。</p>
+                <p>Design Tokens 鍥涘眰鏋舵瀯銆佹帓鐗?闂磋窛/璇箟鍙橀噺銆丼CSS 鍑芥暟銆?0+ 缁勪欢瑙勮寖銆佹繁鑹叉ā寮忎笌灞忓箷閫傞厤銆傛敮鎸佽璁″璁′笌鑷姩淇銆?/p>
                 <div class="triggers">
                     <span class="tag">/uniapp-design</span>
-                    <span class="tag">设计审计</span>
+                    <span class="tag">璁捐瀹¤</span>
                 </div>
             </div>
 
             <div class="card">
-                <div class="card-icon" style="background:#d1fae5;">🖌️</div>
+                <div class="card-icon" style="background:#d1fae5;">馃枌锔?/div>
                 <h3>uniapp-theme-skill</h3>
-                <p>动态色阶生成（任意 HEX 输入）、7 种预设主题、三维度一键切换换肤，强制统一硬编码颜色。</p>
+                <p>鍔ㄦ€佽壊闃剁敓鎴愶紙浠绘剰 HEX 杈撳叆锛夈€? 绉嶉璁句富棰樸€佷笁缁村害涓€閿垏鎹㈡崲鑲わ紝寮哄埗缁熶竴纭紪鐮侀鑹层€?/p>
                 <div class="triggers">
                     <span class="tag">/uniapp-theme</span>
-                    <span class="tag">添加主题系统，主色 #2563EB</span>
+                    <span class="tag">娣诲姞涓婚绯荤粺锛屼富鑹?#2563EB</span>
                 </div>
             </div>
 
             <div class="card">
-                <div class="card-icon" style="background:#d1fae5;">📡</div>
+                <div class="card-icon" style="background:#d1fae5;">馃摗</div>
                 <h3>uniapp-request-skill</h3>
-                <p>统一 request.ts 封装：鉴权拦截自动注入 Token、401 刷新重试、并发去重、防抖、Mock、SSE 流式请求。</p>
+                <p>缁熶竴 request.ts 灏佽锛氶壌鏉冩嫤鎴嚜鍔ㄦ敞鍏?Token銆?01 鍒锋柊閲嶈瘯銆佸苟鍙戝幓閲嶃€侀槻鎶栥€丮ock銆丼SE 娴佸紡璇锋眰銆?/p>
                 <div class="triggers">
                     <span class="tag">/uniapp-request</span>
-                    <span class="tag">request.ts 怎么写</span>
+                    <span class="tag">request.ts 鎬庝箞鍐?/span>
                 </div>
             </div>
 
             <div class="card">
-                <div class="card-icon" style="background:#d1fae5;">🔐</div>
+                <div class="card-icon" style="background:#d1fae5;">馃攼</div>
                 <h3>uniapp-components-skill</h3>
-                <p>登录鉴权与安全规范：认证服务架构、Token 管理、401/403 并发去重、登出回跳、接口/数据/代码安全。</p>
+                <p>鐧诲綍閴存潈涓庡畨鍏ㄨ鑼冿細璁よ瘉鏈嶅姟鏋舵瀯銆乀oken 绠＄悊銆?01/403 骞跺彂鍘婚噸銆佺櫥鍑哄洖璺炽€佹帴鍙?鏁版嵁/浠ｇ爜瀹夊叏銆?/p>
                 <div class="triggers">
                     <span class="tag">/uniapp-components</span>
-                    <span class="tag">登录鉴权怎么做</span>
+                    <span class="tag">鐧诲綍閴存潈鎬庝箞鍋?/span>
                 </div>
             </div>
 
             <div class="card">
-                <div class="card-icon" style="background:#d1fae5;">🧱</div>
+                <div class="card-icon" style="background:#d1fae5;">馃П</div>
                 <h3>uniapp-page-components-skill</h3>
-                <p>常用组件化页面技能：21 个组件（空卡片/按钮/头部导航/底部菜单/表单行 + 用户卡片/评论条/通知栏/设置行/空状态/结果页 + 列表/聊天/朋友圈/详情/我的/图片卡/搜索/表单/登录/首页）。BaseCard 托底，slot 自由填充，主题自动检测对齐 + 替换 tabBar/导航栏。</p>
+                <p>甯哥敤缁勪欢鍖栭〉闈㈡妧鑳斤細21 涓粍浠讹紙绌哄崱鐗?鎸夐挳/澶撮儴瀵艰埅/搴曢儴鑿滃崟/琛ㄥ崟琛?+ 鐢ㄦ埛鍗＄墖/璇勮鏉?閫氱煡鏍?璁剧疆琛?绌虹姸鎬?缁撴灉椤?+ 鍒楄〃/鑱婂ぉ/鏈嬪弸鍦?璇︽儏/鎴戠殑/鍥剧墖鍗?鎼滅储/琛ㄥ崟/鐧诲綍/棣栭〉锛夈€侭aseCard 鎵樺簳锛宻lot 鑷敱濉厖锛屼富棰樿嚜鍔ㄦ娴嬪榻?+ 鏇挎崲 tabBar/瀵艰埅鏍忋€?/p>
                 <div class="triggers">
                     <span class="tag">/uniapp-page-components</span>
-                    <span class="tag">帮我做个聊天页</span>
-                    <span class="tag">订单列表页</span>
-                    <span class="tag">朋友圈 / 我的页面</span>
-                    <span class="tag">登录页 / 搜索页</span>
-                    <span class="tag">卡片圆角调整</span>
-                    <span class="tag">自定义按钮 / 底部菜单</span>
+                    <span class="tag">甯垜鍋氫釜鑱婂ぉ椤?/span>
+                    <span class="tag">璁㈠崟鍒楄〃椤?/span>
+                    <span class="tag">鏈嬪弸鍦?/ 鎴戠殑椤甸潰</span>
+                    <span class="tag">鐧诲綍椤?/ 鎼滅储椤?/span>
+                    <span class="tag">鍗＄墖鍦嗚璋冩暣</span>
+                    <span class="tag">鑷畾涔夋寜閽?/ 搴曢儴鑿滃崟</span>
                 </div>
             </div>
 
             <div class="card">
-                <div class="card-icon" style="background:#d1fae5;">🎯</div>
+                <div class="card-icon" style="background:#d1fae5;">馃幆</div>
                 <h3>ui-component-commands-skill</h3>
-                <p>预定义指令 + CSS 变量绑定，一句话生成精确样式组件。btn-primary / solid-line / icon-tag / badge 等。</p>
+                <p>棰勫畾涔夋寚浠?+ CSS 鍙橀噺缁戝畾锛屼竴鍙ヨ瘽鐢熸垚绮剧‘鏍峰紡缁勪欢銆俠tn-primary / solid-line / icon-tag / badge 绛夈€?/p>
                 <div class="triggers">
-                    <span class="tag">做一个主按钮</span>
-                    <span class="tag">加个分割线</span>
+                    <span class="tag">鍋氫竴涓富鎸夐挳</span>
+                    <span class="tag">鍔犱釜鍒嗗壊绾?/span>
                 </div>
             </div>
 
             <div class="card">
-                <div class="card-icon" style="background:#d1fae5;">🖼️</div>
+                <div class="card-icon" style="background:#d1fae5;">馃柤锔?/div>
                 <h3>ui-replica-skill</h3>
-                <p>原型图 → 结构化分析 → Token 收敛 → 代码生成。专门复刻 AI UI 生成器的截图（v0/Stitch/Galileo 等）。</p>
+                <p>鍘熷瀷鍥?鈫?缁撴瀯鍖栧垎鏋?鈫?Token 鏀舵暃 鈫?浠ｇ爜鐢熸垚銆備笓闂ㄥ鍒?AI UI 鐢熸垚鍣ㄧ殑鎴浘锛坴0/Stitch/Galileo 绛夛級銆?/p>
                 <div class="triggers">
                     <span class="tag">/ui-replica-skill</span>
-                    <span class="tag">复刻这张图</span>
+                    <span class="tag">澶嶅埢杩欏紶鍥?/span>
                 </div>
             </div>
 
         </div>
     </section>
 
-    <!-- ═══════════ Phase 3: 质量保障 ═══════════ -->
+    <!-- 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?Phase 3: 璐ㄩ噺淇濋殰 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?-->
     <section class="phase phase-3">
         <div class="phase-header">
             <div class="phase-num">3</div>
-            <h2 class="phase-title">质量保障 — 上线前的全面体检</h2>
+            <h2 class="phase-title">璐ㄩ噺淇濋殰 鈥?涓婄嚎鍓嶇殑鍏ㄩ潰浣撴</h2>
         </div>
-        <p class="phase-desc">代码审计、跨平台兼容检查、样式一致性治理，确保项目在安全、性能、合规上达到生产标准。</p>
+        <p class="phase-desc">浠ｇ爜瀹¤銆佽法骞冲彴鍏煎妫€鏌ャ€佹牱寮忎竴鑷存€ф不鐞嗭紝纭繚椤圭洰鍦ㄥ畨鍏ㄣ€佹€ц兘銆佸悎瑙勪笂杈惧埌鐢熶骇鏍囧噯銆?/p>
         <div class="cards">
 
             <div class="card">
-                <div class="card-icon" style="background:#fef3c7;">🔍</div>
+                <div class="card-icon" style="background:#fef3c7;">馃攳</div>
                 <h3>uniapp-code-audit-skill</h3>
-                <p>10 维度全面体检：安全合规、性能、代码质量、架构、UI/主题一致性、跨平台、小程序专项、App 端专项、冗余死代码、三端差异。P0-P3 分级，报告 only。</p>
+                <p>10 缁村害鍏ㄩ潰浣撴锛氬畨鍏ㄥ悎瑙勩€佹€ц兘銆佷唬鐮佽川閲忋€佹灦鏋勩€乁I/涓婚涓€鑷存€с€佽法骞冲彴銆佸皬绋嬪簭涓撻」銆丄pp 绔笓椤广€佸啑浣欐浠ｇ爜銆佷笁绔樊寮傘€侾0-P3 鍒嗙骇锛屾姤鍛?only銆?/p>
                 <div class="triggers">
                     <span class="tag">/uniapp-code-audit-skill</span>
-                    <span class="tag">审计 uniapp 代码</span>
+                    <span class="tag">瀹¤ uniapp 浠ｇ爜</span>
                 </div>
             </div>
 
             <div class="card">
-                <div class="card-icon" style="background:#fef3c7;">🌐</div>
+                <div class="card-icon" style="background:#fef3c7;">馃寪</div>
                 <h3>uniapp-crossplatform-audit-skill</h3>
-                <p>审计 H5/小程序/App 三端差异：模板标签检查、CSS 兼容性、API 调用差异，按文件维度输出修复指南。</p>
+                <p>瀹¤ H5/灏忕▼搴?App 涓夌宸紓锛氭ā鏉挎爣绛炬鏌ャ€丆SS 鍏煎鎬с€丄PI 璋冪敤宸紓锛屾寜鏂囦欢缁村害杈撳嚭淇鎸囧崡銆?/p>
                 <div class="triggers">
                     <span class="tag">/uniapp-crossplatform-audit-skill</span>
-                    <span class="tag">审计多端兼容性</span>
+                    <span class="tag">瀹¤澶氱鍏煎鎬?/span>
                 </div>
             </div>
 
             <div class="card">
-                <div class="card-icon" style="background:#fef3c7;">🩺</div>
+                <div class="card-icon" style="background:#fef3c7;">馃┖</div>
                 <h3>frontend-code-doctor</h3>
-                <p>前端代码审查：类型安全、uniapp 特有规范、Vue3/React 最佳实践、性能、安全、i18n、无障碍 7 维度。</p>
+                <p>鍓嶇浠ｇ爜瀹℃煡锛氱被鍨嬪畨鍏ㄣ€乽niapp 鐗规湁瑙勮寖銆乂ue3/React 鏈€浣冲疄璺点€佹€ц兘銆佸畨鍏ㄣ€乮18n銆佹棤闅滅 7 缁村害銆?/p>
                 <div class="triggers">
                     <span class="tag">/frontend-code-review</span>
-                    <span class="tag">审查下这个前端项目</span>
+                    <span class="tag">瀹℃煡涓嬭繖涓墠绔」鐩?/span>
                 </div>
             </div>
 
             <div class="card">
-                <div class="card-icon" style="background:#fef3c7;">🎯</div>
+                <div class="card-icon" style="background:#fef3c7;">馃幆</div>
                 <h3>frontend-style-harmonizer-skill</h3>
-                <p>跨页面样式重复检测、同类组件尺寸对齐、硬编码裸值变量化。报告模式 + 自动落地，uniapp 优先。</p>
+                <p>璺ㄩ〉闈㈡牱寮忛噸澶嶆娴嬨€佸悓绫荤粍浠跺昂瀵稿榻愩€佺‖缂栫爜瑁稿€煎彉閲忓寲銆傛姤鍛婃ā寮?+ 鑷姩钀藉湴锛寀niapp 浼樺厛銆?/p>
                 <div class="triggers">
-                    <span class="tag">统一各页面样式</span>
-                    <span class="tag">去硬编码</span>
+                    <span class="tag">缁熶竴鍚勯〉闈㈡牱寮?/span>
+                    <span class="tag">鍘荤‖缂栫爜</span>
                 </div>
             </div>
 
         </div>
     </section>
 
-    <!-- ═══════════ Phase 4: 维护升级 ═══════════ -->
+    <!-- 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?Phase 4: 缁存姢鍗囩骇 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?-->
     <section class="phase phase-4">
         <div class="phase-header">
             <div class="phase-num">4</div>
-            <h2 class="phase-title">维护升级 — 存量项目的持续演进</h2>
+            <h2 class="phase-title">缁存姢鍗囩骇 鈥?瀛橀噺椤圭洰鐨勬寔缁紨杩?/h2>
         </div>
-        <p class="phase-desc">项目规范化诊断与 Vue2→Vue3 迁移，帮助存量项目保持健康、跟上技术栈迭代。</p>
+        <p class="phase-desc">椤圭洰瑙勮寖鍖栬瘖鏂笌 Vue2鈫扸ue3 杩佺Щ锛屽府鍔╁瓨閲忛」鐩繚鎸佸仴搴枫€佽窡涓婃妧鏈爤杩唬銆?/p>
         <div class="cards">
 
             <div class="card">
-                <div class="card-icon" style="background:#ede9fe;">📐</div>
+                <div class="card-icon" style="background:#ede9fe;">馃搻</div>
                 <h3>uniapp-standardization-skill</h3>
-                <p>对比现有项目 vs 标准骨架，出具规范化诊断报告和按优先级排序的重构计划。涵盖目录结构、API 层、状态管理、组件规范。</p>
+                <p>瀵规瘮鐜版湁椤圭洰 vs 鏍囧噯楠ㄦ灦锛屽嚭鍏疯鑼冨寲璇婃柇鎶ュ憡鍜屾寜浼樺厛绾ф帓搴忕殑閲嶆瀯璁″垝銆傛兜鐩栫洰褰曠粨鏋勩€丄PI 灞傘€佺姸鎬佺鐞嗐€佺粍浠惰鑼冦€?/p>
                 <div class="triggers">
                     <span class="tag">/uniapp-standardization-skill</span>
-                    <span class="tag">项目规范化</span>
+                    <span class="tag">椤圭洰瑙勮寖鍖?/span>
                 </div>
             </div>
 
             <div class="card">
-                <div class="card-icon" style="background:#ede9fe;">⬆️</div>
+                <div class="card-icon" style="background:#ede9fe;">猬嗭笍</div>
                 <h3>uniapp-vue2-upgrade-skill</h3>
-                <p>Vue2→Vue3+TS+Pinia 迁移：现状扫描、依赖兼容评估、语法对照、脚手架升级、按优先级分步代码迁移。</p>
+                <p>Vue2鈫扸ue3+TS+Pinia 杩佺Щ锛氱幇鐘舵壂鎻忋€佷緷璧栧吋瀹硅瘎浼般€佽娉曞鐓с€佽剼鎵嬫灦鍗囩骇銆佹寜浼樺厛绾у垎姝ヤ唬鐮佽縼绉汇€?/p>
                 <div class="triggers">
                     <span class="tag">/uniapp-vue2-upgrade-skill</span>
-                    <span class="tag">vue2 升级 vue3</span>
+                    <span class="tag">vue2 鍗囩骇 vue3</span>
                 </div>
             </div>
 
         </div>
     </section>
 
-    <!-- ═══════════ Typical Workflows ═══════════ -->
+    <!-- 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?Typical Workflows 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?-->
     <section>
         <div style="text-align:center;margin:48px 0 24px;">
-            <h2 style="font-size:1.25rem;font-weight:700;">典型协作流程</h2>
-            <p style="color:var(--gray-500);font-size:0.9rem;margin-top:4px;">技能不是孤立的 — 下面是两个最常见的端到端使用场景</p>
+            <h2 style="font-size:1.25rem;font-weight:700;">鍏稿瀷鍗忎綔娴佺▼</h2>
+            <p style="color:var(--gray-500);font-size:0.9rem;margin-top:4px;">鎶€鑳戒笉鏄绔嬬殑 鈥?涓嬮潰鏄袱涓渶甯歌鐨勭鍒扮浣跨敤鍦烘櫙</p>
         </div>
         <div class="workflows">
 
-            <!-- 新建项目流程 -->
+            <!-- 鏂板缓椤圭洰娴佺▼ -->
             <div class="wf-card">
-                <div class="wf-card-header" style="background:var(--blue-light);color:var(--blue);">🆕 从零搭建 uniapp 小程序</div>
+                <div class="wf-card-header" style="background:var(--blue-light);color:var(--blue);">馃啎 浠庨浂鎼缓 uniapp 灏忕▼搴?/div>
                 <div class="wf-card-body">
                     <div class="wf-step">
                         <div class="wf-step-num">1</div>
                         <div>
                             <span class="skill-ref">uniapp-app-generate-skill</span>
-                            <span class="skill-desc">— 生成标准化项目骨架 + 主题系统</span>
+                            <span class="skill-desc">鈥?鐢熸垚鏍囧噯鍖栭」鐩鏋?+ 涓婚绯荤粺</span>
                         </div>
                     </div>
                     <div class="wf-step">
                         <div class="wf-step-num">2</div>
                         <div>
                             <span class="skill-ref">uniapp-standard-skill</span>
-                            <span class="skill-desc">— 建立开发规范，团队对齐 20 条红线</span>
+                            <span class="skill-desc">鈥?寤虹珛寮€鍙戣鑼冿紝鍥㈤槦瀵归綈 20 鏉＄孩绾?/span>
                         </div>
                     </div>
                     <div class="wf-step">
                         <div class="wf-step-num">3</div>
                         <div>
                             <span class="skill-ref">uniapp-request-skill</span>
-                            <span class="skill-desc">— 封装 request.ts，配置 Token/防抖/Mock</span>
+                            <span class="skill-desc">鈥?灏佽 request.ts锛岄厤缃?Token/闃叉姈/Mock</span>
                         </div>
                     </div>
                     <div class="wf-step">
                         <div class="wf-step-num">4</div>
                         <div>
                             <span class="skill-ref">uniapp-components-skill</span>
-                            <span class="skill-desc">— 实现登录鉴权流程与 401 统一处理</span>
+                            <span class="skill-desc">鈥?瀹炵幇鐧诲綍閴存潈娴佺▼涓?401 缁熶竴澶勭悊</span>
                         </div>
                     </div>
                     <div class="wf-step">
                         <div class="wf-step-num">5</div>
                         <div>
                             <span class="skill-ref">ui-template-builder-skill</span>
-                            <span class="skill-desc">— 快速生成列表/详情/个人中心等业务页面</span>
+                            <span class="skill-desc">鈥?蹇€熺敓鎴愬垪琛?璇︽儏/涓汉涓績绛変笟鍔￠〉闈?/span>
                         </div>
                     </div>
                     <div class="wf-step">
                         <div class="wf-step-num">6</div>
                         <div>
                             <span class="skill-ref">uniapp-code-audit-skill</span>
-                            <span class="skill-desc">— 上线前全面体检，修复安全/性能/合规问题</span>
+                            <span class="skill-desc">鈥?涓婄嚎鍓嶅叏闈綋妫€锛屼慨澶嶅畨鍏?鎬ц兘/鍚堣闂</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 存量项目治理流程 -->
+            <!-- 瀛橀噺椤圭洰娌荤悊娴佺▼ -->
             <div class="wf-card">
-                <div class="wf-card-header" style="background:#ede9fe;color:var(--purple);">🔧 存量 uniapp 项目治理</div>
+                <div class="wf-card-header" style="background:#ede9fe;color:var(--purple);">馃敡 瀛橀噺 uniapp 椤圭洰娌荤悊</div>
                 <div class="wf-card-body">
                     <div class="wf-step">
                         <div class="wf-step-num">1</div>
                         <div>
                             <span class="skill-ref">uniapp-code-audit-skill</span>
-                            <span class="skill-desc">— 10 维度审计，定位 P0/P1 高危问题</span>
+                            <span class="skill-desc">鈥?10 缁村害瀹¤锛屽畾浣?P0/P1 楂樺嵄闂</span>
                         </div>
                     </div>
                     <div class="wf-step">
                         <div class="wf-step-num">2</div>
                         <div>
                             <span class="skill-ref">uniapp-standardization-skill</span>
-                            <span class="skill-desc">— 诊断项目结构差距，出具重构优先级计划</span>
+                            <span class="skill-desc">鈥?璇婃柇椤圭洰缁撴瀯宸窛锛屽嚭鍏烽噸鏋勪紭鍏堢骇璁″垝</span>
                         </div>
                     </div>
                     <div class="wf-step">
                         <div class="wf-step-num">3</div>
                         <div>
                             <span class="skill-ref">frontend-style-harmonizer-skill</span>
-                            <span class="skill-desc">— 发现跨页面样式重复、硬编码收敛为 CSS 变量</span>
+                            <span class="skill-desc">鈥?鍙戠幇璺ㄩ〉闈㈡牱寮忛噸澶嶃€佺‖缂栫爜鏀舵暃涓?CSS 鍙橀噺</span>
                         </div>
                     </div>
                     <div class="wf-step">
                         <div class="wf-step-num">4</div>
                         <div>
                             <span class="skill-ref">uniapp-style-skill</span>
-                            <span class="skill-desc">— 将散落的颜色/字号/间距统一为 Design Tokens</span>
+                            <span class="skill-desc">鈥?灏嗘暎钀界殑棰滆壊/瀛楀彿/闂磋窛缁熶竴涓?Design Tokens</span>
                         </div>
                     </div>
                     <div class="wf-step">
                         <div class="wf-step-num">5</div>
                         <div>
                             <span class="skill-ref">uniapp-crossplatform-audit-skill</span>
-                            <span class="skill-desc">— 修复 H5/小程序/App 三端兼容性问题</span>
+                            <span class="skill-desc">鈥?淇 H5/灏忕▼搴?App 涓夌鍏煎鎬ч棶棰?/span>
                         </div>
                     </div>
                     <div class="wf-step">
                         <div class="wf-step-num">6</div>
                         <div>
                             <span class="skill-ref">uniapp-vue2-upgrade-skill</span>
-                            <span class="skill-desc">— Vue2 项目迁移到 Vue3+TS+Pinia（如适用）</span>
+                            <span class="skill-desc">鈥?Vue2 椤圭洰杩佺Щ鍒?Vue3+TS+Pinia锛堝閫傜敤锛?/span>
                         </div>
                     </div>
                 </div>
@@ -636,38 +635,38 @@
         </div>
     </section>
 
-    <!-- ═══════════ Cross-cutting Table ═══════════ -->
+    <!-- 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?Cross-cutting Table 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?-->
     <section style="margin:48px 0;">
         <div style="text-align:center;margin-bottom:24px;">
-            <h2 style="font-size:1.25rem;font-weight:700;">技能速查表</h2>
+            <h2 style="font-size:1.25rem;font-weight:700;">鎶€鑳介€熸煡琛?/h2>
         </div>
         <div style="overflow-x:auto;">
             <table style="width:100%;border-collapse:collapse;font-size:0.88rem;background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);overflow:hidden;">
                 <thead>
                     <tr style="background:var(--gray-50);">
-                        <th style="padding:10px 14px;text-align:left;border-bottom:1px solid var(--gray-200);">技能</th>
-                        <th style="padding:10px 14px;text-align:left;border-bottom:1px solid var(--gray-200);">阶段</th>
-                        <th style="padding:10px 14px;text-align:left;border-bottom:1px solid var(--gray-200);">一句话简介</th>
+                        <th style="padding:10px 14px;text-align:left;border-bottom:1px solid var(--gray-200);">鎶€鑳?/th>
+                        <th style="padding:10px 14px;text-align:left;border-bottom:1px solid var(--gray-200);">闃舵</th>
+                        <th style="padding:10px 14px;text-align:left;border-bottom:1px solid var(--gray-200);">涓€鍙ヨ瘽绠€浠?/th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-app-generate-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">启动</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">从零生成标准化 uniapp 三端项目</td></tr>
-                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">ui-template-builder-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">启动</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">37 套页面模板一键生成</td></tr>
-                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">frontend-ui-foundry</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">启动</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">多场景 UI 生成/优化/审计/品牌套用</td></tr>
-                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-standard-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">编码</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">20 条红线 + 8 份开发规范文档</td></tr>
-                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-style-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">编码</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">Design Tokens + 组件规范 + 深色模式</td></tr>
-                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-theme-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">编码</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">动态色阶生成 + 一键换肤</td></tr>
-                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-request-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">编码</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">request.ts 统一封装 + Token/防抖/Mock/SSE</td></tr>
-                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-components-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">编码</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">登录鉴权 + Token 管理 + 安全规范</td></tr>
-                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-page-components-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">编码</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">常用组件化页面（21 组件：基础/业务/列表/聊天/朋友圈/详情/我的/搜索/表单/登录/首页）</td></tr>
-                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">ui-component-commands-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">编码</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">预定义指令驱动组件生成</td></tr>
-                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">ui-replica-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">编码</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">原型图 → 代码高还原度复刻</td></tr>
-                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-code-audit-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">质量</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">10 维度代码审计，报告 only</td></tr>
-                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-crossplatform-audit-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">质量</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">三端兼容性审计 + 修复指南</td></tr>
-                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">frontend-code-doctor</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">质量</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">7 维度前端代码审查</td></tr>
-                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">frontend-style-harmonizer-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">质量</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">样式重复检测 + 硬编码收敛</td></tr>
-                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-standardization-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">维护</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">项目结构诊断 + 规范化重构计划</td></tr>
-                    <tr><td style="padding:8px 14px;font-weight:600;">uniapp-vue2-upgrade-skill</td><td style="padding:8px 14px;"><span class="tag">维护</span></td><td style="padding:8px 14px;">Vue2 → Vue3+TS+Pinia 迁移</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-app-generate-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">鍚姩</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">浠庨浂鐢熸垚鏍囧噯鍖?uniapp 涓夌椤圭洰</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">ui-template-builder-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">鍚姩</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">37 濂楅〉闈㈡ā鏉夸竴閿敓鎴?/td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">frontend-ui-foundry</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">鍚姩</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">澶氬満鏅?UI 鐢熸垚/浼樺寲/瀹¤/鍝佺墝濂楃敤</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-standard-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">缂栫爜</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">20 鏉＄孩绾?+ 8 浠藉紑鍙戣鑼冩枃妗?/td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-style-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">缂栫爜</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">Design Tokens + 缁勪欢瑙勮寖 + 娣辫壊妯″紡</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-theme-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">缂栫爜</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">鍔ㄦ€佽壊闃剁敓鎴?+ 涓€閿崲鑲?/td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-request-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">缂栫爜</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">request.ts 缁熶竴灏佽 + Token/闃叉姈/Mock/SSE</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-components-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">缂栫爜</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">鐧诲綍閴存潈 + Token 绠＄悊 + 瀹夊叏瑙勮寖</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-page-components-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">缂栫爜</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">甯哥敤缁勪欢鍖栭〉闈紙21 缁勪欢锛氬熀纭€/涓氬姟/鍒楄〃/鑱婂ぉ/鏈嬪弸鍦?璇︽儏/鎴戠殑/鎼滅储/琛ㄥ崟/鐧诲綍/棣栭〉锛?/td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">ui-component-commands-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">缂栫爜</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">棰勫畾涔夋寚浠ら┍鍔ㄧ粍浠剁敓鎴?/td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">ui-replica-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">缂栫爜</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">鍘熷瀷鍥?鈫?浠ｇ爜楂樿繕鍘熷害澶嶅埢</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-code-audit-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">璐ㄩ噺</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">10 缁村害浠ｇ爜瀹¤锛屾姤鍛?only</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-crossplatform-audit-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">璐ㄩ噺</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">涓夌鍏煎鎬у璁?+ 淇鎸囧崡</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">frontend-code-doctor</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">璐ㄩ噺</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">7 缁村害鍓嶇浠ｇ爜瀹℃煡</td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">frontend-style-harmonizer-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">璐ㄩ噺</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">鏍峰紡閲嶅妫€娴?+ 纭紪鐮佹敹鏁?/td></tr>
+                    <tr><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);font-weight:600;">uniapp-standardization-skill</td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);"><span class="tag">缁存姢</span></td><td style="padding:8px 14px;border-bottom:1px solid var(--gray-100);">椤圭洰缁撴瀯璇婃柇 + 瑙勮寖鍖栭噸鏋勮鍒?/td></tr>
+                    <tr><td style="padding:8px 14px;font-weight:600;">uniapp-vue2-upgrade-skill</td><td style="padding:8px 14px;"><span class="tag">缁存姢</span></td><td style="padding:8px 14px;">Vue2 鈫?Vue3+TS+Pinia 杩佺Щ</td></tr>
                 </tbody>
             </table>
         </div>
@@ -675,13 +674,13 @@
 
 </div>
 
-<!-- ═══════════ Footer ═══════════ -->
+<!-- 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?Footer 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?-->
 <footer class="footer">
     <p>
-        <strong>wg-skills</strong> — AI 编程技能集合 ·
+        <strong>wg-skills</strong> 鈥?AI 缂栫▼鎶€鑳介泦鍚?路
         <a href="https://github.com/jiushiwon/wg-skills" target="_blank">GitHub</a>
     </p>
-    <p style="margin-top:4px;">专注 uniapp/前端开发全流程 · 让 AI 更懂你的代码</p>
+    <p style="margin-top:4px;">涓撴敞 uniapp/鍓嶇寮€鍙戝叏娴佺▼ 路 璁?AI 鏇存噦浣犵殑浠ｇ爜</p>
 </footer>
 
 </body>

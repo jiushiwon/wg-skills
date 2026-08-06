@@ -25,16 +25,7 @@
           <view class="moments-me">
             <text class="moments-me-name">{{ myNickname }}</text>
             <view class="moments-me-avatar" @click="$emit('meClick')">
-              <image
-                v-if="myAvatar && !meAvatarError"
-                class="moments-me-avatar-img"
-                :src="myAvatar"
-                mode="aspectFill"
-                @error="meAvatarError = true"
-              />
-              <view v-else class="moments-me-avatar-ph">
-                <text class="moments-me-avatar-ph-text">{{ (myNickname || '我').slice(0, 1) }}</text>
-              </view>
+              <base-avatar :src="myAvatar" :nickname="myNickname || '我'" size="lg" />
             </view>
           </view>
         </view>
@@ -46,16 +37,7 @@
         <view v-for="feed in feedList" :key="feedKey(feed)" class="moments-feed">
           <slot name="feed" :feed="feed">
             <view class="feed-avatar" @click="$emit('avatarClick', feed)">
-              <image
-                v-if="feed.avatar && !isFeedAvatarError(feed)"
-                class="feed-avatar-img"
-                :src="feed.avatar"
-                mode="aspectFill"
-                @error="onFeedAvatarError(feed)"
-              />
-              <view v-else class="feed-avatar-ph">
-                <text class="feed-avatar-ph-text">{{ (feed.nickname || '好友').slice(0, 1) }}</text>
-              </view>
+              <base-avatar :src="feed.avatar" :nickname="feed.nickname || '好友'" size="md" />
             </view>
 
             <view class="feed-main">
@@ -191,9 +173,6 @@ const emit = defineEmits<{
 }>()
 
 const coverError = ref(false)
-const meAvatarError = ref(false)
-const feedAvatarErrors = reactive(new Set<string | number>())
-const feedImageErrors = reactive(new Set<string>())
 const expandedFeeds = reactive(new Set<string | number>())
 const socialFeeds = reactive(new Set<string | number>())
 
@@ -208,26 +187,6 @@ const imageStyle = computed(() => {
 
 function feedKey(feed: MomentsFeed) {
   return String(feed.id)
-}
-
-function isFeedAvatarError(feed: MomentsFeed) {
-  return feedAvatarErrors.has(feed.id)
-}
-
-function onFeedAvatarError(feed: MomentsFeed) {
-  feedAvatarErrors.add(feed.id)
-}
-
-function feedImageKey(feed: MomentsFeed, i: number) {
-  return `${feed.id}:${i}`
-}
-
-function isFeedImageError(feed: MomentsFeed, i: number) {
-  return feedImageErrors.has(feedImageKey(feed, i))
-}
-
-function onFeedImageError(feed: MomentsFeed, i: number) {
-  feedImageErrors.add(feedImageKey(feed, i))
 }
 
 function feedExpanded(feed: MomentsFeed) {
@@ -310,30 +269,9 @@ function likeNames(feed: MomentsFeed) {
 }
 
 .moments-me-avatar {
-  width: var(--height-avatar-lg);
-  height: var(--height-avatar-lg);
-  border-radius: var(--radius-avatar);
   border: 4rpx solid var(--white);
+  border-radius: var(--radius-avatar);
   overflow: hidden;
-}
-
-.moments-me-avatar-img {
-  width: 100%;
-  height: 100%;
-}
-
-.moments-me-avatar-ph {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  background: var(--color-bg-tinted);
-}
-
-.moments-me-avatar-ph-text {
-  font-size: var(--font-2xl);
-  color: var(--color-primary);
 }
 
 /* ---- 动态列表 ---- */
@@ -349,30 +287,7 @@ function likeNames(feed: MomentsFeed) {
 
 .feed-avatar {
   flex-shrink: 0;
-  width: var(--height-avatar-md);
-  height: var(--height-avatar-md);
-  border-radius: var(--radius-avatar);
-  overflow: hidden;
   margin-right: var(--spacing-md);
-}
-
-.feed-avatar-img {
-  width: 100%;
-  height: 100%;
-}
-
-.feed-avatar-ph {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  background: var(--color-bg-tinted);
-}
-
-.feed-avatar-ph-text {
-  font-size: var(--font-lg);
-  color: var(--color-primary);
 }
 
 .feed-main {
