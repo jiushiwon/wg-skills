@@ -290,7 +290,7 @@ description: uniapp 常用「组件化页面」技能（独立、自成体系）
 ## 使用前提（重要）
 
 1. **自定义导航栏**：`chat-page` / `product-detail-page` / `form-page` / `home-page` 内置的是**简化版导航栏**（固定高度，未做状态栏高度适配与胶囊按钮对齐，微信小程序下会与默认导航栏叠加）。使用含导航栏的组件时，页面 `pages.json` 需设 `"navigationStyle": "custom"`；正式项目建议用项目已有 NavBar 替换，或通过对应 slot 传入项目导航栏。
-2. **状态栏适配**：`base-navbar` 使用小程序自定义导航时，需在 `App.vue` 定义 `--status-bar-height`（如 `44px`）或传入 `status-bar-height` prop；胶囊对齐属 app-generate `AppNavbar` 强约束场景，本技能导航栏为简易通用版。`login-page` 无导航栏，无需处理。
+2. **状态栏适配**：`base-navbar` 使用小程序自定义导航时，需在 `App.vue` 定义 `--status-bar-height`（如 `44px`）或传入 `status-bar-height` prop；胶囊对齐属 app-generate `AppNavbar` 强约束场景，本技能导航栏为简易通用版。**APP 端**（Android/iOS）必须运行时动态获取状态栏高度（`uni.getSystemInfoSync().statusBarHeight`），详见 `references/platform-app.md`。`login-page` 无导航栏，无需处理。`product-detail-page` / `chat-page` 内置简化导航栏同理。
 3. **容器高度**：`tab-list-page` / `chat-page` / `product-detail-page` / `search-page` / `form-page` / `home-page` 根容器为 `height: 100%`，使用页面需给确定高度（如页面根 `view` 设 `height: 100vh`）。
 4. **内部依赖**：`form-page` / `home-page` / `login-page` / `tab-list-page` / `profile-page` / `image-card` 依赖基础组件，复制时连带复制（见 Step 2 表）。
 5. **页面背景**：各页面组件自带页面级背景（`--color-bg-page`），外层无需再包容器。
@@ -319,4 +319,5 @@ description: uniapp 常用「组件化页面」技能（独立、自成体系）
 - `references/page-specs.md` — 各组件 API 速查（Props / Slots / Emits / 默认数据 / mock 数据 / 完整页面示例 / 扩展建议）
 - `references/theme-integration.md` — 主题变量清单、无主题系统 fallback 表、easycom 注册、状态栏适配
 - `references/theme-detect.md` — 主题系统自动检测与对齐（变量定位、命名风格识别、三场景处理）
+- `references/platform-app.md` — **APP 端（Android/iOS）使用指南**：状态栏动态适配、安全区、键盘、原生导航栏冲突
 - `components/` — 21 个组件模板（5 基础 + 6 业务 + 10 页面）
