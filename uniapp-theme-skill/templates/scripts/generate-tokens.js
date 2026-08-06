@@ -1,30 +1,11 @@
-/**
- * 主题 Token 生成脚本
- *
- * 使用方式：
- *   node generate-tokens.js                    # 使用默认主色
- *   node generate-tokens.js #6366F1            # 使用指定主色
- *   node generate-tokens.js #6366F1 cute       # 指定主色和主题名
- *
- * 输出：
- *   - src/static/css/tokens.css    # CSS 变量
- *   - src/styles/tokens.scss       # SCSS 变量
- */
-
 const fs = require('fs');
 const path = require('path');
 
-// ============================================
-// 配置
-// ============================================
-
 const args = process.argv.slice(2);
 const primaryColor = args[0] || '#14b8a6';
-const themeName = args[1] || 'custom';
-
-// ============================================
-// 工具函数
-// ============================================
+const secondaryColor = args[1] || null;
+const tertiaryColor = args[2] || null;
+const themeName = args[3] || 'custom';
 
 function hexToRgb(hex) {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -42,212 +23,221 @@ function rgbToHex(r, g, b) {
   }).join('');
 }
 
-function mix(color1, color2, t) {
-  const c1 = hexToRgb(color1);
-  const c2 = hexToRgb(color2);
-  if (!c1 || !c2) return color1;
+function hexToHsl(hex) {
+  const rgb = hexToRgb(hex);
+  if (!rgb) return null;
 
-  return rgbToHex(
-    c1.r + (c2.r - c1.r) * t,
-    c1.g + (c2.g - c1.g) * t,
-    c1.b + (c2.b - c1.b) * t
-  );
+  let r = rgb.r / 255;
+  let g = rgb.g / 255;
+  let b = rgb.b / 255;
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  let h = 0;
+  let s = 0;
+  const l = (max + min) / 2;
+
+  if (max !== min) {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+    if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+    else if (max === g) h = ((b - r) / d + 2) / 6;
+    else h = ((r - g) / d + 4) / 6;
+  }
+
+  return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
 }
 
-// ============================================
-// 色阶生成
-// ============================================
+function hslToHex(h, s, l) {
+  h = h / 360;
+  s = s / 100;
+  l = l / 100;
 
-function generateColorScale(primaryColor) {
-  const steps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
-  const baseIndex = 4; // 500 is index 4
+  let r, g, b;
+
+  if (s === 0) {
+    r = g = b = l;
+  } else {
+    const hue2rgb = (p, q, t) => {
+      if (t < 0) t += 1;
+      if (t > 1) t -= 1;
+      if (t < 1 / 6) return p + (q - p) * 6 * t;
+      if (t < 1 / 2) return q;
+      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+      return p;
+    };
+
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    const p = 2 * l - q;
+    r = hue2rgb(p, q, h + 1 / 3);
+    g = hue2rgb(p, q, h);
+    b = hue2rgb(p, q, h - 1 / 3);
+  }
+
+  return rgbToHex(Math.round(r * 255), Math.round(g * 255), Math.round(b * 255));
+}
+
+function generateHslScale(hexColor, steps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]) {
+  const hsl = hexToHsl(hexColor);
+  if (!hsl) return {};
+
+  const { h, s: baseS, l: baseL } = hsl;
+  const baseIndex = steps.indexOf(500);
 
   const scale = {};
+
   steps.forEach((step, index) => {
     if (step === 500) {
-      scale[step] = primaryColor.toLowerCase();
-    } else if (step < 500) {
+      scale[step] = hexColor.toLowerCase();
+      return;
+    }
+
+    let newS, newL;
+
+    if (step < 500) {
       const t = (baseIndex - index) / baseIndex;
-      scale[step] = mix('#ffffff', primaryColor, t * 0.9 + 0.1).toLowerCase();
+      newS = Math.round(baseS * (1 - t * 0.88));
+      newL = Math.min(98, Math.round(baseL + (100 - baseL) * t * 0.9 + 4));
     } else {
       const t = (index - baseIndex) / (steps.length - 1 - baseIndex);
-      scale[step] = mix(primaryColor, '#000000', t * 0.85 + 0.15).toLowerCase();
+      newS = Math.min(100, Math.round(baseS * (1 + t * 0.14)));
+      newL = Math.max(5, Math.round(baseL - baseL * t * 0.9));
     }
+
+    scale[step] = hslToHex(h, newS, newL);
   });
 
   return scale;
 }
 
-// ============================================
-// CSS 生成
-// ============================================
+function generateMultiThemeTokens(primaryColor, secondaryColor, tertiaryColor) {
+  const result = { primary: generateHslScale(primaryColor) };
 
-function generateCSSTokens(primaryScale) {
-  const grayScale = generateColorScale('#6B7280');
+  if (secondaryColor) {
+    result.secondary = generateHslScale(secondaryColor);
+  }
 
-  let css = `/**
- * Design Tokens - ${themeName} 主题
- * 主色: ${primaryColor}
- * 由 generate-tokens.js 自动生成
- */
+  if (tertiaryColor) {
+    result.tertiary = generateHslScale(tertiaryColor);
+  }
 
-:root,
-page {
-  /* ==================== 主题色阶 ==================== */
-`;
+  result.gray = generateHslScale('#6B7280');
+  result.success = generateHslScale('#10B981');
+  result.warning = generateHslScale('#F59E0B');
+  result.error = generateHslScale('#EF4444');
+  result.info = generateHslScale('#3B82F6');
 
-  // 主色
-  Object.entries(primaryScale).forEach(([step, value]) => {
+  return result;
+}
+
+function generateCSSVariables(tokens, themeName) {
+  let css = `/* Theme: ${themeName} */\n`;
+  css += `/* Generated by generate-tokens.js */\n`;
+  css += `/* HSL algorithm: hue-stable, lightness/saturation only */\n\n`;
+  css += `:root {\n`;
+
+  css += `  /* === Primary Scale === */\n`;
+  Object.entries(tokens.primary).forEach(([step, value]) => {
     css += `  --primary-${step}: ${value};\n`;
   });
 
-  css += `
-  /* ==================== 灰度 ==================== */
-`;
+  if (tokens.secondary) {
+    css += `\n  /* === Secondary Scale === */\n`;
+    Object.entries(tokens.secondary).forEach(([step, value]) => {
+      css += `  --secondary-${step}: ${value};\n`;
+    });
+  }
 
-  // 灰度
-  Object.entries(grayScale).forEach(([step, value]) => {
+  if (tokens.tertiary) {
+    css += `\n  /* === Tertiary Scale === */\n`;
+    Object.entries(tokens.tertiary).forEach(([step, value]) => {
+      css += `  --tertiary-${step}: ${value};\n`;
+    });
+  }
+
+  css += `\n  /* === Gray Scale === */\n`;
+  Object.entries(tokens.gray).forEach(([step, value]) => {
     css += `  --gray-${step}: ${value};\n`;
   });
 
-  css += `
-  /* ==================== 语义化变量 ==================== */
-  --color-primary: var(--primary-500);
-  --color-success: #16ac57;
-  --color-warning: #f59e0b;
-  --color-error: #dc2626;
-  --color-info: #3b82f6;
+  css += `\n  /* === Semantic Colors === */\n`;
+  css += `  --color-primary: var(--primary-500, ${tokens.primary[500]});\n`;
+  if (tokens.secondary) {
+    css += `  --color-secondary: var(--secondary-500, ${tokens.secondary[500]});\n`;
+  }
+  if (tokens.tertiary) {
+    css += `  --color-tertiary: var(--tertiary-500, ${tokens.tertiary[500]});\n`;
+  }
+  css += `  --color-success: var(--success-500, ${tokens.success[500]});\n`;
+  css += `  --color-warning: var(--warning-500, ${tokens.warning[500]});\n`;
+  css += `  --color-error: var(--error-500, ${tokens.error[500]});\n`;
+  css += `  --color-info: var(--info-500, ${tokens.info[500]});\n`;
 
-  --text-primary: var(--gray-900);
-  --text-secondary: var(--gray-600);
-  --text-tertiary: var(--gray-400);
+  css += `\n  /* === Font Sizes (static rpx, no calc) === */\n`;
+  const fontSizes = { '2xs': 20, 'xs': 24, 'sm': 26, 'md': 28, 'lg': 30, 'xl': 32, '2xl': 40, '3xl': 48 };
+  Object.entries(fontSizes).forEach(([size, value]) => {
+    css += `  --font-${size}: ${value}rpx;\n`;
+  });
 
-  --bg-page: var(--gray-50);
-  --bg-card: #ffffff;
-  --bg-light: var(--gray-100);
+  css += `\n  /* === Spacing (static rpx, no calc) === */\n`;
+  const spacing = { 0: 0, 1: 4, 2: 8, 3: 12, 4: 16, 5: 20, 6: 24, 7: 28, 8: 32, 10: 40, 12: 48, 14: 56, 16: 64, 20: 80, 24: 96 };
+  Object.entries(spacing).forEach(([size, value]) => {
+    css += `  --space-${size}: ${value}rpx;\n`;
+  });
 
-  --border: var(--gray-200);
-  --border-light: var(--gray-100);
+  css += `\n  /* === Radius (static rpx, no calc) === */\n`;
+  const radius = { none: 0, sm: 8, md: 16, lg: 24, xl: 32, full: 9999 };
+  Object.entries(radius).forEach(([size, value]) => {
+    css += `  --radius-${size}: ${value}rpx;\n`;
+  });
 
-  /* ==================== 字号 ==================== */
-  --font-xs: 24rpx;
-  --font-sm: 26rpx;
-  --font-md: 28rpx;
-  --font-lg: 30rpx;
-  --font-xl: 34rpx;
+  css += `\n  /* === Heights (static rpx, no calc) === */\n`;
+  const heights = { 'btn-sm': 56, 'btn-md': 72, 'btn-lg': 88 };
+  Object.entries(heights).forEach(([size, value]) => {
+    css += `  --height-btn-${size}: ${value}rpx;\n`;
+  });
 
-  /* ==================== 间距 ==================== */
-  --space-xs: 8rpx;
-  --space-sm: 12rpx;
-  --space-md: 16rpx;
-  --space-lg: 24rpx;
-  --space-xl: 32rpx;
+  css += `\n  /* === Icons (static rpx, no calc) === */\n`;
+  const icons = { xs: 24, sm: 36, md: 48, lg: 72, xl: 96 };
+  Object.entries(icons).forEach(([size, value]) => {
+    css += `  --icon-${size}: ${value}rpx;\n`;
+  });
 
-  /* ==================== 圆角 ==================== */
-  --radius-sm: 8rpx;
-  --radius-md: 16rpx;
-  --radius-lg: 24rpx;
-  --radius-full: 9999rpx;
+  css += `\n  /* === Composite Variables === */\n`;
+  css += `  --radius-btn: var(--radius-full, 9999rpx);\n`;
+  css += `  --radius-input: var(--radius-md, 16rpx);\n`;
+  css += `  --radius-card: var(--radius-lg, 24rpx);\n`;
+  css += `  --radius-tag: var(--radius-sm, 8rpx);\n`;
+  css += `  --radius-image: var(--radius-sm, 8rpx);\n`;
+  css += `  --radius-avatar: var(--radius-full, 9999rpx);\n`;
 
-  /* ==================== 阴影 ==================== */
-  --shadow-sm: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 6rpx 20rpx rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 12rpx 32rpx rgba(0, 0, 0, 0.08);
-
-  /* ==================== 按钮高度 ==================== */
-  --height-btn-sm: 56rpx;
-  --height-btn-md: 72rpx;
-  --height-btn-lg: 88rpx;
-}
-`;
-
+  css += `}\n`;
   return css;
 }
 
-// ============================================
-// SCSS 生成
-// ============================================
-
-function generateSCSSTokens(primaryScale) {
-  const grayScale = generateColorScale('#6B7280');
-
-  let scss = `/**
- * Design Tokens - ${themeName} 主题
- * 主色: ${primaryColor}
- * 由 generate-tokens.js 自动生成
- */
-
-// 主色
-`;
-
-  Object.entries(primaryScale).forEach(([step, value]) => {
-    scss += `$primary-${step}: ${value};\n`;
-  });
-
-  scss += `
-// 灰度
-`;
-
-  Object.entries(grayScale).forEach(([step, value]) => {
-    scss += `$gray-${step}: ${value};\n`;
-  });
-
-  scss += `
-// 语义变量
-$color-primary: $primary-500;
-$text-primary: $gray-900;
-$text-secondary: $gray-600;
-
-// 间距
-$space-xs: 8rpx;
-$space-sm: 12rpx;
-$space-md: 16rpx;
-$space-lg: 24rpx;
-$space-xl: 32rpx;
-
-// 圆角
-$radius-sm: 8rpx;
-$radius-md: 16rpx;
-$radius-lg: 24rpx;
-$radius-full: 9999rpx;
-`;
-
-  return scss;
-}
-
-// ============================================
-// 主程序
-// ============================================
-
 function main() {
-  console.log(`🎨 生成主题 Token`);
-  console.log(`   主色: ${primaryColor}`);
-  console.log(`   主题: ${themeName}`);
+  console.log(`Generating theme tokens`);
+  console.log(`  Primary: ${primaryColor}`);
+  if (secondaryColor) console.log(`  Secondary: ${secondaryColor}`);
+  if (tertiaryColor) console.log(`  Tertiary: ${tertiaryColor}`);
+  console.log(`  Theme: ${themeName}`);
   console.log('');
 
-  const primaryScale = generateColorScale(primaryColor);
+  const tokens = generateMultiThemeTokens(primaryColor, secondaryColor, tertiaryColor);
+  const css = generateCSSVariables(tokens, themeName);
 
-  // 输出路径
-  const cssOutput = path.join(__dirname, '..', 'src', 'static', 'css', 'tokens.css');
-  const scssOutput = path.join(__dirname, '..', 'src', 'styles', 'tokens.scss');
+  const outputDir = path.join(__dirname, '..', 'src', 'static', 'css');
+  const outputFile = path.join(outputDir, 'base.css');
 
-  // 确保目录存在
-  fs.mkdirSync(path.dirname(cssOutput), { recursive: true });
-  fs.mkdirSync(path.dirname(scssOutput), { recursive: true });
+  fs.mkdirSync(outputDir, { recursive: true });
+  fs.writeFileSync(outputFile, css);
 
-  // 写入文件
-  const cssContent = generateCSSTokens(primaryScale);
-  const scssContent = generateSCSSTokens(primaryScale);
-
-  fs.writeFileSync(cssOutput, cssContent);
-  fs.writeFileSync(scssOutput, scssContent);
-
-  console.log(`✅ 已生成:`);
-  console.log(`   ${cssOutput}`);
-  console.log(`   ${scssOutput}`);
+  console.log(`Written: ${outputFile}`);
   console.log('');
-  console.log(`📝 使用方式:`);
-  console.log(`   在 App.vue 中引入: import '@/static/css/tokens.css'`);
+  console.log(`Usage:`);
+  console.log(`  node generate-tokens.js #6366F1`);
+  console.log(`  node generate-tokens.js #14b8a6 #6366f1 #f59e0b mytheme`);
 }
 
 main();

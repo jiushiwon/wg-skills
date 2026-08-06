@@ -6,48 +6,57 @@
 
 1. **CSS 变量优先**：所有尺寸使用 CSS 自定义属性
 2. **uni-app 兼容**：使用 rpx 单位
-3. **语义化命名**：提供语义化变量指向基础变量
+3. **语义化命名**：统一命名 `--space-{n}` / `--font-{size}` / `--height-{comp}-{size}` / `--icon-{size}`
+4. **静态值**：所有 rpx 值为静态，禁止 calc()，确保微信小程序兼容
+5. **APP 兼容**：CSS 变量带 fallback 值
 
 ## 尺寸结构
 
-### 间距 (Spacing)
+### 间距（Spacing）
 
 ```css
 :root {
-  --spacing-xs: 8rpx;
-  --spacing-sm: 16rpx;
-  --spacing-md: 24rpx;
-  --spacing-lg: 32rpx;
-  --spacing-xl: 48rpx;
-  --spacing-2xl: 64rpx;
-  --spacing-3xl: 96rpx;
+  --space-0: 0rpx;
+  --space-1: 4rpx;
+  --space-2: 8rpx;
+  --space-3: 12rpx;
+  --space-4: 16rpx;
+  --space-5: 20rpx;
+  --space-6: 24rpx;
+  --space-7: 28rpx;
+  --space-8: 32rpx;
+  --space-10: 40rpx;
+  --space-12: 48rpx;
+  --space-14: 56rpx;
+  --space-16: 64rpx;
+  --space-20: 80rpx;
+  --space-24: 96rpx;
 }
 ```
 
-### 字号 (Font Size)
+### 字号（Font Size）
 
 ```css
 :root {
-  --font-xs: 22rpx;
-  --font-sm: 24rpx;
+  --font-2xs: 20rpx;
+  --font-xs: 24rpx;
+  --font-sm: 26rpx;
   --font-md: 28rpx;
-  --font-lg: 32rpx;
-  --font-xl: 36rpx;
-  --font-2xl: 44rpx;
-  --font-3xl: 56rpx;
+  --font-lg: 30rpx;
+  --font-xl: 32rpx;
+  --font-2xl: 40rpx;
+  --font-3xl: 48rpx;
 }
 ```
 
-### 高度 (Height)
+### 高度（Height）
 
 ```css
 :root {
   /* 按钮高度 */
-  --height-btn-xs: 48rpx;
   --height-btn-sm: 56rpx;
   --height-btn-md: 72rpx;
   --height-btn-lg: 88rpx;
-  --height-btn-xl: 96rpx;
 
   /* 输入框高度 */
   --height-input-sm: 56rpx;
@@ -61,15 +70,28 @@
 }
 ```
 
-### 图标 (Icon)
+### 图标（Icon）
 
 ```css
 :root {
   --icon-xs: 24rpx;
-  --icon-sm: 32rpx;
-  --icon-md: 40rpx;
-  --icon-lg: 48rpx;
-  --icon-xl: 64rpx;
+  --icon-sm: 36rpx;
+  --icon-md: 48rpx;
+  --icon-lg: 72rpx;
+  --icon-xl: 96rpx;
+}
+```
+
+### 圆角（Radius）
+
+```css
+:root {
+  --radius-none: 0rpx;
+  --radius-sm: 8rpx;
+  --radius-md: 16rpx;
+  --radius-lg: 24rpx;
+  --radius-xl: 32rpx;
+  --radius-full: 9999rpx;
 }
 ```
 
@@ -79,10 +101,10 @@
 
 ```css
 [data-theme="cute"] {
-  --spacing-md: 24rpx;
-  --spacing-lg: 32rpx;
+  --space-md: 24rpx;
+  --space-lg: 32rpx;
   --font-md: 28rpx;
-  --font-lg: 36rpx;
+  --font-lg: 32rpx;
   --height-btn-md: 80rpx;
 }
 ```
@@ -91,8 +113,8 @@
 
 ```css
 [data-theme="minimal"] {
-  --spacing-md: 16rpx;
-  --spacing-lg: 24rpx;
+  --space-md: 16rpx;
+  --space-lg: 24rpx;
   --font-md: 26rpx;
   --font-lg: 30rpx;
   --height-btn-md: 72rpx;
@@ -103,8 +125,8 @@
 
 ```css
 [data-theme="cyber"] {
-  --spacing-md: 16rpx;
-  --spacing-lg: 20rpx;
+  --space-md: 16rpx;
+  --space-lg: 20rpx;
   --font-md: 26rpx;
   --font-lg: 28rpx;
   --height-btn-md: 72rpx;
@@ -115,8 +137,8 @@
 
 ```css
 [data-theme="business"] {
-  --spacing-md: 24rpx;
-  --spacing-lg: 32rpx;
+  --space-md: 24rpx;
+  --space-lg: 32rpx;
   --font-md: 28rpx;
   --font-lg: 32rpx;
   --height-btn-md: 72rpx;
@@ -127,10 +149,10 @@
 
 ```css
 [data-theme="fresh"] {
-  --spacing-md: 24rpx;
-  --spacing-lg: 32rpx;
+  --space-md: 24rpx;
+  --space-lg: 32rpx;
   --font-md: 28rpx;
-  --font-lg: 36rpx;
+  --font-lg: 32rpx;
   --height-btn-md: 80rpx;
 }
 ```
@@ -139,8 +161,8 @@
 
 ```css
 [data-theme="retro"] {
-  --spacing-md: 16rpx;
-  --spacing-lg: 24rpx;
+  --space-md: 16rpx;
+  --space-lg: 24rpx;
   --font-md: 26rpx;
   --font-lg: 30rpx;
   --height-btn-md: 72rpx;
@@ -151,11 +173,23 @@
 
 ```css
 [data-theme="glass"] {
-  --spacing-md: 20rpx;
-  --spacing-lg: 28rpx;
+  --space-md: 20rpx;
+  --space-lg: 28rpx;
   --font-md: 28rpx;
-  --font-lg: 36rpx;
+  --font-lg: 32rpx;
   --height-btn-md: 80rpx;
+}
+```
+
+### warm 暖风（适中）
+
+```css
+[data-theme="warm"] {
+  --space-md: 20rpx;
+  --space-lg: 28rpx;
+  --font-md: 28rpx;
+  --font-lg: 32rpx;
+  --height-btn-md: 76rpx;
 }
 ```
 
@@ -171,18 +205,18 @@
 
 <style>
 .container {
-  padding: var(--spacing-lg);
+  padding: var(--space-lg, 32rpx);
 }
 
 .title {
-  font-size: var(--font-lg);
-  margin-bottom: var(--spacing-md);
+  font-size: var(--font-lg, 30rpx);
+  margin-bottom: var(--space-md, 24rpx);
 }
 
 .btn {
-  height: var(--height-btn-md);
-  padding: 0 var(--spacing-lg);
-  font-size: var(--font-md);
+  height: var(--height-btn-md, 72rpx);
+  padding: 0 var(--space-lg, 32rpx);
+  font-size: var(--font-md, 28rpx);
 }
 </style>
 ```
@@ -191,4 +225,6 @@
 
 - [ ] 所有尺寸使用 CSS 变量
 - [ ] 使用 rpx 单位
+- [ ] 无 calc() 表达式
+- [ ] CSS 变量带 fallback 值
 - [ ] 主题切换时尺寸正确切换

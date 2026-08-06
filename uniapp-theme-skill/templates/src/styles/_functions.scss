@@ -1,19 +1,117 @@
-/**
- * 主题生成函数
- *
- * 提供色阶生成、尺寸计算等工具函数。
- * 这些函数会被 tokens 层调用，自动生成完整的 Design Tokens。
- */
-
 @use 'sass:map';
 
-// ============================================
-// 工具函数
-// ============================================
+@function hsl($h, $s, $l) {
+  @return hsl($h, $s * 1%, $l * 1%);
+}
 
-/**
- * 从 map 获取值，如果不存在则返回默认值
- */
+@function hsl-to-rgb($h, $s, $l) {
+  $h: $h / 360;
+  $s: $s / 100;
+  $l: $l / 100;
+
+  @if $s == 0 {
+    $r: $l;
+    $g: $l;
+    $b: $l;
+  } @else {
+    $q: if($l < 0.5, $l * (1 + $s), $l + $s - $l * $s);
+    $p: 2 * $l - $q;
+
+    $r: hue2rgb($p, $q, $h + 1 / 3);
+    $g: hue2rgb($p, $q, $h);
+    $b: hue2rgb($p, $q, $h - 1 / 3);
+  }
+
+  @return rgb(round($r * 255), round($g * 255), round($b * 255));
+}
+
+@function hue2rgb($p, $q, $t) {
+  @if $t < 0 { $t: $t + 1; }
+  @if $t > 1 { $t: $t - 1; }
+  @if $t < 1 / 6 { @return $p + ($q - $p) * 6 * $t; }
+  @if $t < 1 / 2 { @return $q; }
+  @if $t < 2 / 3 { @return $p + ($q - $p) * (2 / 3 - $t) * 6; }
+  @return $p;
+}
+
+@function hex-to-hsl($hex) {
+  $rgb: hex-to-rgb($hex);
+  $r: nth($rgb, 1) / 255;
+  $g: nth($rgb, 2) / 255;
+  $b: nth($rgb, 3) / 255;
+
+  $max: max($r, $g, $b);
+  $min: min($r, $g, $b);
+  $h: 0;
+  $s: 0;
+  $l: ($max + $min) / 2;
+
+  @if $max != $min {
+    $d: $max - $min;
+    $s: if($l > 0.5, $d / (2 - $max - $min), $d / ($max + $min));
+
+    @if $max == $r { $h: ((($g - $b) / $d) + if($g < $b, 6, 0)) / 6; }
+    @else if $max == $g { $h: ((($b - $r) / $d) + 2) / 6; }
+    @else { $h: ((($r - $g) / $d) + 4) / 6; }
+  }
+
+  @return ($h * 360, $s * 100, $l * 100);
+}
+
+@function hsl-to-hex($h, $s, $l) {
+  $rgb: hsl-to-rgb($h, $s, $l);
+  @return rgb-to-hex(nth($rgb, 1), nth($rgb, 2), nth($rgb, 3));
+}
+
+@function rgb-to-hex($r, $g, $b) {
+  $hex: '';
+  $hex: $hex + to-hex(nth($r, 1));
+  $hex: $hex + to-hex(nth($g, 1));
+  $hex: $hex + to-hex(nth($b, 1));
+  @return '#{$hex}';
+}
+
+@function to-hex($n) {
+  $hex: '0123456789abcdef';
+  $high: floor($n / 16);
+  $low: $n - $high * 16;
+  @return str-slice($hex, $high + 1, $high + 1) + str-slice($hex, $low + 1, $low + 1);
+}
+
+@function generate-hsl-scale($hex-color, $steps: 50 100 200 300 400 500 600 700 800 900 950) {
+  $hsl: hex-to-hsl($hex-color);
+  $h: nth($hsl, 1);
+  $s: nth($hsl, 2);
+  $l: nth($hsl, 3);
+
+  $base-index: index($steps, 500);
+  @if $base-index == null { $base-index: 6; }
+
+  $scale: ();
+
+  @each $step in $steps {
+    @if $step == 500 {
+      $scale: map.merge($scale, ($step: $hex-color));
+    } @else if $step < 500 {
+      $t: ($base-index - index($steps, $step)) / $base-index;
+      $new-s: round($s * (1 - $t * 0.88));
+      $new-l: min(98, round($l + (100 - $l) * $t * 0.9 + 4));
+      $scale: map.merge($scale, ($step: hsl-to-hex($h, $new-s, $new-l)));
+    } @else {
+      $t: (index($steps, $step) - $base-index) / (length($steps) - $base-index);
+      $new-s: min(100, round($s * (1 + $t * 0.14)));
+      $new-l: max(5, round($l - $l * $t * 0.9));
+      $scale: map.merge($scale, ($step: hsl-to-hex($h, $new-s, $new-l)));
+    }
+  }
+
+  @return $scale;
+}
+
+@function static-rpx($value) {
+  @return #{$value}rpx;
+}
+
 @function theme-get($map, $key, $default: null) {
   @if map.has-key($map, $key) {
     @return map.get($map, $key);
@@ -21,63 +119,13 @@
   @return $default;
 }
 
-// ============================================
-// 色阶生成器
-// ============================================
-
-/**
- * 生成主色色阶（50-900）
- * 使用内置的 scale-color 函数（兼容 node-sass 和 dart-sass）
- */
-@function primary-palette($color, $level) {
-  @if $level == 500 {
-    @return $color;
-  } @else if $level < 500 {
-    // 浅色：向白色混合，使用内置 scale-color
-    $lightness: (100 - (100 - 95) * (500 - $level) / 450) * 1%;
-    @return scale-color($color, $lightness: $lightness - 50%);
-  } @else {
-    // 深色：向黑色混合
-    $lightness: (50 - (50 - 10) * ($level - 500) / 400) * 1%;
-    @return scale-color($color, $lightness: $lightness - 50%);
-  }
-}
-
-/**
- * 生成灰度色阶
- */
-@function gray-palette($level) {
-  $lightness: 97% - (($level - 50) / 8.5);
-  @return hsl(0, 0%, $lightness);
-}
-
-// ============================================
-// 尺寸计算
-// ============================================
-
-/**
- * 间距网格计算
- * @param {Number} $scale - 阶梯倍数
- */
-@function grid($scale) {
-  @return $scale * 1rpx;
-}
-
-// ============================================
-// 阴影生成
-// ============================================
-
-/**
- * 生成阴影
- * @param {String} $level - 层级 (sm/md/lg)
- */
 @function shadow($level, $opacity: 0.06) {
   @if $level == 'sm' {
-    @return 0 2rpx 8rpx rgba(0, 0, 0, $opacity);
+    @return 0 static-rpx(2) static-rpx(8) rgba(0, 0, 0, $opacity);
   } @else if $level == 'md' {
-    @return 0 6rpx 20rpx rgba(0, 0, 0, $opacity * 1.5);
+    @return 0 static-rpx(6) static-rpx(20) rgba(0, 0, 0, $opacity * 1.5);
   } @else if $level == 'lg' {
-    @return 0 12rpx 32rpx rgba(0, 0, 0, $opacity * 2);
+    @return 0 static-rpx(12) static-rpx(32) rgba(0, 0, 0, $opacity * 2);
   }
   @return none;
 }
