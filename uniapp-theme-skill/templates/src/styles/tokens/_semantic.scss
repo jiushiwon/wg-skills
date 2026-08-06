@@ -1,91 +1,99 @@
-@use '../primitive' as *;
+@use '../primitive' as prim;
 
-$color-primary: $primary-500;
-$color-primary-light: map-get($primary-scale, 300);
-$color-primary-lighter: map-get($primary-scale, 100);
-$color-primary-lightest: map-get($primary-scale, 50);
-$color-primary-dark: map-get($primary-scale, 700);
-$color-primary-darker: map-get($primary-scale, 800);
-$color-primary-darkest: map-get($primary-scale, 900);
+$color-primary: prim.$primary-500;
+$color-primary-light: map-get(prim.$primary-scale, 300);
+$color-primary-lighter: map-get(prim.$primary-scale, 100);
+$color-primary-lightest: map-get(prim.$primary-scale, 50);
+$color-primary-dark: map-get(prim.$primary-scale, 700);
+$color-primary-darker: map-get(prim.$primary-scale, 800);
+$color-primary-darkest: map-get(prim.$primary-scale, 900);
 
-$color-secondary: if($secondary-scale, map-get($secondary-scale, 500), null);
-$color-tertiary: if($tertiary-scale, map-get($tertiary-scale, 500), null);
+$color-secondary: null;
+$color-tertiary: null;
 
-$color-success: map-get($success-scale, 500);
-$color-warning: map-get($warning-scale, 500);
-$color-error: map-get($error-scale, 500);
-$color-info: map-get($info-scale, 500);
+@if prim.$secondary-scale {
+  $color-secondary: map-get(prim.$secondary-scale, 500);
+}
 
-$color-success-light: map-get($success-scale, 400);
-$color-warning-light: map-get($warning-scale, 400);
-$color-error-light: map-get($error-scale, 400);
-$color-info-light: map-get($info-scale, 400);
+@if prim.$tertiary-scale {
+  $color-tertiary: map-get(prim.$tertiary-scale, 500);
+}
 
-$color-text-primary: map-get($gray-scale, 900);
-$color-text-secondary: map-get($gray-scale, 600);
-$color-text-tertiary: map-get($gray-scale, 400);
-$color-text-disabled: map-get($gray-scale, 400);
-$color-text-placeholder: map-get($gray-scale, 400);
-$color-text-inverse: $white;
+$color-success: map-get(prim.$success-scale, 500);
+$color-warning: map-get(prim.$warning-scale, 500);
+$color-error: map-get(prim.$error-scale, 500);
+$color-info: map-get(prim.$info-scale, 500);
 
-$color-bg-primary: $white;
-$color-bg-page: map-get($gray-scale, 50);
-$color-bg-secondary: map-get($gray-scale, 50);
-$color-bg-tertiary: map-get($gray-scale, 100);
-$color-bg-hover: map-get($gray-scale, 100);
-$color-bg-card: $white;
-$color-bg-overlay: rgba(map-get($gray-scale, 900), 0.5);
+$color-success-light: map-get(prim.$success-scale, 400);
+$color-warning-light: map-get(prim.$warning-scale, 400);
+$color-error-light: map-get(prim.$error-scale, 400);
+$color-info-light: map-get(prim.$info-scale, 400);
 
-$color-border: map-get($gray-scale, 200);
-$color-border-light: map-get($gray-scale, 100);
-$color-border-dark: map-get($gray-scale, 300);
+$color-text-primary: map-get(prim.$gray-scale, 900);
+$color-text-secondary: map-get(prim.$gray-scale, 600);
+$color-text-tertiary: map-get(prim.$gray-scale, 400);
+$color-text-disabled: map-get(prim.$gray-scale, 400);
+$color-text-placeholder: map-get(prim.$gray-scale, 400);
+$color-text-inverse: prim.$white;
 
-$spacing-xs: $space-2;
-$spacing-sm: $space-3;
-$spacing-md: $space-4;
-$spacing-lg: $space-6;
-$spacing-xl: $space-8;
-$spacing-2xl: $space-12;
-$spacing-3xl: $space-16;
+$color-bg-primary: prim.$white;
+$color-bg-page: map-get(prim.$gray-scale, 50);
+$color-bg-secondary: map-get(prim.$gray-scale, 50);
+$color-bg-tertiary: map-get(prim.$gray-scale, 100);
+$color-bg-hover: map-get(prim.$gray-scale, 100);
+$color-bg-card: prim.$white;
+$color-bg-overlay: rgba(map-get(prim.$gray-scale, 900), 0.5);
 
-$radius-none: $radius-none;
-$radius-sm: $radius-sm;
-$radius-md: $radius-md;
-$radius-lg: $radius-lg;
-$radius-xl: $radius-xl;
-$radius-full: $radius-full;
+$color-border: map-get(prim.$gray-scale, 200);
+$color-border-light: map-get(prim.$gray-scale, 100);
+$color-border-dark: map-get(prim.$gray-scale, 300);
 
-$radius-btn: $radius-full;
-$radius-input: $radius-md;
-$radius-card: $radius-lg;
-$radius-tag: $radius-sm;
-$radius-image: $radius-sm;
-$radius-avatar: $radius-full;
+$spacing-xs: prim.$space-2;
+$spacing-sm: prim.$space-3;
+$spacing-md: prim.$space-4;
+$spacing-lg: prim.$space-6;
+$spacing-xl: prim.$space-8;
+$spacing-2xl: prim.$space-12;
+$spacing-3xl: prim.$space-16;
 
-$font-caption: $font-2xs;
-$font-body-sm: $font-xs;
-$font-body: $font-sm;
-$font-body-lg: $font-md;
-$font-subhead: $font-md;
-$font-title-sm: $font-lg;
-$font-title: $font-xl;
-$font-title-lg: $font-2xl;
-$font-display: $font-3xl;
+$radius-none: prim.$radius-none;
+$radius-sm: prim.$radius-sm;
+$radius-md: prim.$radius-md;
+$radius-lg: prim.$radius-lg;
+$radius-xl: prim.$radius-xl;
+$radius-full: prim.$radius-full;
 
-$shadow-sm: $shadow-sm;
-$shadow-md: $shadow-md;
-$shadow-lg: $shadow-lg;
+$radius-btn: prim.$radius-full;
+$radius-input: prim.$radius-md;
+$radius-card: prim.$radius-lg;
+$radius-tag: prim.$radius-sm;
+$radius-image: prim.$radius-sm;
+$radius-avatar: prim.$radius-full;
 
-$height-btn-sm: $height-btn-sm;
-$height-btn-md: $height-btn-md;
-$height-btn-lg: $height-btn-lg;
+$font-caption: prim.$font-2xs;
+$font-body-sm: prim.$font-xs;
+$font-body: prim.$font-sm;
+$font-body-lg: prim.$font-md;
+$font-subhead: prim.$font-md;
+$font-title-sm: prim.$font-lg;
+$font-title: prim.$font-xl;
+$font-title-lg: prim.$font-2xl;
+$font-display: prim.$font-3xl;
 
-$icon-xs: $icon-xs;
-$icon-sm: $icon-sm;
-$icon-md: $icon-md;
-$icon-lg: $icon-lg;
-$icon-xl: $icon-xl;
+$shadow-sm: prim.$shadow-sm;
+$shadow-md: prim.$shadow-md;
+$shadow-lg: prim.$shadow-lg;
 
-$page-padding: $space-6;
-$card-padding: $space-6;
+$height-btn-sm: prim.$height-btn-sm;
+$height-btn-md: prim.$height-btn-md;
+$height-btn-lg: prim.$height-btn-lg;
+
+$icon-xs: prim.$icon-xs;
+$icon-sm: prim.$icon-sm;
+$icon-md: prim.$icon-md;
+$icon-lg: prim.$icon-lg;
+$icon-xl: prim.$icon-xl;
+
+$page-padding: prim.$space-6;
+$card-padding: prim.$space-6;
 $list-item-height: static-rpx(88);

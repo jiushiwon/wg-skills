@@ -406,7 +406,6 @@ function generateCSSVariables(config = {}) {
 
 const PRESET_THEMES = {
   cute: { primaryColor: '#FF8FB1', secondaryColor: null, tertiaryColor: null },
-  minimal: { primaryColor: '#333333', secondaryColor: null, tertiaryColor: null },
   business: { primaryColor: '#2563EB', secondaryColor: null, tertiaryColor: null },
   fresh: { primaryColor: '#34D399', secondaryColor: null, tertiaryColor: null },
   cyber: { primaryColor: '#00F0FF', secondaryColor: null, tertiaryColor: null },
