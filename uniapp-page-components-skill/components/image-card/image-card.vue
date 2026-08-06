@@ -167,10 +167,11 @@ watch(
   display: flex;
   flex-wrap: wrap;
   margin-top: var(--spacing-sm);
-  gap: var(--spacing-xs);
 }
 
 .ic-tag {
+  margin-right: var(--spacing-xs);
+  margin-bottom: var(--spacing-xs);
   padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: var(--radius-tag);
   font-size: var(--font-xs);

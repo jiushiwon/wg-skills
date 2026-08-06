@@ -196,7 +196,6 @@ function itemText(item: any) {
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
   padding: var(--spacing-sm) var(--spacing-md);
   background: var(--color-bg-surface);
   border-bottom: 1rpx solid var(--color-border-light);
@@ -245,6 +244,7 @@ function itemText(item: any) {
 }
 
 .sp-action {
+  margin-left: var(--spacing-sm);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -297,10 +297,11 @@ function itemText(item: any) {
   display: flex;
   flex-wrap: wrap;
   margin-top: var(--spacing-md);
-  gap: var(--spacing-sm);
 }
 
 .sp-tag {
+  margin-right: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
   display: flex;
   align-items: center;
   height: var(--height-btn-sm);

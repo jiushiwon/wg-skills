@@ -100,7 +100,6 @@ function onItemClick(item: TabbarItem) {
   align-items: center;
   justify-content: center;
   height: var(--height-btn-xl);
-  gap: 2rpx;
 }
 
 .bt-icon-wrap {
@@ -124,6 +123,7 @@ function onItemClick(item: TabbarItem) {
 .bt-text {
   font-size: var(--font-xs);
   color: var(--color-text-secondary);
+  margin-top: 2rpx;
   transition: color 150ms ease-out;
 }
 

@@ -424,11 +424,11 @@ onMounted(scrollToBottom)
 .chat-input-bar {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
   padding: var(--spacing-sm) var(--spacing-md);
 }
 
 .chat-plus {
+  margin-right: var(--spacing-sm);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -444,6 +444,7 @@ onMounted(scrollToBottom)
 }
 
 .chat-input {
+  margin-right: var(--spacing-sm);
   flex: 1;
   min-width: 0;
   height: var(--height-btn-lg);

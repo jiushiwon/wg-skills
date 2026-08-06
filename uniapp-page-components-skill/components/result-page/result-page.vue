@@ -150,6 +150,13 @@ const iconMap: Record<string, string> = {
   padding-top: var(--spacing-2xl);
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+}
+
+.rp-actions > * {
+  margin-bottom: var(--spacing-md);
+}
+
+.rp-actions > *:last-child {
+  margin-bottom: 0;
 }
 </style>

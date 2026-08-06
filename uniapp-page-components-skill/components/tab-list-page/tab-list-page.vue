@@ -162,12 +162,12 @@ function onLoadMore() {
   display: flex;
   height: var(--height-btn-lg);
   align-items: center;
-  gap: var(--spacing-lg);
   padding: 0 var(--spacing-lg);
   border-bottom: 1rpx solid var(--color-border-light);
 }
 
 .tlp-tab {
+  margin-right: var(--spacing-lg);
   position: relative;
   display: flex;
   align-items: center;
@@ -255,5 +255,9 @@ function onLoadMore() {
 .tlp-empty-text {
   font-size: var(--font-md);
   color: var(--color-text-tertiary);
+}
+
+.tlp-tab:last-child {
+  margin-right: 0;
 }
 </style>

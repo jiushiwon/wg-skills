@@ -407,10 +407,11 @@ function likeNames(feed: MomentsFeed) {
   display: flex;
   flex-wrap: wrap;
   margin-top: var(--spacing-sm);
-  gap: var(--spacing-xs);
 }
 
 .feed-image {
+  margin-right: var(--spacing-xs);
+  margin-bottom: var(--spacing-xs);
   border-radius: var(--radius-image);
   background: var(--color-bg-surface);
 }

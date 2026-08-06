@@ -226,10 +226,10 @@ const emit = defineEmits<{ back: []; action: [act: BottomAction]; reachBottom: [
 .pdp-actions {
   display: flex;
   align-items: center;
-  gap: var(--spacing-md);
 }
 
 .pdp-action {
+  margin-right: var(--spacing-md);
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -238,7 +238,10 @@ const emit = defineEmits<{ back: []; action: [act: BottomAction]; reachBottom: [
   min-height: var(--height-btn-md);
   border-radius: var(--radius-btn);
 
-  &.is-primary {
+  &.pdp-action:last-child {
+  margin-right: 0;
+}
+.is-primary {
     flex: 1.6;
     height: var(--height-btn-lg);
     background: var(--color-primary);
