@@ -24,6 +24,19 @@ triggers:
   - "多主题"
   - "添加多主题"
   - "primary.*secondary.*tertiary"
+  - "添加二级主题"
+  - "添加三级主题"
+  - "添加 secondary 主题"
+  - "添加 tertiary 主题"
+  - "添加辅助色"
+  - "添加第三主题色"
+  - "secondary.*色阶"
+  - "tertiary.*色阶"
+  - "多主题色阶"
+  - "生成 secondary"
+  - "生成 tertiary"
+  - "辅助色.*#"
+  - "第三主题色.*#"
 ---
 
 # uniapp-theme-skill
