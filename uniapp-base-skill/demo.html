@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>uniapp-base-skill</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      background: #f0f0f0;
+      font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
+    }
+    .app-container {
+      max-width: 414px;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: #fff;
+      position: relative;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+
+    .status-bar {
+      height: 44px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .content { padding: 16px; }
+    .content:last-child { padding-bottom: 34px; }
+
+    .page-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 6px;
+    }
+    .page-desc {
+      font-size: 14px;
+      color: #999;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+    }
+
+    .tag-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .tag {
+      padding: 8px 16px;
+      background: #e7f7ed;
+      color: #07c160;
+      border-radius: 20px;
+      font-size: 13px;
+    }
+
+    .card-preview {
+      background: #f7f7f7;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .base-card-demo {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      color: #999;
+      font-size: 13px;
+    }
+    .base-card-demo.circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      padding: 0;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .base-card-demo.small { padding: 12px; }
+    .base-card-demo.ghost {
+      background: transparent;
+      border: 1px solid #ddd;
+    }
+
+    .preview-header {
+      height: 44px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 500;
+      border-bottom: 1px solid #eee;
+    }
+    .preview-body { padding: 16px; }
+
+    .chat-row { display: flex; margin-bottom: 16px; align-items: flex-start; }
+    .chat-row.self { flex-direction: row-reverse; }
+    .chat-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      background: #ddd;
+      flex-shrink: 0;
+    }
+    .chat-bubble {
+      max-width: 70%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: #fff;
+      margin: 0 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    .chat-row.self .chat-bubble { background: #07c160; color: #fff; }
+
+    .product-cover {
+      height: 140px;
+      background: linear-gradient(135deg, #ffe4c4 0%, #ffdab9 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-size: 12px;
+    }
+    .product-info { padding: 16px; background: #fff; }
+    .product-price { font-size: 20px; font-weight: 700; color: #ff4d4f; }
+    .product-title { font-size: 14px; font-weight: 500; margin-top: 8px; }
+
+    .param-list { background: #fff; border-radius: 12px; padding: 4px 0; }
+    .param-item {
+      display: flex;
+      padding: 10px 16px;
+      border-bottom: 1px solid #f5f5f5;
+    }
+    .param-item:last-child { border-bottom: none; }
+    .param-name { width: 90px; font-size: 13px; color: #07c160; font-weight: 500; }
+    .param-desc { flex: 1; font-size: 13px; color: #666; }
+
+    .file-list { background: #fff; border-radius: 12px; overflow: hidden; }
+    .file-item {
+      display: flex;
+      align-items: center;
+      padding: 14px 16px;
+      border-bottom: 1px solid #f5f5f5;
+      font-size: 14px;
+    }
+    .file-item:last-child { border-bottom: none; }
+    .file-icon {
+      width: 32px;
+      height: 32px;
+      background: #e7f7ed;
+      color: #07c160;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      margin-right: 12px;
+      font-weight: 600;
+    }
+    .file-item:nth-child(2) .file-icon { background: #e6f4ff; color: #1890ff; }
+    .file-item:nth-child(3) .file-icon { background: #fff7e6; color: #fa8c16; }
+    .file-name { flex: 1; color: #333; }
+    .file-desc { color: #999; font-size: 12px; }
+
+    .safe-area { height: env(safe-area-inset-bottom); }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <div class="status-bar">uniapp-base-skill</div>
+
+    <div class="content">
+      <div class="page-title">一切皆卡片</div>
+      <p class="page-desc">核心是 base-card，通过参数组合生成不同形态</p>
+
+      <!-- 触发词 -->
+      <div class="section-title">触发词</div>
+      <div class="tag-group">
+        <span class="tag">按钮</span>
+        <span class="tag">设置项</span>
+        <span class="tag">输入框</span>
+        <span class="tag">聊天页</span>
+        <span class="tag">商品详情</span>
+      </div>
+
+      <!-- 核心：base-card -->
+      <div class="section-title">核心：base-card</div>
+      <div class="card-preview">
+        <div class="base-card-demo">通用卡片</div>
+      </div>
+      <div style="display:flex;gap:12px;margin-bottom:16px;">
+        <div class="card-preview" style="flex:1;padding:12px;">
+          <div class="base-card-demo circle">头像</div>
+        </div>
+        <div class="card-preview" style="flex:1;padding:12px;">
+          <div class="base-card-demo small">紧凑</div>
+        </div>
+        <div class="card-preview" style="flex:1;padding:12px;">
+          <div class="base-card-demo ghost">幽灵</div>
+        </div>
+      </div>
+      <p style="font-size:13px;color:#666;line-height:1.6;">
+        base-card 提供：width/height/background/radius/padding/margin/border/shadow/clickable<br>
+        所有组件都是由它组合而成
+      </p>
+
+      <!-- 文件结构 -->
+      <div class="section-title">文件结构</div>
+      <div class="file-list">
+        <div class="file-item">
+          <div class="file-icon">MD</div>
+          <span class="file-name">base-card.md</span>
+          <span class="file-desc">核心文档</span>
+        </div>
+        <div class="file-item">
+          <div class="file-icon">MD</div>
+          <span class="file-name">demo-components/chat.md</span>
+          <span class="file-desc">聊天Demo</span>
+        </div>
+        <div class="file-item">
+          <div class="file-icon">MD</div>
+          <span class="file-name">demo-components/product.md</span>
+          <span class="file-desc">商品Demo</span>
+        </div>
+        <div class="file-item">
+          <div class="file-icon">MD</div>
+          <span class="file-name">SKILL.md</span>
+          <span class="file-desc">系统介绍</span>
+        </div>
+      </div>
+
+      <!-- 案例1: chat -->
+      <div class="section-title" style="margin-top:24px;">Demo 案例：chat-page</div>
+      <div class="card-preview" style="padding:0;overflow:hidden;">
+        <div class="preview-header">聊天</div>
+        <div class="preview-body">
+          <div class="chat-row">
+            <div class="chat-avatar"></div>
+            <div class="chat-bubble">你好</div>
+          </div>
+          <div class="chat-row self">
+            <div class="chat-bubble">收到</div>
+            <div class="chat-avatar" style="background:#07c160;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="param-list">
+        <div class="param-item">
+          <span class="param-name">avatarRadius</span>
+          <span class="param-desc">50% 圆形 / 0 方形</span>
+        </div>
+        <div class="param-item">
+          <span class="param-name">selfBubbleBg</span>
+          <span class="param-desc">自己气泡颜色</span>
+        </div>
+      </div>
+
+      <!-- 案例2: product -->
+      <div class="section-title" style="margin-top:24px;">Demo 案例：product-page</div>
+      <div class="card-preview" style="padding:0;overflow:hidden;">
+        <div class="product-cover">商品图片</div>
+        <div class="product-info">
+          <div class="product-price">¥99</div>
+          <div class="product-title">商品标题</div>
+        </div>
+      </div>
+      <div class="param-list">
+        <div class="param-item">
+          <span class="param-name">coverRadius</span>
+          <span class="param-desc">图片圆角</span>
+        </div>
+        <div class="param-item">
+          <span class="param-name">cardRadius</span>
+          <span class="param-desc">卡片圆角</span>
+        </div>
+      </div>
+
+      <p style="font-size:12px;color:#999;margin-top:20px;text-align:center;">
+        ⚠️ Demo 案例仅供參考，非完美實現
+      </p>
+    </div>
+
+    <div class="safe-area"></div>
+  </div>
+</body>
+</html>
