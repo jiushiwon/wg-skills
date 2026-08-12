@@ -37,6 +37,9 @@
 | `border` | string | - | 边框 |
 | `shadow` | string | - | 阴影 |
 | `clickable` | boolean | `false` | 是否可点击 |
+| `image` | string | - | 左侧图片地址 |
+| `imageSize` | string | `'80rpx'` | 图片尺寸 |
+| `imageRadius` | string | `var(--radius-sm)` | 图片圆角 |
 
 ## 代码
 
@@ -48,7 +51,18 @@
     :style="cardStyle"
     @click="onClick"
   >
-    <slot />
+    <!-- 左侧图片 -->
+    <image
+      v-if="image"
+      class="card-image"
+      :src="image"
+      :style="imageStyle"
+      mode="aspectFill"
+    />
+    <!-- 内容 -->
+    <view class="card-content">
+      <slot />
+    </view>
   </view>
 </template>
 
@@ -66,6 +80,9 @@ interface Props {
   border?: string
   shadow?: string
   clickable?: boolean
+  image?: string
+  imageSize?: string
+  imageRadius?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -74,6 +91,8 @@ const props = withDefaults(defineProps<Props>(), {
   background: 'var(--color-bg-surface)',
   radius: 'var(--radius-md)',
   padding: 'var(--spacing-lg)',
+  imageSize: '80rpx',
+  imageRadius: 'var(--radius-sm)',
   clickable: false,
 })
 
@@ -85,10 +104,16 @@ const cardStyle = computed(() => ({
   minHeight: props.minHeight,
   background: props.background,
   borderRadius: props.radius,
-  padding: props.padding,
+  padding: props.image ? `var(--spacing-sm) var(--spacing-md)` : props.padding,
   margin: props.margin,
   border: props.border,
   boxShadow: props.shadow,
+}))
+
+const imageStyle = computed(() => ({
+  width: props.imageSize,
+  height: props.imageSize,
+  borderRadius: props.imageRadius,
 }))
 
 function onClick() {
@@ -99,10 +124,20 @@ function onClick() {
 <style scoped>
 .base-card {
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
   transition: opacity 0.2s;
 }
 .is-clickable:active {
   opacity: 0.7;
+}
+.card-image {
+  flex-shrink: 0;
+}
+.card-content {
+  flex: 1;
+  min-width: 0;
 }
 </style>
 ```
@@ -148,6 +183,24 @@ function onClick() {
 </base-card>
 ```
 
+### 带图片的卡片 = 卡片 + 左侧图片
+
+```vue
+<base-card
+  image="/avatar.png"
+  image-size="80rpx"
+  image-radius="var(--radius-sm)"
+  :radius="'var(--radius-lg)'"
+  :margin="'var(--space-3)'"
+  clickable
+>
+  <view>
+    <text>标题</text>
+    <text>描述内容</text>
+  </view>
+</base-card>
+```
+
 ## 使用场景
 
 | 场景 | 配置 |
@@ -158,3 +211,4 @@ function onClick() {
 | 方形 | `radius: 0` |
 | 幽灵按钮 | `background: transparent, border: 1rpx solid var(--color-border)` |
 | 悬浮卡片 | `shadow: var(--shadow-md)` |
+| 带图片卡片 | `image: '/xxx.png', imageSize: '80rpx', imageRadius: 'var(--radius-sm)'` |

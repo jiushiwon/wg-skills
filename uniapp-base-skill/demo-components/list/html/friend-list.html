@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>好友列表 - 参考[016_我的好友]</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* uniapp-theme-skill 变量定义 */
+    :root {
+      --radius-lg: 12px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --color-bg-surface: #fff;
+    }
+    body { background: #f5f5f5; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; background: #f5f5f5; border-radius: 0; overflow: hidden; }
+    .preview-header { height: 44px; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee; font-size: 16px; font-weight: 500; }
+    .preview-body { padding: 16px; }
+
+    /* 好友列表 - 圆角+间距分割 */
+    /* 使用 uniapp-theme-skill 变量 */
+    .friend-card {
+      background: var(--color-bg-surface, #fff);
+      border-radius: var(--radius-lg, 12px);
+      padding: var(--space-3, 12px) var(--space-4, 16px);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3, 12px);
+      margin-bottom: var(--space-3, 12px);
+      box-shadow: var(--shadow-sm, 0 1px 2px rgba(0,0,0,0.05));
+    }
+    .friend-card:last-child { margin-bottom: 0; }
+    .friend-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: url(avatar1.jpg) center/cover;
+      flex-shrink: 0;
+    }
+    .friend-info { flex: 1; min-width: 0; }
+    .friend-name { font-size: 15px; color: #333; font-weight: 500; }
+    .friend-desc { font-size: 13px; color: #999; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .friend-tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      background: #e6f7ff;
+      color: #1890ff;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .friend-tag.new { background: #fff1f0; color: #ff4d4f; }
+
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: #1890ff; width: 70px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="title" style="text-align:center;margin-bottom:10px;font-size:14px;color:#666;">参考: 016_我的好友-新的.jpg</div>
+  <div class="preview">
+    <div class="preview-header">新的好友</div>
+    <div class="preview-body">
+      <!-- 好友1: 新朋友 -->
+      <div class="friend-card">
+        <div class="friend-avatar"></div>
+        <div class="friend-info">
+          <div class="friend-name">产品经理</div>
+          <div class="friend-desc">每天进步一点点 ✨</div>
+        </div>
+        <span class="friend-tag new">新朋友</span>
+      </div>
+
+      <!-- 好友2: 朋友 -->
+      <div class="friend-card">
+        <div class="friend-avatar" style="background: url(avatar2.jpg) center/cover;"></div>
+        <div class="friend-info">
+          <div class="friend-name">UI设计师</div>
+          <div class="friend-desc">设计改变世界</div>
+        </div>
+        <span class="friend-tag">通过微信号</span>
+      </div>
+
+      <!-- 好友3: -->
+      <div class="friend-card">
+        <div class="friend-avatar" style="background: url(avatar3.jpg) center/cover;"></div>
+        <div class="friend-info">
+          <div class="friend-name">前端开发</div>
+          <div class="friend-desc">Vue/React/UniApp</div>
+        </div>
+        <span class="friend-tag">通过手机号</span>
+      </div>
+
+      <!-- 好友4: -->
+      <div class="friend-card">
+        <div class="friend-avatar" style="background: url(avatar1.jpg) center/cover;"></div>
+        <div class="friend-info">
+          <div class="friend-name">后端架构师</div>
+          <div class="friend-desc">技术驱动业务</div>
+        </div>
+        <span class="friend-tag">通过群聊</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title">base-card 参数</div>
+    <div class="param-row"><span class="param-key">radius:</span><span class="param-val">12px（圆角）</span></div>
+    <div class="param-row"><span class="param-key">padding:</span><span class="param-val">12px 16px</span></div>
+    <div class="param-row"><span class="param-key">margin:</span><span class="param-val">12px（间距分割）</span></div>
+    <div class="param-row"><span class="param-key">shadow:</span><span class="param-val">0 1px 2px rgba(0,0,0,0.05)</span></div>
+  </div>
+</body>
+</html>
