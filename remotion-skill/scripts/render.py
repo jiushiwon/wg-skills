@@ -24,7 +24,8 @@ def check_command(cmd: list[str]) -> bool:
 
 def run(cmd: list[str], cwd: Path | None = None):
     print(f"$ {' '.join(cmd)}")
-    result = subprocess.run(cmd, cwd=cwd)
+    use_shell = sys.platform == "win32"
+    result = subprocess.run(cmd, cwd=cwd, shell=use_shell)
     if result.returncode != 0:
         print(f"命令失败：{' '.join(cmd)}")
         sys.exit(result.returncode)
