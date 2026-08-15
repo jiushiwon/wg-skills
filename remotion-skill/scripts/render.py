@@ -46,7 +46,7 @@ def main():
     final_video = out_dir / "final.mp4"
 
     run(
-        ["npx", "remotion", "render", "src/index.ts", str(raw_video)],
+        ["npx", "remotion", "render", "src/index.ts", "Main", str(raw_video)],
         cwd=project_dir,
     )
 
