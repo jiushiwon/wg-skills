@@ -1002,6 +1002,36 @@ FastAPI 零基础起步
 
 ---
 
+### 30. remotion-skill 🎬
+
+> Remotion 社媒口播视频生成技能：文案 → 可编辑 Remotion 项目 → 一键渲染 → FFmpeg 后期
+
+**功能**：输入文案生成竖屏（9x16）或横屏（16x9）口播视频项目，内置字幕高亮动画，支持用户二次编辑样式与配音，一键渲染后自动完成 FFmpeg 压缩与画幅统一。
+
+**使用场景**：
+- 把口播文案快速转成短视频
+- 生成可二次编辑的 Remotion 项目
+- 批量生产社媒短视频原型
+
+**使用方式**：
+
+```
+/remotion-skill
+```
+
+或自然语言：
+
+```
+帮我做一个口播视频
+把这段文案做成 9x16 短视频
+生成一个 Remotion 项目
+渲染这个 Remotion 项目
+```
+
+**详细文档**：[remotion-skill/README.md](remotion-skill/README.md)
+
+---
+
 ## 📋 Skill 一览
 
 | Skill | 说明 | 触发关键词 |
@@ -1035,6 +1065,7 @@ FastAPI 零基础起步
 | [vibecoding-guide-skill](vibecoding-guide-skill/) | VibeCoding / AI 开发知识导师（3 子技能） | `/vibecoding`、`我想学 VibeCoding` |
 | [ui-template-builder-skill](ui-template-builder-skill/) | UI 页面模板构建器（37 套模板 + 5 套风格 + Mock 数据 + 一键换肤） | `生成页面`、`做个个人中心`、`数据大屏`、`换个主题色` |
 | [fastapi-init-skill](fastapi-init-skill/) | FastAPI 一键初始化（环境探测 + 自动安装 + SSE 流式 + JWT 鉴权 + 一键脚本 + MySQL/PG/Mongo） | `FastAPI 脚手架`、`初始化 FastAPI 项目`、`fastapi init`、`搭建 FastAPI 服务`、`Python Web 骨架` |
+| [remotion-skill](remotion-skill/) | Remotion 社媒口播视频生成（文案 → 可编辑项目 → 一键渲染 → FFmpeg 后期） | `remotion`、`口播视频`、`生成视频`、`9x16 视频`、`渲染 Remotion 项目` |
 
 > 注：`demo/foundry-demo` 是 [frontend-ui-foundry](frontend-ui-foundry/) 的端到端示例，不是独立 Skill。
 > 注：`super-deploy-skills` 是父技能，包含 5 个子技能，统一放在 `super-deploy-skills/` 目录下；`deploy-detect-skill` 是其余子技能的共享前置。
