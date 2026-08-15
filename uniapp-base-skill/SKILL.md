@@ -5,9 +5,20 @@ trigger: |
   # 基础组件
   帮我做一个按钮组件 | 生成一个设置项 | 做一个输入框 | 做一个头像 | 做一个卡片
   # 完整页面
-  帮我做一个聊天页面 | 做一个商品详情页 | 做一个个人中心页 | 做一个列表页
+  帮我做一个聊天页面 | 做一个商品详情页 | 做一个个人中心页
+  # 列表页（六类）
+  做一个好友列表 | 做一个关注列表 | 做一个获赞与收藏列表
+  做一个设置列表 | 做一个订单列表 | 做一个积分中心
+  # 详情页（六类）
+  做一个商品详情页 | 做一个活动详情页 | 做一个帖子详情页
+  做一个个人中心页 | 做一个钱包详情页 | 做一个结果页 | 做一个支付成功页
+  # 通用列表
+  做一个列表页 | 做一个带图片的列表 | 做一个分组设置的列表
+  # 通用详情
+  做一个详情页 | 做一个带大图头的详情 | 做一个带操作按钮的详情
   # 参数化调整
   改成方形头像 | 改成圆角图片 | 改成暗黑模式 | 改成蓝色主题
+  列表改成圆角+间距风格 | 改成大卡片套小卡片样式
   # 组合使用
   加一个输入框组件 | 加一个规格选择卡片 | 页面改成XX主题
 ---
@@ -143,10 +154,36 @@ chat-page / product-page（页面案例）
 
 > ⚠️ demo-components 目录下的案例是 demo 示例，非完美实现，仅供参考。
 
+### 聊天/商品
+
 | 案例 | 说明 | 文档 |
 |------|------|------|
 | chat-page | 聊天页面 | [demo-components/chat.md](demo-components/chat.md) |
 | product-page | 商品详情页 | [demo-components/product.md](demo-components/product.md) |
+
+### 列表页（六类风格）
+
+| 案例 | 风格 | 触发词 | 文档 |
+|------|------|--------|------|
+| friend-list | 圆角+圆形头像+间距 | 好友列表、联系人 | [list/friend-list.md](demo-components/list/friend-list.md) |
+| follow-list | 圆角+方形封面+间距 | 关注列表、订阅号 | [list/follow-list.md](demo-components/list/follow-list.md) |
+| like-list | 圆角+Tab切换+间距 | 获赞收藏、互动消息 | [list/like-list.md](demo-components/list/like-list.md) |
+| points-center | 圆角+渐变头部+间距 | 积分中心、资产中心 | [list/points-center.md](demo-components/list/points-center.md) |
+| collection-settings | 大卡片套小卡片 | 设置列表、分组设置 | [list/collection-settings.md](demo-components/list/collection-settings.md) |
+| order-after-sale | 圆角+状态栏+间距 | 订单列表、售后列表 | [list/order-after-sale.md](demo-components/list/order-after-sale.md) |
+
+### 详情页（六类风格）
+
+| 案例 | 风格 | 触发词 | 文档 |
+|------|------|--------|------|
+| product-detail | 轮播大图+信息卡片+底部操作 | 商品详情、服务详情 | [detail/README.md](demo-components/detail/README.md) |
+| activity-detail | 头图角标+时间地点+底部报名 | 活动详情、线路详情 | [detail/README.md](demo-components/detail/README.md) |
+| post-detail | 作者信息+内容+互动评论 | 帖子详情、日记详情 | [detail/README.md](demo-components/detail/README.md) |
+| profile-detail | 渐变头部+统计+VIP+功能网格 | 个人中心、创作者中心 | [detail/README.md](demo-components/detail/README.md) |
+| wallet-detail | 渐变余额+交易明细 | 钱包、资产、积分 | [detail/README.md](demo-components/detail/README.md) |
+| result-detail | 状态图标+操作+推荐 | 支付结果、空状态、404 | [detail/README.md](demo-components/detail/README.md) |
+
+[查看详情页案例集](demo-components/detail/README.md)
 
 ## 实用提示词案例
 
@@ -164,11 +201,23 @@ chat-page / product-page（页面案例）
 做一个商品详情页，需要轮播图、价格区域、底部操作栏
 ```
 
+### 列表页
+```
+做一个好友列表，圆形头像，圆角卡片
+做一个关注列表，方形封面图
+做一个获赞与收藏列表，带Tab切换
+做一个设置列表，分组样式，大卡片套小卡片
+做一个订单列表，带状态和操作按钮
+做一个积分中心，带渐变头部
+```
+
 ### 参数化调整
 ```
 聊天页改成方形头像
 商品页改成圆角图片
 把当前页面改成暗黑模式
+列表改成圆角+间距风格
+改成大卡片套小卡片样式
 ```
 
 ### 组合使用
@@ -220,14 +269,61 @@ chat-page / product-page（页面案例）
 uniapp-base-skill/
 ├── SKILL.md              # 本文件：系统介绍 + 规范
 ├── README.md             # 用户文档
-├── demo.html             # 演示页面
 ├── base-card.md          # 核心：基础卡片
 └── demo-components/      # Demo 案例（参考，非完美实现）
     ├── chat.md           # 聊天页案例
-    └── product.md        # 商品页案例
+    ├── product.md        # 商品页案例
+    ├── list/             # 列表页案例集（6类）
+    │   ├── README.md
+    │   ├── friend-list.md
+    │   ├── follow-list.md
+    │   ├── like-list.md
+    │   ├── points-center.md
+    │   ├── collection-settings.md
+    │   ├── order-after-sale.md
+    │   ├── html/          # HTML 演示
+    │   └── images/        # 示例图片
+    └── detail/           # 详情页案例集（6类）
+        ├── README.md
+        ├── html/          # HTML 演示
+        └── static/        # 示例图标/图片
 ```
 
 ## 版本日志
+
+### v1.2.0 (2026-08-15)
+
+**新增功能**
+
+- ✅ 新增详情页案例集（6类风格）
+- ✅ 使用 icon-image-catch-skill 抓取真实图标/图片素材
+- ✅ 覆盖商品详情、活动详情、帖子详情、个人中心、钱包详情、结果页
+
+**详情页案例**
+
+- ✅ product-detail（商品详情）
+- ✅ activity-detail（活动详情）
+- ✅ post-detail（帖子详情）
+- ✅ profile-detail（个人中心）
+- ✅ wallet-detail（钱包详情）
+- ✅ result-detail（结果页）
+
+### v1.1.0 (2025-08-12)
+
+**新增功能**
+
+- ✅ base-card 新增图片属性：image / imageSize / imageRadius
+- ✅ 新增列表页案例集（6类风格）
+- ✅ 完整触发词覆盖
+
+**列表页案例**
+
+- ✅ friend-list（好友列表）
+- ✅ follow-list（关注列表）
+- ✅ like-list（获赞与收藏）
+- ✅ points-center（积分中心）
+- ✅ collection-settings（设置列表）
+- ✅ order-after-sale（订单列表）
 
 ### v1.0.0 (2025-08-07)
 
@@ -241,13 +337,3 @@ uniapp-base-skill/
 - ✅ 强制规范：禁止使用 scroll-view
 - ✅ 强制规范：禁止使用原生 button
 - ✅ APP 端兼容性规范
-
----
-
-**后续迭代计划**
-
-- [ ] profile 案例（个人中心）
-- [ ] search 案例（搜索页）
-- [ ] list 案例（列表页）
-- [ ] 完善 base-btn/base-list-item 等基础组件代码
-- [ ] 增加更多参数配置

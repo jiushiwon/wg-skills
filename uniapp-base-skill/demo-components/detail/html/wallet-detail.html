@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>钱包详情</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-full: 999px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --color-primary: #4a90e2;
+      --color-income: #52c41a;
+      --color-expense: #ff4d4f;
+      --color-text: #333;
+      --color-text-secondary: #999;
+      --color-bg: #f5f5f5;
+      --color-bg-surface: #fff;
+      --color-border: #f0f0f0;
+    }
+    body { background: var(--color-bg); padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; background: var(--color-bg); }
+    .preview-header { height: 44px; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee; font-size: 16px; font-weight: 500; position: relative; }
+    .preview-back { position: absolute; left: 12px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
+    .icon { width: 20px; height: 20px; }
+    .preview-body { padding: var(--space-3); }
+
+    .base-card {
+      background: var(--color-bg-surface);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-3);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+    .base-card:last-child { margin-bottom: 0; }
+
+    .balance-card {
+      background: linear-gradient(135deg, #4a90e2 0%, #7bb1ff 100%);
+      padding: var(--space-4);
+      color: #fff;
+      position: relative;
+    }
+    .balance-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .balance-label { font-size: 14px; color: rgba(255,255,255,0.9); }
+    .balance-help { width: 20px; height: 20px; }
+    .balance-help .icon { filter: brightness(0) invert(1); }
+    .balance-amount { font-size: 36px; font-weight: 600; margin-bottom: 6px; }
+    .balance-equivalent { font-size: 13px; color: rgba(255,255,255,0.8); }
+    .balance-earn { position: absolute; right: var(--space-4); top: 50%; transform: translateY(-50%); font-size: 13px; color: rgba(255,255,255,0.9); }
+
+    .transaction-header { padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; }
+    .transaction-title { font-size: 15px; color: var(--color-text); font-weight: 500; padding-left: 8px; border-left: 3px solid var(--color-primary); }
+    .transaction-filter { font-size: 13px; color: var(--color-text-secondary); }
+
+    .transaction-list { padding: 0 var(--space-4); }
+    .transaction-item { display: flex; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--color-border); }
+    .transaction-item:last-child { border-bottom: none; }
+    .transaction-icon { width: 40px; height: 40px; border-radius: var(--radius-full); background: #f0f7ff; display: flex; align-items: center; justify-content: center; margin-right: 12px; flex-shrink: 0; }
+    .transaction-icon.income { background: #f0f9eb; }
+    .transaction-icon.expense { background: #fff0f0; }
+    .transaction-icon .icon { width: 20px; height: 20px; }
+    .transaction-icon.income .icon { color: var(--color-income); }
+    .transaction-icon.expense .icon { color: var(--color-expense); }
+    .transaction-info { flex: 1; }
+    .transaction-name { font-size: 14px; color: var(--color-text); font-weight: 500; }
+    .transaction-time { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
+    .transaction-amount { font-size: 16px; font-weight: 600; }
+    .transaction-amount.income { color: var(--color-income); }
+    .transaction-amount.expense { color: var(--color-expense); }
+
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 90px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="preview">
+    <div class="preview-header">
+      <span class="preview-back"><img class="icon" src="../static/icons/arrow-left.svg"></span>
+      宝石钱包
+    </div>
+    <div class="preview-body">
+      <div class="base-card balance-card">
+        <div class="balance-header">
+          <span class="balance-label">我的宝石币</span>
+          <span class="balance-help"><img class="icon" src="../static/icons/help-circle.svg"></span>
+        </div>
+        <div class="balance-amount">2,839.00</div>
+        <div class="balance-equivalent">约等于2839.00RMB</div>
+        <span class="balance-earn">立即赚取>></span>
+      </div>
+
+      <div class="base-card">
+        <div class="transaction-header">
+          <span class="transaction-title">交易明细</span>
+          <span class="transaction-filter">全部 ›</span>
+        </div>
+        <div class="transaction-list">
+          <div class="transaction-item">
+            <div class="transaction-icon income">
+              <img class="icon" src="../static/icons/gift.svg">
+            </div>
+            <div class="transaction-info">
+              <div class="transaction-name">任务奖励</div>
+              <div class="transaction-time">2022/11/15 15:57:42</div>
+            </div>
+            <span class="transaction-amount income">+300.00</span>
+          </div>
+          <div class="transaction-item">
+            <div class="transaction-icon expense">
+              <img class="icon" src="../static/icons/shopping-cart.svg">
+            </div>
+            <div class="transaction-info">
+              <div class="transaction-name">兑换中心消费</div>
+              <div class="transaction-time">2022/11/15 15:57:42</div>
+            </div>
+            <span class="transaction-amount expense">-99.00</span>
+          </div>
+          <div class="transaction-item">
+            <div class="transaction-icon income">
+              <img class="icon" src="../static/icons/gift.svg">
+            </div>
+            <div class="transaction-info">
+              <div class="transaction-name">任务奖励</div>
+              <div class="transaction-time">2022/11/15 15:57:42</div>
+            </div>
+            <span class="transaction-amount income">+300.00</span>
+          </div>
+          <div class="transaction-item">
+            <div class="transaction-icon expense">
+              <img class="icon" src="../static/icons/shopping-cart.svg">
+            </div>
+            <div class="transaction-info">
+              <div class="transaction-name">兑换中心消费</div>
+              <div class="transaction-time">2022/11/15 15:57:42</div>
+            </div>
+            <span class="transaction-amount expense">-99.00</span>
+          </div>
+          <div class="transaction-item">
+            <div class="transaction-icon income">
+              <img class="icon" src="../static/icons/gift.svg">
+            </div>
+            <div class="transaction-info">
+              <div class="transaction-name">任务奖励</div>
+              <div class="transaction-time">2022/11/15 15:57:42</div>
+            </div>
+            <span class="transaction-amount income">+300.00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title">base-card 参数</div>
+    <div class="param-row"><span class="param-key">radius:</span><span class="param-val">var(--radius-lg) 12px</span></div>
+    <div class="param-row"><span class="param-key">margin:</span><span class="param-val">var(--space-3) 12px</span></div>
+    <div class="param-row"><span class="param-key">shadow:</span><span class="param-val">var(--shadow-sm)</span></div>
+    <div class="param-row"><span class="param-key">gradient:</span><span class="param-val">蓝紫渐变余额头部卡片</span></div>
+  </div>
+</body>
+</html>

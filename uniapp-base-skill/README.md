@@ -41,16 +41,20 @@ uniapp-base-skill/
 └── demo-components/       # Demo 案例
     ├── chat.md
     ├── product.md
-    └── list/             # 列表页案例集（6种风格）
+    ├── list/             # 列表页案例集（6种风格）
+    │   ├── README.md
+    │   ├── friend-list.md
+    │   ├── follow-list.md
+    │   ├── like-list.md
+    │   ├── points-center.md
+    │   ├── collection-settings.md
+    │   ├── order-after-sale.md
+    │   ├── html/          # HTML 演示
+    │   └── images/        # 示例图片
+    └── detail/           # 详情页案例集（6种风格）
         ├── README.md
-        ├── friend-list.md
-        ├── follow-list.md
-        ├── like-list.md
-        ├── points-center.md
-        ├── collection-settings.md
-        ├── order-after-sale.md
         ├── html/          # HTML 演示
-        └── images/        # 示例图片
+        └── static/        # 示例图标/图片
 ```
 
 ## 核心：base-card
@@ -78,6 +82,19 @@ uniapp-base-skill/
 | points-center | 圆角+间距+渐变头部 | 积分、资产 |
 | collection-settings | 大卡片套小卡片 | 设置、偏好 |
 | order-after-sale | 圆角+间距+状态栏 | 订单、售后 |
+
+### 详情页（6种风格）
+
+[查看 demo-components/detail/README.md](demo-components/detail/README.md)
+
+| 案例 | 风格 | 适用场景 |
+|------|------|----------|
+| product-detail | 轮播大图 + 信息卡片 + 底部操作 | 商品详情、服务详情 |
+| activity-detail | 头图角标 + 时间地点 + 底部报名 | 活动详情、线路详情 |
+| post-detail | 作者信息 + 内容 + 互动评论 | 帖子、日记、文章详情 |
+| profile-detail | 渐变头部 + 统计 + VIP + 功能网格 | 个人中心、创作者中心 |
+| wallet-detail | 渐变余额 + 交易明细 | 钱包、资产、积分 |
+| result-detail | 状态图标 + 操作 + 推荐 | 支付结果、空状态、404 |
 
 ## 触发词
 
@@ -108,6 +125,16 @@ uniapp-base-skill/
 做一个订单列表，带状态和按钮
 ```
 
+### 详情页
+```
+做一个商品详情页，顶部轮播图，标题价格，规格配送，底部购买按钮
+做一个活动详情页，顶部大图带状态角标，时间地点信息，底部报名按钮
+做一个帖子详情页，作者信息，大图正文，点赞评论互动
+做一个个人中心，渐变头部，数据统计，VIP卡片，功能网格
+做一个钱包详情页，渐变余额卡片，交易明细列表
+做一个支付成功结果页，状态图标，操作按钮，推荐商品
+```
+
 ### 参数化调整
 ```
 聊天页改成方形头像
@@ -132,6 +159,23 @@ uniapp-base-skill/
 ---
 
 ## 版本日志
+
+### v1.2.0 (2026-08-15)
+
+**新增功能**
+
+- ✅ 新增详情页案例集（6种风格）
+- ✅ 使用 icon-image-catch-skill 抓取真实图标/图片素材
+- ✅ 覆盖商品详情、活动详情、帖子详情、个人中心、钱包详情、结果页
+
+**详情页案例**
+
+- ✅ product-detail（商品详情）
+- ✅ activity-detail（活动详情）
+- ✅ post-detail（帖子详情）
+- ✅ profile-detail（个人中心）
+- ✅ wallet-detail（钱包详情）
+- ✅ result-detail（结果页）
 
 ### v1.1.0 (2025-08-12)
 
