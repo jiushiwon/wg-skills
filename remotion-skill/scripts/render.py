@@ -4,7 +4,18 @@ import json
 import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
+
+
+def resolve_project_dir(path: str) -> Path:
+    """解析项目目录，兼容 Windows 上 Git Bash 的 /tmp 映射。"""
+    project_dir = Path(path).resolve()
+    if not project_dir.exists() and path.startswith("/tmp/"):
+        fallback = Path(tempfile.gettempdir()) / path[5:]
+        if fallback.exists():
+            return fallback
+    return project_dir
 
 
 def check_command(cmd: list[str]) -> bool:
@@ -24,7 +35,7 @@ def main():
     parser.add_argument("--project", default=".", help="Remotion 项目目录")
     args = parser.parse_args()
 
-    project_dir = Path(args.project).resolve()
+    project_dir = resolve_project_dir(args.project)
     script_path = project_dir / "src" / "script.json"
     if not script_path.exists():
         print(f"错误：找不到 {script_path}")

@@ -4,7 +4,18 @@ import json
 import re
 import shutil
 import sys
+import tempfile
 from pathlib import Path
+
+
+def resolve_output_dir(path: str) -> Path:
+    """解析输出目录，兼容 Windows 上 Git Bash 的 /tmp 映射。"""
+    output_dir = Path(path).resolve()
+    if path.startswith("/tmp/"):
+        fallback = Path(tempfile.gettempdir()) / path[5:]
+        if fallback.exists() or not output_dir.exists():
+            return fallback
+    return output_dir
 
 
 def parse_text(text: str, seconds_per_segment: int = 3, fps: int = 30) -> list[dict]:
@@ -58,7 +69,7 @@ def main():
     parser.add_argument("--seconds", type=int, default=3, help="每段默认秒数")
     args = parser.parse_args()
 
-    output_dir = Path(args.output).resolve()
+    output_dir = resolve_output_dir(args.output)
     if output_dir.exists():
         print(f"错误：目标目录已存在 {output_dir}")
         sys.exit(1)
