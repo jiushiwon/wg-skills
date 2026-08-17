@@ -52,6 +52,12 @@ def main():
         print("错误：未找到 npx，请先安装 Node.js")
         sys.exit(1)
 
+    node_modules = project_dir / "node_modules"
+    package_json = project_dir / "package.json"
+    if package_json.exists() and not node_modules.exists():
+        print("检测到未安装依赖，执行 npm install...")
+        run(["npm", "install"], cwd=project_dir)
+
     out_dir = project_dir / "out"
     out_dir.mkdir(exist_ok=True)
     raw_video = out_dir / "video.mp4"
