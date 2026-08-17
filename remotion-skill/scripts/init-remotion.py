@@ -65,8 +65,8 @@ def main():
     parser = argparse.ArgumentParser(description="生成 Remotion 口播视频项目")
     parser.add_argument("--text", required=True, help="口播文案")
     parser.add_argument("--aspect", choices=["9x16", "16x9"], default="9x16", help="画幅")
-    parser.add_argument("--output", required=True, help="输出目录")
-    parser.add_argument("--seconds", type=int, default=3, help="每段默认秒数")
+    parser.add_argument("--output", default="./demo", help="输出目录")
+    parser.add_argument("--seconds", type=int, default=5, help="每段默认秒数")
     args = parser.parse_args()
 
     output_dir = resolve_output_dir(args.output)
