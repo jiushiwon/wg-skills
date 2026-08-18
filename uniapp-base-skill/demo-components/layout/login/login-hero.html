@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录页 - 顶部主题图</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --color-primary: #4a90e2;
+      --color-bg: #ffffff;
+      --color-text: #1a1a1a;
+      --color-text-secondary: #666666;
+      --color-text-tertiary: #999999;
+      --color-border: #f0f2f5;
+      --color-surface: #fafafa;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --shadow-sm: 0 2px 12px rgba(0,0,0,0.04);
+    }
+    body {
+      background: var(--color-bg);
+      font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+    }
+
+    .phone {
+      max-width: 375px;
+      margin: 20px auto;
+      background: var(--color-bg);
+      border-radius: 0;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+      position: relative;
+      min-height: 760px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 顶部主题图 */
+    .hero-section {
+      position: relative;
+      height: 260px;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('https://picsum.photos/seed/login-hero/750/520') center/cover;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(74,144,226,0.3) 0%, rgba(0,0,0,0.4) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: var(--space-5);
+      color: white;
+    }
+    .hero-logo {
+      width: 48px; height: 48px;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(8px);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: var(--space-3);
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+    .hero-logo svg { width: 24px; height: 24px; }
+    .hero-title { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    .hero-subtitle { font-size: 13px; opacity: 0.85; }
+
+    /* 轻微缩放动效 */
+    @keyframes hero-zoom {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .hero-bg { animation: hero-zoom 15s ease-in-out infinite; }
+
+    .form-section {
+      flex: 1;
+      padding: var(--space-6) var(--space-5);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-item { margin-bottom: var(--space-5); }
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-3);
+    }
+    .form-input {
+      width: 100%;
+      height: 48px;
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      padding: 0 var(--space-3);
+      font-size: 15px;
+      color: var(--color-text);
+      outline: none;
+      background: var(--color-surface);
+      transition: all 0.2s;
+    }
+    .form-input:focus {
+      border-color: var(--color-primary);
+      background: white;
+    }
+    .form-input::placeholder { color: var(--color-text-tertiary); }
+
+    .login-btn {
+      width: 100%;
+      height: 48px;
+      background: var(--color-primary);
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      margin-top: var(--space-3);
+      margin-bottom: var(--space-4);
+      letter-spacing: 2px;
+      border-radius: 4px;
+    }
+
+    .form-footer {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+    }
+    .form-footer span { color: var(--color-primary); cursor: pointer; }
+
+    .agreement {
+      margin-top: auto;
+      text-align: center;
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+      padding-top: var(--space-4);
+    }
+    .agreement span { color: var(--color-primary); cursor: pointer; }
+
+    .param-bar {
+      background: #fafafa;
+      padding: var(--space-4);
+      margin: var(--space-4) auto;
+      max-width: 375px;
+      border: 1px solid var(--color-border);
+    }
+    .param-title { font-size: 12px; color: var(--color-text-tertiary); margin-bottom: var(--space-3); }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 90px; }
+    .param-val { color: var(--color-text-secondary); }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <div class="hero-section">
+      <div class="hero-bg"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/></svg>
+        </div>
+        <div class="hero-title">考拉搞AI</div>
+        <div class="hero-subtitle">让 AI 成为你的超级助手</div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-item">
+        <label class="form-label">账号</label>
+        <input class="form-input" type="text" placeholder="请输入账号" readonly>
+      </div>
+
+      <div class="form-item">
+        <label class="form-label">密码</label>
+        <input class="form-input" type="password" placeholder="请输入密码" readonly>
+      </div>
+
+      <div class="login-btn">登 录</div>
+
+      <div class="form-footer">
+        <span>忘记密码</span>
+        <span>注册账号</span>
+      </div>
+
+      <div class="agreement">
+        登录即代表同意<span>《用户协议》</span>和<span>《隐私政策》</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title">base-card 参数</div>
+    <div class="param-row"><span class="param-key">style:</span><span class="param-val">顶部主题图 + Logo + 简洁表单 + 小圆角</span></div>
+    <div class="param-row"><span class="param-key">hero:</span><span class="param-val">全宽背景图 + 渐变蒙层 + 缓慢缩放动效</span></div>
+    <div class="param-row"><span class="param-key">input:</span><span class="param-val">浅灰背景输入框，聚焦变白 + 边框变色</span></div>
+    <div class="param-row"><span class="param-key">use:</span><span class="param-val">旅游、生活方式、品牌感强的 App</span></div>
+  </div>
+</body>
+</html>

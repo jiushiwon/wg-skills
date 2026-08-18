@@ -18,18 +18,59 @@
 :style="{ background: '#07c160' }"
 ```
 
-### 2. 禁止使用 H5 标签
+### 2. 必须智能使用真实图标与图片素材
+
+生成页面时**禁止**使用 emoji 作为功能图标，**禁止**使用空白占位图。应调用：
+
+- [icon-catch-skill](../icon-image-catch-skill/icon-catch-skill/)：功能图标 / TabBar 图标（默认 lucide）
+- [image-catch-skill](../icon-image-catch-skill/image-catch-skill/)：配图 / 头像 / Banner
+- [image-forge-skill](../image-forge-skill/)：图标生成、图片压缩裁剪（兜底）
+
+```vue
+<!-- ✅ 正确 -->
+<image src="/static/icons/heart.svg" mode="aspectFit" />
+
+<!-- ❌ 禁止 emoji 与空白占位 -->
+<text>❤️</text>
+<image src="" mode="aspectFill" />
+```
+
+### 3. 禁止使用 H5 标签
 
 - ❌ `div` / `p` / `span` / `img`
 - ✅ `view` / `text` / `image`
 
-### 3. 禁止 scroll-view
+### 4. 禁止 scroll-view
 
 使用页面级滚动，避免右边距问题。
 
-### 4. 禁止原生 button
+### 5. 禁止原生 button
 
 使用 view 模拟按钮。
+
+## 技能矩阵
+
+本技能是 uniapp 技能矩阵的核心入口，生成页面时默认联动：
+
+| 配套技能 | 协作职责 |
+|---------|---------|
+| [uniapp-theme-skill](../uniapp-theme-skill/) | 主题变量系统，禁止写死色值 |
+| [uniapp-style-skill](../uniapp-style-skill/) | 设计系统对齐、组件 Token、设计审计 |
+| [frontend-style-harmonizer-skill](../frontend-style-harmonizer-skill/) | 跨页面样式一致性治理、硬编码收敛 |
+| [icon-image-catch-skill](../icon-image-catch-skill/) | 图标/图片远程抓取 |
+| [image-forge-skill](../image-forge-skill/) | 图标生成、图片处理 |
+
+标准工作流：
+
+```
+uniapp-base-skill（骨架）
+→ uniapp-theme-skill（主题变量）
+→ icon-catch-skill（图标）
+→ image-catch-skill（图片）
+→ image-forge-skill（后处理，按需）
+→ uniapp-style-skill（设计审计）
+→ frontend-style-harmonizer-skill（样式治理）
+```
 
 ## 文件结构
 
@@ -38,6 +79,8 @@ uniapp-base-skill/
 ├── SKILL.md              # 系统介绍 + 规范 + 版本日志
 ├── README.md             # 本文件
 ├── base-card.md          # 核心：基础卡片
+├── references/           # 参考资料
+│   └── skill-matrix.md   # 技能矩阵与协作流程
 └── demo-components/       # Demo 案例
     ├── chat.md
     ├── product.md
@@ -55,6 +98,10 @@ uniapp-base-skill/
         ├── README.md
         ├── html/          # HTML 演示
         └── static/        # 示例图标/图片
+    └── layout/           # 布局与导航案例集
+        ├── README.md
+        ├── tabbar/        # 自定义 TabBar（5种）
+        └── login/         # 登录页（7种）
 ```
 
 ## 核心：base-card
@@ -74,31 +121,58 @@ uniapp-base-skill/
 
 [查看 demo-components/list/README.md](demo-components/list/README.md)
 
-| 案例 | 风格 | 适用场景 |
-|------|------|----------|
-| friend-list | 圆角+间距+圆形头像 | 好友、联系人 |
-| follow-list | 圆角+间距+方形封面 | 关注、订阅 |
-| like-list | 圆角+间距+Tab切换 | 获赞、收藏 |
-| points-center | 圆角+间距+渐变头部 | 积分、资产 |
-| collection-settings | 大卡片套小卡片 | 设置、偏好 |
-| order-after-sale | 圆角+间距+状态栏 | 订单、售后 |
+| 案例 | 风格 | 适用场景 | 文档 |
+|------|------|----------|------|
+| friend-list | 圆角+间距+圆形头像 | 好友、联系人 | [friend-list.md](demo-components/list/friend-list.md) |
+| follow-list | 圆角+间距+方形封面 | 关注、订阅 | [follow-list.md](demo-components/list/follow-list.md) |
+| like-list | 圆角+间距+Tab切换 | 获赞、收藏 | [like-list.md](demo-components/list/like-list.md) |
+| points-center | 圆角+间距+渐变头部 | 积分、资产 | [points-center.md](demo-components/list/points-center.md) |
+| collection-settings | 大卡片套小卡片 | 设置、偏好 | [collection-settings.md](demo-components/list/collection-settings.md) |
+| order-after-sale | 圆角+间距+状态栏 | 订单、售后 | [order-after-sale.md](demo-components/list/order-after-sale.md) |
 
 ### 详情页（6种风格）
 
 [查看 demo-components/detail/README.md](demo-components/detail/README.md)
 
-| 案例 | 风格 | 适用场景 |
-|------|------|----------|
-| product-detail | 轮播大图 + 信息卡片 + 底部操作 | 商品详情、服务详情 |
-| activity-detail | 头图角标 + 时间地点 + 底部报名 | 活动详情、线路详情 |
-| post-detail | 作者信息 + 内容 + 互动评论 | 帖子、日记、文章详情 |
-| profile-detail | 渐变头部 + 统计 + VIP + 功能网格 | 个人中心、创作者中心 |
-| wallet-detail | 渐变余额 + 交易明细 | 钱包、资产、积分 |
-| result-detail | 状态图标 + 操作 + 推荐 | 支付结果、空状态、404 |
+| 案例 | 风格 | 适用场景 | 文档 |
+|------|------|----------|------|
+| product-detail | 轮播大图 + 信息卡片 + 底部操作 | 商品详情、服务详情 | [product-detail.md](demo-components/detail/product-detail.md) |
+| activity-detail | 头图角标 + 时间地点 + 底部报名 | 活动详情、线路详情 | [activity-detail.md](demo-components/detail/activity-detail.md) |
+| post-detail | 作者信息 + 内容 + 互动评论 | 帖子、日记、文章详情 | [post-detail.md](demo-components/detail/post-detail.md) |
+| profile-detail | 渐变头部 + 统计 + VIP + 功能网格 | 个人中心、创作者中心 | [profile-detail.md](demo-components/detail/profile-detail.md) |
+| wallet-detail | 渐变余额 + 交易明细 | 钱包、资产、积分 | [wallet-detail.md](demo-components/detail/wallet-detail.md) |
+| result-detail | 状态图标 + 操作 + 推荐 | 支付结果、空状态、404 | [result-detail.md](demo-components/detail/result-detail.md) |
+
+### 布局与导航（12 个案例）
+
+[查看 demo-components/layout/README.md](demo-components/layout/README.md)
+
+#### 自定义 TabBar（5 种）
+
+| 案例 | 风格 | 适用场景 | 文档 |
+|------|------|----------|------|
+| bulge | 中间凸起 + 主色发布按钮 | 社区首页、内容平台 | [tabbar/bulge.md](demo-components/layout/tabbar/bulge.md) |
+| blur | 毛玻璃背景 + 圆角顶部 | 高端生活类 App | [tabbar/blur.md](demo-components/layout/tabbar/blur.md) |
+| standard | 标准图标 + 文字 + 顶部细线 | 通用型 App | [tabbar/standard.md](demo-components/layout/tabbar/standard.md) |
+| floating-pill | 悬浮药丸 + 毛玻璃 + 圆角 | 健康、生活、工具类 App | [tabbar/floating-pill.md](demo-components/layout/tabbar/floating-pill.md) |
+| assistant-split | 左侧独立 AI 助手 + 右侧连体工具组 | AI 助手、健康管理类 App | [tabbar/assistant-split.md](demo-components/layout/tabbar/assistant-split.md) |
+
+#### 登录页（7 种）
+
+| 案例 | 风格 | 适用场景 | 文档 |
+|------|------|----------|------|
+| login | 标准账号登录：Logo + 账号密码 + 登录按钮 + 第三方登录 | 通用 App | [login/login.md](demo-components/layout/login/login.md) |
+| login-phone | 手机号 + 验证码登录 | 手机号优先的 App | [login/login-phone.md](demo-components/layout/login/login-phone.md) |
+| login-wechat | 一键登录风格：Logo + 微信一键登录按钮 + 协议 | 微信生态 App | [login/login-wechat.md](demo-components/layout/login/login-wechat.md) |
+| login-minimal | 极简清爽：无圆角/小圆角、头部 Logo、下划线输入框 | 工具类、B端 App | [login/login-minimal.md](demo-components/layout/login/login-minimal.md) |
+| login-gradient | 动态渐变背景 + 毛玻璃登录卡片 + 浮动光晕 | 创意、社交、年轻化 App | [login/login-gradient.md](demo-components/layout/login/login-gradient.md) |
+| login-hero | 顶部主题图 + Logo + 缓慢缩放动效 + 简洁表单 | 旅游、生活方式 App | [login/login-hero.md](demo-components/layout/login/login-hero.md) |
+| login-float | 深色背景 + 浮动圆形渐变 + 毛玻璃 Logo + 清爽登录卡片 | 社交、内容、社区类 App | [login/login-float.md](demo-components/layout/login/login-float.md) |
 
 ## 触发词
 
 - 按钮 / 设置项 / 输入框 / 头像 / 卡片
+- 登录页 / 手机号登录 / 微信登录
 - 聊天页 / 商品详情 / 列表页
 
 ## 实用提示词案例
@@ -150,15 +224,47 @@ uniapp-base-skill/
 页面改成蓝色主题
 ```
 
+### 组合技能工作流
+```
+生成一个积分中心页面，并走完整技能矩阵：
+1. 用 uniapp-base-skill 生成页面骨架
+2. 用 uniapp-theme-skill 应用主题变量
+3. 用 icon-catch-skill 抓取任务图标
+4. 用 image-catch-skill 抓取背景/头像素材
+5. 用 uniapp-style-skill 审查设计系统合规
+6. 用 frontend-style-harmonizer-skill 统一跨页面样式
+```
+
 ## 使用前提
 
 1. **必须安装** uniapp-theme-skill
-2. 了解基础 CSS
-3. 测试时兼顾小程序和 App 端
+2. **建议搭配** icon-image-catch-skill 获取真实图标/图片
+3. **生成后建议** 使用 uniapp-style-skill 或 frontend-style-harmonizer-skill 做样式规范对齐
+4. 了解基础 CSS
+5. 测试时兼顾小程序和 App 端
 
 ---
 
 ## 版本日志
+
+### v1.4.0 (2026-08-18)
+
+**新增功能**
+
+- ✅ 布局与导航案例集聚焦为：自定义 TabBar、登录页
+- ✅ 新增登录页 demo：标准账号登录、手机号验证码登录、一键登录风格、极简登录、渐变登录、主题图登录、浮动圆形登录
+- ✅ 自定义 TabBar 新增：标准图标文字型、中间凸起型、毛玻璃背景型、悬浮药丸型、AI 助手分栏型
+- ✅ 所有 demo 均采用完整页面形式，可直接预览
+- ✅ 综合页面模板迁移至 `docs/uniapp-base-skill-demo/`，作为后续专题素材
+- ✅ 触发词更新：新增登录页、手机号登录、微信登录、极简登录、渐变登录、主题图登录、浮动登录
+
+### v1.3.0 (2026-08-16)
+
+**新增功能**
+
+- ✅ 明确技能矩阵定位，联动主题、样式、素材技能
+- ✅ 强制规范新增：禁止使用 emoji 和空白图片占位
+- ✅ 新增组合技能工作流示例
 
 ### v1.2.0 (2026-08-15)
 
