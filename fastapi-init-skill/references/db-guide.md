@@ -34,7 +34,7 @@ DB_URL=mysql+aiomysql://root:root@localhost:3306/app_db?charset=utf8mb4
 DB_URL=postgresql+asyncpg://root:root@localhost:5432/app_db
 
 # MongoDB
-DB_URL=mongodb://root:root@localhost:27017/app_db
+DB_URL=mongodb://root:root@localhost:27017/app_db?authSource=admin
 ```
 
 ## Docker 快速启动数据库
@@ -63,10 +63,14 @@ docker run -d -p 5432:5432 \
 
 ```bash
 docker run -d -p 27017:27017 \
+  -e MONGO_INITDB_ROOT_USERNAME=root \
+  -e MONGO_INITDB_ROOT_PASSWORD=root \
   -e MONGO_INITDB_DATABASE=app_db \
   --name my-mongo \
   mongo:6
 ```
+
+> MongoDB 默认 root 用户的认证库为 `admin`，连接串必须带 `?authSource=admin`。
 
 首次启动后数据库即就绪（MySQL/PostgreSQL 应用启动时 `lifespan` 自动建表；MongoDB 无需预建表）。
 
@@ -121,4 +125,5 @@ async def list_users(db, page: int, size: int):
 | MySQL 认证失败 | MySQL 8.0 默认用 caching_sha2_password，需要 `cryptography` 包 |
 | 想换 PostgreSQL | 修改 `.env` 中 `DB_TYPE=postgresql`、`DB_PORT=5432`，并确保 Docker 容器运行 |
 | 想先不启用数据库 | 修改 `.env` 中 `DB_TYPE=none`，此时只启用 health / sse / upload（上传无需登录） |
+| MongoDB 模式下无 auth/users | 当前模板仅对 MySQL/PostgreSQL 提供完整用户认证；MongoDB 模式下 health / sse / upload 可用 |
 | 生产环境表结构变更 | 使用 Alembic：`alembic init alembic` → `alembic revision --autogenerate -m "描述"` → `alembic upgrade head` |

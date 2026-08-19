@@ -2,10 +2,12 @@
 
 生成 FastAPI 项目时按本骨架现场写代码。版本号一律不写，由 SKILL.md 的版本获取策略动态决定。
 
+> 维护者可用 `scripts/generate_project.py` 从本文件和 `references/startup-scripts.md` 自动生成完整项目，避免人工复制遗漏文件或编码错误。
+
 ## 目录结构
 
 ```
-{{project}}/
+{{PROJECT_NAME}}/
 ├── app/
 │   ├── __init__.py
 │   ├── main.py              # FastAPI 入口：lifespan、CORS、异常、中间件、路由注册
@@ -37,20 +39,22 @@
 │       └── security.py      # JWT 签发/验证 + bcrypt 哈希
 ├── docs/
 │   └── project-guide.md     # 项目指南（强制交付物）
-├── setup.sh                 # 一键环境搭建脚本（Linux/macOS）
-├── setup.bat                # 一键环境搭建脚本（Windows）
-├── dev.sh                   # 开发模式热重载（Linux/macOS）
-├── dev.bat                  # 开发模式热重载（Windows）
-├── start.sh                 # 生产模式启动（Linux/macOS）
-├── start.bat                # 生产模式启动（Windows）
-├── restart.sh               # 一键重启（Linux/macOS）
-├── restart.bat              # 一键重启（Windows）
+├── restart.sh               # 一键启动/重启脚本（Linux/macOS，dev/prod 双模式）
+├── restart.bat              # 一键启动/重启脚本（Windows，dev/prod 双模式）
 ├── requirements.txt         # Python 依赖清单
-├── .env.example             # 环境变量模板
-├── .gitignore               # Git 忽略规则
+├── .env.example             # 环境变量模板（带安全注释，必须生成）
+├── .env                     # 实际运行环境变量（首次从 .env.example 复制，按需修改）
+├── .gitignore               # Git 忽略规则（必须生成，.env 默认不提交）
 ├── api-contract.md          # 接口契约（强制交付物）
 └── README.md                # 项目说明
 ```
+
+## 配置生成与加载规则（强制）
+
+1. **`.env.example`、`.env`、`.gitignore` 必须随脚手架一起生成**。`.gitignore` 中必须忽略 `.env`、`.env.local`、`.env.production` 等包含敏感信息的文件。
+2. **首次生成时**，若用户目录不存在 `.env`，自动从 `.env.example` 复制一份，并提示用户按需修改数据库、JWT、CORS 等关键配置。
+3. **所有运行时可变配置必须从 `.env` 加载**。`app/config.py` 使用 Pydantic Settings（`SettingsConfigDict(env_file=".env")`）读取全部环境变量，禁止在业务代码中硬编码端口、数据库连接、密钥、上传路径等。
+4. **`.env.example` 中的每一项配置都必须在 `app/config.py` 中有对应字段**，并在 `main.py`、database、routers、services 等运行环节被实际使用；模板字段、占位字段必须标注 TODO。
 
 ## 依赖清单（requirements.txt）
 
@@ -70,6 +74,7 @@ passlib[bcrypt]
 python-jose[cryptography]
 sse-starlette
 python-multipart
+alembic
 email-validator
 httpx
 ```
@@ -97,7 +102,9 @@ from fastapi.staticfiles import StaticFiles
 
 from app.config import settings
 from app.exceptions import BusinessException
-from app.routers import health, auth, users, sse, upload
+from app.routers import health, sse, upload
+if settings.db_type not in ("none", "mongodb"):
+    from app.routers import auth, users
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s - %(message)s")
 logger = logging.getLogger("app")
@@ -226,7 +233,7 @@ from pathlib import Path
 Path(settings.upload_dir).mkdir(parents=True, exist_ok=True)
 
 app.include_router(health.router, prefix="/api", tags=["健康检查"])
-if settings.db_type != "none":
+if settings.db_type not in ("none", "mongodb"):
     app.include_router(auth.router, prefix="/api/auth", tags=["认证"])
     app.include_router(users.router, prefix="/api", tags=["用户管理"])
 app.include_router(upload.router, prefix="/api", tags=["文件上传"])
@@ -281,7 +288,7 @@ class Settings(BaseSettings):
         if self.db_type == "postgresql":
             return f"postgresql+asyncpg://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"
         if self.db_type == "mongodb":
-            return f"mongodb://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"
+            return f"mongodb://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}?authSource=admin"
         return ""
 
 
@@ -426,10 +433,10 @@ def get_jwt() -> JWTUtil:
     return JWTUtil(settings.jwt_secret, settings.jwt_expires_in, settings.jwt_refresh_expires_in)
 
 
-def get_current_user(
-    credentials: HTTPAuthorizationCredentials | None = Depends(security),
-    token: str | None = Query(None, description="SSE 等无法设置 Header 的场景通过 URL 参数传递"),
-    jwt: JWTUtil = Depends(get_jwt),
+def _resolve_current_user(
+    credentials: HTTPAuthorizationCredentials | None,
+    token: str | None,
+    jwt: JWTUtil,
 ) -> dict:
     raw_token = credentials.credentials if credentials else token
     if not raw_token:
@@ -439,6 +446,29 @@ def get_current_user(
         return {"user_id": int(payload["sub"]), "username": payload["username"]}
     except JWTError:
         raise BusinessException(-1002, "Token 无效或已过期")
+
+
+def get_current_user(
+    credentials: HTTPAuthorizationCredentials | None = Depends(security),
+    token: str | None = Query(None, description="SSE 等无法设置 Header 的场景通过 URL 参数传递"),
+    jwt: JWTUtil = Depends(get_jwt),
+) -> dict:
+    return _resolve_current_user(credentials, token, jwt)
+
+
+async def optional_current_user(
+    credentials: HTTPAuthorizationCredentials | None = Depends(security),
+    token: str | None = Query(None, description="SSE 等无法设置 Header 的场景通过 URL 参数传递"),
+    jwt: JWTUtil = Depends(get_jwt),
+) -> dict | None:
+    """上传等接口在 DB_TYPE=none 时允许匿名，其他模式必须登录。"""
+    if settings.db_type == "none":
+        return None
+    return _resolve_current_user(credentials, token, jwt)
+
+
+# 数据库会话依赖从 database.py 透传，保持 routers 只依赖 dependencies.py
+from app.database import get_db  # noqa: E402
 ```
 
 ### app/utils/__init__.py
@@ -453,7 +483,13 @@ from datetime import datetime, timedelta, timezone
 from jose import jwt, JWTError
 from passlib.context import CryptContext
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+from app.config import settings
+
+pwd_context = CryptContext(
+    schemes=["bcrypt"],
+    deprecated="auto",
+    bcrypt__rounds=settings.bcrypt_rounds,
+)
 
 
 class JWTUtil:
@@ -594,7 +630,8 @@ class UserUpdateRequest(BaseModel):
 
 class ChangePasswordRequest(BaseModel):
     old_password: str = Field(..., description="旧密码")
-    new_password: str = Field(..., min_length=6, max_length=128, description="新密码")
+    # 🔴 生产环境建议增加复杂度校验（大小写+数字+特殊字符）
+    new_password: str = Field(..., min_length=8, max_length=128, description="新密码")
 
 
 class PaginatedResponse(BaseModel):
@@ -676,7 +713,6 @@ class UserService:
 
 ```python
 import mimetypes
-import os
 import uuid
 from pathlib import Path
 
@@ -694,12 +730,19 @@ class UploadService:
         self.max_size = settings.upload_max_size * 1024 * 1024
         self.allowed_types = {t.strip().lower() for t in settings.upload_allowed_types.split(",") if t.strip()}
 
+    @staticmethod
+    def _safe_filename(filename: str | None) -> str:
+        """防御路径穿越与非法字符：只保留文件名本体，替换危险符号。"""
+        name = Path(filename or "unknown").name
+        # ponytail: 仅做基础过滤，更严格的 MIME 校验可接入 python-magic
+        return name.replace("\\", "_").replace("/", "_").replace("..", "_")
+
     async def save(self, file: UploadFile) -> dict:
         content_type = (file.content_type or "application/octet-stream").lower()
         if self.allowed_types and content_type not in self.allowed_types:
             raise BusinessException(-1032, f"不允许上传该文件类型: {content_type}")
 
-        ext = Path(file.filename or "unknown").suffix.lower()
+        ext = Path(self._safe_filename(file.filename)).suffix.lower()
         if not ext:
             ext = mimetypes.guess_extension(content_type) or ".bin"
         unique_name = f"{uuid.uuid4().hex}{ext}"
@@ -718,7 +761,7 @@ class UploadService:
 
         return {
             "url": f"/static/uploads/{unique_name}",
-            "filename": file.filename or unique_name,
+            "filename": self._safe_filename(file.filename),
             "size": size,
             "mimeType": content_type,
         }
@@ -734,6 +777,8 @@ class UploadService:
 
 ```python
 from fastapi import APIRouter, Depends
+from sqlalchemy import text
+
 from app.response import EnvelopeRoute
 from app.dependencies import get_db
 
@@ -749,7 +794,7 @@ async def health():
 async def health_db(db=Depends(get_db)):
     try:
         if hasattr(db, "execute"):
-            await db.execute("SELECT 1")
+            await db.execute(text("SELECT 1"))
         elif hasattr(db, "command"):
             await db.command("ping")
         else:
@@ -943,6 +988,7 @@ from sse_starlette.sse import EventSourceResponse
 
 from app.response import EnvelopeRoute
 from app.dependencies import get_current_user
+from app.config import settings
 
 router = APIRouter(route_class=EnvelopeRoute)
 
@@ -961,7 +1007,11 @@ async def sse_chat():
         ]
 
         for msg in messages:
-            yield {"event": "message", "data": json.dumps(msg, ensure_ascii=False)}
+            yield {
+                "event": "message",
+                "data": json.dumps(msg, ensure_ascii=False),
+                "retry": settings.sse_retry_timeout,
+            }
             await asyncio.sleep(0.8)
 
         yield {"event": "done", "data": json.dumps({"status": "complete"})}
@@ -975,6 +1025,7 @@ async def sse_chat_protected(current_user: dict = Depends(get_current_user)):
         yield {
             "event": "message",
             "data": json.dumps({"role": "system", "content": f"你好 {current_user['username']}！"}, ensure_ascii=False),
+            "retry": settings.sse_retry_timeout,
         }
         await asyncio.sleep(0.5)
 
@@ -985,7 +1036,11 @@ async def sse_chat_protected(current_user: dict = Depends(get_current_user)):
             "连接保持期间，服务端可以随时推送数据",
         ]
         for thought in thoughts:
-            yield {"event": "message", "data": json.dumps({"role": "assistant", "content": thought}, ensure_ascii=False)}
+            yield {
+                "event": "message",
+                "data": json.dumps({"role": "assistant", "content": thought}, ensure_ascii=False),
+                "retry": settings.sse_retry_timeout,
+            }
             await asyncio.sleep(0.8)
 
         yield {"event": "done", "data": json.dumps({"status": "complete"})}
@@ -997,28 +1052,20 @@ async def sse_chat_protected(current_user: dict = Depends(get_current_user)):
 
 ```python
 from fastapi import APIRouter, Depends, File, UploadFile
-from fastapi.staticfiles import StaticFiles
 
 from app.config import settings
 from app.response import EnvelopeRoute
-from app.dependencies import get_current_user
+from app.dependencies import optional_current_user
 from app.schemas.upload import UploadFileResponse, UploadBatchResponse
 from app.services.upload import UploadService
 
 router = APIRouter(route_class=EnvelopeRoute)
 
 
-async def _upload_current_user():
-    """none 数据库模式下上传不需要登录；其他模式需要 JWT。"""
-    if settings.db_type == "none":
-        return None
-    return get_current_user()
-
-
 @router.post("/upload", summary="单文件上传")
 async def upload_file(
     file: UploadFile = File(..., description="待上传文件"),
-    _=Depends(_upload_current_user),
+    _=Depends(optional_current_user),
 ):
     service = UploadService()
     result = await service.save(file)
@@ -1028,7 +1075,7 @@ async def upload_file(
 @router.post("/uploads", summary="多文件上传")
 async def upload_files(
     files: list[UploadFile] = File(..., description="待上传文件列表"),
-    _=Depends(_upload_current_user),
+    _=Depends(optional_current_user),
 ):
     service = UploadService()
     result = await service.save_batch(files)
@@ -1038,9 +1085,14 @@ async def upload_files(
 ### app/routers/__init__.py（含所有路由导入）
 
 ```python
-from app.routers import health, auth, users, sse, upload
+from app.config import settings
+from app.routers import health, sse, upload
 
-__all__ = ["health", "auth", "users", "sse", "upload"]
+if settings.db_type not in ("none", "mongodb"):
+    from app.routers import auth, users
+    __all__ = ["health", "auth", "users", "sse", "upload"]
+else:
+    __all__ = ["health", "sse", "upload"]
 ```
 
 ### .env.example
@@ -1153,192 +1205,107 @@ htmlcov/
 - JWT access_token 24h / refresh_token 7d
 - 所有注释、文档使用中文
 
+### Dockerfile
+
+```dockerfile
+# 构建阶段
+FROM python:3.11-slim AS builder
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --user --no-cache-dir -r requirements.txt
+
+# 运行阶段
+FROM python:3.11-slim
+WORKDIR /app
+
+# 非 root 运行，降低安全风险
+RUN groupadd -r appuser && useradd -r -g appuser appuser
+COPY --from=builder /root/.local /home/appuser/.local
+COPY . .
+RUN chown -R appuser:appuser /app
+USER appuser
+
+ENV PATH=/home/appuser/.local/bin:$PATH
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+EXPOSE 8080
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
+```
+
+### docker-compose.yml
+
+```yaml
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: app_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
+```
+
+### docker-compose.pg.yml
+
+```yaml
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: app_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+volumes:
+  pg_data:
+```
+
+### docker-compose.mongo.yml
+
+```yaml
+version: "3.8"
+
+services:
+  mongo:
+    image: mongo:6
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: app_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
+```
+
 ## api-contract 生成模板
 
-生成 `api-contract.md` 时以 `backend-convention-skill/references/default-api-contract.md` 为起点，填充以下内容：
-
-```markdown
-# {{project}} 接口契约
-
-## 1. 通信协议
-
-- 基础 URL：`http://localhost:8080/api`
-- 统一响应格式：`{ code, message, data }`
-- 认证方式：`Authorization: Bearer {access_token}`
-
-## 2. 全局错误码
-
-| 错误码 | 含义 | 触发场景 |
-|--------|------|----------|
-| 0 | 成功 | 业务正常 |
-| -1001 | 参数校验失败 | Pydantic 校验失败、必填字段缺失、格式错误 |
-| -1002 | 未授权 | Token 缺失、无效或过期 |
-| -1003 | 禁止访问 | 权限不足（预留） |
-| -1004 | 资源不存在 | 用户/记录不存在 |
-| -1005 | 资源冲突 | 用户名已存在、旧密码错误 |
-| -1006 | 请求过于频繁 | 限流触发（预留） |
-| -1031 | 请求体过大 | 上传文件超过 `UPLOAD_MAX_SIZE` |
-| -1032 | 不支持的文件类型 | 上传文件 MIME 不在白名单 |
-| -2000 | 系统错误 | 未捕获异常 |
-
-## 3. 接口清单
-
-### 3.1 健康检查
-
-#### GET /health
-- 说明：服务健康检查
-- 认证：否
-- 出参：`{ status: "ok", service: "fastapi-init" }`
-
-### 3.2 认证
-
-#### POST /auth/register
-- 说明：用户注册
-- 入参：`{ username, password, email?, phone? }`
-- 出参：`TokenResponse { access_token, refresh_token, token_type }`
-- 错误：-1005（用户名已存在）、-1001（参数校验失败）
-
-#### POST /auth/login
-- 说明：用户登录
-- 入参：`{ username, password }`
-- 出参：`TokenResponse`
-- 错误：-1002（用户名或密码错误）
-
-#### POST /auth/refresh
-- 说明：刷新访问令牌
-- 入参：`{ refresh_token }`
-- 出参：`TokenResponse`
-- 错误：-1002（刷新令牌无效）
-
-#### POST /auth/logout
-- 说明：登出，清空 refresh_token
-- 认证：Bearer Token
-- 出参：`{ message: "已登出" }`
-
-#### GET /auth/me
-- 说明：当前用户信息
-- 认证：Bearer Token
-- 出参：`UserResponse`
-- 错误：-1004（用户不存在）
-
-### 3.3 用户管理
-
-#### GET /users
-- 说明：用户列表（分页）
-- 认证：Bearer Token
-- 入参：`page=1&pageSize=20`
-- 出参：`PaginatedResponse { page, pageSize, total, list: UserResponse[] }`
-
-#### GET /users/{id}
-- 说明：用户详情
-- 认证：Bearer Token
-- 出参：`UserResponse`
-- 错误：-1004（用户不存在）
-
-#### PUT /users/profile
-- 说明：修改当前用户资料
-- 认证：Bearer Token
-- 入参：`UserUpdateRequest { email?, phone?, nickname?, avatar? }`
-- 出参：`UserResponse`
-- 错误：-1004（用户不存在）
-
-#### PUT /users/password
-- 说明：修改密码
-- 认证：Bearer Token
-- 入参：`ChangePasswordRequest { old_password, new_password }`
-- 出参：`{ message: "密码修改成功" }`
-- 错误：-1005（旧密码不正确）
-
-### 3.4 文件上传
-
-#### POST /upload
-- 说明：单文件上传
-- 认证：Bearer Token
-- Content-Type：`multipart/form-data`
-- 入参：`file`（二进制文件）
-- 出参：`UploadFileResponse { url, filename, size, mimeType }`
-- 错误：-1031（文件过大）、-1032（不支持的文件类型）
-
-#### POST /uploads
-- 说明：多文件上传
-- 认证：Bearer Token
-- Content-Type：`multipart/form-data`
-- 入参：`files[]`（多个二进制文件）
-- 出参：`UploadBatchResponse { list: UploadFileResponse[], total }`
-- 错误：-1031（文件过大）、-1032（不支持的文件类型）
-
-### 3.5 SSE 流式
-
-#### GET /sse/chat
-- 说明：SSE 流式示例（无需登录）
-- 响应：`text/event-stream`
-- 事件：`message`、`done`
-
-#### GET /sse/chat/protected
-- 说明：SSE 流式示例（需登录）
-- 认证：Bearer Token
-- 响应：`text/event-stream`
-- 事件：`message`、`done`
-
-## 4. 字段类型定义
-
-```typescript
-interface ApiResponse<T> {
-  code: number;
-  message: string;
-  data: T;
-}
-
-interface TokenResponse {
-  access_token: string;
-  refresh_token: string;
-  token_type: string;
-}
-
-interface UserResponse {
-  id: number;
-  username: string;
-  email: string | null;
-  phone: string | null;
-  nickname: string | null;
-  avatar: string | null;
-  is_active: boolean;
-  last_login_at: string | null;
-  created_at: string;
-  updated_at: string;
-}
-
-interface PaginatedResponse<T> {
-  page: number;
-  pageSize: number;
-  total: number;
-  list: T[];
-}
-
-interface UploadFileResponse {
-  url: string;
-  filename: string;
-  size: number;
-  mimeType: string;
-}
-```
-
-## 5. 前端联动
-
-- 前端 `request.ts` 按 `ApiResponse<T>` 解析统一响应
-- `ERROR_CODE_MAP` 直接复用「全局错误码」表
-- SSE 使用 `EventSource`（H5）或小程序 `enableChunked` 对接
-- 文件上传使用前端 `upload<T>(options)`，Content-Type 由浏览器/框架自动设置
-```
+生成 `api-contract.md` 时，按本 skill `references/api-contract-template.md` 模板落地，并将 `{{PROJECT_NAME}}`、`{{APP_PORT}}`、`{{DATE}}` 替换为项目实际值。接口字段、错误码、前端联动方式必须与代码实现保持一致。
 
 ## project-guide 填充段
 
-生成 `docs/project-guide.md` 时，按 backend-convention-skill `references/project-guide-template.md` 的占位符填入以下本栈内容：
+生成 `docs/project-guide.md` 时，按本 skill `references/project-guide-template.md` 的占位符填入以下本栈内容：
 
 | 占位符 | 本栈填充值 |
 |--------|-----------|
 | `{{STACK}}` | Python + FastAPI + SQLAlchemy 2.0 异步 + SSE（sse-starlette） |
-| `{{START_COMMAND}}` | `./setup.sh`（首次）/ `./dev.sh`（开发） |
+| `{{START_COMMAND}}` | `./restart.sh dev`（开发）/ `./restart.sh prod`（生产） |
 | `{{DIRECTORY_TREE}}` | 上文「目录结构」节 |
 | `{{LAYER_RESPONSIBILITY}}` | routers 接请求返回裸数据；models 表映射（SQLAlchemy ORM）；schemas 出入参校验（Pydantic v2）；services 业务逻辑（用户/上传）；utils 工具（JWT/密码）；main 注册中间件/异常/路由/SSE/静态文件 |
 | `{{MIDDLEWARE_CHAIN}}` | `security_headers_middleware 安全头 → request_log_middleware 日志 → CORSMiddleware → 路由匹配 → get_current_user 鉴权依赖 → Pydantic v2 校验 → EnvelopeRoute 信封包装（StreamingResponse 自动透传）→ exception_handler 异常兜底` |
@@ -1347,6 +1314,6 @@ interface UploadFileResponse {
 | `{{SSE_WAY}}` | 使用 `sse-starlette` 的 `EventSourceResponse`，在路由中 `yield` 字典即可流式推送；前端用 `EventSource` API 接收 |
 | `{{MODULE_STEPS}}` | ① 更新 `api-contract.md` → ② `app/models/xxx.py` → ③ `app/schemas/xxx.py` → ④ `app/services/xxx.py` → ⑤ `app/routers/xxx.py`（`APIRouter(route_class=EnvelopeRoute)`）→ ⑥ `main.py` 中 `include_router` / 静态文件挂载 → ⑦ `python -m compileall app` + curl 验证 |
 | `{{MIDDLEWARE_STEPS}}` | 横切逻辑用 `@app.middleware("http")`；鉴权/权限类优先用 `Depends` 依赖注入 |
-| `{{ONE_CLICK_WAY}}` | Linux/macOS 运行 `./setup.sh`，Windows 运行 `setup.bat`；脚本自动检测 Python → 创建 venv → 安装依赖 → 启动服务 |
+| `{{ONE_CLICK_WAY}}` | Linux/macOS 运行 `./restart.sh [dev|prod]`，Windows 运行 `restart.bat [dev|prod]`；脚本自动检测/创建 venv → 安装依赖 → 安全停止旧进程 → 启动服务 → 输出日志命令 |
 | `{{MIGRATION_WAY}}` | 开发阶段 `lifespan` 中 `create_all()` 自动建表；生产环境请自行安装 Alembic 管理迁移 |
-| `{{DB_START_WAY}}` | MySQL：`docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=app_db mysql:8.0`；PostgreSQL：`docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=root -e POSTGRES_DB=app_db postgres:15`；MongoDB：`docker run -d -p 27017:27017 -e MONGO_INITDB_DATABASE=app_db mongo:6`；无数据库：将 `.env` 中 `DB_TYPE=none`。本地安装：确保数据库已启动且 `.env` 中连接信息正确 |
+| `{{DB_START_WAY}}` | MySQL：`docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=app_db mysql:8.0`；PostgreSQL：`docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=root -e POSTGRES_DB=app_db postgres:15`；MongoDB：`docker run -d -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=root -e MONGO_INITDB_DATABASE=app_db mongo:6`；无数据库：将 `.env` 中 `DB_TYPE=none`。本地安装：确保数据库已启动且 `.env` 中连接信息正确 |

@@ -26,10 +26,9 @@ FastAPI 零基础、FastAPI 小白、帮我搭一个 FastAPI、新建 FastAPI
 |------|------|
 | **环境探测** | 自动检测 Python 版本（>=3.9）、操作系统 |
 | **自动安装** | 创建 venv、安装依赖、编译检查 |
-| **一键启动** | `./setup.sh` 首次自动完成全部 |
-| **开发模式** | `./dev.sh` 热重载 |
-| **生产启动** | `./start.sh` 后台多 worker |
-| **一键重启** | `./restart.sh` 优雅重启 |
+| **一键启动/重启** | `./restart.sh [dev|prod]`：环境搭建、拉代码、装依赖、安全重启、日志输出 |
+| **开发模式** | `./restart.sh dev` 热重载，日志 `logs/dev.log` |
+| **生产模式** | `./restart.sh prod` 后台多 worker，日志 `logs/app.log` |
 | **SSE 流式** | 内置 `sse-starlette`，示例端点 `/api/sse/chat` |
 | **文件上传** | 内置 `/api/upload` 单文件与 `/api/uploads` 多文件上传 |
 | **统一响应** | `{ code, message, data }` 自动包装 |
@@ -57,16 +56,15 @@ AI：开始生成...
   ✓ 环境检测：Python 3.12.0 ✓
   ✓ 创建虚拟环境：venv/
   ✓ 安装依赖：fastapi / uvicorn / sqlalchemy ... 共 13 个包
-  ✓ 生成项目文件：22 个文件
+  ✓ 生成项目文件：18 个文件
   ✓ 编译检查：通过
 
 ✅ 项目 my-api 生成完毕！
 
 🚀 启动方式：
-  一键启动：  ./setup.sh
-  开发模式：  ./dev.sh
-  生产模式：  ./start.sh
-  重启服务：  ./restart.sh
+  开发模式：  ./restart.sh dev         # 热重载，日志 logs/dev.log
+  生产模式：  ./restart.sh prod        # 后台多 worker，日志 logs/app.log
+  默认：      ./restart.sh             # 同 dev
 
 📖 接口文档：
   Swagger UI：http://localhost:8080/docs
@@ -100,13 +98,14 @@ AI：好的！已内置文件上传接口：
 |------|---------------------|--------------------|
 | 目标用户 | 后端开发者 | **零基础小白** |
 | 环境安装 | 需要自己装 | **自动检测 + 自动安装** |
-| 启动方式 | 手动 uvicorn | **一键脚本（setup / dev / start / restart）** |
+| 启动方式 | 手动 uvicorn | **一条命令：`./restart.sh [dev|prod]`** |
 | SSE 支持 | 无 | **内置** |
 | 文件上传 | 无 | **内置** |
 | 默认数据库 | PostgreSQL（可选 PG/MySQL/MongoDB） | **MySQL（可选 PG/MongoDB/无数据库）** |
-| 启动脚本 | 无 | **Linux + Windows 双平台** |
-| 文件数 | ~40 | **~22** |
+| 脚本 | 无 | **只生成 `restart.sh` / `restart.bat`（dev/prod 双模式）** |
+| Swagger | 有 | 有 + **增强中文说明** |
 | 交互次数 | 需要回答多个技术问题 | **最多 3 个问题** |
+| 文件数 | ~40 | **~22** |
 
 ## 目录结构
 
@@ -114,6 +113,8 @@ AI：好的！已内置文件上传接口：
 fastapi-init-skill/
 ├── SKILL.md                    # 技能入口：触发条件、生成流程、红线
 ├── README.md                   # 本文件：使用文档
+├── scripts/
+│   └── generate_project.py     # canonical 生成器：从 references 提取模板生成完整项目
 └── references/
     ├── skeleton.md             # 精简骨架：目录结构 + 核心文件代码模板
     ├── env-setup.md            # 环境探测：检测逻辑、安装指引、排错
@@ -121,9 +122,23 @@ fastapi-init-skill/
     ├── db-guide.md             # 数据库：MySQL/PG/Mongo 选型与配置
     ├── db-schema-guide.md      # 数据库表设计规范
     ├── middleware-guide.md     # 中间件：核心中间件链
-    ├── startup-scripts.md      # 启动脚本：setup / dev / start / restart 模板
+    ├── startup-scripts.md      # 启动脚本：restart.sh / restart.bat 模板（dev/prod 双模式）
     └── frontend-integration.md # 与 frontend-request-skill 的前后端联动
 ```
+
+**维护者注意**：`scripts/generate_project.py` 是 canonical 生成器，从 `references/skeleton.md` 和 `references/startup-scripts.md` 自动提取所有模板并生成项目，避免人工复制遗漏文件或导致 `.bat` 中文乱码。修改模板后应重新运行该脚本生成 `demo/` 做验证。
+
+除 `app/` 源码外，脚手架必须同时生成以下文件：
+
+| 文件 | 说明 |
+|------|------|
+| `.env.example` | 环境变量模板，含端口、数据库、JWT、CORS、上传等全量配置与安全注释 |
+| `.env` | 首次生成时从 `.env.example` 复制，用户按需修改后由服务加载 |
+| `.gitignore` | Git 忽略规则，必须忽略 `.env`、`.env.*.local` 等敏感文件 |
+| `api-contract.md` | 接口契约，与 `frontend-request-skill` 对齐 |
+| `docs/project-guide.md` | 项目指南，含启动方式、拓展指南、前后端对接示例 |
+
+**配置加载原则**：`app/config.py` 通过 Pydantic Settings 读取 `.env` 全部配置，禁止在代码中硬编码端口、数据库连接、密钥、上传路径等运行时可变参数。
 
 ## 生成项目的技术栈
 
@@ -142,8 +157,8 @@ fastapi-init-skill/
 生成后可在项目目录运行：
 
 ```bash
-./setup.sh         # Linux/macOS 一键启动
-setup.bat          # Windows 一键启动
+./restart.sh       # Linux/macOS 一键启动（默认 dev）
+restart.bat        # Windows 一键启动（默认 dev）
 ```
 
 或手动验证：
@@ -156,6 +171,20 @@ curl http://localhost:8080/api/health
 ```
 
 预期返回：`{ "code": 0, "message": "success", "data": { "status": "ok" } }`
+
+## 重启脚本设计规则
+
+`restart.sh` / `restart.bat` 是本 skill 的核心入口，设计目标：**小白只需要记住一条命令**。
+
+| 规则 | 说明 |
+|------|------|
+| **单入口** | 每个平台只生成一个脚本，不拆分 setup / dev / start |
+| **参数分模式** | `./restart.sh dev` 开发热重载，`./restart.sh prod` 生产多 worker，默认 dev |
+| **一条龙** | 拉代码 → 装依赖 → 安全停旧进程 → 启动 → 输出日志命令 |
+| **安全杀旧进程** | 先按 `app.pid` 优雅停止；PID 失效则按端口扫描清理残留进程 |
+| **自动 .env** | 无 `.env` 时自动从 `.env.example` 复制并提示编辑 |
+| **日志落地** | dev 写入 `logs/dev.log`，prod 写入 `logs/app.log`，启动后打印查看命令 |
+| **失败可排查** | 启动失败时输出最近日志路径，方便定位 |
 
 ## 生产环境提醒
 
@@ -173,7 +202,7 @@ curl http://localhost:8080/api/health
 
 ## 与其他 skill 的关系
 
-- 引用 `backend-convention-skill`（不复制规则）
+- 与 `backend-convention-skill` 规范对齐（响应信封、错误码、JWT），但 `api-contract` 与 `project-guide` 模板已内置本 skill，生成项目不依赖外部文件
 - 引用 `database-skill`（DB 选型与迁移规则）
 - 引用 `frontend-request-skill`（前端请求层规范，接口契约联动）
 - **不替代** `python-backend-skill`（后者面向开发者，在 backend-generate-skill 体系内）

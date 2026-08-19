@@ -1,6 +1,11 @@
 # fastapi-init-skill 功能规格说明书
 
 > 本文档描述 fastapi-init-skill 的完整功能清单、生成内容、工作流程与技术细节。
+>
+> 三份文档分工：
+> - `SKILL.md`：模型入口，短、准、狠，用于触发与红线；
+> - `README.md`：用户说明书，侧重怎么用、怎么启动、生产注意什么；
+> - `SPEC.md`：完整规格，用于维护、迭代、跨语言脚手架对齐时查阅。
 
 ---
 
@@ -19,17 +24,20 @@
 |------|---------------------|--------------------|
 | 目标用户 | 后端开发者 | **零基础小白** |
 | 环境安装 | 用户自己装 | **自动检测 + 自动安装** |
-| 启动方式 | 手动 uvicorn | **一键脚本（setup / dev / restart / start）** |
+| 启动方式 | 手动 uvicorn | **一条命令：`./restart.sh [dev|prod]`** |
 | SSE 支持 | 无 | **内置** |
+| 文件上传 | 无 | **内置** |
 | 默认数据库 | PostgreSQL | **MySQL** |
-| 脚本 | 无 | **Linux + Windows 双平台** |
+| 脚本 | 无 | **只生成 `restart.sh` / `restart.bat`（dev/prod 双模式）** |
+| Swagger | 有 | 有 + **增强中文说明** |
 | 交互次数 | 多个技术问题 | **最多 3 个问题** |
+| 文件数 | ~40 | **~22** |
 
 ---
 
 ## 二、触发条件
 
-### 2.1 关键词触发（18 个）
+### 2.1 关键词触发（14 个）
 
 ```
 FastAPI 脚手架、FastAPI 一键生成、初始化 FastAPI 项目、FastAPI 快速开始、
@@ -44,33 +52,31 @@ create fastapi project、fastapi starter
 
 ---
 
-## 三、核心功能（23 项）
+## 三、核心功能（21 项）
 
 | # | 功能 | 说明 |
 |---|------|------|
 | 1 | **环境探测** | 自动检测 Python 版本（>=3.9）、pip、操作系统类型 |
 | 2 | **自动安装** | 创建 venv、安装所有依赖、编译检查 |
-| 3 | **一键启动** | `./setup.sh` 一条命令完成检测→安装→启动 |
-| 4 | **开发模式** | `./dev.sh` 热重载，代码修改自动重启 |
-| 5 | **生产启动** | `./start.sh` 后台多 worker 启动，PID 文件管理 |
-| 6 | **一键重启** | `./restart.sh` 优雅停止旧进程并重新启动 |
-| 7 | **SSE 流式** | 内置 `sse-starlette`，示例端点 `/api/sse/chat` |
-| 8 | **文件上传** | 内置 `/api/upload` 单文件与 `/api/uploads` 多文件上传 |
-| 9 | **统一响应** | `EnvelopeRoute` 自动包装 `{ code, message, data }` |
-| 10 | **全局异常** | BusinessException / -1001 校验 / -2000 兜底 |
-| 11 | **JWT 鉴权** | 注册 / 登录 / 刷新令牌 / 当前用户注入 |
-| 12 | **请求日志** | requestId + method + path + status + duration（自动过滤敏感路径） |
-| 13 | **CORS** | 可配置来源、凭证策略 |
-| 14 | **参数校验** | Pydantic v2 自动校验，失败转 -1001 |
-| 15 | **密码加密** | passlib bcrypt，最小 8 位 |
-| 16 | **Swagger** | `/docs`（Swagger UI）+ `/redoc`（ReDoc） |
-| 17 | **数据库** | MySQL 默认 / PostgreSQL / MongoDB / 无数据库 可选 |
-| 18 | **健康检查** | `/api/health` 含 DB 连通检查 |
-| 19 | **Docker** | Dockerfile + docker-compose（多阶段构建 + 非 root 运行） |
-| 20 | **文档** | project-guide + api-contract 双文档强制交付 |
-| 21 | **生产安全配置** | 安全头中间件、.env 安全注释、资源限制 |
-| 22 | **连接池保活** | `pool_recycle` + `pool_pre_ping` |
-| 23 | **优雅关闭** | `SIGTERM` 精确停止 + uvicorn `--graceful-timeout` |
+| 3 | **一键启动/重启** | `./restart.sh [dev|prod]`：检测、拉代码、装依赖、安全停止旧进程、启动、输出日志命令 |
+| 4 | **开发模式** | `./restart.sh dev` 热重载，代码修改自动重启，日志 `logs/dev.log` |
+| 5 | **生产模式** | `./restart.sh prod` 后台多 worker 启动，PID 文件管理，日志 `logs/app.log` |
+| 6 | **SSE 流式** | 内置 `sse-starlette`，示例端点 `/api/sse/chat` |
+| 7 | **文件上传** | 内置 `/api/upload` 单文件与 `/api/uploads` 多文件上传 |
+| 8 | **统一响应** | `EnvelopeRoute` 自动包装 `{ code, message, data }` |
+| 9 | **全局异常** | BusinessException / -1001 校验 / -2000 兜底 |
+| 10 | **JWT 鉴权** | 注册 / 登录 / 刷新令牌 / 当前用户注入 |
+| 11 | **请求日志** | requestId + method + path + status + duration（自动过滤敏感路径） |
+| 12 | **CORS** | 可配置来源、凭证策略 |
+| 13 | **参数校验** | Pydantic v2 自动校验，失败转 -1001 |
+| 14 | **密码加密** | passlib bcrypt，最小 8 位 |
+| 15 | **Swagger** | `/docs`（Swagger UI）+ `/redoc`（ReDoc） |
+| 16 | **数据库** | MySQL 默认 / PostgreSQL / MongoDB / 无数据库 可选 |
+| 17 | **健康检查** | `/api/health` 含 DB 连通检查 |
+| 18 | **Docker 支持** | 内置 Dockerfile + docker-compose.yml（MySQL/PG/Mongo）模板，多阶段构建 + 非 root 运行 |
+| 19 | **文档** | project-guide + api-contract 双文档强制交付 |
+| 20 | **生产安全配置** | 安全头中间件、.env 安全注释、资源限制 |
+| 21 | **连接池保活** | `pool_recycle` + `pool_pre_ping` |
 
 ---
 
@@ -109,13 +115,15 @@ create fastapi project、fastapi starter
 **生成顺序**：
 
 1. 创建目录结构
-2. 写入配置文件（requirements.txt、.env.example、.gitignore）
+2. 写入依赖与配置（`requirements.txt`、`.env.example`、`.env`、`.gitignore`）
 3. 写入核心模块（main.py、config.py、database.py、response.py、exceptions.py、dependencies.py）
 4. 写入业务模块（models → schemas → services → routers）
-5. 写入启动脚本（setup + dev + start + restart，双平台）
-6. 写入 Docker 配置（Dockerfile + docker-compose.yml x3）
+5. 写入启动脚本（`restart.sh` / `restart.bat`，dev/prod 双模式）
+6. 写入 Docker 配置（Dockerfile + docker-compose.yml / docker-compose.pg.yml / docker-compose.mongo.yml，按需启用）
 7. 写入强制交付物（api-contract.md + docs/project-guide.md）
-8. 写入项目元文件（README.md、CLAUDE.md、AGENTS.md、versions.md）
+8. 写入项目说明（README.md）
+
+> 维护者可用本 skill 根目录 `scripts/generate_project.py` 作为 canonical 生成器参考，从 `references/skeleton.md` 和 `references/startup-scripts.md` 自动提取模板并生成完整项目，确保文件无遗漏、`.bat` 编码正确。需要 `alembic/`、`tests/`、`pyproject.toml`、`versions.md`、`CLAUDE.md`、`AGENTS.md` 等扩展文件时，由生成逻辑按本 SPEC 补充。
 
 ### 4.4 第四步：自动安装与验证
 
@@ -125,7 +133,7 @@ create fastapi project、fastapi starter
 3. 安装依赖（pip install -r requirements.txt）
 4. 编译检查（python -m compileall app）
 5. 检测数据库可用性，有 Docker 则自动启动数据库容器
-6. 提示用户运行 ./setup.sh 或 setup.bat 一键启动
+6. 提示用户运行 `./restart.sh [dev|prod]` 或 `restart.bat [dev|prod]` 一键启动
 ```
 
 ### 4.5 第五步：交付清单
@@ -133,20 +141,19 @@ create fastapi project、fastapi starter
 向用户汇报完整交付物：
 
 ```
-✅ 项目 {{project}} 生成完毕！
+✅ 项目 {{PROJECT_NAME}} 生成完毕！
 
 📁 生成的文件：
   - 核心模块：app/main.py, config.py, database.py, response.py ...
   - API 路由：health / auth / users / sse / upload
-  - 启动脚本：setup.sh, dev.sh, start.sh, restart.sh（Windows 对应 .bat）
+  - 启动脚本：restart.sh, restart.bat（dev/prod 双模式）
   - 数据库：MySQL（已配置 docker-compose.yml，可选 PG / MongoDB / 无数据库）
   - 文档：api-contract.md, docs/project-guide.md
 
 🚀 启动方式：
-  一键启动：  ./setup.sh        （首次使用，自动装依赖）
-  开发模式：  ./dev.sh          （改代码自动重启）
-  生产模式：  ./start.sh        （后台多 worker）
-  重启服务：  ./restart.sh      （停止后重新启动）
+  开发模式：  ./restart.sh dev        （热重载，日志 logs/dev.log）
+  生产模式：  ./restart.sh prod       （后台多 worker，日志 logs/app.log）
+  默认：      ./restart.sh            （同 dev）
 
 📖 接口文档：
   Swagger UI：  http://localhost:8080/docs
@@ -172,7 +179,7 @@ create fastapi project、fastapi starter
 ## 五、生成项目的目录结构
 
 ```
-{{project}}/
+{{PROJECT_NAME}}/
 ├── app/
 │   ├── __init__.py
 │   ├── main.py              # FastAPI 入口：lifespan、CORS、异常、中间件、路由注册
@@ -212,16 +219,11 @@ create fastapi project、fastapi starter
 │   └── test_health.py       # 健康检查单元测试
 ├── docs/
 │   └── project-guide.md     # 项目指南（强制交付物）
-├── setup.sh                 # 一键环境搭建（Linux/macOS）
-├── setup.bat                # 一键环境搭建（Windows）
-├── dev.sh                   # 开发模式热重载（Linux/macOS）
-├── dev.bat                  # 开发模式热重载（Windows）
-├── start.sh                 # 生产模式启动（Linux/macOS）
-├── start.bat                # 生产模式启动（Windows）
-├── restart.sh               # 一键重启（Linux/macOS）
-├── restart.bat              # 一键重启（Windows）
+├── restart.sh               # 一键启动/重启（Linux/macOS，dev/prod 双模式）
+├── restart.bat              # 一键启动/重启（Windows，dev/prod 双模式）
 ├── requirements.txt         # Python 依赖清单
 ├── .env.example             # 环境变量模板（含安全注释）
+├── .env                     # 实际运行环境变量（首次从 .env.example 复制）
 ├── .gitignore               # Git 忽略规则
 ├── Dockerfile               # 容器镜像构建（多阶段 + 非 root）
 ├── docker-compose.yml       # 默认 MySQL 服务编排
@@ -234,6 +236,8 @@ create fastapi project、fastapi starter
 ├── README.md                # 项目说明
 └── pyproject.toml           # 项目元数据
 ```
+
+> 说明：`alembic/`、`tests/`、`pyproject.toml`、`versions.md`、`CLAUDE.md`、`AGENTS.md` 为扩展模板或元文件，当前 canonical 生成器 `scripts/generate_project.py` 不默认生成；需要时由生成逻辑按本 SPEC 补充。核心运行代码以 `references/skeleton.md` 为准。
 
 **核心约定**：
 - 路由前缀：`/api`
@@ -286,8 +290,6 @@ python-multipart
 alembic
 email-validator
 httpx
-pytest
-pytest-asyncio
 ```
 
 **数据库变体**：
@@ -305,7 +307,7 @@ pytest-asyncio
 - `lifespan` 异步上下文：启动时初始化数据库（`create_all` 或 `connect_db`），关闭时释放资源
 - 中间件注册顺序：安全头 → 请求日志 → CORS
 - 异常处理器：`BusinessException` → `-1001` 校验错误 → `-2000` 兜底
-- 路由注册：`health`、`auth`、`users`、`sse`、`upload`
+- 路由注册：`health`（始终）、`auth` / `users`（仅当 `DB_TYPE != none`）、`sse`、`upload`
 - Swagger 自定义：增强中文说明、注册/登录指引
 
 **关键代码结构**：
@@ -348,7 +350,7 @@ async def request_log_middleware(request, call_next):
 
 | 配置项 | 默认值 | 说明 |
 |--------|--------|------|
-| `APP_NAME` | `{{project}}` | 应用名称 |
+| `APP_NAME` | `{{PROJECT_NAME}}` | 应用名称 |
 | `APP_PORT` | `8080` | 监听端口 |
 | `APP_DEBUG` | `true` | 调试模式（⚠️ 生产必须 false） |
 | `DB_TYPE` | `mysql` | 数据库类型 |
@@ -461,53 +463,37 @@ async def connect_db():
 
 ### 8.1 脚本矩阵
 
-| 脚本 | 平台 | 模式 | 热重载 | PID 管理 | 资源限制 |
-|------|------|------|--------|----------|----------|
-| `setup.sh` / `setup.bat` | Linux/macOS / Windows | 首次环境搭建 | ✅ | ❌ | ❌ |
-| `dev.sh` / `dev.bat` | Linux/macOS / Windows | 开发 | ✅ | ❌ | ❌ |
-| `start.sh` / `start.bat` | Linux/macOS / Windows | 生产 | ❌ | ✅ | ✅ |
-| `restart.sh` / `restart.bat` | Linux/macOS / Windows | 重启 | 跟随 start | ✅ | - |
+| 脚本 | 平台 | 模式 | 热重载 | PID 管理 | 资源限制 | 日志 |
+|------|------|------|--------|----------|----------|------|
+| `restart.sh` / `restart.bat` | Linux/macOS / Windows | `dev`（默认）/ `prod` | `dev` 开启 | ✅ | `prod` 开启 | `logs/dev.log` / `logs/app.log` |
 
-### 8.2 setup.sh 工作流程
+### 8.2 restart.sh / restart.bat 工作流程
 
 ```
-[1/6] 检测 Python 3.9+
-[2/6] 创建/激活虚拟环境
-[3/6] 从 .env.example 生成 .env
-[4/6] 安装依赖
-[5/6] 编译检查
-[6/6] 检查数据库（有 Docker 则自动启动）
-→ 启动 uvicorn（热重载开启，前台运行）
+[1/5] 检测 git 仓库，存在则 git pull（失败仅警告）
+[2/5] 创建/激活虚拟环境，安装/更新依赖
+[3/5] 安全停止旧进程（PID 文件 + 端口兜底）
+[4/5] 启动 uvicorn（dev 带热重载 / prod 多 worker + 资源限制）
+[5/5] 写入 PID 文件，输出日志查看命令
 ```
 
-### 8.3 start.sh 生产启动
+### 8.3 安全停止旧进程
+
+1. 读取 `app.pid`，若进程仍为 uvicorn/python，则 `kill` 优雅停止
+2. 若 PID 文件丢失/失效，使用端口扫描清理占用 `APP_PORT` 的残留进程
+3. 清理后等待 1 秒，确保端口释放
+
+### 8.4 启动参数
 
 ```bash
-mkdir -p logs
-nohup uvicorn app.main:app \
-    --host 0.0.0.0 \
-    --port "$PORT" \
-    --workers "$WORKERS" \
-    --log-level info \
-    > logs/app.log 2>&1 &
-echo $! > app.pid
+./restart.sh        # dev 模式：热重载，日志 logs/dev.log
+./restart.sh prod   # prod 模式：多 worker，日志 logs/app.log
 ```
 
-**特性**：
-- 后台运行，日志写入 `logs/app.log`
-- PID 写入 `app.pid`
-- 多 worker（默认 2 进程，可通过 `APP_WORKERS` 调整）
+环境变量：
 
-### 8.4 restart.sh 优雅重启
-
-```bash
-if [ -f "app.pid" ]; then
-    kill -TERM $(cat app.pid)
-    sleep 2
-fi
-rm -f app.pid
-→ 重新执行 start.sh
-```
+- `APP_PORT`：默认 8080
+- `APP_WORKERS`：`prod` 模式 worker 数，默认 2
 
 ---
 
@@ -536,7 +522,7 @@ COPY --chown=appuser:appuser . .
 EXPOSE 8080
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080",
      "--workers", "2", "--limit-max-requests", "10000",
-     "--limit-concurrency", "100", "--graceful-timeout", "30"]
+     "--limit-concurrency", "100", "--timeout-graceful-shutdown", "30"]
 ```
 
 ### 9.2 docker-compose 编排
@@ -606,18 +592,18 @@ const eventSource = new EventSource(
 | -1032 | 不支持的文件类型 | 上传文件 MIME 不在白名单 |
 | -2000 | 系统异常 | 未预期的内部错误 |
 
-> 错误码与 `backend-convention-skill/references/response-format.md` 保持一致，前端 `frontend-request-skill` 的 `ERROR_CODE_MAP` 可直接复用。
+> 错误码与 `backend-convention-skill` 规范对齐；`api-contract-template.md`、`project-guide-template.md` 已内置本 skill，生成项目不依赖 `backend-convention-skill` 文件。前端 `frontend-request-skill` 的 `ERROR_CODE_MAP` 可直接复用。
 
 ---
 
 ## 十二、强制交付物
 
-与 `backend-convention-skill` 一致，生成项目时必须同时落地两份文档：
+生成项目时必须同时落地两份文档（模板位于本 skill `references/` 目录）：
 
 | 文档 | 位置 | 说明 |
 |------|------|------|
-| 项目指南 | `docs/project-guide.md` | 栈特定内容（FastAPI/SQLAlchemy/SSE/Upload）、目录结构、启动方式、模块开发步骤 |
-| 接口契约 | `api-contract.md` | 含 health / auth / users / sse / upload 全量接口定义 |
+| 项目指南 | `docs/project-guide.md` | 按 `references/project-guide-template.md` 生成，栈特定内容（FastAPI/SQLAlchemy/SSE/Upload）、目录结构、启动方式、模块开发步骤 |
+| 接口契约 | `api-contract.md` | 按 `references/api-contract-template.md` 生成，含 health / auth / users / sse / upload 全量接口定义 |
 
 ---
 
@@ -625,7 +611,7 @@ const eventSource = new EventSource(
 
 | 被引用技能 | 引用内容 |
 |-----------|---------|
-| `backend-convention-skill` | 响应信封 `{ code, message, data }`、错误码体系、JWT 规范、api-contract 模板、project-guide 模板 |
+| `backend-convention-skill` | 响应信封 `{ code, message, data }`、错误码体系、JWT 规范（规范对齐；模板已内置本 skill） |
 | `database-skill` | MySQL/PostgreSQL/MongoDB 选型规则、表前缀 `wg`、连接参数、Alembic 迁移规则 |
 | `frontend-request-skill` | 前端请求层规范、响应信封解析、错误码映射、Token/SSE/上传对接方式 |
 
@@ -649,15 +635,16 @@ const eventSource = new EventSource(
 1. **不做 python-backend-skill 已做的事**：不重复生成同样的骨架代码，本 skill 生成的是更完整、更小白友好的版本。
 2. **不硬编码版本号**：Python / FastAPI / 依赖版本一律现场查询官方源最新稳定版。
 3. **不跳过环境探测**：生成前必须先检查用户环境，无法安装则给出明确提示。
-4. **不替用户运行数据库**：只生成 docker-compose 配置，告知用户如何启动。
+4. **不强制安装系统级数据库**：若本机有 Docker，`restart` 脚本或用户可参照 `references/db-guide.md` 快速启动开发数据库；否则提供 Docker 启动命令，由用户自行启动。
 5. **不替用户提交 git**。
 6. **生产默认值必须安全**：Dockerfile 非 root 运行、安全头强制开启、`.env.example` 对 `JWT_SECRET` / `CORS` / `APP_DEBUG` 有醒目警告。
 7. **所有注释、文档用中文**：目标用户是中文小白，不要英文注释。
 8. **接口契约必须和 frontend-request-skill 对齐**：响应信封、错误码、字段命名前后端一致。
+9. **`.env` 与 `.gitignore` 必须随脚手架一起生成，且 `.env` 配置必须被服务加载**：`app/config.py` 通过 Pydantic Settings 读取 `.env` 全部配置，禁止在代码中硬编码端口、数据库密码、JWT 密钥、上传路径等运行时可变参数。`.gitignore` 必须忽略 `.env` 及 `.env.*.local` 等敏感文件。
 
 ---
 
-## 十五、后续扩展方向
+## 十六、后续扩展方向
 
 | 方向 | 说明 | 优先级 |
 |------|------|--------|

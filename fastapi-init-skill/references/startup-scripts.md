@@ -1,261 +1,46 @@
 # 一键启动脚本模板
 
-生成项目时，以下脚本与代码同时落地到项目根目录。Linux/macOS 脚本需 `chmod +x` 赋予执行权限，Windows 脚本双击即可运行。
+生成项目时，只落地两个脚本：
 
-## 脚本概览
+- `restart.sh`（Linux / macOS）
+- `restart.bat`（Windows）
 
-| 脚本 | 作用 | 适用场景 |
-|------|------|----------|
-| `setup.sh` / `setup.bat` | 环境搭建 + 安装 + 启动 | **首次使用**，自动完成全部步骤 |
-| `dev.sh` / `dev.bat` | 开发模式，热重载 | **开发时**使用，修改代码自动重启 |
-| `start.sh` / `start.bat` | 生产模式启动 | **后台多 worker** 运行 |
-| `restart.sh` / `restart.bat` | 一键重启 | 停止后重新启动 |
+一条命令完成：拉代码 → 装依赖 → 安全停止旧进程 → 启动服务 → 输出日志命令。
 
-## setup.sh（Linux / macOS）
+## 使用方式
 
 ```bash
-#!/bin/bash
-set -e
-
-# ============================================
-# FastAPI 项目一键环境搭建脚本
-# 功能：检测 Python → 创建 venv → 生成 .env → 安装依赖 → 检查 DB → 启动服务
-# ============================================
-
-PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
-VENV_DIR="$PROJECT_DIR/venv"
-PORT="${APP_PORT:-8080}"
-DB_TYPE="${DB_TYPE:-mysql}"
-
-echo "========================================"
-echo "  FastAPI 项目环境搭建"
-echo "========================================"
-echo ""
-
-# ---------- 1. 检测 Python ----------
-echo "[1/6] 检测 Python 环境..."
-
-PYTHON=""
-for cmd in python3 python; do
-    if command -v $cmd &> /dev/null; then
-        VERSION=$($cmd --version 2>&1 | grep -oP '\d+\.\d+')
-        MAJOR=$(echo $VERSION | cut -d. -f1)
-        MINOR=$(echo $VERSION | cut -d. -f2)
-        if [ "$MAJOR" -ge 3 ] && [ "$MINOR" -ge 9 ]; then
-            PYTHON=$cmd
-            echo "  ✓ 找到 $($PYTHON --version)"
-            break
-        fi
-    fi
-done
-
-if [ -z "$PYTHON" ]; then
-    echo "  ✗ 未找到 Python 3.9+"
-    echo "  请安装 Python 3.9 或更高版本：https://python.org/downloads"
-    exit 1
-fi
-
-# ---------- 2. 创建虚拟环境 ----------
-echo "[2/6] 配置虚拟环境..."
-
-if [ -d "$VENV_DIR" ]; then
-    echo "  → 检测到已有虚拟环境，跳过创建"
-else
-    $PYTHON -m venv "$VENV_DIR"
-    echo "  ✓ 虚拟环境已创建: venv/"
-fi
-
-source "$VENV_DIR/bin/activate"
-echo "  ✓ 虚拟环境已激活"
-
-# ---------- 3. 生成 .env 配置文件 ----------
-echo "[3/6] 初始化配置文件..."
-
-if [ ! -f "$PROJECT_DIR/.env" ]; then
-    if [ -f "$PROJECT_DIR/.env.example" ]; then
-        cp "$PROJECT_DIR/.env.example" "$PROJECT_DIR/.env"
-        echo "  ✓ 已从 .env.example 创建 .env（请按需修改数据库连接信息）"
-    else
-        echo "  ⚠ 未找到 .env.example，将使用默认配置"
-    fi
-else
-    echo "  → .env 已存在，跳过创建"
-fi
-
-# ---------- 4. 安装依赖 ----------
-echo "[4/6] 安装 Python 依赖..."
-
-if [ -f "$PROJECT_DIR/requirements.txt" ]; then
-    pip install -r "$PROJECT_DIR/requirements.txt"
-    echo "  ✓ 依赖安装完毕"
-else
-    echo "  ✗ 找不到 requirements.txt"
-    exit 1
-fi
-
-# ---------- 5. 编译检查 ----------
-echo "[5/6] 语法检查..."
-
-python -m compileall "$PROJECT_DIR/app" -q
-echo "  ✓ 编译通过"
-
-# ---------- 6. 数据库就绪检查 ----------
-echo "[6/6] 检查数据库连接..."
-
-echo "  → 数据库类型: $DB_TYPE"
-
-if [ "$DB_TYPE" = "none" ]; then
-    echo "  ✓ 已选择不启用数据库，跳过数据库检查"
-elif command -v docker &> /dev/null && docker info &> /dev/null; then
-    echo "  ✓ Docker 已就绪"
-
-    case "$DB_TYPE" in
-        mysql)
-            CONTAINER_NAME="${PROJECT_NAME:-my}-mysql"
-            if docker ps --format '{{.Names}}' 2>/dev/null | grep -q "$CONTAINER_NAME"; then
-                echo "  ✓ MySQL 容器已在运行"
-            else
-                echo "  → 正在启动 MySQL（Docker）..."
-                docker run -d -p 3306:3306 \
-                    -e MYSQL_ROOT_PASSWORD=root \
-                    -e MYSQL_DATABASE=app_db \
-                    --name "$CONTAINER_NAME" \
-                    mysql:8.0 2>/dev/null || true
-                echo "  ✓ MySQL 已启动（如首次启动，初始化约需 30 秒）"
-            fi
-            ;;
-        postgresql)
-            CONTAINER_NAME="${PROJECT_NAME:-my}-postgres"
-            if docker ps --format '{{.Names}}' 2>/dev/null | grep -q "$CONTAINER_NAME"; then
-                echo "  ✓ PostgreSQL 容器已在运行"
-            else
-                echo "  → 正在启动 PostgreSQL（Docker）..."
-                docker run -d -p 5432:5432 \
-                    -e POSTGRES_PASSWORD=root \
-                    -e POSTGRES_DB=app_db \
-                    --name "$CONTAINER_NAME" \
-                    postgres:15 2>/dev/null || true
-                echo "  ✓ PostgreSQL 已启动（如首次启动，初始化约需 30 秒）"
-            fi
-            ;;
-        mongodb)
-            CONTAINER_NAME="${PROJECT_NAME:-my}-mongo"
-            if docker ps --format '{{.Names}}' 2>/dev/null | grep -q "$CONTAINER_NAME"; then
-                echo "  ✓ MongoDB 容器已在运行"
-            else
-                echo "  → 正在启动 MongoDB（Docker）..."
-                docker run -d -p 27017:27017 \
-                    -e MONGO_INITDB_DATABASE=app_db \
-                    --name "$CONTAINER_NAME" \
-                    mongo:6 2>/dev/null || true
-                echo "  ✓ MongoDB 已启动（如首次启动，初始化约需 30 秒）"
-            fi
-            ;;
-        *)
-            echo "  ⚠ 未知的数据库类型: $DB_TYPE"
-            ;;
-    esac
-else
-    echo "  ⚠ 未检测到 Docker，无法自动启动数据库"
-    echo "  请确保 $DB_TYPE 已在本机运行，或安装 Docker 后重试："
-    echo "    macOS:  brew install docker"
-    echo "    Linux:  curl -fsSL https://get.docker.com | sh"
-    echo "    Windows: https://www.docker.com/products/docker-desktop"
-    echo ""
-    echo "  或者手动启动数据库后重新运行本脚本。"
-fi
-
-echo ""
-echo "========================================"
-echo "  ✓ 环境搭建完成！"
-echo ""
-echo "  Swagger 文档：http://localhost:${PORT}/docs"
-echo "  ReDoc 文档：  http://localhost:${PORT}/redoc"
-echo "  健康检查：    http://localhost:${PORT}/api/health"
-echo "  SSE 示例：    http://localhost:${PORT}/api/sse/chat"
-echo "  上传示例：    curl -F file=@test.png http://localhost:${PORT}/api/upload"
-echo ""
-echo "  ⚠ 重要提醒："
-echo "    请编辑 .env 文件修改 JWT_SECRET（搜索 change-me）"
-echo "    生产环境务必使用随机密钥！"
-echo ""
-echo "  🚀 当前为「开发模式」（热重载已开启）"
-echo ""
-echo "  按 Ctrl+C 停止服务"
-echo "========================================"
-echo ""
-
-uvicorn app.main:app --host 0.0.0.0 --port "$PORT" --reload
+# Linux / macOS
+./restart.sh        # 默认 dev 模式（热重载，日志 logs/dev.log）
+./restart.sh prod   # 生产模式（多 worker，日志 logs/app.log）
 ```
 
-## dev.sh（Linux / macOS）
-
-```bash
-#!/bin/bash
-set -e
-
-PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
-VENV_DIR="$PROJECT_DIR/venv"
-PORT="${APP_PORT:-8080}"
-
-if [ ! -d "$VENV_DIR" ]; then
-    echo "首次使用，请先运行 ./setup.sh"
-    echo "或手动创建虚拟环境：python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt"
-    exit 1
-fi
-
-source "$VENV_DIR/bin/activate"
-
-if [ ! -f "$PROJECT_DIR/.env" ]; then
-    if [ -f "$PROJECT_DIR/.env.example" ]; then
-        cp "$PROJECT_DIR/.env.example" "$PROJECT_DIR/.env"
-        echo "  ⚠ 已自动生成 .env，请编辑后重新启动"
-    fi
-fi
-
-echo "========================================"
-echo "  开发模式（热重载已启用）"
-echo "  Swagger: http://localhost:${PORT}/docs"
-echo "  按 Ctrl+C 停止"
-echo "========================================"
-
-uvicorn app.main:app --host 0.0.0.0 --port "$PORT" --reload --log-level info
+```batch
+:: Windows
+restart.bat         :: 默认 dev 模式
+restart.bat prod    :: 生产模式
 ```
 
-## start.sh（Linux / macOS）
+环境变量：
 
-```bash
-#!/bin/bash
-set -e
+- `APP_PORT`：端口，默认 8080
+- `APP_WORKERS`：`prod` 模式 worker 数，默认 2
 
-PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
-VENV_DIR="$PROJECT_DIR/venv"
-PORT="${APP_PORT:-8080}"
-WORKERS="${APP_WORKERS:-2}"
-LOG_DIR="$PROJECT_DIR/logs"
+## 编写规则（强制）
 
-if [ ! -d "$VENV_DIR" ]; then
-    echo "首次使用，请先运行 ./setup.sh"
-    exit 1
-fi
-
-source "$VENV_DIR/bin/activate"
-mkdir -p "$LOG_DIR"
-
-echo "========================================"
-echo "  生产模式启动"
-echo "  端口：$PORT"
-echo "  工作进程：$WORKERS"
-echo "  日志：$LOG_DIR"
-echo "========================================"
-
-nohup uvicorn app.main:app --host 0.0.0.0 --port "$PORT" --workers "$WORKERS" \
-    --log-level info > "$LOG_DIR/app.log" 2>&1 &
-echo $! > "$PROJECT_DIR/app.pid"
-
-echo "  ✓ 服务已后台启动，PID: $(cat "$PROJECT_DIR/app.pid")"
-echo "  访问：http://localhost:${PORT}/api/health"
-```
+1. **单入口**：每个平台只生成一个脚本，禁止拆成 setup / dev / start / restart 多个文件。
+2. **参数区分模式**：`./restart.sh dev` 开发模式（热重载），`./restart.sh prod` 生产模式（多 worker + 资源限制），默认 `dev`。
+3. **一条龙**：脚本必须依次完成——拉代码（可选）→ 安装/更新依赖 → 安全停止旧进程 → 启动服务 → 输出日志命令。
+4. **安全杀旧进程**：
+   - 先按 `app.pid` 停止已记录的 uvicorn/python 进程；
+   - 若 PID 文件丢失或进程已失效，必须按 `APP_PORT` 扫描并强制清理占用端口的残留进程；
+   - 禁止无差别 `killall python`。
+5. **自动生成 .env**：启动前若根目录无 `.env`，自动从 `.env.example` 复制并提示用户编辑。
+6. **日志落地**：`dev` 输出到 `logs/dev.log`，`prod` 输出到 `logs/app.log`，启动成功后必须打印查看日志命令。
+7. **PID 记录**：启动成功后把主进程 PID 写入 `app.pid`，供下次重启识别。
+8. **失败可排查**：启动失败时打印最近 50 行日志路径，而不是只报"起不来"。
+9. **跨平台**：`.sh` 使用 POSIX/Bash，`set -e`；`.bat` 使用 `setlocal enabledelayedexpansion`，错误时 `exit /b`。
+10. **不替用户提交 git**：可以 `git pull`，但绝不执行 `git add/commit/push`。
 
 ## restart.sh（Linux / macOS）
 
@@ -264,252 +49,113 @@ echo "  访问：http://localhost:${PORT}/api/health"
 set -e
 
 PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$PROJECT_DIR"
+
+MODE="${1:-dev}"
+PORT="${APP_PORT:-8080}"
+VENV_DIR="$PROJECT_DIR/venv"
+LOG_DIR="$PROJECT_DIR/logs"
 PID_FILE="$PROJECT_DIR/app.pid"
 
+if [ "$MODE" = "prod" ]; then
+    LOG_FILE="$LOG_DIR/app.log"
+    WORKERS="${APP_WORKERS:-2}"
+else
+    LOG_FILE="$LOG_DIR/dev.log"
+    WORKERS=1
+fi
+
+mkdir -p "$LOG_DIR"
+
 echo "========================================"
-echo "  服务重启"
+echo "  一键重启 [$MODE]"
+echo "  端口：$PORT"
+echo "  日志：$LOG_FILE"
 echo "========================================"
 
+# 1. 拉取代码（可选）
+if command -v git &> /dev/null && [ -d "$PROJECT_DIR/.git" ]; then
+    echo "[1/4] 拉取代码更新..."
+    git pull || echo "  ⚠ git pull 失败，将继续使用当前代码"
+else
+    echo "[1/4] 未检测到 git 仓库，跳过拉取"
+fi
+
+# 2. 安装/更新依赖
+echo "[2/4] 检查环境并安装依赖..."
+if [ ! -d "$VENV_DIR" ]; then
+    python3 -m venv "$VENV_DIR" 2>/dev/null || python -m venv "$VENV_DIR"
+    echo "  ✓ 虚拟环境已创建"
+fi
+source "$VENV_DIR/bin/activate"
+pip install -r "$PROJECT_DIR/requirements.txt"
+echo "  ✓ 依赖已更新"
+
+# 3. 安全停止旧进程
+echo "[3/4] 安全停止旧进程..."
 if [ -f "$PID_FILE" ]; then
     PID=$(cat "$PID_FILE")
-    if kill -0 "$PID" 2>/dev/null; then
-        echo "  → 停止旧进程 PID: $PID"
-        kill "$PID"
+    if ps -p "$PID" -o comm= 2>/dev/null | grep -qE "uvicorn|python"; then
+        echo "  → 停止 PID: $PID"
+        kill "$PID" 2>/dev/null || true
         sleep 2
+    else
+        echo "  ⚠ PID 文件已失效，忽略"
     fi
     rm -f "$PID_FILE"
 fi
 
-exec "$PROJECT_DIR/start.sh"
-```
+OLD_PIDS=""
+if command -v lsof &> /dev/null; then
+    OLD_PIDS=$(lsof -ti tcp:"$PORT" 2>/dev/null || true)
+elif command -v ss &> /dev/null; then
+    OLD_PIDS=$(ss -ltnp "sport = :$PORT" 2>/dev/null | awk -F'pid=' '{print $2}' | awk -F',' '{print $1}' | sort -u | tr '\n' ' ')
+elif command -v fuser &> /dev/null; then
+    fuser -k "$PORT"/tcp 2>/dev/null || true
+fi
 
-## setup.bat（Windows）
+if [ -n "$OLD_PIDS" ]; then
+    echo "  → 端口 $PORT 仍有残留进程，强制清理: $OLD_PIDS"
+    kill -9 $OLD_PIDS 2>/dev/null || true
+    sleep 1
+fi
 
-```batch
-@echo off
-chcp 65001 >nul
-setlocal enabledelayedexpansion
+echo "  ✓ 旧进程已清理"
 
-:: ============================================
-:: FastAPI 项目一键环境搭建脚本 (Windows)
-:: ============================================
+# 4. 启动服务
+echo "[4/4] 启动服务..."
+if [ ! -f "$PROJECT_DIR/.env" ] && [ -f "$PROJECT_DIR/.env.example" ]; then
+    cp "$PROJECT_DIR/.env.example" "$PROJECT_DIR/.env"
+    echo "  ⚠ 已自动生成 .env，请编辑后重新启动"
+fi
 
-set PROJECT_DIR=%~dp0
-set VENV_DIR=%PROJECT_DIR%venv
-set PORT=8080
-if defined APP_PORT set PORT=%APP_PORT%
-set DB_TYPE=mysql
-if defined DB_TYPE set DB_TYPE=%DB_TYPE%
+if [ "$MODE" = "prod" ]; then
+    nohup uvicorn app.main:app --host 0.0.0.0 --port "$PORT" --workers "$WORKERS" \
+        --limit-max-requests 10000 --limit-concurrency 100 --timeout-graceful-shutdown 30 \
+        --log-level info > "$LOG_FILE" 2>&1 &
+else
+    nohup uvicorn app.main:app --host 0.0.0.0 --port "$PORT" --reload --log-level info > "$LOG_FILE" 2>&1 &
+fi
 
-echo ========================================
-echo   FastAPI 项目环境搭建
-echo ========================================
-echo.
+echo $! > "$PID_FILE"
 
-:: ---------- 1. 检测 Python ----------
-echo [1/6] 检测 Python 环境...
-
-set PYTHON=
-for %%C in (python python3) do (
-    where %%C >nul 2>nul
-    if !errorlevel! equ 0 (
-        for /f "tokens=2 delims=." %%V in ('%%C --version 2^>^&1') do (
-            set PYTHON=%%C
-        )
-    )
-)
-
-if "%PYTHON%"=="" (
-    echo   × 未找到 Python
-    echo   请安装 Python 3.9+: https://python.org/downloads
-    echo   安装时请勾选 "Add Python to PATH"
-    pause
-    exit /b 1
-)
-
-%PYTHON% --version
-echo   √ Python 已找到
-
-:: ---------- 2. 创建虚拟环境 ----------
-echo [2/6] 配置虚拟环境...
-
-if exist "%VENV_DIR%" (
-    echo   → 检测到已有虚拟环境，跳过创建
-) else (
-    %PYTHON% -m venv "%VENV_DIR%"
-    echo   √ 虚拟环境已创建: venv\
-)
-
-call "%VENV_DIR%\Scripts\activate.bat"
-echo   √ 虚拟环境已激活
-
-:: ---------- 3. 生成 .env 配置文件 ----------
-echo [3/6] 初始化配置文件...
-
-if not exist "%PROJECT_DIR%.env" (
-    if exist "%PROJECT_DIR%.env.example" (
-        copy /y "%PROJECT_DIR%.env.example" "%PROJECT_DIR%.env" >nul
-        echo   √ 已从 .env.example 创建 .env（请按需修改数据库连接信息）
-    ) else (
-        echo   ! 未找到 .env.example，将使用默认配置
-    )
-) else (
-    echo   → .env 已存在，跳过创建
-)
-
-:: ---------- 4. 安装依赖 ----------
-echo [4/6] 安装 Python 依赖...
-
-if not exist "%PROJECT_DIR%requirements.txt" (
-    echo   × 找不到 requirements.txt
-    pause
-    exit /b 1
-)
-
-pip install -r "%PROJECT_DIR%requirements.txt"
-echo   √ 依赖安装完毕
-
-:: ---------- 5. 编译检查 ----------
-echo [5/6] 语法检查...
-
-%PYTHON% -m compileall "%PROJECT_DIR%app" -q
-echo   √ 编译通过
-
-:: ---------- 6. 数据库就绪检查 ----------
-echo [6/6] 检查数据库连接...
-
-echo   → 数据库类型: %DB_TYPE%
-
-if "%DB_TYPE%"=="none" (
-    echo   √ 已选择不启用数据库，跳过数据库检查
-) else (
-    where docker >nul 2>nul
-    if !errorlevel! equ 0 (
-        echo   √ Docker 已就绪
-
-        docker ps --format "{{.Names}}" 2>nul | findstr /i "%DB_TYPE%" >nul
-        if !errorlevel! neq 0 (
-            echo   → 正在启动 %DB_TYPE%（Docker）...
-            cd /d "%PROJECT_DIR%"
-            if "%DB_TYPE%"=="mysql" (
-                docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=app_db --name my-mysql mysql:8.0 2>nul
-            ) else if "%DB_TYPE%"=="postgresql" (
-                docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=root -e POSTGRES_DB=app_db --name my-postgres postgres:15 2>nul
-            ) else if "%DB_TYPE%"=="mongodb" (
-                docker run -d -p 27017:27017 -e MONGO_INITDB_DATABASE=app_db --name my-mongo mongo:6 2>nul
-            )
-            echo   √ %DB_TYPE% 已启动（如首次启动，初始化约需 30 秒）
-        ) else (
-            echo   √ %DB_TYPE% 容器已在运行
-        )
-    ) else (
-        echo   ! 未检测到 Docker，无法自动启动数据库
-        echo   请确保 %DB_TYPE% 已在本机运行，或安装 Docker Desktop：
-        echo   https://www.docker.com/products/docker-desktop
-        echo   或者手动启动数据库后重新运行本脚本。
-    )
-)
-
-echo.
-echo ========================================
-echo   √ 环境搭建完成！
-echo.
-echo   Swagger 文档：http://localhost:%PORT%/docs
-echo   ReDoc 文档：  http://localhost:%PORT%/redoc
-echo   健康检查：    http://localhost:%PORT%/api/health
-echo   SSE 示例：    http://localhost:%PORT%/api/sse/chat
-echo   上传示例：    curl -F file=@test.png http://localhost:%PORT%/api/upload
-echo.
-echo   ! 重要提醒：
-echo     请编辑 .env 文件修改 JWT_SECRET（搜索 change-me）
-echo     生产环境务必使用随机密钥！
-echo.
-echo   当前为「开发模式」（热重载已开启）
-echo.
-echo   按 Ctrl+C 停止服务
-echo ========================================
-echo.
-
-uvicorn app.main:app --host 0.0.0.0 --port %PORT% --reload
-
-pause
-```
-
-## dev.bat（Windows）
-
-```batch
-@echo off
-chcp 65001 >nul
-
-set PROJECT_DIR=%~dp0
-set VENV_DIR=%PROJECT_DIR%venv
-set PORT=8080
-if defined APP_PORT set PORT=%APP_PORT%
-
-if not exist "%VENV_DIR%" (
-    echo 首次使用，请先运行 setup.bat
-    pause
-    exit /b 1
-)
-
-call "%VENV_DIR%\Scripts\activate.bat"
-
-if not exist "%PROJECT_DIR%.env" (
-    if exist "%PROJECT_DIR%.env.example" (
-        copy /y "%PROJECT_DIR%.env.example" "%PROJECT_DIR%.env" >nul
-        echo   ! 已自动生成 .env，请编辑后重新启动
-    )
-)
-
-echo ========================================
-echo   开发模式（热重载已启用）
-echo   Swagger: http://localhost:%PORT%/docs
-echo   按 Ctrl+C 停止
-echo ========================================
-
-uvicorn app.main:app --host 0.0.0.0 --port %PORT% --reload --log-level info
-
-pause
-```
-
-## start.bat（Windows）
-
-```batch
-@echo off
-chcp 65001 >nul
-
-set PROJECT_DIR=%~dp0
-set VENV_DIR=%PROJECT_DIR%venv
-set PORT=8080
-if defined APP_PORT set PORT=%APP_PORT%
-set WORKERS=2
-if defined APP_WORKERS set WORKERS=%APP_WORKERS%
-
-if not exist "%VENV_DIR%" (
-    echo 首次使用，请先运行 setup.bat
-    pause
-    exit /b 1
-)
-
-call "%VENV_DIR%\Scripts\activate.bat"
-if not exist "%PROJECT_DIR%logs" mkdir "%PROJECT_DIR%logs"
-
-echo ========================================
-echo   生产模式启动
-echo   端口：%PORT%
-echo   工作进程：%WORKERS%
-echo ========================================
-
-start /b uvicorn app.main:app --host 0.0.0.0 --port %PORT% --workers %WORKERS% --log-level info > "%PROJECT_DIR%logs\app.log" 2>&1
-for /f "tokens=2" %%P in ('tasklist ^| findstr "uvicorn"') do (
-    echo %%P > "%PROJECT_DIR%app.pid"
-    goto :done
-)
-:done
-
-echo   √ 服务已后台启动
-echo   访问：http://localhost:%PORT%/api/health
-pause
+sleep 1
+if ps -p "$(cat "$PID_FILE")" -o comm= &> /dev/null; then
+    echo ""
+    echo "========================================"
+    echo "  ✓ 服务已启动 [$MODE]"
+    echo "  PID: $(cat "$PID_FILE")"
+    echo "  Swagger: http://localhost:${PORT}/docs"
+    echo "  健康检查: http://localhost:${PORT}/api/health"
+    echo ""
+    echo "  查看日志："
+    echo "    tail -f \"$LOG_FILE\""
+    echo "========================================"
+else
+    echo "  ✗ 服务启动失败，请查看日志："
+    echo "    tail -n 50 \"$LOG_FILE\""
+    exit 1
+fi
 ```
 
 ## restart.bat（Windows）
@@ -517,19 +163,117 @@ pause
 ```batch
 @echo off
 chcp 65001 >nul
+setlocal enabledelayedexpansion
 
 set PROJECT_DIR=%~dp0
+cd /d "%PROJECT_DIR%"
+
+set MODE=dev
+if not "%~1"=="" set MODE=%~1
+set PORT=8080
+if defined APP_PORT set PORT=%APP_PORT%
+set VENV_DIR=%PROJECT_DIR%venv
+set LOG_DIR=%PROJECT_DIR%logs
 set PID_FILE=%PROJECT_DIR%app.pid
 
+if "%MODE%"=="prod" (
+    set LOG_FILE=%LOG_DIR%\app.log
+    set WORKERS=2
+    if defined APP_WORKERS set WORKERS=%APP_WORKERS%
+) else (
+    set LOG_FILE=%LOG_DIR%\dev.log
+    set WORKERS=1
+)
+
+if not exist "%LOG_DIR%" mkdir "%LOG_DIR%"
+
+echo ========================================
+echo   一键重启 [%MODE%]
+echo   端口：%PORT%
+echo   日志：%LOG_FILE%
+echo ========================================
+
+:: 1. 拉取代码（可选）
+where git >nul 2>nul
+if !errorlevel! equ 0 (
+    if exist "%PROJECT_DIR%.git" (
+        echo [1/4] 拉取代码更新...
+        git pull
+        if !errorlevel! neq 0 echo   ! git pull 失败，将继续使用当前代码
+    ) else (
+        echo [1/4] 未检测到 git 仓库，跳过拉取
+    )
+) else (
+    echo [1/4] 未安装 git，跳过拉取
+)
+
+:: 2. 安装/更新依赖
+echo [2/4] 检查环境并安装依赖...
+if not exist "%VENV_DIR%" (
+    python -m venv "%VENV_DIR%"
+    echo   虚拟环境已创建
+)
+call "%VENV_DIR%\Scripts\activate.bat"
+pip install -r "%PROJECT_DIR%requirements.txt"
+echo   依赖已更新
+
+:: 3. 安全停止旧进程
+echo [3/4] 安全停止旧进程...
 if exist "%PID_FILE%" (
     for /f %%P in (%PID_FILE%) do (
-        echo 停止旧进程 PID: %%P
+        echo   停止旧进程 PID: %%P
+        taskkill /PID %%P >nul 2>nul
+        timeout /t 2 /nobreak >nul
         taskkill /PID %%P /F >nul 2>nul
     )
     del "%PID_FILE%"
 )
 
-call "%PROJECT_DIR%start.bat"
+for /f "tokens=5" %%A in ('netstat -ano ^| findstr ":%PORT%"') do (
+    echo   端口 %PORT% 仍被占用，清理残留 PID: %%A
+    taskkill /PID %%A /F >nul 2>nul
+)
+timeout /t 1 /nobreak >nul
+echo   旧进程已清理
+
+:: 4. 启动服务
+echo [4/4] 启动服务...
+if not exist "%PROJECT_DIR%.env" (
+    if exist "%PROJECT_DIR%.env.example" (
+        copy /y "%PROJECT_DIR%.env.example" "%PROJECT_DIR%.env" >nul
+        echo   ! 已自动生成 .env，请编辑后重新启动
+    )
+)
+
+if "%MODE%"=="prod" (
+    start /b uvicorn app.main:app --host 0.0.0.0 --port %PORT% --workers %WORKERS% --limit-max-requests 10000 --limit-concurrency 100 --timeout-graceful-shutdown 30 --log-level info > "%LOG_FILE%" 2>&1
+) else (
+    start /b uvicorn app.main:app --host 0.0.0.0 --port %PORT% --reload --log-level info > "%LOG_FILE%" 2>&1
+)
+
+:: 5. 记录 PID
+timeout /t 2 /nobreak >nul
+set PID=
+for /f "tokens=2 delims=," %%P in ('wmic process where "name='python.exe' and CommandLine like '%%app.main:app%%'" get ProcessId /format:csv 2^>nul ^| findstr "[0-9]"') do (
+    echo %%P > "%PID_FILE%"
+    set PID=%%P
+    goto :started
+)
+:started
+
+echo.
+echo ========================================
+echo   服务已启动 [%MODE%]
+if defined PID echo   PID: %PID%
+echo   Swagger: http://localhost:%PORT%/docs
+echo   健康检查: http://localhost:%PORT%/api/health
+echo.
+echo   查看日志：
+echo     type "%LOG_FILE%"            （查看全部）
+echo     Get-Content "%LOG_FILE%" -Wait    （PowerShell 实时查看）
+echo ========================================
+
+pause
 ```
 
 ## 脚本权限设置（Linux / macOS）
@@ -537,33 +281,32 @@ call "%PROJECT_DIR%start.bat"
 生成 `.sh` 文件后，需执行：
 
 ```bash
-chmod +x setup.sh dev.sh start.sh restart.sh
+chmod +x restart.sh
 ```
 
 ## 自定义端口与工作进程
 
-所有脚本读取环境变量：
-
 ```bash
-# 使用自定义端口启动
-APP_PORT=9090 ./dev.sh
+# 使用自定义端口
+APP_PORT=9090 ./restart.sh
 
 # 生产模式指定 worker 数
-APP_PORT=9090 APP_WORKERS=4 ./start.sh
+APP_PORT=9090 APP_WORKERS=4 ./restart.sh prod
 ```
 
 Windows：
 
 ```batch
 set APP_PORT=9090
-dev.bat
+restart.bat prod
 ```
 
 ## AI 生成注意事项
 
 1. 生成 `.sh` 和 `.bat` 文件时，分别使用 LF 和 CRLF 换行符
 2. `.sh` 文件自动设置可执行权限
-3. Windows 脚本第一行 `chcp 65001` 确保中文不乱码
-4. 所有脚本使用 `set -e`（shell）或 `exit /b`（batch）确保错误时退出
-5. 生成时需根据用户的项目名替换 `app` 目录路径
-6. `DB_TYPE` 根据用户选择的数据库类型生成（mysql / postgresql / mongodb / none）
+3. Windows 脚本必须保存为 **UTF-8 with BOM**；模板本身是 UTF-8 纯文本，生成到项目时需自动追加 BOM（`\xef\xbb\xbf`），否则 `cmd.exe` 会按系统默认 ANSI（中文系统为 GBK）解析，导致中文乱码、命令被截断
+4. Windows 脚本首行保留 `chcp 65001` 将控制台切到 UTF-8，配合 BOM 保证中文显示正常
+5. Shell 脚本使用 `set -e`，batch 脚本错误时 `exit /b`
+6. 生成时需根据用户的项目名替换 `app` 目录路径
+7. `DB_TYPE` 根据用户选择的数据库类型生成（mysql / postgresql / mongodb / none）

@@ -113,7 +113,7 @@ curl -s https://pypi.org/pypi/motor/json | python -c "import sys,json; print(jso
 |------|------|------|
 | 启动后提示 `Can't connect to MySQL` | 数据库未启动 | `docker compose up -d mysql`；或检查 `.env` 连接信息 |
 | 启动后提示 `JWT_SECRET` 相关警告 | 未修改默认密钥 | 编辑 `.env`，将 `JWT_SECRET` 改为随机字符串 |
-| `.env` 文件不存在 | 首次使用未运行 `setup.sh` | 运行 `cp .env.example .env` 或重新执行 `./setup.sh` |
+| `.env` 文件不存在 | 首次使用未运行 `restart.sh` | 运行 `cp .env.example .env` 或重新执行 `./restart.sh dev` |
 | `pip install` 报 SSL 错误 | 系统 CA 证书过期 | Windows: 重新下载 Python 安装包并勾选 "Install certificates" |
 | `pip install mysqlclient` 报错 | 缺少 MySQL 开发库 | 本项目用 `pymysql + aiomysql`，不需要 `mysqlclient` |
 | `pip install psycopg2` 报错 | 缺少 PostgreSQL 开发库 | 本项目用 `psycopg2-binary + asyncpg`，不需要编译 |
