@@ -1,13 +1,19 @@
 ---
-name: uniapp-request-skill
-description: Use when designing or reviewing the request layer of a uni-app mini-program project, including request.ts wrappers, interceptors, deduplication, mocks, error handling, file upload, SSE streaming, or token refresh.
+name: frontend-request-skill
+description: Use when designing or reviewing the request layer of a frontend project (web / uni-app / mini-program), including request.ts wrappers, interceptors, deduplication, mocks, error handling, file upload, SSE streaming, or token refresh. Provides both a general frontend specification and a uniapp-specific adapter.
 ---
 
-# uniapp 请求层设计 Skill
+# 前端请求层设计 Skill
 
 ## 定位
 
-只聚焦**请求层设计**：从 `request.ts` 出发，建立 uniapp 项目统一、健壮、可维护的请求体系。
+只聚焦**前端请求层设计**：从 `request.ts` 出发，建立统一、健壮、可维护的请求体系。
+
+本 skill 提供**两层规范**：
+1. **通用前端规范**：面向 Web/H5/React/Vue 等标准前端项目，基于 `fetch` / `axios` 实现。
+2. **uniapp 适配规范**：面向 uni-app 小程序/APP/H5 跨端项目，基于 `uni.request` 实现。
+
+二者核心思想完全一致（统一入口、响应信封、鉴权拦截、错误码映射、Token 刷新队列、SSE、上传），仅底层网络 API 不同。
 
 本 skill 只处理请求相关逻辑，不依赖其他 skill。
 
@@ -15,7 +21,7 @@ description: Use when designing or reviewing the request layer of a uni-app mini
 
 | 痛点 | 后果 | 本技能方案 |
 |------|------|-----------|
-| 每个页面各自 `uni.request` | 鉴权/错误处理重复 | 统一 request.ts |
+| 每个页面各自调原生请求 | 鉴权/错误处理重复 | 统一 request.ts |
 | Token 过期无感知 | 用户操作失败 | 响应拦截器识别 401，统一交给 auth service 处理 |
 | 重复点击导致重复请求 | 数据异常/资源浪费 | 防抖去重 |
 | 后端接口未 ready | 前端阻塞 | Mock 机制 |
@@ -28,6 +34,7 @@ description: Use when designing or reviewing the request layer of a uni-app mini
 
 - "请求封装"
 - "request.ts 怎么写"
+- "前端请求统一处理"
 - "uniapp 请求统一处理"
 - "接口拦截"
 - "Token 刷新"（请求层衔接部分，详见 [references/auth-patterns.md](references/auth-patterns.md)）
@@ -47,11 +54,20 @@ description: Use when designing or reviewing the request layer of a uni-app mini
 - 需要项目整体规范化/目录结构诊断 → 不在本 skill 范围内
 - 需要跨平台兼容性审计 → 不在本 skill 范围内
 
+## 两层规范速查
+
+| 规范 | 适用场景 | 底层 API | 参考位置 |
+|------|----------|----------|----------|
+| 通用前端规范 | Web / H5 / React / Vue 等 | `fetch` / `axios` | [references/frontend-spec.md](references/frontend-spec.md) |
+| uniapp 适配规范 | 微信小程序 / App / H5 | `uni.request` / `uni.uploadFile` | [references/uniapp-spec.md](references/uniapp-spec.md) |
+
+> 二者仅在「底层网络 API」和「Token 存储方式」上有差异；响应信封、错误码、鉴权拦截、去重、Mock、SSE 解析逻辑完全一致。
+
 ## Quick Reference
 
 | 能力 | 关键选项 | 参考位置 |
 |------|----------|----------|
-| 统一请求 | `request<T>(options)` | [references/request-impl.md](references/request-impl.md) |
+| 统一请求 | `request<T>(options)` | [references/frontend-spec.md](references/frontend-spec.md)、[references/uniapp-spec.md](references/uniapp-spec.md) |
 | Token 注入 | `needAuth`、`authMode` | [references/auth-patterns.md](references/auth-patterns.md) |
 | 401/403 处理 | `skipAuthHandler` | [references/auth-patterns.md](references/auth-patterns.md) |
 | 防抖去重 | `skipDebounce` | [references/request-impl.md](references/request-impl.md) |
@@ -90,7 +106,7 @@ src/
 
 ## 响应信封与错误约定
 
-本 skill 采用统一的响应结构（响应信封）：
+本 skill 采用统一的响应结构（响应信封），与后端接口契约严格对齐：
 
 ```typescript
 export interface ApiResponse<T = any> {
@@ -133,14 +149,18 @@ export const ERROR_CODE_MAP: Record<string, string> = {
   TIMEOUT: '请求超时，请检查网络',
   NETWORK_ERROR: '网络异常，请稍后重试',
 
-  // 业务异常示例（按 code < 0 约定）
-  '-1001': '手机号已存在',
-  '-1002': '必填项不能为空',
-  '-1003': '重复提交，请稍后再试',
+  // 业务异常示例（按 code < 0 约定，需与后端契约保持一致）
+  '-1001': '参数校验错误',
+  '-1002': '未登录或 Token 无效',
+  '-1003': '无权限',
+  '-1004': '资源不存在',
+  '-1005': '资源冲突',
+  '-1006': '请求过于频繁',
+  '-2000': '系统繁忙，请稍后再试',
 };
 ```
 
-> **重要**：`-1001`、`-1002`、`-1003` 只是示例占位符。接入真实项目时，请与后端确认错误码表并替换。
+> **重要**：以上错误码与 `backend-convention-skill/references/response-format.md` 及 `fastapi-init-skill` 生成后端保持一致。接入真实项目时，请与后端确认错误码表并替换。
 
 ## 设计要点
 
@@ -151,7 +171,7 @@ export const ERROR_CODE_MAP: Record<string, string> = {
 export interface RequestOptions {
   url: string;
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS' | 'HEAD';
-  data?: any;                // 请求体：通常为 plain object；uni.request 也支持 string / ArrayBuffer / FormData 等
+  data?: any;                // 请求体：通常为 plain object
   header?: Record<string, string>;
   timeout?: number;
   needAuth?: boolean;        // 是否需要 Token，默认 true
@@ -175,7 +195,7 @@ export interface ApiResponse<T = any> {
 
 export interface UploadOptions {
   url: string;
-  filePath: string;
+  file: File | string;       // 通用前端用 File；uniapp 用文件路径 string
   name?: string;
   formData?: Record<string, any>;
   header?: Record<string, string>;
@@ -207,7 +227,7 @@ export function del<T = any>(
 export function upload<T = any>(options: UploadOptions): Promise<T>; // 直接返回业务 data，不包 ApiResponse
 ```
 
-完整实现见 [references/request-impl.md](references/request-impl.md)。
+完整实现见 [references/frontend-spec.md](references/frontend-spec.md)（通用前端）与 [references/uniapp-spec.md](references/uniapp-spec.md)（uniapp 适配）。
 
 ### 2. 鉴权衔接
 
@@ -219,7 +239,7 @@ export function upload<T = any>(options: UploadOptions): Promise<T>; // 直接�
 - 401/403 响应交给 `auth.service.ts` 统一处理
 - 登录态来源可由项目自行选择：Storage 最小化方案 或 Pinia `userStore` 方案
 
-> **重要**：本 skill 示例默认使用 Storage 最小化方案（`uni.getStorageSync('token')`）。如果你使用 Pinia 管理登录态，请参考 [references/auth-patterns.md](references/auth-patterns.md) 替换为 `userStore` 方案，请求层代码无需改动。
+> **重要**：通用前端示例默认使用 `localStorage`；uniapp 示例默认使用 `uni.getStorageSync('token')`。如果你使用 Pinia 管理登录态，请参考 [references/auth-patterns.md](references/auth-patterns.md) 替换为 `userStore` 方案，请求层代码无需改动。
 
 详细 Token 管理、401/403 处理、Token 刷新队列、登出回跳等见 [references/auth-patterns.md](references/auth-patterns.md)。
 
@@ -316,3 +336,11 @@ function handleLike() {
 | Token 刷新队列 | — | 推荐由 `auth.service.ts` 统一实现，请求层只负责触发与重试 |
 | 项目规范 | — | 目录结构、命名规范等通用规范 |
 | 跨平台审计 | — | 多端兼容性检查 |
+
+## 与后端规范的联动
+
+本 skill 的响应信封、错误码表与 `backend-convention-skill/references/response-format.md` 完全一致。当配合 `fastapi-init-skill` 等后端脚手架使用时，前后端可直接通过 `api-contract.md` 对齐：
+
+- 后端 `EnvelopeRoute` 输出 `{ code, message, data }`
+- 前端 `request.ts` 按相同结构解析
+- `ERROR_CODE_MAP` 可直接复用后端契约中的错误码表

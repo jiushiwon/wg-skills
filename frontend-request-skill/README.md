@@ -1,6 +1,8 @@
-# uniapp 请求层设计 Skill
+# 前端请求层设计 Skill
 
-> uniapp 微信小程序统一请求封装：从 request.ts 出发，解决鉴权、Token、游客、防抖、Mock、错误处理、文件上传、SSE 流式请求、失败重试等实战问题。
+> 前端级统一请求封装：从 `request.ts` 出发，解决鉴权、Token、游客、防抖、Mock、错误处理、文件上传、SSE 流式请求、失败重试等实战问题。
+>
+> 本 skill 同时提供 **通用前端规范**（Web / H5 / React / Vue）和 **uniapp 适配规范**（微信小程序 / App / H5），二者核心思想完全一致，仅底层网络 API 不同。
 
 ## 功能
 
@@ -12,7 +14,7 @@
 - **失败重试**：超时/网络错误可按需自动重试
 - **Mock 机制**：开发期不依赖后端
 - **错误处理**：统一错误码映射与分级提示
-- **文件上传**：基于 `uni.uploadFile` 的封装，独立实现不走 request 去重，支持进度回调
+- **文件上传**：独立封装不走 request 去重，支持进度回调
 - **SSE 流式请求**：跨端 Server-Sent Events 封装，支持 AI 聊天打字机效果
 
 ## 使用方式
@@ -22,6 +24,7 @@
 ```
 请求封装
 request.ts 怎么写
+前端请求统一处理
 uniapp 请求统一处理
 接口拦截
 Token 刷新
@@ -43,11 +46,13 @@ AI 聊天流式回复
 ## 文档结构
 
 ```
-uniapp-request-skill/
+frontend-request-skill/
 ├── SKILL.md                        # 主文件：触发条件、设计要点、职责边界
 ├── README.md                       # 本文件
 └── references/
-    ├── request-impl.md             # request.ts 完整实现参考
+    ├── frontend-spec.md            # 通用前端请求层规范（fetch / axios）
+    ├── uniapp-spec.md              # uniapp 适配规范（uni.request）
+    ├── request-impl.md             # 历史参考：uniapp request.ts 完整实现
     ├── auth-patterns.md            # 请求层鉴权衔接模式
     ├── mock-guide.md               # Mock 机制配置与使用
     ├── error-handling.md           # 错误处理与文件上传封装
@@ -56,30 +61,30 @@ uniapp-request-skill/
 
 ## 本地安装
 
-将本 skill 通过软链接安装到 Claude Code 的 skills 目录，即可在任意 uniapp 项目中通过触发词调用：
+将本 skill 通过软链接安装到 Claude Code 的 skills 目录，即可在任意前端项目中通过触发词调用：
 
 ```bash
 # macOS / Linux
-ln -s /path/to/wg-skills/uniapp-request-skill ~/.claude/skills/uniapp-request-skill
+ln -s /path/to/wg-skills/frontend-request-skill ~/.claude/skills/frontend-request-skill
 
 # Windows（Git Bash）
-ln -s /d/projects/wg-skills/uniapp-request-skill /c/Users/$USER/.claude/skills/uniapp-request-skill
+ln -s /d/projects/wg-skills/frontend-request-skill /c/Users/$USER/.claude/skills/frontend-request-skill
 
 # 验证
-ls ~/.claude/skills/uniapp-request-skill
+ls ~/.claude/skills/frontend-request-skill
 ```
 
-安装完成后，在 Claude Code 中输入触发词（如“uniapp 请求统一处理”）即可唤起本 skill。
+安装完成后，在 Claude Code 中输入触发词（如“前端请求统一处理”）即可唤起本 skill。
 
 ## 快速开始
 
-按以下步骤将本 skill 的参考实现落地到新项目：
+### 通用前端项目
 
 1. **复制核心请求封装**
-   将 [references/request-impl.md](references/request-impl.md) 中的完整实现复制到 `src/api/request.ts`。
+   将 [references/frontend-spec.md](references/frontend-spec.md) 中的完整实现复制到 `src/api/request.ts`。
 
 2. **复制错误处理与上传工具**
-   将 [references/error-handling.md](references/error-handling.md) 中的 `error.ts`、`toast.ts`、`upload.ts` 复制到对应位置。
+   将 [references/error-handling.md](references/error-handling.md) 中的 `error.ts`、`toast.ts`、`upload.ts` 复制到对应位置（通用前端上传基于 `fetch` FormData）。
 
 3. **实现鉴权服务**
    按 [references/auth-patterns.md](references/auth-patterns.md) 实现 `src/services/auth.service.ts`，至少提供 `refreshToken()` 与 `handleUnauthorized()`。
@@ -101,6 +106,13 @@ ls ~/.claude/skills/uniapp-request-skill
    const { data: userInfo } = await get<UserInfo>('/user/info');
    await post<void>('/user/update', { nickname: '张三' });
    ```
+
+### uniapp 项目
+
+1. **复制核心请求封装**
+   将 [references/uniapp-spec.md](references/uniapp-spec.md) 中的完整实现复制到 `src/api/request.ts`。
+
+2. **其余步骤同上**，上传/SSE 按 [references/error-handling.md](references/error-handling.md) 与 [references/sse-guide.md](references/sse-guide.md) 的 uniapp 示例落地。
 
 ## 环境变量
 
@@ -136,7 +148,7 @@ interface ApiResponse<T> {
 - `code < 0`：业务异常，由 `ERROR_CODE_MAP` 映射提示文案。
 - `401 / 403 / 500 / 超时 / 断网`：走 HTTP 状态异常分支，错误码为 `UNAUTHORIZED`、`FORBIDDEN`、`HTTP_ERROR`、`TIMEOUT`、`NETWORK_ERROR`。
 
-> 本 skill 内置的 `-1001`、`-1002`、`-1003` 等错误码仅为示例，接入真实项目时请替换为后端实际约定。
+> 本 skill 内置的 `-1001`、`-1002`、`-2000` 等错误码与 `backend-convention-skill/references/response-format.md` 对齐。接入真实项目时，请与后端确认错误码表并替换。
 
 ### 游客拦截
 
@@ -151,7 +163,7 @@ function handleLike() {
 }
 ```
 
-登录态默认从 Storage 读取，也支持从 Pinia `userStore` 读取。详见 [auth-patterns.md](references/auth-patterns.md)。
+登录态默认从 `localStorage`（通用前端）或 `uni.getStorageSync`（uniapp）读取，也支持从 Pinia `userStore` 读取。详见 [auth-patterns.md](references/auth-patterns.md)。
 
 ### 防抖
 
@@ -183,7 +195,7 @@ import type { MockEntry } from './index';
 import type { UserInfo } from '@/types/user';
 
 MOCK_MAP['GET:/user/info'] = {
-  code: 200,
+  code: 0,
   message: 'ok',
   data: { id: 1, nickname: '张三', avatar: '' },
 } satisfies MockEntry<UserInfo>;
@@ -200,7 +212,7 @@ import { upload } from '@/api/upload';
 
 const res = await upload<{ url: string }>({
   url: '/api/upload/avatar',
-  filePath: tempFilePath,
+  file: fileInput.files[0],   // 通用前端用 File
   name: 'avatar',
   formData: { userId: '123' },
   onProgress: (progress) => console.log(`上传进度：${progress}%`),
@@ -253,52 +265,27 @@ onUnmounted(() => {
 
 ### 完整参考
 
-- [request-impl.md](references/request-impl.md)
+- [frontend-spec.md](references/frontend-spec.md) — 通用前端规范
+- [uniapp-spec.md](references/uniapp-spec.md) — uniapp 适配规范
 - [auth-patterns.md](references/auth-patterns.md)
 - [mock-guide.md](references/mock-guide.md)
 - [error-handling.md](references/error-handling.md)
 - [sse-guide.md](references/sse-guide.md)
 
-## 从旧版 Mock 机制迁移
+## 从 uniapp-request-skill 迁移
 
-如果你之前使用 `MOCK_MODE`（`none` / `auto` / `force`）或单接口 `{ mock: true }`，请按以下方式迁移：
+本 skill 由 `uniapp-request-skill` 扩展而来。若你之前使用旧 skill：
 
-1. **删除所有单接口 Mock 标记**
-   ```typescript
-   // 旧写法，删除
-   await get('/user/info', null, { mock: true });
+1. 触发词保持不变，`uniapp 请求统一处理` 仍可唤起。
+2. 新增通用前端触发词，如 `前端请求统一处理`、`request.ts 怎么写`。
+3. 原有 `references/request-impl.md` 内容已沉淀为 [uniapp-spec.md](references/uniapp-spec.md)，可直接替换引用。
 
-   // 新写法，无需标记
-   await get('/user/info');
-   ```
+## 与后端规范的联动
 
-2. **替换环境变量**
-   ```env
-   # 旧写法
-   VITE_MOCK_MODE=force
+本 skill 的响应信封与错误码表和 `backend-convention-skill/references/response-format.md` 保持一致。当配合 `fastapi-init-skill` 等后端脚手架使用时：
 
-   # 新写法
-   VITE_USE_MOCK=true
-   ```
+- 后端 `EnvelopeRoute` 输出 `{ code, message, data }`
+- 前端 `request.ts` 按相同结构解析
+- `ERROR_CODE_MAP` 可直接复用后端 `api-contract.md` 中的错误码表
 
-3. **更新 `api.config.ts`**
-   ```typescript
-   // 删除
-   export type MockMode = 'none' | 'auto' | 'force';
-   export const MOCK_MODE: MockMode = (import.meta.env.VITE_MOCK_MODE as MockMode) || 'none';
-
-   // 改为
-   export const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true';
-   ```
-
-4. **注册 Mock 模块**
-   在 `src/api/_mocks_/index.ts` 中显式导入各模块 Mock 文件：
-   ```typescript
-   import './user.mock';
-   import './order.mock';
-   ```
-
-5. **生产环境关闭 Mock**
-   ```env
-   VITE_USE_MOCK=false
-   ```
+前后端以 `api-contract.md` 为唯一事实来源，避免口头约定。
