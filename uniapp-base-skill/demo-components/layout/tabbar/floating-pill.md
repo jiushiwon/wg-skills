@@ -82,7 +82,7 @@
 
 ## 演示
 
-[查看 HTML 演示](tabbar/floating-pill.html)
+[查看 HTML 演示](html/floating-pill.html)
 
 ## 注意事项
 

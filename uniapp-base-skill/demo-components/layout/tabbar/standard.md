@@ -74,7 +74,7 @@
 
 ## 演示
 
-[查看 HTML 演示](tabbar/standard.html)
+[查看 HTML 演示](html/standard.html)
 
 ## 注意事项
 

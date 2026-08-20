@@ -104,7 +104,7 @@
 
 ## 演示
 
-[查看 HTML 演示](login/login-minimal.html)
+[查看 HTML 演示](html/login-minimal.html)
 
 ## 注意事项
 

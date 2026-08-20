@@ -398,19 +398,21 @@ uniapp-base-skill/
     └── layout/           # 布局与导航案例集
         ├── README.md
         ├── tabbar/         # 自定义 TabBar（5种）
-        │   ├── bulge.html
-        │   ├── blur.html
-        │   ├── standard.html
-        │   ├── floating-pill.html
-        │   ├── assistant-split.html
+        │   ├── html/       # HTML 演示
+        │   │   ├── bulge.html
+        │   │   ├── blur.html
+        │   │   ├── standard.html
+        │   │   ├── floating-pill.html
+        │   │   └── assistant-split.html
         └── login/          # 登录页（7种）
-            ├── login.html
-            ├── login-phone.html
-            ├── login-wechat.html
-            ├── login-minimal.html
-            ├── login-gradient.html
-            ├── login-hero.html
-            └── login-float.html
+            ├── html/       # HTML 演示
+            │   ├── login.html
+            │   ├── login-phone.html
+            │   ├── login-wechat.html
+            │   ├── login-minimal.html
+            │   ├── login-gradient.html
+            │   ├── login-hero.html
+            │   └── login-float.html
 ```
 
 ## 版本日志

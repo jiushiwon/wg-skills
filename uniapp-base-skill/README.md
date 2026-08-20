@@ -103,7 +103,9 @@ uniapp-base-skill/
     └── layout/           # 布局与导航案例集
     │   ├── README.md
     │   ├── tabbar/        # 自定义 TabBar（5种）
+    │   │   └── html/      # HTML 演示
     │   └── login/         # 登录页（7种）
+    │       └── html/      # HTML 演示
     └── base-input/        # 输入框案例集（13种：7 通用 + 6 搜索栏独立形态）
     │   ├── README.md
     │   └── html/          # HTML 演示

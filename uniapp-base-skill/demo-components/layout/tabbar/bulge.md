@@ -72,7 +72,7 @@
 
 ## 演示
 
-[查看 HTML 演示](tabbar/bulge.html)
+[查看 HTML 演示](html/bulge.html)
 
 ## 注意事项
 

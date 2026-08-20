@@ -76,7 +76,7 @@
 
 ## 演示
 
-[查看 HTML 演示](tabbar/blur.html)
+[查看 HTML 演示](html/blur.html)
 
 ## 注意事项
 
