@@ -21,10 +21,10 @@
 │                                     │
 │  ┌────────────────────────────────┐ │ ← 登录卡片
 │  │ 手机号                          │ │
-│  │ [📱] _______________________   │ │
+│  │ [图标] _______________________   │ │
 │  │                                 │ │
 │  │ 验证码                          │ │
-│  │ [🔒] ______________ [获取验证码]│ │
+│  │ [图标] ______________ [获取验证码]│ │
 │  └────────────────────────────────┘ │
 │                                     │
 │  ┌────────────────────────────────┐ │ ← 主按钮
@@ -37,7 +37,9 @@
 └─────────────────────────────────────┘
 ```
 
-## base-card 参数
+## base-input + base-card 参数
+
+> 输入框统一使用 [base-input](../../base-input.md)，与 [base-card](../../base-card.md) 同源（参数化外壳组件，包裹原生 input 元素）。
 
 ```vue
 <!-- 登录卡片 -->
@@ -46,25 +48,35 @@
   :border-radius="'var(--radius-lg)'"
   :padding="'var(--space-5)'"
   :shadow="'var(--shadow-sm)'"
-/>
+>
+  <!-- 手机号输入 -->
+  <base-input
+    v-model="form.phone"
+    type="number"
+    :maxlength="11"
+    label="手机号"
+    required
+    border="all"
+    placeholder="请输入手机号"
+  />
 
-<!-- 输入框 -->
-<base-card
-  :height="'52px'"
-  :background="'var(--color-bg)'"
-  :border-radius="'var(--radius-md)'"
-  :padding="'0 8px 0 var(--space-3)'"
-/>
-
-<!-- 验证码按钮 -->
-<base-card
-  :height="'30px'"
-  :padding="'0 8px'"
-  :border-radius="'var(--radius-full)'"
-  :background="'transparent'"
-  :border="'1px solid var(--color-primary)'"
-  :color="'var(--color-primary)'"
-/>
+  <!-- 验证码输入（右侧带发送按钮） -->
+  <base-input
+    v-model="form.code"
+    type="number"
+    :maxlength="6"
+    label="验证码"
+    required
+    border="all"
+    placeholder="请输入验证码"
+  >
+    <template #suffix>
+      <view class="send-btn" :class="{ disabled: countdown > 0 }" @click="onSendCode">
+        <text>{{ countdown > 0 ? `${countdown}s` : '发送验证码' }}</text>
+      </view>
+    </template>
+  </base-input>
+</base-card>
 
 <!-- 登录按钮 -->
 <base-card
@@ -73,8 +85,14 @@
   :border-radius="'var(--radius-md)'"
   :background="'linear-gradient(135deg, var(--color-primary), var(--color-primary-light))'"
   :shadow="'0 8px 24px rgba(74, 144, 226, 0.3)'"
-/>
+  clickable
+  @click="onLogin"
+>
+  <text style="color:#fff;">登录</text>
+</base-card>
 ```
+
+> 详细场景：参见 [base-input-verify.md](../../base-input/base-input-verify.md)
 
 ## 主题变量
 

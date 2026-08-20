@@ -79,6 +79,8 @@ uniapp-base-skill/
 ├── SKILL.md              # 系统介绍 + 规范 + 版本日志
 ├── README.md             # 本文件
 ├── base-card.md          # 核心：基础卡片
+├── base-input.md         # 通用输入框（账号/密码/手机号/多行文本/图标/OTP/浮动标签/搜索栏）
+├── base-input.md         # 通用输入框（账号/密码/手机号/多行文本/图标/OTP/浮动标签/搜索栏）
 ├── references/           # 参考资料
 │   └── skill-matrix.md   # 技能矩阵与协作流程
 └── demo-components/       # Demo 案例
@@ -99,14 +101,25 @@ uniapp-base-skill/
         ├── html/          # HTML 演示
         └── static/        # 示例图标/图片
     └── layout/           # 布局与导航案例集
-        ├── README.md
-        ├── tabbar/        # 自定义 TabBar（5种）
-        └── login/         # 登录页（7种）
+    │   ├── README.md
+    │   ├── tabbar/        # 自定义 TabBar（5种）
+    │   └── login/         # 登录页（7种）
+    └── base-input/        # 输入框案例集（13种：7 通用 + 6 搜索栏独立形态）
+    │   ├── README.md
+    │   └── html/          # HTML 演示
 ```
 
 ## 核心：base-card
 
 [查看 base-card 完整文档](base-card.md)
+
+## 基础组件
+
+| 组件 | 用途 | 文档 |
+|------|------|------|
+| base-card | 基础卡片，所有组件和页面的基石 | [base-card.md](base-card.md) |
+| base-input | 通用输入框（账号/密码/手机号/多行文本/图标/OTP/浮动标签/搜索栏） | [base-input.md](base-input.md) / [HTML](demo-components/base-input/html/base-input-login.html) |
+| base-search-bar | 搜索栏（已合并至 base-input，作为变体形态） | — |
 
 ## Demo 案例
 
@@ -143,6 +156,38 @@ uniapp-base-skill/
 | wallet-detail | 渐变余额 + 交易明细 | 钱包、资产、积分 | [wallet-detail.md](demo-components/detail/wallet-detail.md) |
 | result-detail | 状态图标 + 操作 + 推荐 | 支付结果、空状态、404 | [result-detail.md](demo-components/detail/result-detail.md) |
 
+### 输入框场景（13 种风格：7 通用 + 6 搜索栏）
+
+> 输入框规范见 [base-input.md](base-input.md)
+>
+> [查看 demo-components/base-input/README.md](demo-components/base-input/README.md)
+
+#### 通用输入（7 种）
+
+| 案例 | 风格 | 适用场景 | HTML 参考图 |
+|------|------|----------|-------------|
+| base-input-login | 8px 卡片 + 全边框 + 8px 按钮 | 账号密码登录、注册 | [base-input-login.html](demo-components/base-input/html/base-input-login.html) |
+| base-input-verify | 扁平卡片 + 底线分隔 + 验证码按钮 | 短信验证、绑定手机 | [base-input-verify.html](demo-components/base-input/html/base-input-verify.html) |
+| base-input-feedback | 12px 卡片 + 多行文本 + 胶囊按钮 | 意见反馈、留言 | [base-input-feedback.html](demo-components/base-input/html/base-input-feedback.html) |
+| base-input-disabled | 扁平卡片 + 灰底只读 | 订单详情、提交后表单 | [base-input-disabled.html](demo-components/base-input/html/base-input-disabled.html) |
+| base-input-icon-prefix | 8px 全边框 + 前缀 icon/+86/¥ | 注册、收款（手机号/邮箱/金额） | [base-input-icon-prefix.html](demo-components/base-input/html/base-input-icon-prefix.html) |
+| base-input-icon-suffix | 8px 浅底 + 后缀清除/按钮/胶囊 | 表单清除、验证码、单位 | [base-input-icon-suffix.html](demo-components/base-input/html/base-input-icon-suffix.html) |
+| base-input-otp | 8px 卡片 + 6 位独立格子 | 支付、绑定、双因素 | [base-input-otp.html](demo-components/base-input/html/base-input-otp.html) |
+| base-input-floating | 12px 卡片 + 浮动标签 + 底线 | 注册、信息收集 | [base-input-floating.html](demo-components/base-input/html/base-input-floating.html) |
+
+#### 搜索栏变体（6 种独立形态）
+
+> 搜索栏是 base-input 的一种变体形态（不单独建组件），6 种形态各成独立 HTML + MD 文档。
+
+| 案例 | 形态 | 适用 | HTML 参考图 |
+|------|------|------|-------------|
+| base-input-search-pill | 999px 胶囊 + shadow-sm | 顶部导航主流 | [base-input-search-pill.html](demo-components/base-input/html/base-input-search-pill.html) |
+| base-input-search-card | 8px 卡片 + shadow-sm | 结果页内嵌 | [base-input-search-card.html](demo-components/base-input/html/base-input-search-card.html) |
+| base-input-search-bubble | 12px 大圆角 + shadow-md | 全局搜索弹窗 | [base-input-search-bubble.html](demo-components/base-input/html/base-input-search-bubble.html) |
+| base-input-search-flat | 0 + 底边 | 极简 / 工具类 | [base-input-search-flat.html](demo-components/base-input/html/base-input-search-flat.html) |
+| base-input-search-embed | 浅底 8px + 无 shadow | 头部轻搜索 | [base-input-search-embed.html](demo-components/base-input/html/base-input-search-embed.html) |
+| base-input-search-mini | 浅底 999px + 36px | 头像旁内联 | [base-input-search-mini.html](demo-components/base-input/html/base-input-search-mini.html) |
+
 ### 布局与导航（12 个案例）
 
 [查看 demo-components/layout/README.md](demo-components/layout/README.md)
@@ -174,6 +219,8 @@ uniapp-base-skill/
 - 按钮 / 设置项 / 输入框 / 头像 / 卡片
 - 登录页 / 手机号登录 / 微信登录
 - 聊天页 / 商品详情 / 列表页
+- 搜索页 / 搜索结果页 / 无结果页
+- 输入框场景：账号登录 / 短信验证 / 意见反馈 / 只读表单 / 图标输入 / 验证码格子 / 浮动标签 / 搜索栏变体
 
 ## 实用提示词案例
 
@@ -207,6 +254,14 @@ uniapp-base-skill/
 做一个个人中心，渐变头部，数据统计，VIP卡片，功能网格
 做一个钱包详情页，渐变余额卡片，交易明细列表
 做一个支付成功结果页，状态图标，操作按钮，推荐商品
+```
+
+### 搜索页
+```
+做一个搜索页，带历史记录和热门搜索
+做一个商品搜索结果页，带综合/销量/价格排序
+做一个订单筛选页，带状态/时间/分类多条件筛选
+做一个搜索无结果页，带换词推荐和热门搜索
 ```
 
 ### 参数化调整
@@ -246,6 +301,32 @@ uniapp-base-skill/
 ---
 
 ## 版本日志
+
+### v1.6.0 (2026-08-20)
+
+**新增功能**
+
+- ✅ 输入框案例集重构：原 `search/` 并入 `base-input/`，共 14 个场景（8 通用 + 6 搜索栏独立形态）
+- ✅ 8 个通用输入：login / verify / feedback / disabled / icon-prefix / icon-suffix / otp / floating
+- ✅ 每个场景独立成 HTML + MD 文档，按形态检索复用
+- ✅ `base-input` 与 `base-card` 同源：参数化外壳组件，统一包裹原生 input 元素
+
+**移除/重构**
+
+- ⚠️ 删除 `base-search-bar.md`：搜索栏作为 `base-input` 的变体形态，不再单独建组件
+- ⚠️ layout/login 中 3 个含输入的页面（login / login-phone / login-minimal）的 .md 改用 `base-input` 替代之前的 `base-card` 模拟输入框
+
+### v1.5.0 (2026-08-20)
+
+**新增功能**
+
+- ✅ 新增通用输入框组件 [base-input.md](base-input.md)：账号/密码/手机号/验证码/多行文本/图标/OTP/浮动标签统一入口
+- ✅ 搜索栏作为 `base-input` 的变体形态（v1.5.0 时为独立组件 `base-search-bar.md`，已在 v1.6.0 删除并入 `base-input`）
+- ✅ 输入框案例集重构：原 `search/` 并入 `base-input/`，共 13 个场景（7 通用 + 6 搜索栏独立形态）
+- ✅ 7 个通用输入：login / verify / feedback / disabled / icon / otp / floating
+- ✅ 6 个搜索栏独立形态：search-pill / search-card / search-bubble / search-flat / search-embed / search-mini
+- ✅ 圆角变体演示：覆盖 0 / 8px / 12px / 999px 四档，避免全大圆角
+- ✅ 触发词更新：新增输入框场景（图标输入、验证码格子、浮动标签、搜索栏变体）
 
 ### v1.4.0 (2026-08-18)
 
@@ -296,7 +377,7 @@ uniapp-base-skill/
 - ✅ friend-list（好友列表）
 - ✅ follow-list（关注列表）
 - ✅ like-list（获赞与收藏）
-- ✅ points-center（升值中心）
+- ✅ points-center（积分中心）
 - ✅ collection-settings（设置列表）
 - ✅ order-after-sale（订单列表）
 
