@@ -35,7 +35,9 @@
 └─────────────────────────────────────┘
 ```
 
-## base-card 参数
+## base-input + base-card 参数
+
+> 输入框统一使用 [base-input](../../base-input.md)，与 [base-card](../../base-card.md) 同源（参数化外壳组件，包裹原生 input 元素）。渐变风格使用 `border="bottom"` 形态（下划线 + 透明背景），focus 态由组件内部控制主色高亮。
 
 ```vue
 <!-- 背景层 -->
@@ -63,14 +65,22 @@
   :padding="'var(--space-6)'"
 />
 
-<!-- 输入框 -->
-<base-card
-  :width="'100%'"
-  :height="'48px'"
-  :border="'none'"
-  :border-bottom="'1px solid var(--color-border)'"
-  :background="'transparent'"
-  :focus-border-color="'var(--color-primary)'"
+<!-- 账号输入（下划线样式） -->
+<base-input
+  v-model="form.username"
+  label="账号"
+  border="bottom"
+  placeholder="请输入账号"
+/>
+
+<!-- 密码输入（下划线样式） -->
+<base-input
+  v-model="form.password"
+  type="password"
+  label="密码"
+  border="bottom"
+  placeholder="请输入密码"
+  show-password
 />
 
 <!-- 登录按钮 -->
@@ -80,8 +90,14 @@
   :background="'var(--color-primary)'"
   :color="'white'"
   :border-radius="'4px'"
-/>
+  clickable
+  @click="onLogin"
+>
+  <text style="color:#fff;">登录</text>
+</base-card>
 ```
+
+> 详细场景：参见 [base-input-verify.md](../../base-input/base-input-verify.md)（下划线样式）
 
 ## 主题变量
 

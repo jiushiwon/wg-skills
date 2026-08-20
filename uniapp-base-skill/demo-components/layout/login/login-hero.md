@@ -44,7 +44,9 @@
 └─────────────────────────────────────┘
 ```
 
-## base-card 参数
+## base-input + base-card 参数
+
+> 输入框统一使用 [base-input](../../base-input.md)，与 [base-card](../../base-card.md) 同源（参数化外壳组件，包裹原生 input 元素）。
 
 ```vue
 <!-- 主题图区域 -->
@@ -80,13 +82,23 @@
 />
 
 <!-- 输入框 -->
-<base-card
-  :width="'100%'"
-  :height="'48px'"
-  :border="'1px solid var(--color-border)'"
-  :border-radius="'4px'"
-  :background="'var(--color-surface)'"
-  :padding="'0 var(--space-3)'"
+<base-input
+  v-model="form.username"
+  label="账号"
+  required
+  border="all"
+  placeholder="请输入账号"
+/>
+
+<!-- 密码输入 -->
+<base-input
+  v-model="form.password"
+  type="password"
+  label="密码"
+  required
+  border="all"
+  placeholder="请输入密码"
+  show-password
 />
 
 <!-- 登录按钮 -->
@@ -96,8 +108,14 @@
   :background="'var(--color-primary)'"
   :color="'white'"
   :border-radius="'4px'"
-/>
+  clickable
+  @click="onLogin"
+>
+  <text style="color:#fff;">登录</text>
+</base-card>
 ```
+
+> 详细场景：参见 [base-input-login.md](../../base-input/base-input-login.md)
 
 ## 主题变量
 

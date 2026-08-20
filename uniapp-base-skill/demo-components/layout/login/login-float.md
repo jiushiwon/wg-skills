@@ -41,7 +41,9 @@
 └─────────────────────────────────────┘
 ```
 
-## base-card 参数
+## base-input + base-card 参数
+
+> 输入框统一使用 [base-input](../../base-input.md)，与 [base-card](../../base-card.md) 同源（参数化外壳组件，包裹原生 input 元素）。手机号登录面板使用 `border="all"` 形态，验证码按钮通过 `#suffix` slot 内嵌。
 
 ```vue
 <!-- 背景层 -->
@@ -84,15 +86,33 @@
   :padding="'4px'"
 />
 
-<!-- 输入框 -->
-<base-card
-  :width="'100%'"
-  :height="'48px'"
-  :border="'1px solid var(--color-border)'"
-  :border-radius="'var(--space-2)'"
-  :background="'var(--color-surface)'"
-  :padding="'0 var(--space-3)'"
+<!-- 手机号输入 -->
+<base-input
+  v-model="form.phone"
+  type="number"
+  :maxlength="11"
+  label="手机号"
+  required
+  border="all"
+  placeholder="请输入手机号"
 />
+
+<!-- 验证码输入（右侧带发送按钮） -->
+<base-input
+  v-model="form.code"
+  type="number"
+  :maxlength="6"
+  label="验证码"
+  required
+  border="all"
+  placeholder="请输入验证码"
+>
+  <template #suffix>
+    <view class="send-btn" :class="{ disabled: countdown > 0 }" @click="onSendCode">
+      <text>{{ countdown > 0 ? `${countdown}s` : '发送验证码' }}</text>
+    </view>
+  </template>
+</base-input>
 
 <!-- 登录按钮 -->
 <base-card
@@ -101,8 +121,14 @@
   :border-radius="'var(--radius-md)'"
   :background="'linear-gradient(135deg, var(--color-primary-dark), var(--color-primary))'"
   :color="'white'"
-/>
+  clickable
+  @click="onLogin"
+>
+  <text style="color:#fff;">登录</text>
+</base-card>
 ```
+
+> 详细场景：参见 [base-input-verify.md](../../base-input/base-input-verify.md)
 
 ## 主题变量
 
