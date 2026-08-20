@@ -417,6 +417,20 @@ uniapp-base-skill/
 
 ## 版本日志
 
+### v1.6.0 (2026-08-20)
+
+**新增功能**
+
+- ✅ 输入框案例集重构：原 `search/` 并入 `base-input/`，共 14 个场景（8 通用 + 6 搜索栏独立形态）
+- ✅ 8 个通用输入：login / verify / feedback / disabled / icon-prefix / icon-suffix / otp / floating
+- ✅ 每个场景独立成 HTML + MD 文档，按形态检索复用
+- ✅ `base-input` 与 `base-card` 同源：参数化外壳组件，统一包裹原生 input 元素
+
+**移除/重构**
+
+- ⚠️ 删除 `base-search-bar.md`：搜索栏作为 `base-input` 的变体形态，不再单独建组件
+- ⚠️ layout/login 中 6 个含输入的页面（login / login-phone / login-minimal / login-hero / login-gradient / login-float）的 .md 全部改用 `base-input` 替代之前的 `base-card` 模拟输入框（login-wechat 是微信一键登录风格无 input 字段，不涉及）
+
 ### v1.5.0 (2026-08-20)
 
 **新增功能**

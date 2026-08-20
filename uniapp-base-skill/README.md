@@ -316,7 +316,7 @@ uniapp-base-skill/
 **移除/重构**
 
 - ⚠️ 删除 `base-search-bar.md`：搜索栏作为 `base-input` 的变体形态，不再单独建组件
-- ⚠️ layout/login 中 3 个含输入的页面（login / login-phone / login-minimal）的 .md 改用 `base-input` 替代之前的 `base-card` 模拟输入框
+- ⚠️ layout/login 中 6 个含输入的页面（login / login-phone / login-minimal / login-hero / login-gradient / login-float）的 .md 全部改用 `base-input` 替代之前的 `base-card` 模拟输入框（login-wechat 是微信一键登录风格无 input 字段，不涉及）
 
 ### v1.5.0 (2026-08-20)
 
