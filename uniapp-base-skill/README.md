@@ -80,7 +80,8 @@ uniapp-base-skill/
 ├── README.md             # 本文件
 ├── base-card.md          # 核心：基础卡片
 ├── base-input.md         # 通用输入框（账号/密码/手机号/多行文本/图标/OTP/浮动标签/搜索栏）
-├── base-input.md         # 通用输入框（账号/密码/手机号/多行文本/图标/OTP/浮动标签/搜索栏）
+├── base-button.md        # 按钮组件（6套风格）
+├── base-card-layout.md   # 卡片布局集合（6套风格）
 ├── references/           # 参考资料
 │   └── skill-matrix.md   # 技能矩阵与协作流程
 └── demo-components/       # Demo 案例
@@ -106,9 +107,13 @@ uniapp-base-skill/
     │   │   └── html/      # HTML 演示
     │   └── login/         # 登录页（7种）
     │       └── html/      # HTML 演示
-    └── base-input/        # 输入框案例集（13种：7 通用 + 6 搜索栏独立形态）
+    └── base-input/        # 输入框案例集（14种：8 通用 + 6 搜索栏独立形态）
     │   ├── README.md
     │   └── html/          # HTML 演示
+    ├── base-button/       # 按钮案例集（6套风格）
+    │   └── html/          # HTML 演示
+    └── base-card-layout/  # 卡片布局案例集（6套风格）
+        └── html/          # HTML 演示
 ```
 
 ## 核心：base-card
@@ -121,6 +126,8 @@ uniapp-base-skill/
 |------|------|------|
 | base-card | 基础卡片，所有组件和页面的基石 | [base-card.md](base-card.md) |
 | base-input | 通用输入框（账号/密码/手机号/多行文本/图标/OTP/浮动标签/搜索栏） | [base-input.md](base-input.md) / [HTML](demo-components/base-input/html/base-input-login.html) |
+| base-button | 按钮组件（6套风格） | [base-button.md](base-button.md) / [HTML](demo-components/base-button/html/base-button-primary.html) |
+| base-card-layout | 卡片布局集合（6套风格） | [base-card-layout.md](base-card-layout.md) / [HTML](demo-components/base-card-layout/html/card-basic.html) |
 | base-search-bar | 搜索栏（已合并至 base-input，作为变体形态） | — |
 
 ## Demo 案例
@@ -216,9 +223,44 @@ uniapp-base-skill/
 | login-hero | 顶部主题图 + Logo + 缓慢缩放动效 + 简洁表单 | 旅游、生活方式 App | [login/login-hero.md](demo-components/layout/login/login-hero.md) |
 | login-float | 深色背景 + 浮动圆形渐变 + 毛玻璃 Logo + 清爽登录卡片 | 社交、内容、社区类 App | [login/login-float.md](demo-components/layout/login/login-float.md) |
 
+### 按钮组件（6 套风格）
+
+[查看 base-button.md](base-button.md)
+
+| 风格 | 说明 | HTML 参考图 |
+|------|------|-------------|
+| 主色实心 | 最常用：绿色实心主按钮 | [base-button-primary.html](demo-components/base-button/html/base-button-primary.html) |
+| 主色描边 | 描边风格：边框按钮 | [base-button-outline.html](demo-components/base-button/html/base-button-outline.html) |
+| 幽灵按钮 | 深色背景：透明背景+边框 | [base-button-ghost.html](demo-components/base-button/html/base-button-ghost.html) |
+| 胶囊按钮 | 标签/筛选：小胶囊形态 | [base-button-pill.html](demo-components/base-button/html/base-button-pill.html) |
+| 圆角方形 | 中性风格：白底+阴影 | [base-button-rounded.html](demo-components/base-button/html/base-button-rounded.html) |
+| 渐变按钮 | 营销场景：渐变背景 | [base-button-gradient.html](demo-components/base-button/html/base-button-gradient.html) |
+
+### 卡片布局（6 套风格）
+
+[查看 base-card-layout.md](base-card-layout.md)
+
+| 布局 | 说明 | HTML 参考图 |
+|------|------|-------------|
+| 基础卡片 | 纯文字、带标签、带操作、紧凑、浅色 | [card-basic.html](demo-components/base-card-layout/card-1-html/card-basic.html) |
+| 图片卡片 | 大图顶部、横向图文、圆角大图 | [card-image.html](demo-components/base-card-layout/html/card-image.html) |
+| 信息卡片 | 统计网格、详情信息、进度条、标签组 | [card-info.html](demo-components/base-card-layout/card-1-html/card-info.html) |
+| 商品卡片 | 商品图+标题+价格+按钮 | [card-product.html](demo-components/base-card-layout/html/card-product.html) |
+| 个人中心 | 渐变头部、VIP卡片、封面图头部 | [card-profile.html](demo-components/base-card-layout/card-1-html/card-profile.html) |
+| 好友卡片 | 头像+昵称+签名+箭头 | [card-friend.html](demo-components/base-card-layout/card-1-html/card-friend.html) |
+| 设置卡片 | 图标+标签+开关/箭头 | [card-set.html](demo-components/base-card-layout/card-1-html/card-set.html) |
+| 评论卡片 | 头像+昵称+内容+点赞 | [card-comment.html](demo-components/base-card-layout/html/card-comment.html) |
+| 通知卡片 | 图标+标题+描述+时间 | [card-notify.html](demo-components/base-card-layout/html/card-notify.html) |
+| VIP卡片 | 深色渐变+头像+等级+权益 | [card-vip.html](demo-components/base-card-layout/html/card-vip.html) |
+| 菜单卡片 | 九宫格图标+标签 | [card-menu.html](demo-components/base-card-layout/card-1-html/card-menu.html) |
+| 功能网格 | 每行3列图标网格+分隔线 | [card-grid.html](demo-components/base-card-layout/card-1-html/card-grid.html) |
+| 按钮卡片 | 背景色+尺寸+圆角+图标+悬浮 | [card-button.html](demo-components/base-card-layout/card-1-html/card-button.html) |
+
 ## 触发词
 
 - 按钮 / 设置项 / 输入框 / 头像 / 卡片
+- 按钮风格：主色实心 / 主色描边 / 幽灵按钮 / 胶囊按钮 / 圆角方形 / 渐变按钮
+- 卡片布局：基础卡片 / 图片卡片 / 信息卡片 / 商品卡片 / 个人中心卡片 / 好友卡片 / 设置卡片 / 评论卡片 / 通知卡片 / VIP卡片 / 菜单卡片 / 功能网格卡片 / 按钮卡片 / 固定底部悬浮按钮
 - 登录页 / 手机号登录 / 微信登录
 - 聊天页 / 商品详情 / 列表页
 - 搜索页 / 搜索结果页 / 无结果页
@@ -232,6 +274,22 @@ uniapp-base-skill/
 生成一个设置项，左侧图标+文字+右侧箭头
 需要一个输入框，带placeholder
 做一个头像，圆形80rpx
+```
+
+### 按钮组件
+```
+做一个主色实心按钮
+做一个渐变营销按钮
+做一个胶囊标签按钮
+做一个圆角方形次按钮
+```
+
+### 卡片布局
+```
+做一个基础卡片，带标题和描述
+做一个图片卡片，顶部大图
+做一个列表卡片，带头像和名称
+做一个个人中心卡片，渐变头部
 ```
 
 ### 完整页面
@@ -303,6 +361,16 @@ uniapp-base-skill/
 ---
 
 ## 版本日志
+
+### v1.7.0 (2026-08-22)
+
+**新增功能**
+
+- ✅ 新增按钮组件 [base-button.md](base-button.md)：6 套风格（主色实心、主色描边、幽灵按钮、胶囊按钮、圆角方形、渐变按钮）
+- ✅ 新增卡片布局 [base-card-layout.md](base-card-layout.md)：6 套布局（基础卡片、图片卡片、列表卡片、信息卡片、表单卡片、个人中心卡片）
+- ✅ 每个风格独立成 HTML 演示，按形态检索复用
+- ✅ `base-button` 与 `base-card` 同源：参数化外壳组件，包裹可点击区域
+- ✅ 触发词更新：新增按钮风格、卡片布局相关触发词
 
 ### v1.6.0 (2026-08-20)
 

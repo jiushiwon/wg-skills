@@ -61,6 +61,25 @@
 
 > 详见 [uniapp-theme-skill](https://github.com/jiushiwon/wg-skills/tree/main/uniapp-theme-skill)
 
+## 文件结构
+
+```
+demo-components/list/
+├── README.md                  # 本文件
+├── *.md                       # 各列表页技能文档
+├── html/                      # HTML 演示
+│   ├── friend-list.html
+│   ├── follow-list.html
+│   ├── like-list.html
+│   ├── points-center.html
+│   ├── collection-settings.html
+│   └── order-after-sale.html
+├── images/                    # 示例图片
+└── static/icons/              # lucide SVG 图标
+```
+
+> 图标使用 `icon-catch-skill` 抓取的 lucide SVG，避免 emoji 占位。
+
 ---
 
-> ⚠️ Demo 案例仅供參考，非完美實現
+> ⚠️ Demo 案例仅供参考，非完美实现

@@ -10,20 +10,26 @@
 
 ## 案例清单
 
-| 案例 | 来源页面 | 结构特点 | 适用场景 |
-|------|---------|---------|---------|
-| [product-detail](html/product-detail.html) | 034 商品详情 | 轮播大图 + 标题价格 + 规格配送 + 服务保障 + 详情参数 | 商品详情、服务详情 |
-| [activity-detail](html/activity-detail.html) | 051 活动详情 | 头图状态角标 + 标题价格 + 时间地点信息 + 底部报名 | 活动详情、线路详情、课程详情 |
-| [post-detail](html/post-detail.html) | 075 帖子详情 | 作者信息 + 大图 + 正文 + 互动数据 + 评论区 | 帖子详情、日记详情、文章详情 |
-| [profile-detail](html/profile-detail.html) | 025 个人中心 | 渐变用户信息头部 + 数据统计 + VIP 卡片 + 功能网格 | 个人中心、创作者中心、会员中心 |
-| [wallet-detail](html/wallet-detail.html) | 011 宝石钱包 | 渐变余额卡片 + 交易明细列表 | 钱包、资产、积分明细 |
-| [result-detail](html/result-detail.html) | 070 支付成功 | 状态图标 + 文案 + 操作按钮 + 推荐内容 | 支付结果、空状态、404 |
+| 案例 | 来源页面 | 结构特点 | 适用场景 | 文档 |
+|------|---------|---------|---------|------|
+| [product-detail](html/product-detail.html) | 034 商品详情 | 轮播大图 + 标题价格 + 规格配送 + 服务保障 + 详情参数 | 商品详情、服务详情 | [product-detail.md](product-detail.md) |
+| [activity-detail](html/activity-detail.html) | 051 活动详情 | 头图状态角标 + 标题价格 + 时间地点信息 + 底部报名 | 活动详情、线路详情、课程详情 | [activity-detail.md](activity-detail.md) |
+| [post-detail](html/post-detail.html) | 075 帖子详情 | 作者信息 + 大图 + 正文 + 互动数据 + 评论区 | 帖子详情、日记详情、文章详情 | [post-detail.md](post-detail.md) |
+| [profile-detail](html/profile-detail.html) | 025 个人中心 | 渐变用户信息头部 + 数据统计 + VIP 卡片 + 功能网格 | 个人中心、创作者中心、会员中心 | [profile-detail.md](profile-detail.md) |
+| [wallet-detail](html/wallet-detail.html) | 011 宝石钱包 | 渐变余额卡片 + 交易明细列表 | 钱包、资产、积分明细 | [wallet-detail.md](wallet-detail.md) |
+| [result-detail](html/result-detail.html) | 070 支付成功 | 状态图标 + 文案 + 操作按钮 + 推荐内容 | 支付结果、空状态、404 | [result-detail.md](result-detail.md) |
 
 ## 文件结构
 
 ```
 demo-components/detail/
 ├── README.md                  # 本文件
+├── product-detail.md          # 商品详情技能文档
+├── activity-detail.md         # 活动详情技能文档
+├── post-detail.md             # 帖子详情技能文档
+├── profile-detail.md          # 个人中心技能文档
+├── wallet-detail.md           # 钱包详情技能文档
+├── result-detail.md           # 结果页技能文档
 ├── html/                      # HTML 演示
 │   ├── product-detail.html
 │   ├── activity-detail.html

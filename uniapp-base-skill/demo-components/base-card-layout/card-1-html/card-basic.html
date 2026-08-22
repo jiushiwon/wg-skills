@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>基础卡片</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      /* 主题变量 - 来自 uniapp-style-skill */
+      --color-primary: #07c160;
+      --color-bg-surface: #ffffff;
+      --color-text-primary: #1a1a1a;
+      --color-text-secondary: #666666;
+      --color-text-tertiary: #999999;
+      --radius-md: 12px;
+      --spacing-lg: 16px;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    body { background: #f0f0f0; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; }
+    .preview-header { height: 44px; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee; font-size: 16px; font-weight: 500; }
+    .preview-body { padding: 16px; }
+    .card { background: #fff; border-radius: var(--radius-md); padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    .card-title { font-size: 16px; font-weight: 600; color: #1a1a1a; margin-bottom: 8px; }
+    .card-desc { font-size: 14px; color: #666; line-height: 1.6; }
+    .card-tag { display: inline-block; padding: 4px 8px; font-size: 12px; background: #f0f0f0; color: #666; border-radius: 4px; margin-right: 6px; }
+    .card-action { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 1px solid #f0f0f0; }
+    .card-btn { font-size: 14px; color: var(--color-primary); }
+    .card-time { font-size: 12px; color: #999; }
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 70px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="preview">
+    <div class="preview-header">基础卡片</div>
+    <div class="preview-body">
+      <div class="card">
+        <div class="card-title">标题文字</div>
+        <div class="card-desc">这是卡片的描述内容，可以是多行文字。</div>
+        <span class="card-tag">标签一</span>
+        <span class="card-tag">标签二</span>
+        <div class="card-action">
+          <span class="card-time">2小时前</span>
+          <span class="card-btn">查看详情 ></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="param-bar">
+    <div class="param-title">参数</div>
+    <div class="param-row"><span class="param-key">layout:</span><span class="param-val">basic</span></div>
+    <div class="param-row"><span class="param-key">radius:</span><span class="param-val">0 / 4px / 8px / 12px / 16px</span></div>
+    <div class="param-row"><span class="param-key">shadow:</span><span class="param-val">none / sm / md / lg</span></div>
+    <div class="param-row"><span class="param-key">padding:</span><span class="param-val">8px / 12px / 16px / 24px</span></div>
+    <div class="param-row"><span class="param-key">showTag:</span><span class="param-val">true / false</span></div>
+    <div class="param-row"><span class="param-key">showAction:</span><span class="param-val">true / false</span></div>
+  </div>
+</body>
+</html>
