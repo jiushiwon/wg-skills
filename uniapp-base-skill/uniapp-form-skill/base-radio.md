@@ -8,7 +8,9 @@
 
 ## 形态总览
 
-11 种风格，满足 90% 单选/开关场景：
+**15 种风格**，满足 90% 单选/开关场景：
+
+### 基础单选（10 种）
 
 | 风格 | 场景 | 类型值 |
 |------|------|--------|
@@ -23,7 +25,19 @@
 | 图片选项 | 头像选择、背景选择 | `image` |
 | 颜色选择 | 主题色、皮肤选择 | `color` |
 
+### 开关形态（5 种，通过 size 参数切换）
+
+| 风格 | 场景 | 尺寸值 |
+|------|------|--------|
+| 标准胶囊 | 设置项、通知开关 | `normal` |
+| 方形开关 | 简洁设置、工具类App | `square` |
+| 迷你圆点 | 紧凑列表、小程序 | `mini` |
+| 图标按钮 | 功能开关、状态控制 | `icon` |
+| 卡片开关 | 高级设置、带状态文字 | `card` |
+
 ## HTML 参考图
+
+### 基础单选
 
 | 风格 | 场景 | HTML |
 |------|------|------|
@@ -33,10 +47,20 @@
 | 卡片式 | 套餐选择 | [radio-card.html](html/radio-card.html) |
 | 按钮组 | 支付方式 | [radio-button.html](html/radio-button.html) |
 | 列表式 | 设置项 | [radio-list.html](html/radio-list.html) |
-| 切换式 | 开关（替代 switch） | [radio-toggle.html](html/radio-toggle.html) |
+| 切换式 | 开关 | [radio-toggle.html](html/radio-toggle.html) |
 | 芯片风格 | 筛选标签 | [radio-chips.html](html/radio-chips.html) |
 | 图片选项 | 头像/背景选择 | [radio-image.html](html/radio-image.html) |
 | 颜色选择 | 主题色选择 | [radio-color.html](html/radio-color.html) |
+
+### 开关形态（通过 size 参数）
+
+| 风格 | 场景 | HTML |
+|------|------|------|
+| 标准胶囊 | 设置项、通知开关 | [switch-standard.html](html/switch-standard.html) |
+| 方形开关 | 简洁设置 | [switch-square.html](html/switch-square.html) |
+| 迷你圆点 | 紧凑列表 | [switch-mini.html](html/switch-mini.html) |
+| 图标按钮 | 功能开关 | [switch-icon.html](html/switch-icon.html) |
+| 卡片开关 | 高级设置 | [switch-card.html](html/switch-card.html) |
 
 ## 为什么需要这个组件？
 
@@ -52,11 +76,15 @@
 
 | Prop | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| `modelValue` / `v-model` | any | - | 选中值 |
+| `modelValue` / `v-model` | any | - | 选中值（开关模式下为 boolean） |
 | `options` | array | `[]` | 选项列表：`[{label, value, disabled, desc, image, color}]` |
 | `type` | string | `'circle'` | 类型：circle / check / tag / card / button / list / toggle / chips / image / color |
+| `size` | string | `'normal'` | 尺寸（开关模式）：normal / square / mini / icon / card |
 | `showIcon` | boolean | `true` | 是否显示图标 |
 | `disabled` | boolean | `false` | 是否禁用 |
+| `label` | string | - | 左侧标签（开关模式） |
+| `desc` | string | - | 描述文字（开关模式） |
+| `color` | string | `'success'` | 开启颜色（开关模式） |
 
 ## Events
 
@@ -190,6 +218,51 @@ function onSelect(option: Option) {
 />
 ```
 
+### 切换开关（替代 switch）
+
+```vue
+<base-radio
+  v-model="notification"
+  type="toggle"
+  :options="[
+    { label: '接收推送通知', value: true, desc: '开启后接收最新消息推送' }
+  ]"
+/>
+```
+
+### 标准胶囊开关
+
+```vue
+<base-radio
+  v-model="darkMode"
+  type="toggle"
+  size="normal"
+  label="深色模式"
+/>
+```
+
+### 迷你开关
+
+```vue
+<base-radio
+  v-model="autoPlay"
+  type="toggle"
+  size="mini"
+/>
+```
+
+### 卡片开关
+
+```vue
+<base-radio
+  v-model="wifi"
+  type="toggle"
+  size="card"
+  label="WiFi"
+  desc="已连接"
+/>
+```
+
 ## 形态
 
 通过 `type` 切换单选形态：
@@ -235,13 +308,18 @@ function onSelect(option: Option) {
 /uniapp-base-skill 做一个列表单选
 
 # 特殊形态
-/uniapp-base-skill 做一个切换开关（替代 switch）
+/uniapp-base-skill 做一个切换开关
 /uniapp-base-skill 做一个图片选项单选
 /uniapp-base-skill 做一个颜色选择单选
 
-# 兼容旧 switch 触发词
+# 开关形态（已整合到 base-radio）
 /uniapp-base-skill 做一个开关
 /uniapp-base-skill 做一个胶囊开关
+/uniapp-base-skill 做一个方正开关
+/uniapp-base-skill 做一个迷你开关
+/uniapp-base-skill 做一个图标开关
+/uniapp-base-skill 做一个卡片开关
+/uniapp-base-skill 做一个iOS风格开关
 ```
 
 ## 演示
