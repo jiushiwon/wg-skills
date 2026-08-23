@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radio Chips - 芯片风格</title>
+  <style>
+    :root {
+      --color-primary: #07c160;
+      --color-primary-light: #e8f5e9;
+      --color-surface: #ffffff;
+      --color-border: #e8e8e8;
+      --color-text: #333333;
+      --color-text-secondary: #666666;
+      --radius-lg: 20px;
+      --radius-md: 8px;
+      --space-3: 12px;
+      --space-2: 8px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { padding: 20px; background: #f5f5f5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .demo-title { font-size: 18px; font-weight: 600; margin-bottom: 16px; color: var(--color-text); }
+
+    /* Chips 芯片风格 */
+    .radio-chips { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+    .chip-item {
+      padding: 8px 16px; background: var(--color-surface);
+      border-radius: 20px; border: 1px solid var(--color-border);
+      font-size: 14px; color: var(--color-text);
+      cursor: pointer; transition: all 0.2s;
+    }
+    .chip-item:hover { border-color: var(--color-primary); }
+    .chip-item.selected {
+      background: var(--color-primary); color: #fff; border-color: var(--color-primary);
+    }
+
+    /* 筛选条件 */
+    .chips-filter { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip-filter {
+      padding: 8px 16px; background: #f0f0f0;
+      border-radius: 20px; border: none;
+      font-size: 13px; color: var(--color-text-secondary);
+      cursor: pointer; transition: all 0.2s;
+    }
+    .chip-filter.selected { background: var(--color-primary); color: #fff; }
+
+    /* Demo cards */
+    .demo-card { margin-bottom: 24px; }
+    .demo-card .label { font-size: 14px; color: #666; margin-bottom: 8px; display: block; }
+  </style>
+</head>
+<body>
+  <div class="demo-card">
+    <span class="demo-title">芯片风格 - 多选</span>
+    <div class="radio-chips">
+      <div class="chip-item selected" onclick="this.classList.toggle('selected')">前端开发</div>
+      <div class="chip-item" onclick="this.classList.toggle('selected')">后端开发</div>
+      <div class="chip-item" onclick="this.classList.toggle('selected')">移动端</div>
+      <div class="chip-item" onclick="this.classList.toggle('selected')">UI 设计</div>
+      <div class="chip-item" onclick="this.classList.toggle('selected')">产品经理</div>
+    </div>
+  </div>
+
+  <div class="demo-card">
+    <span class="demo-title">筛选条件</span>
+    <div class="chips-filter">
+      <div class="chip-filter selected" onclick="selectFilter(this)">综合</div>
+      <div class="chip-filter" onclick="selectFilter(this)">销量</div>
+      <div class="chip-filter" onclick="selectFilter(this)">价格</div>
+      <div class="chip-filter" onclick="selectFilter(this)">新品</div>
+    </div>
+  </div>
+
+  <div class="demo-card">
+    <span class="demo-title">单选模式</span>
+    <div class="radio-chips">
+      <div class="chip-item selected" onclick="selectSingle(this)">不限</div>
+      <div class="chip-item" onclick="selectSingle(this)">0-100元</div>
+      <div class="chip-item" onclick="selectSingle(this)">100-500元</div>
+      <div class="chip-item" onclick="selectSingle(this)">500-1000元</div>
+      <div class="chip-item" onclick="selectSingle(this)">1000元以上</div>
+    </div>
+  </div>
+
+  <script>
+    function selectFilter(el) {
+      document.querySelectorAll('.chip-filter').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+    function selectSingle(el) {
+      document.querySelectorAll('.radio-chips .chip-item').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+  </script>
+</body>
+</html>

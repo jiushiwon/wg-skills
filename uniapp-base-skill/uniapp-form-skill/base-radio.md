@@ -1,21 +1,42 @@
 # base-radio 单选框
 
-> 通用单选组件，由 `base-card` 设计思想封装（与 `base-card` 同源：参数化外壳组件，包裹单选交互逻辑）。支持圆圈、打钩、标签、卡片、按钮组、列表式等多种形态。
+> 通用单选组件，由 `base-card` 设计思想封装。支持圆圈、打钩、标签、卡片、按钮组、列表式、切换、芯片、图片、颜色等多种形态。
+
+> **开关（switch）是二选一的特例**，本组件通过 `type="toggle"` 支持开关功能，所有单选/开关场景统一使用本组件。
 
 > 所有表单页面（设置、订单、支付、资料编辑）的单选都应使用本组件，避免样式碎片化。
 
-## HTML 参考图
+## 形态总览
 
-6 种风格独立成文件：
+11 种风格，满足 90% 单选/开关场景：
+
+| 风格 | 场景 | 类型值 |
+|------|------|--------|
+| 标准圆圈 | 基础单选、列表选择 | `circle` |
+| 打钩风格 | 配送方式、服务选择 | `check` |
+| 标签排列 | 筛选条件、状态切换 | `tag` |
+| 卡片式 | 商品规格、套餐选择 | `card` |
+| 按钮组 | 支付方式、会员等级 | `button` |
+| 列表式 | 设置项、个人资料 | `list` |
+| 切换式 | 开关功能（替代 switch） | `toggle` |
+| 芯片风格 | 圆润标签、筛选 | `chips` |
+| 图片选项 | 头像选择、背景选择 | `image` |
+| 颜色选择 | 主题色、皮肤选择 | `color` |
+
+## HTML 参考图
 
 | 风格 | 场景 | HTML |
 |------|------|------|
-| 标准圆圈 | 基础单选、列表选择 | [radio-circle.html](html/radio-circle.html) |
-| 打钩风格 | 配送方式、服务选择 | [radio-check.html](html/radio-check.html) |
-| 标签排列 | 筛选条件、状态切换 | [radio-tag.html](html/radio-tag.html) |
-| 卡片式 | 商品规格、套餐选择 | [radio-card.html](html/radio-card.html) |
-| 按钮组 | 支付方式、会员等级 | [radio-button.html](html/radio-button.html) |
-| 列表式 | 设置项、个人资料 | [radio-list.html](html/radio-list.html) |
+| 标准圆圈 | 基础单选 | [radio-circle.html](html/radio-circle.html) |
+| 打钩风格 | 配送方式 | [radio-check.html](html/radio-check.html) |
+| 标签排列 | 筛选条件 | [radio-tag.html](html/radio-tag.html) |
+| 卡片式 | 套餐选择 | [radio-card.html](html/radio-card.html) |
+| 按钮组 | 支付方式 | [radio-button.html](html/radio-button.html) |
+| 列表式 | 设置项 | [radio-list.html](html/radio-list.html) |
+| 切换式 | 开关（替代 switch） | [radio-toggle.html](html/radio-toggle.html) |
+| 芯片风格 | 筛选标签 | [radio-chips.html](html/radio-chips.html) |
+| 图片选项 | 头像/背景选择 | [radio-image.html](html/radio-image.html) |
+| 颜色选择 | 主题色选择 | [radio-color.html](html/radio-color.html) |
 
 ## 为什么需要这个组件？
 
@@ -32,8 +53,8 @@
 | Prop | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `modelValue` / `v-model` | any | - | 选中值 |
-| `options` | array | `[]` | 选项列表：`[{label, value, disabled, desc}]` |
-| `type` | string | `'circle'` | 类型：`circle` / `check` / `tag` / `card` / `button` / `list` |
+| `options` | array | `[]` | 选项列表：`[{label, value, disabled, desc, image, color}]` |
+| `type` | string | `'circle'` | 类型：circle / check / tag / card / button / list / toggle / chips / image / color |
 | `showIcon` | boolean | `true` | 是否显示图标 |
 | `disabled` | boolean | `false` | 是否禁用 |
 
@@ -181,6 +202,10 @@ function onSelect(option: Option) {
 | `card` | 商品规格、套餐选择（带价格） |
 | `button` | 支付方式、会员等级 |
 | `list` | 设置项、个人资料 |
+| `toggle` | 开关功能（替代 switch） |
+| `chips` | 圆润标签、筛选 |
+| `image` | 头像选择、背景选择 |
+| `color` | 主题色、皮肤选择 |
 
 ## 主题变量
 
@@ -195,13 +220,28 @@ function onSelect(option: Option) {
 ## 触发词
 
 ```markdown
+# 基础单选
 /uniapp-base-skill 做一个单选
 /uniapp-base-skill 做一个圆圈单选
 /uniapp-base-skill 做一个打钩单选
+
+# 筛选/标签
 /uniapp-base-skill 做一个标签单选
+/uniapp-base-skill 做一个芯片单选
+
+# 卡片/按钮
 /uniapp-base-skill 做一个卡片单选
 /uniapp-base-skill 做一个按钮组单选
 /uniapp-base-skill 做一个列表单选
+
+# 特殊形态
+/uniapp-base-skill 做一个切换开关（替代 switch）
+/uniapp-base-skill 做一个图片选项单选
+/uniapp-base-skill 做一个颜色选择单选
+
+# 兼容旧 switch 触发词
+/uniapp-base-skill 做一个开关
+/uniapp-base-skill 做一个胶囊开关
 ```
 
 ## 演示
