@@ -77,3 +77,16 @@ uniapp-card-skill/
         ├── card-2-md/
         └── card-2-html/
 ```
+
+## 设计规范
+
+### 容器原则
+
+> **所有涉及内容容器的组件，都必须使用 base-card 作为容器**
+
+- 卡片内容 → base-card 包裹
+- 按钮容器 → base-card 包裹
+- 列表项 → base-card 承载每行内容
+- 页面区块 → base-card 作为卡片容器
+
+**即：base-card 是所有组件的容器基底。**

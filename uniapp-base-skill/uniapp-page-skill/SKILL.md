@@ -1,7 +1,10 @@
 ---
 name: uniapp-page-skill
-description: uni-app 页面模板技能。包含聊天页、商品页、列表页、详情页、登录页等。
+description: uni-app 页面模板技能。包含聊天页、商品页、列表页、详情页、登录页、弹窗等。
 trigger: |
+  # 弹窗组件
+  做一个弹窗 | 做一个底部弹窗 | 做一个顶部弹窗 | 做一个左侧弹窗 | 做一个右侧弹窗
+  做一个抽屉菜单 | 做一个筛选面板
   # 完整页面
   帮我做一个聊天页面 | 做一个商品详情页 | 做一个个人中心页
   # 列表页
@@ -36,6 +39,7 @@ trigger: |
 |------|------|
 | chat | 聊天页面 |
 | product | 商品页面 |
+| base-popup | 弹窗组件（底部/顶部/左侧/右侧弹出） |
 
 ## 列表页 (6 种)
 
@@ -98,9 +102,22 @@ uniapp-page-skill/
 ├── README.md
 ├── chat.md
 ├── product.md
+├── base-popup.md
 └── demo-components/
     ├── list/
     ├── detail/
     ├── layout/
     └── more/
 ```
+
+## 设计规范
+
+### 容器原则
+
+> **所有涉及内容容器的组件，都必须使用 base-card 作为容器**
+
+- 弹窗内容 → base-card 包裹
+- 列表项 → base-card 承载每行内容
+- 页面区块 → base-card 作为卡片容器
+
+**即：base-card 是所有页面组件的容器基底。**

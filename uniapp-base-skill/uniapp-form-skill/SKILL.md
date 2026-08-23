@@ -30,9 +30,11 @@ trigger: |
 | 组件 | 说明 |
 |------|------|
 | base-input | 输入框组件 |
-| base-radio | 单选组件（含开关功能） |
+| base-switch | 开关组件 |
+| base-radio | 单选组件 |
 | base-select | 下拉选择组件 |
-| base-popup | 弹窗组件 |
+
+> 弹窗组件 (base-popup) 已移至 uniapp-page-skill（页面性质）
 
 ## 输入框 (base-input)
 
@@ -102,15 +104,6 @@ trigger: |
 | 搜索下拉 | 搜索下拉 |
 | 宫格选择 | 宫格选择、网格选择 |
 
-## 弹窗组件 (base-popup)
-
-| 方向 | 触发词 |
-|------|--------|
-| 底部弹出 | 底部弹窗 |
-| 顶部弹出 | 顶部弹窗 |
-| 左侧弹出 | 左侧抽屉 |
-| 右侧弹出 | 右侧筛选 |
-
 ## 文件结构
 
 ```
@@ -119,13 +112,22 @@ uniapp-form-skill/
 ├── README.md
 ├── base-input.md
 ├── base-switch.md
-├── base-radio.md
-├── base-select.md
-├── base-popup.md
 └── demo-components/
     ├── base-input/
     ├── base-switch/
     ├── base-radio/
-    ├── base-select/
-    └── base-popup/
+    └── base-select/
 ```
+
+## 设计规范
+
+### 容器原则
+
+> **所有涉及内容容器的组件，都必须使用 base-card 作为容器**
+
+- 输入框容器 → base-card 包裹 input
+- 开关容器 → base-card 包裹 switch
+- 单选容器 → base-card 包裹 radio
+- 下拉选择容器 → base-card 包裹 select
+
+**即：base-card 是所有表单组件的容器基底。**

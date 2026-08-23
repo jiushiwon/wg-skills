@@ -24,7 +24,6 @@
     }
     body { background: var(--color-bg); padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
     .preview { max-width: 375px; margin: 0 auto; background: var(--color-bg-surface); border-radius: var(--radius-lg); overflow: hidden; }
-    .preview-header { height: 44px; background: var(--color-bg-surface); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--color-border); font-size: 16px; font-weight: 500; }
     .preview-body { padding: var(--space-4); }
 
     .switch-item { display: flex; align-items: center; justify-content: space-between; padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); }
@@ -70,7 +69,6 @@
 </head>
 <body>
   <div class="preview">
-    <div class="preview-header">图标按钮开关</div>
     <div class="preview-body">
       <div class="switch-item">
         <span class="switch-label">飞行模式</span>
@@ -105,6 +103,7 @@
   </div>
 
   <div class="param-bar">
+    <div class="param-title" style="font-size:14px;font-weight:600;color:#333;margin-bottom:12px;">图标按钮开关</div>
     <div class="param-title">base-switch 参数</div>
     <div class="param-row"><span class="param-key">showIcon:</span><span class="param-val">true</span></div>
     <div class="param-row"><span class="param-key">iconOn/iconOff:</span><span class="param-val">自定义图标</span></div>

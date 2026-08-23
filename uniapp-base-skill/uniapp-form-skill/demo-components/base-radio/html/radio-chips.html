@@ -46,12 +46,13 @@
 
     /* Demo cards */
     .demo-card { margin-bottom: 24px; }
+    .demo-title { display: block; margin-bottom: 12px; }
     .demo-card .label { font-size: 14px; color: #666; margin-bottom: 8px; display: block; }
   </style>
 </head>
 <body>
   <div class="demo-card">
-    <span class="demo-title">芯片风格 - 多选</span>
+    <div class="demo-title">芯片风格 - 多选</div>
     <div class="radio-chips">
       <div class="chip-item selected" onclick="this.classList.toggle('selected')">前端开发</div>
       <div class="chip-item" onclick="this.classList.toggle('selected')">后端开发</div>
@@ -62,7 +63,7 @@
   </div>
 
   <div class="demo-card">
-    <span class="demo-title">筛选条件</span>
+    <div class="demo-title">筛选条件</div>
     <div class="chips-filter">
       <div class="chip-filter selected" onclick="selectFilter(this)">综合</div>
       <div class="chip-filter" onclick="selectFilter(this)">销量</div>
@@ -72,7 +73,7 @@
   </div>
 
   <div class="demo-card">
-    <span class="demo-title">单选模式</span>
+    <div class="demo-title">单选模式</div>
     <div class="radio-chips">
       <div class="chip-item selected" onclick="selectSingle(this)">不限</div>
       <div class="chip-item" onclick="selectSingle(this)">0-100元</div>
@@ -92,5 +93,18 @@
       el.classList.add('selected');
     }
   </script>
+
+  <div style="background:#f7f7f7;padding:12px;border-radius:8px;margin-top:16px;">
+    <div style="font-size:14px;font-weight:600;color:#333;margin-bottom:12px;">芯片风格 · 筛选条件 · 单选模式</div>
+    <div style="font-size:12px;color:#999;margin-bottom:8px;">base-radio 参数</div>
+    <div style="display:flex;font-size:12px;margin-bottom:4px;">
+      <span style="color:#4a90e2;width:70px;">type:</span>
+      <span style="color:#666;">chips</span>
+    </div>
+    <div style="display:flex;font-size:12px;margin-bottom:4px;">
+      <span style="color:#4a90e2;width:70px;">variant:</span>
+      <span style="color:#666;">filter | single</span>
+    </div>
+  </div>
 </body>
 </html>

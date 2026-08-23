@@ -23,7 +23,6 @@
     }
     body { background: var(--color-bg); padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
     .preview { max-width: 375px; margin: 0 auto; background: var(--color-bg-surface); border-radius: var(--radius-lg); overflow: hidden; }
-    .preview-header { height: 44px; background: var(--color-bg-surface); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--color-border); font-size: 16px; font-weight: 500; }
     .preview-body { padding: var(--space-4); }
 
     .radio-check-item { display: flex; align-items: center; padding: var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-md); margin-bottom: var(--space-3); cursor: pointer; transition: all 0.2s; }
@@ -55,7 +54,6 @@
 </head>
 <body>
   <div class="preview">
-    <div class="preview-header">打钩风格单选</div>
     <div class="preview-body">
       <div class="radio-check-item selected" onclick="selectCheck(this)">
         <div class="radio-check-icon">
@@ -85,6 +83,7 @@
   </div>
 
   <div class="param-bar">
+    <div class="param-title" style="font-size:14px;font-weight:600;color:#333;margin-bottom:12px;">打钩风格单选</div>
     <div class="param-title">base-radio 参数</div>
     <div class="param-row"><span class="param-key">type:</span><span class="param-val">check</span></div>
     <div class="param-row"><span class="param-key">showIcon:</span><span class="param-val">true</span></div>

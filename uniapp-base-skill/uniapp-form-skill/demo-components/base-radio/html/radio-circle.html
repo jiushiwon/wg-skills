@@ -23,7 +23,6 @@
     }
     body { background: var(--color-bg); padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
     .preview { max-width: 375px; margin: 0 auto; background: var(--color-bg-surface); border-radius: var(--radius-lg); overflow: hidden; }
-    .preview-header { height: 44px; background: var(--color-bg-surface); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--color-border); font-size: 16px; font-weight: 500; }
     .preview-body { padding: var(--space-4); }
 
     .radio-item { display: flex; align-items: center; padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); }
@@ -56,6 +55,11 @@
     }
     .radio-circle.selected::after { opacity: 1; transform: scale(1); }
 
+    /* 圆圈在右侧 */
+    .radio-item-reverse { display: flex; align-items: center; justify-content: space-between; padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); }
+    .radio-item-reverse:last-child { border-bottom: none; }
+    .radio-item-reverse .radio-label { margin-left: 0; margin-right: var(--space-3); }
+
     .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
     .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
     .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
@@ -65,7 +69,6 @@
 </head>
 <body>
   <div class="preview">
-    <div class="preview-header">标准圆圈单选</div>
     <div class="preview-body">
       <div class="radio-item">
         <div class="radio-circle selected" onclick="selectRadio(this)"></div>
@@ -83,18 +86,38 @@
         <div class="radio-circle" onclick="selectRadio(this)"></div>
         <span class="radio-label">选项四</span>
       </div>
+
+      <div style="margin: 20px 0; border-top: 1px dashed #ddd;"></div>
+
+      <div class="radio-item-reverse">
+        <span class="radio-label">选项一</span>
+        <div class="radio-circle selected" onclick="selectRadio2(this)"></div>
+      </div>
+      <div class="radio-item-reverse">
+        <span class="radio-label">选项二</span>
+        <div class="radio-circle" onclick="selectRadio2(this)"></div>
+      </div>
     </div>
   </div>
 
   <div class="param-bar">
+    <div class="param-title" style="font-size:14px;font-weight:600;color:#333;margin-bottom:12px;">标准圆圈单选</div>
     <div class="param-title">base-radio 参数</div>
-    <div class="param-row"><span class="param-key">v-model:</span><span class="param-val">选中的值</span></div>
-    <div class="param-row"><span class="param-key">options:</span><span class="param-val">[{label, value, disabled}]</span></div>
+    <div class="param-row"><span class="param-key">position:</span><span class="param-val">left</span></div>
+  </div>
+  <div class="param-bar" style="margin-top:12px;">
+    <div class="param-title" style="font-size:14px;font-weight:600;color:#333;margin-bottom:12px;">圆圈在右侧</div>
+    <div class="param-title">base-radio 参数</div>
+    <div class="param-row"><span class="param-key">position:</span><span class="param-val">right</span></div>
   </div>
 
   <script>
     function selectRadio(el) {
-      document.querySelectorAll('.radio-circle').forEach(r => r.classList.remove('selected'));
+      document.querySelectorAll('.preview-body > .radio-item .radio-circle').forEach(r => r.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+    function selectRadio2(el) {
+      document.querySelectorAll('.preview-body > .radio-item-reverse .radio-circle').forEach(r => r.classList.remove('selected'));
       el.classList.add('selected');
     }
   </script>

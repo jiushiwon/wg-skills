@@ -23,7 +23,6 @@
     }
     body { background: var(--color-bg); padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
     .preview { max-width: 375px; margin: 0 auto; background: var(--color-bg-surface); border-radius: var(--radius-lg); overflow: hidden; }
-    .preview-header { height: 44px; background: var(--color-bg-surface); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--color-border); font-size: 16px; font-weight: 500; }
     .preview-body { padding: var(--space-4); }
 
     .radio-btn-group { display: flex; border: 1px solid var(--color-border); border-radius: var(--radius-md); overflow: hidden; }
@@ -41,16 +40,15 @@
 </head>
 <body>
   <div class="preview">
-    <div class="preview-header">按钮组单选</div>
     <div class="preview-body">
-      <div style="margin-bottom: 12px; font-size: 14px; color: #666;">支付方式</div>
+      <div style="font-size: 14px; color: #666; margin-bottom: 12px;">支付方式</div>
       <div class="radio-btn-group">
         <div class="radio-btn selected" onclick="selectBtn(this)">微信</div>
         <div class="radio-btn" onclick="selectBtn(this)">支付宝</div>
         <div class="radio-btn" onclick="selectBtn(this)">银行卡</div>
       </div>
 
-      <div style="margin: 20px 0 12px; font-size: 14px; color: #666;">排序方式</div>
+      <div style="font-size: 14px; color: #666; margin: 20px 0 12px;">排序方式</div>
       <div class="radio-btn-group">
         <div class="radio-btn selected" onclick="selectBtn(this)">综合</div>
         <div class="radio-btn" onclick="selectBtn(this)">销量</div>
@@ -61,6 +59,7 @@
   </div>
 
   <div class="param-bar">
+    <div class="param-title" style="font-size:14px;font-weight:600;color:#333;margin-bottom:12px;">按钮组单选</div>
     <div class="param-title">base-radio 参数</div>
     <div class="param-row"><span class="param-key">type:</span><span class="param-val">button</span></div>
   </div>

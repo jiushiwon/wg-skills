@@ -49,60 +49,43 @@
       height: 3px; background: var(--color-primary);
     }
 
-    /* 背景选择 */
-    .radio-bg { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-    .bg-item {
-      aspect-ratio: 16/9; border-radius: 6px; overflow: hidden;
-      border: 2px solid transparent; cursor: pointer;
-    }
-    .bg-item.selected { border-color: var(--color-primary); }
-
     /* Demo cards */
     .demo-card { margin-bottom: 24px; }
+    .demo-title { font-size: 16px; font-weight: 600; margin-bottom: 12px; color: var(--color-text); }
     .demo-card .label { font-size: 14px; color: #666; margin-bottom: 8px; display: block; }
   </style>
 </head>
 <body>
   <div class="demo-card">
-    <span class="demo-title">头像选择</span>
+    <div class="demo-title">头像选择</div>
     <div class="radio-avatar">
       <div class="avatar-item selected" onclick="selectAvatar(this)">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23ff6b6b' width='100' height='100'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3EA%3C/text%3E%3C/svg%3E" alt="头像1">
+        <img src="https://loremflickr.com/100/100/cat?random=1" alt="头像1">
       </div>
       <div class="avatar-item" onclick="selectAvatar(this)">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%234ecdc4' width='100' height='100'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3EB%3C/text%3E%3C/svg%3E" alt="头像2">
+        <img src="https://loremflickr.com/100/100/dog?random=2" alt="头像2">
       </div>
       <div class="avatar-item" onclick="selectAvatar(this)">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%2395e1d3' width='100' height='100'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3EC%3C/text%3E%3C/svg%3E" alt="头像3">
+        <img src="https://loremflickr.com/100/100/bird?random=3" alt="头像3">
       </div>
       <div class="avatar-item" onclick="selectAvatar(this)">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23a8e6cf' width='100' height='100'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3ED%3C/text%3E%3C/svg%3E" alt="头像4">
+        <img src="https://loremflickr.com/100/100/hamster?random=4" alt="头像4">
       </div>
     </div>
   </div>
 
   <div class="demo-card">
-    <span class="demo-title">商品规格选择</span>
+    <div class="demo-title">商品规格选择</div>
     <div class="radio-image">
       <div class="image-item selected" onclick="selectImage(this)">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23ddd' width='100' height='100'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='%23999' font-size='14'%3E规格1%3C/text%3E%3C/svg%3E">
+        <img src="https://loremflickr.com/150/150/product?random=5" alt="规格1">
       </div>
       <div class="image-item" onclick="selectImage(this)">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23ddd' width='100' height='100'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='%23999' font-size='14'%3E规格2%3C/text%3E%3C/svg%3E">
+        <img src="https://loremflickr.com/150/150/product?random=6" alt="规格2">
       </div>
       <div class="image-item" onclick="selectImage(this)">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23ddd' width='100' height='100'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='%23999' font-size='14'%3E规格3%3C/text%3E%3C/svg%3E">
+        <img src="https://loremflickr.com/150/150/product?random=7" alt="规格3">
       </div>
-    </div>
-  </div>
-
-  <div class="demo-card">
-    <span class="demo-title">背景选择</span>
-    <div class="radio-bg">
-      <div class="bg-item selected" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);" onclick="selectBg(this)"></div>
-      <div class="bg-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);" onclick="selectBg(this)"></div>
-      <div class="bg-item" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);" onclick="selectBg(this)"></div>
-      <div class="bg-item" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);" onclick="selectBg(this)"></div>
     </div>
   </div>
 
@@ -115,10 +98,19 @@
       document.querySelectorAll('.image-item').forEach(i => i.classList.remove('selected'));
       el.classList.add('selected');
     }
-    function selectBg(el) {
-      document.querySelectorAll('.bg-item').forEach(i => i.classList.remove('selected'));
-      el.classList.add('selected');
-    }
   </script>
+
+  <div style="background:#f7f7f7;padding:12px;border-radius:8px;margin-top:16px;">
+    <div style="font-size:14px;font-weight:600;color:#333;margin-bottom:12px;">头像选择 · 商品规格</div>
+    <div style="font-size:12px;color:#999;margin-bottom:8px;">base-radio 参数</div>
+    <div style="display:flex;font-size:12px;margin-bottom:4px;">
+      <span style="color:#4a90e2;width:70px;">type:</span>
+      <span style="color:#666;">image</span>
+    </div>
+    <div style="display:flex;font-size:12px;margin-bottom:4px;">
+      <span style="color:#4a90e2;width:70px;">mode:</span>
+      <span style="color:#666;">avatar | image</span>
+    </div>
+  </div>
 </body>
 </html>

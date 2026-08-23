@@ -24,7 +24,6 @@
     }
     body { background: var(--color-bg); padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
     .preview { max-width: 375px; margin: 0 auto; background: var(--color-bg-surface); border-radius: var(--radius-lg); overflow: hidden; }
-    .preview-header { height: 44px; background: var(--color-bg-surface); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--color-border); font-size: 16px; font-weight: 500; }
     .preview-body { padding: var(--space-4); }
 
     .switch-item { display: flex; align-items: center; justify-content: space-between; padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); }
@@ -66,7 +65,6 @@
 </head>
 <body>
   <div class="preview">
-    <div class="preview-header">标准胶囊开关</div>
     <div class="preview-body">
       <div class="switch-item">
         <div>
@@ -95,6 +93,7 @@
   </div>
 
   <div class="param-bar">
+    <div class="param-title" style="font-size:14px;font-weight:600;color:#333;margin-bottom:12px;">标准胶囊开关</div>
     <div class="param-title">base-switch 参数</div>
     <div class="param-row"><span class="param-key">checked:</span><span class="param-val">true/false</span></div>
     <div class="param-row"><span class="param-key">disabled:</span><span class="param-val">true/false</span></div>
