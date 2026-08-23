@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>开关 - 方正风格</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-primary: #4a90e2;
+      --color-success: #52c41a;
+      --color-text: #333;
+      --color-text-secondary: #666;
+      --color-text-tertiary: #999;
+      --color-bg: #f5f5f5;
+      --color-bg-surface: #fff;
+      --color-border: #e8e8e8;
+    }
+    body { background: var(--color-bg); padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; background: var(--color-bg-surface); border-radius: var(--radius-lg); overflow: hidden; }
+    .preview-header { height: 44px; background: var(--color-bg-surface); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--color-border); font-size: 16px; font-weight: 500; }
+    .preview-body { padding: var(--space-4); }
+
+    .switch-item { display: flex; align-items: center; justify-content: space-between; padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); }
+    .switch-item:last-child { border-bottom: none; }
+    .switch-label { font-size: 15px; color: var(--color-text); }
+
+    /* 方正风格开关 */
+    .switch-square {
+      width: 44px;
+      height: 24px;
+      background: #e0e0e0;
+      border-radius: 4px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .switch-square.on { background: var(--color-primary); }
+    .switch-square::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border-radius: 3px;
+      top: 2px;
+      left: 2px;
+      transition: transform 0.3s;
+    }
+    .switch-square.on::after { transform: translateX(20px); }
+
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 70px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="preview">
+    <div class="preview-header">方正风格开关</div>
+    <div class="preview-body">
+      <div class="switch-item">
+        <span class="switch-label">WiFi</span>
+        <div class="switch-square on" onclick="this.classList.toggle('on')"></div>
+      </div>
+      <div class="switch-item">
+        <span class="switch-label">蓝牙</span>
+        <div class="switch-square" onclick="this.classList.toggle('on')"></div>
+      </div>
+      <div class="switch-item">
+        <span class="switch-label">定位服务</span>
+        <div class="switch-square on" onclick="this.classList.toggle('on')"></div>
+      </div>
+      <div class="switch-item">
+        <span class="switch-label">热点</span>
+        <div class="switch-square" onclick="this.classList.toggle('on')"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title">base-switch 参数</div>
+    <div class="param-row"><span class="param-key">shape:</span><span class="param-val">square</span></div>
+    <div class="param-row"><span class="param-key">checked:</span><span class="param-val">true/false</span></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>下拉选择 - 搜索下拉</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-primary: #4a90e2;
+      --color-success: #52c41a;
+      --color-text: #333;
+      --color-text-secondary: #666;
+      --color-text-tertiary: #999;
+      --color-bg: #f5f5f5;
+      --color-bg-surface: #fff;
+      --color-border: #e8e8e8;
+    }
+    body { background: var(--color-bg); padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; background: var(--color-bg-surface); border-radius: var(--radius-lg); overflow: hidden; }
+    .preview-header { height: 44px; background: var(--color-bg-surface); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--color-border); font-size: 16px; font-weight: 500; }
+    .preview-body { padding: var(--space-4); }
+
+    .select-search-wrapper { position: relative; }
+    .select-search-input {
+      width: 100%;
+      padding: 12px var(--space-3);
+      padding-left: 36px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      outline: none;
+    }
+    .select-search-input:focus { border-color: var(--color-primary); }
+    .select-search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--color-text-tertiary);
+    }
+    .select-search-result {
+      margin-top: var(--space-2);
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+    }
+    .select-search-result.show { display: block; }
+    .select-search-item {
+      padding: 12px var(--space-3);
+      font-size: 14px;
+      color: var(--color-text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .select-search-item:hover { background: #f5f5f5; }
+    .select-search-item .highlight { color: var(--color-primary); }
+    .select-search-empty { padding: 20px; text-align: center; color: var(--color-text-tertiary); font-size: 14px; }
+
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 70px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="preview">
+    <div class="preview-header">搜索下拉选择</div>
+    <div class="preview-body">
+      <div class="select-search-wrapper">
+        <span class="select-search-icon">🔍</span>
+        <input type="text" class="select-search-input" placeholder="搜索银行" onfocus="showResult()" oninput="filterResult()">
+        <div class="select-search-result show" id="searchResult">
+          <div class="select-search-item" onclick="selectSearch('中国工商银行')">中国工商银行</div>
+          <div class="select-search-item" onclick="selectSearch('中国农业银行')">中国农业银行</div>
+          <div class="select-search-item" onclick="selectSearch('中国银行')">中国银行</div>
+          <div class="select-search-item" onclick="selectSearch('中国建设银行')">中国建设银行</div>
+          <div class="select-search-item" onclick="selectSearch('交通银行')">交通银行</div>
+          <div class="select-search-item" onclick="selectSearch('招商银行')">招商银行</div>
+          <div class="select-search-item" onclick="selectSearch('浦发银行')">浦发银行</div>
+          <div class="select-search-item" onclick="selectSearch('民生银行')">民生银行</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title">base-select 参数</div>
+    <div class="param-row"><span class="param-key">searchable:</span><span class="param-val">true</span></div>
+    <div class="param-row"><span class="param-key">filter:</span><span class="param-val">客户端过滤</span></div>
+  </div>
+
+  <script>
+    function showResult() {
+      document.getElementById('searchResult').classList.add('show');
+    }
+    function filterResult() {
+      const input = document.querySelector('.select-search-input').value.toLowerCase();
+      const items = document.querySelectorAll('.select-search-item');
+      items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(input) ? 'flex' : 'none';
+      });
+    }
+    function selectSearch(value) {
+      document.querySelector('.select-search-input').value = value;
+      document.getElementById('searchResult').classList.remove('show');
+    }
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.select-search-wrapper')) {
+        document.getElementById('searchResult').classList.remove('show');
+      }
+    });
+  </script>
+</body>
+</html>

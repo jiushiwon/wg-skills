@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>下拉选择 - 宫格选择</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-primary: #4a90e2;
+      --color-success: #52c41a;
+      --color-text: #333;
+      --color-text-secondary: #666;
+      --color-text-tertiary: #999;
+      --color-bg: #f5f5f5;
+      --color-bg-surface: #fff;
+      --color-border: #e8e8e8;
+    }
+    body { background: var(--color-bg); padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; background: var(--color-bg-surface); border-radius: var(--radius-lg); overflow: hidden; }
+    .preview-header { height: 44px; background: var(--color-bg-surface); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--color-border); font-size: 16px; font-weight: 500; }
+    .preview-body { padding: var(--space-4); }
+
+    .select-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-2); }
+    .select-grid-item {
+      padding: 16px 8px;
+      background: #f5f5f5;
+      border-radius: var(--radius-md);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 2px solid transparent;
+    }
+    .select-grid-item:hover { background: #e8e8e8; }
+    .select-grid-item.selected { background: #e6f0ff; border-color: var(--color-primary); }
+    .select-grid-icon { font-size: 24px; margin-bottom: 4px; }
+    .select-grid-label { font-size: 13px; color: var(--color-text); }
+    .select-grid-item.selected .select-grid-label { color: var(--color-primary); font-weight: 500; }
+
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 70px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="preview">
+    <div class="preview-header">宫格选择</div>
+    <div class="preview-body">
+      <div style="font-size: 14px; color: #666; margin-bottom: 12px;">选择支付方式</div>
+      <div class="select-grid">
+        <div class="select-grid-item selected" onclick="selectGrid(this)">
+          <div class="select-grid-icon">💳</div>
+          <div class="select-grid-label">银行卡</div>
+        </div>
+        <div class="select-grid-item" onclick="selectGrid(this)">
+          <div class="select-grid-icon">💰</div>
+          <div class="select-grid-label">余额</div>
+        </div>
+        <div class="select-grid-item" onclick="selectGrid(this)">
+          <div class="select-grid-icon">🎫</div>
+          <div class="select-grid-label">代金券</div>
+        </div>
+        <div class="select-grid-item" onclick="selectGrid(this)">
+          <div class="select-grid-icon">📱</div>
+          <div class="select-grid-label">手机卡</div>
+        </div>
+        <div class="select-grid-item" onclick="selectGrid(this)">
+          <div class="select-grid-icon">🎁</div>
+          <div class="select-grid-label">礼品卡</div>
+        </div>
+        <div class="select-grid-item" onclick="selectGrid(this)">
+          <div class="select-grid-icon">💎</div>
+          <div class="select-grid-label">积分</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title">base-select 参数</div>
+    <div class="param-row"><span class="param-key">type:</span><span class="param-val">grid</span></div>
+    <div class="param-row"><span class="param-key">columns:</span><span class="param-val">3</span></div>
+  </div>
+
+  <script>
+    function selectGrid(el) {
+      document.querySelectorAll('.select-grid-item').forEach(i => i.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+  </script>
+</body>
+</html>
