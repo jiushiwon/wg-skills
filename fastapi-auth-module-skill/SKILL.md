@@ -13,11 +13,21 @@ description: FastAPI 授权与企业组织架构模块一键叠加技能。面�
 - 不替代：不重复生成 `fastapi-init-skill` 已经提供的 JWT、统一响应、SQLModel 等基础设施。
 - 输出：模型、仓储、服务、路由、数据库迁移、接口契约、接入指南。
 
-## 依赖
+## 骨架依赖（子模块）
 
-- **fastapi-init-skill**：基础 JWT、统一响应、分页必须已存在。
-- **frontend-request-skill**：响应信封、错误码、Token、分页字段必须保持对齐。
-- **database-skill**：表前缀、字段命名、软删除、索引规范沿用。
+> 本模块是 `fastapi-init-skill` 的子模块，必须在骨架基础上使用。
+
+**使用前必须满足以下条件：**
+
+1. ✅ 已安装 `fastapi-init-skill`（项目骨架）
+2. ✅ 骨架包含：JWT、统一响应、SQLModel、分页、目录结构
+3. ✅ 遵循骨架的表前缀、字段命名、软删除规范
+
+**检测逻辑：**
+1. 读取用户项目根目录 `SKILL.md` 或 `README.md`
+2. 检测是否包含 `fastapi-init-skill` 相关内容
+3. 如未检测到骨架，提示："本模块需要先安装 fastapi-init-skill 骨架"
+4. 如用户拒绝安装骨架，则终止并提示无法使用
 
 ## 用户问题（最多 3 个）
 
