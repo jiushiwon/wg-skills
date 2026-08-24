@@ -193,6 +193,10 @@ FastAPI 零基础、FastAPI 小白、帮我搭一个 FastAPI、新建 FastAPI、
 create fastapi project、fastapi starter
 ```
 
+## 相关技能
+
+- **fastapi-auth-module-skill**：在生成的项目上叠加 RBAC + 组织架构模块（用户、角色、菜单、部门、岗位、租户、数据权限）
+
 ## 不做
 
 - 不生成与 python-backend-skill 完全相同的骨架（本 skill 额外包含 SSE、上传、一键脚本、环境探测）
