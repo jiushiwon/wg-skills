@@ -46,6 +46,9 @@ out/
 # 工作区
 .worktrees/
 
+# 本地开发技能（不纳入版本控制）
+module-generate-skill/
+
 # workflow-diagram-skill 运行时产物
 workflow-diagram-skill/test-*.svg
 workflow-diagram-skill/test-*.png
