@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>开关 - iOS风格</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-primary: #007aff;
+      --color-success: #34c759;
+      --color-text: #333;
+      --color-text-secondary: #666;
+      --color-text-tertiary: #999;
+      --color-bg: #f2f2f7;
+      --color-bg-surface: #fff;
+      --color-border: #c6c6c8;
+    }
+    body { background: var(--color-bg); padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; background: var(--color-bg-surface); }
+    .preview-body { padding: var(--space-4); }
+
+    .ios-group { background: var(--color-bg-surface); border-radius: 10px; overflow: hidden; }
+    .ios-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 0.5px solid var(--color-border); }
+    .ios-item:last-child { border-bottom: none; }
+    .ios-label { font-size: 17px; color: #000; }
+    .ios-label-sub { font-size: 13px; color: var(--color-text-tertiary); margin-top: 2px; }
+
+    /* iOS风格开关 */
+    .switch-ios {
+      width: 51px;
+      height: 31px;
+      background: #e9e9eb;
+      border-radius: 16px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .switch-ios.on { background: var(--color-success); }
+    .switch-ios::after {
+      content: '';
+      position: absolute;
+      width: 27px;
+      height: 27px;
+      background: #fff;
+      border-radius: 50%;
+      top: 2px;
+      left: 2px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+      transition: transform 0.3s;
+    }
+    .switch-ios.on::after { transform: translateX(20px); }
+
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 70px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="preview">
+    <div class="preview-body">
+      <div class="ios-group">
+        <div class="ios-item">
+          <div>
+            <div class="ios-label">Wi-Fi</div>
+          </div>
+          <div class="switch-ios on" onclick="this.classList.toggle('on')"></div>
+        </div>
+        <div class="ios-item">
+          <div>
+            <div class="ios-label">蓝牙</div>
+            <div class="ios-label-sub">关闭</div>
+          </div>
+          <div class="switch-ios" onclick="this.classList.toggle('on')"></div>
+        </div>
+        <div class="ios-item">
+          <div>
+            <div class="ios-label">蜂窝数据</div>
+          </div>
+          <div class="switch-ios on" onclick="this.classList.toggle('on')"></div>
+        </div>
+        <div class="ios-item">
+          <div>
+            <div class="ios-label">定位服务</div>
+            <div class="ios-label-sub">使用「查找」时</div>
+          </div>
+          <div class="switch-ios on" onclick="this.classList.toggle('on')"></div>
+        </div>
+        <div class="ios-item">
+          <div>
+            <div class="ios-label">飞行模式</div>
+          </div>
+          <div class="switch-ios" onclick="this.classList.toggle('on')"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title" style="font-size:14px;font-weight:600;color:#333;margin-bottom:12px;">iOS风格开关</div>
+    <div class="param-title">base-switch 参数</div>
+    <div class="param-row"><span class="param-key">variant:</span><span class="param-val">ios</span></div>
+    <div class="param-row"><span class="param-key">showSub:</span><span class="param-val">true</span></div>
+  </div>
+</body>
+</html>

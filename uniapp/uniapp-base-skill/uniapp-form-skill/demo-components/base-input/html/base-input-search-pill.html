@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-input 搜索栏 - 胶囊形（pill 999px）</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-full: 999px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-bg: #F5F7FA;
+      --color-surface: #fff;
+      --color-primary: #4A90E2;
+      --color-text: #1A1A1A;
+      --color-text-secondary: #666;
+      --color-text-tertiary: #999;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    body { background: #f5f5f5; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .title { text-align: center; margin-bottom: 10px; font-size: 14px; color: #666; }
+    .preview { max-width: 375px; margin: 0 auto; background: var(--color-bg); overflow: hidden; min-height: 700px; }
+    .preview-body { padding: var(--space-4); }
+
+    .search-bar {
+      background: var(--color-surface);
+      border-radius: var(--radius-full);
+      height: 44px;
+      display: flex;
+      align-items: center;
+      padding: 0 var(--space-3);
+      gap: var(--space-2);
+      box-shadow: var(--shadow-sm);
+    }
+    .search-icon { width: 16px; height: 16px; color: var(--color-text-tertiary); flex-shrink: 0; }
+    .search-input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 14px;
+      outline: none;
+      color: var(--color-text);
+      min-width: 0;
+    }
+    .search-input::placeholder { color: var(--color-text-tertiary); }
+    .suffix-text { font-size: 14px; color: var(--color-text-secondary); flex-shrink: 0; }
+
+    .desc {
+      margin-top: var(--space-4);
+      padding: var(--space-3);
+      background: var(--color-surface);
+      border-radius: 8px;
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+    .desc strong { color: var(--color-text); }
+
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; max-width: 375px; margin-left: auto; margin-right: auto; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: #1890ff; width: 110px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="title">参考: base-input 搜索栏 · 胶囊（pill）</div>
+  <div class="preview">
+    <div class="preview-body">
+
+      <div class="search-bar">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+        </svg>
+        <input class="search-input" placeholder="搜索关键词...">
+        <span class="suffix-text">取消</span>
+      </div>
+
+      <div class="desc">
+        <strong>胶囊形（pill 999px）</strong> —— 顶部导航栏的主流形态，配合 shadow-sm 浮起感。常见于电商、内容、社区类 App 的首页。
+      </div>
+
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title">base-input Props</div>
+    <div class="param-row"><span class="param-key">shape:</span><span class="param-val">pill</span></div>
+    <div class="param-row"><span class="param-key">radius:</span><span class="param-val">999px</span></div>
+    <div class="param-row"><span class="param-key">shadow:</span><span class="param-val">shadow-sm</span></div>
+    <div class="param-row"><span class="param-key">典型场景:</span><span class="param-val">电商首页、内容平台、社区发现</span></div>
+  </div>
+</body>
+</html>

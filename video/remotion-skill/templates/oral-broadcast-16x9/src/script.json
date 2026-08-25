@@ -1,0 +1,15 @@
+{
+  "fps": 30,
+  "durationInFrames": 90,
+  "canvas": {
+    "width": 1920,
+    "height": 1080
+  },
+  "segments": [
+    {
+      "text": "请替换为你的第一句文案",
+      "startFrame": 0,
+      "endFrame": 90
+    }
+  ]
+}

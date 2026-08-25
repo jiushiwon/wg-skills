@@ -1,7 +1,11 @@
 # Anthropic Claude LLM 实现
+# ✅ 修复 P0-P1: 添加 timeout（防止 LLM API 卡死导致 worker 耗尽）
+# ✅ 修复 P0-P6: tenacity 指数退避重试 + RateLimitError 处理
 
+import asyncio
 from typing import List, Dict, Any, AsyncGenerator
-from anthropic import AsyncAnthropic
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
+from anthropic import AsyncAnthropic, RateLimitError, APIConnectionError
 from src.agent.llm.base import LLMBase, Message, LLMResponse, ToolCall
 
 
@@ -13,20 +17,30 @@ class AnthropicLLM(LLMBase):
         model: str = "claude-3-haiku-20240307",
         api_key: str = None,
         temperature: float = 0.7,
-        max_tokens: int = 2048
+        max_tokens: int = 2048,
+        timeout: float = 60.0
     ):
         self.model = model
         self.temperature = temperature
         self.max_tokens = max_tokens
-        self.client = AsyncAnthropic(api_key=api_key)
+        self.timeout = timeout
+        # ✅ 修复 P0-P1: 显式设置 timeout
+        self.client = AsyncAnthropic(api_key=api_key, timeout=timeout)
 
+    # ✅ 修复 P0-P6: tenacity 重试（仅限可重试异常）
+    @retry(
+        retry=retry_if_exception_type((RateLimitError, APIConnectionError, asyncio.TimeoutError)),
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(multiplier=1, min=2, max=10),
+        reraise=True
+    )
     async def chat(
         self,
         messages: List[Message],
         tools: List[Dict] = None,
         **kwargs
     ) -> LLMResponse:
-        """同步对话"""
+        """同步对话（带重试）"""
         # Anthropic 消息格式转换
         msg_list = []
         system_prompt = ""
@@ -48,7 +62,6 @@ class AnthropicLLM(LLMBase):
         if system_prompt:
             request_params["system"] = system_prompt
 
-        # Anthropic tools 格式不同，需要转换
         if tools:
             request_params["tools"] = self._convert_tools(tools)
 
@@ -73,13 +86,19 @@ class AnthropicLLM(LLMBase):
             finish_reason=response.stop_reason
         )
 
+    @retry(
+        retry=retry_if_exception_type((RateLimitError, APIConnectionError, asyncio.TimeoutError)),
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(multiplier=1, min=2, max=10),
+        reraise=True
+    )
     async def stream_chat(
         self,
         messages: List[Message],
         tools: List[Dict] = None,
         **kwargs
     ) -> AsyncGenerator[str, None]:
-        """流式对话"""
+        """流式对话（带重试）"""
         msg_list = []
         system_prompt = ""
 
@@ -108,8 +127,7 @@ class AnthropicLLM(LLMBase):
                 if chunk.type == "content_block_delta":
                     if chunk.delta.type == "text_delta":
                         yield chunk.delta.text
-                    elif chunk.delta.type == "input_json_delta":
-                        yield f"[TOOL_ARG]{chunk.delta.partial_json}"
+                    # input_json_delta 是 Tool 调用的中间 JSON 片段，由 chat() 完整接口处理
 
     def _convert_tools(self, tools: List[Dict]) -> List[Dict]:
         """转换 tools 格式为 Anthropic 格式"""
@@ -123,5 +141,5 @@ class AnthropicLLM(LLMBase):
         return converted
 
     async def get_embedding(self, text: str) -> List[float]:
-        """Claude 不直接支持嵌入，使用 TextLoader"""
+        """Claude 不直接支持嵌入"""
         raise NotImplementedError("Anthropic 不支持直接获取嵌入")

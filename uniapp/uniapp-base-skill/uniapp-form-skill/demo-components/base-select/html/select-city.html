@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>下拉选择 - 城市级联</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-primary: #4a90e2;
+      --color-success: #52c41a;
+      --color-text: #333;
+      --color-text-secondary: #666;
+      --color-text-tertiary: #999;
+      --color-bg: #f5f5f5;
+      --color-bg-surface: #fff;
+      --color-border: #e8e8e8;
+    }
+    body { background: var(--color-bg); padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; background: var(--color-bg-surface); border-radius: var(--radius-lg); overflow: hidden; }
+    .preview-body { padding: var(--space-4); }
+
+    .select-field { margin-bottom: var(--space-4); }
+    .select-label { font-size: 14px; color: var(--color-text-secondary); margin-bottom: var(--space-2); display: block; }
+    .select-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px var(--space-3);
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+    }
+    .select-trigger-text { font-size: 15px; color: var(--color-text); }
+    .select-trigger-placeholder { color: var(--color-text-tertiary); }
+    .select-trigger-arrow { color: var(--color-text-tertiary); font-size: 14px; }
+
+    /* 城市选择器 */
+    .city-picker {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--color-bg-surface);
+      border-radius: 16px 16px 0 0;
+      max-height: 60vh;
+      z-index: 100;
+      display: none;
+    }
+    .city-picker.show { display: block; animation: slideUp 0.3s ease; }
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+    .city-mask {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 99;
+      display: none;
+    }
+    .city-mask.show { display: block; }
+
+    .city-header { display: flex; align-items: center; justify-content: space-between; padding: var(--space-4); border-bottom: 1px solid var(--color-border); }
+    .city-title { font-size: 16px; font-weight: 600; color: var(--color-text); }
+    .city-close { font-size: 24px; color: var(--color-text-tertiary); cursor: pointer; }
+
+    .city-tabs { display: flex; border-bottom: 1px solid var(--color-border); }
+    .city-tab { flex: 1; text-align: center; padding: 12px; font-size: 14px; color: var(--color-text-secondary); cursor: pointer; border-bottom: 2px solid transparent; }
+    .city-tab.active { color: var(--color-primary); border-bottom-color: var(--color-primary); }
+
+    .city-content { display: flex; height: 200px; }
+    .city-column { flex: 1; overflow-y: auto; padding: var(--space-2); }
+    .city-column::-webkit-scrollbar { width: 4px; }
+    .city-column::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
+    .city-item { padding: 12px; font-size: 14px; color: var(--color-text); border-radius: var(--radius-md); }
+    .city-item:hover { background: #f5f5f5; }
+    .city-item.active { color: var(--color-primary); background: #e6f0ff; }
+
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 70px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="preview">
+    <div class="preview-body">
+      <div class="select-field">
+        <span class="select-label">收货地址</span>
+        <div class="select-trigger" onclick="openCityPicker()">
+          <span class="select-trigger-text">请选择省市区</span>
+          <span class="select-trigger-arrow">›</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="city-mask" id="cityMask" onclick="closeCityPicker()"></div>
+  <div class="city-picker" id="cityPicker">
+    <div class="city-header">
+      <span class="city-title">选择地区</span>
+      <span class="city-close" onclick="closeCityPicker()">×</span>
+    </div>
+    <div class="city-tabs">
+      <div class="city-tab active" id="tab0" onclick="switchTab(0)">请选择</div>
+      <div class="city-tab" id="tab1" onclick="switchTab(1)">请选择</div>
+      <div class="city-tab" id="tab2" onclick="switchTab(2)">请选择</div>
+    </div>
+    <div class="city-content">
+      <div class="city-column" id="col0">
+        <div class="city-item active" onclick="selectProvince('北京市', this)">北京市</div>
+        <div class="city-item" onclick="selectProvince('上海市', this)">上海市</div>
+        <div class="city-item" onclick="selectProvince('广东省', this)">广东省</div>
+        <div class="city-item" onclick="selectProvince('浙江省', this)">浙江省</div>
+      </div>
+      <div class="city-column" id="col1" style="display:none;">
+        <div class="city-item" onclick="selectCity('朝阳区', this)">朝阳区</div>
+        <div class="city-item" onclick="selectCity('海淀区', this)">海淀区</div>
+        <div class="city-item" onclick="selectCity('东城区', this)">东城区</div>
+      </div>
+      <div class="city-column" id="col2" style="display:none;">
+        <div class="city-item" onclick="selectDistrict('建国门街道', this)">建国门街道</div>
+        <div class="city-item" onclick="selectDistrict('东直门街道', this)">东直门街道</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title">base-select 参数</div>
+    <div class="param-row"><span class="param-key">type:</span><span class="param-val">cascade</span></div>
+    <div class="param-row"><span class="param-key">level:</span><span class="param-val">3</span></div>
+  </div>
+
+  <script>
+    let currentTab = 0;
+    let selectedProvince = '', selectedCity = '', selectedDistrict = '';
+
+    function openCityPicker() {
+      document.getElementById('cityMask').classList.add('show');
+      document.getElementById('cityPicker').classList.add('show');
+    }
+    function closeCityPicker() {
+      document.getElementById('cityMask').classList.remove('show');
+      document.getElementById('cityPicker').classList.remove('show');
+    }
+    function switchTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll('.city-tab').forEach((t, i) => t.classList.toggle('active', i === tab));
+      document.querySelectorAll('.city-column').forEach((c, i) => c.style.display = i <= tab ? 'block' : 'none');
+    }
+    function selectProvince(name, el) {
+      selectedProvince = name;
+      document.getElementById('tab0').textContent = name;
+      document.querySelectorAll('#col0 .city-item').forEach(i => i.classList.remove('active'));
+      el.classList.add('active');
+      switchTab(1);
+    }
+    function selectCity(name, el) {
+      selectedCity = name;
+      document.getElementById('tab1').textContent = name;
+      document.querySelectorAll('#col1 .city-item').forEach(i => i.classList.remove('active'));
+      el.classList.add('active');
+      switchTab(2);
+    }
+    function selectDistrict(name, el) {
+      selectedDistrict = name;
+      document.getElementById('tab2').textContent = name;
+      document.querySelectorAll('#col2 .city-item').forEach(i => i.classList.remove('active'));
+      el.classList.add('active');
+      document.querySelector('.select-trigger-text').textContent = selectedProvince + ' ' + selectedCity + ' ' + selectedDistrict;
+      closeCityPicker();
+    }
+  </script>
+</body>
+</html>

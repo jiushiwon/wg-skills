@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-input 多行反馈场景 - 参考图</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-bg: #F5F7FA;
+      --color-surface: #fff;
+      --color-primary: #4A90E2;
+      --color-text: #1A1A1A;
+      --color-text-secondary: #666;
+      --color-text-tertiary: #999;
+      --color-border: #F0F2F5;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    body { background: #f5f5f5; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .title { text-align: center; margin-bottom: 10px; font-size: 14px; color: #666; }
+    .preview { max-width: 375px; margin: 0 auto; background: var(--color-bg); overflow: hidden; min-height: 700px; }
+    .preview-header { height: 44px; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee; font-size: 16px; font-weight: 500; }
+    .preview-body { padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-4); }
+
+    .form-card {
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      box-shadow: var(--shadow-sm);
+    }
+    .form-title { font-size: 15px; font-weight: 600; color: var(--color-text); margin-bottom: var(--space-3); }
+    .form-desc { font-size: 12px; color: var(--color-text-tertiary); margin-bottom: var(--space-3); }
+
+    .input-item { display: flex; flex-direction: column; gap: var(--space-2); }
+    .input-label { font-size: 14px; color: var(--color-text); font-weight: 500; display: flex; justify-content: space-between; }
+    .char-count { font-weight: normal; color: var(--color-text-tertiary); font-size: 12px; }
+
+    .textarea-body {
+      min-height: 120px;
+      align-items: flex-start;
+      padding: var(--space-3);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+    }
+
+    .input-control {
+      flex: 1;
+      font-size: 14px;
+      color: var(--color-text);
+      background: transparent;
+      border: none;
+      outline: none;
+      width: 100%;
+      height: auto;
+      line-height: 1.6;
+    }
+    .input-control::placeholder { color: var(--color-text-tertiary); }
+
+    .submit-btn {
+      height: 44px;
+      background: var(--color-primary);
+      color: #fff;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 500;
+      margin-top: var(--space-3);
+    }
+
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; max-width: 375px; margin-left: auto; margin-right: auto; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: #1890ff; width: 110px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="title">参考: base-input 多行反馈场景</div>
+  <div class="preview">
+    <div class="preview-header">意见反馈</div>
+    <div class="preview-body">
+      <div class="form-card">
+        <div class="form-title">提交反馈</div>
+        <div class="form-desc">您的反馈将帮助我们改进产品体验</div>
+
+        <div class="input-item">
+          <label class="input-label">
+            <span>反馈内容</span>
+            <span class="char-count">0 / 500</span>
+          </label>
+          <div class="textarea-body">
+            <textarea class="input-control" rows="5" placeholder="请输入您的反馈..."></textarea>
+          </div>
+        </div>
+
+        <div class="submit-btn">提交反馈</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title">base-input Props</div>
+    <div class="param-row"><span class="param-key">type:</span><span class="param-val">textarea（多行）</span></div>
+    <div class="param-row"><span class="param-key">rows:</span><span class="param-val">默认行数（5）</span></div>
+    <div class="param-row"><span class="param-key">autoHeight:</span><span class="param-val">true（自适应高度）</span></div>
+    <div class="param-row"><span class="param-key">maxlength:</span><span class="param-val">500（最长输入）</span></div>
+    <div class="param-row"><span class="param-key">border:</span><span class="param-val">all（带边框）</span></div>
+  </div>
+</body>
+</html>

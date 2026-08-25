@@ -1,18 +1,28 @@
 # Tool 注册表
 
+import threading
 from typing import Dict, List, Optional
 from src.agent.tools.base import Tool
 
 
 class ToolRegistry:
-    """Tool 注册表"""
+    """Tool 注册表（线程安全）"""
 
     _tools: Dict[str, Tool] = {}
+    _lock = threading.Lock()  # ✅ 线程安全锁
 
     @classmethod
     def register(cls, tool: Tool):
-        """注册 Tool"""
-        cls._tools[tool.name] = tool
+        """注册 Tool（线程安全）"""
+        with cls._lock:
+            if tool.name in cls._tools:
+                # 重复注册仅打印警告，不覆盖（避免 race condition 导致丢失）
+                import logging
+                logging.getLogger(__name__).warning(
+                    f"Tool {tool.name} 已存在，跳过重复注册"
+                )
+                return
+            cls._tools[tool.name] = tool
 
     @classmethod
     def get(cls, name: str) -> Optional[Tool]:
@@ -31,7 +41,14 @@ class ToolRegistry:
             {
                 "name": t.name,
                 "description": t.description,
-                "parameters": t.parameters
+                "parameters": {
+                    pn: {
+                        "type": pd.type,
+                        "required": pd.required,
+                        "description": pd.description
+                    }
+                    for pn, pd in t.parameters.items()
+                }
             }
             for t in cls._tools.values()
         ]

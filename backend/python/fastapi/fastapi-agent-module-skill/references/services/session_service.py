@@ -1,10 +1,14 @@
 # 会话服务
+# 使用骨架的 BusinessException 处理异常
 
+import logging
 from typing import List, Dict, Any
 from src.agent.models import AgentSession, AgentMessage
-from src.agent.schemas import SessionResponse, SessionListResponse
-from database import get_session
-from sqlmodel import select
+from src.agent.database import get_session  # 使用兼容层
+from sqlmodel import select, func
+from app.exceptions import BusinessException
+
+logger = logging.getLogger(__name__)
 
 
 class SessionService:
@@ -15,45 +19,53 @@ class SessionService:
         user_id: int,
         page: int = 1,
         page_size: int = 10
-    ) -> SessionListResponse:
+    ) -> Dict[str, Any]:
         """会话列表"""
         async with get_session() as session:
-            stmt = select(AgentSession).where(
+            # 基础查询条件
+            where_clause = (
                 AgentSession.user_id == user_id,
                 AgentSession.deleted_at == None
-            ).order_by(AgentSession.updated_at.desc())
+            )
 
-            # 分页
-            stmt = stmt.offset((page - 1) * page_size).limit(page_size)
+            # 分页查询
+            stmt = select(AgentSession).where(
+                *where_clause
+            ).order_by(AgentSession.updated_at.desc()).offset(
+                (page - 1) * page_size
+            ).limit(page_size)
             items = await session.exec(stmt).all()
 
-            # 总数
-            count_stmt = select(AgentSession).where(
-                AgentSession.user_id == user_id,
-                AgentSession.deleted_at == None
+            # ✅ 性能优化：使用 SQL COUNT(*) 而非全表加载
+            count_stmt = select(func.count()).select_from(AgentSession).where(
+                *where_clause
             )
-            total = len(await session.exec(count_stmt).all())
+            total = await session.exec(count_stmt).one()
 
-            return SessionListResponse(
-                items=[SessionResponse(
-                    id=s.id,
-                    user_id=s.user_id,
-                    title=s.title,
-                    model=s.model,
-                    status=s.status,
-                    created_at=str(s.created_at) if s.created_at else None
-                ) for s in items],
-                total=total,
-                page=page,
-                page_size=page_size
-            )
+            return {
+                "items": [
+                    {
+                        "id": s.id,
+                        "user_id": s.user_id,
+                        "title": s.title,
+                        "model": s.model,
+                        "status": s.status,
+                        "created_at": str(s.created_at) if s.created_at else None,
+                        "updated_at": str(s.updated_at) if s.updated_at else None
+                    }
+                    for s in items
+                ],
+                "total": total,
+                "page": page,
+                "page_size": page_size
+            }
 
     @staticmethod
     async def create_session(
         user_id: int,
         title: str = None,
         model: str = "gpt-4o-mini"
-    ) -> SessionResponse:
+    ) -> Dict[str, Any]:
         """创建会话"""
         async with get_session() as session:
             s = AgentSession(
@@ -65,14 +77,15 @@ class SessionService:
             await session.commit()
             await session.refresh(s)
 
-            return SessionResponse(
-                id=s.id,
-                user_id=s.user_id,
-                title=s.title,
-                model=s.model,
-                status=s.status,
-                created_at=str(s.created_at) if s.created_at else None
-            )
+            return {
+                "id": s.id,
+                "user_id": s.user_id,
+                "title": s.title,
+                "model": s.model,
+                "status": s.status,
+                "created_at": str(s.created_at) if s.created_at else None,
+                "updated_at": str(s.updated_at) if s.updated_at else None
+            }
 
     @staticmethod
     async def get_session(session_id: int, user_id: int) -> Dict[str, Any]:
@@ -86,7 +99,7 @@ class SessionService:
             s = await session.exec(stmt).first()
 
             if not s:
-                return None
+                raise BusinessException(code=-1001, message="会话不存在或无权访问")
 
             return {
                 "id": s.id,
@@ -94,7 +107,8 @@ class SessionService:
                 "title": s.title,
                 "model": s.model,
                 "status": s.status,
-                "created_at": str(s.created_at) if s.created_at else None
+                "created_at": str(s.created_at) if s.created_at else None,
+                "updated_at": str(s.updated_at) if s.updated_at else None
             }
 
     @staticmethod
@@ -108,9 +122,11 @@ class SessionService:
             )
             s = await session.exec(stmt).first()
 
-            if s:
-                s.deleted_at = datetime.utcnow()
-                await session.commit()
+            if not s:
+                raise BusinessException(code=-1001, message="会话不存在或无权访问")
+
+            s.deleted_at = datetime.utcnow()
+            await session.commit()
 
     @staticmethod
     async def get_messages(session_id: int, user_id: int) -> List[Dict]:
@@ -123,7 +139,7 @@ class SessionService:
             )
             s = await session.exec(stmt).first()
             if not s:
-                return []
+                raise BusinessException(code=-1001, message="会话不存在或无权访问")
 
             # 获取消息
             msg_stmt = select(AgentMessage).where(

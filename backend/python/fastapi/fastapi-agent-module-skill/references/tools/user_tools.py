@@ -1,92 +1,91 @@
 # 用户相关 Tools（依赖 auth 模块）
+# ✅ 修复 P0-A1: current_user_id 必须是必需参数（系统自动注入，禁止外部指定）
+# 权限安全：不允许通过参数查询其他用户，仅允许查询当前用户
 
-from typing import Optional
 from src.agent.tools import tool
 
 
-@tool(name="get_user_info", description="获取用户信息。根据用户ID查询用户基本信息，包括用户名、昵称、邮箱、手机号、部门等")
-async def get_user_info(user_id: int = None) -> dict:
+@tool(name="get_user_info", description="获取当前用户信息。只能查询当前登录用户的基本信息（不包含手机/邮箱等敏感字段）")
+async def get_user_info(current_user_id: int) -> dict:
     """
-    查询用户信息
+    查询当前用户信息（不含敏感字段）
 
     Args:
-        user_id: 用户ID，如果不传则查询当前用户
+        current_user_id: 当前登录用户ID（由系统自动注入，不接受外部指定）
 
     Returns:
-        用户信息字典
+        用户信息字典（已脱敏）
     """
     from src.auth.services.user_service import UserService
 
-    if user_id is None:
-        # 获取当前用户
-        from src.auth.dependencies import get_current_user
-        # 注意：需要在调用处注入 current_user
-        return {"error": "需要提供 user_id 参数"}
-
-    user = await UserService.get_user(user_id)
+    user = await UserService.get_user(current_user_id)
     if not user:
         return {"error": "用户不存在"}
 
+    # 字段脱敏：只返回非敏感信息
     return {
         "id": user.id,
         "username": user.username,
         "nickname": user.nickname,
-        "email": user.email,
-        "phone": user.phone,
         "org_id": user.org_id,
-        "status": user.status
+        "status": user.status,
+        # 敏感字段（手机号/邮箱）不返回
     }
 
 
-@tool(name="get_user_roles", description="获取用户角色。根据用户ID查询其拥有的角色列表")
-async def get_user_roles(user_id: int = None) -> dict:
+@tool(name="get_user_roles", description="获取当前用户的角色。只能查询当前登录用户的角色，不能查询其他用户")
+async def get_user_roles(current_user_id: int) -> dict:
     """
-    查询用户角色
+    查询当前用户的角色
 
     Args:
-        user_id: 用户ID
+        current_user_id: 当前登录用户ID（由系统自动注入）
 
     Returns:
         角色列表
     """
     from src.auth.services.user_service import UserService
 
-    roles = await UserService.get_user_roles(user_id)
+    roles = await UserService.get_user_roles(current_user_id)
     return {"roles": roles}
 
 
-@tool(name="get_user_menus", description="获取用户菜单权限。根据用户ID查询其可见的菜单树")
-async def get_user_menus(user_id: int = None) -> dict:
+@tool(name="get_user_menus", description="获取当前用户的菜单权限。只能查询当前登录用户的菜单")
+async def get_user_menus(current_user_id: int) -> dict:
     """
-    查询用户菜单
+    查询当前用户的菜单
 
     Args:
-        user_id: 用户ID
+        current_user_id: 当前登录用户ID（由系统自动注入）
 
     Returns:
         菜单树列表
     """
     from src.auth.services.auth_service import AuthService
 
-    menus = await AuthService.get_user_menus(user_id)
+    menus = await AuthService.get_user_menus(current_user_id)
     return {"menus": menus}
 
 
-@tool(name="search_users", description="搜索用户。根据关键词搜索用户列表")
-async def search_users(keyword: str = "", limit: int = 10) -> dict:
+@tool(name="search_users", description="搜索用户。仅返回脱敏后的基本信息（ID、用户名、昵称），不含手机/邮箱")
+async def search_users(keyword: str = "", limit: int = 10, current_user_id: int = 0) -> dict:
     """
-    搜索用户
+    搜索用户（结果已脱敏）
 
     Args:
         keyword: 搜索关键词
-        limit: 返回数量限制
+        limit: 返回数量限制（默认10）
+        current_user_id: 当前登录用户ID（由系统自动注入，用于审计）
 
     Returns:
-        用户列表
+        用户列表（脱敏后）
     """
     from src.auth.services.user_service import UserService
 
-    result = await UserService.list_users(page=1, page_size=limit, username=keyword)
+    # ✅ 修复 P0-S6: limit 范围限制（之前无上限可撑爆数据库）
+    safe_limit = min(max(limit, 1), 50)
+
+    result = await UserService.list_users(page=1, page_size=safe_limit, username=keyword)
     return {
         "total": result.total,
         "users": [

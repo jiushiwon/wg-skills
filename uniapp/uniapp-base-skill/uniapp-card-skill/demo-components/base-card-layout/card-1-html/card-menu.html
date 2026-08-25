@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>菜单卡片</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      /* 主题变量 - 来自 uniapp-style-skill */
+      --color-primary: #07c160;
+      --color-bg-surface: #ffffff;
+      --color-text-primary: #1a1a1a;
+      --color-text-secondary: #666666;
+      --color-text-tertiary: #999999;
+      --radius-md: 12px;
+      --spacing-lg: 16px;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    body { background: #f0f0f0; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; }
+    .preview-header { height: 44px; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee; font-size: 16px; font-weight: 500; }
+    .preview-body { padding: 16px; }
+    .card { background: #fff; border-radius: var(--radius-md); box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden; }
+    .card-title { font-size: 15px; font-weight: 600; color: #1a1a1a; padding: 14px 16px; border-bottom: 1px solid #f5f5f5; }
+    .menu-grid { display: grid; grid-template-columns: repeat(4, 1fr); padding: 16px 8px; }
+    .menu-item { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 8px; }
+    .menu-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+    .menu-icon img { width: 24px; height: 24px; }
+    .menu-label { font-size: 12px; color: #333; }
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 90px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="preview">
+    <div class="preview-header">菜单卡片</div>
+    <div class="preview-body">
+      <div class="card">
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-icon" style="background:#e8f5e9;"><img src="https://api.iconify.design/mdi/shopify.svg?color=%2307c160"></div>
+            <span class="menu-label">订单</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-icon" style="background:#fff3e0;"><img src="https://api.iconify.design/mdi/heart.svg?color=%23ff9800"></div>
+            <span class="menu-label">收藏</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-icon" style="background:#e3f2fd;"><img src="https://api.iconify.design/mdi/history.svg?color=%232196f3"></div>
+            <span class="menu-label">足迹</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-icon" style="background:#fce4ec;"><img src="https://api.iconify.design/mdi/wallet.svg?color=%23e91e63"></div>
+            <span class="menu-label">钱包</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-icon" style="background:#f3e5f5;"><img src="https://api.iconify.design/mdi/cog.svg?color=%239c27b0"></div>
+            <span class="menu-label">设置</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-icon" style="background:#e0f7fa;"><img src="https://api.iconify.design/mdi/help-circle.svg?color=%2300bcd4"></div>
+            <span class="menu-label">帮助</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-icon" style="background:#fff8e1;"><img src="https://api.iconify.design/mdi/message.svg?color=%23ffc107"></div>
+            <span class="menu-label">消息</span>
+          </div>
+          <div class="menu-item">
+            <div class="menu-icon" style="background:#efebe9;"><img src="https://api.iconify.design/mdi/share.svg?color=%23795548"></div>
+            <span class="menu-label">分享</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="param-bar">
+    <div class="param-title">参数</div>
+    <div class="param-row"><span class="param-key">layout:</span><span class="param-val">menu</span></div>
+    <div class="param-row"><span class="param-key">columns:</span><span class="param-val">3 / 4 / 5</span></div>
+    <div class="param-row"><span class="param-key">showBadge:</span><span class="param-val">true / false</span></div>
+  </div>
+</body>
+</html>

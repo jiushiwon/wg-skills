@@ -55,7 +55,10 @@ wg-skills/
 ├── skill-auditor/                      # Skill 安全审计
 ├── xhs-style-writer-skill/             # 小红书个人风格写作
 ├── vibecoding-guide-skill/             # VibeCoding / AI 开发知识导师（父技能 + 3 嵌套子技能）
-└── fastapi-init-skill/                 # FastAPI 一键初始化
+├── fastapi-init-skill/                 # FastAPI 一键初始化
+└── video/                              # 视频领域技能集合
+    ├── remotion-skill/                 # Remotion 社媒口播视频生成（文案 → 可编辑项目 → 一键渲染）
+    └── ffmpeg-skill/                   # FFmpeg 多媒体处理（剪辑/转码/水印/合成/提取等）
 ```
 
 > 说明：`super-deploy-skills/` 是父技能目录，内含 5 个嵌套子技能；`backend-generate-skill/` 也是父技能目录，内含 7 个嵌套子技能（`backend-select-skill`、`backend-convention-skill`、`java-backend-skill`、`go-backend-skill`、`python-backend-skill`、`nodejs-backend-skill`、`database-skill`）；`icon-image-catch-skill/` 同为父技能目录，内含 2 个嵌套子技能（`icon-catch-skill`、`image-catch-skill`）；`module-generate-skill/` 同为父技能目录，内含 5 个嵌套子技能（`auth-skill`、`org-permission-skill`、`ai-chat-skill`、`notification-skill`、`payment-skill`）；`vibecoding-guide-skill/` 同为父技能目录，内含 3 个嵌套子技能（`vibecoding-workflow-skill`、`agent-learning-skill`、`agent-interview-skill`）。这五个目录采用「父子嵌套」结构；其他技能仍为扁平目录。

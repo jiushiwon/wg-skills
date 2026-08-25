@@ -47,6 +47,8 @@ class SessionResponse(BaseModel):
     model: str
     status: int
     created_at: Optional[str]
+    updated_at: Optional[str] = None  # ✅ 补充更新时间字段
+    deleted_at: Optional[str] = None  # ✅ 补充软删除时间字段
 
 
 class SessionListResponse(BaseModel):

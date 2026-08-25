@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>开关 - 卡片式</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-primary: #4a90e2;
+      --color-success: #52c41a;
+      --color-text: #333;
+      --color-text-secondary: #666;
+      --color-text-tertiary: #999;
+      --color-bg: #f5f5f5;
+      --color-bg-surface: #fff;
+      --color-border: #e8e8e8;
+    }
+    body { background: var(--color-bg); padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; background: var(--color-bg); }
+    .preview-body { padding: var(--space-4); }
+
+    /* 卡片式开关 */
+    .switch-card {
+      background: var(--color-bg-surface);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      margin-bottom: var(--space-3);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    .switch-card:last-child { margin-bottom: 0; }
+    .switch-card-left { display: flex; align-items: center; gap: var(--space-3); }
+    .switch-card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .switch-card-icon img { width: 20px; height: 20px; }
+    .switch-card-icon.blue { background: #e6f2ff; }
+    .switch-card-icon.green { background: #e6fff0; }
+    .switch-card-icon.orange { background: #fff4e6; }
+    .switch-card-icon.purple { background: #f0e6ff; }
+    .switch-card-info { flex: 1; }
+    .switch-card-title { font-size: 15px; color: var(--color-text); font-weight: 500; }
+    .switch-card-desc { font-size: 12px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .switch-card-status { font-size: 12px; padding: 4px 10px; border-radius: 12px; }
+    .switch-card-status.on { background: #e6fff0; color: #52c41a; }
+    .switch-card-status.off { background: #f5f5f5; color: #999; }
+
+    .switch-card-switch {
+      width: 52px;
+      height: 28px;
+      background: #e8e8e8;
+      border-radius: 14px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .switch-card-switch.on { background: var(--color-success); }
+    .switch-card-switch::after {
+      content: '';
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      background: #fff;
+      border-radius: 50%;
+      top: 2px;
+      left: 2px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      transition: transform 0.3s;
+    }
+    .switch-card-switch.on::after { transform: translateX(24px); }
+
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 70px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="preview">
+    <div class="preview-body">
+      <div class="switch-card">
+        <div class="switch-card-left">
+          <div class="switch-card-icon blue"><img src="../../../demo-components/detail/static/icons/message-circle.svg" alt=""></div>
+          <div class="switch-card-info">
+            <div class="switch-card-title">消息通知</div>
+            <div class="switch-card-desc">接收推送消息</div>
+          </div>
+        </div>
+        <div>
+          <span class="switch-card-status on">已开启</span>
+        </div>
+      </div>
+
+      <div class="switch-card">
+        <div class="switch-card-left">
+          <div class="switch-card-icon green"><img src="../../../demo-components/detail/static/icons/clock.svg" alt=""></div>
+          <div class="switch-card-info">
+            <div class="switch-card-title">定时提醒</div>
+            <div class="switch-card-desc">每日定时推送</div>
+          </div>
+        </div>
+        <div>
+          <span class="switch-card-status off">已关闭</span>
+        </div>
+      </div>
+
+      <div class="switch-card">
+        <div class="switch-card-left">
+          <div class="switch-card-icon orange"><img src="../../../demo-components/detail/static/icons/bell.svg" alt=""></div>
+          <div class="switch-card-info">
+            <div class="switch-card-title">活动提醒</div>
+            <div class="switch-card-desc">最新活动通知</div>
+          </div>
+        </div>
+        <div>
+          <span class="switch-card-status on">已开启</span>
+        </div>
+      </div>
+
+      <div class="switch-card">
+        <div class="switch-card-left">
+          <div class="switch-card-icon purple"><img src="../../../demo-components/detail/static/icons/settings.svg" alt=""></div>
+          <div class="switch-card-info">
+            <div class="switch-card-title">系统设置</div>
+            <div class="switch-card-desc">应用偏好设置</div>
+          </div>
+        </div>
+        <div>
+          <span class="switch-card-status off">已关闭</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title" style="font-size:14px;font-weight:600;color:#333;margin-bottom:12px;">卡片开关</div>
+    <div class="param-title">base-switch 参数</div>
+    <div class="param-row"><span class="param-key">variant:</span><span class="param-val">card</span></div>
+    <div class="param-row"><span class="param-key">showStatus:</span><span class="param-val">true</span></div>
+  </div>
+</body>
+</html>

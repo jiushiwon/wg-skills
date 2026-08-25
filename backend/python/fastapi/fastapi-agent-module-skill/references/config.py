@@ -1,32 +1,39 @@
-# Agent 配置
+# Agent 配置 - 扩展骨架 Settings
+#
+# 本文件不单独定义配置，而是说明如何在骨架的 app/config.py 中扩展 Agent 配置。
+# 使用时请将以下字段添加到骨架的 Settings 类中。
 
-from pydantic_settings import BaseSettings
-from typing import Optional
+"""
+# === 在 app/config.py 的 Settings 类中添加以下字段 ===
 
+# Agent 模块配置
+agent_model: str = "gpt-4o-mini"
+agent_temperature: float = 0.7
+agent_max_tokens: int = 2048
+agent_memory_turns: int = 20
 
-class AgentSettings(BaseSettings):
-    """Agent 配置"""
+# LLM API 配置
+openai_api_key: str | None = None
+openai_base_url: str | None = None
+anthropic_api_key: str | None = None
 
-    # 模型配置
-    AGENT_MODEL: str = "gpt-4o-mini"
-    AGENT_TEMPERATURE: float = 0.7
-    AGENT_MAX_TOKENS: int = 2048
+# === 在 .env.example 中添加以下配置 ===
 
-    # 记忆配置
-    AGENT_MEMORY_TURNS: int = 20
+# Agent 模块配置
+AGENT_MODEL=gpt-4o-mini
+AGENT_TEMPERATURE=0.7
+AGENT_MAX_TOKENS=2048
+AGENT_MEMORY_TURNS=20
 
-    # LLM 配置
-    OPENAI_API_KEY: Optional[str] = None
-    OPENAI_BASE_URL: Optional[str] = None
-    ANTHROPIC_API_KEY: Optional[str] = None
+# OpenAI（可选）
+OPENAI_API_KEY=your-key-here
+OPENAI_BASE_URL=
 
-    # 表前缀
-    TABLE_PREFIX: str = "wg"
+# Anthropic（可选）
+ANTHROPIC_API_KEY=
+"""
 
-    class Config:
-        env_file = ".env"
-        extra = "allow"
-
-
-# 全局配置
-agent_settings = AgentSettings()
+# 使用示例：
+# from app.config import settings
+# model = settings.agent_model
+# api_key = settings.openai_api_key
