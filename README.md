@@ -74,7 +74,7 @@ AI 会根据你的需求自动匹配并调用对应的 Skill。
 看看代码有什么问题
 ```
 
-**详细文档**：[frontend-code-doctor/README.md](frontend-code-doctor/README.md)
+**详细文档**：[frontend-code-doctor/README.md](vibeCoding/frontend/frontend-code-doctor/README.md)
 
 ---
 
@@ -105,7 +105,7 @@ AI 会根据你的需求自动匹配并调用对应的 Skill。
 去除这段文字的AI味
 ```
 
-**详细文档**：[ai-speech-detector/README.md](ai-speech-detector/README.md)
+**详细文档**：[ai-speech-detector/README.md](others/ai-speech-detector/README.md)
 
 ---
 
@@ -149,7 +149,7 @@ AI 会根据你的需求自动匹配并调用对应的 Skill。
 | `scenario` | 查看场景方案 | `scenario admin-dashboard` |
 | `stack` | 查看栈方案 | `stack react-nextjs` |
 
-**详细文档**：[frontend-ui-foundry/README.md](frontend-ui-foundry/README.md)（安装说明 + 8 子命令 + 完整资源索引）
+**详细文档**：[frontend-ui-foundry/README.md](vibeCoding/frontend/frontend-ui-foundry/README.md)（安装说明 + 8 子命令 + 完整资源索引）
 
 ---
 
@@ -180,7 +180,7 @@ Stitch 转代码
 照着设计稿写页面
 ```
 
-**详细文档**：[ui-replica-skill/README.md](ui-replica-skill/README.md)
+**详细文档**：[ui-replica-skill/README.md](vibeCoding/frontend/uniapp/uniapp-ui-replica-skill/README.md)
 
 ---
 
@@ -222,7 +222,7 @@ Stitch 转代码
 - 版本不腐烂：不再维护写死版本号，生成时查询官方源
 - 强制双文档：每个生成项目必带 `api-contract.md`（接口 md，前后端唯一事实来源）+ `docs/project-guide.md`（介绍 & 拓展性文档：技术栈/对接前端/接口范式/拦截器/出入参）
 
-**详细文档**：[backend-generate-skill/README.md](backend-generate-skill/README.md)
+**详细文档**：[backend-generate-skill/README.md](vibeCoding/backend/backend-generate-skill/README.md)
 
 ---
 
@@ -251,7 +251,7 @@ Stitch 转代码
 用 uniapp 搭建一个商城小程序
 ```
 
-**详细文档**：[uniapp-app-generate-skill/README.md](uniapp-app-generate-skill/README.md)
+**详细文档**：[uniapp-app-generate-skill/README.md](vibeCoding/frontend/uniapp/uniapp-app-generate-skill/README.md)
 
 ---
 
@@ -286,7 +286,7 @@ Stitch 转代码
 用 Vue3 搭一个后台管理系统
 ```
 
-**详细文档**：[vue-generate-skill/README.md](vue-generate-skill/README.md)
+**详细文档**：[vue-generate-skill/README.md](vibeCoding/frontend/vue/vue-generate-skill/README.md)
 
 ---
 
@@ -359,7 +359,7 @@ Stitch 转代码
 出一份数据库文档
 ```
 
-**详细文档**：[backend-analysis-skill/README.md](backend-analysis-skill/README.md)
+**详细文档**：[backend-analysis-skill/README.md](vibeCoding/backend/backend-analysis-skill/README.md)
 
 ---
 
@@ -391,7 +391,7 @@ Stitch 转代码
 图标展示
 ```
 
-**详细文档**：[icon-image-catch-skill/README.md](icon-image-catch-skill/README.md)
+**详细文档**：[icon-image-catch-skill/README.md](vibeCoding/frontend/icon-image-catch-skill/README.md)
 
 ---
 
@@ -419,7 +419,7 @@ Stitch 转代码
 做一套 tabBar 图标
 ```
 
-**详细文档**：[image-forge-skill/README.md](image-forge-skill/README.md)
+**详细文档**：[image-forge-skill/README.md](vibeCoding/frontend/image-forge-skill/README.md)
 
 ---
 
@@ -443,7 +443,7 @@ Stitch 转代码
 画个项目上线流程：代码评审 -> 合并 -> 构建 -> 部署 -> 验证
 ```
 
-**详细文档**：[workflow-diagram-skill/README.md](workflow-diagram-skill/README.md)
+**详细文档**：[workflow-diagram-skill/README.md](others/workflow-diagram-skill/README.md)
 
 ---
 
@@ -483,7 +483,7 @@ Stitch 转代码
 - 模块为主、语言为参考：12 模块规划下避免「模块×语言」技能爆炸
 - 二期规划：电商、工作流与定时任务、三方 API 对接、文件存储
 
-**详细文档**：[module-generate-skill/README.md](module-generate-skill/README.md)
+**详细文档**：[module-generate-skill/README.md](vibeCoding/backend/module-generate-skill/README.md)
 
 ---
 
@@ -504,7 +504,7 @@ Stitch 转代码
 skill 安全审计
 ```
 
-**详细文档**：[skill-auditor/README.md](skill-auditor/README.md)
+**详细文档**：[skill-auditor/README.md](others/skill-auditor/README.md)
 
 ---
 
@@ -527,7 +527,7 @@ skill 安全审计
 这篇文案帮我改得像人写的：<粘贴文案>
 ```
 
-**详细文档**：[xhs-style-writer-skill/README.md](xhs-style-writer-skill/README.md)
+**详细文档**：[xhs-style-writer-skill/README.md](others/xhs-style-writer-skill/README.md)
 
 ---
 
@@ -556,7 +556,7 @@ tab高度不一致
 样式审查
 ```
 
-**详细文档**：[frontend-style-harmonizer-skill/README.md](frontend-style-harmonizer-skill/README.md)
+**详细文档**：[frontend-style-harmonizer-skill/README.md](vibeCoding/frontend/frontend-style-harmonizer-skill/README.md)
 
 ---
 
@@ -600,7 +600,7 @@ tab高度不一致
 图标+文字的标签
 ```
 
-**详细文档**：[ui-component-commands-skill/README.md](ui-component-commands-skill/README.md)
+**详细文档**：[ui-component-commands-skill/README.md](vibeCoding/frontend/uniapp/uniapp-ui-component-commands-skill/README.md)
 
 ---
 
@@ -636,7 +636,7 @@ tab高度不一致
 换个主题色 #FF6B6B
 ```
 
-**详细文档**：[ui-template-builder-skill/README.md](ui-template-builder-skill/README.md)
+**详细文档**：[ui-template-builder-skill/README.md](vibeCoding/frontend/uniapp/uniapp-ui-template-builder-skill/README.md)
 
 ---
 
@@ -666,7 +666,7 @@ tab高度不一致
 小程序 App 兼容性问题
 ```
 
-**详细文档**：[uniapp-crossplatform-audit-skill/README.md](uniapp-crossplatform-audit-skill/README.md)
+**详细文档**：[uniapp-crossplatform-audit-skill/README.md](vibeCoding/frontend/uniapp/uniapp-crossplatform-audit-skill/README.md)
 
 ---
 
@@ -701,7 +701,7 @@ uniapp 安全审计
 只审计我还没提交的改动
 ```
 
-**详细文档**：[uniapp-code-audit-skill/README.md](uniapp-code-audit-skill/README.md)
+**详细文档**：[uniapp-code-audit-skill/README.md](vibeCoding/frontend/uniapp/uniapp-code-audit-skill/README.md)
 
 ---
 
@@ -731,7 +731,7 @@ uniapp 规范化
 帮我看看项目结构有什么问题
 ```
 
-**详细文档**：[uniapp-standardization-skill/README.md](uniapp-standardization-skill/README.md)
+**详细文档**：[uniapp-standardization-skill/README.md](vibeCoding/frontend/uniapp/uniapp-standardization-skill/README.md)
 
 ---
 
@@ -761,7 +761,7 @@ uniapp 迁移
 帮我把这个项目从 Vue2 升级到 Vue3
 ```
 
-**详细文档**：[uniapp-vue2-upgrade-skill/README.md](uniapp-vue2-upgrade-skill/README.md)
+**详细文档**：[uniapp-vue2-upgrade-skill/README.md](vibeCoding/frontend/uniapp/uniapp-vue2-upgrade-skill/README.md)
 
 ---
 
@@ -789,7 +789,7 @@ uniapp 开发规范
 接口怎么写
 ```
 
-**详细文档**：[uniapp-standard-skill/README.md](uniapp-standard-skill/README.md)
+**详细文档**：[uniapp-standard-skill/README.md](vibeCoding/frontend/uniapp/uniapp-standard-skill/README.md)
 
 ---
 
@@ -822,7 +822,7 @@ uniapp 开发规范
 替换硬编码颜色
 ```
 
-**详细文档**：[uniapp-style-skill/README.md](uniapp-style-skill/README.md)
+**详细文档**：[uniapp-style-skill/README.md](vibeCoding/frontend/uniapp/uniapp-style-skill/README.md)
 
 ---
 
@@ -851,7 +851,7 @@ uniapp 开发规范
 统一所有硬编码
 ```
 
-**详细文档**：[uniapp-theme-skill/README.md](uniapp-theme-skill/README.md)
+**详细文档**：[uniapp-theme-skill/README.md](vibeCoding/frontend/uniapp/uniapp-theme-skill/README.md)
 
 ---
 
@@ -882,7 +882,7 @@ token 管理
 安全规范
 ```
 
-**详细文档**：[uniapp-components-skill/README.md](uniapp-components-skill/README.md)
+**详细文档**：[uniapp-components-skill/README.md](vibeCoding/frontend/uniapp/uniapp-components-skill/README.md)
 
 ---
 
@@ -939,7 +939,7 @@ token 管理
 把页面做成组件，我能自己填内容
 ```
 
-**详细文档**：[uniapp-page-components-skill/README.md](uniapp-page-components-skill/README.md)
+**详细文档**：[uniapp-page-components-skill/README.md](vibeCoding/frontend/uniapp/uniapp-page-components-skill/README.md)
 
 ---
 
@@ -998,7 +998,7 @@ AI 聊天流式回复
 AI 编程怎么入门
 ```
 
-**详细文档**：[vibecoding-guide-skill/README.md](vibecoding-guide-skill/README.md)
+**详细文档**：[vibecoding-guide-skill/README.md](vibeCoding/vibecoding-guide-skill/README.md)
 
 ---
 
@@ -1033,7 +1033,7 @@ FastAPI 零基础起步
 | Swagger | `/docs`（Swagger UI）+ `/redoc` |
 | 数据库 | MySQL 默认 / PostgreSQL / MongoDB 可选 |
 
-**详细文档**：[fastapi-init-skill/README.md](fastapi-init-skill/README.md)
+**详细文档**：[fastapi-init-skill/README.md](vibeCoding/backend/python/fastapi/fastapi-init-skill/README.md)
 
 ---
 
@@ -1071,40 +1071,48 @@ FastAPI 零基础起步
 
 | Skill | 说明 | 触发关键词 |
 |------|------|-----------|
-| [frontend-code-doctor](frontend-code-doctor/) | 前端代码审查 | `审查代码`、`code review` |
-| [ai-speech-detector](ai-speech-detector/) | AI 风检测 | `AI风`、`AI味`、`像AI写的` |
-| [frontend-ui-foundry](frontend-ui-foundry/) | 综合前端 UI | `生成 UI`、`优化项目`、`Token 统一` |
-| [ui-replica-skill](ui-replica-skill/) | UI 原型图复刻（读图→结构化→Token→组件→代码） | `复刻这张图`、`Figma 转代码`、`Stitch 转代码`、`原型图复刻` |
-| [backend-generate-skill](backend-generate-skill/) | 后端项目骨架生成（7 子技能：选型/规范/Java/Go/Python/Node/数据库） | `生成后端`、`backend generate`、`用 Java/Go/Python/Node 写后端` |
-| [uniapp-app-generate-skill](uniapp-app-generate-skill/) | uni-app 项目生成 | `uniapp 小程序`、`初始化微信小程序` |
-| [vue-generate-skill](vue-generate-skill/) | Vue3 + TS 项目生成（纯前端 SPA：后台/H5/工具站；CLAUDE.md ≤50 行强约束；CSS 变量主题 + Element Plus + Pinia） | `Vue3 项目`、`Vue 后台`、`初始化 Vue3 模板`、`Vue H5` |
-| [super-deploy-skills](super-deploy-skills/) | 一键部署套件（5 子技能：检测/装机/Nginx/原生/Docker） | `部署项目`、`一键部署`、`deploy`、`Docker 部署` |
-| [backend-analysis-skill](backend-analysis-skill/) | 后端项目全景分析（接口/技术栈/数据库/业务 4 份报告） | `分析后端项目`、`梳理接口`、`盘点技术栈`、`出数据库文档`、`接手老项目` |
-| [icon-image-catch-skill](icon-image-catch-skill/) | 素材抓取套件（2 子技能：图标抓取 Iconify 免 Key + SVG→PNG + 图标展示 class / 图片抓取自定义源·三源自动降级·Lorem Flickr 无 Key 语义兜底·Picsum 占位兜底 + 本地压缩切图 + 项目素材审计·自动探测项目类型与平台尺寸·扫描项目自动抓取） | `抓图标`、`下载 icon`、`抓图片`、`找配图`、`背景图`、`项目素材审计`、`图标展示`、`扫描项目` |
-| [image-forge-skill](image-forge-skill/) | 图片处理 + 图标生成工具：压缩/转格式/改尺寸/裁剪/base64/水印/遮罩/多图合成 + SVG→PNG 成套图标渲染 | `压缩图片`、`转 webp`、`改尺寸`、`裁剪图片`、`加水印`、`图片合成`、`base64 图片`、`处理图片`、`生成图标`、`做一套 tabBar 图标` |
-| [workflow-diagram-skill](workflow-diagram-skill/) | 一句话生成流程图（4 风格 + 24 模板 + SVG/PNG） | `画个流程图`、`生成流程图`、`vibe coding 流程图`、`cute 风格` |
-| [module-generate-skill](module-generate-skill/) | 后端业务模块生成套件（5 子技能：登录鉴权/组织权限/AI 聊天/短信邮箱/支付） | `加登录`、`加权限`、`RBAC`、`对接支付`、`短信验证码`、`AI 聊天`、`带记忆的对话` |
-| [skill-auditor](skill-auditor/) | Skill 安全审计（6 维度：数据外泄/供应链/破坏命令/注入话术/权限放大/货不对板） | `审查 skill`、`检测有毒吗`、`skill 安全审计`、`audit skill` |
-| [xhs-style-writer-skill](xhs-style-writer-skill/) | 小红书个人风格写作（建档/写作/去 AI 味三模式） | `写小红书笔记`、`种草笔记`、`爆款标题`、`学我的风格写`、`去 AI 味` |
-| [frontend-style-harmonizer-skill](frontend-style-harmonizer-skill/) | 前端样式一致性治理（复用抽取/对齐收敛/硬编码变量化） | `统一各页面样式`、`样式对齐`、`去硬编码`、`按钮对齐`、`tab高度不一致`、`样式治理` |
-| [ui-component-commands-skill](ui-component-commands-skill/) | UI组件指令系统（按钮/线条/图形/组合） | `做按钮`、`加分割线`、`图标+标签`、`半圆`、`徽章` |
-| [uniapp-crossplatform-audit-skill](uniapp-crossplatform-audit-skill/) | uniapp 跨平台兼容性审计 | `多端兼容`、`跨平台审计`、`小程序 App 兼容` |
-| [uniapp-code-audit-skill](uniapp-code-audit-skill/) | uniapp 代码审计（8 维度体检：安全/性能/代码质量/架构/UI/跨平台/小程序/API 契约，P0-P3 分级，报告-only） | `uniapp 审计`、`小程序代码审计`、`漏洞扫描`、`uniapp 安全审计`、`只审计未提交改动` |
-| [uniapp-standardization-skill](uniapp-standardization-skill/) | uniapp 项目规范化 | `uniapp 规范化`、`项目结构诊断`、`代码规范` |
-| [uniapp-vue2-upgrade-skill](uniapp-vue2-upgrade-skill/) | uniapp Vue2 升级到 Vue3 | `vue2 升级 vue3`、`uniapp 迁移`、`小程序升级` |
-| [uniapp-standard-skill](uniapp-standard-skill/) | uniapp 开发规范（20 红线 + 8 文档） | `uniapp 开发规范`、`接口怎么写` |
-| [uniapp-style-skill](uniapp-style-skill/) | uniapp 设计系统与组件规范（14 红线 + 审计修复） | `Design Tokens`、`组件规范`、`样式规范`、`深色模式`、`设计审计` |
-| [uniapp-theme-skill](uniapp-theme-skill/) | uni-app 主题系统：一键换肤 | `添加主题系统`、`换主题`、`统一硬编码` |
-| [uniapp-page-components-skill](uniapp-page-components-skill/) | uniapp 常用组件化页面技能（21 组件：5 基础 + 6 业务 + 10 页面，BaseCard 托底 + 主题自动检测对齐 + 替换 tabBar/导航栏） | `组件化页面`、`聊天页`、`朋友圈`、`商品详情页`、`订单列表页`、`我的页面/设置页`、`搜索页`、`登录页`、`首页`、`用户卡片/评论条`、`通知栏`、`空状态/结果页`、`自定义按钮/底部菜单`、`卡片圆角调整` |
-| [uniapp-components-skill](uniapp-components-skill/) | uniapp 登录鉴权与安全规范 | `登录鉴权怎么做`、`token 管理`、`401 处理`、`安全规范` |
-| [uniapp-request-skill](uniapp-request-skill/) | uniapp 请求层设计（request.ts 封装/鉴权拦截/防抖/Mock/SSE） | `请求封装`、`request.ts 怎么写`、`Token 刷新`、`SSE 流式请求` |
-| [vibecoding-guide-skill](vibecoding-guide-skill/) | VibeCoding / AI 开发知识导师（3 子技能） | `/vibecoding`、`我想学 VibeCoding` |
-| [ui-template-builder-skill](ui-template-builder-skill/) | UI 页面模板构建器（37 套模板 + 5 套风格 + Mock 数据 + 一键换肤） | `生成页面`、`做个个人中心`、`数据大屏`、`换个主题色` |
-| [fastapi-init-skill](fastapi-init-skill/) | FastAPI 一键初始化（环境探测 + 自动安装 + SSE 流式 + JWT 鉴权 + 一键脚本 + MySQL/PG/Mongo） | `FastAPI 脚手架`、`初始化 FastAPI 项目`、`fastapi init`、`搭建 FastAPI 服务`、`Python Web 骨架` |
+| [frontend-code-doctor](vibeCoding/frontend/frontend-code-doctor/) | 前端代码审查 | `审查代码`、`code review` |
+| [ai-speech-detector](others/ai-speech-detector/) | AI 风检测 | `AI风`、`AI味`、`像AI写的` |
+| [frontend-ui-foundry](vibeCoding/frontend/frontend-ui-foundry/) | 综合前端 UI | `生成 UI`、`优化项目`、`Token 统一` |
+| [ui-replica-skill](vibeCoding/frontend/uniapp/uniapp-ui-replica-skill/) | UI 原型图复刻（读图→结构化→Token→组件→代码） | `复刻这张图`、`Figma 转代码`、`Stitch 转代码`、`原型图复刻` |
+| [backend-generate-skill](vibeCoding/backend/backend-generate-skill/) | 后端项目骨架生成（7 子技能：选型/规范/Java/Go/Python/Node/数据库） | `生成后端`、`backend generate`、`用 Java/Go/Python/Node 写后端` |
+| [uniapp-app-generate-skill](vibeCoding/frontend/uniapp/uniapp-app-generate-skill/) | uni-app 项目生成 | `uniapp 小程序`、`初始化微信小程序` |
+| [vue-generate-skill](vibeCoding/frontend/vue/vue-generate-skill/) | Vue3 + TS 项目生成（纯前端 SPA：后台/H5/工具站；CLAUDE.md ≤50 行强约束；CSS 变量主题 + Element Plus + Pinia） | `Vue3 项目`、`Vue 后台`、`初始化 Vue3 模板`、`Vue H5` |
+| [vue-base-skill](vibeCoding/frontend/vue/vue-base-skill/) | Vue 3 业务组件库（base-* 系列，零第三方，强依赖 vue-theme-skill Token） | `vue 卡片`、`vue 表格`、`vue 自研组件`、`不使用 Element Plus` |
+| [vue-theme-skill](vibeCoding/frontend/vue/vue-theme-skill/) | Vue 3 主题系统（HSL 算法色阶 + 多主题 + Token 层，对齐 uniapp-theme-skill） | `vue 主题`、`设计变量`、`theme token`、`vue 多主题`、`CSS 变量` |
+| [super-deploy-skills](vibeCoding/super-deploy-skills/) | 一键部署套件（5 子技能：检测/装机/Nginx/原生/Docker） | `部署项目`、`一键部署`、`deploy`、`Docker 部署` |
+| [backend-analysis-skill](vibeCoding/backend/backend-analysis-skill/) | 后端项目全景分析（接口/技术栈/数据库/业务 4 份报告） | `分析后端项目`、`梳理接口`、`盘点技术栈`、`出数据库文档`、`接手老项目` |
+| [icon-image-catch-skill](vibeCoding/frontend/icon-image-catch-skill/) | 素材抓取套件（2 子技能：图标抓取 Iconify 免 Key + SVG→PNG + 图标展示 class / 图片抓取自定义源·三源自动降级·Lorem Flickr 无 Key 语义兜底·Picsum 占位兜底 + 本地压缩切图 + 项目素材审计·自动探测项目类型与平台尺寸·扫描项目自动抓取） | `抓图标`、`下载 icon`、`抓图片`、`找配图`、`背景图`、`项目素材审计`、`图标展示`、`扫描项目` |
+| [image-forge-skill](vibeCoding/frontend/image-forge-skill/) | 图片处理 + 图标生成工具：压缩/转格式/改尺寸/裁剪/base64/水印/遮罩/多图合成 + SVG→PNG 成套图标渲染 | `压缩图片`、`转 webp`、`改尺寸`、`裁剪图片`、`加水印`、`图片合成`、`base64 图片`、`处理图片`、`生成图标`、`做一套 tabBar 图标` |
+| [workflow-diagram-skill](others/workflow-diagram-skill/) | 一句话生成流程图（4 风格 + 24 模板 + SVG/PNG） | `画个流程图`、`生成流程图`、`vibe coding 流程图`、`cute 风格` |
+| [module-generate-skill](vibeCoding/backend/module-generate-skill/) | 后端业务模块生成套件（5 子技能：登录鉴权/组织权限/AI 聊天/短信邮箱/支付） | `加登录`、`加权限`、`RBAC`、`对接支付`、`短信验证码`、`AI 聊天`、`带记忆的对话` |
+| [springboot-init-skill](vibeCoding/backend/java/springboot/springboot-init-skill/) | Spring Boot 一键初始化（环境探测 + 自动安装 + SSE + JWT + 一键脚本 + MySQL/PG/Mongo，面向零基础） | `Spring Boot 脚手架`、`Spring Boot 一键生成`、`初始化 Spring Boot`、`springboot init`、`Java Web 骨架` |
+| [java-auth-module-skill](vibeCoding/backend/java/springboot/java-auth-module-skill/) | Java 鉴权与企业组织架构模块（RBAC + 角色菜单 + 部门/岗位/租户 + 数据权限） | `Java 授权模块`、`Spring Boot 权限模块`、`RBAC 模块`、`角色菜单权限`、`java-auth-module` |
+| [skill-auditor](others/skill-auditor/) | Skill 安全审计（6 维度：数据外泄/供应链/破坏命令/注入话术/权限放大/货不对板） | `审查 skill`、`检测有毒吗`、`skill 安全审计`、`audit skill` |
+| [xhs-style-writer-skill](others/xhs-style-writer-skill/) | 小红书个人风格写作（建档/写作/去 AI 味三模式） | `写小红书笔记`、`种草笔记`、`爆款标题`、`学我的风格写`、`去 AI 味` |
+| [frontend-style-harmonizer-skill](vibeCoding/frontend/frontend-style-harmonizer-skill/) | 前端样式一致性治理（复用抽取/对齐收敛/硬编码变量化） | `统一各页面样式`、`样式对齐`、`去硬编码`、`按钮对齐`、`tab高度不一致`、`样式治理` |
+| [frontend-request-skill](vibeCoding/frontend/frontend-request-skill/) | 前端请求层设计（通用 + uniapp 双规范，11 项要点） | `请求封装`、`request.ts 怎么写`、`Token 刷新`、`SSE 流式请求`、`uniapp 请求层` |
+| [ui-component-commands-skill](vibeCoding/frontend/uniapp/uniapp-ui-component-commands-skill/) | UI组件指令系统（按钮/线条/图形/组合） | `做按钮`、`加分割线`、`图标+标签`、`半圆`、`徽章` |
+| [uniapp-crossplatform-audit-skill](vibeCoding/frontend/uniapp/uniapp-crossplatform-audit-skill/) | uniapp 跨平台兼容性审计 | `多端兼容`、`跨平台审计`、`小程序 App 兼容` |
+| [uniapp-code-audit-skill](vibeCoding/frontend/uniapp/uniapp-code-audit-skill/) | uniapp 代码审计（8 维度体检：安全/性能/代码质量/架构/UI/跨平台/小程序/API 契约，P0-P3 分级，报告-only） | `uniapp 审计`、`小程序代码审计`、`漏洞扫描`、`uniapp 安全审计`、`只审计未提交改动` |
+| [uniapp-standardization-skill](vibeCoding/frontend/uniapp/uniapp-standardization-skill/) | uniapp 项目规范化 | `uniapp 规范化`、`项目结构诊断`、`代码规范` |
+| [uniapp-vue2-upgrade-skill](vibeCoding/frontend/uniapp/uniapp-vue2-upgrade-skill/) | uniapp Vue2 升级到 Vue3 | `vue2 升级 vue3`、`uniapp 迁移`、`小程序升级` |
+| [uniapp-standard-skill](vibeCoding/frontend/uniapp/uniapp-standard-skill/) | uniapp 开发规范（20 红线 + 8 文档） | `uniapp 开发规范`、`接口怎么写` |
+| [uniapp-style-skill](vibeCoding/frontend/uniapp/uniapp-style-skill/) | uniapp 设计系统与组件规范（14 红线 + 审计修复） | `Design Tokens`、`组件规范`、`样式规范`、`深色模式`、`设计审计` |
+| [uniapp-theme-skill](vibeCoding/frontend/uniapp/uniapp-theme-skill/) | uni-app 主题系统：一键换肤 | `添加主题系统`、`换主题`、`统一硬编码` |
+| [uniapp-page-components-skill](vibeCoding/frontend/uniapp/uniapp-page-components-skill/) | uniapp 常用组件化页面技能（22 组件：6 基础 + 6 业务 + 10 页面，BaseCard 托底 + 主题自动检测对齐 + 替换 tabBar/导航栏） | `组件化页面`、`聊天页`、`朋友圈`、`商品详情页`、`订单列表页`、`我的页面/设置页`、`搜索页`、`登录页`、`首页`、`用户卡片/评论条`、`通知栏`、`空状态/结果页`、`自定义按钮/底部菜单`、`卡片圆角调整` |
+| [uniapp-components-skill](vibeCoding/frontend/uniapp/uniapp-components-skill/) | uniapp 登录鉴权与安全规范 | `登录鉴权怎么做`、`token 管理`、`401 处理`、`安全规范` |
+| [uniapp-request-skill](vibeCoding/frontend/uniapp/uniapp-request-skill/) | uniapp 请求层设计（request.ts 封装/鉴权拦截/防抖/Mock/SSE） | `请求封装`、`request.ts 怎么写`、`Token 刷新`、`SSE 流式请求` |
+| [vibecoding-guide-skill](vibeCoding/vibecoding-guide-skill/) | VibeCoding / AI 开发知识导师（3 子技能） | `/vibecoding`、`我想学 VibeCoding` |
+| [ui-template-builder-skill](vibeCoding/frontend/uniapp/uniapp-ui-template-builder-skill/) | UI 页面模板构建器（37 套模板 + 5 套风格 + Mock 数据 + 一键换肤） | `生成页面`、`做个个人中心`、`数据大屏`、`换个主题色` |
+| [fastapi-init-skill](vibeCoding/backend/python/fastapi/fastapi-init-skill/) | FastAPI 一键初始化（环境探测 + 自动安装 + SSE 流式 + JWT 鉴权 + 一键脚本 + MySQL/PG/Mongo） | `FastAPI 脚手架`、`初始化 FastAPI 项目`、`fastapi init`、`搭建 FastAPI 服务`、`Python Web 骨架` |
+| [fastapi-auth-module-skill](vibeCoding/backend/python/fastapi/fastapi-auth-module-skill/) | FastAPI 鉴权模块（JWT + RBAC + 用户/角色/权限） | `FastAPI 鉴权模块`、`FastAPI JWT`、`FastAPI RBAC` |
+| [fastapi-agent-module-skill](vibeCoding/backend/python/fastapi/fastapi-agent-module-skill/) | FastAPI AI Agent 模块（LangGraph + Tool + 记忆 + 多轮对话 + tenacity 重试） | `FastAPI AI Agent`、`LangGraph Agent`、`AI 对话模块`、`FastAPI Tool` |
+| [fastapi-ws-module-skill](vibeCoding/backend/python/fastapi/fastapi-ws-module-skill/) | FastAPI WebSocket 模块（长连接 + 单聊 + 离线消息 + 未读 + 会话管理） | `FastAPI WebSocket`、`WS 聊天`、`IM 模块`、`即时通信`、`添加 WebSocket` |
 | [video/remotion-skill](video/remotion-skill/) | Remotion 社媒口播视频生成（文案 → 可编辑项目 → 一键渲染 → FFmpeg 后期） | `remotion`、`口播视频`、`生成视频`、`9x16 视频`、`渲染 Remotion 项目` |
 | [video/ffmpeg-skill](video/ffmpeg-skill/) | FFmpeg 多媒体处理（自然语言 → 正确 ffmpeg 命令，覆盖剪辑/转码/水印/合成/提取等 8 大类） | `ffmpeg`、`视频剪辑`、`视频转码`、`视频压缩`、`去水印`、`加水印`、`视频拼接`、`视频合成`、`提取音频`、`视频转 GIF`、`倍速播放`、`画中画`、`给视频加字幕` |
 
-> 注：`demo/foundry-demo` 是 [frontend-ui-foundry](frontend-ui-foundry/) 的端到端示例，不是独立 Skill。
+> 注：`demo/foundry-demo` 是 [frontend-ui-foundry](vibeCoding/frontend/frontend-ui-foundry/) 的端到端示例，不是独立 Skill。
 > 注：`super-deploy-skills` 是父技能，包含 5 个子技能，统一放在 `super-deploy-skills/` 目录下；`deploy-detect-skill` 是其余子技能的共享前置。
 
 ---
@@ -1536,7 +1544,6 @@ wg-skills/
 │   └── references/
 │       ├── page-specs.md              # 各组件 API + 默认数据 + 完整页面示例
 │       ├── theme-integration.md       # 主题变量清单 + 无主题系统 fallback 表 + easycom + 状态栏适配
-│       ├── theme-detect.md            # 主题系统自动检测与对齐
 │       └── theme-detect.md            # 主题系统自动检测与对齐
 ├── uniapp-request-skill/               # uniapp 请求层设计
 │   ├── SKILL.md
