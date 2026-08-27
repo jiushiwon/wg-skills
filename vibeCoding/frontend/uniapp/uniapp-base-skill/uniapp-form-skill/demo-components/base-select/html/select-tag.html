@@ -28,46 +28,57 @@
   </style>
 </head>
 <body>
+  <!-- 图标 sprite（内联，避免跨域） -->
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 6L9 17l-5-5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6L6 18M6 6l12 12"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-9"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 6l6 6l-6 6"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol>
+    <symbol id="i-dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2" fill="currentColor"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7l-7 7"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21l-4.3-4.3"/></g></symbol>
+  </svg>
   <div class="preview base-card">
     <div class="preview-header base-card__header">标签多选</div>
     <div class="preview-body base-card__body">
       <div style="font-size: 14px; color: #666; margin-bottom: 12px;">选择兴趣爱好（可多选）</div>
       <div class="select-tag-group">
         <div class="select-tag selected" onclick="toggleTag(this)">
-          <span class="check-icon">✓</span> 音乐
+          <svg class="icon icon-14 icon-primary"><use href="#i-check"/></svg> 音乐
         </div>
         <div class="select-tag" onclick="toggleTag(this)">
-          <span class="check-icon">✓</span> 电影
+          <svg class="icon icon-14 icon-primary"><use href="#i-check"/></svg> 电影
         </div>
         <div class="select-tag" onclick="toggleTag(this)">
-          <span class="check-icon">✓</span> 阅读
+          <svg class="icon icon-14 icon-primary"><use href="#i-check"/></svg> 阅读
         </div>
         <div class="select-tag selected" onclick="toggleTag(this)">
-          <span class="check-icon">✓</span> 旅行
+          <svg class="icon icon-14 icon-primary"><use href="#i-check"/></svg> 旅行
         </div>
         <div class="select-tag" onclick="toggleTag(this)">
-          <span class="check-icon">✓</span> 摄影
+          <svg class="icon icon-14 icon-primary"><use href="#i-check"/></svg> 摄影
         </div>
         <div class="select-tag" onclick="toggleTag(this)">
-          <span class="check-icon">✓</span> 健身
+          <svg class="icon icon-14 icon-primary"><use href="#i-check"/></svg> 健身
         </div>
         <div class="select-tag selected" onclick="toggleTag(this)">
-          <span class="check-icon">✓</span> 美食
+          <svg class="icon icon-14 icon-primary"><use href="#i-check"/></svg> 美食
         </div>
         <div class="select-tag" onclick="toggleTag(this)">
-          <span class="check-icon">✓</span> 游戏
+          <svg class="icon icon-14 icon-primary"><use href="#i-check"/></svg> 游戏
         </div>
         <div class="select-tag" onclick="toggleTag(this)">
-          <span class="check-icon">✓</span> 科技
+          <svg class="icon icon-14 icon-primary"><use href="#i-check"/></svg> 科技
         </div>
         <div class="select-tag" onclick="toggleTag(this)">
-          <span class="check-icon">✓</span> 艺术
+          <svg class="icon icon-14 icon-primary"><use href="#i-check"/></svg> 艺术
         </div>
         <div class="select-tag" onclick="toggleTag(this)">
-          <span class="check-icon">✓</span> 时尚
+          <svg class="icon icon-14 icon-primary"><use href="#i-check"/></svg> 时尚
         </div>
         <div class="select-tag" onclick="toggleTag(this)">
-          <span class="check-icon">✓</span> 运动
+          <svg class="icon icon-14 icon-primary"><use href="#i-check"/></svg> 运动
         </div>
       </div>
     </div>

@@ -99,9 +99,38 @@
     }
     .container-note strong { color: var(--color-primary); }
     code { background: #f0f0f0; padding: 1px 6px; border-radius: 4px; font-size: 12px; }
+
+    /* 图标系统（Lucide 风格） */
+    .icon {
+      display: inline-block;
+      width: 1em; height: 1em;
+      vertical-align: -0.125em;
+      fill: none; stroke: currentColor;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+    .icon-12 { font-size: 12px; }
+    .icon-14 { font-size: 14px; }
+    .icon-16 { font-size: 16px; }
+    .icon-18 { font-size: 18px; }
+    .icon-20 { font-size: 20px; }
+    .icon-24 { font-size: 24px; }
+    .icon-primary { color: var(--color-primary); }
+    .icon-secondary { color: var(--color-text-secondary); }
+    .icon-tertiary { color: var(--color-text-tertiary); }
   </style>
 </head>
 <body>
+  <!-- 图标 sprite（内联，避免跨域） -->
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7l-7 7"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-9"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 6l6 6l-6 6"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m-7 7l7-7l7 7"/></symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m7 7l-7-7l7-7"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6L6 18M6 6l12 12"/></symbol>
+  </svg>
+
   <h1>base-popup · 4 方向总览</h1>
   <p class="desc">通用弹窗/抽屉容器 · 内置 base-card · slide in/out 动画 · 圆角智能应用</p>
 
@@ -113,11 +142,11 @@
       </div>
       <div class="card-body base-card__body">
         <div>
-          <div class="arrow-icon">↑</div>
+          <div class="arrow-icon"><svg class="icon icon-24 icon-primary"><use href="#i-arrow-up"/></svg></div>
           <div>圆角在顶部<br/>操作菜单 / 分享 / 选择器</div>
         </div>
       </div>
-      <a class="card-link" href="popup-bottom.html">查看 demo →</a>
+      <a class="card-link" href="popup-bottom.html">查看 demo <svg class="icon icon-14"><use href="#i-arrow-right"/></svg></a>
     </div>
 
     <div class="card base-card">
@@ -127,11 +156,11 @@
       </div>
       <div class="card-body base-card__body">
         <div>
-          <div class="arrow-icon">↓</div>
+          <div class="arrow-icon"><svg class="icon icon-24 icon-primary"><use href="#i-chevron-down"/></svg></div>
           <div>圆角在底部<br/>系统通知 / 公告</div>
         </div>
       </div>
-      <a class="card-link" href="popup-top.html">查看 demo →</a>
+      <a class="card-link" href="popup-top.html">查看 demo <svg class="icon icon-14"><use href="#i-arrow-right"/></svg></a>
     </div>
 
     <div class="card base-card">
@@ -141,11 +170,11 @@
       </div>
       <div class="card-body base-card__body">
         <div>
-          <div class="arrow-icon">→</div>
+          <div class="arrow-icon"><svg class="icon icon-24 icon-primary"><use href="#i-arrow-right"/></svg></div>
           <div>圆角在右侧<br/>侧滑导航 / 个人中心</div>
         </div>
       </div>
-      <a class="card-link" href="popup-left.html">查看 demo →</a>
+      <a class="card-link" href="popup-left.html">查看 demo <svg class="icon icon-14"><use href="#i-arrow-right"/></svg></a>
     </div>
 
     <div class="card base-card">
@@ -155,21 +184,21 @@
       </div>
       <div class="card-body base-card__body">
         <div>
-          <div class="arrow-icon">←</div>
+          <div class="arrow-icon"><svg class="icon icon-24 icon-primary"><use href="#i-arrow-left"/></svg></div>
           <div>圆角在左侧<br/>筛选面板 / 侧边设置</div>
         </div>
       </div>
-      <a class="card-link" href="popup-right.html">查看 demo →</a>
+      <a class="card-link" href="popup-right.html">查看 demo <svg class="icon icon-14"><use href="#i-arrow-right"/></svg></a>
     </div>
   </div>
 
   <div class="container-note">
-    <strong>📦 容器原则</strong>：所有 base-popup demo 都是 base-card 容器。
+    <strong><svg class="icon icon-14" style="vertical-align:-2px"><use href="#i-bell"/></svg> 容器原则</strong>：所有 base-popup demo 都是 base-card 容器。
     内部结构（<code>.card-header</code> / <code>.card-body</code> / <code>.card-footer</code>）<strong>全部来自 base-card 的内置结构</strong>，
     通过 slot 由 base-popup 自动转发：
-    <br/>• <code>#header-right</code> → 关闭按钮 / 操作
-    <br/>• 默认 slot → 弹窗主体内容
-    <br/>• <code>#footer</code> → 底部操作按钮
+    <br/>• <code>#header-right</code> <svg class="icon icon-12"><use href="#i-arrow-right"/></svg> 关闭按钮 / 操作
+    <br/>• 默认 slot <svg class="icon icon-12"><use href="#i-arrow-right"/></svg> 弹窗主体内容
+    <br/>• <code>#footer</code> <svg class="icon icon-12"><use href="#i-arrow-right"/></svg> 底部操作按钮
   </div>
 </body>
 </html>

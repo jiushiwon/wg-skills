@@ -129,3 +129,39 @@ body {
 .popup-content > .card-header,
 .popup-content > .card-body,
 .popup-content > .card-footer { padding-left: var(--space-4); padding-right: var(--space-4); }
+
+/* ============================================
+ * 图标系统（Lucide 风格，统一 currentColor）
+ * 使用：<svg class="icon icon-16"><use href="#i-check"/></svg>
+ * 必须在文档里内联一次 SVG sprite（display:none）：
+ * <svg style="display:none"><symbol id="i-check" ...>...</symbol></svg>
+ * ============================================ */
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+  color: inherit;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+/* 尺寸 */
+.icon-12 { font-size: 12px; }
+.icon-14 { font-size: 14px; }
+.icon-16 { font-size: 16px; }
+.icon-18 { font-size: 18px; }
+.icon-20 { font-size: 20px; }
+.icon-22 { font-size: 22px; }
+.icon-24 { font-size: 24px; }
+.icon-32 { font-size: 32px; }
+/* 颜色 */
+.icon-primary { color: var(--color-primary); }
+.icon-success { color: var(--color-success); }
+.icon-warning { color: var(--color-warning); }
+.icon-secondary { color: var(--color-text-secondary); }
+.icon-tertiary { color: var(--color-text-tertiary); }
+.icon-white { color: #fff; }
