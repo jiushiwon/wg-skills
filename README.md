@@ -197,7 +197,7 @@ Stitch 转代码
 | [java-backend-skill](backend-generate-skill/java-backend-skill/) | Spring Boot 项目生成 | `用 Java 写后端`、`Spring Boot` |
 | [go-backend-skill](backend-generate-skill/go-backend-skill/) | Gin 项目生成 | `用 Go 写后端`、`Gin 项目` |
 | [python-backend-skill](backend-generate-skill/python-backend-skill/) | FastAPI 项目生成 | `用 Python 写后端`、`FastAPI` |
-| [nodejs-backend-skill](backend-generate-skill/nodejs-backend-skill/) | Express / NestJS 项目生成 | `用 Node 写后端`、`Express`、`NestJS` |
+| [nodejs-backend-skill](backend-generate-skill/nodejs-backend-skill/) | Express 项目生成 | `用 Node 写后端`、`Express 项目`、`Express 脚手架` |
 | [database-skill](backend-generate-skill/database-skill/) | PG/MySQL/Mongo 选型与迁移 | `数据库选型`、`schema 设计` |
 
 **使用场景**：
@@ -255,6 +255,41 @@ Stitch 转代码
 
 ---
 
+### 6.1 vue-generate-skill 🟢
+
+> Vue3 + TypeScript 项目生成技能（纯前端 SPA 方向：后台 / H5 / 工具站 / 文档站）
+
+**功能**：从零生成标准化 Vue 3 + TypeScript + Vite + Pinia 项目。基于 `create-vue` 官方脚手架 + CLAUDE.md ≤50 行强约束 + CSS 变量主题 + Element Plus 集成 + axios 拦截器 + 路由守卫。设计哲学：**少即是多**（反对 1800 行 AGENTS.md、反对 23 个检查脚本、反对代码量 = 质量的误区）。
+
+**与 uniapp-app-generate-skill 的区别**：
+- 目标平台：浏览器（uniapp 是小程序 + H5 + App 三端）
+- UI 库：Element Plus（uniapp 是内置组件）
+- 主题方案：CSS 变量（uniapp 是 SCSS 色阶）
+- 无跨平台抽象、无 `pages.json`
+
+**使用场景**：
+- 新建 Vue3 后台管理系统
+- 新建 Vue3 H5 / 工具型网站 / 文档站
+- 为后端接口生成配套前端 SPA
+
+**使用方式**：
+
+```
+/vue-generate-skill
+```
+
+或自然语言：
+
+```
+帮我做一个 Vue3 项目
+初始化一个 Vue3 + TS 模板
+用 Vue3 搭一个后台管理系统
+```
+
+**详细文档**：[vue-generate-skill/README.md](vue-generate-skill/README.md)
+
+---
+
 ### 7. super-deploy-skills 🚀
 
 > 一键部署技能套件（父技能 + 5 个子技能，统一放在 `super-deploy-skills/` 目录下）
@@ -298,7 +333,7 @@ Stitch 转代码
 
 > 后端项目全景分析技能：不运行项目，静态扫描源码，一次产出 4 份报告
 
-**功能**：接手陌生后端项目时，一次回答四个问题——**有哪些接口？用了什么技术？数据库长什么样？业务怎么跑？** 支持 Java(Spring Boot/Cloud)、Go(Gin/Echo)、Python(FastAPI/Django/Flask)、Node.js(Express/NestJS)。
+**功能**：接手陌生后端项目时，一次回答四个问题——**有哪些接口？用了什么技术？数据库长什么样？业务怎么跑？** 支持 Java(Spring Boot/Cloud)、Go(Gin/Echo)、Python(FastAPI/Django/Flask)、Node.js(Express)。
 
 | 报告 | 内容 |
 |------|------|
@@ -1042,6 +1077,7 @@ FastAPI 零基础起步
 | [ui-replica-skill](ui-replica-skill/) | UI 原型图复刻（读图→结构化→Token→组件→代码） | `复刻这张图`、`Figma 转代码`、`Stitch 转代码`、`原型图复刻` |
 | [backend-generate-skill](backend-generate-skill/) | 后端项目骨架生成（7 子技能：选型/规范/Java/Go/Python/Node/数据库） | `生成后端`、`backend generate`、`用 Java/Go/Python/Node 写后端` |
 | [uniapp-app-generate-skill](uniapp-app-generate-skill/) | uni-app 项目生成 | `uniapp 小程序`、`初始化微信小程序` |
+| [vue-generate-skill](vue-generate-skill/) | Vue3 + TS 项目生成（纯前端 SPA：后台/H5/工具站；CLAUDE.md ≤50 行强约束；CSS 变量主题 + Element Plus + Pinia） | `Vue3 项目`、`Vue 后台`、`初始化 Vue3 模板`、`Vue H5` |
 | [super-deploy-skills](super-deploy-skills/) | 一键部署套件（5 子技能：检测/装机/Nginx/原生/Docker） | `部署项目`、`一键部署`、`deploy`、`Docker 部署` |
 | [backend-analysis-skill](backend-analysis-skill/) | 后端项目全景分析（接口/技术栈/数据库/业务 4 份报告） | `分析后端项目`、`梳理接口`、`盘点技术栈`、`出数据库文档`、`接手老项目` |
 | [icon-image-catch-skill](icon-image-catch-skill/) | 素材抓取套件（2 子技能：图标抓取 Iconify 免 Key + SVG→PNG + 图标展示 class / 图片抓取自定义源·三源自动降级·Lorem Flickr 无 Key 语义兜底·Picsum 占位兜底 + 本地压缩切图 + 项目素材审计·自动探测项目类型与平台尺寸·扫描项目自动抓取） | `抓图标`、`下载 icon`、`抓图片`、`找配图`、`背景图`、`项目素材审计`、`图标展示`、`扫描项目` |
@@ -1243,12 +1279,10 @@ wg-skills/
 │   │   ├── SKILL.md
 │   │   ├── README.md
 │   │   └── references/skeleton.md   # 含 project-guide 填充段
-│   ├── nodejs-backend-skill/        # Express / NestJS 生成器
+│   ├── nodejs-backend-skill/        # Express 生成器
 │   │   ├── SKILL.md
 │   │   ├── README.md
-│   │   └── references/
-│   │       ├── skeleton-express.md  # 含 project-guide 填充段
-│   │       └── skeleton-nestjs.md   # 含 project-guide 填充段
+│   │   └── references/skeleton.md   # 含 project-guide 填充段
 │   └── database-skill/              # PG/MySQL/Mongo 选型与迁移
 │       ├── SKILL.md
 │       ├── README.md
