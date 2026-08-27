@@ -1,12 +1,68 @@
+---
+name: base-select
+description: "uni-app 下拉选择组件：13 种形态统一收敛（下拉/弹出面板/标签多选/城市级联/搜索/宫格/分组/级联/树形/异步搜索/可创建），所有选择场景优先使用本组件避免样式碎片化。"
+argument-hint: "[形态: dropdown|popup|tag|city|search|grid] [选项数据 JSON]"
+user-invocable: true
+triggers:
+  - "做一个下拉选择"
+  - "做一个下拉框"
+  - "做一个弹出面板选择"
+  - "做一个标签多选"
+  - "做一个城市选择器"
+  - "做一个搜索下拉"
+  - "做一个宫格选择"
+  - "做一个分组选择"
+  - "做一个级联选择"
+  - "做一个树形选择"
+  - "做一个异步搜索"
+  - "做一个可创建选择"
+  - "base-select"
+  - "select.*组件"
+---
+
 # base-select 下拉选择
 
-> 通用下拉选择组件，由 `base-card` 设计思想封装（与 `base-card` 同源：参数化外壳组件，包裹选择交互逻辑）。支持下拉、弹出面板、标签多选、城市级联、搜索下拉、宫格、分组、级联、树形、远程搜索、可创建等 13 种形态。
+## 定位
 
-> 所有需要选择操作的场景（筛选、配置、资料编辑）都应使用本组件，避免样式碎片化。
+**本组件为 uni-app 项目收敛所有选择场景（13 种形态），由 base-card 设计思想实现（参数化外壳 + 选择交互逻辑）。**
+
+业务开发中任何"选一个/选多个/筛选/配置/地址"的场景，**必须**使用 base-select，不允许各自实现下拉框/弹出面板/级联/树形，否则会出现样式碎片化、主题切换不同步。
+
+## 边界声明
+
+### ✅ 本组件负责
+
+| 能力 | 说明 |
+|------|------|
+| 13 种形态的下拉选择交互 | dropdown / popup / tag / city / search / grid / group / cascade / tree / async / creatable |
+| 单选 + 多选统一 API | `multiple: boolean` 一键切换 |
+| 客户端搜索 + 远程搜索 | `searchable` + `remote` 双模式 |
+| 主题变量接入 | 颜色/尺寸/圆角全部走 `var(--xxx)` |
+
+### ❌ 本组件不负责
+
+| 能力 | 状态 |
+|------|------|
+| 表单校验 | ❌ 由 base-form 处理 |
+| 数据请求封装 | ❌ 由 request skill 处理 |
+| 选项数据源管理 | ❌ 业务自行提供 options |
+| Modal/Dialog 弹窗（非选择场景） | ❌ 用 base-popup |
+| DatePicker / TimePicker | ❌ 用 base-card + 业务实现 |
+
+## 核心能力
+
+1. **13 种形态收敛**：一套组件覆盖 95% 选择场景，无需重复开发
+2. **单选/多选统一**：通过 `multiple` 一键切换，API 完全一致
+3. **客户端 + 远程搜索**：`searchable` 本地过滤，`remote` 远程拉取（含防抖）
+4. **级联 + 树形**：city/cascade/tree 三种结构化数据
+5. **可创建**：`creatable: true` 支持输入即新增（标签、技能场景）
+6. **主题变量接入**：颜色/间距/圆角全部走 CSS 变量，主题切换自动同步
+7. **图标系统集成**：触发器/选项/关闭按钮统一使用根级 icon sprite
+8. **容器原则**：复杂形态（popup）内部就是 base-card，遵守容器基底
 
 ## 形态总览
 
-**13 种风格**，覆盖 95% 选择场景：
+**13 种形态**，覆盖 95% 选择场景：
 
 | # | 风格 | 场景 | 类型值 / 关键参数 |
 |---|------|------|------------------|
@@ -64,34 +120,88 @@
 | `multiple` | boolean | `false` | 是否多选 |
 | `placeholder` | string | `'请选择'` | 占位文字 |
 | `searchable` | boolean | `false` | 是否可搜索 |
+| `remote` | boolean | `false` | 是否远程搜索 |
+| `remoteMethod` | function | - | 远程搜索方法 `(kw) => Promise<options>` |
+| `debounce` | number | `300` | 远程搜索防抖（ms） |
+| `creatable` | boolean | `false` | 是否可创建新选项 |
+| `groupable` | boolean | `false` | 是否分组 |
+| `cascade` | boolean | `false` | 是否级联 |
+| `treeData` | boolean | `false` | 是否树形 |
 | `disabled` | boolean | `false` | 是否禁用 |
+| `max` | number | - | 多选上限 |
 
 ## Events
 
-| Event | 说明 |
-|-------|------|
-| `update:modelValue` | 选中值变化 |
-| `change` | 选中变化时触发 |
-| `search` | 搜索时触发 |
+| Event | 参数 | 说明 |
+|-------|------|------|
+| `update:modelValue` | value | 选中值变化（v-model） |
+| `change` | value | 选中变化时触发 |
+| `search` | keyword | 搜索时触发 |
+| `select` | option | 选中某项时触发 |
+| `clear` | - | 清空选择时触发 |
+
+## 命名体系（与 uniapp-theme-skill 对齐）
+
+所有 CSS 变量严格遵循 uniapp-theme-skill 规范，**禁止使用未定义的变量名**：
+
+| 维度 | 格式 | base-select 常用 |
+|------|------|-----------------|
+| 颜色 | `--{color}-{step}` / `--color-{semantic}` | `--color-primary`, `--color-success` |
+| 背景 | `--color-bg-surface`, `--color-bg` | 触发器/下拉背景 |
+| 文字 | `--color-text`, `--color-text-secondary`, `--color-text-tertiary` | 标题/副标题/占位 |
+| 边框 | `--color-border` | 分隔线 |
+| 间距 | `--space-{n}` | `--space-2` (8rpx), `--space-3` (12rpx), `--space-4` (16rpx) |
+| 圆角 | `--radius-{size}` | `--radius-md` |
+| 字号 | `--font-{size}` | （继承全局） |
+
+❌ **禁止**使用未在 uniapp-theme-skill 中定义的变量名（如 `--color-surface`）
+
+## 架构说明
+
+```
+uniapp-base-skill/
+├── uniapp-form-skill/
+│   └── demo-components/
+│       └── base-select/
+│           ├── base-select.md          # 本文件（唯一规范源）
+│           └── html/                   # 13 个 demo
+│               ├── 00-showcase.html    # 13 形态总览
+│               ├── select-dropdown.html
+│               ├── select-popup.html
+│               ├── ... (13 个 demo)
+│               └── shared/             # 共享样式（外部引用）
+│                   └── base-preview.css
+└── shared/
+    └── icons/                          # 根级 icon sprite（trigger/icon 复用）
+```
+
+### 调用关系
+
+- base-select → base-card（容器基底，所有形态外层 = base-card）
+- select-popup → base-popup（弹出形态 → 弹窗容器）
+- select-* → 根级 icon sprite（trigger 箭头 / check / close）
 
 ## 代码
 
 ```vue
 <template>
-  <view class="base-select">
+  <view class="base-select base-card">
     <!-- 触发器 -->
     <view class="select-trigger" @click="onOpen">
       <text :class="{ placeholder: !modelValue }">
         {{ displayText || placeholder }}
       </text>
-      <text class="select-arrow">▼</text>
+      <svg class="icon icon-12 icon-tertiary">
+        <use href="#i-chevron-down"/>
+      </svg>
     </view>
 
     <!-- 下拉面板 -->
     <view v-if="visible" class="select-dropdown">
       <!-- 搜索框 -->
-      <view v-if="searchable" class="select-search">
-        <input v-model="keyword" placeholder="搜索" />
+      <view v-if="searchable || remote" class="select-search">
+        <svg class="icon icon-14 icon-tertiary"><use href="#i-search"/></svg>
+        <input v-model="keyword" :placeholder="searchPlaceholder" />
       </view>
 
       <!-- 选项列表 -->
@@ -104,7 +214,8 @@
           @click="onSelect(option)"
         >
           <text>{{ option.label }}</text>
-          <text v-if="multiple && isSelected(option)" class="check-icon">✓</text>
+          <svg v-if="multiple && isSelected(option)"
+               class="icon icon-12 icon-primary"><use href="#i-check"/></svg>
         </view>
       </view>
     </view>
@@ -117,6 +228,7 @@ interface Option {
   value: any
   disabled?: boolean
   children?: Option[]
+  group?: string
 }
 
 interface Props {
@@ -126,16 +238,22 @@ interface Props {
   multiple?: boolean
   placeholder?: string
   searchable?: boolean
+  remote?: boolean
+  remoteMethod?: (kw: string) => Promise<Option[]>
+  debounce?: number
+  creatable?: boolean
   disabled?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  modelValue: '',
   options: () => [],
   type: 'dropdown',
   multiple: false,
   placeholder: '请选择',
   searchable: false,
+  remote: false,
+  debounce: 300,
+  creatable: false,
   disabled: false,
 })
 
@@ -143,6 +261,8 @@ const emit = defineEmits<{
   'update:modelValue': [value: any | any[]]
   change: [value: any | any[]]
   search: [keyword: string]
+  select: [option: Option]
+  clear: []
 }>()
 
 // ... 更多逻辑
@@ -154,21 +274,36 @@ const emit = defineEmits<{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px;
-  background: var(--color-surface);
+  padding: var(--space-3);
+  background: var(--color-bg-surface);
   border-radius: var(--radius-md);
   cursor: pointer;
+  font-size: var(--font-md);
+  color: var(--color-text);
 }
 .select-dropdown {
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
+  margin-top: var(--space-2);
   background: var(--color-bg-surface);
   border-radius: var(--radius-md);
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  max-height: 320rpx;
+  overflow-y: auto;
   z-index: 100;
 }
+.select-option {
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  border-bottom: 1px solid var(--color-border);
+}
+.select-option:last-child { border-bottom: none; }
+.select-option.selected { color: var(--color-primary); }
 /* 更多样式... */
 </style>
 ```
@@ -236,7 +371,32 @@ const emit = defineEmits<{
 />
 ```
 
-## 形态
+### 异步搜索
+
+```vue
+<base-select
+  v-model="user"
+  type="search"
+  remote
+  :remote-method="searchUsers"
+  :debounce="300"
+  placeholder="输入姓名搜索"
+/>
+```
+
+### 可创建
+
+```vue
+<base-select
+  v-model="tags"
+  type="tag"
+  multiple
+  creatable
+  :options="existingTags"
+/>
+```
+
+## 形态切换
 
 通过 `type` 切换选择器形态：
 
@@ -249,28 +409,91 @@ const emit = defineEmits<{
 | `search` | 搜索选择、模糊匹配 |
 | `grid` | 商品规格、套餐选择 |
 
-## 主题变量
+## 主题变量（与 uniapp-theme-skill 对齐）
 
 | 变量 | 用途 |
 |------|------|
-| `var(--color-primary)` | 选中态颜色 |
-| `var(--color-surface)` | 触发器背景 |
-| `var(--color-bg-surface)` | 下拉面板背景 |
-| `var(--color-border)` | 边框 |
-| `var(--radius-md)` | 圆角 |
+| `var(--color-primary)` | 选中态颜色 / 主色 |
+| `var(--color-bg-surface)` | 触发器 / 下拉面板背景 |
+| `var(--color-text)` | 主要文字 |
+| `var(--color-text-secondary)` | 副标题 |
+| `var(--color-text-tertiary)` | 占位符 / 提示 |
+| `var(--color-border)` | 选项分隔线 |
+| `var(--radius-md)` | 触发器 / 下拉圆角 |
+| `var(--space-2) / --space-3 / --space-4` | 内边距 |
 
-## 触发词
+## 触发示例
 
 ```markdown
+# 基础下拉
 /uniapp-base-skill 做一个下拉选择
 /uniapp-base-skill 做一个下拉框
+
+# 弹窗类
 /uniapp-base-skill 做一个弹出面板选择
+/uniapp-base-skill 做一个底部选择器
+
+# 多选类
 /uniapp-base-skill 做一个标签多选
+/uniapp-base-skill 做一个兴趣多选
+
+# 结构化数据
 /uniapp-base-skill 做一个城市选择器
+/uniapp-base-skill 做一个省市区级联
+/uniapp-base-skill 做一个部门树形选择
+
+# 搜索类
 /uniapp-base-skill 做一个搜索下拉
+/uniapp-base-skill 做一个模糊匹配选择
+/uniapp-base-skill 做一个异步搜索选择
+
+# 特殊
 /uniapp-base-skill 做一个宫格选择
+/uniapp-base-skill 做一个可创建标签
+/uniapp-base-skill 做一个分组选择
 ```
 
-## 演示
+## 输出物
 
-[查看 HTML 演示](html/select-dropdown.html)
+### 必需输出
+
+- `uniapp-form-skill/demo-components/base-select/base-select.md`：本规范文件（唯一源）
+- `uniapp-form-skill/demo-components/base-select/html/`：13 个 demo HTML（验证用）
+- 业务使用时：`<base-select>` 组件代码 + props/options 配置
+
+### 引用资源
+
+- `demo-components/shared/base-preview.css`：手机壳容器 + 参数条
+- `demo-components/shared/icons/icons-sprite.svg`：根级 icon sprite
+- `uniapp-theme-skill` 提供的 CSS 变量（颜色/尺寸/圆角）
+
+## 回滚方式
+
+```bash
+# 回滚 base-select.md 到上一版本
+git checkout HEAD~1 -- uniapp-form-skill/demo-components/base-select/base-select.md
+
+# 清理生成的 demo（如不再需要）
+rm -rf uniapp-form-skill/demo-components/base-select/html/
+```
+
+## 与其他 skill 的关系
+
+| skill | 关系 |
+|---|---|
+| `uniapp-base-skill` | 上游：提供 base-card / base-popup 容器基底 |
+| `uniapp-theme-skill` | 上游：提供 CSS 变量系统（颜色/尺寸/圆角） |
+| `uniapp-form-skill` | 上游：表单组件容器，base-select 是其中一员 |
+| `base-popup` | 平行：select-popup 形态使用 base-popup 弹窗容器 |
+| `icon-image-catch-skill` | 上游：根级 icon 资源 |
+
+## 约束红线
+
+- **禁止**自行实现下拉框 / 弹出选择 / 级联选择，必须使用 base-select
+- **禁止**使用未在 uniapp-theme-skill 中定义的 CSS 变量（如 `--color-surface`）
+- **禁止**在 base-select 内使用原生组件或第三方组件库（Element Plus / Naive UI 等）
+- **必须**遵守容器原则：select-popup 内部就是 base-card
+- **必须**使用图标 sprite（`<svg class="icon"><use href="#i-xxx"/></svg>`），禁止 emoji
+- **必须**走 CSS 变量（颜色/尺寸/圆角），禁止硬编码 rpx/px 值
+- **禁止**直接修改此文件破坏对齐规范（必须先与 uniapp-theme-skill 同步）
+- uni-app 项目必须使用 rpx 单位（除少量 px 兼容性值）
