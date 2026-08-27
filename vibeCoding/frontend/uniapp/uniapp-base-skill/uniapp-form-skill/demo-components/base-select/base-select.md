@@ -56,9 +56,10 @@ triggers:
 3. **客户端 + 远程搜索**：`searchable` 本地过滤，`remote` 远程拉取（含防抖）
 4. **级联 + 树形**：city/cascade/tree 三种结构化数据
 5. **可创建**：`creatable: true` 支持输入即新增（标签、技能场景）
-6. **主题变量接入**：颜色/间距/圆角全部走 CSS 变量，主题切换自动同步
+6. **Design Tokens 接入**：颜色/间距/圆角全部走 CSS 变量 + SCSS Token，主题切换自动同步
 7. **图标系统集成**：触发器/选项/关闭按钮统一使用根级 icon sprite
 8. **容器原则**：复杂形态（popup）内部就是 base-card，遵守容器基底
+9. **深色模式兼容**：通过 CSS 变量 + `data-theme="dark"` 支持主题切换
 
 ## 形态总览
 
@@ -155,6 +156,60 @@ triggers:
 | 字号 | `--font-{size}` | （继承全局） |
 
 ❌ **禁止**使用未在 uniapp-theme-skill 中定义的变量名（如 `--color-surface`）
+
+## 与 uniapp-style-skill 对齐
+
+> 本组件严格遵守 uniapp-style-skill 红线规则（D01-D34），以下列出 base-select 涉及的关键规则。
+
+### 红线规则引用
+
+| 规则 | 要求 | base-select 落地 |
+|------|------|-----------------|
+| D01 | SCSS 必须用 Token | 颜色/间距/圆角全部引用 `$color-*` / `$spacing-*` / `$radius-*` |
+| D02 | 组件样式用 scoped | `<style scoped>` 或 SCSS scoped |
+| D03 | Props 用 TS 接口 | `interface Props` + `withDefaults` |
+| D06 | 字号禁止硬编码 | 使用 `$font-size-md` / `$font-size-sm` 等 |
+| D10 | 深色模式可切换 | CSS 变量 + `data-theme="dark"` |
+| D13 | Popup 必须有进出场动画 | select-popup 使用 base-popup（内置滑入滑出） |
+| D18 | 圆角必须全局统一 | 使用 `$radius-md` / `$radius-small` |
+| D24 | 可点击区域 ≥ 44pt | 触发器/选项最小高度 88rpx |
+| D26 | 表单控件必须统一 | base-select 统一选择器样式 |
+| D29 | 禁止第三方组件库 | 使用原生标签 + base-card / base-popup |
+| D33 | 组件尺寸必须从 Token 取值 | 内边距/高度/圆角全部引用 Token |
+
+### Design Token 层级
+
+```
+uniapp-theme-skill (CSS 变量)        uniapp-style-skill (SCSS Token)
+──────────────────────────────       ─────────────────────────────────
+--color-primary                   →  $color-primary
+--color-bg-surface                →  $color-bg-primary
+--color-text / secondary / tertiary → $color-text-primary / secondary / tertiary
+--color-border                    →  $color-border
+--space-{n}                       →  $spacing-{n}
+--radius-{size}                   →  $radius-{size}
+```
+
+### 文本层级（必须使用预设类）
+
+| 层级 | 类名 | 用途 |
+|------|------|------|
+| 页面主标题 | `.text-h1` | 选择器标题（弹出形态） |
+| 区块标题 | `.text-h2` | 选项分组标题 |
+| 选项文字 | `.text-body` | 选项标签 |
+| 辅助文字 | `.text-caption` | 占位符、提示 |
+
+### 动画规范
+
+- select-popup 形态使用 base-popup，自带进出场动画（slide-in/slide-out）
+- 动画仅使用 `transform` / `opacity`，禁止触发 layout/paint（D08）
+- 动画时长使用 `$transition-duration-normal`（250ms）
+
+### 屏幕适配
+
+- 所有尺寸使用 rpx 单位（1rpx = 屏幕宽度 / 750）
+- 底部安全区使用 `@include safe-area-bottom` mixin
+- 最小触摸区域 ≥ 44pt（88rpx），符合 D24
 
 ## 架构说明
 
@@ -489,11 +544,18 @@ rm -rf uniapp-form-skill/demo-components/base-select/html/
 
 ## 约束红线
 
+> 以下规则同时参考 uniapp-theme-skill 与 uniapp-style-skill（D01-D34）。
+
 - **禁止**自行实现下拉框 / 弹出选择 / 级联选择，必须使用 base-select
-- **禁止**使用未在 uniapp-theme-skill 中定义的 CSS 变量（如 `--color-surface`）
-- **禁止**在 base-select 内使用原生组件或第三方组件库（Element Plus / Naive UI 等）
+- **禁止**使用未在 uniapp-theme-skill 中定义的 CSS 变量（如 `--color-surface`）（D01）
+- **禁止**在 base-select 内使用原生组件或第三方组件库（Element Plus / Naive UI 等）（D29）
 - **必须**遵守容器原则：select-popup 内部就是 base-card
 - **必须**使用图标 sprite（`<svg class="icon"><use href="#i-xxx"/></svg>`），禁止 emoji
-- **必须**走 CSS 变量（颜色/尺寸/圆角），禁止硬编码 rpx/px 值
-- **禁止**直接修改此文件破坏对齐规范（必须先与 uniapp-theme-skill 同步）
+- **必须**走 CSS 变量 + SCSS Token（颜色/尺寸/圆角），禁止硬编码 rpx/px 值（D01）
+- **必须**使用 `scoped` 样式（D02）
+- **必须**使用 TypeScript 接口定义 Props（D03）
+- **必须**使用 `$font-size-*` 语义变量，禁止硬编码字号（D06）
+- **必须**使用 `$radius-*` 统一圆角（D18）
+- **必须**确保可点击区域 ≥ 44pt / 88rpx（D24）
+- **禁止**直接修改此文件破坏对齐规范（必须先与 uniapp-theme-skill / uniapp-style-skill 同步）
 - uni-app 项目必须使用 rpx 单位（除少量 px 兼容性值）
