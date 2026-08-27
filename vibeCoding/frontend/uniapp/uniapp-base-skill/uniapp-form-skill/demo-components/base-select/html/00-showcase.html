@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-select - 13 种形态总览</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-primary: #4a90e2;
+      --color-text: #333;
+      --color-text-secondary: #666;
+      --color-text-tertiary: #999;
+      --color-bg: #f5f5f5;
+      --color-bg-surface: #fff;
+      --color-border: #e8e8e8;
+    }
+    body {
+      background: var(--color-bg);
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+      color: var(--color-text);
+    }
+    h1 { font-size: 20px; margin-bottom: 8px; }
+    .desc { color: var(--color-text-secondary); font-size: 13px; margin-bottom: 20px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: var(--color-bg-surface);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .card-header {
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card-title { font-size: 15px; font-weight: 500; }
+    .card-tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: var(--color-primary);
+      color: #fff;
+    }
+    .card-tag.basic { background: #52c41a; }
+    .card-tag.business { background: #fa8c16; }
+    .card-tag.advanced { background: #722ed1; }
+    .card-body {
+      padding: var(--space-4);
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-secondary);
+      font-size: 13px;
+      text-align: center;
+      background: linear-gradient(180deg, #fafafa 0%, #fff 100%);
+    }
+    .card-link {
+      display: block;
+      padding: 10px var(--space-4);
+      text-align: center;
+      color: var(--color-primary);
+      font-size: 13px;
+      text-decoration: none;
+      border-top: 1px solid var(--color-border);
+    }
+    .card-link:hover { background: #f8f8f8; }
+  </style>
+</head>
+<body>
+  <h1>base-select · 13 种形态总览</h1>
+  <p class="desc">下拉选择组件，覆盖单选、多选、分组、级联、树形、远程搜索、可创建等场景</p>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">01. 基础下拉</span>
+        <span class="card-tag basic">基础</span>
+      </div>
+      <div class="card-body">表单选择、简单筛选<br/>点击触发器弹出列表</div>
+      <a class="card-link" href="select-dropdown.html">查看 demo →</a>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">02. 弹出面板</span>
+        <span class="card-tag basic">基础</span>
+      </div>
+      <div class="card-body">复杂选择、弹窗选择<br/>底部抽屉 / 居中弹层</div>
+      <a class="card-link" href="select-popup.html">查看 demo →</a>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">03. 标签多选</span>
+        <span class="card-tag business">业务</span>
+      </div>
+      <div class="card-body">筛选条件、兴趣选择<br/>已选项以 chip 形式展示</div>
+      <a class="card-link" href="select-tag.html">查看 demo →</a>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">04. 城市级联</span>
+        <span class="card-tag business">业务</span>
+      </div>
+      <div class="card-body">地址选择、省市区<br/>地区数据联动</div>
+      <a class="card-link" href="select-city.html">查看 demo →</a>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">05. 搜索下拉</span>
+        <span class="card-tag business">业务</span>
+      </div>
+      <div class="card-body">搜索选择、模糊匹配<br/>本地过滤</div>
+      <a class="card-link" href="select-search.html">查看 demo →</a>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">06. 宫格选择</span>
+        <span class="card-tag business">业务</span>
+      </div>
+      <div class="card-body">商品规格、套餐选择<br/>图标 + 文字九宫格</div>
+      <a class="card-link" href="select-grid.html">查看 demo →</a>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">07. 多选下拉</span>
+        <span class="card-tag business">业务</span>
+      </div>
+      <div class="card-body">兴趣标签、批量筛选<br/>底部带清空 / 确定</div>
+      <a class="card-link" href="select-multiple.html">查看 demo →</a>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">08. 分组选择</span>
+        <span class="card-tag business">业务</span>
+      </div>
+      <div class="card-body">联系人、分类目录<br/>选项按 group 字段分组</div>
+      <a class="card-link" href="select-group.html">查看 demo →</a>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">09. 级联选择</span>
+        <span class="card-tag business">业务</span>
+      </div>
+      <div class="card-body">省/市/区 三级联动<br/>底部弹层 + 三列布局</div>
+      <a class="card-link" href="select-cascade.html">查看 demo →</a>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">10. 树形选择</span>
+        <span class="card-tag advanced">高级</span>
+      </div>
+      <div class="card-body">部门、组织架构<br/>父子节点联动</div>
+      <a class="card-link" href="select-tree.html">查看 demo →</a>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">11. 异步搜索</span>
+        <span class="card-tag advanced">高级</span>
+      </div>
+      <div class="card-body">远程数据、防抖搜索<br/>loading / 空态处理</div>
+      <a class="card-link" href="select-async-search.html">查看 demo →</a>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">12. 可创建</span>
+        <span class="card-tag advanced">高级</span>
+      </div>
+      <div class="card-body">标签、技能自定义<br/>输入即创建新选项</div>
+      <a class="card-link" href="select-creatable.html">查看 demo →</a>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">13. 综合展示</span>
+        <span class="card-tag basic">基础</span>
+      </div>
+      <div class="card-body">13 种形态对比一览<br/>选择合适的形态</div>
+      <a class="card-link" href="#">同一页 demo</a>
+    </div>
+  </div>
+</body>
+</html>

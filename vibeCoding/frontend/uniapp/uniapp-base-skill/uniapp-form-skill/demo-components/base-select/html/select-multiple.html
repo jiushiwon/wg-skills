@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>下拉选择 - 标签多选</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-primary: #4a90e2;
+      --color-success: #52c41a;
+      --color-text: #333;
+      --color-text-secondary: #666;
+      --color-text-tertiary: #999;
+      --color-bg: #f5f5f5;
+      --color-bg-surface: #fff;
+      --color-border: #e8e8e8;
+    }
+    body { background: var(--color-bg); padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; background: var(--color-bg-surface); border-radius: var(--radius-lg); overflow: hidden; }
+    .preview-header { height: 44px; background: var(--color-bg-surface); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--color-border); font-size: 16px; font-weight: 500; }
+    .preview-body { padding: var(--space-4); }
+
+    .select-label { font-size: 14px; color: var(--color-text-secondary); margin-bottom: var(--space-2); display: block; }
+
+    /* 触发器：显示已选标签 + 计数器 */
+    .select-trigger {
+      min-height: 44px;
+      padding: 6px var(--space-3);
+      background: #f5f5f5;
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      cursor: pointer;
+    }
+    .selected-tag {
+      background: var(--color-primary);
+      color: #fff;
+      font-size: 13px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .selected-tag .remove { font-size: 14px; line-height: 1; }
+    .placeholder { color: var(--color-text-tertiary); font-size: 14px; }
+    .counter { margin-left: auto; color: var(--color-text-tertiary); font-size: 13px; }
+
+    /* 下拉面板 */
+    .select-panel {
+      margin-top: var(--space-2);
+      background: var(--color-bg-surface);
+      border-radius: var(--radius-md);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: none;
+    }
+    .select-panel.show { display: block; }
+    .option-row {
+      padding: 12px var(--space-3);
+      font-size: 15px;
+      color: var(--color-text);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .option-row:last-child { border-bottom: none; }
+    .option-row.checked { color: var(--color-primary); }
+    .checkbox {
+      width: 18px;
+      height: 18px;
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: transparent;
+      font-size: 12px;
+    }
+    .option-row.checked .checkbox { background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
+
+    /* 底部操作栏 */
+    .panel-footer {
+      padding: var(--space-3);
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fafafa;
+    }
+    .footer-btn {
+      font-size: 14px;
+      padding: 6px 14px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+    }
+    .footer-btn.primary {
+      background: var(--color-primary);
+      color: #fff;
+    }
+    .footer-btn.secondary { color: var(--color-text-secondary); }
+
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 90px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="preview">
+    <div class="preview-header">标签多选</div>
+    <div class="preview-body">
+      <span class="select-label">选择兴趣标签（多选）</span>
+      <div class="select-trigger" id="trigger">
+        <span class="placeholder">请选择</span>
+        <span class="counter" id="counter"></span>
+      </div>
+      <div class="select-panel show" id="panel">
+        <div class="option-row" data-value="前端"><span>前端开发</span><span class="checkbox">✓</span></div>
+        <div class="option-row checked" data-value="后端"><span>后端开发</span><span class="checkbox">✓</span></div>
+        <div class="option-row checked" data-value="设计"><span>UI 设计</span><span class="checkbox">✓</span></div>
+        <div class="option-row" data-value="产品"><span>产品经理</span><span class="checkbox">✓</span></div>
+        <div class="option-row" data-value="测试"><span>测试工程师</span><span class="checkbox">✓</span></div>
+        <div class="option-row" data-value="运维"><span>运维</span><span class="checkbox">✓</span></div>
+      </div>
+      <div class="panel-footer">
+        <span class="footer-btn secondary" onclick="clearAll()">清空</span>
+        <span class="footer-btn primary" onclick="confirm()">确定</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title">base-select 参数</div>
+    <div class="param-row"><span class="param-key">multiple:</span><span class="param-val">true（开启多选）</span></div>
+    <div class="param-row"><span class="param-key">v-model:</span><span class="param-val">array（多选为数组）</span></div>
+    <div class="param-row"><span class="param-key">max:</span><span class="param-val">5（可选上限，可选）</span></div>
+  </div>
+
+  <script>
+    const state = { selected: new Set(['后端', '设计']) };
+    const panel = document.getElementById('panel');
+    const trigger = document.getElementById('trigger');
+    const counter = document.getElementById('counter');
+
+    function renderTrigger() {
+      const tags = trigger.querySelectorAll('.selected-tag');
+      tags.forEach(t => t.remove());
+      const placeholder = trigger.querySelector('.placeholder');
+      if (state.selected.size === 0) {
+        placeholder.style.display = '';
+        counter.textContent = '';
+      } else {
+        placeholder.style.display = 'none';
+        state.selected.forEach(v => {
+          const tag = document.createElement('span');
+          tag.className = 'selected-tag';
+          tag.innerHTML = `${v}<span class="remove">×</span>`;
+          tag.querySelector('.remove').onclick = (e) => {
+            e.stopPropagation();
+            state.selected.delete(v);
+            syncPanel();
+            renderTrigger();
+          };
+          trigger.insertBefore(tag, counter);
+        });
+        counter.textContent = `共 ${state.selected.size} 项`;
+      }
+    }
+
+    function syncPanel() {
+      panel.querySelectorAll('.option-row').forEach(row => {
+        const v = row.dataset.value;
+        row.classList.toggle('checked', state.selected.has(v));
+      });
+    }
+
+    panel.addEventListener('click', (e) => {
+      const row = e.target.closest('.option-row');
+      if (!row) return;
+      const v = row.dataset.value;
+      state.selected.has(v) ? state.selected.delete(v) : state.selected.add(v);
+      syncPanel();
+      renderTrigger();
+    });
+
+    trigger.onclick = () => panel.classList.toggle('show');
+
+    function clearAll() {
+      state.selected.clear();
+      syncPanel();
+      renderTrigger();
+    }
+    function confirm() {
+      alert('已选择：' + [...state.selected].join('、'));
+      panel.classList.remove('show');
+    }
+
+    renderTrigger();
+  </script>
+</body>
+</html>

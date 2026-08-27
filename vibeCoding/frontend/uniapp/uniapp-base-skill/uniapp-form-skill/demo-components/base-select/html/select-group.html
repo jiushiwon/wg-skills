@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>下拉选择 - 分组选择</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-primary: #4a90e2;
+      --color-text: #333;
+      --color-text-secondary: #666;
+      --color-text-tertiary: #999;
+      --color-bg: #f5f5f5;
+      --color-bg-surface: #fff;
+      --color-border: #e8e8e8;
+    }
+    body { background: var(--color-bg); padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; background: var(--color-bg-surface); border-radius: var(--radius-lg); overflow: hidden; }
+    .preview-header { height: 44px; background: var(--color-bg-surface); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--color-border); font-size: 16px; font-weight: 500; }
+    .preview-body { padding: var(--space-4); }
+
+    .select-label { font-size: 14px; color: var(--color-text-secondary); margin-bottom: var(--space-2); display: block; }
+
+    .select-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px var(--space-3);
+      background: #f5f5f5;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+    }
+    .select-trigger-text { font-size: 15px; color: var(--color-text); }
+    .select-trigger-arrow { color: var(--color-text-tertiary); font-size: 12px; }
+
+    /* 分组面板 */
+    .select-panel {
+      margin-top: var(--space-2);
+      background: var(--color-bg-surface);
+      border-radius: var(--radius-md);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: none;
+      max-height: 320px;
+      overflow-y: auto;
+    }
+    .select-panel.show { display: block; }
+    .group-header {
+      padding: 8px var(--space-3);
+      background: #fafafa;
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+      font-weight: 500;
+      border-bottom: 1px solid var(--color-border);
+      position: sticky;
+      top: 0;
+    }
+    .group-header .group-count { margin-left: 6px; color: #bbb; }
+    .option-row {
+      padding: 12px var(--space-3);
+      font-size: 15px;
+      color: var(--color-text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .option-row:hover { background: #f8f8f8; }
+    .option-row.selected { color: var(--color-primary); }
+    .option-row .check { color: var(--color-primary); }
+
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 90px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="preview">
+    <div class="preview-header">分组选择</div>
+    <div class="preview-body">
+      <span class="select-label">选择联系人</span>
+      <div class="select-trigger" onclick="this.nextElementSibling.classList.toggle('show')">
+        <span class="select-trigger-text">请选择</span>
+        <span class="select-trigger-arrow">▼</span>
+      </div>
+      <div class="select-panel">
+        <div class="group-header">最近联系<span class="group-count">3</span></div>
+        <div class="option-row"><span>张三</span><span class="check"></span></div>
+        <div class="option-row"><span>李四</span><span class="check"></span></div>
+        <div class="option-row selected"><span>王五</span><span class="check">✓</span></div>
+
+        <div class="group-header">我的好友<span class="group-count">12</span></div>
+        <div class="option-row"><span>赵六</span><span class="check"></span></div>
+        <div class="option-row"><span>钱七</span><span class="check"></span></div>
+        <div class="option-row"><span>孙八</span><span class="check"></span></div>
+        <div class="option-row"><span>周九</span><span class="check"></span></div>
+
+        <div class="group-header">同事<span class="group-count">8</span></div>
+        <div class="option-row"><span>吴十</span><span class="check"></span></div>
+        <div class="option-row"><span>郑十一</span><span class="check"></span></div>
+        <div class="option-row"><span>王十二</span><span class="check"></span></div>
+
+        <div class="group-header">全部联系人<span class="group-count">42</span></div>
+        <div class="option-row"><span>查看全部 →</span><span class="check"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title">base-select 参数</div>
+    <div class="param-row"><span class="param-key">groupable:</span><span class="param-val">true（开启分组）</span></div>
+    <div class="param-row"><span class="param-key">options:</span><span class="param-val">[{label, value, group}]</span></div>
+    <div class="param-row"><span class="param-key">groupHeader:</span><span class="param-val">'group'（分组字段名）</span></div>
+  </div>
+</body>
+</html>

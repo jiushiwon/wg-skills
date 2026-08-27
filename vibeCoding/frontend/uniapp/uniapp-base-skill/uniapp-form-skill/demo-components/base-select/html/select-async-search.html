@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>下拉选择 - 异步搜索</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-primary: #4a90e2;
+      --color-text: #333;
+      --color-text-secondary: #666;
+      --color-text-tertiary: #999;
+      --color-bg: #f5f5f5;
+      --color-bg-surface: #fff;
+      --color-border: #e8e8e8;
+    }
+    body { background: var(--color-bg); padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; background: var(--color-bg-surface); border-radius: var(--radius-lg); overflow: hidden; }
+    .preview-header { height: 44px; background: var(--color-bg-surface); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--color-border); font-size: 16px; font-weight: 500; }
+    .preview-body { padding: var(--space-4); }
+
+    .select-label { font-size: 14px; color: var(--color-text-secondary); margin-bottom: var(--space-2); display: block; }
+
+    /* 远程搜索下拉（远程数据） */
+    .search-trigger {
+      display: flex;
+      align-items: center;
+      padding: 10px var(--space-3);
+      background: #f5f5f5;
+      border-radius: var(--radius-md);
+      gap: 8px;
+    }
+    .search-trigger .icon { color: var(--color-text-tertiary); font-size: 14px; }
+    .search-trigger input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 15px;
+      outline: none;
+      color: var(--color-text);
+    }
+
+    .result-panel {
+      margin-top: var(--space-2);
+      background: var(--color-bg-surface);
+      border-radius: var(--radius-md);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      overflow: hidden;
+      max-height: 320px;
+      overflow-y: auto;
+    }
+    .result-status {
+      padding: var(--space-3);
+      font-size: 13px;
+      color: var(--color-text-tertiary);
+      text-align: center;
+    }
+    .result-row {
+      padding: 12px var(--space-3);
+      font-size: 14px;
+      color: var(--color-text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .result-row:last-child { border-bottom: none; }
+    .result-row:hover { background: #f8f8f8; }
+    .result-row .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .result-row .meta { color: var(--color-text-tertiary); font-size: 12px; }
+
+    /* loading 状态 */
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--color-border);
+      border-top-color: var(--color-primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 100px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="preview">
+    <div class="preview-header">异步搜索</div>
+    <div class="preview-body">
+      <span class="select-label">搜索用户（远程）</span>
+      <div class="search-trigger">
+        <span class="icon">🔍</span>
+        <input id="kw" placeholder="输入姓名 / 邮箱" oninput="fakeSearch(this.value)" />
+      </div>
+      <div class="result-panel" id="panel">
+        <div class="result-status" id="status">输入关键字开始搜索…</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title">base-select 参数</div>
+    <div class="param-row"><span class="param-key">remote:</span><span class="param-val">true（远程搜索）</span></div>
+    <div class="param-row"><span class="param-key">remoteMethod:</span><span class="param-val">(kw) =&gt; Promise&lt;options&gt;</span></div>
+    <div class="param-row"><span class="param-key">debounce:</span><span class="param-val">300（防抖，可选）</span></div>
+  </div>
+
+  <script>
+    const ALL = [
+      { label: '张三', meta: 'zhang@example.com' },
+      { label: '张伟', meta: 'zhangwei@example.com' },
+      { label: '李四', meta: 'li@example.com' },
+      { label: '王五', meta: 'wang@example.com' },
+      { label: '赵六', meta: 'zhao@example.com' },
+      { label: '钱七', meta: 'qian@example.com' },
+    ];
+    let timer = null;
+    function fakeSearch(kw) {
+      clearTimeout(timer);
+      const panel = document.getElementById('panel');
+      const status = document.getElementById('status');
+      if (!kw) { panel.innerHTML = '<div class="result-status">输入关键字开始搜索…</div>'; return; }
+      panel.innerHTML = '<div class="result-status"><span class="spinner"></span> 搜索中...</div>';
+      timer = setTimeout(() => {
+        const list = ALL.filter(u => u.label.includes(kw) || u.meta.includes(kw));
+        if (list.length === 0) {
+          panel.innerHTML = '<div class="result-status">无匹配结果</div>';
+          return;
+        }
+        panel.innerHTML = list.map(u => `
+          <div class="result-row">
+            <span class="avatar">${u.label[0]}</span>
+            <span>${u.label}</span>
+            <span class="meta">${u.meta}</span>
+          </div>
+        `).join('');
+      }, 600);
+    }
+  </script>
+</body>
+</html>

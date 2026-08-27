@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>下拉选择 - 可创建</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-primary: #4a90e2;
+      --color-success: #52c41a;
+      --color-text: #333;
+      --color-text-secondary: #666;
+      --color-text-tertiary: #999;
+      --color-bg: #f5f5f5;
+      --color-bg-surface: #fff;
+      --color-border: #e8e8e8;
+    }
+    body { background: var(--color-bg); padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; background: var(--color-bg-surface); border-radius: var(--radius-lg); overflow: hidden; }
+    .preview-header { height: 44px; background: var(--color-bg-surface); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--color-border); font-size: 16px; font-weight: 500; }
+    .preview-body { padding: var(--space-4); }
+
+    .select-label { font-size: 14px; color: var(--color-text-secondary); margin-bottom: var(--space-2); display: block; }
+
+    .search-trigger {
+      display: flex;
+      align-items: center;
+      padding: 10px var(--space-3);
+      background: #f5f5f5;
+      border-radius: var(--radius-md);
+      gap: 8px;
+    }
+    .search-trigger input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 15px;
+      outline: none;
+      color: var(--color-text);
+    }
+
+    .result-panel {
+      margin-top: var(--space-2);
+      background: var(--color-bg-surface);
+      border-radius: var(--radius-md);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    .result-row {
+      padding: 12px var(--space-3);
+      font-size: 14px;
+      color: var(--color-text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .result-row:last-child { border-bottom: none; }
+    .result-row:hover { background: #f8f8f8; }
+    .create-row {
+      padding: 12px var(--space-3);
+      font-size: 14px;
+      color: var(--color-primary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(74,144,226,0.04);
+      border-top: 1px dashed var(--color-border);
+    }
+    .create-row .plus {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+
+    /* 已创建的 chips */
+    .created-bar {
+      margin-top: var(--space-3);
+      padding: var(--space-3);
+      background: #fafafa;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      color: var(--color-text-secondary);
+    }
+    .created-bar .chip {
+      display: inline-block;
+      margin: 4px 4px 0 0;
+      background: var(--color-success);
+      color: #fff;
+      padding: 3px 10px;
+      border-radius: 10px;
+      font-size: 12px;
+    }
+
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 100px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="preview">
+    <div class="preview-header">可创建选项</div>
+    <div class="preview-body">
+      <span class="select-label">选择 / 新增技能</span>
+      <div class="search-trigger">
+        <input id="kw" placeholder="搜索或输入新技能..." />
+      </div>
+      <div class="result-panel">
+        <div class="result-row"><span>JavaScript</span><span style="color:#bbb;">›</span></div>
+        <div class="result-row"><span>TypeScript</span><span style="color:#bbb;">›</span></div>
+        <div class="result-row"><span>Python</span><span style="color:#bbb;">›</span></div>
+        <div class="create-row" id="create-row" style="display:none;" onclick="createTag()">
+          <span class="plus">+</span>
+          <span>新建 "<span id="kw-display"></span>"</span>
+        </div>
+      </div>
+      <div class="created-bar">
+        已添加：<span class="chip" id="chips">Rust ×</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title">base-select 参数</div>
+    <div class="param-row"><span class="param-key">creatable:</span><span class="param-val">true（允许创建）</span></div>
+    <div class="param-row"><span class="param-key">onCreate:</span><span class="param-val">(label) =&gt; option</span></div>
+    <div class="param-row"><span class="param-key">filterable:</span><span class="param-val">true（启用本地过滤）</span></div>
+  </div>
+
+  <script>
+    const input = document.getElementById('kw');
+    const createRow = document.getElementById('create-row');
+    const kwDisplay = document.getElementById('kw-display');
+    const EXIST = ['JavaScript', 'TypeScript', 'Python', 'Java', 'Go'];
+
+    input.addEventListener('input', (e) => {
+      const v = e.target.value.trim();
+      if (!v) { createRow.style.display = 'none'; return; }
+      const exists = EXIST.includes(v);
+      if (!exists) {
+        createRow.style.display = '';
+        kwDisplay.textContent = v;
+      } else {
+        createRow.style.display = 'none';
+      }
+    });
+
+    function createTag() {
+      const v = input.value.trim();
+      if (!v) return;
+      EXIST.push(v);
+      const chips = document.getElementById('chips');
+      const chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.textContent = v + ' ×';
+      chips.parentNode.insertBefore(chip, chips.nextSibling);
+      chips.remove();
+      input.value = '';
+      createRow.style.display = 'none';
+    }
+  </script>
+</body>
+</html>
