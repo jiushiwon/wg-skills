@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>自定义底部 - 毛玻璃背景 TabBar</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --color-primary: #8b5cf6;
+      --color-primary-light: rgba(139, 92, 246, 0.15);
+      --color-bg: linear-gradient(180deg, #f3e8ff 0%, #ffffff 100%);
+      --color-surface: rgba(255,255,255,0.72);
+      --color-text: #1a1a1a;
+      --color-text-secondary: #666666;
+      --color-text-tertiary: #999999;
+      --radius-lg: 20px;
+      --radius-full: 999px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+    }
+    body { background: #f3e8ff; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+
+    .phone { max-width: 375px; margin: 20px auto; background: linear-gradient(180deg, #f3e8ff 0%, #ffffff 60%); border-radius: 32px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.12); position: relative; height: 700px; }
+
+    .content {
+      height: 100%;
+      overflow-y: auto;
+      padding: 60px var(--space-4) 110px;
+    }
+    .page-title { font-size: 26px; font-weight: 700; margin-bottom: var(--space-2); color: var(--color-text); }
+    .page-subtitle { font-size: 14px; color: var(--color-text-secondary); margin-bottom: var(--space-4); }
+
+    .music-card {
+      background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      color: white;
+      margin-bottom: var(--space-4);
+      box-shadow: 0 12px 32px rgba(139, 92, 246, 0.25);
+    }
+    .music-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+    .music-card p { font-size: 13px; opacity: 0.85; }
+    .music-progress {
+      height: 4px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 2px;
+      margin-top: var(--space-4);
+      overflow: hidden;
+    }
+    .music-progress::after {
+      content: '';
+      display: block;
+      width: 60%; height: 100%;
+      background: white;
+      border-radius: 2px;
+    }
+
+    .list-card {
+      background: rgba(255,255,255,0.8);
+      border-radius: var(--radius-lg);
+      padding: var(--space-3) var(--space-4);
+      margin-bottom: var(--space-3);
+      display: flex; align-items: center; gap: var(--space-3);
+      backdrop-filter: blur(8px);
+    }
+    .list-cover {
+      width: 48px; height: 48px;
+      background: var(--color-primary-light);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-primary);
+    }
+    .list-cover svg { width: 24px; height: 24px; }
+    .list-info h4 { font-size: 14px; font-weight: 600; color: var(--color-text); }
+    .list-info p { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
+
+    /* 毛玻璃背景 TabBar */
+    .tabbar-blur {
+      position: absolute;
+      bottom: 0;
+      left: var(--space-3);
+      right: var(--space-3);
+      height: 68px;
+      background: var(--color-surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 24px 24px 0 0;
+      border: 1px solid rgba(255,255,255,0.5);
+      border-bottom: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      box-shadow: 0 -8px 32px rgba(139, 92, 246, 0.12);
+    }
+    .blur-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: var(--color-text-tertiary);
+      font-size: 11px;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+    .blur-item svg { width: 22px; height: 22px; }
+    .blur-item.active { color: var(--color-primary); }
+    .blur-item .play-btn {
+      width: 42px; height: 42px;
+      background: var(--color-primary);
+      border-radius: 999px;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.35);
+    }
+    .blur-item .play-btn svg { width: 18px; height: 18px; }
+
+    .param-bar { background: rgba(255,255,255,0.9); padding: var(--space-4); margin: var(--space-4) auto; max-width: 375px; border-radius: var(--radius-lg); box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+    .param-title { font-size: 12px; color: var(--color-text-tertiary); margin-bottom: var(--space-2); }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 90px; }
+    .param-val { color: var(--color-text-secondary); }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <div class="content">
+      <div class="page-title">音乐馆</div>
+      <div class="page-subtitle">每日精选 30 首</div>
+
+      <div class="music-card">
+        <h3>今日推荐</h3>
+        <p>根据你的口味定制</p>
+        <div class="music-progress"></div>
+      </div>
+
+      <div class="list-card">
+        <div class="list-cover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
+        <div class="list-info"><h4>轻音乐合集</h4><p>适合专注与放松</p></div>
+      </div>
+      <div class="list-card">
+        <div class="list-cover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></div>
+        <div class="list-info"><h4>播客电台</h4><p>听见世界的声音</p></div>
+      </div>
+    </div>
+
+    <!-- 毛玻璃背景 TabBar -->
+    <div class="tabbar-blur">
+      <div class="blur-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>首页</span>
+      </div>
+      <div class="blur-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.34-4.34"/></svg>
+        <span>发现</span>
+      </div>
+      <div class="blur-item">
+        <div class="play-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </div>
+      </div>
+      <div class="blur-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+        <span>喜欢</span>
+      </div>
+      <div class="blur-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>我的</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title">base-card 参数</div>
+    <div class="param-row"><span class="param-key">style:</span><span class="param-val">毛玻璃背景 + 圆角顶部 + 内边距悬浮</span></div>
+    <div class="param-row"><span class="param-key">backdrop:</span><span class="param-val">blur(20px) 半透明背景</span></div>
+    <div class="param-row"><span class="param-key">center:</span><span class="param-val">主色播放按钮，强化核心操作</span></div>
+  </div>
+</body>
+</html>

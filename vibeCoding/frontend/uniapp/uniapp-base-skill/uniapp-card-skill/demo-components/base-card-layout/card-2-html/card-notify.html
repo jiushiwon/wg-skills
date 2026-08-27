@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>通知卡片</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      /* 主题变量 - 来自 uniapp-style-skill */
+      --color-primary: #07c160;
+      --color-bg-surface: #ffffff;
+      --color-text-primary: #1a1a1a;
+      --color-text-secondary: #666666;
+      --color-text-tertiary: #999999;
+      --radius-md: 12px;
+      --spacing-lg: 16px;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    body { background: #f0f0f0; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; }
+    .preview-header { height: 44px; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee; font-size: 16px; font-weight: 500; }
+    .preview-body { padding: 16px; }
+    .card { background: #fff; border-radius: var(--radius-md); box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden; }
+    .card-title { font-size: 15px; font-weight: 600; color: #1a1a1a; padding: 12px 16px; border-bottom: 1px solid #f5f5f5; }
+    .notify-item { display: flex; align-items: flex-start; padding: 12px 16px; border-bottom: 1px solid #f5f5f5; }
+    .notify-item:last-child { border-bottom: none; }
+    .notify-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 12px; flex-shrink: 0; }
+    .notify-icon img { width: 18px; height: 18px; }
+    .notify-content { flex: 1; min-width: 0; }
+    .notify-title { font-size: 14px; font-weight: 500; color: #1a1a1a; margin-bottom: 2px; }
+    .notify-desc { font-size: 13px; color: #666; }
+    .notify-time { font-size: 11px; color: #999; margin-top: 4px; }
+    .notify-badge { padding: 2px 6px; background: #ff4d4f; color: #fff; font-size: 10px; border-radius: 10px; margin-left: 8px; }
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 90px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="preview">
+    <div class="preview-header">通知卡片</div>
+    <div class="preview-body">
+      <div class="card">
+        <div class="card-title">消息通知</div>
+        <div class="notify-item">
+          <div class="notify-icon" style="background:#fff7ed;"><img src="https://api.iconify.design/mdi/bell.svg?color=%23f97316"></div>
+          <div class="notify-content">
+            <div class="notify-title">系统通知 <span class="notify-badge">3</span></div>
+            <div class="notify-desc">您有新的系统消息</div>
+            <div class="notify-time">10分钟前</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="param-bar">
+    <div class="param-title">参数</div>
+    <div class="param-row"><span class="param-key">layout:</span><span class="param-val">notify</span></div>
+    <div class="param-row"><span class="param-key">showBadge:</span><span class="param-val">true / false</span></div>
+    <div class="param-row"><span class="param-key">showTime:</span><span class="param-val">true / false</span></div>
+  </div>
+</body>
+</html>

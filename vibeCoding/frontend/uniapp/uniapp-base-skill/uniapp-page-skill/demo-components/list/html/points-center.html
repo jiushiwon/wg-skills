@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>升值中心 - 参考[022_升值中心]</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #f5f5f5; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; background: #fff; border-radius: 16px; overflow: hidden; }
+    .preview-header { height: 44px; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee; font-size: 16px; font-weight: 500; }
+    .preview-body { padding: 16px; }
+
+    /* 升值中心 - 大圆角，渐变背景，数据展示，宽松 */
+    .points-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 16px;
+      padding: 24px;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .points-label { font-size: 14px; opacity: 0.9; }
+    .points-value { font-size: 36px; font-weight: 700; margin: 8px 0; }
+    .points-btn {
+      display: inline-block;
+      padding: 8px 24px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      font-size: 13px;
+    }
+
+    .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+    .stat-card {
+      background: #f7f7f7;
+      border-radius: 12px;
+      padding: 16px 8px;
+      text-align: center;
+    }
+    .stat-value { font-size: 18px; font-weight: 600; color: #333; }
+    .stat-label { font-size: 12px; color: #999; margin-top: 4px; }
+
+    .task-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .task-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #fff7e6 0%, #ffe7ba 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .task-icon img { width: 20px; height: 20px; }
+    .task-info { flex: 1; }
+    .task-title { font-size: 14px; color: #333; font-weight: 500; }
+    .task-desc { font-size: 12px; color: #999; margin-top: 2px; }
+    .task-points { font-size: 14px; color: #fa8c16; font-weight: 500; }
+
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: #764ba2; width: 70px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="title" style="text-align:center;margin-bottom:10px;font-size:14px;color:#666;">参考: 022_升值中心.jpg</div>
+  <div class="preview">
+    <div class="preview-header">升值中心</div>
+    <div class="preview-body">
+      <!-- 积分头部 -->
+      <div class="points-header">
+        <div class="points-label">当前积分</div>
+        <div class="points-value">12,850</div>
+        <div class="points-btn">积分明细 ›</div>
+      </div>
+
+      <!-- 数据统计 -->
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-value">328</div>
+          <div class="stat-label">今日收入</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">1,280</div>
+          <div class="stat-label">本月收入</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">58</div>
+          <div class="stat-label">连续天数</div>
+        </div>
+      </div>
+
+      <!-- 任务列表 -->
+      <div class="task-card">
+        <div class="task-icon"><img src="../static/icons/pencil.svg" alt="pencil"></div>
+        <div class="task-info">
+          <div class="task-title">每日签到</div>
+          <div class="task-desc">连续签到奖励翻倍</div>
+        </div>
+        <div class="task-points">+10</div>
+      </div>
+
+      <div class="task-card">
+        <div class="task-icon" style="background: linear-gradient(135deg, #e6f7ff 0%, #bae7ff 100%);"><img src="../static/icons/book-open.svg" alt="book"></div>
+        <div class="task-info">
+          <div class="task-title">阅读文章</div>
+          <div class="task-desc">阅读任意文章</div>
+        </div>
+        <div class="task-points">+5</div>
+      </div>
+
+      <div class="task-card">
+        <div class="task-icon" style="background: linear-gradient(135deg, #f6ffed 0%, #d9f7be 100%);"><img src="../static/icons/thumbs-up.svg" alt="thumbs-up"></div>
+        <div class="task-info">
+          <div class="task-title">点赞互动</div>
+          <div class="task-desc">点赞5篇内容</div>
+        </div>
+        <div class="task-points">+15</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title">base-card 参数</div>
+    <div class="param-row"><span class="param-key">radius:</span><span class="param-val">16px（大圆角）</span></div>
+    <div class="param-row"><span class="param-key">padding:</span><span class="param-val">16px 24px</span></div>
+    <div class="param-row"><span class="param-key">background:</span><span class="param-val">渐变背景</span></div>
+  </div>
+</body>
+</html>

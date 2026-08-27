@@ -1,0 +1,131 @@
+/* ============================================
+ * base-preview.css — 共享预览样式
+ * 所有 demo 引用此 CSS，复用手机壳容器 + 参数条
+ * ============================================ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --radius-lg: 12px;
+  --radius-md: 8px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --color-primary: #4a90e2;
+  --color-success: #52c41a;
+  --color-warning: #fa8c16;
+  --color-text: #333;
+  --color-text-secondary: #666;
+  --color-text-tertiary: #999;
+  --color-bg: #f5f5f5;
+  --color-bg-surface: #fff;
+  --color-border: #e8e8e8;
+}
+
+body {
+  background: var(--color-bg);
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+/* 🔥 容器原则：preview 就是 base-card 容器 */
+.preview {
+  max-width: 375px;
+  margin: 0 auto;
+  background: var(--color-bg-surface);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  position: relative;
+}
+
+.preview-header {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.preview-body {
+  padding: var(--space-4);
+  min-height: 480px;
+}
+
+/* 参数条（demo 底部展示组件参数） */
+.param-bar {
+  background: #f7f7f7;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 16px;
+  max-width: 375px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+.param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+.param-key { color: var(--color-primary); width: 100px; }
+.param-val { color: #666; }
+
+/* base-popup 共享样式（被 select-popup / select-cascade 复用） */
+.popup-mask {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s;
+  z-index: 10;
+}
+.popup-mask.show { opacity: 1; visibility: visible; }
+
+.popup {
+  position: absolute;
+  background: var(--color-bg-surface);
+  transition: transform 0.3s ease;
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+}
+
+.popup-bottom {
+  left: 0; right: 0; bottom: 0;
+  max-height: 80%;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  transform: translateY(100%);
+}
+.popup-bottom.show { transform: translateY(0); }
+
+.popup-top {
+  top: 0; left: 0; right: 0;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  transform: translateY(-100%);
+}
+.popup-top.show { transform: translateY(0); }
+
+.popup-left {
+  top: 0; left: 0; bottom: 0;
+  width: 280px;
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  transform: translateX(-100%);
+}
+.popup-left.show { transform: translateX(0); }
+
+.popup-right {
+  top: 0; right: 0; bottom: 0;
+  width: 280px;
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+  transform: translateX(100%);
+}
+.popup-right.show { transform: translateX(0); }
+
+/* 弹窗内部就是 base-card 结构 */
+.popup-content { flex: 1; display: flex; flex-direction: column; }
+.popup-content > .card-header,
+.popup-content > .card-body,
+.popup-content > .card-footer { padding-left: var(--space-4); padding-right: var(--space-4); }

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-input 验证码格子场景 - 参考图</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-md: 8px;
+      --radius-full: 999px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-bg: #F5F7FA;
+      --color-surface: #fff;
+      --color-primary: #4A90E2;
+      --color-text: #1A1A1A;
+      --color-text-secondary: #666;
+      --color-text-tertiary: #999;
+      --color-border: #F0F2F5;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    body { background: #f5f5f5; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .title { text-align: center; margin-bottom: 10px; font-size: 14px; color: #666; }
+    .preview { max-width: 375px; margin: 0 auto; background: var(--color-bg); overflow: hidden; min-height: 700px; }
+    .preview-header { height: 44px; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee; font-size: 16px; font-weight: 500; }
+    .preview-body { padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-4); }
+
+    /* 卡片容器 - 小圆角 */
+    .form-card {
+      background: var(--color-surface);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .scene-desc {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+      margin-bottom: var(--space-4);
+    }
+
+    .scene-desc strong { color: var(--color-text); font-weight: 600; }
+
+    /* 验证码格子组 */
+    .otp-group {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-2);
+      margin-bottom: var(--space-3);
+    }
+    .otp-box {
+      flex: 1;
+      aspect-ratio: 1;
+      max-width: 52px;
+      max-height: 52px;
+      background: var(--color-bg);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--color-text);
+      border: 2px solid transparent;
+    }
+    .otp-box.filled {
+      background: var(--color-surface);
+      border-color: var(--color-primary);
+    }
+    .otp-box.focus {
+      background: var(--color-surface);
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 2px rgba(74,144,226,0.2);
+    }
+    .otp-cursor {
+      width: 2px;
+      height: 22px;
+      background: var(--color-primary);
+      animation: blink 1.2s infinite;
+    }
+    @keyframes blink { 0%,50%{opacity:1;} 51%,100%{opacity:0;} }
+
+    .otp-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+      margin-bottom: var(--space-3);
+    }
+    .otp-meta .resend { color: var(--color-primary); }
+
+    /* 提交按钮 - 胶囊（区别于其他场景的小圆角按钮） */
+    .submit-btn {
+      height: 44px;
+      background: var(--color-primary);
+      color: #fff;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 500;
+      margin-top: var(--space-3);
+    }
+
+    /* 错误态 */
+    .error-card {
+      background: var(--color-surface);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      box-shadow: var(--shadow-sm);
+    }
+    .error-card .otp-box { border-color: #FF4D4F; background: #fff1f0; }
+    .error-tip { font-size: 12px; color: #FF4D4F; margin-top: var(--space-2); display: flex; align-items: center; gap: 4px; }
+
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; max-width: 375px; margin-left: auto; margin-right: auto; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: #1890ff; width: 110px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="title">参考: base-input 验证码格子场景</div>
+  <div class="preview">
+    <div class="preview-header">输入验证码</div>
+    <div class="preview-body">
+
+      <!-- 输入中：3 位已填，第 4 位聚焦 -->
+      <div class="form-card">
+        <div class="scene-desc">验证码已发送至 <strong>+86 138****8000</strong>，请输入 6 位短信验证码</div>
+
+        <div class="otp-group">
+          <div class="otp-box filled">8</div>
+          <div class="otp-box filled">2</div>
+          <div class="otp-box filled">5</div>
+          <div class="otp-box focus"><div class="otp-cursor"></div></div>
+          <div class="otp-box"></div>
+          <div class="otp-box"></div>
+        </div>
+
+        <div class="otp-meta">
+          <span>3 / 6</span>
+          <span class="resend">52s 后重发</span>
+        </div>
+
+        <div class="submit-btn">下一步</div>
+      </div>
+
+  <div class="param-bar">
+    <div class="param-title">base-input Props</div>
+    <div class="param-row"><span class="param-key">type:</span><span class="param-val">number（数字键盘）</span></div>
+    <div class="param-row"><span class="param-key">maxlength:</span><span class="param-val">6（验证码位数）</span></div>
+    <div class="param-row"><span class="param-key">otp mode:</span><span class="param-val">true（格子模式 + 自动跳格）</span></div>
+    <div class="param-row"><span class="param-key">典型场景:</span><span class="param-val">支付、绑定、双因素、找回密码</span></div>
+  </div>
+</body>
+</html>

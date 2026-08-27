@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>自定义底部 - 中间凸起 TabBar</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --color-primary: #4a90e2;
+      --color-primary-light: rgba(74, 144, 226, 0.12);
+      --color-bg: #f5f7fa;
+      --color-surface: #ffffff;
+      --color-text: #1a1a1a;
+      --color-text-secondary: #666666;
+      --color-text-tertiary: #999999;
+      --radius-lg: 16px;
+      --radius-full: 999px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --shadow-lg: 0 -4px 24px rgba(0,0,0,0.08);
+    }
+    body { background: var(--color-bg); font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+
+    .phone { max-width: 375px; margin: 20px auto; background: var(--color-bg); border-radius: 32px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.12); position: relative; height: 700px; }
+
+    .content {
+      height: 100%;
+      overflow-y: auto;
+      padding: var(--space-4) var(--space-4) 120px;
+    }
+    .page-title { font-size: 24px; font-weight: 700; margin-bottom: var(--space-4); color: var(--color-text); }
+
+    .card {
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      margin-bottom: var(--space-3);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+    .card h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; color: var(--color-text); }
+    .card p { font-size: 13px; color: var(--color-text-secondary); }
+
+    /* 中间凸起 TabBar */
+    .tabbar-bulge {
+      position: absolute;
+      bottom: 0;
+      left: 0; right: 0;
+      height: 80px;
+      background: var(--color-surface);
+      border-radius: 24px 24px 0 0;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-around;
+      padding-top: 12px;
+      padding-bottom: env(safe-area-inset-bottom, 12px);
+    }
+    .tabbar-bulge::before {
+      content: '';
+      position: absolute;
+      top: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 80px;
+      background: var(--color-surface);
+      border-radius: 50%;
+      box-shadow: 0 -6px 20px rgba(0,0,0,0.06);
+    }
+
+    .tab-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding-top: 4px;
+      color: var(--color-text-tertiary);
+      font-size: 11px;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+    }
+    .tab-item.active { color: var(--color-primary); }
+    .tab-item svg { width: 22px; height: 22px; }
+
+    .tab-center {
+      position: relative;
+      z-index: 2;
+      margin-top: -34px;
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, var(--color-primary), #6bb3ff);
+      border-radius: 999px;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      box-shadow: 0 6px 16px rgba(74, 144, 226, 0.4);
+      cursor: pointer;
+    }
+    .tab-center svg { width: 26px; height: 26px; }
+    .tab-center span {
+      position: absolute;
+      bottom: -18px;
+      font-size: 11px;
+      color: var(--color-text-secondary);
+    }
+
+    .param-bar { background: var(--color-surface); padding: var(--space-4); margin: var(--space-4) auto; max-width: 375px; border-radius: var(--radius-lg); box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+    .param-title { font-size: 12px; color: var(--color-text-tertiary); margin-bottom: var(--space-2); }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 80px; }
+    .param-val { color: var(--color-text-secondary); }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <div class="content">
+      <div class="page-title">首页</div>
+      <div class="card"><h3>今日推荐</h3><p>精选好物，每日更新</p></div>
+      <div class="card"><h3>热门榜单</h3><p>大家都在买的好东西</p></div>
+      <div class="card"><h3>新品首发</h3><p>限时限量，先到先得</p></div>
+      <div class="card"><h3>会员专享</h3><p>会员价更低，福利更多</p></div>
+    </div>
+
+    <!-- 中间凸起 TabBar -->
+    <div class="tabbar-bulge">
+      <div class="tab-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>首页</span>
+      </div>
+      <div class="tab-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span>探索</span>
+      </div>
+      <div class="tab-center">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+        <span>发布</span>
+      </div>
+      <div class="tab-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span>商城</span>
+      </div>
+      <div class="tab-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>我的</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title">base-card 参数</div>
+    <div class="param-row"><span class="param-key">style:</span><span class="param-val">中间凸起 + 圆角顶部 + 主色发布按钮</span></div>
+    <div class="param-row"><span class="param-key">shadow:</span><span class="param-val">顶部投影营造悬浮感</span></div>
+    <div class="param-row"><span class="param-key">safe-area:</span><span class="param-val">padding-bottom: env(safe-area-inset-bottom)</span></div>
+  </div>
+</body>
+</html>

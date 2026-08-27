@@ -4,30 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>下拉选择 - 级联选择</title>
+  <link rel="stylesheet" href="../../../../demo-components/shared/base-preview.css" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --radius-lg: 12px;
-      --radius-md: 8px;
-      --space-2: 8px;
-      --space-3: 12px;
-      --space-4: 16px;
-      --color-primary: #4a90e2;
-      --color-text: #333;
-      --color-text-secondary: #666;
-      --color-text-tertiary: #999;
-      --color-bg: #f5f5f5;
-      --color-bg-surface: #fff;
-      --color-border: #e8e8e8;
-    }
-    body { background: var(--color-bg); padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
-    .preview { max-width: 375px; margin: 0 auto; background: var(--color-bg-surface); border-radius: var(--radius-lg); overflow: hidden; }
-    .preview-header { height: 44px; background: var(--color-bg-surface); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--color-border); font-size: 16px; font-weight: 500; }
-    .preview-body { padding: var(--space-4); }
-
-    .select-label { font-size: 14px; color: var(--color-text-secondary); margin-bottom: var(--space-2); display: block; }
-
-    /* 三级联动面包屑 */
     .cascade-bar {
       display: flex;
       gap: 6px;
@@ -38,48 +16,28 @@
       cursor: pointer;
       font-size: 14px;
     }
-    .crumb {
-      color: var(--color-primary);
-    }
+    .crumb { color: var(--color-primary); }
     .crumb.placeholder { color: var(--color-text-tertiary); }
     .sep { color: var(--color-text-tertiary); }
 
-    /* 弹层 */
-    .overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.4);
-      z-index: 10;
-    }
-    .overlay.show { display: flex; align-items: flex-end; justify-content: center; }
-    .sheet {
-      width: 100%;
-      max-width: 375px;
-      background: var(--color-bg-surface);
-      border-radius: 12px 12px 0 0;
-      padding: var(--space-3) 0;
-      max-height: 60vh;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-    .sheet-header {
-      padding: var(--space-3);
+    /* 弹层（base-popup direction="bottom"） */
+    .popup-content { padding: var(--space-3) 0; }
+    .card-header {
+      padding: var(--space-3) var(--space-4);
       border-bottom: 1px solid var(--color-border);
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .sheet-title { font-size: 16px; font-weight: 500; }
-    .sheet-close { color: var(--color-text-tertiary); font-size: 22px; cursor: pointer; }
+    .card-title { font-size: 16px; font-weight: 500; }
+    .card-close { color: var(--color-text-tertiary); font-size: 22px; cursor: pointer; line-height: 1; }
 
-    /* 三列布局 */
     .cascade-cols {
       flex: 1;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       overflow-y: auto;
+      max-height: 50vh;
     }
     .cascade-col {
       border-right: 1px solid var(--color-border);
@@ -99,62 +57,99 @@
     .col-item.active { color: var(--color-primary); background: rgba(74,144,226,0.08); }
     .col-item .arrow { color: var(--color-text-tertiary); font-size: 12px; }
 
-    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
-    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
-    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
-    .param-key { color: var(--color-primary); width: 100px; }
-    .param-val { color: #666; }
+    .card-footer {
+      padding: var(--space-3) var(--space-4);
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      gap: var(--space-2);
+    }
+    .card-footer button {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid var(--color-border);
+      background: var(--color-bg-surface);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .card-footer .primary {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: var(--color-primary);
+    }
   </style>
 </head>
 <body>
-  <div class="preview">
-    <div class="preview-header">级联选择</div>
-    <div class="preview-body">
-      <span class="select-label">选择省/市/区</span>
-      <div class="cascade-bar" onclick="document.getElementById('overlay').classList.add('show')">
+  <div class="preview base-card">
+    <div class="preview-header base-card__header">
+      <span>下拉选择 · 级联</span>
+      <span style="font-size:12px;color:#999;">demo</span>
+    </div>
+    <div class="preview-body base-card__body">
+      <span style="font-size:14px;color:var(--color-text-secondary);margin-bottom:var(--space-2);display:block;">选择省/市/区</span>
+      <div class="cascade-bar" onclick="openPopup()">
         <span class="crumb" id="p">浙江省</span>
         <span class="sep">/</span>
         <span class="crumb" id="c">杭州市</span>
         <span class="sep">/</span>
         <span class="crumb placeholder" id="a">请选择区</span>
       </div>
-    </div>
-  </div>
 
-  <div class="overlay" id="overlay" onclick="if(event.target===this) this.classList.remove('show')">
-    <div class="sheet">
-      <div class="sheet-header">
-        <span class="sheet-title">选择地区</span>
-        <span class="sheet-close" onclick="document.getElementById('overlay').classList.remove('show')">×</span>
-      </div>
-      <div class="cascade-cols">
-        <div class="cascade-col" id="col-province">
-          <div class="col-item active">浙江省<span class="arrow">›</span></div>
-          <div class="col-item">江苏省<span class="arrow">›</span></div>
-          <div class="col-item">广东省<span class="arrow">›</span></div>
-          <div class="col-item">四川省<span class="arrow">›</span></div>
-        </div>
-        <div class="cascade-col" id="col-city">
-          <div class="col-item active">杭州市<span class="arrow">›</span></div>
-          <div class="col-item">宁波市<span class="arrow">›</span></div>
-          <div class="col-item">温州市<span class="arrow">›</span></div>
-        </div>
-        <div class="cascade-col" id="col-area">
-          <div class="col-item">西湖区</div>
-          <div class="col-item">拱墅区</div>
-          <div class="col-item active">余杭区</div>
-          <div class="col-item">滨江区</div>
-          <div class="col-item">萧山区</div>
+      <!-- 🔥 base-popup direction="bottom" -->
+      <div class="popup-mask" id="mask" onclick="closePopup()"></div>
+      <div class="popup popup-bottom" id="popup">
+        <div class="popup-content">
+          <div class="card-header base-card__header">
+            <span class="card-title">选择地区</span>
+            <span class="card-close" onclick="closePopup()">×</span>
+          </div>
+          <div class="card-body base-card__body" style="padding:0;">
+            <div class="cascade-cols">
+              <div class="cascade-col" id="col-province">
+                <div class="col-item active">浙江省<span class="arrow">›</span></div>
+                <div class="col-item">江苏省<span class="arrow">›</span></div>
+                <div class="col-item">广东省<span class="arrow">›</span></div>
+                <div class="col-item">四川省<span class="arrow">›</span></div>
+              </div>
+              <div class="cascade-col" id="col-city">
+                <div class="col-item active">杭州市<span class="arrow">›</span></div>
+                <div class="col-item">宁波市<span class="arrow">›</span></div>
+                <div class="col-item">温州市<span class="arrow">›</span></div>
+              </div>
+              <div class="cascade-col" id="col-area">
+                <div class="col-item">西湖区</div>
+                <div class="col-item">拱墅区</div>
+                <div class="col-item active">余杭区</div>
+                <div class="col-item">滨江区</div>
+                <div class="col-item">萧山区</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer base-card__footer">
+            <button onclick="closePopup()">取消</button>
+            <button class="primary" onclick="closePopup()">确定</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
   <div class="param-bar">
-    <div class="param-title">base-select 参数</div>
-    <div class="param-row"><span class="param-key">cascade:</span><span class="param-val">true（开启级联）</span></div>
-    <div class="param-row"><span class="param-key">options:</span><span class="param-val">[{label, value, children?}]</span></div>
-    <div class="param-row"><span class="param-key">v-model:</span><span class="param-val">[province, city, area]</span></div>
+    <div class="param-title">base-select / base-popup 组合</div>
+    <div class="param-row"><span class="param-key">type:</span><span class="param-val">'cascade'（级联选择）</span></div>
+    <div class="param-row"><span class="param-key">popup:</span><span class="param-val">direction='bottom'，三列联动布局</span></div>
+    <div class="param-row"><span class="param-key">容器:</span><span class="param-val">base-popup 内置 base-card</span></div>
   </div>
+
+  <script>
+    function openPopup() {
+      document.getElementById('mask').classList.add('show');
+      document.getElementById('popup').classList.add('show');
+    }
+    function closePopup() {
+      document.getElementById('mask').classList.remove('show');
+      document.getElementById('popup').classList.remove('show');
+    }
+  </script>
 </body>
 </html>

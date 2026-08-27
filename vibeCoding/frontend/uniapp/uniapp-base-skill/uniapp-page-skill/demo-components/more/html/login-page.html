@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录页</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --radius-full: 50%;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+      --color-primary: #4a90e2;
+      --color-primary-light: rgba(74, 144, 226, 0.12);
+      --color-success: #52c41a;
+      --color-text: #333;
+      --color-text-secondary: #666;
+      --color-text-tertiary: #999;
+      --color-bg: #f5f5f5;
+      --color-bg-surface: #fff;
+      --color-border: #e8e8e8;
+      --color-input-bg: #f9f9f9;
+    }
+    body { background: var(--color-bg); font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
+
+    .header {
+      height: 220px;
+      background: linear-gradient(135deg, var(--color-primary) 0%, #6ab4ff 100%);
+      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      position: relative;
+    }
+    .logo-wrap {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,0.2);
+      padding: 4px;
+      backdrop-filter: blur(4px);
+    }
+    .logo-wrap img { width: 100%; height: 100%; border-radius: var(--radius-md); object-fit: cover; }
+    .app-name { font-size: 22px; font-weight: 600; margin-top: var(--space-3); }
+    .app-slogan { font-size: 13px; opacity: 0.85; margin-top: var(--space-2); }
+
+    .body { flex: 1; padding: var(--space-4); margin-top: -30px; position: relative; z-index: 1; }
+
+    .base-card {
+      background: var(--color-bg-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: var(--space-5) var(--space-4);
+    }
+
+    .form-title { font-size: 18px; color: var(--color-text); font-weight: 600; margin-bottom: var(--space-5); text-align: center; }
+
+    .input-row { display: flex; align-items: center; background: var(--color-input-bg); border-radius: var(--radius-md); padding: 0 var(--space-3); height: 48px; margin-bottom: var(--space-3); border: 1px solid transparent; transition: border-color 0.2s; }
+    .input-row:focus-within { border-color: var(--color-primary); }
+    .input-row .icon { width: 20px; height: 20px; color: var(--color-text-tertiary); flex-shrink: 0; }
+    .input-row input { flex: 1; border: none; background: transparent; padding: 0 var(--space-3); font-size: 15px; color: var(--color-text); outline: none; }
+    .input-row input::placeholder { color: var(--color-text-tertiary); }
+    .input-row .eye-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+    .input-row .eye-btn .icon { width: 18px; height: 18px; }
+
+    .login-btn {
+      width: 100%;
+      height: 48px;
+      border-radius: 24px;
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: var(--space-5);
+      box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+      cursor: pointer;
+    }
+
+    .extra-links { display: flex; justify-content: space-between; margin-top: var(--space-3); font-size: 13px; color: var(--color-text-secondary); }
+    .extra-links a { color: var(--color-primary); text-decoration: none; }
+
+    .divider { display: flex; align-items: center; margin: var(--space-6) 0 var(--space-4); color: var(--color-text-tertiary); font-size: 13px; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--color-border); }
+    .divider span { padding: 0 var(--space-3); }
+
+    .social-login { display: flex; justify-content: center; gap: var(--space-5); }
+    .social-item { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); cursor: pointer; }
+    .social-icon { width: 48px; height: 48px; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; background: var(--color-bg); }
+    .social-icon img { width: 24px; height: 24px; }
+    .social-item .social-name { font-size: 12px; color: var(--color-text-secondary); }
+
+    .agreement { display: flex; align-items: center; justify-content: center; gap: var(--space-2); padding: var(--space-4) 0; font-size: 12px; color: var(--color-text-secondary); }
+    .agreement .check { width: 16px; height: 16px; border-radius: 4px; background: var(--color-success); display: flex; align-items: center; justify-content: center; }
+    .agreement .check img { width: 12px; height: 12px; filter: brightness(0) invert(1); }
+    .agreement a { color: var(--color-primary); }
+  </style>
+</head>
+<body>
+  <div class="preview">
+    <div class="header">
+      <div class="logo-wrap">
+        <img src="./static/images/logo1.jpg" alt="应用Logo">
+      </div>
+      <div class="app-name">宝石集市</div>
+      <div class="app-slogan">发现属于你的那一颗</div>
+    </div>
+
+    <div class="body">
+      <div class="base-card">
+        <div class="form-title">账号登录</div>
+
+        <div class="input-row">
+          <img class="icon" src="./static/icons/smartphone.svg" alt="手机号">
+          <input type="text" placeholder="请输入手机号">
+        </div>
+
+        <div class="input-row">
+          <img class="icon" src="./static/icons/lock.svg" alt="密码">
+          <input type="password" placeholder="请输入密码">
+          <span class="eye-btn"><img class="icon" src="./static/icons/eye.svg" alt="显示密码"></span>
+        </div>
+
+        <button class="login-btn">登 录</button>
+
+        <div class="extra-links">
+          <a href="#">忘记密码？</a>
+          <a href="#">注册新账号</a>
+        </div>
+      </div>
+
+      <div class="divider"><span>其他登录方式</span></div>
+
+      <div class="social-login">
+        <div class="social-item">
+          <div class="social-icon"><img src="./static/icons/wechat.svg" alt="微信登录"></div>
+          <span class="social-name">微信</span>
+        </div>
+        <div class="social-item">
+          <div class="social-icon"><img src="./static/icons/tencentqq.svg" alt="QQ登录"></div>
+          <span class="social-name">QQ</span>
+        </div>
+        <div class="social-item">
+          <div class="social-icon"><img src="./static/icons/sinaweibo.svg" alt="微博登录"></div>
+          <span class="social-name">微博</span>
+        </div>
+      </div>
+
+      <div class="agreement">
+        <span class="check"><img src="./static/icons/check.svg" alt="已同意"></span>
+        <span>已阅读并同意 <a href="#">用户协议</a> 和 <a href="#">隐私政策</a></span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

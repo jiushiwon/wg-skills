@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录页 - 一键登录风格</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --color-primary: #4a90e2;
+      --color-primary-light: #6bb3ff;
+      --color-wechat: #07c160;
+      --color-bg: #f5f7fa;
+      --color-surface: #ffffff;
+      --color-text: #1a1a1a;
+      --color-text-secondary: #666666;
+      --color-text-tertiary: #999999;
+      --color-border: #e0e6ed;
+      --radius-lg: 20px;
+      --radius-full: 999px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --shadow-sm: 0 2px 12px rgba(0,0,0,0.04);
+    }
+    body {
+      background: var(--color-bg);
+      font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+    }
+
+    .phone {
+      max-width: 375px;
+      margin: 20px auto;
+      background: linear-gradient(180deg, #e8f4fd 0%, var(--color-bg) 50%);
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+      position: relative;
+      min-height: 760px;
+      padding: 100px var(--space-5) var(--space-6);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-section {
+      text-align: center;
+      margin-bottom: var(--space-6);
+    }
+    .logo {
+      width: 90px; height: 90px;
+      margin: 0 auto var(--space-3);
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .logo svg { width: 48px; height: 48px; }
+    .app-name { font-size: 22px; font-weight: 700; color: var(--color-text); margin-bottom: 6px; }
+    .app-slogan { font-size: 13px; color: var(--color-text-tertiary); }
+
+    .login-content {
+      flex: 1;
+    }
+
+    .primary-btn {
+      width: 100%;
+      height: 52px;
+      border-radius: var(--radius-full);
+      background: var(--color-wechat);
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      display: flex; align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(7, 193, 96, 0.3);
+      margin-bottom: var(--space-4);
+    }
+    .primary-btn svg { width: 22px; height: 22px; }
+
+    .secondary-btn {
+      width: 100%;
+      height: 52px;
+      border-radius: var(--radius-full);
+      background: var(--color-surface);
+      font-size: 16px;
+      font-weight: 500;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      border: 1px solid var(--color-primary);
+      color: var(--color-primary);
+      margin-bottom: var(--space-4);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin: var(--space-4) 0;
+      color: var(--color-text-tertiary);
+      font-size: 13px;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--color-border);
+    }
+
+    .other-login {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-6);
+    }
+    .other-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .other-icon {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: var(--color-surface);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .other-icon svg { width: 22px; height: 22px; }
+    .other-item span { font-size: 12px; color: var(--color-text-secondary); }
+
+    .agreement {
+      margin-top: auto;
+      text-align: center;
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+      line-height: 1.6;
+      padding-top: var(--space-6);
+    }
+    .agreement span { color: var(--color-primary); cursor: pointer; }
+
+    .param-bar {
+      background: var(--color-surface);
+      padding: var(--space-4);
+      margin: var(--space-4) auto;
+      max-width: 375px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+    }
+    .param-title { font-size: 12px; color: var(--color-text-tertiary); margin-bottom: var(--space-2); }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 90px; }
+    .param-val { color: var(--color-text-secondary); }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <div class="logo-section">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <div class="app-name">考拉搞AI</div>
+      <div class="app-slogan">一键登录，即刻开始</div>
+    </div>
+
+    <div class="login-content">
+      <div class="primary-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M8.5 13.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/><path d="M17.5 9c0-3.5-3.4-6.5-7.5-6.5S2.5 5.5 2.5 9c0 2.6 1.9 4.8 4.6 5.8-.2.8-.8 2.3-1 2.8 0 0 2.4-1.2 3.4-1.9 2.1.6 4.4.4 6.5-.5 2.4-1 3.5-2.8 3.5-5.2z"/></svg>
+        <span>微信一键登录</span>
+      </div>
+
+      <div class="secondary-btn">手机号登录</div>
+
+      <div class="divider">其他方式</div>
+
+      <div class="other-login">
+        <div class="other-item">
+          <div class="other-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <span>账号密码</span>
+        </div>
+        <div class="other-item">
+          <div class="other-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <span>邮箱</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="agreement">
+      登录即代表您同意<span>《用户协议》</span>和<span>《隐私政策》</span>
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title">base-card 参数</div>
+    <div class="param-row"><span class="param-key">style:</span><span class="param-val">一键登录页：Logo + 主操作按钮 + 次要按钮 + 其他方式</span></div>
+    <div class="param-row"><span class="param-key">primary:</span><span class="param-val">品牌色大按钮，带图标，全宽胶囊</span></div>
+    <div class="param-row"><span class="param-key">secondary:</span><span class="param-val">边框次要按钮，提供备选登录方式</span></div>
+    <div class="param-row"><span class="param-key">use:</span><span class="param-val">微信生态、第三方授权登录场景</span></div>
+  </div>
+</body>
+</html>

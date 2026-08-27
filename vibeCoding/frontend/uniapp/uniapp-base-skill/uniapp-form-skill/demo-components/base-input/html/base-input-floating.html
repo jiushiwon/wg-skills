@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-input 浮动标签场景 - 参考图</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-full: 999px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-bg: #F5F7FA;
+      --color-surface: #fff;
+      --color-primary: #4A90E2;
+      --color-text: #1A1A1A;
+      --color-text-secondary: #666;
+      --color-text-tertiary: #999;
+      --color-border: #F0F2F5;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    body { background: #f5f5f5; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .title { text-align: center; margin-bottom: 10px; font-size: 14px; color: #666; }
+    .preview { max-width: 375px; margin: 0 auto; background: var(--color-bg); overflow: hidden; min-height: 700px; }
+    .preview-header { height: 44px; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee; font-size: 16px; font-weight: 500; }
+    .preview-body { padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-4); }
+
+    /* 卡片容器 - 大圆角（与其他场景差异化） */
+    .form-card {
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      box-shadow: var(--shadow-sm);
+    }
+    .form-title { font-size: 16px; font-weight: 600; color: var(--color-text); margin-bottom: var(--space-2); }
+    .form-sub { font-size: 13px; color: var(--color-text-secondary); margin-bottom: var(--space-4); }
+
+    /* 浮动标签容器 */
+    .floating-item {
+      position: relative;
+      padding-top: 18px;
+      margin-bottom: var(--space-5);
+    }
+    .floating-control {
+      width: 100%;
+      height: 36px;
+      padding: 0;
+      font-size: 15px;
+      color: var(--color-text);
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--color-border);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .floating-control:focus {
+      border-bottom-color: var(--color-primary);
+      border-bottom-width: 2px;
+    }
+
+    /* 浮动标签：默认 placeholder 位置，浮动时缩小上移 */
+    .floating-label {
+      position: absolute;
+      left: 0;
+      top: 28px;
+      font-size: 15px;
+      color: var(--color-text-tertiary);
+      pointer-events: none;
+      transition: all 0.2s;
+    }
+    .floating-control:focus + .floating-label,
+    .floating-control:not(:placeholder-shown) + .floating-label {
+      top: 0;
+      font-size: 12px;
+      color: var(--color-primary);
+      font-weight: 500;
+    }
+    .floating-control:not(:focus):not(:placeholder-shown) + .floating-label {
+      color: var(--color-text-secondary);
+    }
+
+    /* 错误态 */
+    .floating-item.error .floating-control {
+      border-bottom-color: #FF4D4F;
+    }
+    .floating-item.error .floating-label,
+    .floating-control:not(:placeholder-shown) + .floating-label.has-error {
+      color: #FF4D4F;
+    }
+    .floating-hint {
+      position: absolute;
+      bottom: -18px;
+      left: 0;
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+    }
+    .floating-item.error .floating-hint { color: #FF4D4F; }
+
+    /* 提交按钮 - 8px（区别于 feedback 的胶囊） */
+    .submit-btn {
+      height: 44px;
+      background: var(--color-primary);
+      color: #fff;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 500;
+      margin-top: var(--space-4);
+    }
+
+    /* 状态示例分组 */
+    .state-group {
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      box-shadow: var(--shadow-sm);
+    }
+    .state-group-title {
+      font-size: 13px;
+      color: var(--color-text-tertiary);
+      margin-bottom: var(--space-3);
+      padding-bottom: var(--space-2);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .state-group .floating-item:last-child { margin-bottom: 0; }
+
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; max-width: 375px; margin-left: auto; margin-right: auto; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: #1890ff; width: 110px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="title">参考: base-input 浮动标签场景</div>
+  <div class="preview">
+    <div class="preview-header">完善信息</div>
+    <div class="preview-body">
+
+      <!-- 实战：注册表单 -->
+      <div class="form-card">
+        <div class="form-title">注册账号</div>
+        <div class="form-sub">请填写以下信息完成注册</div>
+
+        <div class="floating-item">
+          <input class="floating-control" id="f-name" placeholder=" ">
+          <label class="floating-label" for="f-name">姓名</label>
+        </div>
+
+        <div class="floating-item">
+          <input class="floating-control" id="f-email" placeholder=" ">
+          <label class="floating-label" for="f-email">邮箱</label>
+        </div>
+
+        <div class="floating-item">
+          <input class="floating-control" id="f-phone" placeholder=" ">
+          <label class="floating-label" for="f-phone">手机号</label>
+        </div>
+
+        <div class="submit-btn">下一步</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title">base-input Props</div>
+    <div class="param-row"><span class="param-key">label:</span><span class="param-val">浮动标签文本</span></div>
+    <div class="param-row"><span class="param-key">border:</span><span class="param-val">bottom（仅底线 + focus 加粗变色）</span></div>
+    <div class="param-row"><span class="param-key">典型场景:</span><span class="param-val">注册、信息收集、登录、App 启动引导</span></div>
+  </div>
+</body>
+</html>

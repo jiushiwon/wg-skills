@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-popup / 04 - 右侧筛选</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-primary: #4a90e2;
+      --color-success: #52c41a;
+      --color-text: #333;
+      --color-text-secondary: #666;
+      --color-text-tertiary: #999;
+      --color-bg: #f5f5f5;
+      --color-bg-surface: #fff;
+      --color-border: #e8e8e8;
+    }
+    body { background: var(--color-bg); padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+
+    .preview {
+      max-width: 375px;
+      margin: 0 auto;
+      background: var(--color-bg-surface);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      position: relative;
+    }
+    .preview-header {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .preview-body { padding: var(--space-4); min-height: 480px; position: relative; }
+
+    .trigger {
+      padding: 12px var(--space-4);
+      background: var(--color-primary);
+      color: #fff;
+      border-radius: var(--radius-md);
+      text-align: center;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .popup-mask {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.5);
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.3s;
+    }
+    .popup-mask.show { opacity: 1; visibility: visible; }
+
+    /* 右侧抽屉：圆角在左侧 */
+    .popup {
+      position: absolute;
+      top: 0; right: 0; bottom: 0;
+      width: 320px;
+      background: var(--color-bg-surface);
+      border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .popup.show { transform: translateX(0); }
+
+    /* 内置 base-card */
+    .popup-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-header {
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-title { font-size: 16px; font-weight: 500; }
+    .card-close { color: var(--color-text-tertiary); font-size: 22px; cursor: pointer; }
+
+    .card-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-3) var(--space-4);
+    }
+    .filter-section { margin-bottom: var(--space-4); }
+    .filter-label { font-size: 13px; color: var(--color-text-tertiary); margin-bottom: var(--space-2); }
+    .filter-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .filter-tag {
+      padding: 4px 12px;
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      font-size: 13px;
+      cursor: pointer;
+      background: var(--color-bg-surface);
+    }
+    .filter-tag.active {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: var(--color-primary);
+    }
+
+    .price-range { display: flex; align-items: center; gap: var(--space-2); }
+    .price-input {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .card-footer {
+      padding: var(--space-3) var(--space-4);
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      gap: var(--space-2);
+    }
+    .card-footer button {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid var(--color-border);
+      background: var(--color-bg-surface);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .card-footer .primary {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: var(--color-primary);
+    }
+
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 100px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="preview base-card">
+    <div class="preview-header base-card__header">
+      <span>base-popup / 右侧筛选</span>
+    </div>
+    <div class="preview-body base-card__body">
+      <div class="trigger" onclick="document.getElementById('mask').classList.add('show');document.getElementById('popup').classList.add('show');">
+        打开右侧筛选
+      </div>
+
+      <div class="popup-mask" id="mask" onclick="this.classList.remove('show');document.getElementById('popup').classList.remove('show');"></div>
+      <div class="popup" id="popup">
+        <div class="popup-content">
+          <div class="card-header base-card__header">
+            <span class="card-title">筛选</span>
+            <span class="card-close" onclick="this.closest('.popup').classList.remove('show');document.getElementById('mask').classList.remove('show');">×</span>
+          </div>
+          <div class="card-body base-card__body">
+            <div class="filter-section">
+              <div class="filter-label">分类</div>
+              <div class="filter-tags">
+                <span class="filter-tag active">全部</span>
+                <span class="filter-tag">手机</span>
+                <span class="filter-tag">电脑</span>
+                <span class="filter-tag">耳机</span>
+                <span class="filter-tag">平板</span>
+              </div>
+            </div>
+            <div class="filter-section">
+              <div class="filter-label">价格区间</div>
+              <div class="price-range">
+                <input class="price-input" placeholder="最低价" />
+                <span style="color:#999;">—</span>
+                <input class="price-input" placeholder="最高价" />
+              </div>
+            </div>
+            <div class="filter-section">
+              <div class="filter-label">品牌</div>
+              <div class="filter-tags">
+                <span class="filter-tag">Apple</span>
+                <span class="filter-tag active">华为</span>
+                <span class="filter-tag">小米</span>
+                <span class="filter-tag">三星</span>
+                <span class="filter-tag">OPPO</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer base-card__footer">
+            <button onclick="this.closest('.popup').classList.remove('show');document.getElementById('mask').classList.remove('show');">重置</button>
+            <button class="primary" onclick="this.closest('.popup').classList.remove('show');document.getElementById('mask').classList.remove('show');">确定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title">base-popup 参数</div>
+    <div class="param-row"><span class="param-key">direction:</span><span class="param-val">'right'（右侧）</span></div>
+    <div class="param-row"><span class="param-key">width:</span><span class="param-val">'320px'（更宽）</span></div>
+    <div class="param-row"><span class="param-key">组合:</span><span class="param-val">base-card footer slot（确定/重置）</span></div>
+  </div>
+</body>
+</html>

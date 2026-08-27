@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>订单售后</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #f5f5f5; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; background: #f5f5f5; }
+    .preview-header { height: 44px; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee; font-size: 16px; font-weight: 500; }
+    .preview-body { padding: 16px; }
+
+    /* 订单售后 - 圆角+间距分割 */
+    .order-card {
+      background: #fff;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      overflow: hidden;
+    }
+    .order-card:last-child { margin-bottom: 0; }
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .order-shop { font-size: 13px; color: #333; font-weight: 500; }
+    .order-status { font-size: 12px; color: #ff4d4f; font-weight: 500; }
+    .order-status.done { color: #07c160; }
+    .order-status.processing { color: #fa8c16; }
+
+    .order-product {
+      display: flex;
+      gap: 12px;
+      padding: 12px 16px;
+    }
+    .order-img {
+      width: 70px;
+      height: 70px;
+      border-radius: 4px;
+      background: url(../images/product1.jpg) center/cover;
+      flex-shrink: 0;
+    }
+    .order-info { flex: 1; }
+    .order-title { font-size: 14px; color: #333; font-weight: 500; }
+    .order-spec { font-size: 12px; color: #999; margin-top: 4px; }
+    .order-price { font-size: 14px; color: #333; margin-top: 8px; }
+
+    .order-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 12px 16px;
+      border-top: 1px solid #f0f0f0;
+    }
+    .order-btn {
+      padding: 6px 16px;
+      font-size: 12px;
+      border-radius: 4px;
+      border: 1px solid #d9d9d9;
+      background: #fff;
+      color: #666;
+    }
+    .order-btn.primary {
+      background: #fff;
+      border-color: #ff4d4f;
+      color: #ff4d4f;
+    }
+
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: #ff4d4f; width: 70px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="preview">
+    <div class="preview-header">订单售后</div>
+    <div class="preview-body">
+      <!-- 售后1: 处理中 -->
+      <div class="order-card">
+        <div class="order-header">
+          <span class="order-shop">官方旗舰店</span>
+          <span class="order-status processing">处理中</span>
+        </div>
+        <div class="order-product">
+          <div class="order-img"></div>
+          <div class="order-info">
+            <div class="order-title">iPhone 15 Pro Max</div>
+            <div class="order-spec">256GB 钛金属色</div>
+            <div class="order-price">¥9999 × 1</div>
+          </div>
+        </div>
+        <div class="order-actions">
+          <span class="order-btn">查看详情</span>
+          <span class="order-btn primary">联系客服</span>
+        </div>
+      </div>
+
+      <!-- 售后2: 已完成 -->
+      <div class="order-card">
+        <div class="order-header">
+          <span class="order-shop">Apple 官方 store</span>
+          <span class="order-status done">已完成</span>
+        </div>
+        <div class="order-product">
+          <div class="order-img" style="background: url(../images/product2.jpg) center/cover;"></div>
+          <div class="order-info">
+            <div class="order-title">AirPods Pro 2代</div>
+            <div class="order-spec">MagSafe充电盒</div>
+            <div class="order-price">¥1899 × 1</div>
+          </div>
+        </div>
+        <div class="order-actions">
+          <span class="order-btn">查看详情</span>
+        </div>
+      </div>
+
+      <!-- 售后3: 已拒绝 -->
+      <div class="order-card">
+        <div class="order-header">
+          <span class="order-shop">华为官方商城</span>
+          <span class="order-status">已拒绝</span>
+        </div>
+        <div class="order-product">
+          <div class="order-img" style="background: url(../images/product3.jpg) center/cover;"></div>
+          <div class="order-info">
+            <div class="order-title">Mate 60 Pro</div>
+            <div class="order-spec">12GB+512GB 雅丹黑</div>
+            <div class="order-price">¥6999 × 1</div>
+          </div>
+        </div>
+        <div class="order-actions">
+          <span class="order-btn">查看详情</span>
+          <span class="order-btn primary">重新申请</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title">base-card 参数</div>
+    <div class="param-row"><span class="param-key">radius:</span><span class="param-val">12px（圆角）</span></div>
+    <div class="param-row"><span class="param-key">margin:</span><span class="param-val">12px（间距分割）</span></div>
+    <div class="param-row"><span class="param-key">shadow:</span><span class="param-val">0 1px 2px rgba(0,0,0,0.05)</span></div>
+  </div>
+</body>
+</html>

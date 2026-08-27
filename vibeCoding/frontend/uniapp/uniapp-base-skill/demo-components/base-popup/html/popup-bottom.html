@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-popup / 01 - 底部弹出</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-primary: #4a90e2;
+      --color-text: #333;
+      --color-text-secondary: #666;
+      --color-text-tertiary: #999;
+      --color-bg: #f5f5f5;
+      --color-bg-surface: #fff;
+      --color-border: #e8e8e8;
+    }
+    body { background: var(--color-bg); padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+
+    /* 手机壳：base-card 容器 */
+    .preview {
+      max-width: 375px;
+      margin: 0 auto;
+      background: var(--color-bg-surface);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .preview-header {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .preview-body { padding: var(--space-4); min-height: 480px; position: relative; }
+
+    /* 触发按钮 */
+    .trigger {
+      padding: 12px var(--space-4);
+      background: var(--color-primary);
+      color: #fff;
+      border-radius: var(--radius-md);
+      text-align: center;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    /* 弹窗遮罩 */
+    .popup-mask {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s;
+    }
+    .popup-mask.show { opacity: 1; visibility: visible; }
+
+    /* 底部弹出容器：内置 base-card */
+    .popup {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      background: var(--color-bg-surface);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+      max-height: 80%;
+      display: flex;
+      flex-direction: column;
+    }
+    .popup.show { transform: translateY(0); }
+
+    /* 🔥 内嵌 base-card */
+    .popup-content {
+      padding: var(--space-3) var(--space-4);
+      overflow-y: auto;
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: var(--space-3);
+    }
+    .card-title { font-size: 16px; font-weight: 500; }
+    .card-close { color: var(--color-text-tertiary); font-size: 22px; cursor: pointer; }
+
+    /* 菜单列表 */
+    .menu-list { display: flex; flex-direction: column; }
+    .menu-item {
+      padding: var(--space-3) 0;
+      font-size: 15px;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      cursor: pointer;
+    }
+    .menu-item:last-child { border-bottom: none; }
+    .menu-icon {
+      width: 28px; height: 28px;
+      background: var(--color-primary);
+      color: #fff;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+
+    /* base-card footer */
+    .card-footer {
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--color-border);
+      margin-top: var(--space-3);
+      display: flex;
+      gap: var(--space-2);
+    }
+    .card-footer button {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid var(--color-border);
+      background: var(--color-bg-surface);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+    }
+    .card-footer .primary {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: var(--color-primary);
+    }
+
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 100px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <!-- 🔥 顶部就是 base-card -->
+  <div class="preview base-card">
+    <div class="preview-header base-card__header">
+      <span>base-popup / 底部弹出</span>
+      <span style="font-size:12px;color:#999;">demo</span>
+    </div>
+    <div class="preview-body base-card__body">
+      <div class="trigger" onclick="open()">打开底部弹窗</div>
+
+      <div class="popup-mask" id="mask" onclick="close()"></div>
+      <div class="popup" id="popup">
+        <!-- 🔥 内部就是 base-card -->
+        <div class="popup-content">
+          <div class="card-header base-card__header">
+            <span class="card-title">分享到</span>
+            <span class="card-close" onclick="close()">×</span>
+          </div>
+          <div class="menu-list">
+            <div class="menu-item"><span class="menu-icon">微</span>微信好友</div>
+            <div class="menu-item"><span class="menu-icon">朋</span>朋友圈</div>
+            <div class="menu-item"><span class="menu-icon">Q</span>QQ</div>
+            <div class="menu-item"><span class="menu-icon">微</span>微博</div>
+            <div class="menu-item"><span class="menu-icon">链</span>复制链接</div>
+          </div>
+          <div class="card-footer base-card__footer">
+            <button onclick="close()">取消</button>
+            <button class="primary" onclick="close()">分享</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title">base-popup 参数（内置 base-card）</div>
+    <div class="param-row"><span class="param-key">direction:</span><span class="param-val">'bottom'（默认）</span></div>
+    <div class="param-row"><span class="param-key">radius:</span><span class="param-val">'16px'（顶部左右两角）</span></div>
+    <div class="param-row"><span class="param-key">title:</span><span class="param-val">转发给内部 base-card</span></div>
+    <div class="param-row"><span class="param-key">#footer:</span><span class="param-val">转发给内部 base-card</span></div>
+  </div>
+
+  <script>
+    function open() {
+      document.getElementById('mask').classList.add('show');
+      document.getElementById('popup').classList.add('show');
+    }
+    function close() {
+      document.getElementById('mask').classList.remove('show');
+      document.getElementById('popup').classList.remove('show');
+    }
+  </script>
+</body>
+</html>

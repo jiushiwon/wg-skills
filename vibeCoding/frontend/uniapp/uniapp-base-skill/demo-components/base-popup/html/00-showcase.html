@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-popup / 00 - 4 方向总览</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-primary: #4a90e2;
+      --color-text: #333;
+      --color-text-secondary: #666;
+      --color-text-tertiary: #999;
+      --color-bg: #f5f5f5;
+      --color-bg-surface: #fff;
+      --color-border: #e8e8e8;
+    }
+    body {
+      background: var(--color-bg);
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+      color: var(--color-text);
+    }
+    h1 { font-size: 20px; margin-bottom: 8px; }
+    .desc { color: var(--color-text-secondary); font-size: 13px; margin-bottom: 20px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    /* 🔥 卡片外层统一用 base-card 类 */
+    .card {
+      background: var(--color-bg-surface);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .card-header {
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card-title { font-size: 15px; font-weight: 500; }
+    .card-tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: var(--color-primary);
+      color: #fff;
+    }
+    .card-tag.bottom { background: #4a90e2; }
+    .card-tag.top { background: #fa8c16; }
+    .card-tag.left { background: #52c41a; }
+    .card-tag.right { background: #722ed1; }
+
+    .card-body {
+      padding: var(--space-4);
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-secondary);
+      font-size: 13px;
+      text-align: center;
+      background: linear-gradient(180deg, #fafafa 0%, #fff 100%);
+    }
+    .arrow-icon { font-size: 28px; margin-bottom: 6px; opacity: 0.6; }
+
+    .card-link {
+      display: block;
+      padding: 10px var(--space-4);
+      text-align: center;
+      color: var(--color-primary);
+      font-size: 13px;
+      text-decoration: none;
+      border-top: 1px solid var(--color-border);
+    }
+    .card-link:hover { background: #f8f8f8; }
+
+    .container-note {
+      margin-top: 24px;
+      padding: var(--space-4);
+      background: var(--color-bg-surface);
+      border-radius: var(--radius-lg);
+      border-left: 4px solid var(--color-primary);
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+    }
+    .container-note strong { color: var(--color-primary); }
+    code { background: #f0f0f0; padding: 1px 6px; border-radius: 4px; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <h1>base-popup · 4 方向总览</h1>
+  <p class="desc">通用弹窗/抽屉容器 · 内置 base-card · slide in/out 动画 · 圆角智能应用</p>
+
+  <div class="grid">
+    <div class="card base-card">
+      <div class="card-header base-card__header">
+        <span class="card-title">01. 底部弹出</span>
+        <span class="card-tag bottom">bottom</span>
+      </div>
+      <div class="card-body base-card__body">
+        <div>
+          <div class="arrow-icon">↑</div>
+          <div>圆角在顶部<br/>操作菜单 / 分享 / 选择器</div>
+        </div>
+      </div>
+      <a class="card-link" href="popup-bottom.html">查看 demo →</a>
+    </div>
+
+    <div class="card base-card">
+      <div class="card-header base-card__header">
+        <span class="card-title">02. 顶部通知</span>
+        <span class="card-tag top">top</span>
+      </div>
+      <div class="card-body base-card__body">
+        <div>
+          <div class="arrow-icon">↓</div>
+          <div>圆角在底部<br/>系统通知 / 公告</div>
+        </div>
+      </div>
+      <a class="card-link" href="popup-top.html">查看 demo →</a>
+    </div>
+
+    <div class="card base-card">
+      <div class="card-header base-card__header">
+        <span class="card-title">03. 左侧抽屉</span>
+        <span class="card-tag left">left</span>
+      </div>
+      <div class="card-body base-card__body">
+        <div>
+          <div class="arrow-icon">→</div>
+          <div>圆角在右侧<br/>侧滑导航 / 个人中心</div>
+        </div>
+      </div>
+      <a class="card-link" href="popup-left.html">查看 demo →</a>
+    </div>
+
+    <div class="card base-card">
+      <div class="card-header base-card__header">
+        <span class="card-title">04. 右侧筛选</span>
+        <span class="card-tag right">right</span>
+      </div>
+      <div class="card-body base-card__body">
+        <div>
+          <div class="arrow-icon">←</div>
+          <div>圆角在左侧<br/>筛选面板 / 侧边设置</div>
+        </div>
+      </div>
+      <a class="card-link" href="popup-right.html">查看 demo →</a>
+    </div>
+  </div>
+
+  <div class="container-note">
+    <strong>📦 容器原则</strong>：所有 base-popup demo 都是 base-card 容器。
+    内部结构（<code>.card-header</code> / <code>.card-body</code> / <code>.card-footer</code>）<strong>全部来自 base-card 的内置结构</strong>，
+    通过 slot 由 base-popup 自动转发：
+    <br/>• <code>#header-right</code> → 关闭按钮 / 操作
+    <br/>• 默认 slot → 弹窗主体内容
+    <br/>• <code>#footer</code> → 底部操作按钮
+  </div>
+</body>
+</html>
