@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>base-table / 05 - 紧凑表格</title>
+  <link rel="stylesheet" href="../../shared/tokens.css" />
+  <link rel="stylesheet" href="../../shared/demo.css" />
+</head>
+<body>
+  <h1 class="demo-section-title">紧凑表格 — variant="compact" + size="sm"</h1>
+  <p class="demo-helper">行高更小、字号更小，一屏显示更多数据。适合日志、监控。</p>
+
+  <base-card title="系统日志（最近 10 条）">
+    <table class="base-table base-table--variant-compact">
+      <thead class="base-table__head">
+        <tr>
+          <th>时间</th><th>级别</th><th>模块</th>
+          <th>消息</th><th>耗时</th>
+        </tr>
+      </thead>
+      <tbody class="base-table__body">
+        <tr><td>10:23:45</td><td><span class="base-tag base-tag--type-info">INFO</span></td><td>api.user</td><td>login success, ip=192.168.1.10</td><td>23ms</td></tr>
+        <tr><td>10:23:46</td><td><span class="base-tag base-tag--type-warning">WARN</span></td><td>api.order</td><td>order amount exceeds 10k, manual review needed</td><td>56ms</td></tr>
+        <tr><td>10:23:47</td><td><span class="base-tag base-tag--type-danger">ERROR</span></td><td>api.payment</td><td>payment gateway timeout, retrying...</td><td>3000ms</td></tr>
+        <tr><td>10:23:48</td><td><span class="base-tag base-tag--type-info">INFO</span></td><td>api.product</td><td>fetched 200 products, cache miss</td><td>112ms</td></tr>
+        <tr><td>10:23:49</td><td><span class="base-tag base-tag--type-info">INFO</span></td><td>api.auth</td><td>token refreshed for user 1024</td><td>18ms</td></tr>
+        <tr><td>10:23:50</td><td><span class="base-tag base-tag--type-warning">WARN</span></td><td>api.cache</td><td>redis connection pool running low</td><td>5ms</td></tr>
+        <tr><td>10:23:51</td><td><span class="base-tag base-tag--type-info">INFO</span></td><td>api.user</td><td>registered new user: alice@example.com</td><td>201ms</td></tr>
+        <tr><td>10:23:52</td><td><span class="base-tag base-tag--type-info">INFO</span></td><td>api.order</td><td>order SO-260824001 paid successfully</td><td>87ms</td></tr>
+        <tr><td>10:23:53</td><td><span class="base-tag base-tag--type-danger">ERROR</span></td><td>api.sms</td><td>send sms failed: invalid phone number</td><td>12ms</td></tr>
+        <tr><td>10:23:54</td><td><span class="base-tag base-tag--type-info">INFO</span></td><td>api.report</td><td>daily report generated, 5234 rows</td><td>2340ms</td></tr>
+      </tbody>
+    </table>
+  </base-card>
+</body>
+</html>

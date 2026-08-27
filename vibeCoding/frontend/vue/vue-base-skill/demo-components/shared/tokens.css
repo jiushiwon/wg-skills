@@ -1,0 +1,77 @@
+/* ============================================
+ * Demo Tokens — vue-theme-skill 的精简运行时版
+ * 生产项目请使用 vue-theme-skill/templates/src/styles/tokens.css
+ * 这里保留 demo 必需的核心 token
+ * ============================================ */
+:root {
+  --color-primary-50:   hsl(211, 100%, 96%);
+  --color-primary-100:  hsl(211, 100%, 92%);
+  --color-primary-200:  hsl(211, 100%, 86%);
+  --color-primary-300:  hsl(211, 100%, 76%);
+  --color-primary-400:  hsl(211, 100%, 66%);
+  --color-primary-500:  hsl(211, 100%, 56%);
+  --color-primary-600:  hsl(211, 100%, 48%);
+  --color-primary-700:  hsl(211, 100%, 40%);
+  --color-primary-800:  hsl(211, 100%, 32%);
+  --color-primary-950:  hsl(211, 100%, 16%);
+
+  --color-primary:       var(--color-primary-500);
+  --color-primary-light: var(--color-primary-300);
+  --color-primary-dark:  var(--color-primary-600);
+
+  --color-success:       hsl(152, 69%, 45%);
+  --color-success-light: hsl(152, 69%, 92%);
+  --color-success-dark:  hsl(152, 69%, 38%);
+
+  --color-warning:       hsl(33, 100%, 56%);
+  --color-warning-light: hsl(33, 100%, 92%);
+  --color-warning-dark:  hsl(33, 100%, 48%);
+
+  --color-danger:        hsl(0, 84%, 60%);
+  --color-danger-light:  hsl(0, 84%, 92%);
+  --color-danger-dark:   hsl(0, 84%, 48%);
+
+  --color-bg:              hsl(220, 20%, 98%);
+  --color-bg-secondary:    hsl(220, 14%, 96%);
+  --color-bg-tertiary:     hsl(220, 14%, 92%);
+  --color-surface:         hsl(0, 0%, 100%);
+  --color-surface-hover:   hsl(220, 14%, 98%);
+
+  --color-border:          hsl(220, 14%, 92%);
+  --color-border-strong:   hsl(220, 13%, 86%);
+  --color-divider:         hsl(220, 14%, 95%);
+
+  --color-text:            hsl(220, 13%, 18%);
+  --color-text-secondary:  hsl(220, 9%, 46%);
+  --color-text-tertiary:   hsl(220, 9%, 65%);
+  --color-text-disabled:   hsl(220, 9%, 78%);
+  --color-text-inverse:    hsl(0, 0%, 100%);
+
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  --font-2xs:  11px;
+  --font-xs:   12px;
+  --font-sm:   13px;
+  --font-base: 14px;
+  --font-lg:   16px;
+  --font-xl:   18px;
+  --font-2xl:  22px;
+  --font-3xl:  28px;
+  --font-4xl:  36px;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+
+  --height-button-md: 36px;
+}

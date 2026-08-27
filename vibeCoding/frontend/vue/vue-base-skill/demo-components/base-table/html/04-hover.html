@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>base-table / 04 - 高亮表格</title>
+  <link rel="stylesheet" href="../../shared/tokens.css" />
+  <link rel="stylesheet" href="../../shared/demo.css" />
+</head>
+<body>
+  <h1 class="demo-section-title">高亮表格 — variant="hover"</h1>
+  <p class="demo-helper">鼠标悬停行高亮，便于交互。配合 row-click 事件跳详情。</p>
+
+  <base-card title="任务列表（点击行跳详情）">
+    <table class="base-table base-table--variant-hover">
+      <thead class="base-table__head">
+        <tr>
+          <th>任务 ID</th><th>标题</th><th>负责人</th>
+          <th>优先级</th><th>状态</th><th>截止日期</th>
+        </tr>
+      </thead>
+      <tbody class="base-table__body">
+        <tr>
+          <td>T-1001</td><td>用户登录模块重构</td><td>张三</td>
+          <td><span class="base-tag base-tag--type-danger">紧急</span></td>
+          <td><span class="base-tag base-tag--type-warning">进行中</span></td>
+          <td>2026-08-28</td>
+        </tr>
+        <tr>
+          <td>T-1002</td><td>商品 SKU 系统对接</td><td>李四</td>
+          <td><span class="base-tag base-tag--type-warning">高</span></td>
+          <td><span class="base-tag base-tag--type-info">待开始</span></td>
+          <td>2026-09-05</td>
+        </tr>
+        <tr>
+          <td>T-1003</td><td>订单导出性能优化</td><td>王五</td>
+          <td><span class="base-tag base-tag--type-info">中</span></td>
+          <td><span class="base-tag base-tag--type-success">已完成</span></td>
+          <td>2026-08-22</td>
+        </tr>
+        <tr>
+          <td>T-1004</td><td>支付回调链路修复</td><td>赵六</td>
+          <td><span class="base-tag base-tag--type-danger">紧急</span></td>
+          <td><span class="base-tag base-tag--type-warning">进行中</span></td>
+          <td>2026-08-26</td>
+        </tr>
+        <tr>
+          <td>T-1005</td><td>商品详情页 SEO 优化</td><td>钱七</td>
+          <td><span class="base-tag base-tag--type-info">中</span></td>
+          <td><span class="base-tag base-tag--type-info">待开始</span></td>
+          <td>2026-09-10</td>
+        </tr>
+      </tbody>
+    </table>
+  </base-card>
+</body>
+</html>

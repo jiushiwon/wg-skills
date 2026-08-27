@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>base-button / 02 - 形态变体</title>
+  <link rel="stylesheet" href="../../shared/tokens.css" />
+  <link rel="stylesheet" href="../../shared/demo.css" />
+</head>
+<body>
+  <h1 class="demo-section-title">形态变体 — variant="solid / outline / text"</h1>
+  <p class="demo-helper">solid（实色背景）/ outline（边框）/ text（文字按钮，无背景）。</p>
+
+  <base-card title="variant=solid（默认）">
+    <div class="demo-row">
+      <button class="base-button base-button--type-primary">主要 solid</button>
+      <button class="base-button base-button--type-success">成功 solid</button>
+      <button class="base-button base-button--type-danger">危险 solid</button>
+    </div>
+  </base-card>
+
+  <base-card title="variant=outline">
+    <div class="demo-row">
+      <button class="base-button base-button--variant-outline base-button--type-primary">主要 outline</button>
+      <button class="base-button base-button--variant-outline base-button--type-success">成功 outline</button>
+      <button class="base-button base-button--variant-outline base-button--type-danger">危险 outline</button>
+    </div>
+  </base-card>
+
+  <base-card title="variant=text">
+    <div class="demo-row">
+      <button class="base-button base-button--variant-text">文字按钮</button>
+      <button class="base-button base-button--variant-text">查看详情</button>
+      <button class="base-button base-button--variant-text">更多</button>
+    </div>
+  </base-card>
+</body>
+</html>

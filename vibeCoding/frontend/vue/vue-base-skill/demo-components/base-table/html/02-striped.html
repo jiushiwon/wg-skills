@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>base-table / 02 - 条纹表格</title>
+  <link rel="stylesheet" href="../../shared/tokens.css" />
+  <link rel="stylesheet" href="../../shared/demo.css" />
+</head>
+<body>
+  <h1 class="demo-section-title">条纹表格 — variant="striped"</h1>
+  <p class="demo-helper">偶数行加背景色，便于扫读对比。适合数据展示、报表类页面。</p>
+
+  <base-card title="订单报表">
+    <table class="base-table base-table--variant-striped">
+      <thead class="base-table__head">
+        <tr>
+          <th>订单号</th><th>客户</th><th>金额</th>
+          <th>状态</th><th>下单时间</th>
+        </tr>
+      </thead>
+      <tbody class="base-table__body">
+        <tr><td>SO-260824001</td><td>张三</td><td>¥8999</td><td><span class="base-tag base-tag--type-success">已付款</span></td><td>2026-08-24 10:23</td></tr>
+        <tr><td>SO-260824002</td><td>李四</td><td>¥2399</td><td><span class="base-tag base-tag--type-warning">待发货</span></td><td>2026-08-24 11:15</td></tr>
+        <tr><td>SO-260824003</td><td>王五</td><td>¥14999</td><td><span class="base-tag base-tag--type-success">已付款</span></td><td>2026-08-24 13:42</td></tr>
+        <tr><td>SO-260824004</td><td>赵六</td><td>¥499</td><td><span class="base-tag base-tag--type-danger">已取消</span></td><td>2026-08-24 15:08</td></tr>
+        <tr><td>SO-260824005</td><td>钱七</td><td>¥3199</td><td><span class="base-tag base-tag--type-info">配送中</span></td><td>2026-08-24 16:55</td></tr>
+        <tr><td>SO-260824006</td><td>孙八</td><td>¥1899</td><td><span class="base-tag base-tag--type-success">已完成</span></td><td>2026-08-24 18:20</td></tr>
+      </tbody>
+    </table>
+  </base-card>
+</body>
+</html>

@@ -1,0 +1,198 @@
+/* ============================================
+ * Vue Theme Skill — 完整设计 Token
+ * 由 vue-theme-skill/templates/scripts/generate-tokens.js 生成
+ * 不要手改，由 generator 维护
+ * 命名对齐 uniapp-theme-skill
+ * ============================================ */
+
+:root {
+  /* ==================== 主题色（HSL 50-950） ==================== */
+  --color-primary-50:   hsl(211, 100%, 96%);
+  --color-primary-100:  hsl(211, 100%, 92%);
+  --color-primary-200:  hsl(211, 100%, 86%);
+  --color-primary-300:  hsl(211, 100%, 76%);
+  --color-primary-400:  hsl(211, 100%, 66%);
+  --color-primary-500:  hsl(211, 100%, 56%);
+  --color-primary-600:  hsl(211, 100%, 48%);
+  --color-primary-700:  hsl(211, 100%, 40%);
+  --color-primary-800:  hsl(211, 100%, 32%);
+  --color-primary-950:  hsl(211, 100%, 16%);
+
+  /* 主色简写 */
+  --color-primary:        var(--color-primary-500);
+  --color-primary-light:  var(--color-primary-300);
+  --color-primary-dark:   var(--color-primary-600);
+
+  /* ==================== 语义色 ==================== */
+  --color-success: hsl(152, 69%, 45%);
+  --color-success-light: hsl(152, 69%, 92%);
+  --color-success-dark: hsl(152, 69%, 38%);
+
+  --color-warning: hsl(33, 100%, 56%);
+  --color-warning-light: hsl(33, 100%, 92%);
+  --color-warning-dark: hsl(33, 100%, 48%);
+
+  --color-danger: hsl(0, 84%, 60%);
+  --color-danger-light: hsl(0, 84%, 92%);
+  --color-danger-dark: hsl(0, 84%, 48%);
+
+  --color-info: var(--color-primary);
+
+  /* ==================== 中性色 ==================== */
+  --color-bg:              hsl(220, 20%, 98%);
+  --color-bg-secondary:    hsl(220, 14%, 96%);
+  --color-surface:         hsl(0, 0%, 100%);
+  --color-surface-hover:   hsl(220, 14%, 98%);
+
+  --color-border:          hsl(220, 14%, 92%);
+  --color-border-strong:   hsl(220, 13%, 86%);
+  --color-divider:         hsl(220, 14%, 95%);
+
+  --color-text:            hsl(220, 13%, 18%);
+  --color-text-secondary:  hsl(220, 9%, 46%);
+  --color-text-tertiary:   hsl(220, 9%, 65%);
+  --color-text-disabled:   hsl(220, 9%, 78%);
+  --color-text-inverse:    hsl(0, 0%, 100%);
+  --color-text-link:       var(--color-primary);
+
+  /* ==================== 间距 --space-{n} ==================== */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* ==================== 字体 --font-{size} ==================== */
+  --font-2xs:  11px;
+  --font-xs:   12px;
+  --font-sm:   13px;
+  --font-base: 14px;
+  --font-lg:   16px;
+  --font-xl:   18px;
+  --font-2xl:  22px;
+  --font-3xl:  28px;
+  --font-4xl:  36px;
+
+  /* 行高 */
+  --leading-tight:  1.2;
+  --leading-normal: 1.5;
+  --leading-loose:  1.8;
+
+  /* 字重 */
+  --weight-normal:   400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  /* ==================== 圆角 --radius-{size} ==================== */
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   20px;
+  --radius-2xl:  24px;
+  --radius-full: 999px;
+
+  /* ==================== 组件高度 --height-{comp}-{size} ==================== */
+  /* 按钮 */
+  --height-button-sm: 32px;
+  --height-button-md: 40px;
+  --height-button-lg: 48px;
+
+  /* 输入框 */
+  --height-input-sm:  32px;
+  --height-input-md:  40px;
+  --height-input-lg:  48px;
+
+  /* 卡片 */
+  --height-card-sm:   80px;
+  --height-card-md:   120px;
+  --height-card-lg:   200px;
+
+  /* 表格行 */
+  --height-table-row-sm: 40px;
+  --height-table-row-md: 52px;
+  --height-table-row-lg: 64px;
+
+  /* ==================== 图标 --icon-{size} ==================== */
+  --icon-xs: 12px;
+  --icon-sm: 16px;
+  --icon-md: 20px;
+  --icon-lg: 24px;
+  --icon-xl: 32px;
+
+  /* ==================== 阴影 ==================== */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.16);
+}
+
+/* ==================== 多主题（data-theme 切换） ==================== */
+
+[data-theme="green"] {
+  --color-primary-500: hsl(152, 69%, 45%);
+  --color-primary-300: hsl(152, 69%, 65%);
+  --color-primary-600: hsl(152, 69%, 38%);
+  --color-primary:       var(--color-primary-500);
+  --color-primary-light: var(--color-primary-300);
+  --color-primary-dark:  var(--color-primary-600);
+}
+
+[data-theme="purple"] {
+  --color-primary-500: hsl(262, 83%, 58%);
+  --color-primary-300: hsl(262, 83%, 75%);
+  --color-primary-600: hsl(262, 83%, 48%);
+  --color-primary:       var(--color-primary-500);
+  --color-primary-light: var(--color-primary-300);
+  --color-primary-dark:  var(--color-primary-600);
+}
+
+[data-theme="red"] {
+  --color-primary-500: hsl(0, 84%, 60%);
+  --color-primary-300: hsl(0, 84%, 80%);
+  --color-primary-600: hsl(0, 84%, 48%);
+  --color-primary:       var(--color-primary-500);
+  --color-primary-light: var(--color-primary-300);
+  --color-primary-dark:  var(--color-primary-600);
+}
+
+[data-theme="orange"] {
+  --color-primary-500: hsl(33, 100%, 56%);
+  --color-primary-300: hsl(33, 100%, 76%);
+  --color-primary-600: hsl(33, 100%, 48%);
+  --color-primary:       var(--color-primary-500);
+  --color-primary-light: var(--color-primary-300);
+  --color-primary-dark:  var(--color-primary-600);
+}
+
+[data-theme="cyan"] {
+  --color-primary-500: hsl(180, 77%, 47%);
+  --color-primary-300: hsl(180, 77%, 70%);
+  --color-primary-600: hsl(180, 77%, 38%);
+  --color-primary:       var(--color-primary-500);
+  --color-primary-light: var(--color-primary-300);
+  --color-primary-dark:  var(--color-primary-600);
+}
+
+[data-theme="pink"] {
+  --color-primary-500: hsl(330, 81%, 60%);
+  --color-primary-300: hsl(330, 81%, 80%);
+  --color-primary-600: hsl(330, 81%, 48%);
+  --color-primary:       var(--color-primary-500);
+  --color-primary-light: var(--color-primary-300);
+  --color-primary-dark:  var(--color-primary-600);
+}
+
+[data-theme="slate"] {
+  --color-primary-500: hsl(220, 9%, 46%);
+  --color-primary-300: hsl(220, 9%, 70%);
+  --color-primary-600: hsl(220, 9%, 36%);
+  --color-primary:       var(--color-primary-500);
+  --color-primary-light: var(--color-primary-300);
+  --color-primary-dark:  var(--color-primary-600);
+}

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>base-table / 06 - 固定表头</title>
+  <link rel="stylesheet" href="../../shared/tokens.css" />
+  <link rel="stylesheet" href="../../shared/demo.css" />
+  <style>
+    /* 本 demo 演示滚动容器 + sticky 表头 */
+    .scroll-area {
+      max-height: 360px;
+      overflow-y: auto;
+    }
+    .scroll-area .base-table thead th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: var(--color-bg-secondary);
+    }
+  </style>
+</head>
+<body>
+  <h1 class="demo-section-title">固定表头 — 滚动时表头常驻</h1>
+  <p class="demo-helper">长列表（> 20 行）下，滚动到中部时仍能看到列名。外层 max-height + sticky 实现。</p>
+
+  <base-card title="商品列表（30+ 行）" class="base-card--padding-none">
+    <div class="scroll-area">
+      <table class="base-table base-table--variant-hover">
+        <thead class="base-table__head">
+          <tr>
+            <th>SKU</th><th>商品名称</th><th>分类</th>
+            <th>价格</th><th>库存</th>
+          </tr>
+        </thead>
+        <tbody class="base-table__body">
+          <!-- 生成 30 行数据用于演示滚动 -->
+          <script>document.write(
+              Array.from({length: 30}).map((_, i) => `
+                <tr>
+                  <td>SKU-${String(i+1).padStart(3,'0')}</td>
+                  <td>商品 ${i+1}</td>
+                  <td>分类 ${(i % 5) + 1}</td>
+                  <td>¥${(99 + i * 23).toFixed(2)}</td>
+                  <td>${100 + i * 7}</td>
+                </tr>
+              `).join('')
+            )</script>
+        </tbody>
+      </table>
+    </div>
+  </base-card>
+</body>
+</html>

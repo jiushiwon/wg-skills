@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>base-card / 01 - 基础卡片</title>
+  <link rel="stylesheet" href="../../shared/tokens.css" />
+  <link rel="stylesheet" href="../../shared/demo.css" />
+</head>
+<body>
+  <h1 class="demo-section-title">基础 base-card</h1>
+  <p class="demo-helper">所有内容组件、表单、表格都必须放在 base-card 内。基础用法：仅传 title。</p>
+
+  <base-card title="用户信息">
+    <p>这是卡片内容区。可以是文本、表单、列表、任意 Vue 节点。</p>
+    <p style="color: var(--color-text-secondary); margin-top: var(--space-3);">
+      —— vue-base-skill 的容器原则：所有组件必须由 base-card 包裹
+    </p>
+  </base-card>
+
+  <base-card>
+    <p>无标题的卡片。适合不需要标识的场景。</p>
+  </base-card>
+</body>
+</html>

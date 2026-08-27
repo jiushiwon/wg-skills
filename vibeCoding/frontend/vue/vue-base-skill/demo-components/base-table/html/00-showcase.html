@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>base-table / 00 - 形态总览</title>
+  <link rel="stylesheet" href="../../shared/tokens.css" />
+  <link rel="stylesheet" href="../../shared/demo.css" />
+</head>
+<body>
+  <h1 class="demo-section-title">base-table 14 种形态总览</h1>
+  <p class="demo-helper">所有表格都嵌入 base-card 容器使用，遵循 vue-base-skill 的容器原则。</p>
+
+  <base-card title="形态 1: basic（默认）">
+    <table class="base-table">
+      <thead class="base-table__head">
+        <tr><th>ID</th><th>商品</th><th>价格</th></tr>
+      </thead>
+      <tbody class="base-table__body">
+        <tr><td>1</td><td>基础表格 A</td><td>¥99</td></tr>
+        <tr><td>2</td><td>基础表格 B</td><td>¥199</td></tr>
+        <tr><td>3</td><td>基础表格 C</td><td>¥299</td></tr>
+      </tbody>
+    </table>
+  </base-card>
+
+  <base-card title="形态 2: striped（条纹）">
+    <table class="base-table base-table--variant-striped">
+      <thead class="base-table__head">
+        <tr><th>ID</th><th>商品</th><th>价格</th></tr>
+      </thead>
+      <tbody class="base-table__body">
+        <tr><td>1</td><td>条纹 A</td><td>¥99</td></tr>
+        <tr><td>2</td><td>条纹 B</td><td>¥199</td></tr>
+        <tr><td>3</td><td>条纹 C</td><td>¥299</td></tr>
+      </tbody>
+    </table>
+  </base-card>
+
+  <base-card title="形态 3: bordered（边框）">
+    <table class="base-table base-table--variant-bordered">
+      <thead class="base-table__head">
+        <tr><th>ID</th><th>商品</th><th>价格</th></tr>
+      </thead>
+      <tbody class="base-table__body">
+        <tr><td>1</td><td>边框 A</td><td>¥99</td></tr>
+        <tr><td>2</td><td>边框 B</td><td>¥199</td></tr>
+      </tbody>
+    </table>
+  </base-card>
+
+  <base-card title="形态 4: hover（高亮）">
+    <table class="base-table base-table--variant-hover">
+      <thead class="base-table__head">
+        <tr><th>ID</th><th>商品（点击行）</th><th>价格</th></tr>
+      </thead>
+      <tbody class="base-table__body">
+        <tr><td>1</td><td>高亮 A</td><td>¥99</td></tr>
+        <tr><td>2</td><td>高亮 B</td><td>¥199</td></tr>
+      </tbody>
+    </table>
+  </base-card>
+
+  <base-card title="形态 5: compact（紧凑）">
+    <table class="base-table base-table--variant-compact">
+      <thead class="base-table__head">
+        <tr><th>ID</th><th>商品</th><th>价格</th></tr>
+      </thead>
+      <tbody class="base-table__body">
+        <tr><td>1</td><td>紧凑 A</td><td>¥99</td></tr>
+        <tr><td>2</td><td>紧凑 B</td><td>¥199</td></tr>
+      </tbody>
+    </table>
+  </base-card>
+</body>
+</html>

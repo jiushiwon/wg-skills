@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>base-card / 02 - 头部 + 底部</title>
+  <link rel="stylesheet" href="../../shared/tokens.css" />
+  <link rel="stylesheet" href="../../shared/demo.css" />
+</head>
+<body>
+  <h1 class="demo-section-title">头部操作 + 底部操作</h1>
+  <p class="demo-helper">通过 #header-right 和 #footer slot 放置按钮组、操作区。</p>
+
+  <base-card title="商品管理">
+    <div slot="header-right" class="base-card__header-right">
+      <button class="base-button">导出</button>
+      <button class="base-button base-button--type-primary">+ 新建商品</button>
+    </div>
+
+    <p>这里是商品列表或其他内容区。</p>
+
+    <div slot="footer" class="base-card__footer">
+      <button class="base-button">取消</button>
+      <button class="base-button base-button--type-primary">保存</button>
+    </div>
+  </base-card>
+</body>
+</html>

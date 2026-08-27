@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>base-button / 01 - 5 种类型</title>
+  <link rel="stylesheet" href="../../shared/tokens.css" />
+  <link rel="stylesheet" href="../../shared/demo.css" />
+</head>
+<body>
+  <h1 class="demo-section-title">基础按钮 — 5 种 type</h1>
+  <p class="demo-helper">type: default | primary | success | warning | danger。必须嵌入 base-card 使用。</p>
+
+  <base-card title="按钮类型">
+    <div class="demo-row">
+      <button class="base-button">默认</button>
+      <button class="base-button base-button--type-primary">主要</button>
+      <button class="base-button base-button--type-success">成功</button>
+      <button class="base-button base-button--type-warning">警告</button>
+      <button class="base-button base-button--type-danger">危险</button>
+    </div>
+  </base-card>
+
+  <base-card title="禁用态">
+    <div class="demo-row">
+      <button class="base-button" disabled>默认</button>
+      <button class="base-button base-button--type-primary" disabled>主要</button>
+      <button class="base-button base-button--type-success" disabled>成功</button>
+    </div>
+  </base-card>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>base-table / 03 - 边框表格</title>
+  <link rel="stylesheet" href="../../shared/tokens.css" />
+  <link rel="stylesheet" href="../../shared/demo.css" />
+</head>
+<body>
+  <h1 class="demo-section-title">边框表格 — variant="bordered"</h1>
+  <p class="demo-helper">单元格带边框，整体更紧凑、规整。适合库存、价格表、配置对比。</p>
+
+  <base-card title="商品库存表">
+    <table class="base-table base-table--variant-bordered">
+      <thead class="base-table__head">
+        <tr>
+          <th>SKU</th><th>商品名称</th><th>分类</th>
+          <th>在库</th><th>预占</th><th>可用</th><th>单价</th>
+        </tr>
+      </thead>
+      <tbody class="base-table__body">
+        <tr><td>SKU-001</td><td>iPhone 15 Pro 256G</td><td>手机</td><td>128</td><td>12</td><td>116</td><td>¥8999</td></tr>
+        <tr><td>SKU-002</td><td>MacBook Pro 14</td><td>电脑</td><td>56</td><td>8</td><td>48</td><td>¥14999</td></tr>
+        <tr><td>SKU-003</td><td>AirPods Pro 2</td><td>耳机</td><td>320</td><td>45</td><td>275</td><td>¥1899</td></tr>
+        <tr><td>SKU-004</td><td>iPad Air 256G</td><td>平板</td><td>89</td><td>6</td><td>83</td><td>¥4799</td></tr>
+        <tr><td>SKU-005</td><td>Apple Watch S9</td><td>手表</td><td>145</td><td>20</td><td>125</td><td>¥3199</td></tr>
+      </tbody>
+    </table>
+  </base-card>
+</body>
+</html>
