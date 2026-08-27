@@ -55,3 +55,4 @@ workflow-diagram-skill/test-*.png
 workflow-diagram-skill/scripts/svg2png_core.js
 workflow-diagram-skill/assets/
 workflow-diagram-skill/.tmp-*.js
+super-deploy-skills/
