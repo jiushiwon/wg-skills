@@ -43,9 +43,21 @@
     .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
     .param-key { color: var(--color-primary); width: 90px; }
     .param-val { color: #666; }
+  
+    .icon { display: inline-block; width: 1em; height: 1em; vertical-align: -0.125em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+    .icon-14 { font-size: 14px; }
+    .icon-18 { font-size: 18px; }
+    .icon-primary { color: var(--color-primary); }
+    .icon-warning { color: var(--color-warning); }
   </style>
 </head>
 <body>
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="i-crown" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294zM5 21h14"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 22a10 10 0 1 1 10-10c0 1.66-1.34 3-3 3h-2.5a1.5 1.5 0 0 0-.83 2.83a1.5 1.5 0 0 1-2.55 1.32A11 11 0 0 1 12 22M7 9a1 1 0 1 0 0-2a1 1 0 0 0 0 2m5-5a1 1 0 1 0 0-2a1 1 0 0 0 0 2m5 5a1 1 0 1 0 0-2a1 1 0 0 0 0 2"/></symbol>
+  </svg>
   <div class="preview">
     <div class="preview-header">VIP会员卡片</div>
     <div class="preview-body">
@@ -54,21 +66,21 @@
           <img class="vip-avatar" src="https://picsum.photos/seed/vip1/56/56" alt="头像">
           <div class="vip-info">
             <div class="vip-name">考拉搞AI</div>
-            <div class="vip-level">👑 SVIP</div>
+            <div class="vip-level"><svg class="icon icon-14 icon-warning"><use href="#i-crown"/></svg> SVIP</div>
           </div>
         </div>
         <div class="vip-desc">开通VIP享专属权益，限时优惠中</div>
         <div class="vip-rights">
           <div class="vip-right">
-            <div class="vip-right-icon">🎁</div>
+            <div class="vip-right-icon"><svg class="icon icon-18 icon-primary"><use href="#i-gift"/></svg></div>
             <div class="vip-right-text">专属礼包</div>
           </div>
           <div class="vip-right">
-            <div class="vip-right-icon">⚡</div>
+            <div class="vip-right-icon"><svg class="icon icon-18 icon-warning"><use href="#i-zap"/></svg></div>
             <div class="vip-right-text">极速下载</div>
           </div>
           <div class="vip-right">
-            <div class="vip-right-icon">🎨</div>
+            <div class="vip-right-icon"><svg class="icon icon-18 icon-primary"><use href="#i-palette"/></svg></div>
             <div class="vip-right-text">专属主题</div>
           </div>
         </div>

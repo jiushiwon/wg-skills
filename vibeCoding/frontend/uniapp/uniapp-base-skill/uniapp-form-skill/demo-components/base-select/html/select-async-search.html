@@ -83,12 +83,15 @@
   </style>
 </head>
 <body>
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21l-4.3-4.3"/></g></symbol>
+  </svg>
   <div class="preview base-card">
     <div class="preview-header base-card__header">异步搜索</div>
     <div class="preview-body base-card__body">
       <span class="select-label">搜索用户（远程）</span>
       <div class="search-trigger">
-        <span class="icon">🔍</span>
+        <svg class="icon icon-16 icon-tertiary"><use href="#i-search"/></svg>
         <input id="kw" placeholder="输入姓名 / 邮箱" oninput="fakeSearch(this.value)" />
       </div>
       <div class="result-panel" id="panel">

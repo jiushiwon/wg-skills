@@ -22,36 +22,48 @@
     .select-grid-icon { font-size: 24px; margin-bottom: 4px; }
     .select-grid-label { font-size: 13px; color: var(--color-text); }
     .select-grid-item.selected .select-grid-label { color: var(--color-primary); font-weight: 500; }
+  
+    .icon { display: inline-block; width: 1em; height: 1em; vertical-align: -0.125em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+    .icon-22 { font-size: 22px; }
+    .icon-primary { color: var(--color-primary); }
   </style>
 </head>
 <body>
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="i-credit-card" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 10h20"/></symbol>
+    <symbol id="i-smartphone" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2" ry="2" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></symbol>
+    <symbol id="i-gem" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 3h12l4 6l-10 13L2 9z"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3L8 9l4 13l4-13l-3-6M2 9h20"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7"/></symbol>
+    <symbol id="i-ticket" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2ZM13 5v2M13 17v2M13 11v2"/></symbol>
+  </svg>
   <div class="preview base-card">
     <div class="preview-header base-card__header">宫格选择</div>
     <div class="preview-body base-card__body">
       <div style="font-size: 14px; color: #666; margin-bottom: 12px;">选择支付方式</div>
       <div class="select-grid">
         <div class="select-grid-item selected" onclick="selectGrid(this)">
-          <div class="select-grid-icon">💳</div>
+          <div class="select-grid-icon"><svg class="icon icon-22 icon-primary"><use href="#i-credit-card"/></svg></div>
           <div class="select-grid-label">银行卡</div>
         </div>
         <div class="select-grid-item" onclick="selectGrid(this)">
-          <div class="select-grid-icon">💰</div>
+          <div class="select-grid-icon"><svg class="icon icon-22 icon-primary"><use href="#i-wallet"/></svg></div>
           <div class="select-grid-label">余额</div>
         </div>
         <div class="select-grid-item" onclick="selectGrid(this)">
-          <div class="select-grid-icon">🎫</div>
+          <div class="select-grid-icon"><svg class="icon icon-22 icon-primary"><use href="#i-ticket"/></svg></div>
           <div class="select-grid-label">代金券</div>
         </div>
         <div class="select-grid-item" onclick="selectGrid(this)">
-          <div class="select-grid-icon">📱</div>
+          <div class="select-grid-icon"><svg class="icon icon-22 icon-primary"><use href="#i-smartphone"/></svg></div>
           <div class="select-grid-label">手机卡</div>
         </div>
         <div class="select-grid-item" onclick="selectGrid(this)">
-          <div class="select-grid-icon">🎁</div>
+          <div class="select-grid-icon"><svg class="icon icon-22 icon-primary"><use href="#i-gift"/></svg></div>
           <div class="select-grid-label">礼品卡</div>
         </div>
         <div class="select-grid-item" onclick="selectGrid(this)">
-          <div class="select-grid-icon">💎</div>
+          <div class="select-grid-icon"><svg class="icon icon-22 icon-primary"><use href="#i-gem"/></svg></div>
           <div class="select-grid-label">积分</div>
         </div>
       </div>
