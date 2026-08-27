@@ -235,7 +235,7 @@ function togglePassword() {
   align-items: center;
   gap: var(--space-2);
   padding: 0 var(--space-3);
-  background: var(--color-surface);
+  background: var(--color-bg-surface);
   border-radius: var(--radius-md);
 }
 .is-bottom .input-body {
@@ -311,7 +311,7 @@ function togglePassword() {
 
 | 变量 | 用途 |
 |------|------|
-| `var(--color-surface)` | 输入框背景 |
+| `var(--color-bg-surface)` | 输入框背景 |
 | `var(--color-bg)` | 禁用态背景 |
 | `var(--color-border)` | 边框 |
 | `var(--color-text)` | 输入文字 |

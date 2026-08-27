@@ -4,7 +4,7 @@
 
 ## 风格
 
-- 背景 → `var(--color-surface)` 纯白
+- 背景 → `var(--color-bg-surface)` 纯白
 - 顶部边框 → `1px solid var(--color-border)`
 - 布局 → `justify-content: space-around`，5 个 Tab 均分
 - 图标 → `22px`，文字 → `11px`
@@ -38,7 +38,7 @@
   :left="'0'"
   :right="'0'"
   :height="'64px'"
-  :background="'var(--color-surface)'"
+  :background="'var(--color-bg-surface)'"
   :border-top="'1px solid var(--color-border)'"
   :shadow="'var(--shadow-top)'"
 />

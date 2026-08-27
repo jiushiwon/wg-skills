@@ -6,7 +6,7 @@
 
 - 高度 → 44px（更舒展）
 - 圆角 → `var(--radius-lg)` 12px
-- 背景 → `var(--color-surface)` 白色
+- 背景 → `var(--color-bg-surface)` 白色
 - 阴影 → `var(--shadow-md)` 中等浮起
 - 图标 → 左侧搜索 icon，右侧清除 icon
 - padding → `0 var(--space-3)` 水平内边距
@@ -42,7 +42,7 @@
 
 <!-- 外层容器（实现 bubble 视觉） -->
 <view style="
-  background: var(--color-surface);
+  background: var(--color-bg-surface);
   border-radius: var(--radius-lg);
   height: 44px;
   display: flex;
@@ -59,7 +59,7 @@
 
 | 变量 | 用途 |
 |------|------|
-| `var(--color-surface)` | 搜索栏背景 |
+| `var(--color-bg-surface)` | 搜索栏背景 |
 | `var(--color-text-tertiary)` | 搜索图标、清除按钮 |
 | `var(--shadow-md)` | 中等阴影 |
 | `var(--radius-lg)` | 圆角（12px） |

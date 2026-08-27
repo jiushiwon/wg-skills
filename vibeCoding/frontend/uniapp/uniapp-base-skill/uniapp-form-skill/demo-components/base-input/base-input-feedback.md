@@ -71,7 +71,7 @@
 
 | 变量 | 用途 |
 |------|------|
-| `var(--color-surface)` | 卡片背景、输入框背景 |
+| `var(--color-bg-surface)` | 卡片背景、输入框背景 |
 | `var(--color-border)` | 输入框边框 |
 | `var(--color-text-tertiary)` | 字数计数 |
 | `var(--color-primary)` | 提交按钮背景 |

@@ -73,7 +73,7 @@
 
 | 变量 | 用途 |
 |------|------|
-| `var(--color-surface)` | 输入框背景、卡片背景 |
+| `var(--color-bg-surface)` | 输入框背景、卡片背景 |
 | `var(--color-primary)` | 主按钮背景 |
 | `var(--color-border)` | 输入框边框 |
 | `var(--color-error)` | 错误提示、必填星号 |

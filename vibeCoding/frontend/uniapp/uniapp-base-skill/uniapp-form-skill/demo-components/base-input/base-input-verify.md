@@ -80,7 +80,7 @@
 
 | 变量 | 用途 |
 |------|------|
-| `var(--color-surface)` | 卡片背景 |
+| `var(--color-bg-surface)` | 卡片背景 |
 | `var(--color-primary)` | 验证码按钮文字、主按钮背景 |
 | `var(--color-text-tertiary)` | 倒计时文字 |
 | `var(--color-error)` | 错误态边框与文字 |

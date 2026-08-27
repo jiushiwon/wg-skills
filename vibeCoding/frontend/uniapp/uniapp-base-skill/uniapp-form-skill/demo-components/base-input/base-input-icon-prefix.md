@@ -84,7 +84,7 @@
 
 | 变量 | 用途 |
 |------|------|
-| `var(--color-surface)` | 卡片背景、输入框背景 |
+| `var(--color-bg-surface)` | 卡片背景、输入框背景 |
 | `var(--color-border)` | 输入框边框、区号左侧分割线 |
 | `var(--color-text-tertiary)` | 前缀图标颜色 |
 | `var(--color-text)` | 文本前缀（+86 / ¥） |

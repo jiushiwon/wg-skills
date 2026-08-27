@@ -46,7 +46,7 @@
 ```vue
 <!-- 登录卡片 -->
 <base-card
-  :background="'var(--color-surface)'"
+  :background="'var(--color-bg-surface)'"
   :border-radius="'var(--radius-lg)'"
   :padding="'var(--space-5)'"
   :shadow="'var(--shadow-sm)'"

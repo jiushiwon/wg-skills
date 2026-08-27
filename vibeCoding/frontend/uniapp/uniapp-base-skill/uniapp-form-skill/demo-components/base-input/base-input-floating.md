@@ -85,7 +85,7 @@
 
 | 变量 | 用途 |
 |------|------|
-| `var(--color-surface)` | 卡片背景 |
+| `var(--color-bg-surface)` | 卡片背景 |
 | `var(--color-border)` | 底部分割线 |
 | `var(--color-primary)` | 聚焦底线、聚焦标签 |
 | `var(--color-text-tertiary)` | 默认标签 |

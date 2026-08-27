@@ -6,7 +6,7 @@
 
 - 高度 → 44px
 - 圆角 → `0` 直角
-- 背景 → `var(--color-surface)` 白色
+- 背景 → `var(--color-bg-surface)` 白色
 - 阴影 → 无
 - 图标 → 左侧搜索 icon，右侧清除 icon
 - padding → `0 var(--space-3)` 水平内边距
@@ -42,7 +42,7 @@
 
 <!-- 外层容器（实现 flat 视觉） -->
 <view style="
-  background: var(--color-surface);
+  background: var(--color-bg-surface);
   border-radius: 0;
   height: 44px;
   display: flex;
@@ -58,7 +58,7 @@
 
 | 变量 | 用途 |
 |------|------|
-| `var(--color-surface)` | 搜索栏背景（与页面背景形成对比） |
+| `var(--color-bg-surface)` | 搜索栏背景（与页面背景形成对比） |
 | `var(--color-text-tertiary)` | 搜索图标、清除按钮 |
 
 ## 适用场景

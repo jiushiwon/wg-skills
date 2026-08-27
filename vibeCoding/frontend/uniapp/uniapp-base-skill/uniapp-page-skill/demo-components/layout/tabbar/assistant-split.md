@@ -6,7 +6,7 @@
 
 - 左侧 AI 助手 → 圆形头像按钮 `56px` + 脉冲呼吸圈动画
 - 右侧工具组 → 药丸形容器，内部工具项均分
-- 背景 → `var(--color-surface)` 纯白
+- 背景 → `var(--color-bg-surface)` 纯白
 - 选中态 → 浅主色背景 `rgba(20, 184, 166, 0.1)` + 主色文字
 - 位置 → `bottom: 24px` 左右留边距悬浮
 
@@ -48,7 +48,7 @@
   :width="'56px'"
   :height="'56px'"
   :border-radius="'var(--radius-full)'"
-  :background="'var(--color-surface)'"
+  :background="'var(--color-bg-surface)'"
   :border="'1px solid rgba(20, 184, 166, 0.2)'"
   :shadow="'0 8px 24px rgba(20, 184, 166, 0.2)'"
 />
@@ -58,7 +58,7 @@
   :flex="'1'"
   :display="'flex'"
   :align-items="'center'"
-  :background="'var(--color-surface)'"
+  :background="'var(--color-bg-surface)'"
   :border-radius="'var(--radius-full)'"
   :padding="'6px'"
   :shadow="'0 8px 24px rgba(0,0,0,0.08)'"

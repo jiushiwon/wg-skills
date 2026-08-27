@@ -282,7 +282,7 @@
 |------|------|
 | `var(--color-primary)` | 选中态颜色 |
 | `var(--color-primary-light)` | 选中态背景 |
-| `var(--color-surface)` | 选项背景 |
+| `var(--color-bg-surface)` | 选项背景 |
 | `var(--color-border)` | 边框 |
 | `var(--radius-md)` | 圆角 |
 

@@ -43,7 +43,7 @@
   :width="'90px'"
   :height="'90px'"
   :border-radius="'var(--radius-lg)'"
-  :background="'var(--color-surface)'"
+  :background="'var(--color-bg-surface)'"
   :shadow="'var(--shadow-sm)'"
 />
 
@@ -62,7 +62,7 @@
   :width="'100%'"
   :height="'52px'"
   :border-radius="'var(--radius-full)'"
-  :background="'var(--color-surface)'"
+  :background="'var(--color-bg-surface)'"
   :border="'1px solid var(--color-primary)'"
   :color="'var(--color-primary)'"
 />
@@ -72,7 +72,7 @@
   :width="'48px'"
   :height="'48px'"
   :border-radius="'50%'"
-  :background="'var(--color-surface)'"
+  :background="'var(--color-bg-surface)'"
   :shadow="'var(--shadow-sm)'"
 />
 ```

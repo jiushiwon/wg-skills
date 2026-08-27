@@ -4,7 +4,7 @@
 
 ## 风格
 
-- 背景 → `var(--color-surface)` 纯白
+- 背景 → `var(--color-bg-surface)` 纯白
 - 顶部圆角 → `24px`
 - 中间凸起 → 伪元素圆形 `80px`，制造凹陷视觉效果
 - 主按钮 → 渐变 `var(--color-primary)` 到 `#6bb3ff`，圆形 `56px`
@@ -37,7 +37,7 @@
   :left="'0'"
   :right="'0'"
   :height="'80px'"
-  :background="'var(--color-surface)'"
+  :background="'var(--color-bg-surface)'"
   :border-radius="'24px 24px 0 0'"
   :shadow="'var(--shadow-lg)'"
 />

@@ -71,7 +71,7 @@
 
 | 变量 | 用途 |
 |------|------|
-| `var(--color-surface)` | 已填格子背景 |
+| `var(--color-bg-surface)` | 已填格子背景 |
 | `var(--color-bg)` | 空态格子背景 |
 | `var(--color-primary)` | 边框、光标、文字 |
 | `var(--color-text-tertiary)` | 计数文字 |
