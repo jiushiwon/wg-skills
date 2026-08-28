@@ -121,21 +121,46 @@
       clearTimeout(timer);
       const panel = document.getElementById('panel');
       const status = document.getElementById('status');
-      if (!kw) { panel.innerHTML = '<div class="result-status">输入关键字开始搜索…</div>'; return; }
-      panel.innerHTML = '<div class="result-status"><span class="spinner"></span> 搜索中...</div>';
+      panel.replaceChildren();  // 清空旧结果（安全清空）
+      const statusDiv = document.createElement('div');
+      statusDiv.className = 'result-status';
+
+      if (!kw) {
+        statusDiv.textContent = '输入关键字开始搜索…';
+        panel.appendChild(statusDiv);
+        return;
+      }
+      const spinner = document.createElement('span');
+      spinner.className = 'spinner';
+      statusDiv.appendChild(spinner);
+      statusDiv.appendChild(document.createTextNode(' 搜索中...'));
+      panel.appendChild(statusDiv);
+
       timer = setTimeout(() => {
         const list = ALL.filter(u => u.label.includes(kw) || u.meta.includes(kw));
+        panel.replaceChildren();  // 安全清空
         if (list.length === 0) {
-          panel.innerHTML = '<div class="result-status">无匹配结果</div>';
+          const empty = document.createElement('div');
+          empty.className = 'result-status';
+          empty.textContent = '无匹配结果';
+          panel.appendChild(empty);
           return;
         }
-        panel.innerHTML = list.map(u => `
-          <div class="result-row">
-            <span class="avatar">${u.label[0]}</span>
-            <span>${u.label}</span>
-            <span class="meta">${u.meta}</span>
-          </div>
-        `).join('');
+        // 使用 createElement + textContent 避免 XSS（user data 不进 innerHTML）
+        list.forEach(u => {
+          const row = document.createElement('div');
+          row.className = 'result-row';
+          const avatar = document.createElement('span');
+          avatar.className = 'avatar';
+          avatar.textContent = u.label[0];  // textContent 自动转义
+          const name = document.createElement('span');
+          name.textContent = u.label;       // textContent 自动转义
+          const meta = document.createElement('span');
+          meta.className = 'meta';
+          meta.textContent = u.meta;        // textContent 自动转义
+          row.append(avatar, name, meta);
+          panel.appendChild(row);
+        });
       }, 600);
     }
   </script>

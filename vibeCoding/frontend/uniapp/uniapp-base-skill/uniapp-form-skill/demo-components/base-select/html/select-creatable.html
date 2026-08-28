@@ -153,7 +153,16 @@
       const chips = document.getElementById('chips');
       const chip = document.createElement('span');
       chip.className = 'chip';
-      chip.innerHTML = v + '<svg class="icon icon-12"><use href="#i-x"/></svg>';
+      // 使用 createElement + textContent 避免 XSS（v 为用户输入）
+      chip.textContent = v;
+      const svgNS = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(svgNS, 'svg');
+      svg.setAttribute('class', 'icon icon-12');
+      svg.setAttribute('aria-hidden', 'true');
+      const use = document.createElementNS(svgNS, 'use');
+      use.setAttribute('href', '#i-x');
+      svg.appendChild(use);
+      chip.appendChild(svg);
       chips.parentNode.insertBefore(chip, chips.nextSibling);
       chips.remove();
       input.value = '';
