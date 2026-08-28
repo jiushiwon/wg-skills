@@ -88,7 +88,7 @@ user-invocable: true
 
 ## 关键设计法则（精简版）
 
-完整版见 [impeccable/SKILL.md](../impeccable/SKILL.md)，本 SKILL 必读要点：
+> 完整版见 `impeccable` 设计法则 skill（**外部依赖**，未纳入本仓库；用户可在 Anthropic / 社区获取），本 SKILL 必读要点：
 
 ### 调色策略
 - 使用 **OKLCH**，减少极亮/极暗的 chroma

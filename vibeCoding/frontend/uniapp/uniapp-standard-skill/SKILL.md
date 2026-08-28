@@ -13,8 +13,8 @@ trigger: /uniapp-standard
 **技术栈**：uni-app + Vue3 + TypeScript + Pinia + SCSS
 
 **配套技能**：
-- [uniapp-auth-skill](../../uniapp-auth-skill/) — 登录鉴权与安全规范
-- [uniapp-style-skill](../../uniapp-style-skill/) — 设计系统与组件规范
+- [uniapp-components-skill](../uniapp-components-skill/) — 登录鉴权与安全规范
+- [uniapp-style-skill](../uniapp-style-skill/) — 设计系统与组件规范
 
 ## When to Use
 
@@ -59,12 +59,12 @@ trigger: /uniapp-standard
 | R12 | **提交前必须 lint** | 通过后才能提交 |
 | R13 | **commit 必须用中文** | 禁止纯英文 |
 | R14 | **commit 长度限制** | subject ≤ 50 字 |
-| R15 | **SCSS 必须用 Token** | 详见 [uniapp-style-skill](../../uniapp-style-skill/) |
+| R15 | **SCSS 必须用 Token** | 详见 [uniapp-style-skill](../uniapp-style-skill/) |
 | R16 | **Mock 放 _mocks_/** | 禁止写在 API 文件或页面中 |
 | R17 | **请求只传业务路径** | 传 `/user/info` 不传 `/api/v1/user/info`，prefix 从 @/config 导入 |
-| R18 | **屏幕适配走规范** | 详见 [uniapp-style-skill](../../uniapp-style-skill/) |
-| R19 | **鸿蒙降级规范** | 详见 [uniapp-style-skill](../../uniapp-style-skill/) |
-| R20 | **认证服务收口** | 详见 [uniapp-auth-skill](../../uniapp-auth-skill/) |
+| R18 | **屏幕适配走规范** | 详见 [uniapp-style-skill](../uniapp-style-skill/) |
+| R19 | **鸿蒙降级规范** | 详见 [uniapp-style-skill](../uniapp-style-skill/) |
+| R20 | **认证服务收口** | 详见 [uniapp-components-skill](../uniapp-components-skill/) |
 
 ---
 
@@ -90,10 +90,10 @@ uniapp-project/
 │   │   ├── index.ts            # store 入口
 │   │   └── user.ts             # 示例用户状态（需替换）
 │   ├── services/                 # 业务服务层
-│   │   ├── auth.service.ts     # 认证服务（详见 uniapp-auth-skill）
+│   │   ├── auth.service.ts     # 认证服务（详见 uniapp-components-skill）
 │   │   └── index.ts           # 服务导出
 │   ├── utils/                   # 工具函数
-│   │   ├── auth.ts             # 鉴权工具（详见 uniapp-auth-skill）
+│   │   ├── auth.ts             # 鉴权工具（详见 uniapp-components-skill）
 │   │   ├── toast.ts           # 提示工具
 │   │   ├── storage.ts          # 存储工具
 │   │   ├── platform.ts         # 平台判断
@@ -216,7 +216,7 @@ function requestInterceptor(options: RequestOptions): RequestOptions {
     ...options.header,
   };
 
-  // Token 注入（详见 uniapp-auth-skill）
+  // Token 注入（详见 uniapp-components-skill）
   if (options.needAuth !== false) {
     const token = getToken();
     if (token) {
@@ -247,7 +247,7 @@ import { AUTH_FAILURE_CODES } from '@/config/api.config';
 function responseInterceptor<T>(res: any, options: RequestOptions): ApiResponse<T> {
   const { statusCode, data } = res;
 
-  // 401/403 处理（详见 uniapp-auth-skill）
+  // 401/403 处理（详见 uniapp-components-skill）
   if (statusCode === 401 || AUTH_FAILURE_CODES.includes(data?.code)) {
     if (!options.skipAuthHandler) {
       handleUnauthorized();
@@ -323,8 +323,8 @@ export const AUTH_FAILURE_CODES = [2001, 2002] as const;
 
 - **开发/体验版**：Modal 展示完整错误详情
 - **正式版**：按消息长度选择 Toast 或精简 Modal
-- **401**：自动跳转登录页（详见 uniapp-auth-skill）
-- **403**：弹权限不足（详见 uniapp-auth-skill）
+- **401**：自动跳转登录页（详见 uniapp-components-skill）
+- **403**：弹权限不足（详见 uniapp-components-skill）
 
 ---
 
@@ -406,5 +406,5 @@ cp -r templates/* /path/to/new-project/
 - `references/storage-guide.md` — 存储 Key 常量规范
 
 ### 配套技能
-- [uniapp-auth-skill](../../uniapp-auth-skill/) — 登录鉴权与安全规范
-- [uniapp-style-skill](../../uniapp-style-skill/) — 设计系统与组件规范
+- [uniapp-components-skill](../uniapp-components-skill/) — 登录鉴权与安全规范
+- [uniapp-style-skill](../uniapp-style-skill/) — 设计系统与组件规范

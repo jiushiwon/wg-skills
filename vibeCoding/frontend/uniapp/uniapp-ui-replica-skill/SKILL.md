@@ -1,5 +1,5 @@
 ---
-name: ui-replica-skill
+name: uniapp-ui-replica-skill
 description: "把 UI 原型图/截图高还原地复刻成可运行代码。触发词：复刻这张图、把原型图转成代码、图片转 HTML/Vue/React、Figma 转代码、Stitch 转代码、照着设计稿写页面、截图转代码、仿照这个页面。"
 user-invocable: true
 argument-hint: "[image-path-or-url] [target-stack]"

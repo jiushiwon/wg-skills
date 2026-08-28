@@ -1,5 +1,5 @@
 ---
-name: ui-component-commands-skill
+name: uniapp-ui-component-commands-skill
 description: "前端UI组件指令系统 - 可扩展的组件库框架，每次做完复杂组件沉淀成指令，下次直接调用。"
 user-invocable: true
 argument-hint: "[组件需求描述] 或 [已有组件名]"

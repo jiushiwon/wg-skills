@@ -1,5 +1,5 @@
 ---
-name: ui-template-builder
+name: uniapp-ui-template-builder-skill
 description: "UI页面模板构建器 - 固化常见页面模板，多套风格可选，支持mock数据。从个人中心到商品页，从登录页到大屏，一键生成风格统一、质量稳定的页面代码。"
 argument-hint: "[页面类型] [风格] [--mock]"
 user-invocable: true

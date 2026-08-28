@@ -153,8 +153,8 @@ uniapp-standard-skill/
 
 | 技能 | 用途 |
 |------|------|
-| [uniapp-auth-skill](../../uniapp-auth-skill/) | 登录鉴权与安全规范 |
-| [uniapp-style-skill](../../uniapp-style-skill/) | 设计系统与组件规范 |
+| [uniapp-auth-skill](../uniapp-components-skill/) | 登录鉴权与安全规范 |
+| [uniapp-style-skill](../uniapp-style-skill/) | 设计系统与组件规范 |
 
 ## 常见问题
 

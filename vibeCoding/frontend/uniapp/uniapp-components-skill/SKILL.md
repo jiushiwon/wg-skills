@@ -9,7 +9,7 @@ description: uniapp 微信小程序登录鉴权与安全规范。覆盖 Token �
 
 本 skill 提供 uniapp 微信小程序项目的登录鉴权与安全规范，不包含业务逻辑。
 
-**前置依赖**：建议配合 [uniapp-common-skill](../uniapp-common-skill/) 使用（红线规则、目录结构、接口规范）
+**前置依赖**：建议配合 [uniapp-common-skill](../uniapp-standard-skill/) 使用（红线规则、目录结构、接口规范）
 
 ## When to Use
 

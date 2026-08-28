@@ -192,13 +192,13 @@ Stitch 转代码
 
 | 子 skill | 职责 | 触发关键词 |
 |----------|------|-----------|
-| [backend-select-skill](backend-generate-skill/backend-select-skill/) | 入口：问答选型、分流 | `生成后端项目`、`backend generate` |
-| [backend-convention-skill](backend-generate-skill/backend-convention-skill/) | 公共规范：响应信封、错误码、api-contract | `后端规范`、`api 契约` |
-| [java-backend-skill](backend-generate-skill/java-backend-skill/) | Spring Boot 项目生成 | `用 Java 写后端`、`Spring Boot` |
-| [go-backend-skill](backend-generate-skill/go-backend-skill/) | Gin 项目生成 | `用 Go 写后端`、`Gin 项目` |
-| [python-backend-skill](backend-generate-skill/python-backend-skill/) | FastAPI 项目生成 | `用 Python 写后端`、`FastAPI` |
-| [nodejs-backend-skill](backend-generate-skill/nodejs-backend-skill/) | Express 项目生成 | `用 Node 写后端`、`Express 项目`、`Express 脚手架` |
-| [database-skill](backend-generate-skill/database-skill/) | PG/MySQL/Mongo 选型与迁移 | `数据库选型`、`schema 设计` |
+| [backend-select-skill](vibeCoding/backend/backend-generate-skill/backend-select-skill/) | 入口：问答选型、分流 | `生成后端项目`、`backend generate` |
+| [backend-convention-skill](vibeCoding/backend/backend-generate-skill/backend-convention-skill/) | 公共规范：响应信封、错误码、api-contract | `后端规范`、`api 契约` |
+| [java-backend-skill](vibeCoding/backend/backend-generate-skill/java-backend-skill/) | Spring Boot 项目生成 | `用 Java 写后端`、`Spring Boot` |
+| [go-backend-skill](vibeCoding/backend/backend-generate-skill/go-backend-skill/) | Gin 项目生成 | `用 Go 写后端`、`Gin 项目` |
+| [python-backend-skill](vibeCoding/backend/backend-generate-skill/python-backend-skill/) | FastAPI 项目生成 | `用 Python 写后端`、`FastAPI` |
+| [nodejs-backend-skill](vibeCoding/backend/backend-generate-skill/nodejs-backend-skill/) | Express 项目生成 | `用 Node 写后端`、`Express 项目`、`Express 脚手架` |
+| [database-skill](vibeCoding/backend/backend-generate-skill/database-skill/) | PG/MySQL/Mongo 选型与迁移 | `数据库选型`、`schema 设计` |
 
 **使用场景**：
 - 新建后端服务
@@ -298,11 +298,11 @@ Stitch 转代码
 
 | 子技能 | 职责 |
 |--------|------|
-| [deploy-detect-skill](super-deploy-skills/deploy-detect-skill/) | 检测项目语言/框架/数据库，生成 `deploy-profile.md` |
-| [server-setup-skill](super-deploy-skills/server-setup-skill/) | 检测服务器环境，按画像装依赖（含预置安装脚本 `install.sh`/`install.ps1`） |
-| [static-nginx-skill](super-deploy-skills/static-nginx-skill/) | 前端 Vue/React 静态产物 Nginx 托管配置 |
-| [deploy-native-skill](super-deploy-skills/deploy-native-skill/) | 原生部署脚本（含预置 `launch.sh`/`launch.ps1` + systemd/pm2 模板） |
-| [deploy-docker-skill](super-deploy-skills/deploy-docker-skill/) | Dockerfile + docker-compose 生成 |
+| [deploy-detect-skill](vibeCoding/super-deploy-skills/deploy-detect-skill/) | 检测项目语言/框架/数据库，生成 `deploy-profile.md` |
+| [server-setup-skill](vibeCoding/super-deploy-skills/server-setup-skill/) | 检测服务器环境，按画像装依赖（含预置安装脚本 `install.sh`/`install.ps1`） |
+| [static-nginx-skill](vibeCoding/super-deploy-skills/static-nginx-skill/) | 前端 Vue/React 静态产物 Nginx 托管配置 |
+| [deploy-native-skill](vibeCoding/super-deploy-skills/deploy-native-skill/) | 原生部署脚本（含预置 `launch.sh`/`launch.ps1` + systemd/pm2 模板） |
+| [deploy-docker-skill](vibeCoding/super-deploy-skills/deploy-docker-skill/) | Dockerfile + docker-compose 生成 |
 
 **使用场景**：
 - Node.js / Python / Java / Go 后端服务部署
@@ -325,7 +325,7 @@ Stitch 转代码
 用原生脚本部署
 ```
 
-**详细文档**：[super-deploy-skills/README.md](super-deploy-skills/README.md)（含完整使用走查）
+**详细文档**：[super-deploy-skills/README.md](vibeCoding/super-deploy-skills/README.md)（含完整使用走查）
 
 ---
 
@@ -371,8 +371,8 @@ Stitch 转代码
 
 | 子技能 | 职责 | 数据源 | 配置 |
 |--------|------|--------|------|
-| [icon-catch-skill](icon-image-catch-skill/icon-catch-skill/) | 语义搜图标 → 下载 SVG；一键转 PNG；抓图后可输出 `.icon-box` 图标展示公共 class | Iconify（20 万+ 图标，含 lucide/tabler/heroicons 等 100+ 图标集） | **零配置，免费无需 Key** |
-| [image-catch-skill](icon-image-catch-skill/image-catch-skill/) | 语义搜图片 → 下载高清图；本地压缩/切图/格式转换；按项目类型自动推荐尺寸；**支持自定义远程源** | 自定义源 / Pexels / Pixabay / Unsplash / Lorem Flickr / Picsum 兜底 | 可选 Key + `npm install` |
+| [icon-catch-skill](vibeCoding/frontend/icon-image-catch-skill/icon-catch-skill/) | 语义搜图标 → 下载 SVG；一键转 PNG；抓图后可输出 `.icon-box` 图标展示公共 class | Iconify（20 万+ 图标，含 lucide/tabler/heroicons 等 100+ 图标集） | **零配置，免费无需 Key** |
+| [image-catch-skill](vibeCoding/frontend/icon-image-catch-skill/image-catch-skill/) | 语义搜图片 → 下载高清图；本地压缩/切图/格式转换；按项目类型自动推荐尺寸；**支持自定义远程源** | 自定义源 / Pexels / Pixabay / Unsplash / Lorem Flickr / Picsum 兜底 | 可选 Key + `npm install` |
 
 **使用场景**：
 - 把页面中的 Emoji 全部替换为专业图标
@@ -455,11 +455,11 @@ Stitch 转代码
 
 | 子技能 | 模块 | 内容 |
 |--------|------|------|
-| [auth-skill](module-generate-skill/auth-skill/) | 登录鉴权 | JWT 双令牌 + 轮换重放检测、密码/验证码登录、登出拉黑、失败锁定 |
-| [org-permission-skill](module-generate-skill/org-permission-skill/) | 组织与权限 | 组织树、RBAC、菜单/按钮权限、数据权限 |
-| [ai-chat-skill](module-generate-skill/ai-chat-skill/) | AI 聊天（带记忆） | 会话管理、消息持久化、短期+长期记忆、SSE 流式、上下文裁剪 |
-| [notification-skill](module-generate-skill/notification-skill/) | 短信邮箱通知 | 阿里云短信参考实现、SMTP 邮件、模板、限流、发送记录 |
-| [payment-skill](module-generate-skill/payment-skill/) | 支付 | 微信/支付宝下单、回调验签、退款、幂等、对账（金额一律整数分） |
+| [auth-skill](vibeCoding/backend/module-generate-skill/auth-skill/) | 登录鉴权 | JWT 双令牌 + 轮换重放检测、密码/验证码登录、登出拉黑、失败锁定 |
+| [org-permission-skill](vibeCoding/backend/module-generate-skill/org-permission-skill/) | 组织与权限 | 组织树、RBAC、菜单/按钮权限、数据权限 |
+| [ai-chat-skill](vibeCoding/backend/module-generate-skill/ai-chat-skill/) | AI 聊天（带记忆） | 会话管理、消息持久化、短期+长期记忆、SSE 流式、上下文裁剪 |
+| [notification-skill](vibeCoding/backend/module-generate-skill/notification-skill/) | 短信邮箱通知 | 阿里云短信参考实现、SMTP 邮件、模板、限流、发送记录 |
+| [payment-skill](vibeCoding/backend/module-generate-skill/payment-skill/) | 支付 | 微信/支付宝下单、回调验签、退款、幂等、对账（金额一律整数分） |
 
 **使用场景**：
 - 在已有后端项目里加登录鉴权 / RBAC 权限
@@ -972,7 +972,7 @@ SSE 流式请求
 AI 聊天流式回复
 ```
 
-**详细文档**：[uniapp-request-skill/README.md](uniapp-request-skill/README.md)
+**详细文档**：[uniapp-request-skill/README.md](vibeCoding/frontend/uniapp/uniapp-request-skill/README.md)
 
 ---
 
@@ -986,9 +986,9 @@ AI 聊天流式回复
 
 | 子技能 | 职责 |
 |--------|------|
-| [vibecoding-workflow-skill](vibecoding-guide-skill/vibecoding-workflow-skill/) | 工具→模型→IDE→提示词→产品模块→开发→联调→测试→部署 |
-| [agent-learning-skill](vibecoding-guide-skill/agent-learning-skill/) | Agent 概念→制作→模型底层→算法→Skill 学习 |
-| [agent-interview-skill](vibecoding-guide-skill/agent-interview-skill/) | 面试知识树 + 项目包装 + 模拟题 |
+| [vibecoding-workflow-skill](vibeCoding/vibecoding-guide-skill/vibecoding-workflow-skill/) | 工具→模型→IDE→提示词→产品模块→开发→联调→测试→部署 |
+| [agent-learning-skill](vibeCoding/vibecoding-guide-skill/agent-learning-skill/) | Agent 概念→制作→模型底层→算法→Skill 学习 |
+| [agent-interview-skill](vibeCoding/vibecoding-guide-skill/agent-interview-skill/) | 面试知识树 + 项目包装 + 模拟题 |
 
 **使用方式**：
 
@@ -1146,11 +1146,11 @@ FastAPI 零基础起步
 - 父技能 `super-deploy-skills` 是统一入口，按意图路由到 5 个子技能（位于 `super-deploy-skills/` 目录下）。
 - 所有技能默认**只生成脚本/命令，不自动执行**；执行安装或部署需二次确认。
 - **数据库初始化永不自动执行**，由用户审查命令后手动跑。
-- **端口统一 `APP_PORT`**（默认 8080），贯穿启动脚本、systemd/pm2、Dockerfile、Nginx；详见 [script-standards.md](super-deploy-skills/deploy-native-skill/references/script-standards.md)。
-- **预置脚本**：装机用 [`install.sh`](super-deploy-skills/server-setup-skill/assets/install.sh) / [`install.ps1`](super-deploy-skills/server-setup-skill/assets/install.ps1)，部署用 [`launch.sh`](super-deploy-skills/deploy-native-skill/assets/launch.sh) / [`launch.ps1`](super-deploy-skills/deploy-native-skill/assets/launch.ps1)，统一日志格式 `[时间] [级别] 消息`。
+- **端口统一 `APP_PORT`**（默认 8080），贯穿启动脚本、systemd/pm2、Dockerfile、Nginx；详见 [script-standards.md](vibeCoding/super-deploy-skills/deploy-native-skill/references/script-standards.md)。
+- **预置脚本**：装机用 [`install.sh`](vibeCoding/super-deploy-skills/server-setup-skill/assets/install.sh) / [`install.ps1`](vibeCoding/super-deploy-skills/server-setup-skill/assets/install.ps1)，部署用 [`launch.sh`](vibeCoding/super-deploy-skills/deploy-native-skill/assets/launch.sh) / [`launch.ps1`](vibeCoding/super-deploy-skills/deploy-native-skill/assets/launch.ps1)，统一日志格式 `[时间] [级别] 消息`。
 - 项目变更后重新跑 `deploy-detect-skill` 即可刷新画像，无需手动改文档。
 
-完整使用走查见 [super-deploy-skills/README.md](super-deploy-skills/README.md)。
+完整使用走查见 [super-deploy-skills/README.md](vibeCoding/super-deploy-skills/README.md)。
 
 ---
 

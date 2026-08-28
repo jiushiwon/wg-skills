@@ -23,7 +23,7 @@
 
 ### 前置依赖
 
-建议配合 [uniapp-common-skill](../uniapp-common-skill/) 使用（红线规则、目录结构、接口规范）
+建议配合 [uniapp-common-skill](../uniapp-standard-skill/) 使用（红线规则、目录结构、接口规范）
 
 ## 文档结构
 
