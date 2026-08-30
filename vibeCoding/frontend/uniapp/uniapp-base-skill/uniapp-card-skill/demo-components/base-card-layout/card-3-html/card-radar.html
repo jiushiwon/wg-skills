@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>雷达图卡片 - 多维评估</title>
+  <link rel="stylesheet" href="../../../../demo-components/shared/base-preview.css" />
+  <style>
+    .chart-card { padding: 0; }
+    .chart-head {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      padding: var(--space-4) var(--space-4) var(--space-2);
+    }
+    .chart-title { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 4px; }
+    .chart-value { font-size: 22px; font-weight: 700; color: var(--color-text-primary); font-variant-numeric: tabular-nums; }
+    .chart-meta { font-size: 11px; color: var(--color-text-tertiary); padding: 4px 8px; background: var(--color-bg); border-radius: var(--radius-sm); }
+
+    .chart-body { display: flex; padding: 0 var(--space-4) var(--space-4); gap: var(--space-3); }
+    .radar-wrap { width: 160px; height: 160px; flex-shrink: 0; }
+    .radar-svg { width: 100%; height: 100%; }
+
+    .radar-grid { fill: none; stroke: var(--color-border); stroke-width: 1; }
+    .radar-grid-strong { stroke: #cbd5e1; }
+    .radar-axis-line { stroke: var(--color-border); stroke-width: 1; }
+    .radar-area-self  { fill: #3b82f6; fill-opacity: 0.25; stroke: #3b82f6; stroke-width: 2; }
+    .radar-area-peer  { fill: #cbd5e1; fill-opacity: 0.4;  stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 3 3; }
+    .radar-vertex     { fill: #3b82f6; }
+
+    .radar-stats { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 8px; min-width: 0; }
+    .radar-stat-row { display: flex; align-items: center; justify-content: space-between; font-size: 12px; }
+    .radar-stat-label { color: var(--color-text-secondary); display: flex; align-items: center; gap: 4px; }
+    .radar-stat-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .radar-stat-val { font-weight: 600; color: var(--color-text-primary); font-variant-numeric: tabular-nums; }
+
+    /* Demo 标题（phone shell 底部、param-bar 顶部） */
+    .case-title {
+      max-width: 375px;
+      margin: 16px auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    .case-title-desc {
+      max-width: 375px;
+      margin: 0 auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+    }
+
+    .chart-legend {
+      display: flex; gap: var(--space-3);
+      padding: 0 var(--space-4) var(--space-3);
+      font-size: 11px; color: var(--color-text-tertiary);
+    }
+    .chart-legend-item { display: flex; align-items: center; gap: 4px; }
+    .chart-legend-line { width: 16px; height: 2px; border-radius: 1px; }
+  </style>
+</head>
+<body>
+  <div class="preview base-card">
+    <div class="preview-header base-card__header">雷达图卡片 · 多维能力评估</div>
+    <div class="preview-body base-card__body" style="padding: 0;">
+      <div class="chart-card">
+        <div class="chart-head">
+          <div>
+            <div class="chart-title">综合能力评估（满分 100）</div>
+            <div class="chart-value">86<span style="font-size:12px;color:var(--color-text-tertiary);font-weight:400;"> / 综合分</span></div>
+          </div>
+          <div class="chart-meta">前 12%</div>
+        </div>
+
+        <div class="chart-body">
+          <div class="radar-wrap">
+            <svg class="radar-svg" viewBox="0 0 200 200">
+              <!-- 6 axes: 专业/沟通/创新/执行/学习/协作 at 0/60/120/180/240/300 degrees -->
+              <!-- Compute points: center (100,100), R=80 max -->
+              <!-- axis angles: 90, 30, -30, -90, -150, 150 (going clockwise from top) -->
+
+              <!-- Concentric polygons (4 levels: 20%, 40%, 60%, 80%) -->
+              <polygon class="radar-grid" points="100,36 142.1,72 142.1,128 100,164 57.9,128 57.9,72"/>
+              <polygon class="radar-grid" points="100,52 130.3,76 130.3,124 100,148 69.7,124 69.7,76"/>
+              <polygon class="radar-grid" points="100,68 118.5,80 118.5,120 100,132 81.5,120 81.5,80"/>
+              <polygon class="radar-grid radar-grid-strong" points="100,84 106.7,84 106.7,116 100,116 93.3,116 93.3,84"/>
+
+              <!-- Axes lines from center to each vertex -->
+              <line class="radar-axis-line" x1="100" y1="100" x2="100" y2="20"/>
+              <line class="radar-axis-line" x1="100" y1="100" x2="169.3" y2="60"/>
+              <line class="radar-axis-line" x1="100" y1="100" x2="169.3" y2="140"/>
+              <line class="radar-axis-line" x1="100" y1="100" x2="100" y2="180"/>
+              <line class="radar-axis-line" x1="100" y1="100" x2="30.7" y2="140"/>
+              <line class="radar-axis-line" x1="100" y1="100" x2="30.7" y2="60"/>
+
+              <!-- Peer (avg) polygon - scaled down -->
+              <!-- Peer values: 70/65/60/75/65/70 -->
+              <polygon class="radar-area-peer"
+                points="100,52 130.3,76 121,124 100,124 88,124 81.5,80"/>
+
+              <!-- Self polygon - actual scores: 92/85/88/90/78/85 -->
+              <!-- Scale: 92→14.4px from center on R=80 axis (so y=100-(80*0.92)=26.4) -->
+              <!-- Compute each vertex at 90/30/-30/-90/-150/150 degrees, distance = value*0.8 -->
+              <!-- 92: top, dx=0, dy=-73.6 → (100, 26.4) -->
+              <!-- 85: 30deg, dx=58.9, dy=-42.5 → (158.9, 57.5)  -->
+              <!-- 88: -30deg, dx=61.0, dy=-42.0 (but y is +) → (161, 142) -->
+              <!-- 90: bottom, (100, 172) -->
+              <!-- 78: -150deg (lower-left), dx=-54.0, dy=+42 → (46, 142) -->
+              <!-- 85: 150deg (upper-left), dx=-58.9, dy=-42.5 → (41.1, 57.5) -->
+              <polygon class="radar-area-self"
+                points="100,26.4 158.9,57.5 161,142 100,172 46,142 41.1,57.5"/>
+
+              <!-- Vertices -->
+              <circle class="radar-vertex" cx="100"   cy="26.4" r="3"/>
+              <circle class="radar-vertex" cx="158.9" cy="57.5" r="3"/>
+              <circle class="radar-vertex" cx="161"   cy="142"  r="3"/>
+              <circle class="radar-vertex" cx="100"   cy="172"  r="3"/>
+              <circle class="radar-vertex" cx="46"    cy="142"  r="3"/>
+              <circle class="radar-vertex" cx="41.1"  cy="57.5" r="3"/>
+
+              <!-- Labels at outer ring (R=92) -->
+              <text x="100"   y="14"  text-anchor="middle" fill="var(--color-text-secondary)" font-size="11">专业</text>
+              <text x="178"   y="58"  text-anchor="middle" fill="var(--color-text-secondary)" font-size="11">沟通</text>
+              <text x="178"   y="148" text-anchor="middle" fill="var(--color-text-secondary)" font-size="11">创新</text>
+              <text x="100"   y="195" text-anchor="middle" fill="var(--color-text-secondary)" font-size="11">执行</text>
+              <text x="22"    y="148" text-anchor="middle" fill="var(--color-text-secondary)" font-size="11">学习</text>
+              <text x="22"    y="58"  text-anchor="middle" fill="var(--color-text-secondary)" font-size="11">协作</text>
+            </svg>
+          </div>
+
+          <div class="radar-stats">
+            <div class="radar-stat-row">
+              <span class="radar-stat-label"><span class="radar-stat-dot" style="background:#3b82f6"></span>专业能力</span>
+              <span class="radar-stat-val">92</span>
+            </div>
+            <div class="radar-stat-row">
+              <span class="radar-stat-label"><span class="radar-stat-dot" style="background:#3b82f6"></span>沟通协作</span>
+              <span class="radar-stat-val">85</span>
+            </div>
+            <div class="radar-stat-row">
+              <span class="radar-stat-label"><span class="radar-stat-dot" style="background:#3b82f6"></span>创新思维</span>
+              <span class="radar-stat-val">88</span>
+            </div>
+            <div class="radar-stat-row">
+              <span class="radar-stat-label"><span class="radar-stat-dot" style="background:#3b82f6"></span>执行能力</span>
+              <span class="radar-stat-val">90</span>
+            </div>
+            <div class="radar-stat-row">
+              <span class="radar-stat-label"><span class="radar-stat-dot" style="background:#3b82f6"></span>学习能力</span>
+              <span class="radar-stat-val">78</span>
+            </div>
+            <div class="radar-stat-row">
+              <span class="radar-stat-label"><span class="radar-stat-dot" style="background:#3b82f6"></span>协作能力</span>
+              <span class="radar-stat-val">85</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-legend">
+          <div class="chart-legend-item">
+            <span class="chart-legend-line" style="background:#3b82f6"></span>本人
+          </div>
+          <div class="chart-legend-item">
+            <span class="chart-legend-line" style="background:#94a3b8;border-top:2px dashed #94a3b8;background:transparent"></span>同行平均
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-title">card-radar</div>
+  <div class="case-title-desc">雷达图卡片 · 6 维评分 + 本人 / 同行对比</div>
+
+  <div class="param-bar">
+    <div class="param-title">card-radar Props</div>
+    <div class="param-row"><span class="param-key">title:</span><span class="param-val">string ｜ 图表标题</span></div>
+    <div class="param-row"><span class="param-key">totalScore:</span><span class="param-val">number ｜ 综合分</span></div>
+    <div class="param-row"><span class="param-key">labels:</span><span class="param-val">string[] ｜ 维度名</span></div>
+    <div class="param-row"><span class="param-key">selfValues:</span><span class="param-val">number[] ｜ 自己的分数</span></div>
+    <div class="param-row"><span class="param-key">peerValues:</span><span class="param-val">number[]? ｜ 同行平均（可选）</span></div>
+    <div class="param-row"><span class="param-key">maxValue:</span><span class="param-val">number ｜ 最大值（默认 100）</span></div>
+    <div class="param-row"><span class="param-key">container:</span><span class="param-val">base-card 作为根容器</span></div>
+  </div>
+</body>
+</html>

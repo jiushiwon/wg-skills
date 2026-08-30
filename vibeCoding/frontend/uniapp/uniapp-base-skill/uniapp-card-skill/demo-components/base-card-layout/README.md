@@ -1,6 +1,6 @@
 # 卡片布局案例集（base-card）
 
-`base-card` 是 uniapp-base-skill 的基石组件，所有页面元素都由它组合而成。本案例集给出 **13 种卡片布局** 的 HTML 参考图，每种独立成文件，方便按形态检索复用。
+`base-card` 是 uniapp-base-skill 的基石组件，所有页面元素都由它组合而成。本案例集给出 **30 种卡片布局** 的 HTML 参考图，每种独立成文件，方便按形态检索复用。
 
 > 卡片按钮是 `base-card` 的一个**变体**（内嵌按钮元素），不是独立组件。
 
@@ -31,8 +31,30 @@
 | card-image | 大图+标题+描述+底部 | 图册、相册、封面 | [card-2-md/card-image.md](card-2-md/card-image.md) | [card-2-html/card-image.html](card-2-html/card-image.html) |
 | card-notify | 图标+标题+描述+时间+徽标 | 系统通知、消息列表 | [card-2-md/card-notify.md](card-2-md/card-notify.md) | [card-2-html/card-notify.html](card-2-html/card-notify.html) |
 | card-comment | 头像+昵称+时间+内容+点赞 | 评论区、留言板 | [card-2-md/card-comment.md](card-2-md/card-comment.md) | [card-2-html/card-comment.html](card-2-html/card-comment.html) |
+| card-post | 头像+作者徽标+内容+多图网格+位置+互动 | 朋友圈、动态、社交内容 | [card-2-md/card-post.md](card-2-md/card-post.md) | [card-2-html/card-post.html](card-2-html/card-post.html) |
+| card-video | 16:10封面+播放按钮+时长+统计 | 视频流、短视频列表 | [card-2-md/card-video.md](card-2-md/card-video.md) | [card-2-html/card-video.html](card-2-html/card-video.html) |
+| card-article | 16:9封面+分类+标题+摘要+作者+阅读数 | 公众号、博客文章流 | [card-2-md/card-article.md](card-2-md/card-article.md) | [card-2-html/card-article.html](card-2-html/card-article.html) |
+| card-news | 左文+右图+来源+阅读数+时间+热门标记 | 新闻、资讯列表 | [card-2-md/card-news.md](card-2-md/card-news.md) | [card-2-html/card-news.html](card-2-html/card-news.html) |
+| card-topic | 渐变头图+#号+角标+描述+讨论+参与按钮 | 话题广场、社区#标签 | [card-2-md/card-topic.md](card-2-md/card-topic.md) | [card-2-html/card-topic.html](card-2-html/card-topic.html) |
+| card-coupon | 异形+渐变+左侧金额+虚线+右侧按钮+状态 | 我的优惠券、领券中心 | [card-2-md/card-coupon.md](card-2-md/card-coupon.md) | [card-2-html/card-coupon.html](card-2-html/card-coupon.html) |
 
-> card-info 和 card-button 待补充到 card-2 分类
+### 分类三：card-3 (图表卡片 · 原生 SVG)
+
+| 案例 | 形态 | 适用场景 | 文档 | HTML |
+|------|------|----------|------|------|
+| card-line | 平滑折线+渐变填充+涨跌指示 | 销售趋势、活跃度、健康数据 | [card-3-md/card-line.md](card-3-md/card-line.md) | [card-3-html/card-line.html](card-3-html/card-line.html) |
+| card-line-tabs | 折线+顶部 tab 切换（7天/30天/90天） | 时段切换折线图 | [card-3-md/card-line-tabs.md](card-3-md/card-line-tabs.md) | [card-3-html/card-line-tabs.html](card-3-html/card-line-tabs.html) |
+| card-line-multi | 多线对比（本月/上月/平均）+ 图例 | 多产品线对比、同环比 | [card-3-md/card-line-multi.md](card-3-md/card-line-multi.md) | [card-3-html/card-line-multi.html](card-3-html/card-line-multi.html) |
+| card-line-metric | 4 行指标+迷你折线（sparkline） | Dashboard 多指标 | [card-3-md/card-line-metric.md](card-3-md/card-line-metric.md) | [card-3-html/card-line-metric.html](card-3-html/card-line-metric.html) |
+| card-line-area | 3 层堆叠面积图+累计总数 | 渠道分布、构成变化 | [card-3-md/card-line-area.md](card-3-md/card-line-area.md) | [card-3-html/card-line-area.html](card-3-html/card-line-area.html) |
+| card-line-tooltip | 折线+节点圆点+活动节点 tooltip | 节点高亮、关键时刻 | [card-3-md/card-line-tooltip.md](card-3-md/card-line-tooltip.md) | [card-3-html/card-line-tooltip.html](card-3-html/card-line-tooltip.html) |
+| card-bar | 柱状+高亮当前项+数值标签 | 月度对比、销量排行 | [card-3-md/card-bar.md](card-3-md/card-bar.md) | [card-3-html/card-bar.html](card-3-html/card-bar.html) |
+| card-pie | 环形+中心数值+彩色图例 | 流量来源、消费分类 | [card-3-md/card-pie.md](card-3-md/card-pie.md) | [card-3-html/card-pie.html](card-3-html/card-pie.html) |
+| card-radar | 6 维评分+本人/同行双层 | 综合能力、技能评估 | [card-3-md/card-radar.md](card-3-md/card-radar.md) | [card-3-html/card-radar.html](card-3-html/card-radar.html) |
+| card-progress | 进度环+任务列表+优先级 | 任务完成度、学习进度 | [card-3-md/card-progress.md](card-3-md/card-progress.md) | [card-3-html/card-progress.html](card-3-html/card-progress.html) |
+| card-gauge | 270° 弧+渐变+指针+刻度 | 健康指数、CPU、信用评分 | [card-3-md/card-gauge.md](card-3-md/card-gauge.md) | [card-3-html/card-gauge.html](card-3-html/card-gauge.html) |
+
+> **图表实现原则**：全部使用原生 SVG 绘制（path / circle / polyline），无任何图表库（echarts / antv / d3）。SVG 文件极小，可定制、可缩放、零依赖。
 
 ## 设计原则
 
@@ -93,14 +115,50 @@ demo-components/base-card-layout/
 │   ├── card-vip.html
 │   ├── card-menu.html
 │   └── card-grid.html
-├── card-2-md/                 # 分类二：信息流卡片
+├── card-2-md/                 # 分类二：信息流卡片（9 个）
 │   ├── card-image.md
 │   ├── card-notify.md
-│   └── card-comment.md
-└── card-2-html/               # 分类二：HTML 演示
-    ├── card-image.html
-    ├── card-notify.html
-    └── card-comment.html
+│   ├── card-comment.md
+│   ├── card-post.md
+│   ├── card-video.md
+│   ├── card-article.md
+│   ├── card-news.md
+│   ├── card-topic.md
+│   └── card-coupon.md
+├── card-2-html/               # 分类二：HTML 演示（9 个）
+│   ├── card-image.html
+│   ├── card-notify.html
+│   ├── card-comment.html
+│   ├── card-post.html
+│   ├── card-video.html
+│   ├── card-article.html
+│   ├── card-news.html
+│   ├── card-topic.html
+│   └── card-coupon.html
+├── card-3-md/                 # 分类三：图表卡片（11 个 · 原生 SVG）
+│   ├── card-line.md              # 基础折线
+│   ├── card-line-tabs.md         # Tab 切换
+│   ├── card-line-multi.md        # 多线对比
+│   ├── card-line-metric.md       # 迷你指标卡
+│   ├── card-line-area.md         # 堆叠面积
+│   ├── card-line-tooltip.md      # 节点 tooltip
+│   ├── card-bar.md
+│   ├── card-pie.md
+│   ├── card-radar.md
+│   ├── card-progress.md
+│   └── card-gauge.md
+└── card-3-html/               # 分类三：HTML 演示（11 个 · 原生 SVG）
+    ├── card-line.html
+    ├── card-line-tabs.html
+    ├── card-line-multi.html
+    ├── card-line-metric.html
+    ├── card-line-area.html
+    ├── card-line-tooltip.html
+    ├── card-bar.html
+    ├── card-pie.html
+    ├── card-radar.html
+    ├── card-progress.html
+    └── card-gauge.html
 ```
 
 > 图片使用 `icon-image-catch-skill` 抓取的 Picsum/Lorem Picsum，避免占位图。

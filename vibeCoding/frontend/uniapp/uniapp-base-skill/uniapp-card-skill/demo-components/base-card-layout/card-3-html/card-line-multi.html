@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>折线图 - 多线对比 + 图例</title>
+  <link rel="stylesheet" href="../../../../demo-components/shared/base-preview.css" />
+  <style>
+    .chart-card { padding: 0; }
+    .chart-head {
+      padding: var(--space-4);
+    }
+    .chart-title { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 4px; }
+    .chart-value { font-size: 22px; font-weight: 700; color: var(--color-text-primary); font-variant-numeric: tabular-nums; }
+
+    .chart-legend {
+      display: flex; gap: var(--space-3);
+      padding: 0 var(--space-4) var(--space-2);
+      font-size: 11px; color: var(--color-text-tertiary);
+    }
+    .chart-legend-item { display: flex; align-items: center; gap: 4px; }
+    .chart-legend-dot { width: 10px; height: 2px; border-radius: 1px; }
+
+    .chart-body { padding: 0 var(--space-2); }
+    .chart-svg { width: 100%; height: 160px; display: block; }
+
+    .grid-line { stroke: var(--color-border); stroke-width: 1; stroke-dasharray: 2 4; opacity: 0.5; }
+    .line-current { fill: none; stroke: #3b82f6; stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
+    .line-last    { fill: none; stroke: #94a3b8; stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; opacity: 0.7; }
+    .line-avg     { fill: none; stroke: #f59e0b; stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; stroke-dasharray: 4 4; }
+    .dot-active   { fill: #fff; stroke: #3b82f6; stroke-width: 2; }
+
+    .chart-xaxis {
+      display: flex; justify-content: space-between;
+      padding: 4px var(--space-4) var(--space-3);
+      font-size: 11px; color: var(--color-text-tertiary);
+    }
+
+    /* Demo 标题（phone shell 底部、param-bar 顶部） */
+    .case-title {
+      max-width: 375px;
+      margin: 16px auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    .case-title-desc {
+      max-width: 375px;
+      margin: 0 auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+    }
+  </style>
+</head>
+<body>
+  <div class="preview base-card">
+    <div class="preview-header base-card__header">折线图 · 多线对比 + 图例</div>
+    <div class="preview-body base-card__body" style="padding: 0;">
+      <div class="chart-card">
+        <div class="chart-head">
+          <div class="chart-title">月度对比</div>
+          <div class="chart-value">¥86,200<span style="font-size:12px;color:var(--color-text-tertiary);font-weight:400;"> / 8月</span></div>
+        </div>
+
+        <div class="chart-legend">
+          <div class="chart-legend-item">
+            <span class="chart-legend-dot" style="background:#3b82f6"></span>本月
+          </div>
+          <div class="chart-legend-item">
+            <span class="chart-legend-dot" style="background:#94a3b8"></span>上月
+          </div>
+          <div class="chart-legend-item">
+            <span class="chart-legend-dot" style="background:#f59e0b;border-top:1.5px dashed #f59e0b;background:transparent"></span>平均
+          </div>
+        </div>
+
+        <div class="chart-body">
+          <svg class="chart-svg" viewBox="0 0 340 160" preserveAspectRatio="none">
+            <!-- Grid -->
+            <line class="grid-line" x1="0" y1="40"  x2="340" y2="40"/>
+            <line class="grid-line" x1="0" y1="80"  x2="340" y2="80"/>
+            <line class="grid-line" x1="0" y1="120" x2="340" y2="120"/>
+
+            <!-- Last month (gray) -->
+            <path class="line-last" d="
+              M 0,80 C 30,75 60,90 90,82 S 150,70 180,75
+              S 240,55 270,65 S 310,45 340,50"/>
+
+            <!-- Average (orange dashed) -->
+            <path class="line-avg" d="
+              M 0,90 L 340,75"/>
+
+            <!-- Current month (blue, thicker, with dot) -->
+            <path class="line-current" d="
+              M 0,100 C 30,85 60,78 90,72 S 150,50 180,45
+              S 240,30 270,28 S 310,18 340,12"/>
+
+            <!-- Active dot -->
+            <circle class="dot-active" cx="340" cy="12" r="4"/>
+          </svg>
+        </div>
+
+        <div class="chart-xaxis">
+          <span>1日</span><span>5日</span><span>10日</span><span>15日</span><span>20日</span><span>25日</span><span>30日</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-title">card-line-multi</div>
+  <div class="case-title-desc">折线图 · 多线对比（本月 / 上月 / 平均）+ 图例</div>
+
+  <div class="param-bar">
+    <div class="param-title">card-line-multi Props</div>
+    <div class="param-row"><span class="param-key">title:</span><span class="param-val">string ｜ 图表标题</span></div>
+    <div class="param-row"><span class="param-key">value:</span><span class="param-val">string ｜ 主数值</span></div>
+    <div class="param-row"><span class="param-key">lines:</span><span class="param-val">Line[] ｜ 多线配置</span></div>
+    <div class="param-row"><span class="param-key">labels:</span><span class="param-val">string[] ｜ X 轴标签</span></div>
+    <div class="param-row"><span class="param-key">Line:</span><span class="param-val">{ name, color, data, dashed?, active? }</span></div>
+    <div class="param-row"><span class="param-key">container:</span><span class="param-val">base-card 作为根容器</span></div>
+  </div>
+</body>
+</html>

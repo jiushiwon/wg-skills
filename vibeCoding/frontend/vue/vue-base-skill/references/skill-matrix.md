@@ -56,7 +56,7 @@ vue-base-skill（父技能层，强依赖 vue-theme-skill）
 | 行高 | `--height-{comp}-{size}` | `--height-button-md`(36px) |
 | 圆角 | `--radius-{size}` | `--radius-sm`, `--radius-lg` |
 
-> 完整 token 列表见 [vue-theme-skill](../vue-theme-skill/templates/src/styles/tokens.css)。
+> 完整 token 列表见 [vue-theme-skill](../../vue-theme-skill/templates/src/styles/tokens.css)。
 
 ## 4. 组件 ↔ Token 使用对照表
 

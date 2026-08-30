@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>柱状图卡片 - 月度对比</title>
+  <link rel="stylesheet" href="../../../../demo-components/shared/base-preview.css" />
+  <style>
+    .chart-card { padding: 0; }
+    .chart-head {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      padding: var(--space-4) var(--space-4) var(--space-2);
+    }
+    .chart-title { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 4px; }
+    .chart-value { font-size: 22px; font-weight: 700; color: var(--color-text-primary); font-variant-numeric: tabular-nums; }
+    .chart-tabs { display: flex; gap: 4px; }
+    .chart-tab {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      color: var(--color-text-tertiary);
+      background: var(--color-bg);
+    }
+    .chart-tab.is-active { background: var(--color-primary); color: #fff; }
+
+    .chart-body { padding: var(--space-2) var(--space-4) var(--space-2); }
+    .chart-svg { width: 100%; height: 160px; display: block; }
+
+    .grid-line { stroke: var(--color-border); stroke-width: 1; stroke-dasharray: 2 4; opacity: 0.6; }
+    .bar-default { fill: #dbeafe; }
+    .bar-active { fill: #3b82f6; }
+    .bar-label  { fill: var(--color-text-tertiary); font-size: 10px; }
+    .bar-value  { fill: var(--color-text-secondary); font-size: 11px; font-weight: 600; }
+
+    /* Demo 标题（phone shell 底部、param-bar 顶部） */
+    .case-title {
+      max-width: 375px;
+      margin: 16px auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    .case-title-desc {
+      max-width: 375px;
+      margin: 0 auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+    }
+
+    .chart-legend {
+      display: flex; gap: var(--space-3);
+      padding: 0 var(--space-4) var(--space-3);
+      font-size: 11px; color: var(--color-text-tertiary);
+    }
+    .chart-legend-item { display: flex; align-items: center; gap: 4px; }
+    .chart-legend-dot { width: 8px; height: 8px; border-radius: 2px; }
+  </style>
+</head>
+<body>
+  <div class="preview base-card">
+    <div class="preview-header base-card__header">柱状图卡片 · 月度对比</div>
+    <div class="preview-body base-card__body" style="padding: 0;">
+      <div class="chart-card">
+        <div class="chart-head">
+          <div>
+            <div class="chart-title">月度业绩对比（万元）</div>
+            <div class="chart-value">¥86.2<span style="font-size:12px;color:var(--color-text-tertiary);font-weight:400;"> / 8月</span></div>
+          </div>
+          <div class="chart-tabs">
+            <span class="chart-tab">7天</span>
+            <span class="chart-tab is-active">月度</span>
+            <span class="chart-tab">年度</span>
+          </div>
+        </div>
+
+        <div class="chart-body">
+          <svg class="chart-svg" viewBox="0 0 340 160" preserveAspectRatio="none">
+            <!-- Grid lines -->
+            <line class="grid-line" x1="0" y1="40"  x2="340" y2="40"/>
+            <line class="grid-line" x1="0" y1="80"  x2="340" y2="80"/>
+            <line class="grid-line" x1="0" y1="120" x2="340" y2="120"/>
+
+            <!-- Bars: 6 months, March..August, last one active -->
+            <!-- Each bar: x, y, w=32, h, rx=4 -->
+            <rect class="bar-default" x="14"  y="100" width="32" height="20" rx="4"/>
+            <rect class="bar-default" x="68"  y="78"  width="32" height="42" rx="4"/>
+            <rect class="bar-default" x="122" y="90"  width="32" height="30" rx="4"/>
+            <rect class="bar-default" x="176" y="62"  width="32" height="58" rx="4"/>
+            <rect class="bar-default" x="230" y="84"  width="32" height="36" rx="4"/>
+            <rect class="bar-active"  x="284" y="40"  width="32" height="80" rx="4"/>
+
+            <!-- Value labels above bars -->
+            <text class="bar-value" x="30"  y="94"  text-anchor="middle">21</text>
+            <text class="bar-value" x="84"  y="72"  text-anchor="middle">42</text>
+            <text class="bar-value" x="138" y="84"  text-anchor="middle">30</text>
+            <text class="bar-value" x="192" y="56"  text-anchor="middle">58</text>
+            <text class="bar-value" x="246" y="78"  text-anchor="middle">36</text>
+            <text class="bar-value" x="300" y="34"  text-anchor="middle" fill="#3b82f6">86</text>
+
+            <!-- X-axis labels -->
+            <text class="bar-label" x="30"  y="140" text-anchor="middle">3月</text>
+            <text class="bar-label" x="84"  y="140" text-anchor="middle">4月</text>
+            <text class="bar-label" x="138" y="140" text-anchor="middle">5月</text>
+            <text class="bar-label" x="192" y="140" text-anchor="middle">6月</text>
+            <text class="bar-label" x="246" y="140" text-anchor="middle">7月</text>
+            <text class="bar-label" x="300" y="140" text-anchor="middle" fill="#3b82f6" font-weight="600">8月</text>
+          </svg>
+        </div>
+
+        <div class="chart-legend">
+          <div class="chart-legend-item">
+            <span class="chart-legend-dot" style="background:#dbeafe"></span>历史月份
+          </div>
+          <div class="chart-legend-item">
+            <span class="chart-legend-dot" style="background:#3b82f6"></span>当前月份
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-title">card-bar</div>
+  <div class="case-title-desc">柱状图卡片 · 高亮当前项 + 数值标签</div>
+
+  <div class="param-bar">
+    <div class="param-title">card-bar Props</div>
+    <div class="param-row"><span class="param-key">title:</span><span class="param-val">string ｜ 图表标题</span></div>
+    <div class="param-row"><span class="param-key">data:</span><span class="param-val">number[] ｜ 数值数组</span></div>
+    <div class="param-row"><span class="param-key">labels:</span><span class="param-val">string[] ｜ 类别标签</span></div>
+    <div class="param-row"><span class="param-key">activeIndex:</span><span class="param-val">number ｜ 高亮索引</span></div>
+    <div class="param-row"><span class="param-key">unit:</span><span class="param-val">string ｜ 数值单位</span></div>
+    <div class="param-row"><span class="param-key">color:</span><span class="param-val">string ｜ 高亮色（默认蓝）</span></div>
+    <div class="param-row"><span class="param-key">container:</span><span class="param-val">base-card 作为根容器</span></div>
+  </div>
+</body>
+</html>

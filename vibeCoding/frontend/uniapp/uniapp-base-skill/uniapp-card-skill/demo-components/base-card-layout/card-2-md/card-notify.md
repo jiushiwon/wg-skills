@@ -6,9 +6,9 @@
 
 | 特征 | 值 |
 |------|-----|
-| 圆角 | 12px |
-| 背景 | --color-bg-surface |
-| 阴影 | shadow-sm |
+| 圆角 | `var(--radius-md)` |
+| 背景 | `var(--color-bg-surface)` |
+| 阴影 | `var(--shadow-sm)` |
 
 ## 适用场景
 
@@ -18,7 +18,7 @@
 
 ## HTML 演示
 
-[card-notify.html](html/card-notify.html)
+[card-notify.html](../card-2-html/card-notify.html)
 
 ## 组件代码
 

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>环形饼图卡片 - 占比分析</title>
+  <link rel="stylesheet" href="../../../../demo-components/shared/base-preview.css" />
+  <style>
+    .chart-card { padding: 0; }
+    .chart-head {
+      padding: var(--space-4);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .chart-title { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 4px; }
+    .chart-value { font-size: 22px; font-weight: 700; color: var(--color-text-primary); font-variant-numeric: tabular-nums; }
+
+    .chart-body {
+      display: flex; align-items: center; gap: var(--space-4);
+      padding: 0 var(--space-4) var(--space-4);
+    }
+    .donut-wrap {
+      position: relative;
+      width: 140px; height: 140px;
+      flex-shrink: 0;
+    }
+    .donut-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .donut-center {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .donut-center-num {
+      font-size: 22px; font-weight: 700;
+      color: var(--color-text-primary);
+      font-variant-numeric: tabular-nums;
+    }
+    .donut-center-label {
+      font-size: 11px; color: var(--color-text-tertiary);
+      margin-top: 2px;
+    }
+
+    .pie-legend { flex: 1; min-width: 0; }
+    .pie-legend-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 6px 0;
+      font-size: 12px;
+    }
+    .pie-legend-item:not(:last-child) { border-bottom: 1px solid var(--color-border); }
+    .pie-legend-left { display: flex; align-items: center; gap: 6px; color: var(--color-text-secondary); }
+    .pie-legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .pie-legend-val {
+      font-weight: 600; color: var(--color-text-primary);
+      font-variant-numeric: tabular-nums;
+    }
+    .pie-legend-pct {
+      font-size: 11px; color: var(--color-text-tertiary);
+      margin-left: 6px;
+    }
+
+    /* Demo 标题（phone shell 底部、param-bar 顶部） */
+    .case-title {
+      max-width: 375px;
+      margin: 16px auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    .case-title-desc {
+      max-width: 375px;
+      margin: 0 auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+    }
+  </style>
+</head>
+<body>
+  <div class="preview base-card">
+    <div class="preview-header base-card__header">环形饼图卡片 · 流量来源</div>
+    <div class="preview-body base-card__body" style="padding: 0;">
+      <div class="chart-card">
+        <div class="chart-head">
+          <div>
+            <div class="chart-title">本月访问来源</div>
+            <div class="chart-value">¥58,420</div>
+          </div>
+          <div style="font-size:11px;color:var(--color-text-tertiary);">8月</div>
+        </div>
+
+        <div class="chart-body">
+          <div class="donut-wrap">
+            <svg class="donut-svg" viewBox="0 0 42 42">
+              <!-- 4 segments: 45% / 25% / 18% / 12% -->
+              <!-- circumference = 2πr ≈ 131.95 (with r=21) -->
+              <circle cx="21" cy="21" r="15.915" fill="transparent"
+                stroke="#3b82f6" stroke-width="6"
+                stroke-dasharray="45 55" stroke-dashoffset="0"/>
+              <circle cx="21" cy="21" r="15.915" fill="transparent"
+                stroke="#10b981" stroke-width="6"
+                stroke-dasharray="25 75" stroke-dashoffset="-45"/>
+              <circle cx="21" cy="21" r="15.915" fill="transparent"
+                stroke="#f59e0b" stroke-width="6"
+                stroke-dasharray="18 82" stroke-dashoffset="-70"/>
+              <circle cx="21" cy="21" r="15.915" fill="transparent"
+                stroke="#ec4899" stroke-width="6"
+                stroke-dasharray="12 88" stroke-dashoffset="-88"/>
+            </svg>
+            <div class="donut-center">
+              <div class="donut-center-num">58.4k</div>
+              <div class="donut-center-label">总访问</div>
+            </div>
+          </div>
+
+          <div class="pie-legend">
+            <div class="pie-legend-item">
+              <div class="pie-legend-left">
+                <span class="pie-legend-dot" style="background:#3b82f6"></span>
+                搜索引擎
+              </div>
+              <div>
+                <span class="pie-legend-val">26,289</span>
+                <span class="pie-legend-pct">45%</span>
+              </div>
+            </div>
+            <div class="pie-legend-item">
+              <div class="pie-legend-left">
+                <span class="pie-legend-dot" style="background:#10b981"></span>
+                直接访问
+              </div>
+              <div>
+                <span class="pie-legend-val">14,605</span>
+                <span class="pie-legend-pct">25%</span>
+              </div>
+            </div>
+            <div class="pie-legend-item">
+              <div class="pie-legend-left">
+                <span class="pie-legend-dot" style="background:#f59e0b"></span>
+                社交媒体
+              </div>
+              <div>
+                <span class="pie-legend-val">10,516</span>
+                <span class="pie-legend-pct">18%</span>
+              </div>
+            </div>
+            <div class="pie-legend-item">
+              <div class="pie-legend-left">
+                <span class="pie-legend-dot" style="background:#ec4899"></span>
+                外链引荐
+              </div>
+              <div>
+                <span class="pie-legend-val">7,010</span>
+                <span class="pie-legend-pct">12%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-title">card-pie</div>
+  <div class="case-title-desc">环形饼图卡片 · 中心数值 + 彩色图例</div>
+
+  <div class="param-bar">
+    <div class="param-title">card-pie Props</div>
+    <div class="param-row"><span class="param-key">title:</span><span class="param-val">string ｜ 图表标题</span></div>
+    <div class="param-row"><span class="param-key">total:</span><span class="param-val">string ｜ 中心总数（已格式化）</span></div>
+    <div class="param-row"><span class="param-key">totalLabel:</span><span class="param-val">string ｜ 中心副标</span></div>
+    <div class="param-row"><span class="param-key">segments:</span><span class="param-val">Array&lt;{label, value, color}&gt;</span></div>
+    <div class="param-row"><span class="param-key">type:</span><span class="param-val">'donut' \| 'pie'（环形 / 饼）</span></div>
+    <div class="param-row"><span class="param-key">container:</span><span class="param-val">base-card 作为根容器</span></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>折线图 - Tab 切换时段</title>
+  <link rel="stylesheet" href="../../../../demo-components/shared/base-preview.css" />
+  <style>
+    .chart-card { padding: 0; }
+    .chart-head {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      padding: var(--space-4);
+      gap: var(--space-2);
+    }
+    .chart-title { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 4px; }
+    .chart-value { font-size: 22px; font-weight: 700; color: var(--color-text-primary); font-variant-numeric: tabular-nums; }
+    .chart-meta { display: flex; align-items: center; gap: 4px; font-size: 12px; color: #10b981; font-weight: 500; }
+    .chart-meta-sep { color: var(--color-text-tertiary); font-weight: 400; margin: 0 4px; }
+    .chart-meta-arrow { width: 12px; height: 12px; }
+
+    .chart-tabs {
+      display: flex; gap: 2px;
+      padding: 0 var(--space-4) var(--space-2);
+    }
+    .chart-tab {
+      flex: 1;
+      text-align: center;
+      font-size: 11px;
+      padding: 6px 0;
+      border-radius: var(--radius-sm);
+      color: var(--color-text-tertiary);
+      background: var(--color-bg);
+    }
+    .chart-tab.is-active {
+      background: var(--color-primary);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .chart-body { padding: 0 var(--space-2); }
+    .chart-svg { width: 100%; height: 140px; display: block; }
+
+    .grid-line { stroke: var(--color-border); stroke-width: 1; stroke-dasharray: 2 4; opacity: 0.5; }
+    .line-path { fill: none; stroke: #3b82f6; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+    .area-fill { fill: url(#tabLineGrad); opacity: 0.9; }
+    .dot-active { fill: #fff; stroke: #3b82f6; stroke-width: 2; }
+
+    .chart-xaxis {
+      display: flex; justify-content: space-between;
+      padding: 4px var(--space-4) var(--space-3);
+      font-size: 11px; color: var(--color-text-tertiary);
+    }
+
+    /* Demo 标题（phone shell 底部、param-bar 顶部） */
+    .case-title {
+      max-width: 375px;
+      margin: 16px auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    .case-title-desc {
+      max-width: 375px;
+      margin: 0 auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+    }
+  </style>
+</head>
+<body>
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="i-trend-up" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        d="M7 17l5-5 4 4 5-5M14 7h7v7"/>
+    </symbol>
+  </svg>
+
+  <div class="preview base-card">
+    <div class="preview-header base-card__header">折线图 · Tab 切换时段</div>
+    <div class="preview-body base-card__body" style="padding: 0;">
+      <div class="chart-card">
+        <div class="chart-head">
+          <div>
+            <div class="chart-title">访问量趋势</div>
+            <div class="chart-value">12.8k</div>
+          </div>
+          <div class="chart-meta">
+            <svg class="chart-meta-arrow"><use href="#i-trend-up"/></svg>
+            <span>18.2%</span>
+            <span class="chart-meta-sep">vs 上周期</span>
+          </div>
+        </div>
+
+        <div class="chart-tabs">
+          <span class="chart-tab">7天</span>
+          <span class="chart-tab is-active">30天</span>
+          <span class="chart-tab">90天</span>
+          <span class="chart-tab">全部</span>
+        </div>
+
+        <div class="chart-body">
+          <svg class="chart-svg" viewBox="0 0 340 140" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="tabLineGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+
+            <line class="grid-line" x1="0" y1="40"  x2="340" y2="40"/>
+            <line class="grid-line" x1="0" y1="80"  x2="340" y2="80"/>
+            <line class="grid-line" x1="0" y1="120" x2="340" y2="120"/>
+
+            <path class="area-fill" d="
+              M 0,100 C 30,90 50,85 80,82 S 130,55 160,65
+              S 220,75 250,45 S 310,30 340,15
+              L 340,140 L 0,140 Z"/>
+
+            <path class="line-path" d="
+              M 0,100 C 30,90 50,85 80,82 S 130,55 160,65
+              S 220,75 250,45 S 310,30 340,15"/>
+
+            <circle class="dot-active" cx="340" cy="15" r="4"/>
+          </svg>
+        </div>
+
+        <div class="chart-xaxis">
+          <span>1日</span><span>5日</span><span>10日</span><span>15日</span><span>20日</span><span>25日</span><span>30日</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-title">card-line-tabs</div>
+  <div class="case-title-desc">折线图 · 顶部 tab 切换时段（7天 / 30天 / 90天 / 全部）</div>
+
+  <div class="param-bar">
+    <div class="param-title">card-line-tabs Props</div>
+    <div class="param-row"><span class="param-key">title:</span><span class="param-val">string ｜ 图表标题</span></div>
+    <div class="param-row"><span class="param-key">value:</span><span class="param-val">string ｜ 主数值</span></div>
+    <div class="param-row"><span class="param-key">trend:</span><span class="param-val">{ value, direction, compareText }</span></div>
+    <div class="param-row"><span class="param-key">tabs:</span><span class="param-val">string[] | 时段选项</span></div>
+    <div class="param-row"><span class="param-key">activeTab:</span><span class="param-val">string | 当前时段</span></div>
+    <div class="param-row"><span class="param-key">seriesByTab:</span><span class="param-val">Record&lt;tab, number[]&gt; | 各时段数据</span></div>
+    <div class="param-row"><span class="param-key">container:</span><span class="param-val">base-card 作为根容器</span></div>
+  </div>
+</body>
+</html>

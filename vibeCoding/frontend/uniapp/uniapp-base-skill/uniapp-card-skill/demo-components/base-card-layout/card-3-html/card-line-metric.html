@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>折线图 - 迷你指标卡（多指标）</title>
+  <link rel="stylesheet" href="../../../../demo-components/shared/base-preview.css" />
+  <style>
+    .metric-card { padding: 0; }
+    .metric-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--space-4);
+    }
+    .metric-title { font-size: 15px; font-weight: 600; color: var(--color-text-primary); }
+
+    .metric-list { padding: 0 var(--space-4) var(--space-3); }
+    .metric-row {
+      display: flex; align-items: center;
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .metric-row:last-child { border-bottom: none; }
+    .metric-icon {
+      width: 36px; height: 36px;
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-right: var(--space-3);
+    }
+    .metric-icon-blue   { background: #dbeafe; color: #3b82f6; }
+    .metric-icon-green  { background: #dcfce7; color: #16a34a; }
+    .metric-icon-orange { background: #fed7aa; color: #ea580c; }
+    .metric-icon-purple { background: #e9d5ff; color: #9333ea; }
+    .metric-icon-svg    { width: 18px; height: 18px; }
+
+    .metric-body { flex: 1; min-width: 0; }
+    .metric-name { font-size: 13px; color: var(--color-text-secondary); }
+    .metric-value-row {
+      display: flex; align-items: baseline; gap: 6px;
+      margin-top: 2px;
+    }
+    .metric-value {
+      font-size: 18px; font-weight: 700;
+      color: var(--color-text-primary);
+      font-variant-numeric: tabular-nums;
+    }
+    .metric-trend {
+      font-size: 11px;
+      display: flex; align-items: center; gap: 2px;
+    }
+    .metric-trend.is-up   { color: #10b981; }
+    .metric-trend.is-down { color: #ef4444; }
+    .metric-trend-arrow   { width: 10px; height: 10px; }
+
+    .metric-spark {
+      width: 80px; height: 32px;
+      flex-shrink: 0;
+      margin-left: var(--space-3);
+    }
+    .spark-path { fill: none; stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; }
+    .spark-fill { opacity: 0.18; }
+    .spark-blue   .spark-path { stroke: #3b82f6; }
+    .spark-blue   .spark-fill { fill: #3b82f6; }
+    .spark-green  .spark-path { stroke: #10b981; }
+    .spark-green  .spark-fill { fill: #10b981; }
+    .spark-orange .spark-path { stroke: #ea580c; }
+    .spark-orange .spark-fill { fill: #ea580c; }
+    .spark-purple .spark-path { stroke: #9333ea; }
+    .spark-purple .spark-fill { fill: #9333ea; }
+
+    /* Demo 标题（phone shell 底部、param-bar 顶部） */
+    .case-title {
+      max-width: 375px;
+      margin: 16px auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    .case-title-desc {
+      max-width: 375px;
+      margin: 0 auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+    }
+  </style>
+</head>
+<body>
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="i-users" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+      <circle cx="9" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+    </symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24">
+      <circle cx="9" cy="21" r="1" fill="currentColor"/>
+      <circle cx="20" cy="21" r="1" fill="currentColor"/>
+      <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+    </symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+      <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+    </symbol>
+    <symbol id="i-dollar" viewBox="0 0 24 24">
+      <line x1="12" y1="1" x2="12" y2="23" stroke="currentColor" stroke-width="2"/>
+      <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+    </symbol>
+    <symbol id="i-trend-up" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        d="M7 17l5-5 4 4 5-5M14 7h7v7"/>
+    </symbol>
+    <symbol id="i-trend-down" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        d="M17 7l-5 5-4-4-5 5M14 17h7V7"/>
+    </symbol>
+  </svg>
+
+  <div class="preview base-card">
+    <div class="preview-header base-card__header">折线图 · 迷你指标卡</div>
+    <div class="preview-body base-card__body" style="padding: 0;">
+      <div class="metric-card">
+        <div class="metric-head">
+          <div class="metric-title">核心指标</div>
+          <div style="font-size:11px;color:var(--color-text-tertiary);">2026-08-28</div>
+        </div>
+
+        <div class="metric-list">
+          <div class="metric-row">
+            <div class="metric-icon metric-icon-blue">
+              <svg class="metric-icon-svg"><use href="#i-users"/></svg>
+            </div>
+            <div class="metric-body">
+              <div class="metric-name">新增用户</div>
+              <div class="metric-value-row">
+                <span class="metric-value">1,286</span>
+                <span class="metric-trend is-up">
+                  <svg class="metric-trend-arrow"><use href="#i-trend-up"/></svg>
+                  +18.2%
+                </span>
+              </div>
+            </div>
+            <svg class="metric-spark spark-blue" viewBox="0 0 80 32" preserveAspectRatio="none">
+              <path class="spark-fill" d="M 0,24 L 10,18 L 20,20 L 30,12 L 40,15 L 50,8 L 60,10 L 70,4 L 80,2 L 80,32 L 0,32 Z"/>
+              <path class="spark-path" d="M 0,24 L 10,18 L 20,20 L 30,12 L 40,15 L 50,8 L 60,10 L 70,4 L 80,2"/>
+            </svg>
+          </div>
+
+          <div class="metric-row">
+            <div class="metric-icon metric-icon-orange">
+              <svg class="metric-icon-svg"><use href="#i-cart"/></svg>
+            </div>
+            <div class="metric-body">
+              <div class="metric-name">订单数</div>
+              <div class="metric-value-row">
+                <span class="metric-value">328</span>
+                <span class="metric-trend is-up">
+                  <svg class="metric-trend-arrow"><use href="#i-trend-up"/></svg>
+                  +6.5%
+                </span>
+              </div>
+            </div>
+            <svg class="metric-spark spark-orange" viewBox="0 0 80 32" preserveAspectRatio="none">
+              <path class="spark-fill" d="M 0,20 L 10,22 L 20,18 L 30,16 L 40,14 L 50,18 L 60,12 L 70,8 L 80,10 L 80,32 L 0,32 Z"/>
+              <path class="spark-path" d="M 0,20 L 10,22 L 20,18 L 30,16 L 40,14 L 50,18 L 60,12 L 70,8 L 80,10"/>
+            </svg>
+          </div>
+
+          <div class="metric-row">
+            <div class="metric-icon metric-icon-green">
+              <svg class="metric-icon-svg"><use href="#i-dollar"/></svg>
+            </div>
+            <div class="metric-body">
+              <div class="metric-name">销售额</div>
+              <div class="metric-value-row">
+                <span class="metric-value">¥86,200</span>
+                <span class="metric-trend is-up">
+                  <svg class="metric-trend-arrow"><use href="#i-trend-up"/></svg>
+                  +12.5%
+                </span>
+              </div>
+            </div>
+            <svg class="metric-spark spark-green" viewBox="0 0 80 32" preserveAspectRatio="none">
+              <path class="spark-fill" d="M 0,26 L 10,22 L 20,24 L 30,18 L 40,20 L 50,14 L 60,10 L 70,12 L 80,6 L 80,32 L 0,32 Z"/>
+              <path class="spark-path" d="M 0,26 L 10,22 L 20,24 L 30,18 L 40,20 L 50,14 L 60,10 L 70,12 L 80,6"/>
+            </svg>
+          </div>
+
+          <div class="metric-row">
+            <div class="metric-icon metric-icon-purple">
+              <svg class="metric-icon-svg"><use href="#i-eye"/></svg>
+            </div>
+            <div class="metric-body">
+              <div class="metric-name">页面 PV</div>
+              <div class="metric-value-row">
+                <span class="metric-value">58,420</span>
+                <span class="metric-trend is-down">
+                  <svg class="metric-trend-arrow"><use href="#i-trend-down"/></svg>
+                  -2.3%
+                </span>
+              </div>
+            </div>
+            <svg class="metric-spark spark-purple" viewBox="0 0 80 32" preserveAspectRatio="none">
+              <path class="spark-fill" d="M 0,10 L 10,12 L 20,8 L 30,14 L 40,12 L 50,18 L 60,22 L 70,20 L 80,24 L 80,32 L 0,32 Z"/>
+              <path class="spark-path" d="M 0,10 L 10,12 L 20,8 L 30,14 L 40,12 L 50,18 L 60,22 L 70,20 L 80,24"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-title">card-line-metric</div>
+  <div class="case-title-desc">折线图 · 4 行指标 + 迷你折线（sparkline）</div>
+
+  <div class="param-bar">
+    <div class="param-title">card-line-metric Props</div>
+    <div class="param-row"><span class="param-key">title:</span><span class="param-val">string ｜ 卡片标题</span></div>
+    <div class="param-row"><span class="param-key">metrics:</span><span class="param-val">Metric[] ｜ 指标列表</span></div>
+    <div class="param-row"><span class="param-key">Metric:</span><span class="param-val">{ icon, name, value, trend?, sparkData, sparkColor }</span></div>
+    <div class="param-row"><span class="param-key">container:</span><span class="param-val">base-card 作为根容器</span></div>
+  </div>
+</body>
+</html>

@@ -6,9 +6,9 @@
 
 | 特征 | 值 |
 |------|-----|
-| 圆角 | 12px |
-| 背景 | --color-bg-surface |
-| 阴影 | shadow-sm |
+| 圆角 | `var(--radius-md)` |
+| 背景 | `var(--color-bg-surface)` |
+| 阴影 | `var(--shadow-sm)` |
 
 ## 适用场景
 
@@ -18,7 +18,7 @@
 
 ## HTML 演示
 
-[card-comment.html](html/card-comment.html)
+[card-comment.html](../card-2-html/card-comment.html)
 
 ## 组件代码
 
@@ -34,8 +34,14 @@
     </view>
     <text class="comment-content">{{ comment.content }}</text>
     <view class="comment-action" v-if="showAction">
-      <text>👍 {{ comment.likes }}</text>
-      <text>💬 {{ comment.replies }}</text>
+      <text>
+        <svg class="icon"><use href="#i-heart" /></svg>
+        {{ comment.likes }}
+      </text>
+      <text>
+        <svg class="icon"><use href="#i-message-circle" /></svg>
+        {{ comment.replies }}
+      </text>
     </view>
   </view>
 </base-card>

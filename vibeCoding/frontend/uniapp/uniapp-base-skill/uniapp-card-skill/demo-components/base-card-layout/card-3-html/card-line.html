@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>折线图卡片 - 销售趋势</title>
+  <link rel="stylesheet" href="../../../../demo-components/shared/base-preview.css" />
+  <style>
+    .chart-card { padding: 0; }
+    .chart-head {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      padding: var(--space-4);
+    }
+    .chart-title { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 4px; }
+    .chart-value { font-size: 24px; font-weight: 700; color: var(--color-text-primary); font-variant-numeric: tabular-nums; }
+    .chart-meta { display: flex; align-items: center; gap: 4px; font-size: 12px; color: #10b981; font-weight: 500; }
+    .chart-meta.is-down { color: #ef4444; }
+    .chart-meta-arrow { width: 12px; height: 12px; }
+    .chart-meta-sep { color: var(--color-text-tertiary); font-weight: 400; margin: 0 2px; }
+
+    .chart-body { padding: 0 var(--space-2) var(--space-2); }
+    .chart-svg { width: 100%; height: 160px; display: block; }
+    .chart-xaxis {
+      display: flex; justify-content: space-between;
+      padding: 4px var(--space-4) 0;
+      font-size: 11px; color: var(--color-text-tertiary);
+    }
+
+    /* Chart visual tokens */
+    .grid-line { stroke: var(--color-border); stroke-width: 1; stroke-dasharray: 2 4; opacity: 0.6; }
+    .axis-text { fill: var(--color-text-tertiary); font-size: 10px; }
+    .line-path { fill: none; stroke: #3b82f6; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+    .area-fill { fill: url(#lineGradient); opacity: 0.9; }
+    .dot-active { fill: #fff; stroke: #3b82f6; stroke-width: 2; }
+
+    /* Demo 标题（phone shell 底部、param-bar 顶部） */
+    .case-title {
+      max-width: 375px;
+      margin: 16px auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    .case-title-desc {
+      max-width: 375px;
+      margin: 0 auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+    }
+  </style>
+</head>
+<body>
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="i-trend-up" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        d="M7 17l5-5 4 4 5-5M14 7h7v7"/>
+    </symbol>
+  </svg>
+
+  <div class="preview base-card">
+    <div class="preview-header base-card__header">折线图卡片 · 销售趋势</div>
+    <div class="preview-body base-card__body" style="padding: 0;">
+      <div class="chart-card">
+        <div class="chart-head">
+          <div>
+            <div class="chart-title">本周销售总额</div>
+            <div class="chart-value">¥128,650</div>
+          </div>
+          <div class="chart-meta">
+            <svg class="chart-meta-arrow"><use href="#i-trend-up"/></svg>
+            <span>12.5%</span>
+            <span class="chart-meta-sep">vs 上周</span>
+          </div>
+        </div>
+
+        <div class="chart-body">
+          <svg class="chart-svg" viewBox="0 0 340 160" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="lineGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Grid lines -->
+            <line class="grid-line" x1="0" y1="40"  x2="340" y2="40"/>
+            <line class="grid-line" x1="0" y1="80"  x2="340" y2="80"/>
+            <line class="grid-line" x1="0" y1="120" x2="340" y2="120"/>
+
+            <!-- Area -->
+            <path class="area-fill" d="
+              M 0,90
+              C 30,80 50,70 80,75
+              S 130,40 160,55
+              S 220,80 250,50
+              S 310,30 340,0
+              L 340,160 L 0,160 Z"/>
+
+            <!-- Line -->
+            <path class="line-path" d="
+              M 0,90
+              C 30,80 50,70 80,75
+              S 130,40 160,55
+              S 220,80 250,50
+              S 310,30 340,0"/>
+
+            <!-- Active dot -->
+            <circle class="dot-active" cx="340" cy="0" r="4"/>
+          </svg>
+        </div>
+
+        <div class="chart-xaxis">
+          <span>周一</span><span>周二</span><span>周三</span><span>周四</span><span>周五</span><span>周六</span><span>周日</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-title">card-line</div>
+  <div class="case-title-desc">折线图卡片 · 平滑曲线 + 渐变填充 + 涨跌指示</div>
+
+  <div class="param-bar">
+    <div class="param-title">card-line Props</div>
+    <div class="param-row"><span class="param-key">title:</span><span class="param-val">string ｜ 图表标题</span></div>
+    <div class="param-row"><span class="param-key">value:</span><span class="param-val">string ｜ 主数值</span></div>
+    <div class="param-row"><span class="param-key">trend:</span><span class="param-val">{ value: string, direction: 'up' \| 'down', compareText?: string }</span></div>
+    <div class="param-row"><span class="param-key">series:</span><span class="param-val">number[] ｜ 数值序列</span></div>
+    <div class="param-row"><span class="param-key">labels:</span><span class="param-val">string[] ｜ X 轴标签</span></div>
+    <div class="param-row"><span class="param-key">color:</span><span class="param-val">string ｜ 主色（默认蓝 #3b82f6）</span></div>
+    <div class="param-row"><span class="param-key">smooth:</span><span class="param-val">boolean ｜ 平滑曲线（默认 true）</span></div>
+    <div class="param-row"><span class="param-key">container:</span><span class="param-val">base-card 作为根容器</span></div>
+  </div>
+</body>
+</html>

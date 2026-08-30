@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>折线图 - 节点 tooltip（数据点高亮）</title>
+  <link rel="stylesheet" href="../../../../demo-components/shared/base-preview.css" />
+  <style>
+    .chart-card { padding: 0; }
+    .chart-head {
+      padding: var(--space-4);
+    }
+    .chart-title { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 4px; }
+    .chart-value-row { display: flex; align-items: baseline; gap: 8px; }
+    .chart-value { font-size: 22px; font-weight: 700; color: var(--color-text-primary); font-variant-numeric: tabular-nums; }
+    .chart-meta { font-size: 12px; color: #ef4444; font-weight: 500; display: flex; align-items: center; gap: 4px; }
+
+    .chart-body { padding: 0 var(--space-2); position: relative; }
+    .chart-svg { width: 100%; height: 180px; display: block; }
+
+    .grid-line { stroke: var(--color-border); stroke-width: 1; stroke-dasharray: 2 4; opacity: 0.5; }
+    .line-path { fill: none; stroke: #3b82f6; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+    .area-fill { fill: url(#tipLineGrad); opacity: 0.9; }
+
+    .node-dot {
+      fill: #fff; stroke: #3b82f6; stroke-width: 2;
+    }
+    .node-dot.is-active {
+      fill: #3b82f6; stroke: #fff; stroke-width: 3;
+    }
+
+    /* Tooltip overlay - HTML positioned over SVG */
+    .tooltip-box {
+      position: absolute;
+      top: 32px; left: 200px;
+      background: #1e293b;
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      pointer-events: none;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .tooltip-box::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 50%;
+      transform: translateX(-50%);
+      width: 0; height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 4px solid #1e293b;
+    }
+    .tooltip-label { color: #94a3b8; font-size: 10px; margin-bottom: 2px; }
+    .tooltip-value { font-weight: 600; font-size: 13px; font-variant-numeric: tabular-nums; }
+
+    .chart-xaxis {
+      display: flex; justify-content: space-between;
+      padding: 4px var(--space-4) var(--space-3);
+      font-size: 11px; color: var(--color-text-tertiary);
+    }
+
+    /* Demo 标题（phone shell 底部、param-bar 顶部） */
+    .case-title {
+      max-width: 375px;
+      margin: 16px auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    .case-title-desc {
+      max-width: 375px;
+      margin: 0 auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+    }
+  </style>
+</head>
+<body>
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="i-trend-down" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        d="M17 7l-5 5-4-4-5 5M14 17h7V7"/>
+    </symbol>
+  </svg>
+
+  <div class="preview base-card">
+    <div class="preview-header base-card__header">折线图 · 节点 tooltip</div>
+    <div class="preview-body base-card__body" style="padding: 0;">
+      <div class="chart-card">
+        <div class="chart-head">
+          <div class="chart-title">服务器响应时间（ms）</div>
+          <div class="chart-value-row">
+            <span class="chart-value">186 ms</span>
+            <span class="chart-meta">
+              <svg style="width:12px;height:12px;"><use href="#i-trend-down"/></svg>
+              <span>+12.4%</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="chart-body">
+          <svg class="chart-svg" viewBox="0 0 340 180" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="tipLineGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+
+            <line class="grid-line" x1="0" y1="40"  x2="340" y2="40"/>
+            <line class="grid-line" x1="0" y1="90"  x2="340" y2="90"/>
+            <line class="grid-line" x1="0" y1="140" x2="340" y2="140"/>
+
+            <path class="area-fill" d="
+              M 0,90 C 30,80 60,100 90,85 S 150,70 180,75
+              S 240,60 270,50 S 310,30 340,40
+              L 340,180 L 0,180 Z"/>
+
+            <path class="line-path" d="
+              M 0,90 C 30,80 60,100 90,85 S 150,70 180,75
+              S 240,60 270,50 S 310,30 340,40"/>
+
+            <!-- 5 data point dots, x positions: 40, 110, 180, 250, 320 -->
+            <!-- Active dot at x=270, y=50 -->
+            <circle class="node-dot" cx="40"  cy="80"  r="3"/>
+            <circle class="node-dot" cx="110" cy="85"  r="3"/>
+            <circle class="node-dot" cx="180" cy="75"  r="3"/>
+            <circle class="node-dot is-active" cx="270" cy="50"  r="5"/>
+            <circle class="node-dot" cx="320" cy="35"  r="3"/>
+
+            <!-- Vertical guide line at active dot -->
+            <line x1="270" y1="50" x2="270" y2="180" stroke="#3b82f6" stroke-width="1" stroke-dasharray="3 3" opacity="0.5"/>
+          </svg>
+
+          <!-- Tooltip overlay (HTML positioned) -->
+          <div class="tooltip-box">
+            <div class="tooltip-label">8月22日 14:00</div>
+            <div class="tooltip-value">186 ms</div>
+          </div>
+        </div>
+
+        <div class="chart-xaxis">
+          <span>8/18</span><span>8/19</span><span>8/20</span><span>8/21</span><span>8/22</span><span>8/23</span><span>8/24</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-title">card-line-tooltip</div>
+  <div class="case-title-desc">折线图 · 节点圆点 + 活动节点 tooltip</div>
+
+  <div class="param-bar">
+    <div class="param-title">card-line-tooltip Props</div>
+    <div class="param-row"><span class="param-key">title:</span><span class="param-val">string ｜ 图表标题</span></div>
+    <div class="param-row"><span class="param-key">value:</span><span class="param-val">string ｜ 主数值</span></div>
+    <div class="param-row"><span class="param-key">series:</span><span class="param-val">number[] ｜ 数值序列</span></div>
+    <div class="param-row"><span class="param-key">labels:</span><span class="param-val">string[] ｜ X 轴标签</span></div>
+    <div class="param-row"><span class="param-key">activeIndex:</span><span class="param-val">number ｜ 高亮节点索引</span></div>
+    <div class="param-row"><span class="param-key">tooltip:</span><span class="param-val">{ label, value } ｜ tooltip 内容</span></div>
+    <div class="param-row"><span class="param-key">container:</span><span class="param-val">base-card 作为根容器</span></div>
+  </div>
+</body>
+</html>

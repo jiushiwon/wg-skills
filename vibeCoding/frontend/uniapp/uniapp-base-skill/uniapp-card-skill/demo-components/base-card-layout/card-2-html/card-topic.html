@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>话题卡片 - 标签 + 讨论数</title>
+  <link rel="stylesheet" href="../../../../demo-components/shared/base-preview.css" />
+  <style>
+    .topic-card { padding: 0; }
+    .topic-banner {
+      height: 80px;
+      background-image: url('https://picsum.photos/seed/topic1/640/240');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .topic-banner::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.35));
+    }
+    .topic-body { padding: var(--space-4); }
+    .topic-name-row {
+      display: flex; align-items: center; gap: var(--space-2);
+      margin-bottom: var(--space-2);
+    }
+    .topic-hash {
+      font-size: 14px;
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+    .topic-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+    .topic-badge {
+      font-size: 10px;
+      padding: 1px 5px;
+      background: #fef3c7;
+      color: #b45309;
+      border-radius: var(--radius-sm);
+      margin-left: var(--space-1);
+    }
+    .topic-desc {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+      margin-bottom: var(--space-3);
+    }
+    .topic-stats {
+      display: flex; gap: var(--space-4);
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--color-border);
+    }
+    .topic-stat {
+      display: flex; align-items: center; gap: var(--space-1);
+    }
+    .topic-stat-num {
+      font-weight: 600;
+      color: var(--color-text);
+      font-size: 14px;
+    }
+    .topic-join {
+      margin-left: auto;
+      padding: var(--space-2) var(--space-4);
+      background: var(--color-primary);
+      color: #fff;
+      font-size: 13px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+    }
+
+    /* Demo 标题（phone shell 底部、param-bar 顶部） */
+    .case-title {
+      max-width: 375px;
+      margin: 16px auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    .case-title-desc {
+      max-width: 375px;
+      margin: 0 auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+    }
+  </style>
+</head>
+<body>
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="i-message-square" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    </symbol>
+    <symbol id="i-users" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+      <circle cx="9" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+    </symbol>
+    <symbol id="i-hash" viewBox="0 0 24 24">
+      <line x1="4" y1="9" x2="20" y2="9" stroke="currentColor" stroke-width="2"/>
+      <line x1="4" y1="15" x2="20" y2="15" stroke="currentColor" stroke-width="2"/>
+      <line x1="10" y1="3" x2="8" y2="21" stroke="currentColor" stroke-width="2"/>
+      <line x1="16" y1="3" x2="14" y2="21" stroke="currentColor" stroke-width="2"/>
+    </symbol>
+  </svg>
+
+  <div class="preview base-card">
+    <div class="preview-header base-card__header">话题卡片 · 社区广场</div>
+    <div class="preview-body base-card__body" style="padding: 0;">
+      <div class="topic-card">
+        <div class="topic-banner"></div>
+        <div class="topic-body">
+          <div class="topic-name-row">
+            <svg class="icon icon-14 icon-primary"><use href="#i-hash"/></svg>
+            <span class="topic-name">VibeCoding 实战</span>
+            <span class="topic-badge">推荐</span>
+          </div>
+          <div class="topic-desc">
+            分享用 AI 辅助编程的实战经验、踩坑记录、提效工具，让 VibeCoding 成为每一个开发者的超能力。
+          </div>
+          <div class="topic-stats">
+            <div class="topic-stat">
+              <svg class="icon icon-12"><use href="#i-message-square"/></svg>
+              <span class="topic-stat-num">1,286</span>
+              <span>讨论</span>
+            </div>
+            <div class="topic-stat">
+              <svg class="icon icon-12"><use href="#i-users"/></svg>
+              <span class="topic-stat-num">8.2k</span>
+              <span>参与</span>
+            </div>
+            <div class="topic-join">参与话题</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-title">card-topic</div>
+  <div class="case-title-desc">话题卡片 · 顶部 banner + #话题 + 描述 + 统计 + 参与按钮</div>
+
+  <div class="param-bar">
+    <div class="param-title">card-topic Props</div>
+    <div class="param-row"><span class="param-key">name:</span><span class="param-val">string ｜ 话题名</span></div>
+    <div class="param-row"><span class="param-key">desc:</span><span class="param-val">string ｜ 话题描述</span></div>
+    <div class="param-row"><span class="param-key">discussions:</span><span class="param-val">number ｜ 讨论数</span></div>
+    <div class="param-row"><span class="param-key">participants:</span><span class="param-val">number ｜ 参与人数</span></div>
+    <div class="param-row"><span class="param-key">badge:</span><span class="param-val">string ｜ 角标文字（可选）</span></div>
+    <div class="param-row"><span class="param-key">bannerColor:</span><span class="param-val">string ｜ 头部背景渐变（可选）</span></div>
+    <div class="param-row"><span class="param-key">容器:</span><span class="param-val">base-card 作为根容器</span></div>
+  </div>
+</body>
+</html>

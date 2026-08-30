@@ -17,26 +17,26 @@
 
 - **扫描**：`rg "#[0-9a-fA-F]{3,8}\b|rgba?\s*\(" --glob "*.{vue,scss,css}" -n`
 - **排除**：`_theme-config.scss`、`node_modules/`、`uni_modules/`、CSS 注释、`content: "#"` 字符串
-- **修复映射**：见 [SKILL.md §15.3 颜色硬编码映射表](../SKILL.md#d01d06--颜色硬编码)
+- **修复映射**：见 [SKILL.md §15.3 颜色硬编码映射表](../SKILL.md#d01d06-颜色硬编码)
 - **自动化**：✅
 
 ## D01 — SCSS 必须用 Token（字号）
 
 - **扫描**：`rg "font-size:\s*\d+rpx" --glob "*.{vue,scss,css}" -n`
-- **修复映射**：见 [SKILL.md §15.3 字号硬编码映射表](../SKILL.md#d01d06--字号硬编码)
+- **修复映射**：见 [SKILL.md §15.3 字号硬编码映射表](../SKILL.md#d01d06-字号硬编码)
 - **自动化**：✅
 
 ## D01 — SCSS 必须用 Token（间距）
 
 - **扫描**：`rg "(padding|margin|gap):\s*[^;]*\d+rpx" --glob "*.{vue,scss,css}" -n`
 - **排除**：值为 `0` 或 `auto` 的行
-- **修复映射**：见 [SKILL.md §15.3 间距硬编码映射表](../SKILL.md#d01--间距硬编码)
+- **修复映射**：见 [SKILL.md §15.3 间距硬编码映射表](../SKILL.md#d01-间距硬编码)
 - **自动化**：✅
 
 ## D01 — SCSS 必须用 Token（圆角）
 
 - **扫描**：`rg "border-radius:\s*\d+rpx" --glob "*.{vue,scss,css}" -n`
-- **修复映射**：见 [SKILL.md §15.3 圆角硬编码映射表](../SKILL.md#d01--圆角硬编码)
+- **修复映射**：见 [SKILL.md §15.3 圆角硬编码映射表](../SKILL.md#d01-圆角硬编码)
 - **自动化**：✅
 
 ## D02 — 组件样式用 scoped
@@ -85,7 +85,7 @@
 
 - **扫描**：`rg "z-index:\s*\d+" --glob "*.{vue,scss,css}" -n`
 - **排除**：`_theme-config.scss`、`tokens/_semantic.scss`（定义源）
-- **修复映射**：见 [SKILL.md §15.3 z-index 硬编码映射表](../SKILL.md#d09--z-index-硬编码)
+- **修复映射**：见 [SKILL.md §15.3 z-index 硬编码映射表](../SKILL.md#d09-z-index-硬编码)
 - **自动化**：✅
 
 ## D10 — 深色模式可切换

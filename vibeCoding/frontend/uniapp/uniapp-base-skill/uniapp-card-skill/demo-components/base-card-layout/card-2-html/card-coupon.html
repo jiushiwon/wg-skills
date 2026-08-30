@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>优惠券卡片 - 异形 / 满减</title>
+  <link rel="stylesheet" href="../../../../demo-components/shared/base-preview.css" />
+  <style>
+    .coupon-list { padding: 0; }
+    .coupon-item {
+      position: relative;
+      margin: var(--space-3);
+      display: flex;
+      background: linear-gradient(135deg, #fb923c, #f97316);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(251, 146, 60, 0.25);
+      color: #fff;
+      min-height: 96px;
+    }
+    /* 异形：左右两侧半圆缺口 */
+    .coupon-item::before,
+    .coupon-item::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 16px;
+      height: 16px;
+      background: var(--color-bg);
+      border-radius: 50%;
+      transform: translateY(-50%);
+    }
+    .coupon-item::before { left: 76px; }
+    .coupon-item::after { right: 76px; }
+
+    /* 中间虚线 */
+    .coupon-divider {
+      position: absolute;
+      left: 84px;
+      top: 12px;
+      bottom: 12px;
+      width: 0;
+      border-left: 1px dashed rgba(255, 255, 255, 0.4);
+    }
+
+    .coupon-amount {
+      width: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-3) 0;
+      flex-shrink: 0;
+    }
+    .coupon-currency {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1;
+    }
+    .coupon-value {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-top: 4px;
+      font-variant-numeric: tabular-nums;
+    }
+    .coupon-condition {
+      font-size: 11px;
+      opacity: 0.9;
+      margin-top: 2px;
+    }
+
+    .coupon-body {
+      flex: 1;
+      padding: var(--space-3) var(--space-4);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+    }
+    .coupon-title {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    .coupon-scope {
+      font-size: 11px;
+      opacity: 0.85;
+      margin-top: 2px;
+    }
+    .coupon-time {
+      font-size: 11px;
+      opacity: 0.7;
+      margin-top: var(--space-2);
+    }
+
+    .coupon-action {
+      width: 76px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-3) 0;
+      flex-shrink: 0;
+      gap: 4px;
+    }
+    .coupon-btn {
+      padding: 6px 14px;
+      background: #fff;
+      color: #f97316;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    .coupon-btn.disabled {
+      background: rgba(255, 255, 255, 0.3);
+      color: #fff;
+    }
+    .coupon-tag {
+      font-size: 10px;
+      opacity: 0.85;
+    }
+
+    /* 第二张：蓝色渐变（不同类型对比） */
+    .coupon-item.coupon-vip {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      box-shadow: 0 2px 8px rgba(99, 102, 241, 0.25);
+    }
+    .coupon-item.coupon-vip .coupon-btn {
+      color: #6366f1;
+    }
+
+    /* Demo 标题（phone shell 底部、param-bar 顶部） */
+    .case-title {
+      max-width: 375px;
+      margin: 16px auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    .case-title-desc {
+      max-width: 375px;
+      margin: 0 auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+    }
+  </style>
+</head>
+<body>
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="i-ticket" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M2 9V7a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4z"/>
+      <line x1="9" y1="5" x2="9" y2="19" stroke="currentColor" stroke-width="2" stroke-dasharray="2 2"/>
+    </symbol>
+  </svg>
+
+  <div class="preview base-card">
+    <div class="preview-header base-card__header">优惠券卡片 · 异形满减</div>
+    <div class="preview-body base-card__body" style="padding: 0; background: #fafafa;">
+      <div class="coupon-list">
+        <div class="coupon-item">
+          <div class="coupon-amount">
+            <div class="coupon-currency">¥</div>
+            <div class="coupon-value">30</div>
+            <div class="coupon-condition">满 200 可用</div>
+          </div>
+          <div class="coupon-divider"></div>
+          <div class="coupon-body">
+            <div class="coupon-title">全场通用券</div>
+            <div class="coupon-scope">全场商品 · 不限品类</div>
+            <div class="coupon-time">有效期至 2026-09-30</div>
+          </div>
+          <div class="coupon-action">
+            <div class="coupon-btn">立即使用</div>
+            <div class="coupon-tag">未使用</div>
+          </div>
+        </div>
+
+        <div class="coupon-item coupon-vip">
+          <div class="coupon-amount">
+            <div class="coupon-currency">¥</div>
+            <div class="coupon-value">88</div>
+            <div class="coupon-condition">满 500 可用</div>
+          </div>
+          <div class="coupon-divider"></div>
+          <div class="coupon-body">
+            <div class="coupon-title">会员专享券</div>
+            <div class="coupon-scope">VIP 会员专享 · 部分商品除外</div>
+            <div class="coupon-time">有效期至 2026-08-31</div>
+          </div>
+          <div class="coupon-action">
+            <div class="coupon-btn">立即使用</div>
+            <div class="coupon-tag">VIP</div>
+          </div>
+        </div>
+
+        <div class="coupon-item">
+          <div class="coupon-amount">
+            <div class="coupon-currency">¥</div>
+            <div class="coupon-value">15</div>
+            <div class="coupon-condition">满 99 可用</div>
+          </div>
+          <div class="coupon-divider"></div>
+          <div class="coupon-body">
+            <div class="coupon-title">新人专享券</div>
+            <div class="coupon-scope">仅限新注册用户使用</div>
+            <div class="coupon-time">已过期</div>
+          </div>
+          <div class="coupon-action">
+            <div class="coupon-btn disabled">已过期</div>
+            <div class="coupon-tag">不可用</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-title">card-coupon</div>
+  <div class="case-title-desc">优惠券卡片 · 异形满减 + 颜色变体（默认 / VIP / 已过期）</div>
+
+  <div class="param-bar">
+    <div class="param-title">card-coupon Props</div>
+    <div class="param-row"><span class="param-key">value:</span><span class="param-val">number ｜ 优惠金额</span></div>
+    <div class="param-row"><span class="param-key">currency:</span><span class="param-val">string ｜ 货币符号（默认 ¥）</span></div>
+    <div class="param-row"><span class="param-key">minSpend:</span><span class="param-val">number ｜ 使用门槛</span></div>
+    <div class="param-row"><span class="param-key">title:</span><span class="param-val">string ｜ 券名称</span></div>
+    <div class="param-row"><span class="param-key">scope:</span><span class="param-val">string ｜ 使用范围</span></div>
+    <div class="param-row"><span class="param-key">expireAt:</span><span class="param-val">string ｜ 过期时间</span></div>
+    <div class="param-row"><span class="param-key">status:</span><span class="param-val">'unused' \| 'used' \| 'expired'</span></div>
+    <div class="param-row"><span class="param-key">variant:</span><span class="param-val">'default' \| 'vip'（配色变体）</span></div>
+    <div class="param-row"><span class="param-key">容器:</span><span class="param-val">base-card 作为根容器</span></div>
+  </div>
+</body>
+</html>

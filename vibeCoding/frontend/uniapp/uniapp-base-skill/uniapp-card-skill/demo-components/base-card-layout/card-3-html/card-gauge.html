@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>仪表盘卡片 - 健康指数</title>
+  <link rel="stylesheet" href="../../../../demo-components/shared/base-preview.css" />
+  <style>
+    .chart-card { padding: 0; }
+    .chart-head {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      padding: var(--space-4);
+    }
+    .chart-title { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 4px; }
+    .chart-meta {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      background: #dcfce7;
+      color: #16a34a;
+      font-weight: 500;
+    }
+
+    .chart-body {
+      position: relative;
+      padding: 0 var(--space-4) var(--space-2);
+    }
+    .gauge-svg { width: 100%; height: 200px; display: block; }
+
+    .gauge-center {
+      position: absolute;
+      top: 130px; left: 0; right: 0;
+      display: flex; flex-direction: column;
+      align-items: center;
+      pointer-events: none;
+    }
+    .gauge-value {
+      font-size: 36px; font-weight: 700;
+      color: var(--color-text-primary);
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+    .gauge-unit {
+      font-size: 14px; color: var(--color-text-tertiary);
+      margin-left: 4px;
+      font-weight: 400;
+    }
+    .gauge-label {
+      font-size: 11px; color: var(--color-text-tertiary);
+      margin-top: 4px;
+      opacity: 0.7;
+    }
+
+    .gauge-scale {
+      display: flex; justify-content: space-between;
+      padding: 0 24px;
+      font-size: 10px; color: var(--color-text-tertiary);
+      margin-top: -8px;
+    }
+
+    /* Demo 标题（phone shell 底部、param-bar 顶部） */
+    .case-title {
+      max-width: 375px;
+      margin: 16px auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    .case-title-desc {
+      max-width: 375px;
+      margin: 0 auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+    }
+  </style>
+</head>
+<body>
+  <div class="preview base-card">
+    <div class="preview-header base-card__header">仪表盘卡片 · 健康指数</div>
+    <div class="preview-body base-card__body" style="padding: 0;">
+      <div class="chart-card">
+        <div class="chart-head">
+          <div>
+            <div class="chart-title">今日健康指数</div>
+            <div style="font-size:11px;color:var(--color-text-tertiary);">基于步数 / 心率 / 睡眠综合评估</div>
+          </div>
+          <div class="chart-meta">优秀</div>
+        </div>
+
+        <div class="chart-body">
+          <svg class="gauge-svg" viewBox="0 0 340 200" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <linearGradient id="gaugeGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%"   stop-color="#10b981"/>
+                <stop offset="50%"  stop-color="#3b82f6"/>
+                <stop offset="100%" stop-color="#f59e0b"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Center (170, 160), Radius 110, stroke 14 -->
+            <!-- Arc covers 270° from math angle 225° (bottom-left) CCW to 315° (bottom-right) -->
+            <!-- Start screen: (170 - 77.78, 160 + 77.78) = (92.22, 237.78) -->
+            <!-- End   screen: (170 + 77.78, 160 + 77.78) = (247.78, 237.78) -->
+
+            <!-- Track (270° going over the top) -->
+            <path d="M 92.22,237.78 A 110 110 0 1 1 247.78,237.78"
+              fill="none" stroke="#e2e8f0" stroke-width="14" stroke-linecap="round"/>
+
+            <!-- Progress (85% of 270° = 229.5°, ends at math angle 225°-229.5° = -4.5°) -->
+            <!-- End screen: (170 + 110*cos(-4.5°), 160 - 110*sin(-4.5°)) -->
+            <!--            = (170 + 109.66, 160 + 8.63) = (279.66, 168.63) -->
+            <path d="M 92.22,237.78 A 110 110 0 1 1 279.66,168.63"
+              fill="none" stroke="url(#gaugeGrad)" stroke-width="14" stroke-linecap="round"/>
+
+            <!-- Needle (triangle) pointing from center toward 85% position -->
+            <!-- Direction: from (170, 160) toward (279.66, 168.63) -->
+            <!-- Length 95, base width 6, base offset 12 from center -->
+            <!-- Perpendicular to needle direction (angle 355.5° math): rotated 90° → angle 265.5° -->
+            <!-- Perpendicular unit: (cos(265.5°), -sin(265.5°)) = (-0.0785, 0.9969) -->
+            <!-- Tip: (279.66, 168.63) -->
+            <!-- Base center: 12 units back from center along needle direction -->
+            <!--   = (170 - 12*cos(-4.5°), 160 + 12*sin(-4.5°)) -->
+            <!--   = (170 - 11.96, 160 + 0.94) = (158.04, 160.94) -->
+            <!-- Base left: B + 3*(-0.0785, 0.9969) = (158.04 - 0.24, 160.94 + 2.99) = (157.80, 163.93) -->
+            <!-- Base right: B - 3*(-0.0785, 0.9969) = (158.04 + 0.24, 160.94 - 2.99) = (158.28, 157.95) -->
+            <path d="M 279.66,168.63 L 157.80,163.93 L 158.28,157.95 Z"
+              fill="#1e293b" stroke="#1e293b" stroke-width="1" stroke-linejoin="round"/>
+
+            <!-- Center hub -->
+            <circle cx="170" cy="160" r="9" fill="#1e293b"/>
+            <circle cx="170" cy="160" r="3" fill="#fff"/>
+          </svg>
+
+          <div class="gauge-center">
+            <div>
+              <span class="gauge-value">85</span><span class="gauge-unit">/100</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gauge-scale">
+          <span>0</span>
+          <span>25</span>
+          <span>50</span>
+          <span>75</span>
+          <span>100</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-title">card-gauge</div>
+  <div class="case-title-desc">仪表盘卡片 · 270° 弧 + 渐变 + 指针 + 刻度</div>
+
+  <div class="param-bar">
+    <div class="param-title">card-gauge Props</div>
+    <div class="param-row"><span class="param-key">title:</span><span class="param-val">string ｜ 图表标题</span></div>
+    <div class="param-row"><span class="param-key">value:</span><span class="param-val">number ｜ 当前值</span></div>
+    <div class="param-row"><span class="param-key">maxValue:</span><span class="param-val">number ｜ 最大值</span></div>
+    <div class="param-row"><span class="param-key">unit:</span><span class="param-val">string ｜ 单位</span></div>
+    <div class="param-row"><span class="param-key">compareText:</span><span class="param-val">string ｜ 对比文案</span></div>
+    <div class="param-row"><span class="param-key">status:</span><span class="param-val">'poor' | 'normal' | 'good' | 'excellent'</span></div>
+    <div class="param-row"><span class="param-key">color:</span><span class="param-val">GradientStops ｜ 渐变色（默认三段式）</span></div>
+    <div class="param-row"><span class="param-key">container:</span><span class="param-val">base-card 作为根容器</span></div>
+  </div>
+</body>
+</html>
