@@ -189,15 +189,8 @@ wg-skills/
 │   │   ├── server-setup-skill/               # 服务器初始化
 │   │   └── static-nginx-skill/               # Nginx 静态站点
 │   │
-│   └── vibecoding-guide-skill/        # 📚 VibeCoding 知识导师（父技能 + 3 嵌套子技能）
-│       ├── vibecoding-workflow-skill/        # 工作流教学
-│       ├── agent-learning-skill/             # 智能体学习
-│       └── agent-interview-skill/            # 智能体面试 / 自检
 │
-├── others/                            # 🧰 板块二：其他领域工具
-│   └── ffmpeg-skill/                         # FFmpeg 多媒体处理（剪辑/转码/水印/合成/提取）
-│
-└── others/                            # 🧰 板块三：其他领域工具
+└── others/                            # 🧰 板块二：其他领域工具
     ├── ai-speech-detector/                   # AI 风检测
     ├── article-illustrator-skill/            # 文章配图生成
     ├── skill-auditor/                        # Skill 安全审计
@@ -224,7 +217,6 @@ wg-skills/
 | `vibeCoding/frontend/icon-image-catch-skill` | 2 | 图标抓取 / 图片抓取 |
 | `vibeCoding/super-deploy-skills` | 13（含 2 级嵌套） | 数据库安装 / 运行时安装 / 各种部署 |
 | `vibeCoding/frontend/uniapp/uniapp-base-skill` | 3 | uniapp 表单/卡片/页面 |
-| `vibeCoding/vibecoding-guide-skill` | 3 | 工作流 / 学习 / 面试 |
 
 > `super-deploy-skills` 含二级嵌套：`database-install-skill/children/{mysql,postgres,redis,mongodb}-install-skill` 与 `runtime-install-skill/children/{go,java,python,nodejs}-install-skill`，**对应"大量中间件多插件部署"的真实需求**。
 

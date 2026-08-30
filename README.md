@@ -95,16 +95,6 @@ AI 时代的编程不是"取代程序员"，而是把传统工程中**重复、�
 | `server-setup-skill/` | 服务器初始化 | "初始化服务器" |
 | `static-nginx-skill/` | Nginx 静态站点 | "配置 Nginx" |
 
-#### 1.4 `vibeCoding/vibecoding-guide-skill/` —— VibeCoding 知识导师
-
-> 教小白如何更高效地 Vibecoding，理解 AI 编程的本质。
-
-| 技能 | 用途 | 触发词 |
-|------|------|--------|
-| `vibecoding-workflow-skill/` | VibeCoding 工作流教学 | "VibeCoding 工作流" |
-| `agent-learning-skill/` | 智能体学习 | "学智能体" |
-| `agent-interview-skill/` | 智能体面试 / 自检 | "智能体面试" |
-
 ---
 
 ### 🧰 板块二：`others/` —— 其他领域工具
@@ -241,13 +231,12 @@ git clone https://github.com/your-org/wg-skills.git ~/.claude/skills/wg-skills
 
 | 板块 | skill 总数 | 占比 |
 |------|----------|------|
-| **vibeCoding** | 50+ | 90% |
+| **vibeCoding** | 45+ | 90% |
 | └ backend | 15+ | |
 | └ frontend | 30+ | |
 | └ super-deploy | 7（含 13 嵌套子） | |
-| └ vibecoding-guide | 1（含 3 嵌套子） | |
 | **others** | 5 | 10% |
-| **合计** | **55+ skills** | 100% |
+| **合计** | **50+ skills** | 100% |
 
 ---
 
