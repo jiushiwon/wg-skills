@@ -142,7 +142,6 @@ wg-skills/
 │   │   │   ├── python-backend-skill/         # Python 体系
 │   │   │   ├── nodejs-backend-skill/         # Node.js 体系
 │   │   │   └── database-skill/               # 数据库选型
-│   │   └── module-generate-skill/            # 后端业务模块生成（父技能 + 5 嵌套子技能）
 │   │       ├── auth-skill/                   # 鉴权模块
 │   │       ├── org-permission-skill/         # 组织权限
 │   │       ├── ai-chat-skill/                # AI 聊天
@@ -213,7 +212,6 @@ wg-skills/
 | 父技能 | 嵌套子技能数 | 子技能定位 |
 |--------|------------|-----------|
 | `vibeCoding/backend/backend-generate-skill` | 7 | 语言/框架/DB 选型 + 规范 + 各语言骨架 |
-| `vibeCoding/backend/module-generate-skill` | 5 | 鉴权/权限/AI聊天/通知/支付 |
 | `vibeCoding/frontend/icon-image-catch-skill` | 2 | 图标抓取 / 图片抓取 |
 | `vibeCoding/super-deploy-skills` | 13（含 2 级嵌套） | 数据库安装 / 运行时安装 / 各种部署 |
 | `vibeCoding/frontend/uniapp/uniapp-base-skill` | 3 | uniapp 表单/卡片/页面 |

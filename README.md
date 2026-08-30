@@ -46,7 +46,6 @@ AI 时代的编程不是"取代程序员"，而是把传统工程中**重复、�
 | `fastapi-agent-module-skill/` | FastAPI + LangGraph AI Agent | "AI Agent 服务"、"LangGraph" |
 | `backend-analysis-skill/` | 后端项目全景分析 | "分析这个后端项目" |
 | `backend-generate-skill/` | 后端骨架生成（**父技能 + 7 子技能**） | "生成后端骨架"、"后端选型" |
-| `module-generate-skill/` | 后端业务模块生成（**父技能 + 5 子技能**） | "加鉴权模块"、"加支付模块" |
 
 #### 1.2 `vibeCoding/frontend/` —— 前端框架矩阵
 
