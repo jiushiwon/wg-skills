@@ -177,7 +177,8 @@ wg-skills/
 │   │   └── vue/                              # Vue 通用技能矩阵
 │   │       ├── vue-base-skill/               # Vue 基础（按钮/卡片/表格/标签）
 │   │       ├── vue-generate-skill/           # Vue 项目生成
-│   │       └── vue-theme-skill/              # Vue 主题系统
+│   │       ├── vue-theme-skill/              # Vue 主题系统
+│   │       └── electron-vue-init-skill/     # Electron + Vue3 桌面端初始化
 │   │
 │   ├── super-deploy-skills/           # 🚀 一键部署套件（父技能 + 13 嵌套子技能）
 │   │   ├── database-install-skill/           # 数据库安装（mysql/pg/redis/mongo 子技能）
@@ -191,6 +192,7 @@ wg-skills/
 │
 └── others/                            # 🧰 板块二：其他领域工具
     ├── ai-speech-detector/                   # AI 风检测
+    ├── humanizer/                            # 去除AI写作模式（35个模式）
     ├── article-illustrator-skill/            # 文章配图生成
     ├── skill-auditor/                        # Skill 安全审计
     ├── workflow-diagram-skill/               # 一句话生成流程图

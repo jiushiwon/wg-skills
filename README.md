@@ -79,6 +79,7 @@ AI 时代的编程不是"取代程序员"，而是把传统工程中**重复、�
 | └─ `vue-base-skill/` | Vue 基础（按钮/卡片/表格/标签） | "Vue 基础组件" |
 | └─ `vue-generate-skill/` | Vue 项目生成 | "生成 Vue 项目" |
 | └─ `vue-theme-skill/` | Vue 主题系统 | "Vue 主题" |
+| └─ `electron-vue-init-skill/` | Electron + Vue3 桌面端初始化 | "Electron 脚手架"、"electron vue" |
 
 #### 1.3 `vibeCoding/super-deploy-skills/` —— 一键部署套件
 
@@ -103,6 +104,7 @@ AI 时代的编程不是"取代程序员"，而是把传统工程中**重复、�
 | 技能 | 用途 | 触发词 |
 |------|------|--------|
 | `ai-speech-detector/` | AI 风检测 | "检测 AI 风"、"去 AI 味" |
+| `humanizer/` | 去除AI写作模式（35个模式） | "去AI味"、"humanize"、"帮我改改"、"润色一下" |
 | `article-illustrator-skill/` | 文章配图生成 | "文章配图" |
 | `skill-auditor/` | Skill 安全审计 | "审计 Skill" |
 | `workflow-diagram-skill/` | 一句话生成流程图 | "生成流程图" |
