@@ -46,6 +46,8 @@ AI 时代的编程不是"取代程序员"，而是把传统工程中**重复、�
 | `fastapi-agent-module-skill/` | FastAPI + LangGraph AI Agent | "AI Agent 服务"、"LangGraph" |
 | `backend-analysis-skill/` | 后端项目全景分析 | "分析这个后端项目" |
 | `backend-generate-skill/` | 后端骨架生成（**父技能 + 7 子技能**） | "生成后端骨架"、"后端选型" |
+| `hot-trend-collector/` | 热点抓取（知乎/微博/百度/微信） | "热点抓取"、"自媒体热点" |
+| `article-generator/` | 多平台文章生成（小红书/知乎/头条/公众号/CSDN） | "文章生成"、"AI 写作" |
 
 #### 1.2 `vibeCoding/frontend/` —— 前端框架矩阵
 
@@ -77,9 +79,13 @@ AI 时代的编程不是"取代程序员"，而是把传统工程中**重复、�
 | └─ `uniapp-ui-template-builder-skill/` | UI 页面模板 | "UI 模板" |
 | `vue/` | **Vue 通用技能矩阵** | "做 Vue" |
 | └─ `vue-base-skill/` | Vue 基础（按钮/卡片/表格/标签） | "Vue 基础组件" |
+| └─ `vue-table-skill/` | Vue 表格组件（20+ 形态，3 个独立组件） | "做一个表格"、"表格组件" |
+| └─ `vue-form-skill/` | Vue 表单组件（10+ 组件） | "做一个表单"、"表单组件" |
+| └─ `vue-dropdown-skill/` | Vue 万能浮层（5 mode × 12 position，5 合1） | "做一个下拉"、"气泡框"、"选择器" |
 | └─ `vue-generate-skill/` | Vue 项目生成 | "生成 Vue 项目" |
 | └─ `vue-theme-skill/` | Vue 主题系统 | "Vue 主题" |
 | └─ `electron-vue-init-skill/` | Electron + Vue3 桌面端初始化 | "Electron 脚手架"、"electron vue" |
+| `html-frontend-template/` | 纯 HTML 管理后台（无框架） | "HTML 管理后台"、"自媒体前端" |
 
 #### 1.3 `vibeCoding/super-deploy-skills/` —— 一键部署套件
 
