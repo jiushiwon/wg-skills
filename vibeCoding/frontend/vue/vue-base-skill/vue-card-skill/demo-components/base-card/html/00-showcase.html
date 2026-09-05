@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>vue-card-skill · 00 总览</title>
+<link rel="stylesheet" href="../../shared/tokens.css" />
+<link rel="stylesheet" href="../../shared/icons.css" />
+<link rel="stylesheet" href="../../shared/demo.css" />
+</head>
+<body>
+<div class="page">
+
+  <!-- ===== 页头 ===== -->
+  <div class="page-header">
+    <h1>vue-card-skill 总览</h1>
+    <p>base-card 根容器 + 11 种业务卡片模式 · 6 维度参数矩阵 · 240+ 组合</p>
+    <div class="nav">
+      <a href="00-showcase.html" class="active">总览</a>
+      <a href="01-base-card.html">参数矩阵</a>
+      <a href="02-layout-cards.html">Layout 卡片</a>
+      <a href="03-flow-cards.html">信息流卡片</a>
+    </div>
+  </div>
+
+  <div class="layout-with-side">
+
+    <!-- ===== 侧边目录 ===== -->
+    <aside class="side-nav">
+      <div class="side-nav__title">页面目录</div>
+      <a href="#s1" class="side-nav__link active"><span class="icon icon--settings"></span> 参数矩阵（6 维）</a>
+      <a href="#s2" class="side-nav__link"><span class="icon icon--grid"></span> 业务卡片（11 种）</a>
+      <a href="#s3" class="side-nav__link"><span class="icon icon--shield"></span> 容器原则</a>
+      <a href="#s4" class="side-nav__link"><span class="icon icon--check"></span> 设计 Token</a>
+    </aside>
+
+    <main>
+
+    <!-- ===== 区块 1：base-card 6 维度参数矩阵 ===== -->
+    <section id="s1" class="section">
+      <div class="section-header">
+        <span class="section-num">1</span>
+        <h2>base-card 6 维度参数</h2>
+        <span class="cat-tag cat-tag--param">参数维度</span>
+        <span class="badge">240+ 组合</span>
+      </div>
+
+      <!-- radius × padding -->
+      <div class="subsection">
+        <div class="subsection__title">1.1 radius × padding · 5 × 5 = 25 组合</div>
+        <div class="matrix-grid grid-5">
+          <div class="base-card base-card--radius-sm base-card--padding-sm base-card--shadow-sm">
+            <div class="base-card__body">sm × sm</div>
+          </div>
+          <div class="base-card base-card--radius-sm base-card--padding-md base-card--shadow-sm">
+            <div class="base-card__body">sm × md</div>
+          </div>
+          <div class="base-card base-card--radius-md base-card--padding-lg base-card--shadow-sm">
+            <div class="base-card__body">md × lg</div>
+          </div>
+          <div class="base-card base-card--radius-lg base-card--padding-xl base-card--shadow-sm">
+            <div class="base-card__body">lg × xl</div>
+          </div>
+          <div class="base-card base-card--radius-full base-card--padding-md base-card--shadow-sm">
+            <div class="base-card__body">full</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- shadow × bordered -->
+      <div class="subsection">
+        <div class="subsection__title">1.2 shadow × bordered · 4 × 2 = 8 组合</div>
+        <div class="matrix-grid grid-4">
+          <div class="base-card base-card--shadow-none base-card--padding-md base-card--bordered">
+            <div class="base-card__body"><strong>shadow:none</strong><br/><span class="text-muted">无阴影</span></div>
+          </div>
+          <div class="base-card base-card--shadow-sm base-card--padding-md">
+            <div class="base-card__body"><strong>shadow:sm</strong><br/><span class="text-muted">默认</span></div>
+          </div>
+          <div class="base-card base-card--shadow-md base-card--padding-md">
+            <div class="base-card__body"><strong>shadow:md</strong><br/><span class="text-muted">中等</span></div>
+          </div>
+          <div class="base-card base-card--shadow-lg base-card--padding-md">
+            <div class="base-card__body"><strong>shadow:lg</strong><br/><span class="text-muted">深阴影</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- variant -->
+      <div class="subsection">
+        <div class="subsection__title">1.3 variant 视觉变体 · 4 种</div>
+        <div class="matrix-grid grid-4">
+          <div class="base-card base-card--variant-flat base-card--padding-md">
+            <div class="base-card__body"><strong>default</strong><br/><span class="text-muted">标准</span></div>
+          </div>
+          <div class="base-card base-card--variant-flat base-card--padding-md">
+            <div class="base-card__body"><strong>flat</strong><br/><span class="text-muted">平面</span></div>
+          </div>
+          <div class="base-card base-card--variant-elevated base-card--padding-md">
+            <div class="base-card__body"><strong>elevated</strong><br/><span class="text-muted">浮层</span></div>
+          </div>
+          <div class="base-card base-card--variant-outlined base-card--padding-md">
+            <div class="base-card__body"><strong>outlined</strong><br/><span class="text-muted">描边</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- tone -->
+      <div class="subsection">
+        <div class="subsection__title">1.4 tone 色调 · 5 种（左侧 3px 强调条）</div>
+        <div class="matrix-grid grid-5">
+          <div class="base-card base-card--tone-neutral base-card--padding-md base-card--shadow-sm">
+            <div class="base-card__body"><strong>neutral</strong><br/><span class="text-muted">默认</span></div>
+          </div>
+          <div class="base-card base-card--tone-primary base-card--padding-md base-card--shadow-sm">
+            <div class="base-card__body"><strong>primary</strong><br/><span class="text-muted">蓝色</span></div>
+          </div>
+          <div class="base-card base-card--tone-success base-card--padding-md base-card--shadow-sm">
+            <div class="base-card__body"><strong>success</strong><br/><span class="text-muted">绿色</span></div>
+          </div>
+          <div class="base-card base-card--tone-warning base-card--padding-md base-card--shadow-sm">
+            <div class="base-card__body"><strong>warning</strong><br/><span class="text-muted">黄色</span></div>
+          </div>
+          <div class="base-card base-card--tone-danger base-card--padding-md base-card--shadow-sm">
+            <div class="base-card__body"><strong>danger</strong><br/><span class="text-muted">红色</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 区块 2：11 种业务卡片 ===== -->
+    <section id="s2" class="section">
+      <div class="section-header">
+        <span class="section-num">2</span>
+        <h2>11 种业务卡片</h2>
+        <span class="cat-tag cat-tag--layout">Layout · 8</span>
+        <span class="cat-tag cat-tag--flow">Flow · 3</span>
+      </div>
+
+      <!-- 8 种 layout -->
+      <div class="subsection">
+        <div class="subsection__title">2.1 Layout 卡片（8 种）</div>
+        <div class="matrix-grid grid-3">
+
+          <!-- card-basic -->
+          <div class="base-card base-card--radius-lg base-card--padding-md base-card--shadow-sm">
+            <div class="base-card__header base-card--has-header-border">
+              <div class="base-card__header-main">
+                <div class="base-card__title">card-basic</div>
+                <p class="base-card__desc">基础容器 · 标题 + 描述</p>
+              </div>
+            </div>
+            <div class="base-card__body">最通用的卡片结构</div>
+          </div>
+
+          <!-- card-product -->
+          <div class="base-card base-card--radius-lg base-card--padding-none base-card--shadow-sm base-card--clickable">
+            <div class="card-product__cover">
+              <span class="icon icon--image"></span>
+              <span class="card-product__badge">新品</span>
+            </div>
+            <div class="card-product__body">
+              <div class="card-product__title">card-product</div>
+              <div class="card-product__desc">商品卡片</div>
+              <div class="card-product__footer">
+                <span class="card-product__price">¥ 99</span>
+                <span class="base-button base-button--primary base-button--sm">购买</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- card-profile -->
+          <div class="base-card base-card--radius-xl base-card--padding-none base-card--shadow-md">
+            <div class="card-profile__cover"></div>
+            <div class="card-profile__avatar">
+              <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=demo-profile&backgroundColor=818cf8" alt="用户" />
+            </div>
+            <div class="card-profile__body">
+              <div class="card-profile__name">card-profile</div>
+              <div class="card-profile__bio">个人中心</div>
+            </div>
+          </div>
+
+          <!-- card-friend -->
+          <div class="base-card base-card--radius-full base-card--padding-sm base-card--shadow-sm base-card--clickable">
+            <div class="card-friend">
+              <div class="card-friend__avatar">
+                <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=demo-friend&backgroundColor=a78bfa" alt="好友" />
+                <span class="card-friend__online"></span>
+              </div>
+              <div class="card-friend__main">
+                <div class="card-friend__name">card-friend</div>
+                <div class="card-friend__bio">好友列表</div>
+              </div>
+              <span class="card-friend__arrow"><span class="icon icon--chevron"></span></span>
+            </div>
+          </div>
+
+          <!-- card-set -->
+          <div class="base-card base-card--radius-lg base-card--padding-none base-card--bordered base-card--shadow-sm">
+            <div class="card-set__item">
+              <div class="card-set__icon"><span class="icon icon--bell"></span></div>
+              <div class="card-set__label">card-set</div>
+              <div class="base-switch base-switch--on" onclick="this.classList.toggle('base-switch--on')"></div>
+            </div>
+          </div>
+
+          <!-- card-vip -->
+          <div class="base-card base-card--radius-xl base-card--padding-lg card-vip">
+            <div class="card-vip__bg"></div>
+            <div class="card-vip__header">
+              <span class="card-vip__crown"><span class="icon icon--crown"></span></span>
+              <div class="card-vip__level">card-vip</div>
+            </div>
+            <div class="card-vip__avatar"><span class="icon icon--star"></span></div>
+            <div class="card-vip__name">钻石会员</div>
+          </div>
+
+          <!-- card-menu -->
+          <div class="base-card base-card--radius-lg base-card--padding-lg base-card--bordered">
+            <div style="font-weight:var(--weight-semibold);margin-bottom:var(--space-3);font-size:var(--font-md);">card-menu</div>
+            <div class="card-menu__grid">
+              <div class="card-menu__item"><div class="card-menu__icon"><span class="icon icon--home"></span></div><div class="card-menu__label">首页</div></div>
+              <div class="card-menu__item"><div class="card-menu__icon"><span class="icon icon--package"></span></div><div class="card-menu__label">订单</div></div>
+              <div class="card-menu__item"><div class="card-menu__icon"><span class="icon icon--wallet"></span></div><div class="card-menu__label">钱包</div></div>
+              <div class="card-menu__item"><div class="card-menu__icon"><span class="icon icon--settings"></span></div><div class="card-menu__label">设置</div></div>
+            </div>
+          </div>
+
+          <!-- card-grid -->
+          <div class="base-card base-card--radius-lg base-card--padding-md base-card--shadow-sm">
+            <div style="font-weight:var(--weight-semibold);margin-bottom:var(--space-3);font-size:var(--font-md);">card-grid</div>
+            <div class="card-grid">
+              <div class="card-grid__item"><div class="card-grid__icon"><span class="icon icon--palette"></span></div><div class="card-grid__title">设计</div></div>
+              <div class="card-grid__item"><div class="card-grid__icon"><span class="icon icon--zap"></span></div><div class="card-grid__title">性能</div></div>
+              <div class="card-grid__item"><div class="card-grid__icon"><span class="icon icon--shield"></span></div><div class="card-grid__title">安全</div></div>
+              <div class="card-grid__item"><div class="card-grid__icon"><span class="icon icon--chart"></span></div><div class="card-grid__title">数据</div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 3 种 flow -->
+      <div class="subsection">
+        <div class="subsection__title">2.2 信息流卡片（3 种）</div>
+        <div class="matrix-grid grid-3">
+
+          <!-- card-image -->
+          <div class="base-card base-card--radius-lg base-card--padding-none base-card--shadow-sm base-card--clickable">
+            <div class="card-image__cover" style="background:linear-gradient(135deg,#34d399,#10b981);">
+              <span class="icon icon--image"></span>
+            </div>
+            <div class="card-image__body">
+              <div class="card-image__title">card-image · 图片流</div>
+              <div class="card-image__desc">大图 + 标题 + 描述</div>
+              <div class="card-image__footer">
+                <span>@昵称</span>
+                <span class="card-image__meta">
+                  <span><span class="icon icon--heart"></span> 1.2k</span>
+                  <span><span class="icon icon--chat"></span> 56</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- card-notify -->
+          <div class="base-card base-card--radius-md base-card--padding-sm base-card--tone-primary base-card--shadow-sm">
+            <div class="card-notify">
+              <div class="card-notify__icon"><span class="icon icon--megaphone"></span></div>
+              <div class="card-notify__main">
+                <div class="card-notify__title">card-notify</div>
+                <div class="card-notify__desc">系统升级通知</div>
+              </div>
+              <div class="flex flex-col items-center" style="gap:var(--space-1);">
+                <span class="card-notify__time">5 分钟前</span>
+                <span class="card-notify__badge">3</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- card-comment -->
+          <div class="base-card base-card--radius-md base-card--padding-md base-card--bordered">
+            <div class="card-comment__head">
+              <div class="card-comment__avatar">
+                <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=demo-comment&backgroundColor=ec4899" alt="用户" />
+              </div>
+              <div>
+                <div class="card-comment__name">card-comment</div>
+                <div class="card-comment__time">2 小时前</div>
+              </div>
+            </div>
+            <div class="card-comment__body">评论卡片 · 头像 + 昵称 + 内容</div>
+            <div class="card-comment__actions">
+              <span><span class="icon icon--heart"></span> 128</span>
+              <span><span class="icon icon--chat"></span> 回复</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 区块 3：容器原则 ===== -->
+    <section id="s3" class="section">
+      <div class="section-header">
+        <span class="section-num">3</span>
+        <h2>容器原则</h2>
+        <span class="cat-tag cat-tag--principle">核心铁律</span>
+      </div>
+      <div class="matrix-grid grid-2">
+        <div class="base-card base-card--radius-lg base-card--padding-md base-card--shadow-sm" style="border-left:3px solid var(--color-success);">
+          <div class="base-card__title flex items-center gap-2"><span class="icon icon--check" style="color:var(--color-success);"></span> 正确</div>
+          <p class="base-card__desc">base-card 包裹所有内容组件</p>
+          <div class="base-card__body">
+            <div style="padding:var(--space-3);background:var(--color-bg);border-radius:var(--radius-md);font-family:monospace;font-size:var(--font-xs);">
+              &lt;base-card&gt;<br/>
+              &nbsp;&nbsp;&lt;base-table :data="..." /&gt;<br/>
+              &lt;/base-card&gt;
+            </div>
+          </div>
+        </div>
+        <div class="base-card base-card--radius-lg base-card--padding-md base-card--shadow-sm" style="border-left:3px solid var(--color-danger);">
+          <div class="base-card__title flex items-center gap-2"><span class="icon icon--x" style="color:var(--color-danger);"></span> 错误</div>
+          <p class="base-card__desc">游离的组件（无容器）</p>
+          <div class="base-card__body">
+            <div style="padding:var(--space-3);background:var(--color-bg);border-radius:var(--radius-md);font-family:monospace;font-size:var(--font-xs);color:var(--color-danger);">
+              &lt;base-table :data="..." /&gt;<br/>
+              &nbsp;&nbsp;&lt;!-- 没有容器 --&gt;
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 区块 4：设计 Token ===== -->
+    <section id="s4" class="section">
+      <div class="section-header">
+        <span class="section-num">4</span>
+        <h2>设计 Token</h2>
+        <span class="cat-tag cat-tag--param">唯一来源</span>
+      </div>
+      <div class="matrix-grid grid-3">
+        <div class="base-card base-card--padding-md base-card--shadow-sm">
+          <div class="base-card__title flex items-center gap-2"><span class="icon icon--palette" style="color:var(--color-primary);"></span> 颜色</div>
+          <p class="base-card__desc">--color-primary / --color-text / --color-border</p>
+        </div>
+        <div class="base-card base-card--padding-md base-card--shadow-sm">
+          <div class="base-card__title flex items-center gap-2"><span class="icon icon--grid" style="color:var(--color-primary);"></span> 间距</div>
+          <p class="base-card__desc">--space-1 ~ --space-12</p>
+        </div>
+        <div class="base-card base-card--padding-md base-card--shadow-sm">
+          <div class="base-card__title flex items-center gap-2"><span class="icon icon--settings" style="color:var(--color-primary);"></span> 圆角 / 阴影</div>
+          <p class="base-card__desc">--radius-* / --shadow-*</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 页脚 ===== -->
+    <div style="text-align:center;padding:var(--space-8);color:var(--color-text-tertiary);font-size:var(--font-sm);">
+      <p>vue-card-skill · base-card 是 vue-base-skill 所有子技能的容器基底</p>
+      <p style="margin-top:var(--space-2);">所有样式严格使用 vue-theme-skill Token · 零第三方组件库</p>
+    </div>
+
+    </main>
+  </div>
+
+  <!-- 侧边栏滚动激活（简易实现） -->
+  <script>
+    const navLinks = document.querySelectorAll('.side-nav__link');
+    const sections = document.querySelectorAll('main section[id]');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 100) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.classList.remove('active');
+        if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+      });
+    });
+  </script>
+
+</div>
+</body>
+</html>

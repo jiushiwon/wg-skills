@@ -114,9 +114,9 @@
   --height-card-lg:   200px;
 
   /* 表格行 */
-  --height-table-row-sm: 40px;
-  --height-table-row-md: 52px;
-  --height-table-row-lg: 64px;
+  --height-table-row-sm: 36px;
+  --height-table-row-md: 44px;
+  --height-table-row-lg: 56px;
 
   /* ==================== 图标 --icon-{size} ==================== */
   --icon-xs: 12px;

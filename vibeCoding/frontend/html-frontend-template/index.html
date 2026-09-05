@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自媒体运营平台</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="app">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h1>📝 自媒体运营</h1>
+            </div>
+            <nav class="nav">
+                <a href="#trends" class="nav-item active" data-page="trends">
+                    <span class="icon">🔥</span>
+                    <span>热点管理</span>
+                </a>
+                <a href="#create" class="nav-item" data-page="create">
+                    <span class="icon">✍️</span>
+                    <span>创作中心</span>
+                </a>
+                <a href="#articles" class="nav-item" data-page="articles">
+                    <span class="icon">📄</span>
+                    <span>文章库</span>
+                </a>
+                <a href="#materials" class="nav-item" data-page="materials">
+                    <span class="icon">🖼️</span>
+                    <span>素材库</span>
+                </a>
+                <a href="#publish" class="nav-item" data-page="publish">
+                    <span class="icon">🚀</span>
+                    <span>发布中心</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="main">
+            <!-- 顶部栏 -->
+            <header class="header">
+                <div class="header-title">
+                    <h2 id="page-title">热点管理</h2>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-theme" id="theme-toggle" title="切换主题">
+                        🌙
+                    </button>
+                </div>
+            </header>
+
+            <!-- 页面内容 -->
+            <div class="content" id="content">
+                <!-- 动态加载页面 -->
+            </div>
+        </main>
+    </div>
+
+    <script src="assets/js/store.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

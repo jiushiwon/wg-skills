@@ -149,6 +149,41 @@ description: Vue 3 主题系统（设计 Token 层），对齐 uniapp-theme-skil
 --icon-xl: 32px;
 ```
 
+#### 阴影 `--shadow-{size}`
+
+```css
+--shadow-sm:   0 1px 2px 0 rgba(0, 0, 0, 0.05);
+--shadow-md:   0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+--shadow-lg:   0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+```
+
+#### 字重 `--weight-{level}`
+
+```css
+--weight-normal:   400;
+--weight-medium:   500;
+--weight-semibold: 600;
+--weight-bold:     700;
+```
+
+#### 行高 `--leading-{level}`
+
+```css
+--leading-none:    1;
+--leading-tight:   1.25;
+--leading-snug:    1.375;
+--leading-normal:  1.5;
+--leading-relaxed: 1.625;
+```
+
+#### 表格行高 `--height-table-row-{size}`
+
+```css
+--height-table-row-sm: 36px;
+--height-table-row-md: 44px;  /* 基准 */
+--height-table-row-lg: 56px;
+```
+
 ### 能力 3：CSS 变量导出（tokens.css）
 
 **完整文件**：`templates/src/styles/tokens.css`

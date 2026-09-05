@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>vue-card-skill · 03 信息流卡片</title>
+<link rel="stylesheet" href="../../shared/tokens.css" />
+<link rel="stylesheet" href="../../shared/icons.css" />
+<link rel="stylesheet" href="../../shared/demo.css" />
+</head>
+<body>
+<div class="page">
+
+  <!-- ===== 页头 ===== -->
+  <div class="page-header">
+    <h1>信息流卡片 · 3 种业务模式</h1>
+    <p>image · notify · comment</p>
+    <div class="nav">
+      <a href="00-showcase.html">总览</a>
+      <a href="01-base-card.html">参数矩阵</a>
+      <a href="02-layout-cards.html">Layout 卡片</a>
+      <a href="03-flow-cards.html" class="active">信息流卡片</a>
+    </div>
+  </div>
+
+  <div class="layout-with-side">
+
+    <!-- ===== 侧边目录 ===== -->
+    <aside class="side-nav">
+      <div class="side-nav__title">3 种 Flow</div>
+      <a href="#image" class="side-nav__link active"><span class="icon icon--image"></span> card-image</a>
+      <a href="#notify" class="side-nav__link"><span class="icon icon--megaphone"></span> card-notify</a>
+      <a href="#comment" class="side-nav__link"><span class="icon icon--chat"></span> card-comment</a>
+      <a href="#scene" class="side-nav__link"><span class="icon icon--image"></span> 真实场景</a>
+    </aside>
+
+    <main>
+
+    <!-- ===== 1. card-image ===== -->
+    <section id="image" class="section">
+      <div class="section-header">
+        <span class="section-num">1</span>
+        <h2>card-image · 图片流卡片</h2>
+        <span class="cat-tag cat-tag--flow">Flow</span>
+        <span class="badge">大图 + 标题 + 描述 + 底部统计</span>
+      </div>
+
+      <div class="matrix-grid grid-3">
+
+        <div class="base-card base-card--radius-lg base-card--padding-none base-card--shadow-sm base-card--clickable">
+          <div class="card-image__cover" style="background:linear-gradient(135deg,#34d399,#10b981);">
+            <span class="icon icon--image"></span>
+          </div>
+          <div class="card-image__body">
+            <div class="card-image__title">深山徒步路线推荐</div>
+            <div class="card-image__desc">这周末约了朋友去徒步，分享 3 条风景最美的路线...</div>
+            <div class="card-image__footer">
+              <span>@户外达人</span>
+              <span class="card-image__meta">
+                <span><span class="icon icon--heart"></span> 1.2k</span>
+                <span><span class="icon icon--chat"></span> 56</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="base-card base-card--radius-lg base-card--padding-none base-card--shadow-sm base-card--clickable">
+          <div class="card-image__cover" style="background:linear-gradient(135deg,#fda4af,#fb7185);">
+            <span class="icon icon--image"></span>
+          </div>
+          <div class="card-image__body">
+            <div class="card-image__title">私房甜点配方</div>
+            <div class="card-image__desc">3 步做出米其林级提拉米苏，零失败...</div>
+            <div class="card-image__footer">
+              <span>@甜点师小美</span>
+              <span class="card-image__meta">
+                <span><span class="icon icon--heart"></span> 856</span>
+                <span><span class="icon icon--chat"></span> 32</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="base-card base-card--radius-lg base-card--padding-none base-card--shadow-sm base-card--clickable">
+          <div class="card-image__cover" style="background:linear-gradient(135deg,#a78bfa,#8b5cf6);">
+            <span class="icon icon--image"></span>
+          </div>
+          <div class="card-image__body">
+            <div class="card-image__title">城市夜景拍摄技巧</div>
+            <div class="card-image__desc">光圈、ISO、白平衡的实战组合方案...</div>
+            <div class="card-image__footer">
+              <span>@摄影老张</span>
+              <span class="card-image__meta">
+                <span><span class="icon icon--heart"></span> 2.3k</span>
+                <span><span class="icon icon--chat"></span> 128</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="base-card base-card--radius-lg base-card--padding-none base-card--shadow-sm base-card--clickable">
+          <div class="card-image__cover" style="background:linear-gradient(135deg,#fdba74,#f97316);">
+            <span class="icon icon--image"></span>
+          </div>
+          <div class="card-image__body">
+            <div class="card-image__title">精品咖啡入门指南</div>
+            <div class="card-image__desc">从豆子到杯子的完整链路，让你成为咖啡达人...</div>
+            <div class="card-image__footer">
+              <span>@咖啡师阿明</span>
+              <span class="card-image__meta">
+                <span><span class="icon icon--heart"></span> 678</span>
+                <span><span class="icon icon--chat"></span> 41</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="base-card base-card--radius-lg base-card--padding-none base-card--shadow-sm base-card--clickable">
+          <div class="card-image__cover" style="background:linear-gradient(135deg,#60a5fa,#3b82f6);">
+            <span class="icon icon--image"></span>
+          </div>
+          <div class="card-image__body">
+            <div class="card-image__title">前端工程化最佳实践</div>
+            <div class="card-image__desc">从工具链到部署的完整 SOP...</div>
+            <div class="card-image__footer">
+              <span>@前端工程师</span>
+              <span class="card-image__meta">
+                <span><span class="icon icon--heart"></span> 3.1k</span>
+                <span><span class="icon icon--chat"></span> 256</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="base-card base-card--radius-lg base-card--padding-none base-card--shadow-sm base-card--clickable">
+          <div class="card-image__cover" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);">
+            <span class="icon icon--image"></span>
+          </div>
+          <div class="card-image__body">
+            <div class="card-image__title">黄山日出最佳观赏点</div>
+            <div class="card-image__desc">避开人潮的私藏机位...</div>
+            <div class="card-image__footer">
+              <span>@旅行家</span>
+              <span class="card-image__meta">
+                <span><span class="icon icon--heart"></span> 1.8k</span>
+                <span><span class="icon icon--chat"></span> 89</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== 2. card-notify ===== -->
+    <section id="notify" class="section">
+      <div class="section-header">
+        <span class="section-num">2</span>
+        <h2>card-notify · 通知卡片</h2>
+        <span class="cat-tag cat-tag--flow">Flow</span>
+        <span class="badge">图标 + 标题 + 描述 + 时间 + 徽标</span>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection__title">2.1 · 4 种 tone 通知</div>
+        <div class="matrix-grid grid-2">
+
+          <div class="base-card base-card--padding-sm base-card--shadow-sm base-card--tone-primary">
+            <div class="card-notify">
+              <div class="card-notify__icon"><span class="icon icon--megaphone"></span></div>
+              <div class="card-notify__main">
+                <div class="card-notify__title">系统升级通知</div>
+                <div class="card-notify__desc">本次升级新增了 3 个功能，详情请查看更新日志</div>
+              </div>
+              <div class="flex flex-col items-center" style="gap:var(--space-1);">
+                <span class="card-notify__time">5 分钟前</span>
+                <span class="card-notify__badge">3</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="base-card base-card--padding-sm base-card--shadow-sm base-card--tone-success">
+            <div class="card-notify">
+              <div class="card-notify__icon" style="background:#d1fae5;color:#047857;"><span class="icon icon--star"></span></div>
+              <div class="card-notify__main">
+                <div class="card-notify__title">双 11 活动开始啦</div>
+                <div class="card-notify__desc">全场商品 5 折起，会员再享 8 折优惠</div>
+              </div>
+              <div class="flex flex-col items-center" style="gap:var(--space-1);">
+                <span class="card-notify__time">1 小时前</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="base-card base-card--padding-sm base-card--shadow-sm base-card--tone-warning">
+            <div class="card-notify">
+              <div class="card-notify__icon" style="background:#fef3c7;color:#b45309;"><span class="icon icon--alert"></span></div>
+              <div class="card-notify__main">
+                <div class="card-notify__title">账户余额不足</div>
+                <div class="card-notify__desc">当前余额 ¥ 12.50，建议及时充值</div>
+              </div>
+              <div class="flex flex-col items-center" style="gap:var(--space-1);">
+                <span class="card-notify__time">今天 09:30</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="base-card base-card--padding-sm base-card--shadow-sm base-card--tone-danger">
+            <div class="card-notify">
+              <div class="card-notify__icon" style="background:#fee2e2;color:#b91c1c;"><span class="icon icon--x"></span></div>
+              <div class="card-notify__main">
+                <div class="card-notify__title">支付失败</div>
+                <div class="card-notify__desc">银行卡余额不足，请更换支付方式</div>
+              </div>
+              <div class="flex flex-col items-center" style="gap:var(--space-1);">
+                <span class="card-notify__time">刚刚</span>
+                <span class="card-notify__badge">!</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection__title">2.2 · 通知列表（多条组合）</div>
+        <div class="matrix-grid grid-2">
+
+          <div class="base-card base-card--padding-none base-card--shadow-sm">
+            <div class="base-card__header base-card--has-header-border">
+              <div class="base-card__header-main">
+                <div class="base-card__title">消息中心</div>
+                <p class="base-card__desc">您有 5 条未读消息</p>
+              </div>
+              <div class="base-card__header-right">
+                <span class="base-button base-button--text base-button--sm">全部已读</span>
+              </div>
+            </div>
+
+            <div class="card-notify">
+              <div class="card-notify__icon"><span class="icon icon--chat"></span></div>
+              <div class="card-notify__main">
+                <div class="card-notify__title">张三 评论了你的文章</div>
+                <div class="card-notify__desc">写得真不错，期待下一篇...</div>
+              </div>
+              <div class="flex flex-col items-center" style="gap:var(--space-1);">
+                <span class="card-notify__time">2 分钟前</span>
+                <span class="card-notify__badge">1</span>
+              </div>
+            </div>
+            <div class="card-set__divider"></div>
+
+            <div class="card-notify">
+              <div class="card-notify__icon" style="background:#e0e7ff;color:#4338ca;"><span class="icon icon--thumbs"></span></div>
+              <div class="card-notify__main">
+                <div class="card-notify__title">李四 点赞了你的作品</div>
+                <div class="card-notify__desc">《Vue 3 最佳实践》</div>
+              </div>
+              <div class="flex flex-col items-center" style="gap:var(--space-1);">
+                <span class="card-notify__time">10 分钟前</span>
+                <span class="card-notify__badge">1</span>
+              </div>
+            </div>
+            <div class="card-set__divider"></div>
+
+            <div class="card-notify">
+              <div class="card-notify__icon" style="background:#fce7f3;color:#be185d;"><span class="icon icon--star"></span></div>
+              <div class="card-notify__main">
+                <div class="card-notify__title">系统赠送月度会员</div>
+                <div class="card-notify__desc">已自动激活到您的账户</div>
+              </div>
+              <div class="flex flex-col items-center" style="gap:var(--space-1);">
+                <span class="card-notify__time">昨天</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="base-card base-card--padding-none base-card--shadow-sm">
+            <div class="base-card__header base-card--has-header-border">
+              <div class="base-card__header-main">
+                <div class="base-card__title">订单物流</div>
+                <p class="base-card__desc">共 2 个在途订单</p>
+              </div>
+            </div>
+
+            <div class="card-notify">
+              <div class="card-notify__icon" style="background:#dbeafe;color:var(--color-primary);"><span class="icon icon--truck"></span></div>
+              <div class="card-notify__main">
+                <div class="card-notify__title">已发货，预计明天送达</div>
+                <div class="card-notify__desc">订单 #20260901-001 · 顺丰速运</div>
+              </div>
+              <span class="card-notify__time">10:30</span>
+            </div>
+            <div class="card-set__divider"></div>
+
+            <div class="card-notify">
+              <div class="card-notify__icon" style="background:#d1fae5;color:#047857;"><span class="icon icon--check"></span></div>
+              <div class="card-notify__main">
+                <div class="card-notify__title">已签收，感谢您的购买</div>
+                <div class="card-notify__desc">订单 #20260831-005 · 圆通速递</div>
+              </div>
+              <span class="card-notify__time">昨天</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 3. card-comment ===== -->
+    <section id="comment" class="section">
+      <div class="section-header">
+        <span class="section-num">3</span>
+        <h2>card-comment · 评论卡片</h2>
+        <span class="cat-tag cat-tag--flow">Flow</span>
+        <span class="badge">头像 + 昵称 + 时间 + 内容 + 点赞 + 嵌套回复</span>
+      </div>
+
+      <div class="matrix-grid grid-2">
+
+        <div class="base-card base-card--radius-md base-card--padding-md base-card--bordered">
+          <div class="card-comment__head">
+            <div class="card-comment__avatar">
+              <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=zhangxiaoming&backgroundColor=60a5fa" alt="张小明" />
+            </div>
+            <div>
+              <div class="card-comment__name">张小明</div>
+              <div class="card-comment__time">2 小时前</div>
+            </div>
+          </div>
+          <div class="card-comment__body">这篇文章写得非常详细，特别是关于 Token 系统的部分，对我们项目帮助很大</div>
+          <div class="card-comment__actions">
+            <span><span class="icon icon--heart"></span> 128</span>
+            <span><span class="icon icon--chat"></span> 回复</span>
+            <span style="cursor:pointer;margin-left:auto;color:var(--color-text-tertiary);">···</span>
+          </div>
+        </div>
+
+        <div class="base-card base-card--radius-md base-card--padding-md base-card--bordered">
+          <div class="card-comment__head">
+            <div class="card-comment__avatar">
+              <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=wangfang&backgroundColor=a78bfa" alt="王芳" />
+            </div>
+            <div>
+              <div class="card-comment__name">王芳</div>
+              <div class="card-comment__time">1 小时前</div>
+            </div>
+          </div>
+          <div class="card-comment__body">同感！我们也刚完成了 Token 化的迁移，整个项目的样式统一性提升了好几个档次。</div>
+          <div class="card-comment__actions">
+            <span style="color:var(--color-danger);"><span class="icon icon--heart"></span> 56</span>
+            <span><span class="icon icon--chat"></span> 回复</span>
+            <span style="cursor:pointer;margin-left:auto;color:var(--color-text-tertiary);">···</span>
+          </div>
+
+          <div class="base-card base-card--radius-sm base-card--padding-sm base-card--variant-flat" style="margin-top:var(--space-3);">
+            <div class="card-comment__head">
+              <div class="card-comment__avatar" style="width:24px;height:24px;font-size:var(--font-xs);">
+                <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=lixiaohong&backgroundColor=fb7185" alt="李小红" />
+              </div>
+              <div>
+                <div class="card-comment__name" style="font-size:var(--font-xs);">李小红 <span style="color:var(--color-primary);font-weight:var(--weight-normal);">回复 王芳</span></div>
+                <div class="card-comment__time">30 分钟前</div>
+              </div>
+            </div>
+            <div class="card-comment__body" style="font-size:var(--font-xs);margin-bottom:0;">是啊，主题切换也变得超简单了~</div>
+          </div>
+        </div>
+
+        <div class="base-card base-card--radius-md base-card--padding-none base-card--bordered">
+          <div class="base-card__header base-card--has-header-border">
+            <div class="base-card__header-main">
+              <div class="base-card__title">热门评论 (128)</div>
+              <p class="base-card__desc">按热度筛选</p>
+            </div>
+            <div class="base-card__header-right">
+              <span class="base-button base-button--ghost base-button--sm">最新</span>
+            </div>
+          </div>
+
+          <div style="padding:var(--space-4);">
+            <div class="card-comment__head">
+              <div class="card-comment__avatar">
+                <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=chenchen&backgroundColor=f59e0b" alt="陈晨" />
+              </div>
+              <div>
+                <div class="card-comment__name">陈晨 <span class="base-tag" style="font-size:10px;padding:0 4px;">作者</span></div>
+                <div class="card-comment__time">3 小时前</div>
+              </div>
+            </div>
+            <div class="card-comment__body">感谢大家的支持！这套体系我们已经应用到 5 个项目上，反馈都很好。后续会出更多实战文章，敬请期待</div>
+            <div class="card-comment__actions">
+              <span style="color:var(--color-danger);"><span class="icon icon--heart"></span> 286</span>
+              <span><span class="icon icon--chat"></span> 12</span>
+            </div>
+          </div>
+          <div class="card-set__divider"></div>
+
+          <div style="padding:var(--space-4);">
+            <div class="card-comment__head">
+              <div class="card-comment__avatar">
+                <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=zhaoming&backgroundColor=10b981" alt="赵明" />
+              </div>
+              <div>
+                <div class="card-comment__name">赵明</div>
+                <div class="card-comment__time">5 小时前</div>
+              </div>
+            </div>
+            <div class="card-comment__body">已经在新项目里用上了，零第三方组件库的思路值得点赞。</div>
+            <div class="card-comment__actions">
+              <span><span class="icon icon--heart"></span> 89</span>
+              <span><span class="icon icon--chat"></span> 3</span>
+            </div>
+          </div>
+          <div class="card-set__divider"></div>
+
+          <div style="padding:var(--space-4);">
+            <div class="card-comment__head">
+              <div class="card-comment__avatar">
+                <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=zhouqi&backgroundColor=ec4899" alt="周琪" />
+              </div>
+              <div>
+                <div class="card-comment__name">周琪</div>
+                <div class="card-comment__time">昨天</div>
+              </div>
+            </div>
+            <div class="card-comment__body">求一个 uniapp 版的对照表</div>
+            <div class="card-comment__actions">
+              <span><span class="icon icon--heart"></span> 42</span>
+              <span><span class="icon icon--chat"></span> 8</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="base-card base-card--radius-md base-card--padding-md base-card--bordered">
+          <div class="card-comment__head">
+            <div class="card-comment__avatar">
+              <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=douyin8801&backgroundColor=06b6d4" alt="抖音用户_8801" />
+            </div>
+            <div>
+              <div class="card-comment__name">抖音用户_8801</div>
+              <div class="card-comment__time">刚刚</div>
+            </div>
+            <span style="margin-left:auto;font-size:var(--font-xs);color:var(--color-text-tertiary);">▶ 12:34</span>
+          </div>
+          <div class="card-comment__body">前方高能！</div>
+          <div class="card-comment__actions">
+            <span><span class="icon icon--thumbs"></span> 1.2k</span>
+            <span><span class="icon icon--chat"></span> 回复</span>
+            <span style="cursor:pointer;margin-left:auto;color:var(--color-text-tertiary);">···</span>
+          </div>
+
+          <div class="card-set__divider"></div>
+
+          <div class="card-comment__head" style="margin-bottom:var(--space-2);">
+            <div class="card-comment__avatar">
+              <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=lurenchang&backgroundColor=84cc16" alt="路人甲" />
+            </div>
+            <div>
+              <div class="card-comment__name">路人甲</div>
+              <div class="card-comment__time">3 秒前</div>
+            </div>
+            <span style="margin-left:auto;font-size:var(--font-xs);color:var(--color-text-tertiary);">▶ 12:34</span>
+          </div>
+          <div class="card-comment__body" style="margin-bottom:var(--space-2);">666666</div>
+          <div class="card-comment__actions">
+            <span><span class="icon icon--thumbs"></span> 89</span>
+            <span><span class="icon icon--chat"></span> 回复</span>
+            <span style="cursor:pointer;margin-left:auto;color:var(--color-text-tertiary);">···</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== 4. 真实场景 ===== -->
+    <section id="scene" class="section">
+      <div class="section-header">
+        <span class="section-num">4</span>
+        <h2>真实场景</h2>
+        <span class="cat-tag cat-tag--scene">综合示例</span>
+        <span class="badge">通知 + 评论 + 多卡片嵌套</span>
+      </div>
+
+      <div class="matrix-grid grid-2">
+
+        <div class="base-card base-card--padding-none base-card--shadow-md">
+          <div class="base-card__header base-card--has-header-border">
+            <div class="base-card__header-main">
+              <div class="base-card__title">评论区</div>
+              <p class="base-card__desc">128 条评论 · 按热度排序</p>
+            </div>
+            <div class="base-card__header-right">
+              <span class="base-button base-button--primary base-button--sm">+ 写评论</span>
+            </div>
+          </div>
+
+          <div class="base-card__body" style="padding:var(--space-4);">
+            <div class="card-comment__head">
+              <div class="card-comment__avatar" style="width:40px;height:40px;">
+                <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=chenchen&backgroundColor=f59e0b" alt="陈晨" />
+              </div>
+              <div style="flex:1;">
+                <div class="card-comment__name">陈晨 <span class="base-tag" style="font-size:10px;padding:0 4px;">作者</span></div>
+                <div class="card-comment__time">3 小时前 · 已编辑</div>
+              </div>
+            </div>
+            <div class="card-comment__body" style="margin-top:var(--space-3);">
+              大家好，这篇文章是我对 3 年 Vue 组件库经验的总结，欢迎大家在评论区交流心得
+            </div>
+            <div class="card-comment__actions" style="margin-top:var(--space-3);">
+              <span style="color:var(--color-danger);"><span class="icon icon--heart"></span> 286</span>
+              <span><span class="icon icon--chat"></span> 12 回复</span>
+              <span style="color:var(--color-text-tertiary);">···</span>
+            </div>
+          </div>
+
+          <div class="base-card__footer base-card--has-footer-border">
+            <span style="font-size:var(--font-xs);color:var(--color-text-tertiary);">查看全部 128 条评论 ›</span>
+          </div>
+        </div>
+
+        <div class="base-card base-card--padding-none base-card--shadow-md">
+          <div class="base-card__header base-card--has-header-border">
+            <div class="base-card__header-main">
+              <div class="base-card__title">视频评论</div>
+              <p class="base-card__desc">精选 3 条</p>
+            </div>
+          </div>
+
+          <div style="padding:var(--space-3) var(--space-4);">
+            <div class="card-comment__head" style="margin-bottom:var(--space-2);">
+              <div class="card-comment__avatar" style="width:32px;height:32px;">
+                <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=lansehaiyang&backgroundColor=06b6d4" alt="蓝色海洋" />
+              </div>
+              <div style="flex:1;">
+                <div class="card-comment__name" style="font-size:var(--font-xs);">蓝色海洋</div>
+                <div class="card-comment__time" style="font-size:10px;">5 分钟前</div>
+              </div>
+              <span class="card-notify__badge" style="font-size:10px;">热</span>
+            </div>
+            <div class="card-comment__body" style="font-size:var(--font-xs);margin-bottom:var(--space-2);">讲得太好了，刷新了我对组件库的认识！</div>
+            <div class="card-comment__actions">
+              <span style="font-size:var(--font-xs);"><span class="icon icon--thumbs"></span> 892</span>
+              <span style="font-size:var(--font-xs);"><span class="icon icon--chat"></span> 32</span>
+            </div>
+          </div>
+
+          <div class="card-set__divider"></div>
+          <div style="padding:var(--space-3) var(--space-4);">
+            <div class="card-comment__head" style="margin-bottom:var(--space-2);">
+              <div class="card-comment__avatar" style="width:32px;height:32px;">
+                <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=lvsexinqing&backgroundColor=84cc16" alt="绿色心情" />
+              </div>
+              <div style="flex:1;">
+                <div class="card-comment__name" style="font-size:var(--font-xs);">绿色心情</div>
+                <div class="card-comment__time" style="font-size:10px;">1 小时前</div>
+              </div>
+            </div>
+            <div class="card-comment__body" style="font-size:var(--font-xs);margin-bottom:var(--space-2);">收藏了，后续慢慢消化</div>
+            <div class="card-comment__actions">
+              <span style="font-size:var(--font-xs);"><span class="icon icon--thumbs"></span> 256</span>
+              <span style="font-size:var(--font-xs);"><span class="icon icon--chat"></span> 8</span>
+            </div>
+          </div>
+
+          <div class="card-set__divider"></div>
+          <div style="padding:var(--space-3) var(--space-4);">
+            <div class="card-comment__head" style="margin-bottom:var(--space-2);">
+              <div class="card-comment__avatar" style="width:32px;height:32px;">
+                <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=fenseshaonv&backgroundColor=ec4899" alt="粉色少女" />
+              </div>
+              <div style="flex:1;">
+                <div class="card-comment__name" style="font-size:var(--font-xs);">粉色少女</div>
+                <div class="card-comment__time" style="font-size:10px;">3 小时前</div>
+              </div>
+            </div>
+            <div class="card-comment__body" style="font-size:var(--font-xs);margin-bottom:var(--space-2);">有配套的代码仓库吗？</div>
+            <div class="card-comment__actions">
+              <span style="font-size:var(--font-xs);"><span class="icon icon--thumbs"></span> 89</span>
+              <span style="font-size:var(--font-xs);"><span class="icon icon--chat"></span> 5</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== 页脚 ===== -->
+    <div style="text-align:center;padding:var(--space-8);color:var(--color-text-tertiary);font-size:var(--font-sm);">
+      <p>vue-card-skill · 信息流卡片 · 3 种业务模式</p>
+      <p style="margin-top:var(--space-2);">严格遵守 vue-theme-skill Token · 零第三方组件库 · 零 emoji（演示文件除外）</p>
+    </div>
+
+    </main>
+  </div>
+
+  <script>
+    const navLinks = document.querySelectorAll('.side-nav__link');
+    const sections = document.querySelectorAll('main section[id]');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 100) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.classList.remove('active');
+        if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+      });
+    });
+  </script>
+
+</div>
+</body>
+</html>

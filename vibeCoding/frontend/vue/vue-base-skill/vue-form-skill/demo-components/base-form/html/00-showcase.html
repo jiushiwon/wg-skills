@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>vue-form-skill · 表单组件样式总览</title>
+  <link rel="stylesheet" href="../../shared/tokens.css" />
+  <link rel="stylesheet" href="../../shared/demo.css" />
+</head>
+<body>
+
+  <header class="page-header">
+    <h1>vue-form-skill · 表单组件样式总览</h1>
+    <p>base-form + 8 个子组件 · variant / size / shape / state / color 全维度样式矩阵</p>
+    <p class="page-header__links">
+      <a href="../../SKILL.md">SKILL.md</a> ·
+      <a href="../../README.md">README.md</a> ·
+      <a href="../../references/">references/</a>
+    </p>
+  </header>
+
+  <!-- ============================================================
+       1. base-form · 容器与布局
+       ============================================================ -->
+  <section class="demo-section">
+    <h2 class="demo-section__title">1. base-form · 容器与布局</h2>
+    <p class="demo-section__desc">labelWidth / labelAlign / size / layout / disabled / readonly 六大入参联动效果</p>
+
+    <h3 class="demo-h3">1.1 三种布局</h3>
+    <div class="demo-grid">
+      <div class="demo-card">
+        <p class="demo-label">horizontal · 水平布局</p>
+        <form class="base-form base-form--horizontal">
+          <div class="base-form-item">
+            <div class="base-form-item__label" style="width:80px;text-align:right;">姓名</div>
+            <div class="base-form-item__content">
+              <div class="base-input base-input--md">
+                <input class="base-input__input" type="text" placeholder="水平布局" />
+              </div>
+            </div>
+          </div>
+          <div class="base-form-item">
+            <div class="base-form-item__label" style="width:80px;text-align:right;">邮箱</div>
+            <div class="base-form-item__content">
+              <div class="base-input base-input--md">
+                <input class="base-input__input" type="email" placeholder="水平布局" />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="demo-card">
+        <p class="demo-label">vertical · 垂直布局</p>
+        <form class="base-form base-form--vertical">
+          <div class="base-form-item">
+            <div class="base-form-item__label">姓名</div>
+            <div class="base-form-item__content">
+              <div class="base-input base-input--md">
+                <input class="base-input__input" type="text" placeholder="垂直布局" />
+              </div>
+            </div>
+          </div>
+          <div class="base-form-item">
+            <div class="base-form-item__label">邮箱</div>
+            <div class="base-form-item__content">
+              <div class="base-input base-input--md">
+                <input class="base-input__input" type="email" placeholder="垂直布局" />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="demo-card">
+        <p class="demo-label">inline · 行内布局</p>
+        <form class="base-form base-form--inline">
+          <div class="base-form-item">
+            <div class="base-form-item__label" style="width:auto;padding-right:var(--space-2);">姓名</div>
+            <div class="base-form-item__content">
+              <div class="base-input base-input--md">
+                <input class="base-input__input" type="text" placeholder="行内" />
+              </div>
+            </div>
+          </div>
+          <button class="base-button base-button--primary base-button--md" type="button">搜索</button>
+        </form>
+      </div>
+    </div>
+
+    <h3 class="demo-h3">1.2 labelAlign · 标签对齐</h3>
+    <div class="demo-grid">
+      <div class="demo-card">
+        <p class="demo-label">labelAlign: left</p>
+        <div class="base-form base-form--horizontal" style="--label-align:left;">
+          <div class="base-form-item">
+            <div class="base-form-item__label" style="width:90px;">姓名</div>
+            <div class="base-form-item__content">
+              <div class="base-input base-input--md"><input class="base-input__input" type="text" /></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-card">
+        <p class="demo-label">labelAlign: center</p>
+        <div class="base-form base-form--horizontal" style="--label-align:center;">
+          <div class="base-form-item">
+            <div class="base-form-item__label" style="width:90px;">姓名</div>
+            <div class="base-form-item__content">
+              <div class="base-input base-input--md"><input class="base-input__input" type="text" /></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-card">
+        <p class="demo-label">labelAlign: right（默认）</p>
+        <div class="base-form base-form--horizontal" style="--label-align:right;">
+          <div class="base-form-item">
+            <div class="base-form-item__label" style="width:90px;">姓名</div>
+            <div class="base-form-item__content">
+              <div class="base-input base-input--md"><input class="base-input__input" type="text" /></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="demo-h3">1.3 状态叠加 · error / disabled / readonly</h3>
+    <div class="demo-card">
+      <form class="base-form base-form--horizontal">
+        <div class="base-form-item base-form-item--error">
+          <div class="base-form-item__label" style="width:90px;text-align:right;">
+            <span class="base-form-item__required">*</span>错误态
+          </div>
+          <div class="base-form-item__content">
+            <div class="base-input base-input--md base-input--error">
+              <input class="base-input__input" type="text" value="不合规值" />
+            </div>
+            <div class="base-form-item__error">输入值不合法，请检查后重试</div>
+          </div>
+        </div>
+        <div class="base-form-item">
+          <div class="base-form-item__label" style="width:90px;text-align:right;">禁用</div>
+          <div class="base-form-item__content">
+            <div class="base-input base-input--md base-input--disabled">
+              <input class="base-input__input" type="text" value="禁用态" disabled />
+            </div>
+          </div>
+        </div>
+        <div class="base-form-item">
+          <div class="base-form-item__label" style="width:90px;text-align:right;">只读</div>
+          <div class="base-form-item__content">
+            <div class="base-input base-input--md">
+              <input class="base-input__input" type="text" value="只读态" readonly />
+            </div>
+            <div class="base-form-item__help">辅助说明：这是字段的额外提示</div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       2. base-input · 输入框样式矩阵
+       ============================================================ -->
+  <section class="demo-section">
+    <h2 class="demo-section__title">2. base-input · 输入框样式矩阵</h2>
+    <p class="demo-section__desc">size / shape / variant / state / prefix / suffix / type / showCount · 8 维度</p>
+
+    <h3 class="demo-h3">2.1 size · 三种尺寸</h3>
+    <div class="demo-card">
+      <div class="demo-stack">
+        <div class="base-input base-input--sm"><input class="base-input__input" type="text" placeholder="sm · 32px" /></div>
+        <div class="base-input base-input--md"><input class="base-input__input" type="text" placeholder="md · 40px" /></div>
+        <div class="base-input base-input--lg"><input class="base-input__input" type="text" placeholder="lg · 48px" /></div>
+      </div>
+    </div>
+
+    <h3 class="demo-h3">2.2 shape · 形状变体（rounded / square / pill / circle）</h3>
+    <div class="demo-card">
+      <div class="demo-stack">
+        <div class="base-input base-input--md base-input--rounded">
+          <input class="base-input__input" type="text" placeholder="rounded · 大圆角 16px" />
+        </div>
+        <div class="demo-row">
+          <div class="base-input base-input--md base-input--square" style="flex:1;">
+            <input class="base-input__input" type="text" placeholder="square · 0 圆角" />
+          </div>
+          <div class="base-input base-input--md base-input--pill" style="flex:1;">
+            <input class="base-input__input" type="text" placeholder="pill · 胶囊" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="demo-h3">2.3 variant · 视觉变体（default / underline / filled / borderless / dashed）</h3>
+    <div class="demo-card">
+      <div class="demo-stack">
+        <div class="base-input base-input--md">
+          <input class="base-input__input" type="text" value="default · 边框" />
+        </div>
+        <div class="base-input base-input--md base-input--underline">
+          <input class="base-input__input" type="text" value="underline · 底部边框" />
+        </div>
+        <div class="base-input base-input--md base-input--filled">
+          <input class="base-input__input" type="text" value="filled · 填充背景" />
+        </div>
+        <div class="base-input base-input--md base-input--borderless">
+          <input class="base-input__input" type="text" value="borderless · 无边框" />
+        </div>
+        <div class="base-input base-input--md base-input--dashed">
+          <input class="base-input__input" type="text" value="dashed · 虚线边框" />
+        </div>
+      </div>
+    </div>
+
+    <h3 class="demo-h3">2.4 color · 主题色变体</h3>
+    <div class="demo-card">
+      <div class="demo-grid">
+        <div class="base-input base-input--md base-input--success"><input class="base-input__input" type="text" value="✓ success" /></div>
+        <div class="base-input base-input--md base-input--warning"><input class="base-input__input" type="text" value="⚠ warning" /></div>
+        <div class="base-input base-input--md base-input--danger"><input class="base-input__input" type="text" value="✕ danger" /></div>
+        <div class="base-input base-input--md base-input--info"><input class="base-input__input" type="text" value="ℹ info" /></div>
+      </div>
+    </div>
+
+    <h3 class="demo-h3">2.5 prefix / suffix · 前后缀插槽</h3>
+    <div class="demo-card">
+      <div class="demo-stack">
+        <div class="base-input base-input--md">
+          <span class="base-input__prefix">@</span>
+          <input class="base-input__input" type="text" value="username" />
+        </div>
+        <div class="base-input base-input--md">
+          <span class="base-input__prefix">$</span>
+          <input class="base-input__input" type="number" value="199.00" />
+          <span class="base-input__suffix">.00</span>
+        </div>
+        <div class="base-input base-input--md">
+          <input class="base-input__input" type="password" value="123456" />
+          <span class="base-input__suffix" style="cursor:pointer;">👁</span>
+        </div>
+        <div class="base-input base-input--md">
+          <input class="base-input__input" type="text" value="可清空" />
+          <span class="base-input__suffix" style="cursor:pointer;color:var(--color-text-muted);">×</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="demo-h3">2.6 showCount · 字数统计</h3>
+    <div class="demo-card">
+      <div class="demo-stack">
+        <div class="base-input base-input--md">
+          <input class="base-input__input" type="text" value="已输入文本" maxlength="20" />
+          <span class="base-input__suffix" style="font-size:var(--font-xs);color:var(--color-text-muted);">5 / 20</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="demo-h3">2.7 type · 原生 type 矩阵</h3>
+    <div class="demo-card">
+      <div class="demo-grid">
+        <div class="base-input base-input--md"><input class="base-input__input" type="text" placeholder="text" /></div>
+        <div class="base-input base-input--md"><input class="base-input__input" type="password" placeholder="password" /></div>
+        <div class="base-input base-input--md"><input class="base-input__input" type="email" placeholder="email" /></div>
+        <div class="base-input base-input--md"><input class="base-input__input" type="tel" placeholder="tel" /></div>
+        <div class="base-input base-input--md"><input class="base-input__input" type="number" placeholder="number" /></div>
+        <div class="base-input base-input--md"><input class="base-input__input" type="url" placeholder="url" /></div>
+        <div class="base-input base-input--md"><input class="base-input__input" type="search" placeholder="search" /></div>
+        <div class="base-input base-input--md"><input class="base-input__input" type="date" placeholder="date" /></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       3. base-textarea · 文本域
+       ============================================================ -->
+  <section class="demo-section">
+    <h2 class="demo-section__title">3. base-textarea · 文本域</h2>
+    <p class="demo-section__desc">size / autosize / resize / showCount · 4 维度</p>
+
+    <div class="demo-grid">
+      <div class="demo-card">
+        <p class="demo-label">sm · 2 行</p>
+        <div class="base-textarea">
+          <textarea class="base-textarea__input" rows="2" placeholder="小尺寸"></textarea>
+        </div>
+      </div>
+      <div class="demo-card">
+        <p class="demo-label">md · 4 行（默认）</p>
+        <div class="base-textarea">
+          <textarea class="base-textarea__input" rows="4" placeholder="中等尺寸"></textarea>
+        </div>
+      </div>
+      <div class="demo-card">
+        <p class="demo-label">lg · 6 行</p>
+        <div class="base-textarea">
+          <textarea class="base-textarea__input" rows="6" placeholder="大尺寸"></textarea>
+        </div>
+      </div>
+      <div class="demo-card">
+        <p class="demo-label">disabled</p>
+        <div class="base-textarea">
+          <textarea class="base-textarea__input" rows="3" placeholder="禁用态">禁用文本</textarea>
+        </div>
+      </div>
+      <div class="demo-card">
+        <p class="demo-label">showCount · 字数统计</p>
+        <div class="base-textarea">
+          <textarea class="base-textarea__input" rows="3" maxlength="200" placeholder="最多 200 字">已输入一些内容</textarea>
+          <div class="base-textarea__count">7 / 200</div>
+        </div>
+      </div>
+      <div class="demo-card">
+        <p class="demo-label">resize: none · 固定大小</p>
+        <div class="base-textarea base-textarea--no-resize">
+          <textarea class="base-textarea__input" rows="3" placeholder="不可拖拽"></textarea>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       4. base-select · 选择器
+       ============================================================ -->
+  <section class="demo-section">
+    <h2 class="demo-section__title">4. base-select · 选择器</h2>
+    <p class="demo-section__desc">size / variant / multiple / searchable / clearable / disabled-option · 6 维度</p>
+
+    <h3 class="demo-h3">4.1 size · 三种尺寸</h3>
+    <div class="demo-card">
+      <div class="demo-stack">
+        <div class="base-select base-select--sm" data-select>
+          <div class="base-select__control" data-trigger><span class="base-select__placeholder" data-display>sm 尺寸</span><span class="base-select__arrow">▾</span></div>
+          <div class="base-select__panel" data-panel hidden>
+            <div class="base-select__option" data-value="a">选项 A</div><div class="base-select__option" data-value="b">选项 B</div>
+          </div>
+        </div>
+        <div class="base-select base-select--md" data-select>
+          <div class="base-select__control" data-trigger><span class="base-select__placeholder" data-display>md 尺寸</span><span class="base-select__arrow">▾</span></div>
+          <div class="base-select__panel" data-panel hidden>
+            <div class="base-select__option" data-value="a">选项 A</div><div class="base-select__option" data-value="b">选项 B</div>
+          </div>
+        </div>
+        <div class="base-select base-select--lg" data-select>
+          <div class="base-select__control" data-trigger><span class="base-select__placeholder" data-display>lg 尺寸</span><span class="base-select__arrow">▾</span></div>
+          <div class="base-select__panel" data-panel hidden>
+            <div class="base-select__option" data-value="a">选项 A</div><div class="base-select__option" data-value="b">选项 B</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="demo-h3">4.2 variant · 视觉变体</h3>
+    <div class="demo-grid">
+      <div class="demo-card">
+        <p class="demo-label">default</p>
+        <div class="base-select base-select--md" data-select>
+          <div class="base-select__control" data-trigger><span class="base-select__placeholder" data-display>默认</span><span class="base-select__arrow">▾</span></div>
+          <div class="base-select__panel" data-panel hidden>
+            <div class="base-select__option" data-value="a">选项 A</div><div class="base-select__option" data-value="b">选项 B</div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-card">
+        <p class="demo-label">underline</p>
+        <div class="base-select base-select--md base-select--underline" data-select>
+          <div class="base-select__control" data-trigger><span class="base-select__placeholder" data-display>下划线</span><span class="base-select__arrow">▾</span></div>
+          <div class="base-select__panel" data-panel hidden>
+            <div class="base-select__option" data-value="a">选项 A</div><div class="base-select__option" data-value="b">选项 B</div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-card">
+        <p class="demo-label">filled</p>
+        <div class="base-select base-select--md base-select--filled" data-select>
+          <div class="base-select__control" data-trigger><span class="base-select__placeholder" data-display>填充</span><span class="base-select__arrow">▾</span></div>
+          <div class="base-select__panel" data-panel hidden>
+            <div class="base-select__option" data-value="a">选项 A</div><div class="base-select__option" data-value="b">选项 B</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="demo-h3">4.3 mode · 单选 / 多选 / 搜索</h3>
+    <div class="demo-grid">
+      <div class="demo-card">
+        <p class="demo-label">single · 单选</p>
+        <div class="base-select base-select--md" data-select>
+          <div class="base-select__control" data-trigger><span class="base-select__placeholder" data-display>请选择</span><span class="base-select__arrow">▾</span></div>
+          <div class="base-select__panel" data-panel hidden>
+            <div class="base-select__option" data-value="vue">Vue</div><div class="base-select__option" data-value="react">React</div><div class="base-select__option" data-value="svelte">Svelte</div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-card">
+        <p class="demo-label">multiple · 多选（标签）</p>
+        <div class="base-select base-select--md base-select--multiple" data-select>
+          <div class="base-select__control" data-trigger><div class="base-select__tags" data-display><span class="base-select__placeholder">请选择</span></div><span class="base-select__arrow">▾</span></div>
+          <div class="base-select__panel" data-panel hidden>
+            <div class="base-select__option" data-value="vue">Vue</div><div class="base-select__option" data-value="react">React</div><div class="base-select__option" data-value="ts">TypeScript</div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-card">
+        <p class="demo-label">searchable · 可搜索</p>
+        <div class="base-select base-select--md base-select--searchable" data-select>
+          <div class="base-select__control" data-trigger><input class="base-select__search" type="text" placeholder="搜索..." data-display="搜索..." /><span class="base-select__arrow">▾</span></div>
+          <div class="base-select__panel" data-panel hidden>
+            <div class="base-select__option" data-value="apple">苹果</div><div class="base-select__option" data-value="banana">香蕉</div><div class="base-select__option" data-value="cherry">樱桃</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="demo-h3">4.4 状态 · disabled-option / disabled / clearable</h3>
+    <div class="demo-card">
+      <p class="demo-label">含禁用选项</p>
+      <div class="base-select base-select--md" data-select>
+        <div class="base-select__control" data-trigger><span class="base-select__placeholder" data-display>含禁用项</span><span class="base-select__arrow">▾</span></div>
+        <div class="base-select__panel" data-panel hidden>
+          <div class="base-select__option" data-value="a">可选项 A</div>
+          <div class="base-select__option is-disabled" data-value="b">禁用项 B</div>
+          <div class="base-select__option" data-value="c">可选项 C</div>
+          <div class="base-select__option is-disabled" data-value="d">禁用项 D</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       5. base-checkbox · 复选框
+       ============================================================ -->
+  <section class="demo-section">
+    <h2 class="demo-section__title">5. base-checkbox · 复选框</h2>
+    <p class="demo-section__desc">shape · size · state · color · with-desc · 5 维度</p>
+
+    <h3 class="demo-h3">5.1 shape · 形状（square / round / button / card）</h3>
+    <div class="demo-grid">
+      <div class="demo-card">
+        <p class="demo-label">square · 默认方框</p>
+        <div class="demo-stack">
+          <div class="base-checkbox base-checkbox--md" data-checkbox><span class="base-checkbox__input"><span class="base-checkbox__box"></span></span><span class="base-checkbox__label">未选</span></div>
+          <div class="base-checkbox base-checkbox--md is-checked" data-checkbox><span class="base-checkbox__input"><span class="base-checkbox__box"></span></span><span class="base-checkbox__label">已选</span></div>
+          <div class="base-checkbox base-checkbox--md is-indeterminate" data-checkbox><span class="base-checkbox__input"><span class="base-checkbox__box"></span></span><span class="base-checkbox__label">半选</span></div>
+        </div>
+      </div>
+      <div class="demo-card">
+        <p class="demo-label">round · 圆形</p>
+        <div class="demo-stack">
+          <div class="base-checkbox base-checkbox--md base-checkbox--round" data-checkbox><span class="base-checkbox__input"><span class="base-checkbox__box"></span></span><span class="base-checkbox__label">未选</span></div>
+          <div class="base-checkbox base-checkbox--md base-checkbox--round is-checked" data-checkbox><span class="base-checkbox__input"><span class="base-checkbox__box"></span></span><span class="base-checkbox__label">已选</span></div>
+          <div class="base-checkbox base-checkbox--md base-checkbox--round is-indeterminate" data-checkbox><span class="base-checkbox__input"><span class="base-checkbox__box"></span></span><span class="base-checkbox__label">半选</span></div>
+        </div>
+      </div>
+      <div class="demo-card">
+        <p class="demo-label">button · 按钮样式</p>
+        <div class="demo-stack">
+          <div class="base-checkbox base-checkbox--button base-checkbox--md" data-checkbox><span class="base-checkbox__label">未选按钮</span></div>
+          <div class="base-checkbox base-checkbox--button base-checkbox--md is-checked" data-checkbox><span class="base-checkbox__label">已选按钮</span></div>
+          <div class="base-checkbox base-checkbox--button base-checkbox--md is-disabled" data-checkbox><span class="base-checkbox__label">禁用</span></div>
+        </div>
+      </div>
+      <div class="demo-card">
+        <p class="demo-label">card · 卡片样式</p>
+        <div class="demo-stack">
+          <div class="base-checkbox base-checkbox--card base-checkbox--md" data-checkbox>
+            <span class="base-checkbox__input"><span class="base-checkbox__box"></span></span>
+            <div class="base-checkbox__content">
+              <p class="base-checkbox__title">未选卡片</p>
+              <p class="base-checkbox__desc">附加描述信息</p>
+            </div>
+          </div>
+          <div class="base-checkbox base-checkbox--card base-checkbox--md is-checked" data-checkbox>
+            <span class="base-checkbox__input"><span class="base-checkbox__box"></span></span>
+            <div class="base-checkbox__content">
+              <p class="base-checkbox__title">已选卡片</p>
+              <p class="base-checkbox__desc">附加描述信息</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="demo-h3">5.2 size · 尺寸</h3>
+    <div class="demo-card">
+      <div class="demo-row">
+        <div class="base-checkbox base-checkbox--sm" data-checkbox><span class="base-checkbox__input"><span class="base-checkbox__box"></span></span><span class="base-checkbox__label">sm</span></div>
+        <div class="base-checkbox base-checkbox--md" data-checkbox><span class="base-checkbox__input"><span class="base-checkbox__box"></span></span><span class="base-checkbox__label">md</span></div>
+        <div class="base-checkbox base-checkbox--lg" data-checkbox><span class="base-checkbox__input"><span class="base-checkbox__box"></span></span><span class="base-checkbox__label">lg</span></div>
+      </div>
+    </div>
+
+    <h3 class="demo-h3">5.3 color · 主题色</h3>
+    <div class="demo-card">
+      <div class="demo-row">
+        <div class="base-checkbox base-checkbox--md is-checked" data-checkbox><span class="base-checkbox__input"><span class="base-checkbox__box"></span></span><span class="base-checkbox__label">primary</span></div>
+        <div class="base-checkbox base-checkbox--md is-checked base-checkbox--success" data-checkbox><span class="base-checkbox__input"><span class="base-checkbox__box"></span></span><span class="base-checkbox__label">success</span></div>
+        <div class="base-checkbox base-checkbox--md is-checked base-checkbox--warning" data-checkbox><span class="base-checkbox__input"><span class="base-checkbox__box"></span></span><span class="base-checkbox__label">warning</span></div>
+        <div class="base-checkbox base-checkbox--md is-checked base-checkbox--danger" data-checkbox><span class="base-checkbox__input"><span class="base-checkbox__box"></span></span><span class="base-checkbox__label">danger</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       6. base-radio · 单选框
+       ============================================================ -->
+  <section class="demo-section">
+    <h2 class="demo-section__title">6. base-radio · 单选框</h2>
+    <p class="demo-section__desc">shape · size · color · 3 维度</p>
+
+    <h3 class="demo-h3">6.1 shape · 形状（默认圆点 / button / card）</h3>
+    <div class="demo-grid">
+      <div class="demo-card">
+        <p class="demo-label">默认圆点</p>
+        <div class="demo-row" data-radio-group>
+          <div class="base-radio base-radio--md" data-radio><span class="base-radio__input"><span class="base-radio__dot"></span></span><span class="base-radio__label">选项 A</span></div>
+          <div class="base-radio base-radio--md is-checked" data-radio><span class="base-radio__input"><span class="base-radio__dot"></span></span><span class="base-radio__label">选项 B</span></div>
+          <div class="base-radio base-radio--md is-disabled" data-radio><span class="base-radio__input"><span class="base-radio__dot"></span></span><span class="base-radio__label">禁用</span></div>
+        </div>
+      </div>
+      <div class="demo-card">
+        <p class="demo-label">button · 按钮组</p>
+        <div class="demo-row" data-radio-group>
+          <div class="base-radio base-radio--button base-radio--md is-checked" data-radio><span class="base-radio__label">日</span></div>
+          <div class="base-radio base-radio--button base-radio--md" data-radio><span class="base-radio__label">周</span></div>
+          <div class="base-radio base-radio--button base-radio--md" data-radio><span class="base-radio__label">月</span></div>
+        </div>
+      </div>
+      <div class="demo-card">
+        <p class="demo-label">filled-button · 实心按钮</p>
+        <div class="demo-row" data-radio-group>
+          <div class="base-radio base-radio--filled-button base-radio--md" data-radio><span class="base-radio__label">小</span></div>
+          <div class="base-radio base-radio--filled-button base-radio--md is-checked" data-radio><span class="base-radio__label">中</span></div>
+          <div class="base-radio base-radio--filled-button base-radio--md" data-radio><span class="base-radio__label">大</span></div>
+        </div>
+      </div>
+      <div class="demo-card">
+        <p class="demo-label">card · 卡片单选</p>
+        <div class="demo-row" data-radio-group>
+          <div class="base-radio base-radio--card base-radio--md is-checked" data-radio>
+            <span class="base-radio__input"><span class="base-radio__dot"></span></span>
+            <div class="base-radio__content">
+              <p class="base-radio__title">基础版</p>
+              <p class="base-radio__desc">¥ 9 /月</p>
+            </div>
+          </div>
+          <div class="base-radio base-radio--card base-radio--md" data-radio>
+            <span class="base-radio__input"><span class="base-radio__dot"></span></span>
+            <div class="base-radio__content">
+              <p class="base-radio__title">专业版</p>
+              <p class="base-radio__desc">¥ 29 /月</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="demo-h3">6.2 size · 尺寸</h3>
+    <div class="demo-card">
+      <div class="demo-row" data-radio-group>
+        <div class="base-radio base-radio--sm is-checked" data-radio><span class="base-radio__input"><span class="base-radio__dot"></span></span><span class="base-radio__label">sm</span></div>
+        <div class="base-radio base-radio--md is-checked" data-radio><span class="base-radio__input"><span class="base-radio__dot"></span></span><span class="base-radio__label">md</span></div>
+        <div class="base-radio base-radio--lg is-checked" data-radio><span class="base-radio__input"><span class="base-radio__dot"></span></span><span class="base-radio__label">lg</span></div>
+      </div>
+    </div>
+
+    <h3 class="demo-h3">6.3 color · 主题色</h3>
+    <div class="demo-card">
+      <div class="demo-row" data-radio-group>
+        <div class="base-radio base-radio--md is-checked" data-radio><span class="base-radio__input"><span class="base-radio__dot"></span></span><span class="base-radio__label">primary</span></div>
+        <div class="base-radio base-radio--md is-checked base-radio--success" data-radio><span class="base-radio__input"><span class="base-radio__dot"></span></span><span class="base-radio__label">success</span></div>
+        <div class="base-radio base-radio--md is-checked base-radio--warning" data-radio><span class="base-radio__input"><span class="base-radio__dot"></span></span><span class="base-radio__label">warning</span></div>
+        <div class="base-radio base-radio--md is-checked base-radio--danger" data-radio><span class="base-radio__input"><span class="base-radio__dot"></span></span><span class="base-radio__label">danger</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       7. base-switch · 开关
+       ============================================================ -->
+  <section class="demo-section">
+    <h2 class="demo-section__title">7. base-switch · 开关</h2>
+    <p class="demo-section__desc">size · shape · color · loading · with-text · 5 维度</p>
+
+    <h3 class="demo-h3">7.1 size · 尺寸</h3>
+    <div class="demo-card">
+      <div class="demo-row">
+        <div class="base-switch base-switch--sm" data-switch><span class="base-switch__core"><span class="base-switch__button"></span></span></div>
+        <div class="base-switch base-switch--md" data-switch><span class="base-switch__core"><span class="base-switch__button"></span></span></div>
+        <div class="base-switch base-switch--lg" data-switch><span class="base-switch__core"><span class="base-switch__button"></span></span></div>
+      </div>
+    </div>
+
+    <h3 class="demo-h3">7.2 shape · 形状（默认圆 / square 方）</h3>
+    <div class="demo-card">
+      <div class="demo-row">
+        <div class="base-switch base-switch--md is-checked" data-switch><span class="base-switch__core"><span class="base-switch__button"></span></span></div>
+        <div class="base-switch base-switch--md base-switch--square is-checked" data-switch><span class="base-switch__core"><span class="base-switch__button"></span></span></div>
+      </div>
+    </div>
+
+    <h3 class="demo-h3">7.3 color · 主题色</h3>
+    <div class="demo-card">
+      <div class="demo-row">
+        <div class="base-switch base-switch--md is-checked" data-switch><span class="base-switch__core"><span class="base-switch__button"></span></span></div>
+        <div class="base-switch base-switch--md is-checked base-switch--success" data-switch><span class="base-switch__core"><span class="base-switch__button"></span></span></div>
+        <div class="base-switch base-switch--md is-checked base-switch--warning" data-switch><span class="base-switch__core"><span class="base-switch__button"></span></span></div>
+        <div class="base-switch base-switch--md is-checked base-switch--danger" data-switch><span class="base-switch__core"><span class="base-switch__button"></span></span></div>
+      </div>
+    </div>
+
+    <h3 class="demo-h3">7.4 with-text · 嵌入文字</h3>
+    <div class="demo-card">
+      <div class="demo-row">
+        <div class="base-switch base-switch--md base-switch--with-text" data-switch>
+          <span class="base-switch__core"><span class="base-switch__label base-switch__label--left">OFF</span><span class="base-switch__button"></span><span class="base-switch__label base-switch__label--right">ON</span></span>
+        </div>
+        <div class="base-switch base-switch--md base-switch--with-text is-checked" data-switch>
+          <span class="base-switch__core"><span class="base-switch__label base-switch__label--left">关</span><span class="base-switch__button"></span><span class="base-switch__label base-switch__label--right">开</span></span>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="demo-h3">7.5 loading / disabled</h3>
+    <div class="demo-card">
+      <div class="demo-row">
+        <div class="base-switch base-switch--md is-loading" data-switch><span class="base-switch__core"><span class="base-switch__button"></span></span></div>
+        <div class="base-switch base-switch--md is-disabled" data-switch><span class="base-switch__core"><span class="base-switch__button"></span></span></div>
+        <div class="base-switch base-switch--md is-checked is-disabled" data-switch><span class="base-switch__core"><span class="base-switch__button"></span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       8. base-datepicker · 日期选择器
+       ============================================================ -->
+  <section class="demo-section">
+    <h2 class="demo-section__title">8. base-datepicker · 日期选择器</h2>
+    <p class="demo-section__desc">size · type · variant · 3 维度</p>
+
+    <h3 class="demo-h3">8.1 type · 类型（date / daterange / month / datetime / year）</h3>
+    <div class="demo-grid">
+      <div class="demo-card">
+        <p class="demo-label">date · 单日</p>
+        <div class="base-datepicker base-datepicker--md" data-datepicker data-type="date">
+          <div class="base-datepicker__control" data-trigger><span class="base-datepicker__placeholder" data-display>选择日期</span></div>
+          <div class="base-datepicker__panel" data-panel hidden></div>
+        </div>
+      </div>
+      <div class="demo-card">
+        <p class="demo-label">daterange · 范围</p>
+        <div class="base-datepicker base-datepicker--md" data-datepicker data-type="daterange">
+          <div class="base-datepicker__control" data-trigger><span class="base-datepicker__placeholder" data-display>开始 至 结束</span></div>
+          <div class="base-datepicker__panel" data-panel hidden></div>
+        </div>
+      </div>
+      <div class="demo-card">
+        <p class="demo-label">month · 月份</p>
+        <div class="base-datepicker base-datepicker--md" data-datepicker data-type="month">
+          <div class="base-datepicker__control" data-trigger><span class="base-datepicker__placeholder" data-display>选择月份</span></div>
+          <div class="base-datepicker__panel" data-panel hidden></div>
+        </div>
+      </div>
+      <div class="demo-card">
+        <p class="demo-label">year · 年份</p>
+        <div class="base-datepicker base-datepicker--md" data-datepicker data-type="year">
+          <div class="base-datepicker__control" data-trigger><span class="base-datepicker__placeholder" data-display>选择年份</span></div>
+          <div class="base-datepicker__panel" data-panel hidden></div>
+        </div>
+      </div>
+      <div class="demo-card">
+        <p class="demo-label">datetime · 日期时间</p>
+        <div class="base-datepicker base-datepicker--md" data-datepicker data-type="datetime">
+          <div class="base-datepicker__control" data-trigger><span class="base-datepicker__placeholder" data-display>选择日期时间</span></div>
+          <div class="base-datepicker__panel" data-panel hidden></div>
+        </div>
+      </div>
+      <div class="demo-card">
+        <p class="demo-label">datetimerange · 时间范围</p>
+        <div class="base-datepicker base-datepicker--md" data-datepicker data-type="datetimerange">
+          <div class="base-datepicker__control" data-trigger><span class="base-datepicker__placeholder" data-display>开始时间 至 结束时间</span></div>
+          <div class="base-datepicker__panel" data-panel hidden></div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="demo-h3">8.2 size · 尺寸</h3>
+    <div class="demo-card">
+      <div class="demo-stack">
+        <div class="base-datepicker base-datepicker--sm" data-datepicker data-type="date">
+          <div class="base-datepicker__control" data-trigger><span class="base-datepicker__placeholder" data-display>sm 尺寸</span></div>
+          <div class="base-datepicker__panel" data-panel hidden></div>
+        </div>
+        <div class="base-datepicker base-datepicker--md" data-datepicker data-type="date">
+          <div class="base-datepicker__control" data-trigger><span class="base-datepicker__placeholder" data-display>md 尺寸</span></div>
+          <div class="base-datepicker__panel" data-panel hidden></div>
+        </div>
+        <div class="base-datepicker base-datepicker--lg" data-datepicker data-type="date">
+          <div class="base-datepicker__control" data-trigger><span class="base-datepicker__placeholder" data-display>lg 尺寸</span></div>
+          <div class="base-datepicker__panel" data-panel hidden></div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="demo-h3">8.3 variant · 视觉变体</h3>
+    <div class="demo-grid">
+      <div class="demo-card">
+        <p class="demo-label">default</p>
+        <div class="base-datepicker base-datepicker--md" data-datepicker data-type="date">
+          <div class="base-datepicker__control" data-trigger><span class="base-datepicker__placeholder" data-display>默认</span></div>
+          <div class="base-datepicker__panel" data-panel hidden></div>
+        </div>
+      </div>
+      <div class="demo-card">
+        <p class="demo-label">underline</p>
+        <div class="base-datepicker base-datepicker--md base-datepicker--underline" data-datepicker data-type="date">
+          <div class="base-datepicker__control" data-trigger><span class="base-datepicker__placeholder" data-display>下划线</span></div>
+          <div class="base-datepicker__panel" data-panel hidden></div>
+        </div>
+      </div>
+      <div class="demo-card">
+        <p class="demo-label">filled</p>
+        <div class="base-datepicker base-datepicker--md base-datepicker--filled" data-datepicker data-type="date">
+          <div class="base-datepicker__control" data-trigger><span class="base-datepicker__placeholder" data-display>填充</span></div>
+          <div class="base-datepicker__panel" data-panel hidden></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       9. props 总表
+       ============================================================ -->
+  <details class="demo-props">
+    <summary>📚 9 大组件完整 props 总表</summary>
+    <div class="demo-props__grid">
+      <div><h4>base-form</h4><ul><li><b>model</b> · Record</li><li><b>rules</b> · FormRule[]</li><li><b>layout</b> · horizontal|vertical|inline</li><li><b>labelWidth</b> · string</li><li><b>labelAlign</b> · left|right|center</li><li><b>disabled / size</b></li></ul></div>
+      <div><h4>base-form-item</h4><ul><li><b>label</b> · string</li><li><b>prop</b> · string</li><li><b>required</b> · boolean</li><li><b>rules</b></li><li><b>error / help</b></li><li><b>labelWidth</b></li></ul></div>
+      <div><h4>base-input</h4><ul><li><b>v-model</b></li><li><b>size</b></li><li><b>shape</b> · rounded|square|pill</li><li><b>variant</b> · default|underline|filled|borderless|dashed</li><li><b>type</b></li><li><b>prefix/suffix/clearable/showCount</b></li></ul></div>
+      <div><h4>base-textarea</h4><ul><li><b>v-model</b></li><li><b>rows</b></li><li><b>autosize</b></li><li><b>maxlength</b></li><li><b>showCount</b></li><li><b>resize</b> · none|both|horizontal|vertical</li></ul></div>
+      <div><h4>base-select</h4><ul><li><b>v-model</b></li><li><b>options</b></li><li><b>size</b></li><li><b>variant</b> · default|underline|filled</li><li><b>multiple/searchable/clearable</b></li><li><b>disabledOption / loading</b></li></ul></div>
+      <div><h4>base-checkbox</h4><ul><li><b>v-model</b></li><li><b>shape</b> · square|round|button|card</li><li><b>size</b></li><li><b>color</b> · primary|success|warning|danger</li><li><b>indeterminate/disabled</b></li><li><b>title / desc</b></li></ul></div>
+      <div><h4>base-radio</h4><ul><li><b>v-model</b></li><li><b>shape</b> · default|button|filled-button|card</li><li><b>size</b></li><li><b>color</b></li><li><b>disabled / border</b></li><li><b>title / desc / price</b></li></ul></div>
+      <div><h4>base-switch</h4><ul><li><b>v-model</b></li><li><b>size</b></li><li><b>shape</b> · default|square</li><li><b>color</b></li><li><b>activeText/inactiveText</b></li><li><b>loading / beforeChange</b></li></ul></div>
+      <div><h4>base-datepicker</h4><ul><li><b>v-model</b></li><li><b>type</b> · date|daterange|month|year|datetime|datetimerange</li><li><b>size</b></li><li><b>variant</b> · default|underline|filled</li><li><b>format/valueFormat</b></li><li><b>disabledDate/shortcuts</b></li></ul></div>
+    </div>
+  </details>
+
+  <footer class="demo-footer">
+    <p>vue-form-skill · base-form + 8 子组件 · variant/size/shape/color 全维度样式矩阵</p>
+  </footer>
+
+  <script>
+    /* 复选框 / 单选 / 开关 通用交互 */
+    document.querySelectorAll('[data-checkbox]').forEach(el => {
+      if (el.classList.contains('is-disabled')) return;
+      el.addEventListener('click', () => {
+        if (el.classList.contains('is-indeterminate')) {
+          el.classList.remove('is-indeterminate'); el.classList.add('is-checked');
+        } else el.classList.toggle('is-checked');
+      });
+    });
+    document.querySelectorAll('[data-radio-group]').forEach(g => {
+      g.querySelectorAll('[data-radio]').forEach(it => {
+        if (it.classList.contains('is-disabled')) return;
+        it.addEventListener('click', () => {
+          g.querySelectorAll('[data-radio]').forEach(i => i.classList.remove('is-checked'));
+          it.classList.add('is-checked');
+        });
+      });
+    });
+    document.querySelectorAll('[data-switch]').forEach(el => {
+      if (el.classList.contains('is-disabled') || el.classList.contains('is-loading')) return;
+      el.addEventListener('click', () => el.classList.toggle('is-checked'));
+    });
+
+    /* 下拉选择器 */
+    document.querySelectorAll('[data-select]').forEach(sel => {
+      const trigger = sel.querySelector('[data-trigger]');
+      const panel = sel.querySelector('[data-panel]');
+      const display = sel.querySelector('[data-display]');
+      const isMulti = sel.classList.contains('base-select--multiple');
+      let chosen = new Set();
+      trigger.addEventListener('click', e => {
+        e.stopPropagation();
+        const wasHidden = panel.hidden;
+        document.querySelectorAll('[data-panel]').forEach(p => p.hidden = true);
+        panel.hidden = !wasHidden;
+      });
+      panel.querySelectorAll('[data-value]').forEach(opt => {
+        if (opt.classList.contains('is-disabled')) return;
+        opt.addEventListener('click', () => {
+          const v = opt.dataset.value, t = opt.textContent;
+          if (isMulti) {
+            if (chosen.has(v)) { chosen.delete(v); opt.classList.remove('is-selected'); }
+            else { chosen.add(v); opt.classList.add('is-selected'); }
+            display.innerHTML = chosen.size
+              ? Array.from(chosen).map(x => '<span class="base-tag">' + (panel.querySelector('[data-value="' + x + '"]')?.textContent || x) + '</span>').join('')
+              : '<span class="base-select__placeholder">请选择</span>';
+          } else {
+            panel.querySelectorAll('[data-value]').forEach(o => o.classList.remove('is-selected'));
+            opt.classList.add('is-selected');
+            display.textContent = t;
+            panel.hidden = true;
+          }
+        });
+      });
+    });
+    document.addEventListener('click', () => {
+      document.querySelectorAll('[data-panel]').forEach(p => p.hidden = true);
+    });
+
+    /* 日期选择器 */
+    function buildCalendar(year, month, onPick) {
+      const today = new Date();
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const panel = document.createElement('div');
+      panel.className = 'datepicker-panel';
+      panel.innerHTML =
+        '<div class="datepicker-panel__nav">' +
+          '<span class="datepicker-panel__arrow" data-prev>‹</span>' +
+          '<span class="datepicker-panel__title">' + year + ' 年 ' + (month + 1) + ' 月</span>' +
+          '<span class="datepicker-panel__arrow" data-next>›</span>' +
+        '</div>' +
+        '<div class="datepicker-panel__weekdays"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span></div>' +
+        '<div class="datepicker-panel__days"></div>';
+      const days = panel.querySelector('.datepicker-panel__days');
+      for (let i = 0; i < firstDay; i++) days.appendChild(document.createElement('span'));
+      for (let d = 1; d <= daysInMonth; d++) {
+        const cell = document.createElement('span');
+        cell.className = 'datepicker-panel__day';
+        cell.textContent = d;
+        if (year === today.getFullYear() && month === today.getMonth() && d === today.getDate()) cell.classList.add('is-today');
+        cell.addEventListener('click', () => onPick(d));
+        days.appendChild(cell);
+      }
+      panel.querySelector('[data-prev]').addEventListener('click', e => {
+        e.stopPropagation();
+        const np = buildCalendar(month === 0 ? year - 1 : year, month === 0 ? 11 : month - 1, onPick);
+        panel.replaceWith(np);
+      });
+      panel.querySelector('[data-next]').addEventListener('click', e => {
+        e.stopPropagation();
+        const np = buildCalendar(month === 11 ? year + 1 : year, month === 11 ? 0 : month + 1, onPick);
+        panel.replaceWith(np);
+      });
+      return panel;
+    }
+    document.querySelectorAll('[data-datepicker]').forEach(dp => {
+      const trigger = dp.querySelector('[data-trigger]');
+      const panel = dp.querySelector('[data-panel]');
+      const display = dp.querySelector('[data-display]');
+      const now = new Date();
+      trigger.addEventListener('click', e => {
+        e.stopPropagation();
+        document.querySelectorAll('[data-panel]').forEach(p => { if (p !== panel) { p.hidden = true; p.innerHTML = ''; } });
+        panel.hidden = false;
+        panel.innerHTML = '';
+        panel.appendChild(buildCalendar(now.getFullYear(), now.getMonth(), d => {
+          display.textContent = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+          panel.hidden = true;
+        }));
+      });
+    });
+  </script>
+</body>
+</html>

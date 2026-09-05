@@ -176,8 +176,11 @@ wg-skills/
 │   │   │   └── uniapp-ui-template-builder-skill/   # UI 页面模板
 │   │   └── vue/                              # Vue 通用技能矩阵
 │   │       ├── vue-base-skill/               # Vue 基础（按钮/卡片/表格/标签）
+│   │       ├── vue-table-skill/              # Vue 表格组件（20+ 形态，3 个独立组件）
+│   │       ├── vue-form-skill/               # Vue 表单组件（10+ 组件）
 │   │       ├── vue-generate-skill/           # Vue 项目生成
 │   │       ├── vue-theme-skill/              # Vue 主题系统
+│   │       ├── vue-style-skill/              # Vue 样式规范
 │   │       └── electron-vue-init-skill/     # Electron + Vue3 桌面端初始化
 │   │
 │   ├── super-deploy-skills/           # 🚀 一键部署套件（父技能 + 13 嵌套子技能）
@@ -321,7 +324,7 @@ wg-skills/
    │                     │                                       │xhs-writer    │
    │   frontend          │                                       └──────────────┘
    │   ├ uniapp (15+)    │
-   │   ├ vue (3)         │
+   │   ├ vue (7)         │
    │   └ ui-foundry      │
    │                     │
    │   super-deploy (13) │ ← 大量中间件：redis / kafka / mysql / pg / mongo
@@ -369,6 +372,106 @@ wg-skills/
 ### 11.4 版本控制
 
 按第七节规定，`docs/` 全目录**不进入 git**。`docs/plans/` 同理，本地沉淀、随时查阅，**无需提交**。
+
+---
+
+## 十二、Vue 组件实现规范（md vs demo 关系）
+
+本节针对 `vibeCoding/frontend/vue/**` 下所有 `.md` 组件文档与 demo 演示文件的协作关系。
+
+### 12.1 核心分层
+
+| 层级 | 文件类型 | 性质 | 受约束对象 |
+|------|----------|------|-----------|
+| **逻辑层（md）** | `*.md` 组件文档 | Vue 组件**实现代码** + 设计契约（props/events/slots） | 受**零 HTML5 标签**红线约束 |
+| **视觉层（demo）** | `demo-components/**/html/*.html` | 纯静态 HTML 演示，给用户查看运行效果 | **不受**零 HTML5 标签约束 |
+
+> **一句话**：md 决定"怎么实现"，demo 决定"长什么样"。两者必须视觉一致，但实现路径独立。
+
+### 12.2 md 端红线（强制）
+
+`vue-base-skill/`、`vue-form-skill/`、`vue-table-skill/` 下的所有 `.md` 文件，**严禁出现**以下 HTML5 原生标签：
+
+```
+<button>  <input>  <select>  <table>  <tr>  <td>  <th>
+<textarea>  <form>  <option>  <label>  <fieldset>  <legend>
+<header>  <footer>  <h1>-<h6>  <ul>/<ol>/<li>  <a href>
+```
+
+**替代方案**（在 `.md` 示例代码中必须遵守）：
+
+| 原生标签 | 替代写法 |
+|----------|----------|
+| `<button>` | `<div role="button" tabindex="0" :aria-disabled @click @keydown.enter @keydown.space.prevent>` |
+| `<input type="checkbox">` | `<div role="checkbox" tabindex="0" :aria-checked>` |
+| `<input type="radio">` | `<div role="radio" tabindex="0" :aria-checked>` |
+| `<button type="button">` 开关 | `<div role="switch" tabindex="0" :aria-checked>` |
+| `<input type="text">` | `<div contenteditable="!disabled && !readonly" role="textbox" @input>` |
+| `<textarea>` | `<div contenteditable="true" role="textbox">` |
+| `<form @submit.prevent>` | `<div role="form" @keydown.enter.prevent>` + `emit('submit')` |
+| `<table>/<tr>/<td>` | CSS Grid / Flex 实现（语义保留 `<div>` + ARIA role="grid/row/gridcell"） |
+| `<header>/<footer>` | `<div class="xxx__header">` / `<div class="xxx__footer">` |
+
+**禁止裸用**：所有组件必须被 `<base-card>` 包裹（容器原则）。
+
+### 12.3 demo 端例外（豁免）
+
+`demo-components/**/*.html` 文件**允许**自由使用 `<button>` `<input>` `<table>` 等原生标签，**不需要遵守**零 HTML5 标签约束。
+
+> 用户原话：**"demo文件 违约 不用管"** / **"demo里面 使用没关系。这只是给别人看的"**
+
+**理由**：
+1. demo 是给人类查看的运行示例，目标是"看到效果"，不是"展示实现规范"。
+2. 原生标签让 demo 体积更小、可读性更高、无需 ARIA 属性堆砌。
+3. demo 与生产组件实现**隔离**，demo 不参与工程编译，不污染业务代码。
+
+**demo 必须遵守**（仅此一条）：
+- ✅ 视觉必须与对应 `.md` 的渲染效果**完全一致**（className、CSS3、组件层级、交互状态）
+- ✅ demo 底部需列出**完整入参**（props / columns / events / slots / data 结构），方便用户对照 `.md` 实现
+
+### 12.4 视觉匹配契约
+
+| 维度 | md 端 | demo 端 | 一致性要求 |
+|------|-------|---------|-----------|
+| className | `base-button--primary` | `base-button--primary` | **完全相同** |
+| CSS 变量 | `var(--color-primary)` | `var(--color-primary)` | **完全相同** |
+| 组件层级 | `<base-card><base-form>...` | `<div class="demo-card"><div class="demo-form">...` | **结构镜像**（class 命名映射） |
+| 状态类 | `.is-disabled` / `.is-checked` | `.is-disabled` / `.is-checked` | **完全相同** |
+| 交互态 | hover/focus/active | hover/focus/active | **完全相同** |
+
+### 12.5 审计范围（仅查 md，不查 demo）
+
+```bash
+# ✅ 正确：审计零 HTML5 标签违规（仅 .md）
+grep -rnE '<(button|input|select|table|tr|td|th|textarea|form|option|label|fieldset|header|footer|h[1-6])' \
+  --include="*.md" \
+  ./vibeCoding/frontend/vue/vue-base-skill \
+  ./vibeCoding/frontend/vue/vue-form-skill \
+  ./vibeCoding/frontend/vue/vue-table-skill
+
+# ❌ 错误：把 demo HTML 也纳入审计（会大量误报，无需修复）
+grep -rnE '<button' ./vibeCoding/frontend/vue/vue-table-skill/demo-components
+```
+
+### 12.6 修复责任划分
+
+| 文件 | 违反零 HTML5 标签 | 处理方式 |
+|------|------------------|---------|
+| `*.md` 组件文档 | ❌ **必须修复** | 替换为 `<div role="*">` + ARIA + 键盘事件 |
+| `demo-components/**/*.html` | ✅ **无需修复** | 保留原生标签，作为视觉演示 |
+| `*.md` 中的"正确/错误对比"注释 | ⚠️ **注释里也要避免** | 用 `div + role="form"` 描述，不要直接写 `<form>` 字面量 |
+
+### 12.7 新增 Vue 组件的强制清单
+
+新增 `.md` 组件文档时，按顺序过一遍：
+
+- [ ] 所有交互元素是否用了 `<div role="*">` 替代 HTML5 标签？
+- [ ] 是否包含 `aria-*` 属性（checked / disabled / readonly / label）？
+- [ ] 是否包含键盘事件（`@keydown.enter` / `@keydown.space.prevent`）？
+- [ ] 是否包了 `<base-card>` 容器？
+- [ ] demo HTML 是否与 md 视觉一致？
+- [ ] demo 底部是否列出了完整入参（props / columns / events / slots）？
+- [ ] 是否跑过 `grep -rnE '<(button|input|select|table|...)' --include="*.md"` 确认零违规？
 
 ---
 

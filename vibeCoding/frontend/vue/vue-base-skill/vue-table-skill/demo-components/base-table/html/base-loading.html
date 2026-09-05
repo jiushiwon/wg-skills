@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-loading 加载状态组件</title>
+  <link rel="stylesheet" href="demo.css">
+</head>
+<body>
+  <div class="page">
+    <h1 class="page__title">base-loading 加载状态组件</h1>
+    <p class="page__subtitle">5 种类型 · 7 种动画 · 5 种尺寸 · 5 种主题</p>
+
+    <!-- 1. 不同动画模式 -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">1. 7 种动画模式</span>
+        <span class="demo-card__tag">animation</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 16px;">
+            <div class="base-card" style="padding: 16px; text-align: center;">
+              <div id="l-dots"></div>
+              <div style="margin-top: 8px; font-size: 12px; color: var(--color-text-secondary);">dots</div>
+            </div>
+            <div class="base-card" style="padding: 16px; text-align: center;">
+              <div id="l-bar"></div>
+              <div style="margin-top: 8px; font-size: 12px; color: var(--color-text-secondary);">bar</div>
+            </div>
+            <div class="base-card" style="padding: 16px; text-align: center;">
+              <div id="l-ring"></div>
+              <div style="margin-top: 8px; font-size: 12px; color: var(--color-text-secondary);">ring</div>
+            </div>
+            <div class="base-card" style="padding: 16px; text-align: center;">
+              <div id="l-pulse"></div>
+              <div style="margin-top: 8px; font-size: 12px; color: var(--color-text-secondary);">pulse</div>
+            </div>
+            <div class="base-card" style="padding: 16px; text-align: center;">
+              <div id="l-wave"></div>
+              <div style="margin-top: 8px; font-size: 12px; color: var(--color-text-secondary);">wave</div>
+            </div>
+            <div class="base-card" style="padding: 16px; text-align: center;">
+              <div id="l-cube"></div>
+              <div style="margin-top: 8px; font-size: 12px; color: var(--color-text-secondary);">cube</div>
+            </div>
+            <div class="base-card" style="padding: 16px; text-align: center;">
+              <div id="l-ripple"></div>
+              <div style="margin-top: 8px; font-size: 12px; color: var(--color-text-secondary);">ripple</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. 不同尺寸 -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">2. 不同尺寸（xs / sm / md / lg / xl）</span>
+        <span class="demo-card__tag">size</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body" style="display: flex; align-items: center; gap: 24px; justify-content: center;">
+            <div class="text-center">
+              <div id="l-xs"></div>
+              <div style="margin-top: 8px; font-size: 12px; color: var(--color-text-secondary);">xs</div>
+            </div>
+            <div class="text-center">
+              <div id="l-sm"></div>
+              <div style="margin-top: 8px; font-size: 12px; color: var(--color-text-secondary);">sm</div>
+            </div>
+            <div class="text-center">
+              <div id="l-md"></div>
+              <div style="margin-top: 8px; font-size: 12px; color: var(--color-text-secondary);">md</div>
+            </div>
+            <div class="text-center">
+              <div id="l-lg"></div>
+              <div style="margin-top: 8px; font-size: 12px; color: var(--color-text-secondary);">lg</div>
+            </div>
+            <div class="text-center">
+              <div id="l-xl"></div>
+              <div style="margin-top: 8px; font-size: 12px; color: var(--color-text-secondary);">xl</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. 不同主题 -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">3. 不同主题（primary / success / warning / danger / info）</span>
+        <span class="demo-card__tag">theme</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body" style="display: flex; align-items: center; gap: 24px; justify-content: center;">
+            <div class="text-center">
+              <div id="l-primary"></div>
+              <div style="margin-top: 8px; font-size: 12px; color: var(--color-text-secondary);">primary</div>
+            </div>
+            <div class="text-center">
+              <div id="l-success"></div>
+              <div style="margin-top: 8px; font-size: 12px; color: var(--color-text-secondary);">success</div>
+            </div>
+            <div class="text-center">
+              <div id="l-warning"></div>
+              <div style="margin-top: 8px; font-size: 12px; color: var(--color-text-secondary);">warning</div>
+            </div>
+            <div class="text-center">
+              <div id="l-danger"></div>
+              <div style="margin-top: 8px; font-size: 12px; color: var(--color-text-secondary);">danger</div>
+            </div>
+            <div class="text-center">
+              <div id="l-info"></div>
+              <div style="margin-top: 8px; font-size: 12px; color: var(--color-text-secondary);">info</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. 容器加载 -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">4. 容器加载（包裹内容）</span>
+        <span class="demo-card__tag">container</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__header">
+            <span class="base-card__title">用户列表</span>
+            <span class="base-button base-button--type-primary base-button--variant-solid base-button--size-sm" id="l-toggle">显示加载</span>
+          </div>
+          <div class="base-card__body">
+            <div class="base-loading" id="l-container" style="min-height: 200px;">
+              <div style="padding: 16px;">
+                <div style="margin-bottom: 8px;">用户：张三 / 李四 / 王五</div>
+                <div style="margin-bottom: 8px;">邮箱：zhangsan@example.com</div>
+                <div>状态：活跃</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. 全屏加载 -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">5. 全屏加载</span>
+        <span class="demo-card__tag">fullscreen</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body" style="text-align: center;">
+            <span class="base-button base-button--type-primary base-button--variant-solid base-button--size-md" id="l-fs-trigger">触发全屏加载</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. 带文案加载 -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">6. 带文案加载</span>
+        <span class="demo-card__tag">with-text</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body" style="display: flex; gap: 24px; flex-wrap: wrap;">
+            <div class="base-loading" id="l-text-top" style="min-height: 100px;"></div>
+            <div class="base-loading" id="l-text-bottom" style="min-height: 100px;"></div>
+            <div class="base-loading" id="l-text-left" style="min-height: 100px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Props -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">Props 速查</span>
+      </div>
+      <div class="demo-card__body">
+        <pre class="demo-code">5 种类型: container / fullscreen / section / inline / overlay
+7 种动画: dots / bar / ring / pulse / wave / cube / ripple
+5 种尺寸: xs / sm / md / lg / xl
+5 种主题: primary / success / warning / danger / info
+禁止: &lt;button&gt; &lt;input&gt; 等 HTML5 标签</pre>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="loading.js"></script>
+</body>
+</html>

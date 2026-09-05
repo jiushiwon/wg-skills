@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>vue-card-skill · 01 base-card 参数矩阵</title>
+<link rel="stylesheet" href="../../shared/tokens.css" />
+<link rel="stylesheet" href="../../shared/icons.css" />
+<link rel="stylesheet" href="../../shared/demo.css" />
+</head>
+<body>
+<div class="page">
+
+  <!-- ===== 页头 ===== -->
+  <div class="page-header">
+    <h1>base-card 参数矩阵</h1>
+    <p>6 维度参数 · radius × padding × shadow × variant × tone × bordered / clickable / loading</p>
+    <div class="nav">
+      <a href="00-showcase.html">总览</a>
+      <a href="01-base-card.html" class="active">参数矩阵</a>
+      <a href="02-layout-cards.html">Layout 卡片</a>
+      <a href="03-flow-cards.html">信息流卡片</a>
+    </div>
+  </div>
+
+  <div class="layout-with-side">
+
+    <!-- ===== 侧边目录 ===== -->
+    <aside class="side-nav">
+      <div class="side-nav__title">参数维度</div>
+      <a href="#radius" class="side-nav__link active"><span class="icon icon--grid"></span> radius · 5 种</a>
+      <a href="#padding" class="side-nav__link"><span class="icon icon--grid"></span> padding · 5 种</a>
+      <a href="#shadow" class="side-nav__link"><span class="icon icon--grid"></span> shadow · 4 种</a>
+      <a href="#variant" class="side-nav__link"><span class="icon icon--palette"></span> variant · 4 种</a>
+      <a href="#tone" class="side-nav__link"><span class="icon icon--palette"></span> tone · 5 种</a>
+      <a href="#boolean" class="side-nav__link"><span class="icon icon--settings"></span> 布尔开关</a>
+      <a href="#slot" class="side-nav__link"><span class="icon icon--grid"></span> header / footer</a>
+      <a href="#scene" class="side-nav__link"><span class="icon icon--image"></span> 真实场景</a>
+    </aside>
+
+    <main>
+
+    <!-- ===== 1. radius ===== -->
+    <section id="radius" class="section">
+      <div class="section-header">
+        <span class="section-num">1</span>
+        <h2>radius · 5 种圆角</h2>
+        <span class="cat-tag cat-tag--param">参数维度</span>
+      </div>
+      <div class="matrix-grid grid-5">
+        <div class="base-card base-card--radius-sm base-card--padding-md base-card--shadow-sm">
+          <div class="base-card__body">
+            <strong>radius="sm"</strong><br/>
+            <span class="text-muted">8px</span>
+          </div>
+        </div>
+        <div class="base-card base-card--radius-md base-card--padding-md base-card--shadow-sm">
+          <div class="base-card__body">
+            <strong>radius="md"</strong><br/>
+            <span class="text-muted">12px</span>
+          </div>
+        </div>
+        <div class="base-card base-card--radius-lg base-card--padding-md base-card--shadow-sm">
+          <div class="base-card__body">
+            <strong>radius="lg"</strong><br/>
+            <span class="text-muted">16px（默认）</span>
+          </div>
+        </div>
+        <div class="base-card base-card--radius-xl base-card--padding-md base-card--shadow-sm">
+          <div class="base-card__body">
+            <strong>radius="xl"</strong><br/>
+            <span class="text-muted">20px</span>
+          </div>
+        </div>
+        <div class="base-card base-card--radius-full base-card--padding-md base-card--shadow-sm">
+          <div class="base-card__body">
+            <strong>radius="full"</strong><br/>
+            <span class="text-muted">999px</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 2. padding ===== -->
+    <section id="padding" class="section">
+      <div class="section-header">
+        <span class="section-num">2</span>
+        <h2>padding · 5 种内边距</h2>
+        <span class="cat-tag cat-tag--param">参数维度</span>
+      </div>
+      <div class="matrix-grid grid-5">
+        <div class="base-card base-card--padding-none base-card--shadow-sm" style="background:var(--color-bg-secondary);">
+          <div class="base-card__body" style="padding:var(--space-4);">
+            <strong>padding="none"</strong><br/>
+            <span class="text-muted">0</span>
+          </div>
+        </div>
+        <div class="base-card base-card--padding-sm base-card--shadow-sm">
+          <div class="base-card__body">
+            <strong>padding="sm"</strong><br/>
+            <span class="text-muted">12px</span>
+          </div>
+        </div>
+        <div class="base-card base-card--padding-md base-card--shadow-sm">
+          <div class="base-card__body">
+            <strong>padding="md"</strong><br/>
+            <span class="text-muted">16px（默认）</span>
+          </div>
+        </div>
+        <div class="base-card base-card--padding-lg base-card--shadow-sm">
+          <div class="base-card__body">
+            <strong>padding="lg"</strong><br/>
+            <span class="text-muted">24px</span>
+          </div>
+        </div>
+        <div class="base-card base-card--padding-xl base-card--shadow-sm">
+          <div class="base-card__body">
+            <strong>padding="xl"</strong><br/>
+            <span class="text-muted">32px</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 3. shadow ===== -->
+    <section id="shadow" class="section">
+      <div class="section-header">
+        <span class="section-num">3</span>
+        <h2>shadow · 4 种阴影</h2>
+        <span class="cat-tag cat-tag--param">参数维度</span>
+      </div>
+      <div class="matrix-grid grid-4">
+        <div class="base-card base-card--shadow-none base-card--padding-md base-card--bordered">
+          <div class="base-card__body">
+            <strong>shadow="none"</strong><br/>
+            <span class="text-muted">无阴影</span>
+          </div>
+        </div>
+        <div class="base-card base-card--shadow-sm base-card--padding-md">
+          <div class="base-card__body">
+            <strong>shadow="sm"</strong><br/>
+            <span class="text-muted">轻阴影（默认）</span>
+          </div>
+        </div>
+        <div class="base-card base-card--shadow-md base-card--padding-md">
+          <div class="base-card__body">
+            <strong>shadow="md"</strong><br/>
+            <span class="text-muted">中等阴影</span>
+          </div>
+        </div>
+        <div class="base-card base-card--shadow-lg base-card--padding-md">
+          <div class="base-card__body">
+            <strong>shadow="lg"</strong><br/>
+            <span class="text-muted">深阴影</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 4. variant ===== -->
+    <section id="variant" class="section">
+      <div class="section-header">
+        <span class="section-num">4</span>
+        <h2>variant · 4 种视觉变体</h2>
+        <span class="cat-tag cat-tag--param">参数维度</span>
+        <span class="badge">default / flat / elevated / outlined</span>
+      </div>
+      <div class="matrix-grid grid-2">
+        <div class="base-card base-card--variant-flat base-card--padding-lg">
+          <div class="base-card__body">
+            <strong style="font-size:var(--font-lg);">variant="default"</strong>
+            <p style="margin-top:var(--space-2);color:var(--color-text-secondary);font-size:var(--font-sm);">标准卡片 · 白底 + sm 阴影（默认）</p>
+          </div>
+        </div>
+        <div class="base-card base-card--variant-flat base-card--padding-lg">
+          <div class="base-card__body">
+            <strong style="font-size:var(--font-lg);">variant="flat"</strong>
+            <p style="margin-top:var(--space-2);color:var(--color-text-secondary);font-size:var(--font-sm);">平面卡片 · 灰底 + 无阴影</p>
+          </div>
+        </div>
+        <div class="base-card base-card--variant-elevated base-card--padding-lg">
+          <div class="base-card__body">
+            <strong style="font-size:var(--font-lg);">variant="elevated"</strong>
+            <p style="margin-top:var(--space-2);color:var(--color-text-secondary);font-size:var(--font-sm);">浮层卡片 · 白底 + md 阴影</p>
+          </div>
+        </div>
+        <div class="base-card base-card--variant-outlined base-card--padding-lg">
+          <div class="base-card__body">
+            <strong style="font-size:var(--font-lg);">variant="outlined"</strong>
+            <p style="margin-top:var(--space-2);color:var(--color-text-secondary);font-size:var(--font-sm);">描边卡片 · 透明底 + 边框</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 5. tone ===== -->
+    <section id="tone" class="section">
+      <div class="section-header">
+        <span class="section-num">5</span>
+        <h2>tone · 5 种色调</h2>
+        <span class="cat-tag cat-tag--param">参数维度</span>
+        <span class="badge">左侧 3px 强调条</span>
+      </div>
+      <div class="matrix-grid grid-5">
+        <div class="base-card base-card--tone-neutral base-card--padding-md base-card--shadow-sm">
+          <div class="base-card__body">
+            <strong>tone="neutral"</strong><br/>
+            <span class="text-muted">默认</span>
+          </div>
+        </div>
+        <div class="base-card base-card--tone-primary base-card--padding-md base-card--shadow-sm">
+          <div class="base-card__body">
+            <strong>tone="primary"</strong><br/>
+            <span class="text-muted">蓝色</span>
+          </div>
+        </div>
+        <div class="base-card base-card--tone-success base-card--padding-md base-card--shadow-sm">
+          <div class="base-card__body">
+            <strong>tone="success"</strong><br/>
+            <span class="text-muted">绿色</span>
+          </div>
+        </div>
+        <div class="base-card base-card--tone-warning base-card--padding-md base-card--shadow-sm">
+          <div class="base-card__body">
+            <strong>tone="warning"</strong><br/>
+            <span class="text-muted">黄色</span>
+          </div>
+        </div>
+        <div class="base-card base-card--tone-danger base-card--padding-md base-card--shadow-sm">
+          <div class="base-card__body">
+            <strong>tone="danger"</strong><br/>
+            <span class="text-muted">红色</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 6. bordered / clickable / loading ===== -->
+    <section id="boolean" class="section">
+      <div class="section-header">
+        <span class="section-num">6</span>
+        <h2>布尔开关</h2>
+        <span class="cat-tag cat-tag--param">参数维度</span>
+        <span class="badge">bordered / clickable / loading</span>
+      </div>
+      <div class="matrix-grid grid-3">
+
+        <div class="base-card base-card--padding-md base-card--shadow-sm base-card--bordered">
+          <div class="base-card__body">
+            <strong>bordered=true</strong>
+            <p style="margin-top:var(--space-2);color:var(--color-text-secondary);font-size:var(--font-sm);">显示边框</p>
+          </div>
+        </div>
+
+        <div class="base-card base-card--padding-md base-card--shadow-sm base-card--clickable" onclick="this.style.background='var(--color-primary-50)'">
+          <div class="base-card__body">
+            <strong>clickable=true</strong>
+            <p style="margin-top:var(--space-2);color:var(--color-text-secondary);font-size:var(--font-sm);">hover 试试（提阴影 + 上移）</p>
+          </div>
+        </div>
+
+        <div class="base-card base-card--padding-md base-card--shadow-sm">
+          <div class="base-card__loading">
+            <div class="base-card__spinner"></div>
+          </div>
+          <div class="base-card__body">
+            <strong>loading=true</strong>
+            <p style="margin-top:var(--space-2);color:var(--color-text-secondary);font-size:var(--font-sm);">加载中遮罩</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== 7. header / footer 插槽 ===== -->
+    <section id="slot" class="section">
+      <div class="section-header">
+        <span class="section-num">7</span>
+        <h2>header / footer 插槽</h2>
+        <span class="cat-tag cat-tag--param">插槽</span>
+      </div>
+
+      <div class="matrix-grid grid-2">
+        <!-- header-right -->
+        <div class="base-card base-card--padding-none base-card--shadow-sm">
+          <div class="base-card__header base-card--has-header-border">
+            <div class="base-card__header-main">
+              <div class="base-card__title">订单列表</div>
+              <p class="base-card__desc">共 128 条订单</p>
+            </div>
+            <div class="base-card__header-right">
+              <span class="base-button base-button--ghost base-button--sm">导出</span>
+              <span class="base-button base-button--primary base-button--sm">+ 新建</span>
+            </div>
+          </div>
+          <div class="base-card__body" style="padding:var(--space-4);">
+            <div style="color:var(--color-text-secondary);font-size:var(--font-sm);">列表内容区域（slot: default）</div>
+          </div>
+        </div>
+
+        <!-- footer -->
+        <div class="base-card base-card--padding-none base-card--shadow-sm">
+          <div class="base-card__header base-card--has-header-border">
+            <div class="base-card__header-main">
+              <div class="base-card__title">数据列表</div>
+            </div>
+          </div>
+          <div class="base-card__body" style="padding:var(--space-4);">
+            <div style="color:var(--color-text-secondary);font-size:var(--font-sm);">表格区域（slot: default）</div>
+          </div>
+          <div class="base-card__footer base-card--has-footer-border">
+            <div class="flex justify-between items-center w-full">
+              <span style="font-size:var(--font-xs);color:var(--color-text-tertiary);">共 100 条</span>
+              <div class="flex gap-1">
+                <span class="base-button base-button--ghost base-button--sm">上一页</span>
+                <span class="base-button base-button--primary base-button--sm">下一页</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 8. 真实场景 ===== -->
+    <section id="scene" class="section">
+      <div class="section-header">
+        <span class="section-num">8</span>
+        <h2>真实场景</h2>
+        <span class="cat-tag cat-tag--scene">综合示例</span>
+      </div>
+      <div class="base-card base-card--padding-none base-card--shadow-md">
+        <div class="base-card__header base-card--has-header-border">
+          <div class="base-card__header-main">
+            <div class="base-card__title">用户管理</div>
+            <p class="base-card__desc">管理系统所有用户</p>
+          </div>
+          <div class="base-card__header-right">
+            <span class="base-button base-button--ghost base-button--sm">导出</span>
+            <span class="base-button base-button--primary base-button--sm">+ 新建用户</span>
+          </div>
+        </div>
+        <div class="base-card__body" style="padding:0;">
+          <div style="display:grid;grid-template-columns:80px 1fr 1fr 1fr 100px;background:var(--color-bg);border-bottom:1px solid var(--color-border);font-size:var(--font-xs);color:var(--color-text-tertiary);font-weight:var(--weight-semibold);">
+            <div style="padding:var(--space-3);">ID</div>
+            <div style="padding:var(--space-3);">姓名</div>
+            <div style="padding:var(--space-3);">邮箱</div>
+            <div style="padding:var(--space-3);">角色</div>
+            <div style="padding:var(--space-3);">操作</div>
+          </div>
+          <div style="display:grid;grid-template-columns:80px 1fr 1fr 1fr 100px;border-bottom:1px solid var(--color-border-light);font-size:var(--font-sm);">
+            <div style="padding:var(--space-3);">001</div>
+            <div style="padding:var(--space-3);">张三</div>
+            <div style="padding:var(--space-3);">zhang@example.com</div>
+            <div style="padding:var(--space-3);"><span class="base-tag">管理员</span></div>
+            <div style="padding:var(--space-3);display:flex;gap:var(--space-1);"><span class="base-button base-button--text base-button--sm">编辑</span><span class="base-button base-button--text base-button--sm" style="color:var(--color-danger);">删除</span></div>
+          </div>
+          <div style="display:grid;grid-template-columns:80px 1fr 1fr 1fr 100px;border-bottom:1px solid var(--color-border-light);font-size:var(--font-sm);">
+            <div style="padding:var(--space-3);">002</div>
+            <div style="padding:var(--space-3);">李四</div>
+            <div style="padding:var(--space-3);">li@example.com</div>
+            <div style="padding:var(--space-3);"><span class="base-tag base-tag--success">编辑</span></div>
+            <div style="padding:var(--space-3);display:flex;gap:var(--space-1);"><span class="base-button base-button--text base-button--sm">编辑</span><span class="base-button base-button--text base-button--sm" style="color:var(--color-danger);">删除</span></div>
+          </div>
+          <div style="display:grid;grid-template-columns:80px 1fr 1fr 1fr 100px;font-size:var(--font-sm);">
+            <div style="padding:var(--space-3);">003</div>
+            <div style="padding:var(--space-3);">王五</div>
+            <div style="padding:var(--space-3);">wang@example.com</div>
+            <div style="padding:var(--space-3);"><span class="base-tag">访客</span></div>
+            <div style="padding:var(--space-3);display:flex;gap:var(--space-1);"><span class="base-button base-button--text base-button--sm">编辑</span><span class="base-button base-button--text base-button--sm" style="color:var(--color-danger);">删除</span></div>
+          </div>
+        </div>
+        <div class="base-card__footer base-card--has-footer-border">
+          <div class="flex justify-between items-center w-full">
+            <span style="font-size:var(--font-xs);color:var(--color-text-tertiary);">共 100 条 · 第 1 页</span>
+            <div class="flex gap-1">
+              <span class="base-button base-button--ghost base-button--sm">‹</span>
+              <span class="base-button base-button--primary base-button--sm">1</span>
+              <span class="base-button base-button--ghost base-button--sm">2</span>
+              <span class="base-button base-button--ghost base-button--sm">3</span>
+              <span class="base-button base-button--ghost base-button--sm">›</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    </main>
+  </div>
+
+  <script>
+    const navLinks = document.querySelectorAll('.side-nav__link');
+    const sections = document.querySelectorAll('main section[id]');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 100) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.classList.remove('active');
+        if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+      });
+    });
+  </script>
+
+</div>
+</body>
+</html>

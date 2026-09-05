@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-table 表格组件 — 全部 demo</title>
+  <link rel="stylesheet" href="demo.css">
+</head>
+<body>
+  <div class="page">
+    <h1 class="page__title">base-table 表格组件</h1>
+    <p class="page__subtitle">23 种形态 · 自定义复选框 · 复用 base-button / base-status · 零 HTML5 标签</p>
+
+    <!-- ============== 1. 基础表格 ============== -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">1. 基础表格</span>
+        <span class="demo-card__tag">basic</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__header">
+            <span class="base-card__title">用户列表</span>
+          </div>
+          <div class="base-card__body">
+            <div class="base-table" id="t-basic"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== 2. 固定列 ============== -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">2. 固定列（左 + 右）</span>
+        <span class="demo-card__tag">fixed</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__header">
+            <span class="base-card__title">左右两侧固定列</span>
+          </div>
+          <div class="base-card__body">
+            <div class="base-table" id="t-fixed"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== 3. 操作列 ============== -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">3. 操作列（复用 base-button）</span>
+        <span class="demo-card__tag">actions</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__header">
+            <span class="base-card__title">用户管理</span>
+          </div>
+          <div class="base-card__body">
+            <div class="base-table" id="t-actions"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== 4. 状态列 ============== -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">4. 状态列（复用 base-status）</span>
+        <span class="demo-card__tag">status</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__header">
+            <span class="base-card__title">订单管理</span>
+          </div>
+          <div class="base-card__body">
+            <div class="base-table" id="t-status"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== 5. 可选择行 ============== -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">5. 可选择行（自定义复选框）</span>
+        <span class="demo-card__tag">selectable</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__header">
+            <span class="base-card__title">已选 <strong id="selected-count">0</strong> 项</span>
+          </div>
+          <div class="base-card__body">
+            <div class="base-table base-table--hover" id="t-selectable"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== 6. 可排序 ============== -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">6. 可排序</span>
+        <span class="demo-card__tag">sortable</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body">
+            <div class="base-table" id="t-sortable"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== 7. 可筛选 ============== -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">7. 可筛选</span>
+        <span class="demo-card__tag">filterable</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body">
+            <div class="base-table" id="t-filterable"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== 8. 可展开行 ============== -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">8. 可展开行</span>
+        <span class="demo-card__tag">expandable</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body">
+            <div class="base-table" id="t-expandable"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== 9. 表头分组 ============== -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">9. 表头分组</span>
+        <span class="demo-card__tag">grouped-header</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body">
+            <div class="base-table" id="t-grouped"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== 10. 行编辑（div-input） ============== -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">10. 行编辑（div-input / div-select）</span>
+        <span class="demo-card__tag">editable</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body">
+            <div class="base-table" id="t-editable"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== 11. 树形数据 ============== -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">11. 树形数据</span>
+        <span class="demo-card__tag">tree</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body">
+            <div class="base-table" id="t-tree"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== 12. 拖拽排序 ============== -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">12. 拖拽排序</span>
+        <span class="demo-card__tag">drag-sort</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body">
+            <div class="base-table" id="t-drag"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== 13. 汇总行 ============== -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">13. 汇总行</span>
+        <span class="demo-card__tag">summary</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body">
+            <div class="base-table" id="t-summary"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== 14. 斑马纹 + 边框 + 悬停 + 紧凑 ============== -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">14. 斑马纹 + 边框 + 悬停 + 紧凑</span>
+        <span class="demo-card__tag">striped</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body">
+            <div class="base-table base-table--striped base-table--bordered base-table--hover base-table--compact" id="t-styled"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== 15. 加载中 + 空状态 ============== -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">15. 加载中 / 空状态</span>
+        <span class="demo-card__tag">loading/empty</span>
+      </div>
+      <div class="demo-card__body">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+          <div class="base-card">
+            <div class="base-card__header">
+              <span class="base-card__title">加载中</span>
+            </div>
+            <div class="base-card__body">
+              <div class="base-table base-table--loading" id="t-loading"></div>
+            </div>
+          </div>
+          <div class="base-card">
+            <div class="base-card__header">
+              <span class="base-card__title">空状态</span>
+            </div>
+            <div class="base-card__body">
+              <div class="base-table" id="t-empty"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== 16. 完整示例 ============== -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">16. 完整示例（选择 + 操作 + 状态 + 分页）</span>
+        <span class="demo-card__tag">complete</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__header">
+            <span class="base-card__title">订单管理</span>
+          </div>
+          <div class="base-card__body">
+            <div class="base-table base-table--hover" id="t-complete"></div>
+            <div class="base-paginated base-paginated--position-right" id="p-complete"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== Props 速查（16 个 demo 入参详细列表）============= -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">Props 速查 · 16 个 Demo 入参详解</span>
+        <span class="demo-card__tag">props</span>
+      </div>
+      <div class="demo-card__body">
+        <p style="margin: 0 0 12px; color: var(--color-text-secondary); font-size: 12px;">
+          每个 demo 实际传入的 props + columns 配置。生产组件用 props，columns 是数组参数。
+        </p>
+
+        <!-- 1. 基础表格 -->
+        <details class="demo-props" open>
+          <summary>1. 基础表格 <code>basic</code></summary>
+          <table class="demo-props__table">
+            <thead><tr><th>类型</th><th>参数</th><th>值</th></tr></thead>
+            <tbody>
+              <tr><td>props</td><td><code>data</code></td><td><code>usersData</code>（8 条）</td></tr>
+              <tr><td>props</td><td><code>columns</code></td><td><code>[{key:'name',title:'姓名',align:'left'},{key:'age',title:'年龄',align:'center'},{key:'email',title:'邮箱',align:'left'},{key:'role',title:'角色',align:'center'}]</code></td></tr>
+            </tbody>
+          </table>
+        </details>
+
+        <!-- 2. 固定列 -->
+        <details class="demo-props">
+          <summary>2. 固定列 <code>fixed</code></summary>
+          <table class="demo-props__table">
+            <thead><tr><th>类型</th><th>参数</th><th>值</th></tr></thead>
+            <tbody>
+              <tr><td>props</td><td><code>data</code></td><td>8 条 + address 字段</td></tr>
+              <tr><td>column</td><td><code>name.fixed</code></td><td><code>'left'</code>（左侧固定）</td></tr>
+              <tr><td>column</td><td><code>__action__.fixed</code></td><td><code>'right'</code>（右侧固定）</td></tr>
+              <tr><td>column</td><td><code>__action__.actions</code></td><td>查看(outline) + 编辑(solid) — 复用 base-button</td></tr>
+            </tbody>
+          </table>
+        </details>
+
+        <!-- 3. 操作列 -->
+        <details class="demo-props">
+          <summary>3. 操作列 <code>actions</code></summary>
+          <table class="demo-props__table">
+            <thead><tr><th>类型</th><th>参数</th><th>值</th></tr></thead>
+            <tbody>
+              <tr><td>column</td><td><code>__action__.actions</code></td><td>查看(primary/outline) · 编辑(primary/solid) · 删除(danger/outline)</td></tr>
+              <tr><td>event</td><td><code>action</code></td><td><code>(eventName, row) => void</code> — 监听按钮点击</td></tr>
+            </tbody>
+          </table>
+        </details>
+
+        <!-- 4. 状态列 -->
+        <details class="demo-props">
+          <summary>4. 状态列 <code>status (render)</code></summary>
+          <table class="demo-props__table">
+            <thead><tr><th>类型</th><th>参数</th><th>值</th></tr></thead>
+            <tbody>
+              <tr><td>column</td><td><code>status.render</code></td><td><code>(row) =&gt; h(BaseStatus, { type, variant:'light', size:'sm' }, text)</code></td></tr>
+              <tr><td>data</td><td><code>ordersData</code></td><td>5 条订单，status 字段: paid / pending / shipped / done / refunded</td></tr>
+              <tr><td>映射</td><td>paid→success · pending→warning · shipped→info · done→primary · refunded→danger</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </details>
+
+        <!-- 5. 可选择行 -->
+        <details class="demo-props">
+          <summary>5. 可选择行 <code>selectable</code></summary>
+          <table class="demo-props__table">
+            <thead><tr><th>类型</th><th>参数</th><th>值</th></tr></thead>
+            <tbody>
+              <tr><td>props</td><td><code>selectable</code></td><td><code>true</code></td></tr>
+              <tr><td>props</td><td><code>selectedKeys</code></td><td><code>[]</code>（响应式）</td></tr>
+              <tr><td>props</td><td><code>hover</code></td><td><code>true</code></td></tr>
+              <tr><td>event</td><td><code>selectionChange</code></td><td><code>(keys) =&gt; void</code></td></tr>
+              <tr><td>实现</td><td>复选框</td><td><code>&lt;span role="checkbox" tabindex="0" :aria-checked&gt;</code> + CSS3 — 全表用 div+CSS3</td></tr>
+            </tbody>
+          </table>
+        </details>
+
+        <!-- 6. 可排序 -->
+        <details class="demo-props">
+          <summary>6. 可排序 <code>sortable</code></summary>
+          <table class="demo-props__table">
+            <thead><tr><th>类型</th><th>参数</th><th>值</th></tr></thead>
+            <tbody>
+              <tr><td>column</td><td><code>name.sortable</code></td><td><code>true</code></td></tr>
+              <tr><td>column</td><td><code>age.sortable</code></td><td><code>true</code></td></tr>
+              <tr><td>props</td><td><code>defaultSort</code></td><td><code>{ key:'age', order:'asc' }</code></td></tr>
+              <tr><td>event</td><td><code>sortChange</code></td><td><code>(sort) =&gt; void</code></td></tr>
+              <tr><td>实现</td><td>排序图标</td><td><code>&lt;span&gt;▲&lt;/span&gt;&lt;span&gt;▼&lt;/span&gt;</code> — 点击表头切换 asc/desc</td></tr>
+            </tbody>
+          </table>
+        </details>
+
+        <!-- 7. 可筛选 -->
+        <details class="demo-props">
+          <summary>7. 可筛选 <code>filterable</code></summary>
+          <table class="demo-props__table">
+            <thead><tr><th>类型</th><th>参数</th><th>值</th></tr></thead>
+            <tbody>
+              <tr><td>column</td><td><code>role.filterable</code></td><td><code>true</code></td></tr>
+              <tr><td>column</td><td><code>role.filters</code></td><td><code>[{text:'管理员',value:'管理员'},{text:'编辑',value:'编辑'},{text:'访客',value:'访客'}]</code></td></tr>
+              <tr><td>column</td><td><code>status.render</code></td><td>复用 base-status（active→success / inactive→default）</td></tr>
+              <tr><td>event</td><td><code>filterChange</code></td><td><code>(filters) =&gt; void</code></td></tr>
+              <tr><td>实现</td><td>筛选面板</td><td>点击列筛选图标 → 弹出 <code>&lt;div class="base-table__filter-panel"&gt;</code></td></tr>
+            </tbody>
+          </table>
+        </details>
+
+        <!-- 8. 可展开行 -->
+        <details class="demo-props">
+          <summary>8. 可展开行 <code>expandable</code></summary>
+          <table class="demo-props__table">
+            <thead><tr><th>类型</th><th>参数</th><th>值</th></tr></thead>
+            <tbody>
+              <tr><td>props</td><td><code>expandable</code></td><td><code>true</code></td></tr>
+              <tr><td>slot</td><td><code>expanded-row</code></td><td><code>{ row } =&gt; vnode</code> — 自定义展开内容</td></tr>
+              <tr><td>实现</td><td>展开按钮</td><td><code>&lt;span role="button" tabindex="0" :aria-label&gt;</code> + CSS3 箭头旋转</td></tr>
+            </tbody>
+          </table>
+        </details>
+
+        <!-- 9. 表头分组 -->
+        <details class="demo-props">
+          <summary>9. 表头分组 <code>grouped-header</code></summary>
+          <table class="demo-props__table">
+            <thead><tr><th>类型</th><th>参数</th><th>值</th></tr></thead>
+            <tbody>
+              <tr><td>column</td><td><code>title: '个人信息', children</code></td><td><code>[age, gender]</code> — 嵌套列</td></tr>
+              <tr><td>column</td><td><code>title: '联系方式', children</code></td><td><code>[email, phone]</code></td></tr>
+              <tr><td>实现</td><td>分组表头</td><td>多行 <code>.base-table__row--header</code> + <code>colspan</code>/<code>rowspan</code> 属性</td></tr>
+            </tbody>
+          </table>
+        </details>
+
+        <!-- 10. 行编辑 -->
+        <details class="demo-props">
+          <summary>10. 行编辑 <code>editable</code></summary>
+          <table class="demo-props__table">
+            <thead><tr><th>类型</th><th>参数</th><th>值</th></tr></thead>
+            <tbody>
+              <tr><td>column</td><td><code>name.editable / editType</code></td><td><code>true / 'input'</code></td></tr>
+              <tr><td>column</td><td><code>age.editable / editType</code></td><td><code>true / 'number'</code></td></tr>
+              <tr><td>column</td><td><code>role.editable / editType / editOptions</code></td><td><code>true / 'select' / [...3项]</code></td></tr>
+              <tr><td>实现</td><td>div-input</td><td><code>&lt;div contenteditable="true" role="textbox"&gt;</code> + <code>@blur</code></td></tr>
+              <tr><td>实现</td><td>div-select</td><td><code>&lt;div tabindex="0"&gt;</code> + 自定义下拉面板（无 select）</td></tr>
+              <tr><td>event</td><td><code>cellEdit</code></td><td><code>(row, key, value) =&gt; void</code></td></tr>
+            </tbody>
+          </table>
+        </details>
+
+        <!-- 11. 树形数据 -->
+        <details class="demo-props">
+          <summary>11. 树形数据 <code>tree</code></summary>
+          <table class="demo-props__table">
+            <thead><tr><th>类型</th><th>参数</th><th>值</th></tr></thead>
+            <tbody>
+              <tr><td>props</td><td><code>treeData</code></td><td><code>true</code></td></tr>
+              <tr><td>props</td><td><code>rowKey</code></td><td><code>'id'</code></td></tr>
+              <tr><td>props</td><td><code>indent</code></td><td><code>24</code>（缩进 px）</td></tr>
+              <tr><td>props</td><td><code>defaultExpandAllRows</code></td><td><code>true</code></td></tr>
+              <tr><td>data</td><td><code>treeData</code></td><td>嵌套 children + _level + _expanded</td></tr>
+              <tr><td>实现</td><td>缩进</td><td><code>&lt;span class="base-table__tree-indent" :style="width"&gt;</code></td></tr>
+              <tr><td>实现</td><td>展开按钮</td><td><code>&lt;span role="button" tabindex="0"&gt;</code> + <code>.base-table__tree-toggle</code></td></tr>
+            </tbody>
+          </table>
+        </details>
+
+        <!-- 12. 拖拽排序 -->
+        <details class="demo-props">
+          <summary>12. 拖拽排序 <code>drag-sort</code></summary>
+          <table class="demo-props__table">
+            <thead><tr><th>类型</th><th>参数</th><th>值</th></tr></thead>
+            <tbody>
+              <tr><td>props</td><td><code>dragSort</code></td><td><code>true</code></td></tr>
+              <tr><td>row</td><td><code>:draggable</code></td><td><code>dragSort</code>（动态绑定）</td></tr>
+              <tr><td>event</td><td><code>dragEnd</code></td><td><code>(fromIndex, toIndex) =&gt; void</code></td></tr>
+              <tr><td>实现</td><td>拖拽手柄</td><td><code>.base-table__row--draggable</code> + CSS <code>cursor:move</code></td></tr>
+            </tbody>
+          </table>
+        </details>
+
+        <!-- 13. 汇总行 -->
+        <details class="demo-props">
+          <summary>13. 汇总行 <code>summary</code></summary>
+          <table class="demo-props__table">
+            <thead><tr><th>类型</th><th>参数</th><th>值</th></tr></thead>
+            <tbody>
+              <tr><td>props</td><td><code>showSummary</code></td><td><code>true</code></td></tr>
+              <tr><td>props</td><td><code>summaryMethod</code></td><td><code>(params) =&gt; Record&lt;string, unknown&gt;</code></td></tr>
+              <tr><td>props</td><td><code>bordered</code></td><td><code>true</code></td></tr>
+              <tr><td>实现</td><td>汇总行</td><td><code>.base-table__row--summary</code> + <code>position:sticky bottom:0</code></td></tr>
+            </tbody>
+          </table>
+        </details>
+
+        <!-- 14. 斑马纹 + 边框 + 悬停 + 紧凑 -->
+        <details class="demo-props">
+          <summary>14. 样式组合 <code>striped + bordered + hover + compact</code></summary>
+          <table class="demo-props__table">
+            <thead><tr><th>类型</th><th>参数</th><th>值</th></tr></thead>
+            <tbody>
+              <tr><td>props</td><td><code>striped</code></td><td><code>true</code> — 偶数行背景 <code>var(--color-bg-secondary)</code></td></tr>
+              <tr><td>props</td><td><code>bordered</code></td><td><code>true</code> — 行列描边</td></tr>
+              <tr><td>props</td><td><code>hover</code></td><td><code>true</code> — 悬停高亮</td></tr>
+              <tr><td>props</td><td><code>compact</code></td><td><code>true</code> — 紧凑 padding <code>var(--space-2)</code></td></tr>
+              <tr><td>CSS</td><td colspan="2"><code>.base-table--striped .base-table__row--data:nth-child(even)</code></td></tr>
+            </tbody>
+          </table>
+        </details>
+
+        <!-- 15. 加载中 + 空状态 -->
+        <details class="demo-props">
+          <summary>15. 加载中 + 空状态 <code>loading / empty</code></summary>
+          <table class="demo-props__table">
+            <thead><tr><th>类型</th><th>参数</th><th>值</th></tr></thead>
+            <tbody>
+              <tr><td>props</td><td><code>loading</code></td><td><code>true</code> — 复用 base-loading dots 动画</td></tr>
+              <tr><td>props</td><td><code>loadingText</code></td><td><code>'加载中...'</code></td></tr>
+              <tr><td>props</td><td><code>emptyText</code></td><td><code>'暂无数据'</code></td></tr>
+              <tr><td>props</td><td><code>emptyIcon</code></td><td>默认 SVG icon</td></tr>
+              <tr><td>slot</td><td><code>empty</code></td><td>自定义空状态内容</td></tr>
+              <tr><td>slot</td><td><code>loading</code></td><td>自定义加载内容</td></tr>
+              <tr><td>实现</td><td>loading 遮罩</td><td><code>.base-table--loading</code> + <code>inset:0</code> + <code>z-index:20</code></td></tr>
+            </tbody>
+          </table>
+        </details>
+
+        <!-- 16. 完整示例 -->
+        <details class="demo-props">
+          <summary>16. 完整示例 <code>complete</code></summary>
+          <table class="demo-props__table">
+            <thead><tr><th>类型</th><th>参数</th><th>值</th></tr></thead>
+            <tbody>
+              <tr><td>props</td><td><code>selectable</code></td><td><code>true</code></td></tr>
+              <tr><td>props</td><td><code>hover</code></td><td><code>true</code></td></tr>
+              <tr><td>props</td><td><code>selectedKeys</code></td><td><code>[]</code></td></tr>
+              <tr><td>column</td><td><code>status</code></td><td>render → 复用 base-status</td></tr>
+              <tr><td>column</td><td><code>__action__.actions</code></td><td>查看 + 编辑 + 删除（3 个 base-button）</td></tr>
+              <tr><td>配合</td><td><code>base-paginated</code></td><td>
+                <code>showTotal · showSizeChanger · showQuickJumper · position:'right'</code>
+              </td></tr>
+              <tr><td>配合</td><td><code>base-loading</code></td><td>可包裹 <code>base-table</code> 实现加载态</td></tr>
+            </tbody>
+          </table>
+        </details>
+
+        <!-- 全局汇总 -->
+        <details class="demo-props">
+          <summary>📊 全局汇总：23 种形态 / 50+ props / 14 events / 6 slots</summary>
+          <pre class="demo-code">23 种形态：basic · fixed · actions · selectable · sortable · filterable · expandable
+        · grouped-header · editable · tree · drag-sort · summary · striped
+        · bordered · hover · compact · loading · empty · virtual · resizable
+        · span · fixed-header · paginated
+
+50+ props：data · columns · selectable · selectedKeys · rowKey · sortable · defaultSort
+        · filterable · filters · expandable · defaultExpandAll · spanMethod · editable
+        · treeData · indent · defaultExpandAllRows · virtual · height · itemHeight
+        · dragSort · resizable · showSummary · summaryMethod · size · striped · bordered
+        · hover · compact · rounded · shadow · loading · loadingText · emptyText
+        · emptyIcon · pagination · rowClassName · cellClassName · fixed · defaultSort
+        · actions · children · render · slot · width · minWidth · maxWidth · align
+
+14 events：selectionChange · sortChange · filterChange · expandChange · rowClick
+        · rowDblclick · cellClick · cellEdit · action · dragEnd · resize · pageChange
+        · ...
+
+6 slots：header · cell · expanded-row · empty · loading · append
+
+依赖组件：base-button · base-status · base-card · base-loading · base-paginated
+禁止标签：&lt;button&gt; &lt;input&gt; &lt;select&gt; &lt;table&gt; &lt;textarea&gt; &lt;form&gt;
+容器原则：必须嵌入 base-card</pre>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="demo.js"></script>
+</body>
+</html>

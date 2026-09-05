@@ -23,7 +23,7 @@
 
 ## 规格文档
 
-- [base-card.md](base-card.md) — 根容器规格
+- [base-card.md](../base-card.md) — 根容器规格
 
 ## Demos
 

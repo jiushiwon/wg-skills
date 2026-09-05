@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-paginated 分页组件</title>
+  <link rel="stylesheet" href="demo.css">
+</head>
+<body>
+  <div class="page">
+    <h1 class="page__title">base-paginated 分页组件</h1>
+    <p class="page__subtitle">5 种模式 · 3 种尺寸 · 3 种位置 · 自定义下拉 · 自定义按钮</p>
+
+    <!-- 1. 经典模式 -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">1. 经典模式（classic）</span>
+        <span class="demo-card__tag">classic</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body">
+            <div id="p-classic"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. 按钮模式 -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">2. 按钮模式（button）</span>
+        <span class="demo-card__tag">button</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body">
+            <div id="p-button"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. 下拉模式 -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">3. 下拉模式（dropdown）</span>
+        <span class="demo-card__tag">dropdown</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body">
+            <div id="p-dropdown"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. 简洁模式 -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">4. 简洁模式（simple）</span>
+        <span class="demo-card__tag">simple</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body">
+            <div id="p-simple"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. 不同尺寸 -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">5. 不同尺寸（sm / md / lg）</span>
+        <span class="demo-card__tag">size</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body" style="display: flex; flex-direction: column; gap: 16px;">
+            <div id="p-sm"></div>
+            <div id="p-md"></div>
+            <div id="p-lg"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. 不同位置 -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">6. 不同位置（left / center / right）</span>
+        <span class="demo-card__tag">position</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body" style="display: flex; flex-direction: column; gap: 16px;">
+            <div id="p-left"></div>
+            <div id="p-center"></div>
+            <div id="p-right"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. 带总数 + 每页切换 + 跳转 -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">7. 完整功能（总数 + 每页切换 + 跳转）</span>
+        <span class="demo-card__tag">complete</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body">
+            <div id="p-full"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. 大量页码（20页） -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">8. 大量页码（20页测试）</span>
+        <span class="demo-card__tag">large</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body">
+            <div id="p-large"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. 禁用状态 -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">9. 禁用状态</span>
+        <span class="demo-card__tag">disabled</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body">
+            <div id="p-disabled"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Props -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">Props 速查</span>
+      </div>
+      <div class="demo-card__body">
+        <pre class="demo-code">5 种模式: classic / button / dropdown / simple / scroll
+3 种尺寸: sm / md / lg
+3 种位置: left / center / right
+强依赖: base-button + base-card
+禁止: &lt;button&gt; &lt;input&gt; &lt;select&gt; 等 HTML5 标签</pre>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="paginated.js"></script>
+</body>
+</html>

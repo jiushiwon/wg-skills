@@ -1,82 +1,95 @@
-// 用户相关 Tools
+package {basePackage}.agent.tool;
 
-package com.{package}.agent.tool;
-
-import com.{package}.auth.service.SysUserService;
-import com.{package}.agent.tool.Tool;
-import com.{package}.agent.tool.ToolParam;
-import lombok.RequiredArgsConstructor;
+import {basePackage}.auth.entity.SysRole;
+import {basePackage}.auth.entity.SysUser;
+import {basePackage}.auth.service.SysMenuService;
+import {basePackage}.auth.service.SysRoleService;
+import {basePackage}.auth.service.SysUserService;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 import java.util.Map;
 
 /**
  * 用户相关 Tool
+ * userId 为 @CurrentUser 系统注入参数，LLM 无法篡改
  */
+@Slf4j
 @Component
-@RequiredArgsConstructor
-public class UserTools {
+public class UserTools extends BaseTool {
 
-    private final SysUserService sysUserService;
+    @Autowired
+    private SysUserService userService;
 
-    @Tool(name = "getUserInfo", description = "获取用户信息")
+    @Autowired
+    private SysRoleService roleService;
+
+    @Autowired
+    private SysMenuService menuService;
+
+    /**
+     * 获取当前用户基本信息（脱敏）
+     * 不返回手机号、邮箱等 PII 字段
+     */
+    @AgentTool(name = "getUserInfo", description = "获取当前用户基本信息（不含手机号/邮箱）")
     public Map<String, Object> getUserInfo(
-        @ToolParam(description = "用户ID，不传则查当前用户") Long userId,
-        @ToolParam(description = "当前登录用户ID") Long currentUserId
-    ) {
-        // 如果未传 userId，则查当前用户
-        Long queryUserId = userId != null ? userId : currentUserId;
-
-        var user = sysUserService.getById(queryUserId);
+            @ToolParam(description = "当前用户ID（系统注入）") Long userId) {
+        SysUser user = userService.selectUserById(userId);
         if (user == null) {
             return Map.of("error", "用户不存在");
         }
-
         return Map.of(
-            "id", user.getId(),
-            "username", user.getUsername(),
-            "nickname", user.getNickname() != null ? user.getNickname() : "",
-            "email", user.getEmail() != null ? user.getEmail() : "",
-            "phone", user.getPhone() != null ? user.getPhone() : "",
-            "orgId", user.getOrgId() != null ? user.getOrgId() : 0,
-            "status", user.getStatus()
+            "id", user.getUserId(),
+            "username", user.getUserName(),
+            "nickname", user.getNickName(),
+            "dept", user.getDept() != null ? user.getDept().getDeptName() : "未分配"
         );
     }
 
-    @Tool(name = "getUserRoles", description = "获取用户角色")
-    public Map<String, Object> getUserRoles(
-        @ToolParam(description = "用户ID") Long userId,
-        @ToolParam(description = "当前登录用户ID") Long currentUserId
-    ) {
-        Long queryUserId = userId != null ? userId : currentUserId;
-        var roles = sysUserService.getUserRoles(queryUserId);
-        return Map.of("roles", roles);
+    /**
+     * 获取当前用户角色列表
+     */
+    @AgentTool(name = "getUserRoles", description = "获取当前用户角色列表")
+    public List<Map<String, Object>> getUserRoles(
+            @ToolParam(description = "当前用户ID（系统注入）") Long userId) {
+        List<SysRole> roles = roleService.selectRolesByUserId(userId);
+        return roles.stream()
+            .map(r -> Map.<String, Object>of(
+                "roleId", r.getRoleId(),
+                "roleName", r.getRoleName(),
+                "roleKey", r.getRoleKey()
+            ))
+            .toList();
     }
 
-    @Tool(name = "getUserMenus", description = "获取用户菜单权限")
-    public Map<String, Object> getUserMenus(
-        @ToolParam(description = "用户ID") Long userId,
-        @ToolParam(description = "当前登录用户ID") Long currentUserId
-    ) {
-        Long queryUserId = userId != null ? userId : currentUserId;
-        // 需要调用 Auth 模块的服务
-        var menus = sysUserService.getUserMenus(queryUserId);
-        return Map.of("menus", menus);
+    /**
+     * 获取当前用户菜单权限
+     */
+    @AgentTool(name = "getUserMenus", description = "获取当前用户菜单权限列表")
+    public List<String> getUserMenus(
+            @ToolParam(description = "当前用户ID（系统注入）") Long userId) {
+        return menuService.selectMenuPermsByUserId(userId);
     }
 
-    @Tool(name = "searchUsers", description = "搜索用户")
-    public Map<String, Object> searchUsers(
-        @ToolParam(description = "搜索关键词") String keyword,
-        @ToolParam(description = "返回数量限制") Integer limit
-    ) {
-        int queryLimit = limit != null && limit > 0 ? Math.min(limit, 50) : 10;
-        var users = sysUserService.searchUsers(keyword, queryLimit);
-        return Map.of(
-            "total", users.size(),
-            "users", users.stream().map(u -> Map.of(
-                "id", u.getId(),
-                "username", u.getUsername(),
-                "nickname", u.getNickname() != null ? u.getNickname() : ""
-            )).toList()
-        );
+    /**
+     * 搜索用户（脱敏：ID/用户名/昵称，不含敏感信息）
+     */
+    @AgentTool(name = "searchUsers", description = "搜索用户（返回ID/用户名/昵称，不含敏感信息）")
+    public List<Map<String, Object>> searchUsers(
+            @ToolParam(description = "搜索关键词") @Size(min = 1, max = 50) String keyword,
+            @ToolParam(description = "返回数量上限") @Min(1) @Max(50) Integer limit,
+            @ToolParam(description = "当前用户ID（系统注入）") Long userId) {
+        return userService.searchUsers(keyword, limit).stream()
+            .map(u -> Map.<String, Object>of(
+                "id", u.getUserId(),
+                "username", u.getUserName(),
+                "nickname", u.getNickName()
+            ))
+            .toList();
     }
 }

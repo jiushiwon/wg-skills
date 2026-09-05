@@ -4,6 +4,8 @@
 > 三种 type：primary / default / success / warning / danger / text
 > 三种 size：sm / md / lg
 > 五种 variant：solid / outline / ghost / text / link
+>
+> **零 HTML5 标签**：使用 `<div role="button">` + CSS3 实现，**严禁 `<button>`**。
 
 ## Props
 
@@ -34,27 +36,36 @@
 | danger | 红色实心 | — | — | 红色文字 | — |
 | text | — | — | — | 文字按钮 | — |
 
-## 代码
+## 代码（零 HTML5 标签）
 
 ```vue
 <template>
-  <button
+  <div
     :class="[
       'base-button',
       `base-button--type-${type}`,
       `base-button--size-${size}`,
       `base-button--variant-${variant}`,
       { 'base-button--block': block, 'base-button--loading': loading },
+      { 'is-disabled': disabled || loading },
     ]"
-    :disabled="disabled || loading"
-    @click="emit('click', $event)"
+    role="button"
+    tabindex="0"
+    :aria-disabled="(disabled || loading) ? 'true' : 'false'"
+    @click="handleClick"
+    @keydown.enter="handleClick"
+    @keydown.space.prevent="handleClick"
   >
     <span v-if="loading" class="base-button__spinner"></span>
     <slot v-else />
-  </button>
+  </div>
 </template>
 
 <script setup lang="ts">
+const emit = defineEmits<{
+  click: [event: MouseEvent | KeyboardEvent]
+}>()
+
 withDefaults(defineProps<{
   type?: 'primary' | 'default' | 'success' | 'warning' | 'danger' | 'text'
   size?: 'sm' | 'md' | 'lg'
@@ -72,9 +83,10 @@ withDefaults(defineProps<{
   block: false,
 })
 
-const emit = defineEmits<{
-  click: [event: MouseEvent]
-}>()
+function handleClick(event: MouseEvent | KeyboardEvent) {
+  // disabled / loading 状态由 .is-disabled CSS 阻止点击（pointer-events）
+  emit('click', event)
+}
 </script>
 
 <style scoped>
@@ -90,11 +102,22 @@ const emit = defineEmits<{
   border: 1px solid transparent;
   user-select: none;
   white-space: nowrap;
+  outline: none;
 }
 
-.base-button:disabled {
+.base-button:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-primary-light);
+}
+
+.base-button:active:not(.is-disabled) {
+  transform: scale(0.98);
+}
+
+/* 禁用态（纯 CSS，不依赖原生 disabled） */
+.base-button.is-disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  pointer-events: none;
 }
 
 .base-button--block { display: flex; width: 100%; }
@@ -109,7 +132,7 @@ const emit = defineEmits<{
   background: var(--color-primary);
   color: var(--color-text-inverse);
 }
-.base-button--variant-solid.base-button--type-primary:hover:not(:disabled) {
+.base-button--variant-solid.base-button--type-primary:hover:not(.is-disabled) {
   background: var(--color-primary-light);
 }
 
@@ -119,7 +142,7 @@ const emit = defineEmits<{
   border-color: var(--color-border-strong);
   color: var(--color-text);
 }
-.base-button--variant-solid.base-button--type-default:hover:not(:disabled) {
+.base-button--variant-solid.base-button--type-default:hover:not(.is-disabled) {
   border-color: var(--color-primary);
   color: var(--color-primary);
 }
@@ -128,7 +151,7 @@ const emit = defineEmits<{
 .base-button--variant-solid.base-button--type-success { background: var(--color-success); color: var(--color-text-inverse); }
 .base-button--variant-solid.base-button--type-warning { background: var(--color-warning); color: var(--color-text-inverse); }
 .base-button--variant-solid.base-button--type-danger { background: var(--color-danger); color: var(--color-text-inverse); }
-.base-button--variant-solid.base-button--type-danger:hover:not(:disabled) { background: var(--color-danger-dark); }
+.base-button--variant-solid.base-button--type-danger:hover:not(.is-disabled) { background: var(--color-danger-dark); }
 
 /* Outline */
 .base-button--variant-outline.base-button--type-primary {
@@ -136,7 +159,7 @@ const emit = defineEmits<{
   color: var(--color-primary);
   background: transparent;
 }
-.base-button--variant-outline.base-button--type-primary:hover:not(:disabled) {
+.base-button--variant-outline.base-button--type-primary:hover:not(.is-disabled) {
   background: var(--color-primary);
   color: var(--color-text-inverse);
 }
@@ -149,7 +172,7 @@ const emit = defineEmits<{
 }
 .base-button--variant-text.base-button--type-primary { color: var(--color-primary); }
 .base-button--variant-text.base-button--type-danger { color: var(--color-danger); }
-.base-button--variant-text:hover:not(:disabled) { background: var(--color-surface-hover); }
+.base-button--variant-text:hover:not(.is-disabled) { background: var(--color-surface-hover); }
 
 /* Loading spinner */
 .base-button__spinner {
@@ -183,6 +206,13 @@ const emit = defineEmits<{
   ...
 </base-card>
 ```
+
+## 红线
+
+- ❌ 禁止使用 `<button>` 原生标签（必须 `<div role="button">` + CSS3）
+- ❌ 禁止使用 `:disabled` 原生属性（必须 `.is-disabled` class + `pointer-events: none`）
+- ❌ 禁止混入 Element Plus / 任何第三方按钮组件
+- ❌ 禁止硬编码颜色 / 间距 / 字号 / 圆角（必须 `var(--*)`）
 
 ## HTML Demo
 
