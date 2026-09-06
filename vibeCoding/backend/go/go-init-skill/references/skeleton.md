@@ -172,8 +172,9 @@ type Config struct {
 	DBDriver   string // mysql / postgres
 
 	// JWT 配置
-	JwtSecret string
-	JwtExpire int // 小时
+	JwtSecret     string
+	JwtExpire     int  // access_token 过期时间（小时）
+	JwtRefreshExpire int // refresh_token 过期时间（天）
 
 	// CORS 配置
 	CorsOrigins string
@@ -203,7 +204,8 @@ func Load() *Config {
 		DBName:        getEnv("DB_NAME", "wg_db"),
 		DBDriver:      getEnv("DB_DRIVER", "mysql"),
 		JwtSecret:     getEnv("JWT_SECRET", "change-me-in-production"),
-		JwtExpire:     getEnvInt("JWT_EXPIRE", 24),
+		JwtExpire:        getEnvInt("JWT_EXPIRE", 24),
+		JwtRefreshExpire:  getEnvInt("JWT_REFRESH_EXPIRE", 7), // 默认 7 天
 		CorsOrigins:   getEnv("CORS_ORIGINS", "*"),
 		UploadPath:    getEnv("UPLOAD_PATH", "./uploads"),
 		UploadMaxSize: getEnvInt64("UPLOAD_MAX_SIZE", 10),
@@ -485,23 +487,26 @@ func Register(r *gin.Engine, cfg *config.Config) {
 	{
 		// 健康检查（无需鉴权）
 		api.GET("/health", healthCheck)
+		api.GET("/health/db", healthCheckDB)
 
 		// 认证路由（无需鉴权）
 		auth := api.Group("/auth")
 		{
 			auth.POST("/register", register)
 			auth.POST("/login", login)
+			auth.POST("/refresh", refreshToken)
 		}
 
 		// 需要鉴权的路由
 		protected := api.Group("")
 		protected.Use(JWTAuth(cfg))
 		{
+			protected.GET("/auth/me", getCurrentUser)
+			protected.POST("/auth/logout", logout)
 			protected.GET("/users", listUsers)
 			protected.GET("/users/:id", getUser)
 			protected.PUT("/users/:id", updateUser)
 			protected.DELETE("/users/:id", deleteUser)
-			protected.POST("/auth/refresh", refreshToken)
 			protected.GET("/sse/chat", sseChat)
 			protected.POST("/upload", uploadFile)
 			protected.POST("/uploads", uploadFiles)
@@ -562,16 +567,19 @@ func JWTAuth(cfg *config.Config) gin.HandlerFunc {
 }
 
 // 占位函数（实际在 handlers 中实现）
-func register(c *gin.Context)  { c.JSON(501, gin.H{"message": "not implemented"}) }
-func login(c *gin.Context)     { c.JSON(501, gin.H{"message": "not implemented"}) }
-func listUsers(c *gin.Context) { c.JSON(501, gin.H{"message": "not implemented"}) }
-func getUser(c *gin.Context)   { c.JSON(501, gin.H{"message": "not implemented"}) }
-func updateUser(c *gin.Context) { c.JSON(501, gin.H{"message": "not implemented"}) }
-func deleteUser(c *gin.Context) { c.JSON(501, gin.H{"message": "not implemented"}) }
-func refreshToken(c *gin.Context) { c.JSON(501, gin.H{"message": "not implemented"}) }
-func sseChat(c *gin.Context)    { c.JSON(501, gin.H{"message": "not implemented"}) }
-func uploadFile(c *gin.Context)  { c.JSON(501, gin.H{"message": "not implemented"}) }
-func uploadFiles(c *gin.Context)  { c.JSON(501, gin.H{"message": "not implemented"}) }
+func register(c *gin.Context)      { c.JSON(501, gin.H{"message": "not implemented"}) }
+func login(c *gin.Context)         { c.JSON(501, gin.H{"message": "not implemented"}) }
+func refreshToken(c *gin.Context)   { c.JSON(501, gin.H{"message": "not implemented"}) }
+func getCurrentUser(c *gin.Context) { c.JSON(501, gin.H{"message": "not implemented"}) }
+func logout(c *gin.Context)        { c.JSON(501, gin.H{"message": "not implemented"}) }
+func listUsers(c *gin.Context)     { c.JSON(501, gin.H{"message": "not implemented"}) }
+func getUser(c *gin.Context)       { c.JSON(501, gin.H{"message": "not implemented"}) }
+func updateUser(c *gin.Context)    { c.JSON(501, gin.H{"message": "not implemented"}) }
+func deleteUser(c *gin.Context)    { c.JSON(501, gin.H{"message": "not implemented"}) }
+func healthCheckDB(c *gin.Context) { c.JSON(501, gin.H{"message": "not implemented"}) }
+func sseChat(c *gin.Context)      { c.JSON(501, gin.H{"message": "not implemented"}) }
+func uploadFile(c *gin.Context)    { c.JSON(501, gin.H{"message": "not implemented"}) }
+func uploadFiles(c *gin.Context)   { c.JSON(501, gin.H{"message": "not implemented"}) }
 ```
 
 ### internal/models/user.go
@@ -631,10 +639,11 @@ func InitJWT(secret string) {
 type Claims struct {
 	UserID   uint   `json:"user_id"`
 	Username string `json:"username"`
+	Type     string `json:"type"` // "access" 或 "refresh"
 	jwt.RegisteredClaims
 }
 
-// GenerateToken 生成 Token
+// GenerateToken 生成访问令牌 (access_token)
 func GenerateToken(userID uint, username string, expireHours int) (string, error) {
 	now := time.Now()
 	expire := now.Add(time.Duration(expireHours) * time.Hour)
@@ -642,6 +651,28 @@ func GenerateToken(userID uint, username string, expireHours int) (string, error
 	claims := Claims{
 		UserID:   userID,
 		Username: username,
+		Type:     "access",
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(expire),
+			IssuedAt:  jwt.NewNumericDate(now),
+			NotBefore: jwt.NewNumericDate(now),
+			Issuer:    "wg-app",
+		},
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	return token.SignedString(jwtSecret)
+}
+
+// GenerateRefreshToken 生成刷新令牌 (refresh_token)
+func GenerateRefreshToken(userID uint, username string, expireDays int) (string, error) {
+	now := time.Now()
+	expire := now.Add(time.Duration(expireDays) * 24 * time.Hour)
+
+	claims := Claims{
+		UserID:   userID,
+		Username: username,
+		Type:     "refresh",
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expire),
 			IssuedAt:  jwt.NewNumericDate(now),
@@ -709,8 +740,10 @@ DB_NAME=wg_db
 # ==================== JWT 配置 ====================
 # JWT 密钥 [WARNING] 生产环境必须修改！
 JWT_SECRET=change-me-in-production-use-openssl-rand-hex-32
-# Token 过期时间（小时）
+# access_token 过期时间（小时）
 JWT_EXPIRE=24
+# refresh_token 过期时间（天）
+JWT_REFRESH_EXPIRE=7
 
 # ==================== CORS 配置 ====================
 # 允许的 Origins，多个用逗号分隔

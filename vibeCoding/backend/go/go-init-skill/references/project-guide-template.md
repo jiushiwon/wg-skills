@@ -97,6 +97,13 @@ docker-compose up -d
 
 ## API 接口
 
+### 健康检查
+
+| 接口 | 方法 | 说明 |
+|------|------|------|
+| /api/health | GET | 服务健康检查 |
+| /api/health/db | GET | 数据库连通检查 |
+
 ### 认证接口
 
 | 接口 | 方法 | 说明 |
@@ -104,6 +111,8 @@ docker-compose up -d
 | /api/auth/register | POST | 用户注册 |
 | /api/auth/login | POST | 用户登录 |
 | /api/auth/refresh | POST | 刷新 Token |
+| /api/auth/me | GET | 当前用户信息 |
+| /api/auth/logout | POST | 登出 |
 
 ### 用户接口
 
@@ -118,7 +127,6 @@ docker-compose up -d
 
 | 接口 | 方法 | 说明 |
 |------|------|------|
-| /api/health | GET | 健康检查 |
 | /api/sse/chat | GET | SSE 聊天 |
 | /api/upload | POST | 单文件上传 |
 | /api/uploads | POST | 多文件上传 |
@@ -138,7 +146,8 @@ docker-compose up -d
 | DB_PASSWORD | - | 数据库密码 |
 | DB_NAME | wg_db | 数据库名称 |
 | JWT_SECRET | - | JWT 密钥 |
-| JWT_EXPIRE | 24 | Token 过期时间（小时） |
+| JWT_EXPIRE | 24 | access_token 过期时间（小时） |
+| JWT_REFRESH_EXPIRE | 7 | refresh_token 过期时间（天） |
 | CORS_ORIGINS | * | 允许的跨域来源 |
 
 ## 常见问题
