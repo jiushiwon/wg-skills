@@ -44,7 +44,7 @@ AI 时代的编程不是"取代程序员"，而是把传统工程中**重复、�
 | `fastapi-auth-module-skill/` | FastAPI 组织与鉴权 | "FastAPI 加权限"、"RBAC" |
 | `fastapi-ws-module-skill/` | FastAPI WebSocket 即时通讯 | "WebSocket 聊天"、"IM 模块" |
 | `fastapi-agent-module-skill/` | FastAPI + LangGraph AI Agent | "AI Agent 服务"、"LangGraph" |
-| `go-init-skill/` | Go (Gin) 一键初始化（小白友好） | "帮我搭 Go"、"Go 脚手架"、"Gin 后端" |
+| `go-gin-init-skill/` | Go + Gin 一键初始化（小白友好） | "帮我搭 Go"、"Go 脚手架"、"Gin 后端" |
 | `backend-analysis-skill/` | 后端项目全景分析 | "分析这个后端项目" |
 | `backend-generate-skill/` | 后端骨架生成（**父技能 + 7 子技能**） | "生成后端骨架"、"后端选型" |
 | `hot-trend-collector/` | 热点抓取（知乎/微博/百度/微信） | "热点抓取"、"自媒体热点" |

@@ -52,9 +52,9 @@ Python 虽好，但 GIL（全局解释器锁）让它在 CPU 密集型场景下�
 
 这也就是为什么，AI 时代的后端服务，Go 正在成为新宠——推理服务、高并发 API、实时流处理，这些都是 Go 的强项。
 
-## 二、go-init-skill 带来了什么？
+## 二、go-gin-init-skill 带来了什么？
 
-和 Spring Boot、FastAPI 一样，go-init-skill 面向零基础小白，提供**一键初始化 + 环境探测 + 完整骨架 + 启动脚本**的完整链路。
+和 Spring Boot、FastAPI 一样，go-gin-init-skill 面向零基础小白，提供**一键初始化 + 环境探测 + 完整骨架 + 启动脚本**的完整链路。
 
 ### 2.1 核心特性（11 项）
 
@@ -197,9 +197,9 @@ create go project
 | /api/sse/chat | GET | SSE 聊天 |
 | /api/upload | POST | 文件上传 |
 
-## 五、为什么选择 go-init-skill？
+## 五、为什么选择 go-gin-init-skill？
 
-| 维度 | 其他方案 | go-init-skill |
+| 维度 | 其他方案 | go-gin-init-skill |
 |------|---------|---------------|
 | 环境安装 | 自己装 Go | 自动检测 + 安装指引 |
 | 项目生成 | 手写或复制粘贴 | 一键生成完整骨架 |
@@ -239,7 +239,7 @@ create go project
 
 ## 七、下期预告
 
-go-init-skill 推出后，我们会继续完善 Go 生态：
+go-gin-init-skill 推出后，我们会继续完善 Go 生态：
 
 - go-auth-module-skill：Go 版本 RBAC + 组织架构
 - go-ws-module-skill：WebSocket 实时通讯
@@ -257,5 +257,5 @@ go-init-skill 推出后，我们会继续完善 Go 生态：
 
 - springboot-init-skill：Java 脚手架
 - fastapi-init-skill：Python 脚手架
-- go-init-skill：Go 脚手架（本篇）
+- go-gin-init-skill：Go 脚手架（本篇）
 - frontend-request-skill：前端请求层规范

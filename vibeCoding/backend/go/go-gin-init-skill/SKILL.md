@@ -1,5 +1,5 @@
 ---
-name: go-init-skill
+name: go-gin-init-skill
 description: Go 项目一键初始化技能。面向零基础小白，提供环境探测、自动安装、完整 Web 骨架生成、SSE 流式框架、JWT 鉴权、统一响应封装、文件上传接口、一键启动/重启脚本、Swagger 文档，内置 MySQL（默认）/ PostgreSQL 数据库选择。用户只需说"帮我搭一个 Go 项目"即可一条命令完成从零到跑的完整链路。触发词："Go 脚手架"、"Go 一键生成"、"初始化 Go 项目"、"Go 快速开始"、"go init"、"搭建 Go 服务"、"Go Web 骨架"、"Go 开箱即用"、"Go 零基础"、"Go 小白"、"帮我搭一个 Go"、"新建 Go"、"create go project"、"go starter"。
 ---
 

@@ -1,6 +1,6 @@
 # {{PROJECT_NAME}} 接口契约
 
-本文档是 `go-init-skill` 生成项目的默认接口契约模板，与 `frontend-request-skill` 的响应解析逻辑对齐。
+本文档是 `go-gin-init-skill` 生成项目的默认接口契约模板，与 `frontend-request-skill` 的响应解析逻辑对齐。
 
 ## 1. 基础信息
 
