@@ -165,4 +165,4 @@ demo-components/base-card-layout/
 
 ---
 
-> ⚠️ Demo 案例仅供参考，非完美实现
+> [WARNING] Demo 案例仅供参考，非完美实现
