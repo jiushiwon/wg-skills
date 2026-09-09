@@ -407,6 +407,7 @@ wg-skills/
 | `<input type="radio">` | `<div role="radio" tabindex="0" :aria-checked>` |
 | `<button type="button">` 开关 | `<div role="switch" tabindex="0" :aria-checked>` |
 | `<input type="text">` | `<div contenteditable="!disabled && !readonly" role="textbox" @input>` |
+| `<input type="file">` 上传 | **唯一技术豁免**：Web 文件选择是浏览器安全模型硬性要求，`base-upload.md` 内部允许渲染一个 `display:none` 的隐藏 file 控件（Element Plus / Naive UI 等所有上传组件均如此），可见触发区仍用 `<div role="button">` |
 | `<textarea>` | `<div contenteditable="true" role="textbox">` |
 | `<form @submit.prevent>` | `<div role="form" @keydown.enter.prevent>` + `emit('submit')` |
 | `<table>/<tr>/<td>` | CSS Grid / Flex 实现（语义保留 `<div>` + ARIA role="grid/row/gridcell"） |
@@ -443,8 +444,10 @@ wg-skills/
 
 ```bash
 # ✅ 正确：审计零 HTML5 标签违规（仅 .md）
+# --exclude base-upload.md：其隐藏 file 控件是 Web 文件选择的唯一技术豁免
 grep -rnE '<(button|input|select|table|tr|td|th|textarea|form|option|label|fieldset|header|footer|h[1-6])' \
   --include="*.md" \
+  --exclude="base-upload.md" \
   ./vibeCoding/frontend/vue/vue-base-skill \
   ./vibeCoding/frontend/vue/vue-form-skill \
   ./vibeCoding/frontend/vue/vue-table-skill

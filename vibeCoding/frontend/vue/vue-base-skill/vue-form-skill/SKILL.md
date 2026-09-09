@@ -1,18 +1,21 @@
 ---
 name: vue-form-skill
-description: Vue 表单体系技能。基于「容器原则」，所有表单必须嵌入 base-card。提供 base-form（表单容器 + 校验）、base-form-item（表单项）、base-input / base-select / base-checkbox / base-radio / base-switch / base-datepicker 共 8 个组件。纯 CSS 实现，零第三方组件库。触发词："Vue 表单"、"vue-form"、"做一个表单"、"表单校验"、"登录表单"、"搜索表单"。
+description: Vue 表单体系技能。基于「容器原则」，所有表单必须嵌入 base-card。提供 base-form（表单容器 + 校验）、base-form-item（表单项）、base-input / base-select / base-checkbox / base-radio / base-switch / base-datepicker / base-upload 共 9 个基础组件，以及 base-form-render（契约驱动万能表单渲染器，根据 FormSchema 字段+类型+必填自动生成表单）。纯 CSS 实现，零第三方组件库。触发词："Vue 表单"、"vue-form"、"做一个表单"、"表单校验"、"万能表单"、"契约驱动表单"、"ERP 表单"、"动态表单"、"上传组件"。
 trigger: |
   做一个表单 | 做一个登录表单 | 做一个搜索表单 | 做一个注册表单
   表单校验 | 表单验证 | 表单布局 | 表单容器
   做一个输入框 | 做一个选择器 | 做一个复选框 | 做一个单选框 | 做一个开关
-  做一个日期选择器 | 做一个表单项
+  做一个日期选择器 | 做一个表单项 | 做一个上传组件 | 做一个文件上传 | 图片上传
+  万能表单 | 契约驱动表单 | 根据契约生成表单 | ERP 表单 | 动态表单 | schema 表单
 ---
 
 # vue-form-skill
 
-> Vue 表单体系技能。Vue3 + TypeScript 泛型组件，8 个核心组件，覆盖 99% 业务表单场景。零第三方组件库。
+> Vue 表单体系技能。Vue3 + TypeScript 泛型组件，10 个核心组件（9 基础 + 1 契约渲染器），覆盖 99% 业务表单场景。零第三方组件库。
 >
 > **容器原则**：所有表单必须嵌入 `<base-card>`。无例外。
+>
+> **契约驱动**：`base-form-render` 根据 FormSchema（字段 + 类型 + 必填）自动生成表单，一份契约同时驱动前端渲染与后端入参校验。
 >
 > **零 HTML5 标签原则**：表单组件是重灾区（`<input>` `<select>` `<textarea>` `<form>` `<label>`），`.md` 文档里**严禁出现**这些原生标签，必须用 `<div>` `<span>` + ARIA + contenteditable + 键盘事件实现。表单组件若混入原生标签，整套规范直接破功。
 >
@@ -30,6 +33,8 @@ trigger: |
 | **base-radio** | 单选框 | 单选组 |
 | **base-switch** | 开关 | 开/关切换 |
 | **base-datepicker** | 日期选择器 | 日期、日期范围 |
+| **base-upload** | 上传 | 图片墙、附件、进度、删除 |
+| **base-form-render** | 万能表单渲染器 | 契约驱动，自动生成表单 |
 
 ## 命名对齐矩阵（与 uniapp-form-skill 完全对齐）
 
@@ -43,6 +48,8 @@ base-checkbox         ←  base-checkbox
 base-radio            ←  base-radio
 base-switch           ←  base-switch
 base-datepicker       ←  base-datepicker
+base-upload           ←  base-upload
+base-form-render      ←  base-form-render
 ```
 
 跨技能命名严格保持一致：组件、Token、文件结构、容器原则。
@@ -66,6 +73,8 @@ base-datepicker       ←  base-datepicker
 ### 唯一例外
 
 ✅ **Demo HTML 文件**（`demo-components/**/*.html`）允许使用 HTML5 标签 —— 给用户查看的运行示例，与生产组件实现隔离。
+
+✅ **base-upload 的隐藏 file 控件**：Web 端文件选择是浏览器安全模型的硬性要求，`base-upload.md` 内部必须渲染一个**隐藏的原生 `<input type="file">`**（Element Plus / Naive UI 等所有上传组件均如此）。这是零标签铁律的**唯一技术豁免**，除此之外可见触发区、文件列表、删除按钮全部用 `<div>` + ARIA。
 
 ### 工具替代矩阵（表单场景）
 
@@ -150,8 +159,10 @@ base-datepicker       ←  base-datepicker
 
 ```bash
 # 仅检查 base-*.md 实现文件（SKILL.md 的反例代码块已豁免）
+# --exclude base-upload.md：其隐藏 file 控件是 Web 文件选择的唯一技术豁免
 grep -rnE '<(input|select|textarea|form|label|fieldset|button|option)' \
   --include="base-*.md" \
+  --exclude="base-upload.md" \
   ./vibeCoding/frontend/vue/vue-form-skill
 
 # 输出为空才算合规
@@ -183,17 +194,31 @@ grep -rnE '<(input|select|textarea|form|label|fieldset|button|option)' \
 
 ```
 base-card（容器）
-  └── base-form（表单容器）
+  ├── base-form-render（契约驱动万能表单渲染器）
+  │     └── base-form（表单容器）── 按 FormSchema 自动生成
+  │           └── base-form-item（表单项）
+  │                 ├── base-input（输入框）
+  │                 ├── base-select（选择器）
+  │                 ├── base-checkbox（复选框）
+  │                 ├── base-radio（单选框）
+  │                 ├── base-switch（开关）
+  │                 ├── base-datepicker（日期选择器）
+  │                 └── base-upload（上传）
+  │
+  └── base-form（表单容器，手写模式）
         ├── base-form-item（表单项）
         │     ├── base-input（输入框）
         │     ├── base-select（选择器）
         │     ├── base-checkbox（复选框）
         │     ├── base-radio（单选框）
         │     ├── base-switch（开关）
-        │     └── base-datepicker（日期选择器）
+        │     ├── base-datepicker（日期选择器）
+        │     └── base-upload（上传）
         └── base-form-item
               └── ...
 ```
+
+> 两种模式：**契约驱动**（`base-form-render` + FormSchema，ERP/动态表单）和**手写模式**（`base-form` + 各组件，定制交互）。二者共享同一套 base-* 控件和校验引擎。
 
 ## 文件结构
 
@@ -209,8 +234,12 @@ vue-form-skill/
 ├── base-radio.md                   # 单选框
 ├── base-switch.md                  # 开关
 ├── base-datepicker.md              # 日期选择器
+├── base-upload.md                  # 上传（图片墙/附件/进度）
+├── base-form-render.md             # 契约驱动万能表单渲染器
 ├── references/
-│   └── validation-rules.md         # 校验规则库
+│   ├── validation-rules.md         # 校验规则库
+│   ├── form-contract.md            # 表单契约规范（FieldType/FormSchema/映射/推导）
+│   └── mock-contract-product.md    # 商品信息模拟契约
 └── demo-components/
     ├── shared/
     │   ├── tokens.css              # 设计 Token（与 vue-theme-skill 对齐）
@@ -218,7 +247,7 @@ vue-form-skill/
     └── base-form/
         ├── README.md
         └── html/
-            └── 00-showcase.html    # 8 大组件样式矩阵总览（variant/size/shape/color 全维度）
+            └── 00-showcase.html    # 组件样式矩阵总览（variant/size/shape/color 全维度）
 ```
 
 ## 核心 API 概览
@@ -359,6 +388,92 @@ interface BaseDatepickerProps {
 }
 ```
 
+### base-upload
+
+```typescript
+interface BaseUploadProps {
+  modelValue?: string[]                 // 已上传文件 URL 列表
+  action: string                        // 上传接口地址
+  accept?: string                       // 接受文件类型
+  maxCount?: number                     // 最大数量
+  maxSize?: number                      // 单文件大小上限（MB）
+  multiple?: boolean                    // 是否多选
+  listType?: 'picture' | 'picture-card' | 'text'
+  disabled?: boolean
+  autoUpload?: boolean                  // 选择后自动上传
+  showFileList?: boolean
+  name?: string                         // 上传字段名
+}
+```
+
+### base-form-render（契约驱动万能表单渲染器）
+
+```typescript
+interface BaseFormRenderProps {
+  modelValue?: Record<string, unknown>  // 表单数据（v-model）
+  schema: FormSchema                    // 表单契约（必填）
+  disabled?: boolean
+  readonly?: boolean
+}
+
+// 契约类型定义（详见 references/form-contract.md）
+interface FormSchema {
+  fields: FormField[]
+  layout?: 'horizontal' | 'vertical' | 'inline'
+  labelWidth?: string | number
+  labelAlign?: 'left' | 'right'
+  size?: 'sm' | 'md' | 'lg'
+  disabled?: boolean
+  columns?: 1 | 2 | 3
+}
+
+type FieldType =
+  | 'input' | 'textarea' | 'password' | 'number' | 'email' | 'phone' | 'idcard'
+  | 'select' | 'radio' | 'checkbox' | 'switch' | 'datepicker' | 'upload'
+```
+
+## 契约驱动表单（万能表单）
+
+> **根据契约（字段 + 类型 + 必填）自动生成表单**。一份 FormSchema 同时驱动前端渲染与后端入参校验，是 ERP / 后台 CRUD / 动态字段场景的核心能力。
+
+### 两种模式
+
+| 模式 | 组件 | 适用场景 |
+|------|------|----------|
+| 契约驱动 | `base-form-render` | ERP/后台 CRUD、字段由后端下发、字段频繁增删 |
+| 手写模式 | `base-form` + 各组件 | 定制交互、固定表单（登录/注册） |
+
+### 契约驱动快速开始
+
+```vue
+<template>
+  <base-card title="新增商品">
+    <base-form-render v-model="goodsForm" :schema="goodsSchema" />
+  </base-card>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { goodsSchema } from '@/contracts/goods.contract'
+
+const goodsForm = ref<Record<string, unknown>>({})
+</script>
+```
+
+### 契约规范
+
+- 完整契约规范（FieldType / FormField / FormSchema / 映射表 / 规则推导）见 [references/form-contract.md](references/form-contract.md)
+- 商品信息模拟契约（12 种字段类型落地示例）见 [references/mock-contract-product.md](references/mock-contract-product.md)
+- 字段类型：`input / textarea / password / number / email / phone / idcard / select / radio / checkbox / switch / datepicker / upload`
+
+### 与后端契约对齐
+
+- 字段名 `prop` === 后端入参字段名 === 数据库字段名
+- 响应走统一信封 `{ code, message, data }`（对齐 frontend-request-skill / backend-convention-skill）
+- 上传对接 frontend-request-skill 的 `upload<T>()` 封装
+
+---
+
 ## 容器原则
 
 > **所有表单必须嵌入 `<base-card>`。无例外。**
@@ -410,8 +525,10 @@ interface BaseDatepickerProps {
 
 ## 红线
 
-- ❌ 禁止裸用 `<base-form>`（必须 `<base-card>` 包裹）
+- ❌ 禁止裸用 `<base-form>` / `<base-form-render>`（必须 `<base-card>` 包裹）
 - ❌ 禁止裸色值 / 裸 px（必须 `var(--*)`）
 - ❌ 禁止混入 Element Plus / 任何第三方表单组件
 - ❌ 禁止用 `any` 类型
 - ❌ 禁止在组件内直接操作 DOM（通过 v-model 绑定）
+- ❌ 禁止在 `base-form-render` 内手写校验规则（契约自动推导，自定义走 `field.rules`）
+- ❌ 禁止 upload 复用 request 的防抖去重（上传必须走 `upload<T>()` 单独封装）

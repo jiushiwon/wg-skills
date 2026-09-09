@@ -747,8 +747,235 @@
     </div>
   </details>
 
+  <!-- ============================================================
+       9. base-form-render · 契约驱动万能表单
+       ============================================================ -->
+  <section class="demo-section">
+    <h2 class="demo-section__title">9. base-form-render · 契约驱动万能表单</h2>
+    <p class="demo-section__desc">根据 FormSchema 契约自动生成表单，字段类型自动渲染对应组件</p>
+
+    <h3 class="demo-h3">9.1 商品管理契约 Demo</h3>
+    <div class="demo-card" style="max-width: 800px;">
+      <p class="demo-label">不同字段类型 → 不同 form-item</p>
+      <!-- 模拟 base-form-render 渲染结果 -->
+      <form class="base-form base-form--horizontal" style="--label-width: 100px;">
+        <!-- input -->
+        <div class="base-form-item">
+          <div class="base-form-item__label"><span class="base-form-item__required">*</span>商品名称</div>
+          <div class="base-form-item__content">
+            <div class="base-input base-input--md" style="width: 100%;"><input class="base-input__input" type="text" placeholder="请输入商品名称" /></div>
+          </div>
+        </div>
+        <!-- input (number) -->
+        <div class="base-form-item">
+          <div class="base-form-item__label"><span class="base-form-item__required">*</span>售价（元）</div>
+          <div class="base-form-item__content">
+            <div class="base-input base-input--md" style="width: 200px;"><input class="base-input__input" type="text" placeholder="请输入售价" /></div>
+          </div>
+        </div>
+        <!-- select -->
+        <div class="base-form-item">
+          <div class="base-form-item__label"><span class="base-form-item__required">*</span>商品分类</div>
+          <div class="base-form-item__content">
+            <div class="base-select base-select--md" style="width: 200px;" data-select>
+              <div class="base-select__trigger"><span class="base-select__placeholder">请选择</span><i class="base-select__arrow"></i></div>
+              <div class="base-select__dropdown" hidden data-panel>
+                <div class="base-select__option" data-value="digital">数码家电</div>
+                <div class="base-select__option" data-value="fashion">服饰鞋包</div>
+                <div class="base-select__option" data-value="beauty">美妆个护</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- checkbox group -->
+        <div class="base-form-item">
+          <div class="base-form-item__label">商品标签</div>
+          <div class="base-form-item__content">
+            <div class="base-checkbox-group" style="display: flex; gap: 16px;">
+              <div class="base-checkbox base-checkbox--square" data-checkbox><span class="base-checkbox__box"></span><span class="base-checkbox__label">新品</span></div>
+              <div class="base-checkbox base-checkbox--square" data-checkbox><span class="base-checkbox__box"></span><span class="base-checkbox__label">热销</span></div>
+              <div class="base-checkbox base-checkbox--square is-checked" data-checkbox><span class="base-checkbox__box"></span><span class="base-checkbox__label">特惠</span></div>
+            </div>
+          </div>
+        </div>
+        <!-- radio group -->
+        <div class="base-form-item">
+          <div class="base-form-item__label"><span class="base-form-item__required">*</span>销售渠道</div>
+          <div class="base-form-item__content">
+            <div class="base-radio-group" style="display: flex; gap: 16px;" data-radio-group>
+              <div class="base-radio" data-radio><span class="base-radio__box"></span><span class="base-radio__label">仅线上</span></div>
+              <div class="base-radio is-checked" data-radio><span class="base-radio__box"></span><span class="base-radio__label">全渠道</span></div>
+            </div>
+          </div>
+        </div>
+        <!-- switch -->
+        <div class="base-form-item">
+          <div class="base-form-item__label">是否上架</div>
+          <div class="base-form-item__content">
+            <div class="base-switch base-switch--md is-checked" data-switch></div>
+          </div>
+        </div>
+        <!-- textarea -->
+        <div class="base-form-item">
+          <div class="base-form-item__label">商品描述</div>
+          <div class="base-form-item__content">
+            <div class="base-textarea" style="width: 100%;">
+              <textarea class="base-textarea__input" rows="3" placeholder="请输入商品卖点"></textarea>
+            </div>
+          </div>
+        </div>
+        <!-- upload -->
+        <div class="base-form-item">
+          <div class="base-form-item__label">商品主图</div>
+          <div class="base-form-item__content">
+            <div class="base-upload base-upload--picture-card">
+              <div class="base-upload__trigger" role="button" tabindex="0"><span class="base-upload__plus">+</span></div>
+              <div class="base-upload__item">
+                <div class="base-upload__thumb" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect fill=%22%23333%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 fill=%22%23fff%22 text-anchor=%22middle%22 dy=%22.3em%22%3EIMG%3C/text%3E%3C/svg%3E');"></div>
+                <span class="base-upload__remove" role="button" tabindex="0">×</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- datepicker -->
+        <div class="base-form-item">
+          <div class="base-form-item__label">上架日期</div>
+          <div class="base-form-item__content">
+            <div class="base-datepicker base-datepicker--md" data-datepicker data-type="date">
+              <div class="base-datepicker__control" data-trigger><span class="base-datepicker__placeholder" data-display>选择日期</span></div>
+              <div class="base-datepicker__panel" data-panel hidden></div>
+            </div>
+          </div>
+        </div>
+        <!-- 按钮组 -->
+        <div class="base-form-item">
+          <div class="base-form-item__label"></div>
+          <div class="base-form-item__content">
+            <div style="display: flex; gap: 12px;">
+              <button class="base-button base-button--md" type="button">重置</button>
+              <button class="base-button base-button--primary base-button--md" type="button">提交</button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <p class="demo-desc" style="margin-top: 16px; color: var(--color-text-muted); font-size: 12px;">
+        💡 上面这个表单就是由 base-form-render 根据商品契约自动渲染的——13 种字段类型自动分发到对应组件。
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       10. base-upload · 文件上传
+       ============================================================ -->
+  <section class="demo-section">
+    <h2 class="demo-section__title">10. base-upload · 文件上传</h2>
+    <p class="demo-section__desc">图片墙 / 附件上传 / 进度显示 / 删除 / 预览</p>
+
+    <h3 class="demo-h3">9.1 listType · 类型</h3>
+    <div class="demo-grid">
+      <div class="demo-card">
+        <p class="demo-label">picture-card · 图片墙（默认）</p>
+        <div class="base-upload base-upload--picture-card">
+          <div class="base-upload__trigger" role="button" tabindex="0">
+            <span class="base-upload__plus">+</span>
+          </div>
+          <div class="base-upload__item">
+            <div class="base-upload__thumb" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect fill=%22%23333%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 fill=%22%23fff%22 text-anchor=%22middle%22 dy=%22.3em%22%3EIMG%3C/text%3E%3C/svg%3E');"></div>
+            <span class="base-upload__remove" role="button" tabindex="0">×</span>
+          </div>
+          <div class="base-upload__item">
+            <div class="base-upload__thumb" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect fill=%22%23444%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 fill=%22%23fff%22 text-anchor=%22middle%22 dy=%22.3em%22%3E2%3C/text%3E%3C/svg%3E');"></div>
+            <span class="base-upload__remove" role="button" tabindex="0">×</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-card">
+        <p class="demo-label">picture · 大图模式</p>
+        <div class="base-upload base-upload--picture">
+          <div class="base-upload__trigger base-upload__trigger--picture" role="button" tabindex="0">
+            <span class="base-upload__plus">+</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-card">
+        <p class="demo-label">text · 文本模式</p>
+        <div class="base-upload base-upload--text">
+          <div class="base-upload__trigger base-upload__trigger--text" role="button" tabindex="0">
+            <span class="base-upload__plus">+</span>
+            <span class="base-upload__trigger-text">点击上传</span>
+          </div>
+          <div class="base-upload__text-item">
+            <span class="base-upload__name">document.pdf</span>
+            <span class="base-upload__remove" role="button" tabindex="0">×</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="demo-h3">9.2 状态</h3>
+    <div class="demo-grid">
+      <div class="demo-card">
+        <p class="demo-label">uploading · 上传中</p>
+        <div class="base-upload base-upload--picture-card">
+          <div class="base-upload__item">
+            <div class="base-upload__thumb" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect fill=%22%23959%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 fill=%22%23fff%22 text-anchor=%22middle%22 dy=%22.3em%22%3E50%25%3C/text%3E%3C/svg%3E');"></div>
+            <div class="base-upload__progress">50%</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-card">
+        <p class="demo-label">error · 上传失败</p>
+        <div class="base-upload base-upload--picture-card">
+          <div class="base-upload__item">
+            <div class="base-upload__thumb" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect fill=%22%23fcc%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 fill=%22%23c00%22 text-anchor=%22middle%22 dy=%22.3em%22%3EERR%3C/text%3E%3C/svg%3E');"></div>
+            <div class="base-upload__error">上传失败</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-card">
+        <p class="demo-label">disabled · 禁用</p>
+        <div class="base-upload base-upload--picture-card base-upload--disabled">
+          <div class="base-upload__trigger" role="button" tabindex="0" aria-disabled="true">
+            <span class="base-upload__plus">+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="demo-h3">9.3 maxCount · 数量限制</h3>
+    <div class="demo-grid">
+      <div class="demo-card">
+        <p class="demo-label">maxCount: 1 · 单张头像</p>
+        <div class="base-upload base-upload--picture-card">
+          <div class="base-upload__item" style="width: 96px; height: 96px;">
+            <div class="base-upload__thumb" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2296%22 height=%2296%22%3E%3Ccircle cx=%2248%22 cy=%2248%22 r=%2240%22 fill=%22%2366%22/%3E%3Ctext x=%2248%22 y=%2252%22 fill=%22%23fff%22 text-anchor=%22middle%22%3E头像%3C/text%3E%3C/svg%3E');"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-card">
+        <p class="demo-label">maxCount: 3 · 限制3张</p>
+        <div class="base-upload base-upload--picture-card">
+          <div class="base-upload__item">
+            <div class="base-upload__thumb" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect fill=%22%23666%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 fill=%22%23fff%22 text-anchor=%22middle%22 dy=%22.3em%22%3E1%3C/text%3E%3C/svg%3E');"></div>
+          </div>
+          <div class="base-upload__item">
+            <div class="base-upload__thumb" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect fill=%22%23777%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 fill=%22%23fff%22 text-anchor=%22middle%22 dy=%22.3em%22%3E2%3C/text%3E%3C/svg%3E');"></div>
+          </div>
+          <div class="base-upload__trigger" role="button" tabindex="0">
+            <span class="base-upload__plus">+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer class="demo-footer">
-    <p>vue-form-skill · base-form + 8 子组件 · variant/size/shape/color 全维度样式矩阵</p>
+    <p>vue-form-skill · base-form + 9 组件 + base-form-render 契约驱动 · variant/size/shape/color 全维度样式矩阵</p>
   </footer>
 
   <script>

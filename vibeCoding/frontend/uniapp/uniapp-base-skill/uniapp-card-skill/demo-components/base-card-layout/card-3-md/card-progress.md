@@ -1,6 +1,7 @@
 # card-progress 进度环卡片
 
-> 原生 SVG 进度环，展示完成度。含中心百分比 + 右侧任务列表。
+> canvas 2d 进度环（跨端兼容），展示完成度。含中心百分比 + 右侧任务列表。
+> 图表基座见 [_canvas-base.md](./_canvas-base.md)。
 
 ## 形态特征
 
@@ -20,10 +21,6 @@
 - 健身目标完成度
 - 课程进度
 
-## HTML 演示
-
-[card-progress.html](../card-3-html/card-progress.html)
-
 ## 组件代码
 
 ```vue
@@ -36,14 +33,12 @@
   </view>
   <view class="chart-body">
     <view class="progress-ring-wrap">
-      <svg viewBox="0 0 42 42">
-        <circle cx="21" cy="21" r="15.915"
-          fill="transparent" stroke="#e2e8f0" stroke-width="6"/>
-        <circle cx="21" cy="21" r="15.915"
-          fill="transparent" :stroke="color" stroke-width="6"
-          stroke-linecap="round"
-          :stroke-dasharray="`${percent} ${100 - percent}`"/>
-      </svg>
+      <!-- #ifdef MP-WEIXIN || MP-ALIPAY || MP-TOUTIAO -->
+      <canvas class="ring-canvas" type="2d" id="ringChart" :style="{ width: size + 'px', height: size + 'px' }" />
+      <!-- #endif -->
+      <!-- #ifndef MP-WEIXIN || MP-ALIPAY || MP-TOUTIAO -->
+      <canvas ref="canvasRef" class="ring-canvas" :style="{ width: size + 'px', height: size + 'px' }" />
+      <!-- #endif -->
       <view class="progress-ring-center">
         <text class="progress-ring-pct">{{ percent }}%</text>
         <text class="progress-ring-label">已完成</text>
@@ -52,7 +47,7 @@
     <view class="task-list">
       <view v-for="t in tasks" :key="t.id" class="task-item">
         <view class="task-check" :class="{ 'is-pending': !t.done }">
-          <svg><use :href="t.done ? '#i-check' : '#i-clock'"/></svg>
+          <text class="task-check-icon">{{ t.done ? '✓' : '○' }}</text>
         </view>
         <text class="task-text" :class="{ 'is-done': t.done }">{{ t.text }}</text>
         <text class="task-priority" :class="{ 'is-high': t.priority === 'high' }">
@@ -62,6 +57,94 @@
     </view>
   </view>
 </base-card>
+```
+
+```vue
+<script setup>
+import { computed, ref, onMounted, nextTick, watch, getCurrentInstance } from 'vue'
+
+const props = defineProps({
+  title: String,
+  current: { type: Number, default: 0 },
+  total: { type: Number, default: 0 },
+  unit: { type: String, default: '项' },
+  color: { type: String, default: '#3b82f6' },
+  size: { type: String, default: 'lg' },
+  tasks: { type: Array, default: () => [] },
+})
+
+const percent = computed(() => props.total ? Math.round((props.current / props.total) * 100) : 0)
+const ringSize = computed(() => (props.size === 'sm' ? 100 : 132))
+
+const canvasRef = ref(null)
+const ctx = ref(null)
+
+async function initCanvas() {
+  await nextTick()
+  const dpr = (uni.getSystemInfoSync().pixelRatio) || 1
+  const S = ringSize.value
+  let c
+  // #ifdef MP-WEIXIN || MP-ALIPAY || MP-TOUTIAO
+  c = await new Promise((resolve) => {
+    uni.createSelectorQuery().in(getCurrentInstance())
+      .select('#ringChart').fields({ node: true, size: true }).exec((ret) => {
+        const node = ret && ret[0] && ret[0].node
+        if (!node) return resolve(null)
+        node.width = S * dpr
+        node.height = S * dpr
+        const c2 = node.getContext('2d')
+        c2.scale(dpr, dpr)
+        resolve(c2)
+      })
+  })
+  // #endif
+  // #ifndef MP-WEIXIN || MP-ALIPAY || MP-TOUTIAO
+  if (canvasRef.value) {
+    canvasRef.value.width = S * dpr
+    canvasRef.value.height = S * dpr
+    c = canvasRef.value.getContext('2d')
+    c.scale(dpr, dpr)
+  }
+  // #endif
+  ctx.value = c
+  if (c) draw()
+}
+
+function draw() {
+  const c = ctx.value
+  if (!c) return
+  const S = ringSize.value
+  c.clearRect(0, 0, S, S)
+  const cx = S / 2
+  const cy = S / 2
+  const r = S / 2 - 8
+  const lineW = 6
+
+  // 轨道
+  c.beginPath()
+  c.arc(cx, cy, r, 0, Math.PI * 2)
+  c.strokeStyle = '#e2e8f0'
+  c.lineWidth = lineW
+  c.stroke()
+
+  // 进度弧（带圆头 lineCap）
+  const start = -Math.PI / 2
+  const sweep = (percent.value / 100) * Math.PI * 2
+  c.beginPath()
+  c.arc(cx, cy, r, start, start + sweep)
+  c.strokeStyle = props.color
+  c.lineWidth = lineW
+  c.lineCap = 'round'
+  c.stroke()
+  c.lineCap = 'butt'
+}
+
+watch(() => percent.value, () => { if (ctx.value) draw() })
+watch(() => props.color, () => { if (ctx.value) draw() })
+watch(() => ringSize.value, () => { initCanvas() })
+
+onMounted(initCanvas)
+</script>
 ```
 
 ## Props
@@ -74,11 +157,17 @@
 | unit | string | '项' | 单位 |
 | color | string | '#3b82f6' | 主色 |
 | size | 'sm' \| 'lg' | 'lg' | 尺寸 |
+
+## 跨端说明
+
+- 条件编译切换小程序 2d 与 H5/App 普通 canvas。
+- 进度环用 canvas `arc` 从 12 点方向绘制，`lineCap: 'round'` 圆头。
+- 中心百分比、任务列表（✓/○ 用文本替代 SVG symbol）仍为 view 层。
 | tasks | Task[] | - | 任务列表 |
 
 ## 变体参考
 
 - 单环 → `card-progress`（默认）
-- 多层环 → 多个 `<circle>` 同心，叠加不同 `percent`
-- 半环 → 截取 50% SVG 高度
+- 多层环 → 多个同心 `arc` 叠加，不同 `percent`
+- 半环 → 弧长改为 180°（canvas 只画半圈）
 - 多色 → 不同段不同颜色（已完成/进行中/未开始）

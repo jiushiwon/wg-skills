@@ -1,6 +1,6 @@
 # vue-form-skill
 
-> Vue 表单体系技能。8 个核心组件，覆盖 99% 业务表单场景。零第三方组件库。
+> Vue 表单体系技能。10 个核心组件（9 基础 + 1 契约渲染器），覆盖 99% 业务表单场景。零第三方组件库。支持「契约驱动」和「手写」两种模式。
 
 ## 容器原则（核心铁律）
 
@@ -21,7 +21,7 @@
 >
 > 完整规范见 [SKILL.md](./SKILL.md) → 「🚫 零 HTML5 标签铁律」。
 
-## 组件列表（8 个）
+## 组件列表（10 个）
 
 | 组件 | 说明 | 文件 |
 |------|------|------|
@@ -33,6 +33,33 @@
 | base-radio | 单选框（单选组） | [base-radio.md](base-radio.md) |
 | base-switch | 开关 | [base-switch.md](base-switch.md) |
 | base-datepicker | 日期选择器（日期、日期范围、月份、年份） | [base-datepicker.md](base-datepicker.md) |
+| base-upload | 上传（图片墙、附件、进度、删除） | [base-upload.md](base-upload.md) |
+| base-form-render | 契约驱动万能表单渲染器 | [base-form-render.md](base-form-render.md) |
+
+## 契约驱动表单（万能表单）
+
+> 根据契约（字段 + 字段类型 + 是否必填）自动生成表单。一份 FormSchema 同时驱动前端渲染与后端入参校验。
+
+| 文档 | 说明 |
+|------|------|
+| [references/form-contract.md](references/form-contract.md) | 契约规范：FieldType / FormField / FormSchema / 组件映射 / 规则推导 |
+| [references/mock-contract-product.md](references/mock-contract-product.md) | 商品信息模拟契约（12 种字段类型落地示例） |
+
+```vue
+<template>
+  <base-card title="新增商品">
+    <base-form-render v-model="goodsForm" :schema="goodsSchema" />
+  </base-card>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { goodsSchema } from '@/contracts/goods.contract'
+const goodsForm = ref<Record<string, unknown>>({})
+</script>
+```
+
+字段类型覆盖：`input / textarea / password / number / email / phone / idcard / select / radio / checkbox / switch / datepicker / upload`。
 
 ## 设计 Token
 

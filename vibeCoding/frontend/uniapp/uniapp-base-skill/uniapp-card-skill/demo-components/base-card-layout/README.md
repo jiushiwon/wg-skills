@@ -38,23 +38,24 @@
 | card-topic | 渐变头图+#号+角标+描述+讨论+参与按钮 | 话题广场、社区#标签 | [card-2-md/card-topic.md](card-2-md/card-topic.md) | [card-2-html/card-topic.html](card-2-html/card-topic.html) |
 | card-coupon | 异形+渐变+左侧金额+虚线+右侧按钮+状态 | 我的优惠券、领券中心 | [card-2-md/card-coupon.md](card-2-md/card-coupon.md) | [card-2-html/card-coupon.html](card-2-html/card-coupon.html) |
 
-### 分类三：card-3 (图表卡片 · 原生 SVG)
+### 分类三：card-3 (图表卡片 · canvas 2d 跨端兼容)
 
-| 案例 | 形态 | 适用场景 | 文档 | HTML |
-|------|------|----------|------|------|
-| card-line | 平滑折线+渐变填充+涨跌指示 | 销售趋势、活跃度、健康数据 | [card-3-md/card-line.md](card-3-md/card-line.md) | [card-3-html/card-line.html](card-3-html/card-line.html) |
-| card-line-tabs | 折线+顶部 tab 切换（7天/30天/90天） | 时段切换折线图 | [card-3-md/card-line-tabs.md](card-3-md/card-line-tabs.md) | [card-3-html/card-line-tabs.html](card-3-html/card-line-tabs.html) |
-| card-line-multi | 多线对比（本月/上月/平均）+ 图例 | 多产品线对比、同环比 | [card-3-md/card-line-multi.md](card-3-md/card-line-multi.md) | [card-3-html/card-line-multi.html](card-3-html/card-line-multi.html) |
-| card-line-metric | 4 行指标+迷你折线（sparkline） | Dashboard 多指标 | [card-3-md/card-line-metric.md](card-3-md/card-line-metric.md) | [card-3-html/card-line-metric.html](card-3-html/card-line-metric.html) |
-| card-line-area | 3 层堆叠面积图+累计总数 | 渠道分布、构成变化 | [card-3-md/card-line-area.md](card-3-md/card-line-area.md) | [card-3-html/card-line-area.html](card-3-html/card-line-area.html) |
-| card-line-tooltip | 折线+节点圆点+活动节点 tooltip | 节点高亮、关键时刻 | [card-3-md/card-line-tooltip.md](card-3-md/card-line-tooltip.md) | [card-3-html/card-line-tooltip.html](card-3-html/card-line-tooltip.html) |
-| card-bar | 柱状+高亮当前项+数值标签 | 月度对比、销量排行 | [card-3-md/card-bar.md](card-3-md/card-bar.md) | [card-3-html/card-bar.html](card-3-html/card-bar.html) |
-| card-pie | 环形+中心数值+彩色图例 | 流量来源、消费分类 | [card-3-md/card-pie.md](card-3-md/card-pie.md) | [card-3-html/card-pie.html](card-3-html/card-pie.html) |
-| card-radar | 6 维评分+本人/同行双层 | 综合能力、技能评估 | [card-3-md/card-radar.md](card-3-md/card-radar.md) | [card-3-html/card-radar.html](card-3-html/card-radar.html) |
-| card-progress | 进度环+任务列表+优先级 | 任务完成度、学习进度 | [card-3-md/card-progress.md](card-3-md/card-progress.md) | [card-3-html/card-progress.html](card-3-html/card-progress.html) |
-| card-gauge | 270° 弧+渐变+指针+刻度 | 健康指数、CPU、信用评分 | [card-3-md/card-gauge.md](card-3-md/card-gauge.md) | [card-3-html/card-gauge.html](card-3-html/card-gauge.html) |
+| 案例 | 形态 | 适用场景 | 文档 |
+|------|------|----------|------|
+| card-line | 平滑折线+渐变填充+涨跌指示 | 销售趋势、活跃度、健康数据 | [card-3-md/card-line.md](card-3-md/card-line.md) |
+| card-line-tabs | 折线+顶部 tab 切换（7天/30天/90天） | 时段切换折线图 | [card-3-md/card-line-tabs.md](card-3-md/card-line-tabs.md) |
+| card-line-multi | 多线对比（本月/上月/平均）+ 图例 | 多产品线对比、同环比 | [card-3-md/card-line-multi.md](card-3-md/card-line-multi.md) |
+| card-line-metric | 4 行指标+迷你折线（sparkline） | Dashboard 多指标 | [card-3-md/card-line-metric.md](card-3-md/card-line-metric.md) |
+| card-line-area | 3 层堆叠面积图+累计总数 | 渠道分布、构成变化 | [card-3-md/card-line-area.md](card-3-md/card-line-area.md) |
+| card-line-tooltip | 折线+节点圆点+活动节点 tooltip | 节点高亮、关键时刻 | [card-3-md/card-line-tooltip.md](card-3-md/card-line-tooltip.md) |
+| card-line-value | 折线+每个点标数值+Y轴刻度+X轴标签+图例 | 活力指数、步数趋势、健康数据 | [card-3-md/card-line-value.md](card-3-md/card-line-value.md) |
+| card-bar | 柱状+高亮当前项+数值标签 | 月度对比、销量排行 | [card-3-md/card-bar.md](card-3-md/card-bar.md) |
+| card-pie | 环形+中心数值+彩色图例 | 流量来源、消费分类 | [card-3-md/card-pie.md](card-3-md/card-pie.md) |
+| card-radar | 6 维评分+本人/同行双层 | 综合能力、技能评估 | [card-3-md/card-radar.md](card-3-md/card-radar.md) |
+| card-progress | 进度环+任务列表+优先级 | 任务完成度、学习进度 | [card-3-md/card-progress.md](card-3-md/card-progress.md) |
+| card-gauge | 270° 弧+渐变+指针+刻度 | 健康指数、CPU、信用评分 | [card-3-md/card-gauge.md](card-3-md/card-gauge.md) |
 
-> **图表实现原则**：全部使用原生 SVG 绘制（path / circle / polyline），无任何图表库（echarts / antv / d3）。SVG 文件极小，可定制、可缩放、零依赖。
+> **图表实现原则**：全部使用 **canvas 2d** 绘制，跨端条件编译兼容（H5/App 普通 canvas，小程序 `<canvas type="2d">`），无任何图表库（echarts / antv / d3）。每个图表 md 为自包含组件代码，公共绘制逻辑复用 `_chart-draw.md`，跨端初始化基座见 `_canvas-base.md`。
 
 ## 设计原则
 
@@ -135,30 +136,21 @@ demo-components/base-card-layout/
 │   ├── card-news.html
 │   ├── card-topic.html
 │   └── card-coupon.html
-├── card-3-md/                 # 分类三：图表卡片（11 个 · 原生 SVG）
-│   ├── card-line.md              # 基础折线
-│   ├── card-line-tabs.md         # Tab 切换
-│   ├── card-line-multi.md        # 多线对比
-│   ├── card-line-metric.md       # 迷你指标卡
-│   ├── card-line-area.md         # 堆叠面积
-│   ├── card-line-tooltip.md      # 节点 tooltip
-│   ├── card-bar.md
-│   ├── card-pie.md
-│   ├── card-radar.md
-│   ├── card-progress.md
-│   └── card-gauge.md
-└── card-3-html/               # 分类三：HTML 演示（11 个 · 原生 SVG）
-    ├── card-line.html
-    ├── card-line-tabs.html
-    ├── card-line-multi.html
-    ├── card-line-metric.html
-    ├── card-line-area.html
-    ├── card-line-tooltip.html
-    ├── card-bar.html
-    ├── card-pie.html
-    ├── card-radar.html
-    ├── card-progress.html
-    └── card-gauge.html
+└── card-3-md/                 # 分类三：图表卡片（12 个 · canvas 2d 跨端）
+    ├── _canvas-base.md          # 跨端初始化基座（DPR / 条件编译 / 2d context）
+    ├── _chart-draw.md           # 共享绘制函数（drawLineArea / drawSparkline / hexToRgba）
+    ├── card-line.md              # 基础折线
+    ├── card-line-tabs.md         # Tab 切换
+    ├── card-line-multi.md        # 多线对比
+    ├── card-line-metric.md       # 迷你指标卡
+    ├── card-line-area.md         # 堆叠面积
+    ├── card-line-tooltip.md      # 节点 tooltip
+    ├── card-line-value.md        # 折线 · 数据点数值标注
+    ├── card-bar.md
+    ├── card-pie.md
+    ├── card-radar.md
+    ├── card-progress.md
+    └── card-gauge.md
 ```
 
 > 图片使用 `icon-image-catch-skill` 抓取的 Picsum/Lorem Picsum，避免占位图。

@@ -32,8 +32,8 @@
 │       ├── card-1-html/
 │       ├── card-2-md/       # 分类二：信息流卡片（9 个：image/notify/comment + post/video/article/news/topic/coupon）
 │       ├── card-2-html/
-│       ├── card-3-md/       # 分类三：图表卡片（6 个：line/bar/pie/radar/progress/gauge · 原生 SVG）
-│       └── card-3-html/
+│       ├── card-3-md/       # 分类三：图表卡片（12 个 · canvas 2d 跨端）
+│       └── (card-3-html 已移除，图表无 HTML demo)
 ```
 
 ## 信息流卡片速查（card-2）
@@ -50,7 +50,7 @@
 | card-topic | 渐变头图+#号+角标+讨论+参与 | 话题卡片 |
 | card-coupon | 异形+渐变+金额+虚线+按钮+状态 | 优惠券卡片 |
 
-## 图表卡片速查（card-3 · 原生 SVG）
+## 图表卡片速查（card-3 · canvas 2d 跨端）
 
 | 案例 | 风格 | 触发词 |
 |------|------|--------|
@@ -60,13 +60,14 @@
 | card-line-metric | 4 行指标+迷你折线 | 指标卡、Dashboard |
 | card-line-area | 3 层堆叠面积 | 堆叠面积、渠道分布 |
 | card-line-tooltip | 折线+节点 tooltip | 节点高亮 |
+| card-line-value | 折线+每个点标数值+Y轴刻度+X轴标签+图例 | 折线数值标注、活力指数、步数趋势 |
 | card-bar | 柱状+高亮当前项+数值标签 | 柱状图、对比图 |
 | card-pie | 环形+中心数值+彩色图例 | 饼图、环形图、占比 |
 | card-radar | 6 维评分+本人/同行双层 | 雷达图、能力评估 |
 | card-progress | 进度环+任务列表+优先级 | 进度环、任务进度 |
 | card-gauge | 270° 弧+渐变+指针+刻度 | 仪表盘、健康指数 |
 
-> **图表实现原则**：全部使用原生 SVG 绘制（path / circle / polyline），无任何图表库（echarts / antv / d3）。
+> **图表实现原则**：全部使用 canvas 2d 绘制（条件编译：H5/App 普通 canvas，小程序 `<canvas type="2d">`），无任何图表库（echarts / antv / d3）。跨端初始化基座见 [demo-components/base-card-layout/card-3-md/_canvas-base.md](demo-components/base-card-layout/card-3-md/_canvas-base.md)。
 
 ## 相关技能
 

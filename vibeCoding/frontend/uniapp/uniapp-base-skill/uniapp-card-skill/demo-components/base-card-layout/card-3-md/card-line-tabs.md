@@ -1,6 +1,7 @@
 # card-line-tabs 折线图 · Tab 切换时段
 
-> 顶部带 Tab 切换的折线图，支持 7天 / 30天 / 90天 / 全部等不同时段数据切换。
+> canvas 2d 折线图（跨端兼容），顶部带 Tab 切换时段（7天 / 30天 / 90天 / 全部）。
+> 图表基座与跨端初始化见 [_canvas-base.md](./_canvas-base.md)。
 
 ## 形态特征
 
@@ -18,10 +19,6 @@
 - 活跃用户趋势
 - 健康指标（24h / 7d / 30d）
 
-## HTML 演示
-
-[card-line-tabs.html](../card-3-html/card-line-tabs.html)
-
 ## 组件代码
 
 ```vue
@@ -32,7 +29,6 @@
       <text class="chart-value">{{ value }}</text>
     </view>
     <view class="chart-meta">
-      <svg class="chart-meta-arrow"><use href="#i-trend-up"/></svg>
       <text>{{ trend.value }}</text>
       <text class="chart-meta-sep">{{ trend.compareText }}</text>
     </view>
@@ -46,12 +42,87 @@
   </view>
 
   <view class="chart-body">
-    <svg class="chart-svg" :viewBox="`0 0 ${W} ${H}`">
-      <path class="line-path" :d="pathD" />
-      <path class="area-fill" :d="pathD + `L ${W} ${H} L 0 ${H} Z`" />
-    </svg>
+    <!-- #ifdef MP-WEIXIN || MP-ALIPAY || MP-TOUTIAO -->
+    <canvas class="chart-canvas" type="2d" id="lineTabsChart" :style="{ width: W + 'px', height: H + 'px' }" />
+    <!-- #endif -->
+    <!-- #ifndef MP-WEIXIN || MP-ALIPAY || MP-TOUTIAO -->
+    <canvas ref="canvasRef" class="chart-canvas" :style="{ width: W + 'px', height: H + 'px' }" />
+    <!-- #endif -->
   </view>
 </base-card>
+```
+
+```vue
+<script setup>
+import { ref, onMounted, nextTick, watch, getCurrentInstance } from 'vue'
+import { drawLineArea } from './_chart-draw'
+
+const props = defineProps({
+  title: String,
+  value: String,
+  trend: { type: Object, default: () => ({ value: '', compareText: '' }) },
+  tabs: { type: Array, default: () => [] },
+  activeTab: { type: String, default: '' },
+  seriesByTab: { type: Object, default: () => ({}) }, // Record<string, number[]>
+  color: { type: String, default: '#3b82f6' },
+  W: { type: Number, default: 340 },
+  H: { type: Number, default: 140 },
+})
+
+const emit = defineEmits(['change'])
+
+const canvasRef = ref(null)
+const ctx = ref(null)
+
+async function initCanvas() {
+  await nextTick()
+  const dpr = (uni.getSystemInfoSync().pixelRatio) || 1
+  let c
+  // #ifdef MP-WEIXIN || MP-ALIPAY || MP-TOUTIAO
+  c = await new Promise((resolve) => {
+    uni.createSelectorQuery().in(getCurrentInstance())
+      .select('#lineTabsChart').fields({ node: true, size: true }).exec((ret) => {
+        const node = ret && ret[0] && ret[0].node
+        if (!node) return resolve(null)
+        node.width = props.W * dpr
+        node.height = props.H * dpr
+        const c2 = node.getContext('2d')
+        c2.scale(dpr, dpr)
+        resolve(c2)
+      })
+  })
+  // #endif
+  // #ifndef MP-WEIXIN || MP-ALIPAY || MP-TOUTIAO
+  if (canvasRef.value) {
+    canvasRef.value.width = props.W * dpr
+    canvasRef.value.height = props.H * dpr
+    c = canvasRef.value.getContext('2d')
+    c.scale(dpr, dpr)
+  }
+  // #endif
+  ctx.value = c
+  if (c) draw()
+}
+
+function draw() {
+  const c = ctx.value
+  const series = props.seriesByTab[props.activeTab] || []
+  if (!c || !series.length) return
+  c.clearRect(0, 0, props.W, props.H)
+  drawLineArea(c, { series, W: props.W, H: props.H, color: props.color, grid: 3, dot: true })
+}
+
+function onTabChange(t) {
+  emit('change', t)
+}
+
+watch(() => props.activeTab, () => { if (ctx.value) draw() })
+watch(() => props.seriesByTab, () => { if (ctx.value) draw() }, { deep: true })
+watch(() => props.color, () => { if (ctx.value) draw() })
+watch([() => props.W, () => props.H], () => { initCanvas() })
+
+onMounted(initCanvas)
+</script>
 ```
 
 ## Props
@@ -64,6 +135,16 @@
 | tabs | string[] | - | 时段选项 |
 | activeTab | string | - | 当前时段 |
 | seriesByTab | Record<string, number[]> | - | 各时段数据 |
+| color | string | '#3b82f6' | 主色 |
+| W | number | 340 | 画布宽度 |
+| H | number | 140 | 画布高度 |
+
+**事件**：`change`（tabs 切换时触发）
+
+## 跨端说明
+
+- 条件编译切换小程序 `type="2d"` 与 H5/App 普通 canvas。
+- 折线复用 `_chart-draw.js` 的 `drawLineArea`（平滑曲线 + 渐变面积 + 末端圆点）。
 
 ## 变体参考
 

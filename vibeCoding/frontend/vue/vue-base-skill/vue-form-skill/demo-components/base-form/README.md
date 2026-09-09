@@ -6,7 +6,7 @@
 
 | 文件 | 说明 |
 |------|------|
-| `00-showcase.html` | 总览：所有表单组件 |
+| `00-showcase.html` | 总览：所有表单组件 + 契约驱动 Demo |
 | `01-basic.html` | 基础表单 |
 | `02-validation.html` | 表单校验 |
 | `03-layout.html` | 表单布局 |
@@ -16,6 +16,8 @@
 | `07-radio.html` | 单选框 |
 | `08-switch.html` | 开关 |
 | `09-datepicker.html` | 日期选择器 |
+| `10-upload.html` | 文件上传 |
+| `11-form-render.html` | 契约驱动万能表单 |
 
 ## 运行方式
 

@@ -1966,3 +1966,150 @@ body.is-dark .base-checkbox__title,
 body.is-dark .base-radio__title { color: hsl(210 10% 95%); }
 body.is-dark .base-checkbox__desc,
 body.is-dark .base-radio__desc { color: hsl(210 8% 60%); }
+
+/* ============================================================
+   Base Upload 上传组件
+   ============================================================ */
+
+.base-upload {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.base-upload__trigger {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.base-upload__trigger:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.base-upload__trigger--text {
+  flex-direction: row;
+  width: auto;
+  height: auto;
+  padding: var(--space-2) var(--space-3);
+  border-style: solid;
+}
+
+.base-upload__trigger--picture {
+  width: 200px;
+  height: 150px;
+}
+
+.base-upload__plus {
+  font-size: var(--font-xl);
+  line-height: 1;
+}
+
+.base-upload__trigger-text {
+  font-size: var(--font-sm);
+  margin-left: var(--space-1);
+}
+
+.base-upload__item {
+  position: relative;
+  width: 96px;
+  height: 96px;
+}
+
+.base-upload__thumb {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-md);
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+}
+
+.base-upload__remove {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-danger);
+  color: #fff;
+  text-align: center;
+  line-height: 18px;
+  cursor: pointer;
+  font-size: var(--font-sm);
+}
+
+.base-upload__progress {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border-radius: var(--radius-md);
+}
+
+.base-upload__error {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2px 0;
+  background: var(--color-danger);
+  color: #fff;
+  text-align: center;
+  font-size: var(--font-xs);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+
+.base-upload__text-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-secondary);
+}
+
+.base-upload__name {
+  flex: 1;
+  font-size: var(--font-sm);
+  color: var(--color-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.base-upload--disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.base-upload--picture-card .base-upload__trigger {
+  width: 96px;
+  height: 96px;
+}
+
+.base-upload--picture .base-upload__trigger {
+  width: 200px;
+  height: 150px;
+}
+
+.base-upload--text .base-upload__trigger {
+  width: auto;
+  height: auto;
+  padding: var(--space-2) var(--space-3);
+}
