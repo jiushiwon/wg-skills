@@ -15,15 +15,21 @@
 | `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | 尺寸 |
 | `variant` | `'solid' \| 'outline' \| 'ghost' \| 'text' \| 'link'` | `'solid'` | 样式变体 |
 | `disabled` | boolean | `false` | 禁用 |
-| `loading` | boolean | `false` | 加载中 |
+| `loading` | boolean | `false` | 加载中（自动禁用点击 + 显示 spinner） |
 | `block` | boolean | `false` | 块级（铺满父容器） |
 | `icon` | string | - | 图标（Iconify 名称） |
+| `native-type` | `'button' \| 'submit' \| 'reset'` | `'button'` | 表单语义（仅当被 `<form>` 包裹时生效，模拟原生 button 的 type 行为） |
+| `href` | string | - | 链接地址（设置后渲染为 `<a>` 语义，但仍保持 base-button 类） |
+| `to` | `string \| object` | - | router-link 目标（vue-router 配合） |
+| `round` | boolean | `false` | 全圆角胶囊形 |
+| `circle` | boolean | `false` | 正圆形（仅图标） |
+| `name` | string | - | 表单字段名（form 自动注入） |
 
 ## Events
 
 | Event | 参数 | 说明 |
 |-------|------|------|
-| `click` | `event: MouseEvent` | 点击事件 |
+| `click` | `event: MouseEvent \| KeyboardEvent` | 点击事件（Enter/Space 键也触发） |
 
 ## 形态组合
 
@@ -40,18 +46,28 @@
 
 ```vue
 <template>
+  <!-- 链接模式（href / to）：用 div 模拟 a，保持样式一致 -->
   <div
-    :class="[
-      'base-button',
-      `base-button--type-${type}`,
-      `base-button--size-${size}`,
-      `base-button--variant-${variant}`,
-      { 'base-button--block': block, 'base-button--loading': loading },
-      { 'is-disabled': disabled || loading },
-    ]"
-    role="button"
+    v-if="href || to"
+    :class="buttonClass"
+    role="link"
     tabindex="0"
     :aria-disabled="(disabled || loading) ? 'true' : 'false'"
+    @click="handleClick"
+    @keydown.enter="handleClick"
+  >
+    <span v-if="loading" class="base-button__spinner"></span>
+    <slot v-else />
+  </div>
+
+  <!-- 默认按钮模式 -->
+  <div
+    v-else
+    :class="buttonClass"
+    role="button"
+    :aria-disabled="(disabled || loading) ? 'true' : 'false'"
+    :data-native-type="nativeType"
+    tabindex="0"
     @click="handleClick"
     @keydown.enter="handleClick"
     @keydown.space.prevent="handleClick"
@@ -62,11 +78,13 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
 const emit = defineEmits<{
   click: [event: MouseEvent | KeyboardEvent]
 }>()
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   type?: 'primary' | 'default' | 'success' | 'warning' | 'danger' | 'text'
   size?: 'sm' | 'md' | 'lg'
   variant?: 'solid' | 'outline' | 'ghost' | 'text' | 'link'
@@ -74,6 +92,12 @@ withDefaults(defineProps<{
   loading?: boolean
   block?: boolean
   icon?: string
+  nativeType?: 'button' | 'submit' | 'reset'
+  href?: string
+  to?: string | object
+  round?: boolean
+  circle?: boolean
+  name?: string
 }>(), {
   type: 'default',
   size: 'md',
@@ -81,10 +105,27 @@ withDefaults(defineProps<{
   disabled: false,
   loading: false,
   block: false,
+  nativeType: 'button',
+  round: false,
+  circle: false,
 })
 
+const buttonClass = computed(() => [
+  'base-button',
+  `base-button--type-${props.type}`,
+  `base-button--size-${props.size}`,
+  `base-button--variant-${props.variant}`,
+  {
+    'base-button--block': props.block,
+    'base-button--loading': props.loading,
+    'base-button--round': props.round,
+    'base-button--circle': props.circle,
+    'is-disabled': props.disabled || props.loading,
+  },
+])
+
 function handleClick(event: MouseEvent | KeyboardEvent) {
-  // disabled / loading 状态由 .is-disabled CSS 阻止点击（pointer-events）
+  if (props.disabled || props.loading) return
   emit('click', event)
 }
 </script>

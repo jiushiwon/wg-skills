@@ -1,0 +1,9 @@
+.container {
+  padding: 16px;
+}
+
+.toolbar {
+  margin-bottom: 16px;
+  display: flex;
+  gap: 12px;
+}

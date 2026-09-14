@@ -1,0 +1,125 @@
+/* base-list-item 样式 —— 7 风格 */
+
+.list-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s, color 0.15s;
+  position: relative;
+}
+
+.list-item.is-disabled { opacity: 0.5; cursor: not-allowed; }
+.list-item.is-danger { color: #ef4444; }
+
+.list-item__expander {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 11px;
+  color: #9ca3af;
+  transition: transform 0.15s;
+}
+.list-item__expander.is-open { transform: rotate(90deg); }
+.list-item__expander.is-leaf { visibility: hidden; }
+
+.list-item__icon { flex-shrink: 0; font-size: 14px; }
+.list-item__label { flex: 1; font-size: 14px; }
+.list-item__shortcut { font-size: 11px; color: #9ca3af; }
+.list-item__meta { font-size: 11px; color: #9ca3af; }
+.list-item__badge {
+  font-size: 11px;
+  color: #fff;
+  background: #6366f1;
+  padding: 1px 6px;
+  border-radius: 999px;
+}
+
+.list-children { padding-left: 18px; }
+.list-children.is-collapsed { display: none; }
+
+/* 风格 01: basic */
+.list-item--basic:hover { background: #f3f4f6; }
+.list-item--basic.is-active { background: #eef2ff; color: #4f46e5; }
+
+/* 风格 02: finder (macOS) */
+.list-item--finder {
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 5px;
+  font-size: 13px;
+}
+.list-item--finder:hover { background: rgba(0, 0, 0, 0.06); }
+.list-item--finder.is-active {
+  background: #007aff;
+  color: #fff;
+}
+.list-item--finder.is-active .list-item__meta,
+.list-item--finder.is-active .list-item__shortcut { color: #fff; }
+
+/* 风格 03: win */
+.list-item--win { border-radius: 2px; }
+.list-item--win:hover { background: #e5f1fb; }
+.list-item--win.is-active {
+  background: #cce8ff;
+  border: 1px solid #99d1ff;
+  padding: 0 6px;
+}
+
+/* 风格 04: vscode (深色主题) */
+.list-item--vscode {
+  height: 22px;
+  color: #cccccc;
+  background: transparent;
+}
+.list-item--vscode:hover { background: #2a2d2e; }
+.list-item--vscode.is-active { background: #094771; color: #fff; }
+.list-item--vscode .list-item__meta,
+.list-item--vscode .list-item__shortcut { color: #858585; font-family: monospace; font-size: 11px; }
+
+/* 风格 05: admin */
+.list-item--admin {
+  height: 30px;
+  padding: 0 10px;
+}
+.list-item--admin:hover { background: #f5f5f5; }
+.list-item--admin.is-active { background: #e6f7ff; color: #1890ff; }
+
+/* 风格 06: notion */
+.list-item--notion {
+  height: 26px;
+  color: #37352f;
+  padding: 0 6px;
+}
+.list-item--notion:hover { background: rgba(55, 53, 47, 0.08); }
+.list-item--notion.is-active { background: rgba(55, 53, 47, 0.08); font-weight: 500; }
+.list-item--notion .list-item__meta,
+.list-item--notion .list-item__shortcut { color: #9b9a97; }
+
+/* 风格 07: nav (强引导) */
+.list-item--nav {
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 6px;
+}
+.list-item--nav:hover { background: rgba(99, 102, 241, 0.08); }
+.list-item--nav.is-active {
+  background: linear-gradient(90deg, #6366f1, #4f46e5);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+.list-item--nav.is-active .list-item__meta,
+.list-item--nav.is-active .list-item__shortcut { color: #fff; }
+
+/* vscode 容器适配 */
+.list--vscode-wrap {
+  background: #252526;
+  border-radius: 4px;
+  padding: 8px;
+}

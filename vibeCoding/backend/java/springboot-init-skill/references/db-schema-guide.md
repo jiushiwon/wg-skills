@@ -1,6 +1,6 @@
 # 数据库表设计规范
 
-本规范与 `database-skill` 对齐。所有通过 springboot-init-skill 生成的项目默认遵循。
+本规范与 `database-design-skill` 对齐。所有通过 springboot-init-skill 生成的项目默认遵循。
 
 ## 一、表名规范
 

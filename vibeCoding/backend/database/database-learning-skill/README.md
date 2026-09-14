@@ -20,3 +20,7 @@
 /database-learning-skill MySQL 和 PostgreSQL 区别
 /database-learning-skill 怎么优化慢查询
 ```
+
+## 安装脚本
+
+如需搭建学习环境，数据库安装脚本在：`docs/vibeCoding/super-deploy-skills/database-install-skill/children/`

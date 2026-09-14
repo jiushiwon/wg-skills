@@ -68,6 +68,82 @@ engine = create_engine(
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 ```
 
+### Go (Gin + GORM)
+
+```go
+// config/config.go
+package config
+
+import (
+    "fmt"
+    "os"
+)
+
+type Config struct {
+    PGHost     string
+    PGPort     string
+    PGUser     string
+    PGPassword string
+    PGDatabase string
+}
+
+func Load() *Config {
+    return &Config{
+        PGHost:     getEnv("PG_HOST", "localhost"),
+        PGPort:     getEnv("PG_PORT", "5432"),
+        PGUser:     getEnv("PG_USER", "postgres"),
+        PGPassword: getEnv("PG_PASSWORD", ""),
+        PGDatabase: getEnv("PG_DATABASE", "myapp"),
+    }
+}
+
+func (c *Config) DSN() string {
+    return fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Shanghai",
+        c.PGHost, c.PGUser, c.PGPassword, c.PGDatabase, c.PGPort)
+}
+
+func getEnv(key, defaultVal string) string {
+    if val := os.Getenv(key); val != "" {
+        return val
+    }
+    return defaultVal
+}
+```
+
+```go
+// database/database.go
+package database
+
+import (
+    "fmt"
+    "log"
+    "time"
+
+    "gorm.io/driver/postgres"
+    "gorm.io/gorm"
+    "gorm.io/gorm/logger"
+)
+
+var DB *gorm.DB
+
+func Init(dsn string) {
+    var err error
+    DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{
+        Logger: logger.Default.LogMode(logger.Info),
+    })
+    if err != nil {
+        log.Fatalf("连接 PostgreSQL 失败: %v", err)
+    }
+
+    sqlDB, _ := DB.DB()
+    sqlDB.SetMaxIdleConns(5)
+    sqlDB.SetMaxOpenConns(10)
+    sqlDB.SetConnMaxLifetime(30 * time.Minute)
+
+    fmt.Println("PostgreSQL 连接成功")
+}
+```
+
 ## 表结构设计
 
 ### 基础表模板

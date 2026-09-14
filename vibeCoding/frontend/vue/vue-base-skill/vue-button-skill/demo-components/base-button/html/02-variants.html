@@ -5,33 +5,126 @@
   <title>base-button / 02 - 形态变体</title>
   <link rel="stylesheet" href="../../shared/tokens.css" />
   <link rel="stylesheet" href="../../shared/demo.css" />
+  <style>
+    /* base-button 演示样式（继承自 01-types.html） */
+    .base-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      border-radius: var(--radius-md);
+      font-weight: var(--weight-medium);
+      font-family: inherit;
+      font-size: var(--font-base);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      border: 1px solid transparent;
+      user-select: none;
+      white-space: nowrap;
+      outline: none;
+      text-decoration: none;
+    }
+    .base-button:focus-visible { box-shadow: 0 0 0 2px var(--color-primary-light); }
+    .base-button:active:not(:disabled):not(.is-disabled) { transform: scale(0.98); }
+    .base-button:disabled, .base-button.is-disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+
+    .base-button--size-md { height: var(--height-btn-md); padding: 0 var(--space-5); }
+
+    /* solid 实色 */
+    .base-button--variant-solid.base-button--type-default {
+      background: var(--color-bg-card);
+      border-color: var(--color-border);
+      color: var(--color-text-primary);
+    }
+    .base-button--variant-solid.base-button--type-default:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    .base-button--variant-solid.base-button--type-primary {
+      background: var(--color-primary);
+      color: var(--color-white);
+    }
+    .base-button--variant-solid.base-button--type-primary:hover { background: var(--color-primary-hover); }
+    .base-button--variant-solid.base-button--type-success { background: var(--color-success); color: var(--color-white); }
+    .base-button--variant-solid.base-button--type-success:hover { background: #16a34a; }
+    .base-button--variant-solid.base-button--type-danger { background: var(--color-danger); color: var(--color-white); }
+    .base-button--variant-solid.base-button--type-danger:hover { background: #dc2626; }
+
+    /* outline 边框 */
+    .base-button--variant-outline {
+      background: transparent;
+    }
+    .base-button--variant-outline.base-button--type-primary {
+      color: var(--color-primary);
+      border-color: var(--color-primary);
+    }
+    .base-button--variant-outline.base-button--type-primary:hover {
+      background: var(--color-primary-light);
+    }
+    .base-button--variant-outline.base-button--type-success {
+      color: var(--color-success);
+      border-color: var(--color-success);
+    }
+    .base-button--variant-outline.base-button--type-success:hover {
+      background: var(--color-success-light);
+    }
+    .base-button--variant-outline.base-button--type-danger {
+      color: var(--color-danger);
+      border-color: var(--color-danger);
+    }
+    .base-button--variant-outline.base-button--type-danger:hover {
+      background: var(--color-danger-light);
+    }
+
+    /* text 文字按钮 */
+    .base-button--variant-text {
+      background: transparent;
+      border-color: transparent;
+      color: var(--color-primary);
+      padding: 0 var(--space-2);
+    }
+    .base-button--variant-text:hover {
+      color: var(--color-primary-hover);
+    }
+  </style>
 </head>
 <body>
-  <h1 class="demo-section-title">形态变体 — variant="solid / outline / text"</h1>
-  <p class="demo-helper">solid（实色背景）/ outline（边框）/ text（文字按钮，无背景）。</p>
+  <div class="demo-page">
+    <h1 class="demo-page-title">形态变体 — variant="solid / outline / text"</h1>
+    <p class="demo-page-desc">solid（实色背景）/ outline（边框）/ text（文字按钮，无背景）。</p>
 
-  <base-card title="variant=solid（默认）">
-    <div class="demo-row">
-      <button class="base-button base-button--type-primary">主要 solid</button>
-      <button class="base-button base-button--type-success">成功 solid</button>
-      <button class="base-button base-button--type-danger">危险 solid</button>
+    <div class="demo-card">
+      <div class="demo-card__title">variant=solid（默认）</div>
+      <div class="demo-card__body">
+        <div class="demo-row">
+          <button class="base-button base-button--size-md base-button--variant-solid base-button--type-primary">主要 solid</button>
+          <button class="base-button base-button--size-md base-button--variant-solid base-button--type-success">成功 solid</button>
+          <button class="base-button base-button--size-md base-button--variant-solid base-button--type-danger">危险 solid</button>
+        </div>
+      </div>
     </div>
-  </base-card>
 
-  <base-card title="variant=outline">
-    <div class="demo-row">
-      <button class="base-button base-button--variant-outline base-button--type-primary">主要 outline</button>
-      <button class="base-button base-button--variant-outline base-button--type-success">成功 outline</button>
-      <button class="base-button base-button--variant-outline base-button--type-danger">危险 outline</button>
+    <div class="demo-card">
+      <div class="demo-card__title">variant=outline（描边）</div>
+      <div class="demo-card__body">
+        <div class="demo-row">
+          <button class="base-button base-button--size-md base-button--variant-outline base-button--type-primary">主要 outline</button>
+          <button class="base-button base-button--size-md base-button--variant-outline base-button--type-success">成功 outline</button>
+          <button class="base-button base-button--size-md base-button--variant-outline base-button--type-danger">危险 outline</button>
+        </div>
+      </div>
     </div>
-  </base-card>
 
-  <base-card title="variant=text">
-    <div class="demo-row">
-      <button class="base-button base-button--variant-text">文字按钮</button>
-      <button class="base-button base-button--variant-text">查看详情</button>
-      <button class="base-button base-button--variant-text">更多</button>
+    <div class="demo-card">
+      <div class="demo-card__title">variant=text（文字按钮）</div>
+      <div class="demo-card__body">
+        <div class="demo-row">
+          <button class="base-button base-button--size-md base-button--variant-text">文字按钮</button>
+          <button class="base-button base-button--size-md base-button--variant-text">查看详情</button>
+          <button class="base-button base-button--size-md base-button--variant-text">更多</button>
+        </div>
+      </div>
     </div>
-  </base-card>
+  </div>
 </body>
 </html>

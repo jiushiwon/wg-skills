@@ -66,6 +66,82 @@ engine = create_engine(
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 ```
 
+### Go (Gin + GORM)
+
+```go
+// config/config.go
+package config
+
+import (
+    "fmt"
+    "os"
+)
+
+type Config struct {
+    MySQLHost     string
+    MySQLPort     string
+    MySQLUser     string
+    MySQLPassword string
+    MySQLDatabase string
+}
+
+func Load() *Config {
+    return &Config{
+        MySQLHost:     getEnv("MYSQL_HOST", "localhost"),
+        MySQLPort:     getEnv("MYSQL_PORT", "3306"),
+        MySQLUser:     getEnv("MYSQL_USER", "root"),
+        MySQLPassword: getEnv("MYSQL_PASSWORD", ""),
+        MySQLDatabase: getEnv("MYSQL_DATABASE", "myapp"),
+    }
+}
+
+func (c *Config) DSN() string {
+    return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+        c.MySQLUser, c.MySQLPassword, c.MySQLHost, c.MySQLPort, c.MySQLDatabase)
+}
+
+func getEnv(key, defaultVal string) string {
+    if val := os.Getenv(key); val != "" {
+        return val
+    }
+    return defaultVal
+}
+```
+
+```go
+// database/database.go
+package database
+
+import (
+    "fmt"
+    "log"
+    "time"
+
+    "gorm.io/driver/mysql"
+    "gorm.io/gorm"
+    "gorm.io/gorm/logger"
+)
+
+var DB *gorm.DB
+
+func Init(dsn string) {
+    var err error
+    DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
+        Logger: logger.Default.LogMode(logger.Info),
+    })
+    if err != nil {
+        log.Fatalf("连接 MySQL 失败: %v", err)
+    }
+
+    sqlDB, _ := DB.DB()
+    sqlDB.SetMaxIdleConns(5)                  // 最小空闲连接
+    sqlDB.SetMaxOpenConns(10)                 // 最大连接数
+    sqlDB.SetConnMaxLifetime(30 * time.Minute) // 连接最大存活时间
+
+    fmt.Println("MySQL 连接成功")
+}
+```
+
 ## 表结构设计
 
 ### 基础表模板

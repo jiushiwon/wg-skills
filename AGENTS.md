@@ -56,11 +56,12 @@ AI 时代的编程不是"取代程序员"，而是把传统工程中**重复、�
 #### 场景 3：学习各种语言规范
 **针对小白、追求更高效的 Vibecoding**：
 
-- ☕ **一天学会 Java 体系** → 触发 `java-backend-skill` / `springboot-init-skill`
-- 🐍 **一天学会 Python 体系** → 触发 `python-backend-skill` / `fastapi-init-skill`
-- 🐹 **一天学会 Go 体系** → 触发 `go-backend-skill`
-- 🟢 **一天学会 Node.js 体系** → 触发 `nodejs-backend-skill`
+- ☕ **一天学会 Java 体系** → 触发 `java-fast-skill` / `springboot-init-skill`
+- 🐍 **一天学会 Python 体系** → 触发 `python-fast-skill` / `fastapi-init-skill`
+- 🐹 **一天学会 Go 体系** → 触发 `go-gin-init-skill`
+- 🟢 **一天学会 Node.js 体系** → 触发 `nodejs-init-skill`
 - 🎨 **一天学会 Vue 体系** → 触发 `vue-base-skill` / `vue-generate-skill`
+- 📱 **一天学会 React 体系** → 触发 `react-init-skill`
 - 📱 **一天学会 uni-app 体系** → 触发 `uniapp-base-skill` 及其 21 个子技能
 
 > 一句"帮我用 Java 搭一个商城"，智能体会按"选型 → 骨架 → 业务模块"的顺序串起多个技能，**小白也能跟着提示词完成一个完整项目**。
@@ -125,28 +126,53 @@ wg-skills/
 │
 ├── vibeCoding/                        # 🎯 板块一：编程开发（占比 85%）
 │   ├── backend/                       # 后端语言矩阵
-│   │   ├── java/springboot/
+│   │   ├── java/                            # Java 语言矩阵
+│   │   │   ├── java-fast-skill/             # Java 快速入门（小白友好）
 │   │   │   ├── springboot-init-skill/        # Spring Boot 一键初始化
-│   │   │   └── java-auth-module-skill/       # Spring Boot 组织与鉴权
-│   │   ├── python/fastapi/
-│   │   │   ├── fastapi-init-skill/           # FastAPI 一键初始化
-│   │   │   ├── fastapi-auth-module-skill/    # FastAPI 组织与鉴权
-│   │   │   ├── fastapi-ws-module-skill/       # FastAPI WebSocket 即时通讯
-│   │   │   └── fastapi-agent-module-skill/   # FastAPI + LangGraph AI Agent
-│   │   ├── backend-analysis-skill/           # 后端项目全景分析
-│   │   ├── backend-generate-skill/           # 后端项目骨架生成（父技能 + 7 嵌套子技能）
-│   │   │   ├── backend-select-skill/         # 选型（语言/框架/数据库）
-│   │   │   ├── backend-convention-skill/     # 通用规范
-│   │   │   ├── java-backend-skill/           # Java 体系
-│   │   │   ├── go-backend-skill/             # Go 体系
-│   │   │   ├── python-backend-skill/         # Python 体系
-│   │   │   ├── nodejs-backend-skill/         # Node.js 体系
-│   │   │   └── database-skill/               # 数据库选型
-│   │       ├── auth-skill/                   # 鉴权模块
-│   │       ├── org-permission-skill/         # 组织权限
-│   │       ├── ai-chat-skill/                # AI 聊天
-│   │       ├── notification-skill/           # 通知模块
-│   │       └── payment-skill/                # 支付模块
+│   │   │   └── springboot-module/            # Java 业务模块矩阵
+│   │   │       ├── java-auth-module-skill/
+│   │   │       ├── java-redis-module-skill/
+│   │   │       ├── java-kafka-module-skill/
+│   │   │       ├── java-ai-chat-module-skill/
+│   │   │       ├── java-notification-module-skill/
+│   │   │       ├── java-org-permission-module-skill/
+│   │   │       └── java-payment-module-skill/
+│   │   ├── python/                          # Python 语言矩阵
+│   │   │   ├── python-fast-skill/           # Python 快速入门（小白友好）
+│   │   │   ├── fastapi-init-skill/          # FastAPI 一键初始化
+│   │   │   └── fastapi-module/              # Python 业务模块矩阵
+│   │   │       ├── fastapi-auth-module-skill/
+│   │   │       ├── python-redis-module-skill/
+│   │   │       ├── python-kafka-module-skill/
+│   │   │       ├── fastapi-ws-module-skill/
+│   │   │       ├── fastapi-agent-module-skill/
+│   │   │       ├── fastapi-ai-chat-module-skill/
+│   │   │       ├── fastapi-notification-module-skill/
+│   │   │       ├── fastapi-org-permission-module-skill/
+│   │   │       └── fastapi-payment-module-skill/
+│   │   ├── go/                              # Go 语言矩阵
+│   │   │   ├── go-gin-init-skill/           # Go + Gin 一键初始化
+│   │   │   └── go-ws-module-skill/          # Go WebSocket 模块
+│   │   ├── nodejs/                          # Node.js 语言矩阵
+│   │   │   └── nodejs-init-skill/           # Node.js + Express 一键初始化
+│   │   ├── database/                        # 数据库设计规范体系
+│   │   │   ├── database-design-skill/       # 数据库设计规范（表名/索引/分库分表/性能）
+│   │   │   ├── mysql-module-skill/          # MySQL 模块集成
+│   │   │   ├── mongodb-module-skill/        # MongoDB 模块集成
+│   │   │   ├── pgsql-module-skill/          # PostgreSQL 模块集成
+│   │   │   ├── redis-module-skill/          # Redis 缓存/分布式锁
+│   │   │   ├── kafka-module-skill/          # Kafka 消息队列
+│   │   │   ├── sqlite-module-skill/         # SQLite 轻量数据库
+│   │   │   └── database-learning-skill/     # 数据库学习与选型
+│   │   ├── backend-analysis-skill/           # 后端项目分析
+│   │   ├── backend-select-skill/            # 技术选型
+│   │   ├── backend-convention-skill/        # 通用规范
+│   │   └── module-generate-skill/           # 业务模块（跨语言）
+│   │       ├── auth-skill/
+│   │       ├── org-permission-skill/
+│   │       ├── ai-chat-skill/
+│   │       ├── notification-skill/
+│   │       └── payment-skill/
 │   │
 │   ├── frontend/                      # 前端框架矩阵
 │   │   ├── frontend-code-doctor/             # 前端代码审查
@@ -175,13 +201,36 @@ wg-skills/
 │   │   │   ├── uniapp-ui-component-commands-skill/ # UI 组件指令
 │   │   │   └── uniapp-ui-template-builder-skill/   # UI 页面模板
 │   │   └── vue/                              # Vue 通用技能矩阵
-│   │       ├── vue-base-skill/               # Vue 基础（按钮/卡片/表格/标签）
+│   │       ├── vue-base-skill/               # Vue 基础（按钮/卡片/表格/标签/表单/树/菜单/输入框/选择器/日期选择器/列表页）
 │   │       ├── vue-table-skill/              # Vue 表格组件（20+ 形态，3 个独立组件）
-│   │       ├── vue-form-skill/               # Vue 表单组件（10+ 组件）
+│   │       ├── vue-form-skill/               # Vue 表单体系（组装型，引用独立技能）
+│   │       ├── vue-dropdown-skill/           # Vue 万能浮层
+│   │       ├── vue-tree-skill/               # Vue 树形组件（10+ 形态）
+│   │       ├── vue-input-skill/              # Vue 输入框组件
+│   │       ├── vue-select-skill/             # Vue 下拉选择器
+│   │       ├── vue-datepicker-skill/         # Vue 日期选择器
+│   │       ├── vue-checkbox-skill/           # Vue 复选框组件
+│   │       ├── vue-radio-skill/              # Vue 单选框组件
+│   │       ├── vue-switch-skill/            # Vue 开关组件
+│   │       ├── vue-upload-skill/            # Vue 上传组件
+│   │       ├── vue-list-page-skill/        # Vue 列表页（搜索+表格+分页）
+│   │       └── vue-complex-skill/            # Vue 综合页面（含登录页、增删改查页面）
+│   │       ├── vue-contextmenu-skill/        # Vue 右键菜单组件
+│   │       ├── vue-list-item-skill/          # Vue 列表项抽象（tree/menu/dropdown 复用基座）
 │   │       ├── vue-generate-skill/           # Vue 项目生成
 │   │       ├── vue-theme-skill/              # Vue 主题系统
 │   │       ├── vue-style-skill/              # Vue 样式规范
-│   │       └── electron-vue-init-skill/     # Electron + Vue3 桌面端初始化
+│   │       ├── vue-tui-skill/                # Vue TUI 终端界面
+│   │       └── electron-vue3-skill/         # Electron + Vue3 桌面端初始化
+│   │   └── react/                            # React 技能矩阵
+│   │       ├── react-init-skill/            # React + TS + Vite 项目生成
+│   │       └── react-native-generate-skill/  # React Native 移动端初始化
+│   │   └── video/                           # 视频处理技能矩阵
+│   │       ├── remotion-skill/              # Remotion 代码生成视频
+│   │       └── ffmpeg-skill/               # FFmpeg 视频处理
+│   │
+│   ├── vibeCodingProjectsSkills/            # 🎯 项目级技能（开箱即用项目骨架）
+│   │   └── vue-admin-skill/                # Vue3 管理后台项目
 │   │
 │   ├── super-deploy-skills/           # 🚀 一键部署套件（父技能 + 13 嵌套子技能）
 │   │   ├── database-install-skill/           # 数据库安装（mysql/pg/redis/mongo 子技能）
@@ -333,7 +382,7 @@ wg-skills/
                 │
                 ▼
    真实项目：商城 / 管理系统 / App / 小程序 / 大型平台（多中间件）
-   学习场景：一天学会 Java 体系 / Python 体系 / Vue 体系 / uni-app 体系
+   学习场景：一天学会 Java / Python / Go / Node / Vue / React / uni-app 体系
 ```
 
 ---

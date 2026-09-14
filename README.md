@@ -38,18 +38,58 @@ AI 时代的编程不是"取代程序员"，而是把传统工程中**重复、�
 
 | 技能 | 用途 | 触发词 |
 |------|------|--------|
-| `springboot-init-skill/` | Spring Boot 一键初始化（Java 小白友好） | "帮我搭 Spring Boot"、"Java 初始化" |
-| `java-auth-module-skill/` | Spring Boot 组织与鉴权 | "加 RBAC"、"组织权限" |
-| `fastapi-init-skill/` | FastAPI 一键初始化（Python 小白友好） | "帮我搭 FastAPI"、"Python 后端" |
-| `fastapi-auth-module-skill/` | FastAPI 组织与鉴权 | "FastAPI 加权限"、"RBAC" |
-| `fastapi-ws-module-skill/` | FastAPI WebSocket 即时通讯 | "WebSocket 聊天"、"IM 模块" |
-| `fastapi-agent-module-skill/` | FastAPI + LangGraph AI Agent | "AI Agent 服务"、"LangGraph" |
-| `go-gin-init-skill/` | Go + Gin 一键初始化（小白友好） | "帮我搭 Go"、"Go 脚手架"、"Gin 后端" |
-| `database-learning-skill/` | 数据库学习与选型 | "数据库学习"、"MySQL vs PostgreSQL"、"索引"、"事务" |
+| **Java** | | |
+| `java-fast-skill/` | Java 快速入门学习（小白友好） | "Java 入门"、"Java 基础"、"Java 学什么" |
+| `springboot-init-skill/` | Spring Boot 一键初始化（小白友好） | "帮我搭 Spring Boot"、"Java 初始化" |
+| `springboot-module/` | **Java 业务模块矩阵** | |
+| └ `java-auth-module-skill/` | 鉴权模块 | "加 RBAC"、"组织权限" |
+| └ `java-redis-module-skill/` | Redis 缓存/分布式锁 | "Redis 集成"、"redis 缓存" |
+| └ `java-kafka-module-skill/` | Kafka 消息队列 | "Kafka 集成"、"消息队列" |
+| └ `java-ai-chat-module-skill/` | AI 聊天模块 | "AI 聊天"、"对话模块" |
+| └ `java-notification-module-skill/` | 通知模块（短信/邮件/站内信） | "短信验证码"、"发送邮件" |
+| └ `java-org-permission-module-skill/` | 组织权限模块 | "组织架构"、"部门管理" |
+| └ `java-payment-module-skill/` | 支付模块（微信/支付宝） | "微信支付"、"支付宝支付" |
+| └ `springboot-dict-module-skill/` | 字典/配置模块 | "字典模块"、"系统配置" |
+| └ `springboot-upload-module-skill/` | 文件上传模块 | "文件上传"、"OSS" |
+| └ `springboot-storage-module-skill/` | 静态资源库模块 | "静态资源"、"大文件上传"、"文件压缩" |
+| **Python** | | |
+| `python-fast-skill/` | Python 快速入门学习（小白友好） | "Python 入门"、"Python 基础" |
+| `fastapi-init-skill/` | FastAPI 一键初始化（小白友好） | "帮我搭 FastAPI"、"Python 后端" |
+| `fastapi-module/` | **Python 业务模块矩阵** | |
+| └ `fastapi-auth-module-skill/` | 鉴权模块 | "FastAPI 加权限"、"RBAC" |
+| └ `python-redis-module-skill/` | Redis 缓存/分布式锁 | "Redis 集成" |
+| └ `python-kafka-module-skill/` | Kafka 消息队列 | "Kafka 集成" |
+| └ `fastapi-ws-module-skill/` | WebSocket 即时通讯 | "WebSocket 聊天"、"IM 模块" |
+| └ `fastapi-agent-module-skill/` | AI Agent 模块 | "AI Agent 服务"、"LangGraph" |
+| └ `fastapi-ai-chat-module-skill/` | AI 聊天模块 | "AI 聊天" |
+| └ `fastapi-notification-module-skill/` | 通知模块 | "短信验证码"、"发送邮件" |
+| └ `fastapi-org-permission-module-skill/` | 组织权限模块 | "组织架构" |
+| └ `fastapi-payment-module-skill/` | 支付模块 | "微信支付" |
+| └ `fastapi-dict-module-skill/` | 字典/配置模块 | "字典模块"、"系统配置" |
+| └ `fastapi-upload-module-skill/` | 文件上传模块 | "文件上传"、"OSS" |
+| └ `fastapi-storage-module-skill/` | 静态资源库模块 | "静态资源"、"大文件上传"、"文件压缩" |
+| **Go** | | |
+| `go-gin-init-skill/` | Go + Gin 一键初始化（小白友好） | "帮我搭 Go"、"Go 脚手架" |
+| `go-ws-module-skill/` | Go Gin WebSocket 模块 | "Go WebSocket"、"IM 模块" |
+| `go-module/` | **Go 业务模块矩阵** | |
+| └ `go-storage-module-skill/` | 静态资源库模块 | "Go 文件上传"、"大文件上传" |
+| **Node.js** | | |
+| `nodejs-init-skill/` | Node.js + Express 一键初始化 | "帮我搭 Node.js"、"Express 脚手架" |
+| **数据库** | | |
+| `database/` | **数据库设计规范体系** | |
+| └ `database-design-skill/` | 数据库设计规范（表名/索引/分库分表/性能） | "数据库设计规范"、"表名规范" |
+| └ `mysql-module-skill/` | MySQL 模块集成 | "MySQL 集成" |
+| └ `mongodb-module-skill/` | MongoDB 模块集成 | "MongoDB 集成" |
+| └ `pgsql-module-skill/` | PostgreSQL 模块集成 | "PostgreSQL 集成" |
+| └ `redis-module-skill/` | Redis 缓存/分布式锁 | "Redis 集成"、"分布式锁" |
+| └ `kafka-module-skill/` | Kafka 消息队列 | "Kafka 集成"、"消息队列" |
+| └ `sqlite-module-skill/` | SQLite 轻量数据库 | "SQLite 集成"、"嵌入式数据库" |
+| └ `database-learning-skill/` | 数据库学习与选型 | "数据库学习"、"MySQL vs PostgreSQL" |
+| **辅助** | | |
 | `backend-analysis-skill/` | 后端项目全景分析 | "分析这个后端项目" |
 | `backend-generate-skill/` | 后端骨架生成（**父技能 + 7 子技能**） | "生成后端骨架"、"后端选型" |
 | `hot-trend-collector/` | 热点抓取（知乎/微博/百度/微信） | "热点抓取"、"自媒体热点" |
-| `article-generator/` | 多平台文章生成（小红书/知乎/头条/公众号/CSDN） | "文章生成"、"AI 写作" |
+| `article-generator/` | 多平台文章生成 | "文章生成"、"AI 写作" |
 
 #### 1.2 `vibeCoding/frontend/` —— 前端框架矩阵
 
@@ -80,16 +120,35 @@ AI 时代的编程不是"取代程序员"，而是把传统工程中**重复、�
 | └─ `uniapp-ui-component-commands-skill/` | UI 组件指令 | "UI 组件命令" |
 | └─ `uniapp-ui-template-builder-skill/` | UI 页面模板 | "UI 模板" |
 | `vue/` | **Vue 通用技能矩阵** | "做 Vue" |
-| └─ `vue-base-skill/` | Vue 基础（按钮/卡片/表格/标签） | "Vue 基础组件" |
+| └─ `vue-base-skill/` | Vue 基础（按钮/卡片/表格/标签/表单/树/菜单/登录/输入框/选择器/日期选择器/列表页） | "Vue 基础组件" |
+| └─ `vue-login-skill/` | Vue 高端登录页（8 种差异化风格） | "登录页"、"login page"、"高大上登录" |
 | └─ `vue-table-skill/` | Vue 表格组件（20+ 形态，3 个独立组件） | "做一个表格"、"表格组件" |
 | └─ `vue-form-skill/` | Vue 表单组件（10+ 组件） | "做一个表单"、"表单组件" |
 | └─ `vue-dropdown-skill/` | Vue 万能浮层（5 mode × 12 position，5 合1） | "做一个下拉"、"气泡框"、"选择器" |
+| └─ `vue-tree-skill/` | Vue 树形组件（10+ 形态） | "Vue 树组件"、"tree component" |
+| └─ `vue-contextmenu-skill/` | Vue 右键菜单组件 | "Vue 右键菜单"、"context menu" |
+| └─ `vue-list-item-skill/` | Vue 列表项抽象（tree/menu/dropdown 复用基座） | "列表项抽象"、"BaseListItem" |
 | └─ `vue-generate-skill/` | Vue 项目生成 | "生成 Vue 项目" |
 | └─ `vue-theme-skill/` | Vue 主题系统 | "Vue 主题" |
-| └─ `electron-vue-init-skill/` | Electron + Vue3 桌面端初始化 | "Electron 脚手架"、"electron vue" |
+| └─ `vue-tui-skill/` | Vue TUI 终端界面 | "终端 UI"、"TUI" |
+| └─ `electron-vue3-skill/` | Electron + Vue3 桌面端初始化 | "Electron 脚手架"、"electron vue" |
+| `react/` | **React 技能矩阵** | "做 React" |
+| └─ `react-init-skill/` | React + TS + Vite 项目生成 | "生成 React 项目" |
+| └─ `react-native-generate-skill/` | React Native 移动端初始化 | "React Native 脚手架"、"移动端 App" |
+| `video/` | **视频处理技能矩阵** | "视频生成"、"视频处理" |
+| └─ `remotion-skill/` | Remotion 代码生成视频 | "Remotion"、"代码做视频" |
+| └─ `ffmpeg-skill/` | FFmpeg 视频处理 | "FFmpeg"、"视频剪辑" |
 | `html-frontend-template/` | 纯 HTML 管理后台（无框架） | "HTML 管理后台"、"自媒体前端" |
 
-#### 1.3 `vibeCoding/super-deploy-skills/` —— 一键部署套件
+#### 1.3 `vibeCodingProjectsSkills/` —— 项目级技能
+
+> **开箱即用的完整项目骨架**，直接生成可运行的项目。
+
+| 技能 | 用途 | 触发词 |
+|------|------|--------|
+| `vue-admin-skill/` | Vue3 管理后台项目 | "Vue 管理后台"、"admin 系统" |
+
+#### 1.4 `vibeCoding/super-deploy-skills/` —— 一键部署套件
 
 > **大型平台项目必备**：覆盖大量中间件（Redis / Kafka / MySQL / PostgreSQL / MongoDB / Go / Java / Python / Node.js）的多插件部署。
 
@@ -149,12 +208,13 @@ AI 时代的编程不是"取代程序员"，而是把传统工程中**重复、�
 
 | 体系 | 技能 | 触发 |
 |------|------|------|
-| ☕ **一天学会 Java 体系** | `java-backend-skill` + `springboot-init-skill` | "教我 Java" |
-| 🐍 **一天学会 Python 体系** | `python-backend-skill` + `fastapi-init-skill` | "教我 Python" |
-| 🐹 **一天学会 Go 体系** | `go-backend-skill` | "教我 Go" |
-| 🟢 **一天学会 Node.js 体系** | `nodejs-backend-skill` | "教我 Node" |
-| 🎨 **一天学会 Vue 体系** | `vue-base-skill` + `vue-generate-skill` | "教我 Vue" |
-| 📱 **一天学会 uni-app 体系** | `uniapp-base-skill` + 21 个组件 | "教我 uni-app" |
+| ☕ **一天学会 Java 体系** | `java-fast-skill` + `springboot-init-skill` | "Java 入门"、"Java 基础" |
+| 🐍 **一天学会 Python 体系** | `python-fast-skill` + `fastapi-init-skill` | "Python 入门"、"Python 基础" |
+| 🐹 **一天学会 Go 体系** | `go-gin-init-skill` | "Go 入门" |
+| 🟢 **一天学会 Node.js 体系** | `nodejs-init-skill` | "Node.js 入门" |
+| 🎨 **一天学会 Vue 体系** | `vue-base-skill` + `vue-generate-skill` | "Vue 入门" |
+| 📱 **一天学会 React 体系** | `react-init-skill` | "React 入门" |
+| 📱 **一天学会 uni-app 体系** | `uniapp-base-skill` + 21 个组件 | "uni-app 入门" |
 
 ---
 
@@ -240,12 +300,12 @@ git clone https://github.com/your-org/wg-skills.git ~/.claude/skills/wg-skills
 
 | 板块 | skill 总数 | 占比 |
 |------|----------|------|
-| **vibeCoding** | 45+ | 90% |
-| └ backend | 15+ | |
-| └ frontend | 30+ | |
+| **vibeCoding** | 70+ | 93% |
+| └ backend | 30+ | |
+| └ frontend | 35+ | |
 | └ super-deploy | 7（含 13 嵌套子） | |
-| **others** | 5 | 10% |
-| **合计** | **50+ skills** | 100% |
+| **others** | 5 | 7% |
+| **合计** | **75+ skills** | 100% |
 
 ---
 

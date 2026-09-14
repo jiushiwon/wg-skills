@@ -22,10 +22,18 @@ vibeCoding/frontend/vue/
     │   ├── SKILL.md, README.md
     │   ├── base-tag.md
     │   └── demo-components/base-tag/
-    └── vue-table-skill/                   # 业务子技能 4（表格）
-        ├── SKILL.md, README.md
-        ├── base-table.md + 10 变体 .md
-        └── demo-components/{shared, base-table}/
+    ├── vue-table-skill/                   # 业务子技能 4（表格）
+    │   ├── SKILL.md, README.md
+    │   ├── base-table.md + 10 变体 .md
+    │   └── demo-components/{shared, base-table}/
+    ├── vue-form-skill/                    # 业务子技能 5（表单）
+    ├── vue-dropdown-skill/                # 业务子技能 6（下拉菜单）
+    ├── vue-tree-skill/                    # 业务子技能 7（树形组件）
+    ├── vue-contextmenu-skill/             # 业务子技能 8（右键菜单）
+    ├── vue-collapse-skill/                # 业务子技能 9（折叠面板）
+    ├── vue-upload-skill/                  # 业务子技能 10（文件上传）
+    ├── vue-generate-skill/                # 业务子技能 11（代码生成器）
+    └── vue-login-skill/                   # 业务子技能 12（高端登录页）
 ```
 
 > **关键原则**：父技能根目录**不放置任何业务组件 .md**，所有组件 .md 都下沉到对应子技能内。这是为了**严格对齐 uniapp-base-skill 结构**（其根目录的 `base-card.md` / `base-input.md` 视为"跨场景通用基础"，未来若提炼通用基线也可下沉）。
@@ -36,11 +44,19 @@ vibeCoding/frontend/vue/
 vue-theme-skill（基础层，无依赖）
        ↓ 提供 --color-* / --space-* / --font-* / --radius-*
 vue-base-skill（父技能层，强依赖 vue-theme-skill）
-       ↓ 规范 + 容器原则 + 4 个子技能入口
+       ↓ 规范 + 容器原则 + 12 个子技能入口
   ├── vue-card-skill        （容器基底）
   ├── vue-button-skill      （按钮）
   ├── vue-tag-skill         （标签）
-  └── vue-table-skill       （表格）
+  ├── vue-table-skill       （表格）
+  ├── vue-form-skill        （表单）
+  ├── vue-dropdown-skill    （下拉菜单）
+  ├── vue-tree-skill        （树形组件）
+  ├── vue-contextmenu-skill （右键菜单）
+  ├── vue-collapse-skill    （折叠面板）
+  ├── vue-upload-skill      （文件上传）
+  ├── vue-generate-skill    （代码生成器）
+  └── vue-login-skill       （高端登录页）
 ```
 
 **禁止反向依赖**：vue-theme-skill 不得引用 vue-base-skill 的任何变量。
@@ -139,6 +155,7 @@ vue-base-skill（父技能层，强依赖 vue-theme-skill）
 | 版本 | 状态 | 说明 |
 |------|------|------|
 | 0.1.0 | ✅ 已发布 | 父技能 + card / button / tag / table 4 个子技能 |
-| 0.2.0 | 🚧 规划中 | vue-form-skill（input / radio / checkbox / select / form） |
-| 0.3.0 | 🚧 规划中 | vue-popup-skill / vue-page-skill |
+| 0.2.0 | ✅ 已发布 | vue-form-skill（表单体系 + 校验引擎） |
+| 0.3.0 | ✅ 已发布 | vue-dropdown / vue-tree / vue-contextmenu / vue-collapse / vue-upload / vue-generate |
+| 0.4.0 | ✅ 已发布 | vue-login-skill（18 种高端登录页风格） |
 | 1.0.0 | 🚧 规划中 | 业务层组件 + 完整页面模板 |

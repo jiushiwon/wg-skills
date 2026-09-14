@@ -32,7 +32,20 @@
 
 | 事件 | 参数 | 说明 |
 |------|------|------|
+| `submit` | `Record<string, unknown>` | 校验通过后提交（监听 `<base-button native-type="submit">`） |
 | `validate` | `{ prop: string, valid: boolean, message: string }` | 单字段校验完成 |
+| `reset` | — | 表单重置时（监听 `<base-button native-type="reset">`） |
+
+### submit 触发流程
+
+```
+用户点击登录按钮
+  └─ base-button.native-type="submit"
+     └─ base-form 拦截"提交"事件
+        ├─ 调用所有 FormItem.validate() 校验
+        ├─ 全部通过 → emit('submit', { ...model })
+        └─ 校验失败 → 不 emit submit，在对应 FormItem 显示错误
+```
 
 ## 类型定义
 
@@ -153,6 +166,7 @@ async function validateField(prop: string): Promise<{ valid: boolean; message: s
       { 'base-form--disabled': disabled },
     ]"
     role="form"
+    @click="handleClick"
     @keydown.enter.prevent="handleEnterSubmit"
   >
     <slot />
@@ -202,7 +216,66 @@ async function validateField(prop: string): Promise<{ valid: boolean; message: s
 </style>
 ```
 
-### 4. 容器原则
+### 4. 提交拦截（零原生 form 的核心）
+
+```typescript
+const emit = defineEmits<{
+  submit: [values: Record<string, unknown>]
+  reset: []
+}>()
+
+// 捕获 base-button.native-type="submit" 的点击
+async function handleClick(e: MouseEvent) {
+  const target = (e.target as HTMLElement).closest('[data-native-type]') as HTMLElement | null
+  if (!target) return
+
+  const type = target.dataset.nativeType
+  if (type === 'submit') {
+    e.stopPropagation()
+    await doSubmit()
+  } else if (type === 'reset') {
+    e.stopPropagation()
+    resetFields()
+    emit('reset')
+  }
+}
+
+// Enter 键提交（仅当聚焦在 input 时）
+async function handleEnterSubmit(e: KeyboardEvent) {
+  const target = e.target as HTMLElement
+  // 仅 input 触发，textarea 不触发（Shift+Enter 换行）
+  if (target.getAttribute('role') !== 'textbox') return
+  await doSubmit()
+}
+
+async function doSubmit() {
+  const valid = await validate()
+  if (valid) {
+    // 深拷贝 model，避免外部引用被改
+    emit('submit', JSON.parse(JSON.stringify(props.model)))
+  }
+}
+```
+
+### 5. 与登录页配合
+
+```vue
+<base-card class="login-card">
+  <base-form :model="form" :rules="rules" @submit="handleSubmit">
+    <base-form-item label="账号" prop="username">
+      <base-input v-model="form.username" />
+    </base-form-item>
+    <base-form-item label="密码" prop="password">
+      <base-input v-model="form.password" type="password" show-password />
+    </base-form-item>
+    <base-button type="primary" block native-type="submit">
+      登 录
+    </base-button>
+  </base-form>
+</base-card>
+```
+
+### 6. 容器原则
 
 ```vue
 <!-- 正确 -->

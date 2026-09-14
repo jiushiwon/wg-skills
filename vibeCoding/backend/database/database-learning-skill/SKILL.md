@@ -117,26 +117,32 @@ MySQL vs PostgreSQL 选型
 
 ### 5. 查询优化
 
-**慢查询分析**
+**为什么要优化？**
+
+慢查询是数据库性能的最大杀手。一个没有索引的查询可能让整个系统变慢。
+
+**如何发现慢查询？**
 
 ```sql
--- 开启慢查询日志
+-- MySQL：开启慢查询日志
 SHOW VARIABLES LIKE 'slow_query_log';
-
--- 查看慢查询
 SELECT * FROM slow_log ORDER BY start_time DESC LIMIT 10;
+
+-- PostgreSQL：查看慢查询统计
+SELECT * FROM pg_stat_statements ORDER BY total_time DESC LIMIT 10;
 
 -- 使用 EXPLAIN 分析查询
 EXPLAIN SELECT * FROM users WHERE username = 'test';
 ```
 
-**优化技巧**
+**核心优化思路**
 
-1. **避免 SELECT *** → 只查询需要的字段
-2. **避免函数运算** → WHERE age * 2 > 30 改为 WHERE age > 15
-3. **避免隐式转换** → '123' vs 123
-4. **使用索引** → 确保 WHERE 条件有索引
-5. **分页优化** → SELECT * FROM users LIMIT 100000, 10 改为 WHERE id > last_id
+1. **加索引** → WHERE 条件字段必须有索引
+2. **避免 SELECT *** → 只查询需要的字段
+3. **避免函数运算** → WHERE YEAR(created_at)=2024 改为 WHERE created_at >= '2024-01-01'
+4. **分页优化** → 大偏移量用游标分页（WHERE id > last_id）
+
+> 详细的性能优化规范见 `database-design-skill`。
 
 ### 6. MySQL vs PostgreSQL 选型
 
@@ -166,31 +172,14 @@ EXPLAIN SELECT * FROM users WHERE username = 'test';
 | 高并发简单查询 | MySQL |
 | 复杂查询/联表 | PostgreSQL |
 
-## 核心概念速查
+## 设计规范
 
-### 数据类型选择
+> 详细的设计规范（命名、字段类型、索引设计、分库分表等）见 `database-design-skill`。
 
-| 数据 | MySQL | PostgreSQL |
-|------|-------|-----------|
-| 整数 | INT/BIGINT | INTEGER/BIGINT |
-| 浮点数 | FLOAT/DOUBLE | REAL/DOUBLE PRECISION |
-| 字符串 | VARCHAR/TEXT | VARCHAR/TEXT |
-| 日期时间 | DATETIME/TIMESTAMP | TIMESTAMP |
-| 布尔 | TINYINT(1) | BOOLEAN |
-| JSON | JSON | JSONB（推荐） |
-
-### 字段命名规范
-
-- 英文小写 + 下划线：`user_name`（不是 userName）
-- 有意义：`created_at`（不是 ctime）
-- 有前缀：`wg_user`（wg_ 是表前缀）
-
-### 表设计原则
-
-1. **每表有主键**：自增 BIGINT
-2. **有创建/更新时间**：`created_at`、`updated_at`
-3. **支持软删除**：`deleted_at`
-4. **必要的索引**：WHERE 常用字段加索引
+**速查要点**：
+- 命名：英文小写 + 下划线，表前缀 `wg_`，单数名词
+- 基础字段：`id`、`status`、`created_at`、`updated_at`、`deleted_at`
+- 索引：WHERE/ORDER BY/JOIN 字段必须加索引
 
 ## 触发场景
 
@@ -216,7 +205,7 @@ EXPLAIN SELECT * FROM users WHERE username = 'test';
 
 ## 相关技能
 
-- `database-skill`：数据库选型
+- `database-design-skill`：数据库设计规范
 - `mysql-module-skill`：MySQL 集成
 - `pgsql-module-skill`：PostgreSQL 集成
 - `springboot-init-skill`：后端骨架（含数据库集成）
@@ -225,7 +214,7 @@ EXPLAIN SELECT * FROM users WHERE username = 'test';
 
 ## 不做
 
-- 不涉及数据库安装部署（参考 database-skill）
+- 不涉及数据库安装部署（参考 database-design-skill）
 - 不涉及数据库集群/高可用架构
 - 不涉及具体 ORM 的使用（各后端 skill 负责）
 - 不涉及 SQL 深度优化（DBA 范畴）

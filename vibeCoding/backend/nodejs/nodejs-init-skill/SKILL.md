@@ -21,12 +21,12 @@ description: Node.js + Express 项目一键初始化技能。面向零基础小�
 | 鉴权 | Spring Security + JWT | FastAPI JWT | **passport.js + JWT** |
 | 交互次数 | 3个问题 | 3个问题 | **3个问题** |
 
-**不重复造轮子**：统一响应信封、错误码、JWT 规范与 `backend-convention-skill` 对齐，但模板已内置于本 skill（`references/api-contract-template.md`、`references/project-guide-template.md`），生成项目不依赖 `backend-convention-skill` 文件；数据库配置引用 `database-skill`；前端联动规范引用 `frontend-request-skill`。本 skill 在它们之上增加「小白友好」的完整封装。
+**不重复造轮子**：统一响应信封、错误码、JWT 规范与 `backend-convention-skill` 对齐，但模板已内置于本 skill（`references/api-contract-template.md`、`references/project-guide-template.md`），生成项目不依赖 `backend-convention-skill` 文件；数据库配置引用 `database-design-skill`；前端联动规范引用 `frontend-request-skill`。本 skill 在它们之上增加「小白友好」的完整封装。
 
 ## 依赖
 
 - **backend-convention-skill**：响应信封 `{ code, message, data }`、错误码（-1001 校验 / -2000 系统）、JWT Bearer、api-contract、project-guide 规范对齐（模板已内置本 skill）
-- **database-skill**：MongoDB / MySQL / PostgreSQL 选型规则、连接参数
+- **database-design-skill**：MongoDB / MySQL / PostgreSQL 选型规则、连接参数
 - **frontend-request-skill**：前端请求层规范，确保后端生成的接口契约可直接被前端消费
 
 ## 核心能力清单（11 项）

@@ -1,6 +1,6 @@
 ---
 name: vue-base-skill
-description: Vue 基础组件父技能。基于「一切皆容器」思想，容器原则：所有组件必须由 base-card 承载。提供通用基础规范 + 嵌套业务子技能（card / button / tag / table / form）。强制约束：所有 .md 文档严禁使用 HTML5 原生标签（button / table / input / select / textarea / checkbox / radio / form 等），必须用 div / span + CSS3 实现。
+description: Vue 基础组件父技能。基于「一切皆容器」思想，容器原则：所有组件必须由 base-card 承载。直接提供两个公共根容器（base-card 内容容器 + base-input 输入容器），外加嵌套业务子技能（card / button / tag / table / form）。强制约束：所有 .md 文档严禁使用 HTML5 原生标签（button / table / input / select / textarea / checkbox / radio / form 等），必须用 div / span + CSS3 实现。
 trigger: |
   # 父技能触发
   vue base 是什么 | vue 基础组件规范 | vue-base-skill 怎么用
@@ -15,11 +15,20 @@ trigger: |
 >
 > 本技能严格镜像 [uniapp-base-skill](../../uniapp/uniapp-base-skill/) 结构：父技能（规范层）+ 4 个业务化子技能。
 
+## 公共根容器（vue-base-skill 直接提供）
+
+| 容器 | 职责 | 入口 |
+|------|------|------|
+| **base-card** | 内容容器（包裹业务区块、表单、表格） | [base-card.md](base-card.md) |
+| **base-input** | 输入容器（承载所有用户输入交互） | [base-input.md](base-input.md) |
+
+> 两个根容器与所有业务子技能平级，按需直接 import 使用，无须进子技能目录。
+
 ## 子技能地图
 
 | 子技能 | 职责 | 入口 |
 |--------|------|------|
-| **vue-card-skill** | base-card 根容器 | [SKILL.md](vue-card-skill/SKILL.md) |
+| **vue-card-skill** | base-card 完整规格 + 11 业务变体 | [SKILL.md](vue-card-skill/SKILL.md) |
 | **vue-button-skill** | base-button 按钮组件 | [SKILL.md](vue-button-skill/SKILL.md) |
 | **vue-tag-skill** | base-tag 标签组件 | [SKILL.md](vue-tag-skill/SKILL.md) |
 | **vue-table-skill** | base-table 表格组件（23 形态） | [SKILL.md](vue-table-skill/SKILL.md) |
@@ -174,6 +183,8 @@ vue-status-skill     ←  (扩展，状态/标签/徽章)
 vue-base-skill/
 ├── SKILL.md                     # 本文件（父技能入口）
 ├── README.md
+├── base-card.md                 # 内容根容器（公共）
+├── base-input.md                # 输入根容器（公共）
 ├── references/                  # 跨子技能通用规范
 │   └── skill-matrix.md
 ├── vue-card-skill/              # 业务子技能 1
@@ -220,10 +231,11 @@ vue-base-skill/
 
 ## 如何使用
 
-1. **需要 base-card 容器** → 进入 [vue-card-skill](vue-card-skill/SKILL.md)
-2. **需要按钮** → 进入 [vue-button-skill](vue-button-skill/SKILL.md)
-3. **需要标签** → 进入 [vue-tag-skill](vue-tag-skill/SKILL.md)
-4. **需要状态/徽章** → 进入 [vue-status-skill](vue-status-skill/SKILL.md)
-5. **需要表格** → 进入 [vue-table-skill](vue-table-skill/SKILL.md)
-6. **需要表单** → 进入 [vue-form-skill](vue-form-skill/SKILL.md)
-7. **跨技能协同疑问** → 查看 [references/skill-matrix.md](references/skill-matrix.md)
+1. **需要内容容器** → 直接 `<base-card>` ([base-card.md](base-card.md))
+2. **需要输入框** → 直接 `<base-input>` ([base-input.md](base-input.md))，详细规格见 [vue-form-skill/base-input.md](vue-form-skill/base-input.md)
+3. **需要按钮** → 进入 [vue-button-skill](vue-button-skill/SKILL.md)
+4. **需要标签** → 进入 [vue-tag-skill](vue-tag-skill/SKILL.md)
+5. **需要状态/徽章** → 进入 [vue-status-skill](vue-status-skill/SKILL.md)
+6. **需要表格** → 进入 [vue-table-skill](vue-table-skill/SKILL.md)
+7. **需要表单体系** → 进入 [vue-form-skill](vue-form-skill/SKILL.md)
+8. **跨技能协同疑问** → 查看 [references/skill-matrix.md](references/skill-matrix.md)

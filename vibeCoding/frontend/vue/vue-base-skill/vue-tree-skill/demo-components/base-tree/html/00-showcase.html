@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>vue-tree-skill · 00 总览（8 形态 + 右键联动）</title>
+  <link rel="stylesheet" href="../../shared/tokens.css" />
+  <link rel="stylesheet" href="../../shared/list-item.css" />
+  <link rel="stylesheet" href="../../shared/tree.css" />
+  <link rel="stylesheet" href="../../shared/demo.css" />
+</head>
+<body>
+<div class="page">
+
+  <div class="page-header">
+    <div class="page-header__title">vue-tree-skill · 8 形态 + 右键联动</div>
+    <div class="page-header__desc">
+      节点渲染统一收敛到 base-list-item，8 种形态通过 prop 开关叠加<br>
+      实际项目：组织架构 / 文件浏览器 / 分类树 / 权限树
+    </div>
+  </div>
+
+  <!-- ===== 形态 01 · 基础树（组织架构） ===== -->
+  <div class="section">
+    <div class="section__title">
+      <span>形态 01 · 基础树（组织架构 / 分类树）</span>
+      <span class="section__tag">默认 variant=basic</span>
+    </div>
+    <div class="section__body" id="s-basic"></div>
+  </div>
+
+  <!-- ===== 形态 02 · 复选框树（权限分配） ===== -->
+  <div class="section">
+    <div class="section__title">
+      <span>形态 02 · 复选框树（权限分配 / 多选）</span>
+      <span class="section__tag">checkbox = true</span>
+    </div>
+    <div class="section__body" id="s-checkbox"></div>
+  </div>
+
+  <!-- ===== 形态 03 · 懒加载树（大数据 / 文件浏览器） ===== -->
+  <div class="section">
+    <div class="section__title">
+      <span>形态 03 · 懒加载树（按需加载子节点）</span>
+      <span class="section__tag">lazy + load</span>
+    </div>
+    <div class="section__body" id="s-lazy"></div>
+  </div>
+
+  <!-- ===== 形态 04 · 可拖拽树（排序 / 嵌套） ===== -->
+  <div class="section">
+    <div class="section__title">
+      <span>形态 04 · 可拖拽树（节点排序 / 跨层级拖入）</span>
+      <span class="section__tag">draggable = true</span>
+    </div>
+    <div class="section__body" id="s-drag"></div>
+  </div>
+
+  <!-- ===== 形态 05 + 联动 · 右键菜单树（树 + contextmenu） ===== -->
+  <div class="section">
+    <div class="section__title">
+      <span>形态 05 · 右键菜单树（与 vue-contextmenu-skill 联动）</span>
+      <span class="section__tag">@contextmenu → base-contextmenu</span>
+    </div>
+    <div class="section__body">
+      <div id="s-context" style="min-height: 240px; position: relative;"></div>
+      <div class="divider"></div>
+      <div style="font-size: 12px; color: var(--color-text-muted);">提示：在任意节点上点右键 → 弹出操作菜单</div>
+    </div>
+  </div>
+
+  <!-- ===== 形态 06 · 可搜索树（关键字过滤 + 高亮） ===== -->
+  <div class="section">
+    <div class="section__title">
+      <span>形态 06 · 可搜索树（关键字过滤 + 高亮匹配）</span>
+      <span class="section__tag">search + filterNode</span>
+    </div>
+    <div class="section__body">
+      <div style="margin-bottom: 8px;">
+        <input id="search-input" placeholder="输入关键字过滤（如：前端 / Prompt / src）"
+               style="padding: 6px 10px; border: 1px solid #d1d5db; border-radius: 6px; width: 320px; font-size: 13px;" />
+      </div>
+      <div id="s-search"></div>
+    </div>
+  </div>
+
+  <!-- ===== 形态 07 · 可编辑树（双击 / 单击编辑节点名） ===== -->
+  <div class="section">
+    <div class="section__title">
+      <span>形态 07 · 可编辑树（单击节点进入编辑态）</span>
+      <span class="section__tag">editable = true</span>
+    </div>
+    <div class="section__body" id="s-edit"></div>
+  </div>
+
+  <!-- ===== 形态 08 · 节点图标树（自定义每级图标） ===== -->
+  <div class="section">
+    <div class="section__title">
+      <span>形态 08 · 节点图标树（每节点自定义 icon）</span>
+      <span class="section__tag">TreeNode.icon</span>
+    </div>
+    <div class="section__body" id="s-icon"></div>
+  </div>
+
+  <!-- ===== 风格 09 · finder 文件浏览器 ===== -->
+  <div class="section">
+    <div class="section__title">
+      <span>风格 09 · finder 风格文件树（variant=finder）</span>
+      <span class="section__tag">variant=finder</span>
+    </div>
+    <div class="section__body" id="s-finder"></div>
+  </div>
+
+  <!-- ===== 风格 10 · vscode 资源管理器（深色） ===== -->
+  <div class="section">
+    <div class="section__title">
+      <span>风格 10 · vscode 资源管理器（深色 IDE）</span>
+      <span class="section__tag">variant=vscode</span>
+    </div>
+    <div class="section__body list--vscode-wrap" id="s-vscode"></div>
+  </div>
+
+  <div class="log-panel" id="log">- 点击 / 右键任意节点查看事件 -</div>
+</div>
+
+<script src="./tree-render.js"></script>
+</body>
+</html>

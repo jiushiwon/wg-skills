@@ -266,7 +266,7 @@ body {
 .base-table__skeleton-row td { padding: var(--space-3) var(--space-4); }
 .base-table__skeleton {
   height: 14px;
-  background: linear-gradient(90deg, var(--color-bg-secondary) 0%, var(--color-bg-tertiary, var(--color-bg-secondary)) 50%, var(--color-bg-secondary) 100%);
+  background: linear-gradient(90deg, var(--color-bg-secondary, #f5f7fa) 0%, var(--color-bg-tertiary, var(--color-bg-secondary, #f5f7fa)) 50%, var(--color-bg-secondary, #f5f7fa) 100%);
   background-size: 200% 100%;
   animation: base-table-skeleton 1.5s infinite;
   border-radius: var(--radius-sm);

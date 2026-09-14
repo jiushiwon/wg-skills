@@ -17,7 +17,7 @@ description: Spring Boot授权与企业组织架构模块一键叠加技能。�
 
 - **springboot-init-skill**：基础 JWT、统一响应、分页、当前用户注解必须已存在。
 - **frontend-request-skill**：响应信封、错误码、Token、分页字段必须保持对齐。
-- **database-skill**：表前缀、字段命名、软删除、索引规范沿用。
+- **database-design-skill**：表前缀、字段命名、软删除、索引规范沿用。
 
 ## 用户问题（最多 3 个）
 
@@ -111,7 +111,7 @@ docs/auth-module-guide.md           # 接入与扩展指南
 ## 红线
 
 1. 不重复生成 Spring Boot 基础骨架。
-2. 表名统一 `{prefix}_sys_user`、`{prefix}_sys_role` 等，遵循 `database-skill` 规范。
+2. 表名统一 `{prefix}_sys_user`、`{prefix}_sys_role` 等，遵循 `database-design-skill` 规范。
 3. 所有删除为软删除（`deleted_at`）。
 4. 菜单树使用 `parent_id` + `sort_order`，禁止嵌套集合。
 5. 接口鉴权先走 Spring Security JWT，再走角色-菜单权限校验。

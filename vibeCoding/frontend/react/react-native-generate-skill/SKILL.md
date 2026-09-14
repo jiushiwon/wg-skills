@@ -1,5 +1,5 @@
 ---
-name: react-native-init-skill
+name: react-native-generate-skill
 description: React Native 项目一键初始化技能。面向零基础小白，提供环境探测、自动安装、完整 React Native 移动端骨架生成、一键启动/打包脚本、所需依赖包规范文档。触发词："React Native 脚手架"、"React Native 一键生成"、"初始化 React Native 项目"、"React Native 快速开始"、"reactnative init"、"搭建 React Native 服务"、"React Native 移动端"、"React Native 零基础"、"React Native 小白"、"帮我搭一个 React Native"、"新建 React Native"、"create reactnative project"、"reactnative starter"。
 ---
 
@@ -124,9 +124,8 @@ description: React Native 项目一键初始化技能。面向零基础小白，
 ```json
 {
   "dependencies": {
-    "expo": "~51.0.0",
-    "react": "18.2.0",
-    "react-native": "0.73.2"
+    "react": "19.0.0",
+    "react-native": "0.86.2"
   }
 }
 ```
@@ -135,57 +134,86 @@ description: React Native 项目一键初始化技能。面向零基础小白，
 
 | 类别 | 包名 | 版本 | 说明 |
 |------|------|------|------|
-| 导航 | @react-navigation/native | ^6.x | 导航核心 |
-| 导航 | @react-navigation/native-stack | ^6.x | 堆栈导航 |
-| 导航 | @react-navigation/bottom-tabs | ^6.x | 底部标签导航 |
-| 状态 | zustand | ^4.x | 轻量状态管理 |
-| UI | react-native-paper | ^5.x | Material Design 组件 |
-| 图标 | @expo/vector-icons | * | 图标库 |
-| 网络 | axios | ^1.x | HTTP 客户端 |
-| 本地存储 | @react-native-async-storage/async-storage | ^1.x | 本地存储 |
+| 导航 | @react-navigation/native | ^7.3.0 | 导航核心 |
+| 导航 | @react-navigation/native-stack | ^7.3.0 | 堆栈导航 |
+| 导航 | @react-navigation/bottom-tabs | ^7.3.0 | 底部标签导航 |
+| 导航 | react-native-screens | ^4.10.0 | 导航性能优化 |
+| 导航 | react-native-safe-area-context | ^5.3.0 | 安全区域 |
+| 状态 | zustand | ^5.0.0 | 轻量状态管理 |
+| 状态 | @react-native-async-storage/async-storage | ^2.1.0 | 持久化存储 |
+| UI | react-native-paper | ^5.15.0 | Material Design 组件 |
+| UI | react-native-vector-icons | ^10.0.0 | 图标库 |
+| UI | @react-native-vector-icons/material-design-icons | ^10.0.0 | Material 图标 |
+| UI | react-native-linear-gradient | ^2.8.0 | 渐变背景 |
+| 网络 | axios | ^1.7.0 | HTTP 客户端 |
 | 表单 | react-hook-form | ^7.x | 表单处理 |
 | 类型 | typescript | ^5.x | TypeScript |
+
+> **重要**：React Navigation 7.x 需要配合 react-native-screens 4.x 和 react-native-safe-area-context 5.x 使用
 
 ## 生成项目的目录结构
 
 ```
 {{project}}/
-├── App.tsx                    # 应用入口
-├── app.json                  # Expo 配置
+├── App.tsx                    # 应用入口（Provider 包裹）
+├── app.json                  # Expo / RN 配置
 ├── package.json              # 依赖配置
 ├── tsconfig.json            # TypeScript 配置
 ├── babel.config.js          # Babel 配置
-├── src/
-│   ├── screens/             # 页面
-│   │   └── HomeScreen.tsx
-│   ├── components/          # 组件
-│   │   └── Button.tsx
-│   ├── navigation/          # 导航配置
-│   │   └── AppNavigator.tsx
-│   ├── store/               # 状态管理
-│   │   └── index.ts
-│   ├── services/            # API 服务
-│   │   └── api.ts
-│   ├── utils/               # 工具函数
-│   │   └── index.ts
-│   ├── types/               # 类型定义
-│   │   └── index.ts
-│   └── constants/           # 常量
-│       └── index.ts
-└── assets/                  # 静态资源
-    └── images/
+├── metro.config.js           # Metro 打包配置
+├── android/                  # Android 原生项目
+├── ios/                      # iOS 原生项目
+└── src/
+    ├── assets/               # 静态资源
+    │   └── images/
+    ├── components/           # 通用组件
+    │   ├── common/          # 基础组件（AppScreen, AppTextInput, AppScrollView）
+    │   └── business/        # 业务组件
+    ├── config/               # 配置
+    │   └── env.ts           # 环境配置
+    ├── data/                # 静态数据
+    ├── hooks/               # 自定义 Hooks
+    ├── navigation/          # 导航配置
+    │   ├── AppTabs.tsx     # 底部标签导航
+    │   ├── RootNavigator.tsx # 根导航（根据登录态切换）
+    │   ├── navigationRef.ts # 导航引用
+    │   └── types.ts         # 类型定义
+    ├── screens/             # 页面
+    │   ├── auth/           # 认证相关
+    │   │   └── LoginScreen.tsx
+    │   ├── common/         # 通用页面
+    │   │   ├── SplashScreen.tsx
+    │   │   ├── ForbiddenScreen.tsx
+    │   ├── home/           # 首页
+    │   │   └── HomeScreen.tsx
+    │   └── mine/           # 我的页
+    │       └── MineScreen.tsx
+    ├── services/            # API 服务
+    │   ├── http.ts         # axios 封装
+    │   └── auth.ts         # 登录 API
+    ├── store/               # 状态管理（Zustand）
+    │   ├── authStore.ts    # 登录态
+    │   ├── toastStore.ts   # Toast 提示
+    │   └── sessionStore.ts # 会话
+    ├── theme/               # 主题系统
+    │   ├── colors.ts       # 颜色
+    │   ├── typography.ts   # 字体
+    │   ├── spacing.ts      # 间距
+    │   └── index.ts        # 统一导出
+    ├── types/               # 类型定义
+    └── utils/               # 工具函数
 ```
+
+> 完整目录结构和代码模板见 `references/skeleton.md`
 
 ## 引用索引
 
 | 文件 | 内容 |
 |------|------|
-| `references/skeleton.md` | 精简目录结构 + 核心文件代码模板 |
-| `references/env-setup.md` | 环境探测流程、各平台配置 |
-| `references/packages.md` | 依赖包规范、版本建议 |
-| `references/navigation.md` | React Navigation 配置 |
-| `references/state-management.md` | 状态管理方案 |
-| `references/packaging.md` | 打包配置 |
+| `references/skeleton.md` | 完整目录结构 + 核心文件代码模板（App.tsx、LoginScreen、导航、Store） |
+| `references/packages.md` | 依赖包规范、版本建议（React Navigation 7.x、Zustand 5.x） |
+| `references/navigation.md` | React Navigation 7.x 配置、根导航 + 底部 Tab |
+| `references/state-management.md` | Zustand 5.x + AsyncStorage 持久化方案 |
 
 ## 红线（不可绕过）
 

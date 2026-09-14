@@ -132,7 +132,7 @@ docs/auth-module-guide.md         # 接入与扩展指南
 ## 红线
 
 1. 不重复生成 FastAPI 基础骨架。
-2. 表名统一 `{prefix}_sys_user`、`{prefix}_sys_role` 等，遵循 `database-skill` 规范。
+2. 表名统一 `{prefix}_sys_user`、`{prefix}_sys_role` 等，遵循 `database-design-skill` 规范。
 3. 所有删除为软删除（`deleted_at`）。
 4. 菜单树使用 `parent_id` + `sort_order`，禁止嵌套集合。
 5. 接口鉴权先走 FastAPI 依赖注入 JWT 校验，再走角色-菜单权限校验。

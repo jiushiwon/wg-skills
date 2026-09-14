@@ -4,7 +4,7 @@
 
 ## 功能
 
-一键生成标准化、开箱即用的 React Native 移动端应用骨架。
+一键生成标准化、开箱即用的 React Native 移动端应用骨架，包含完整登录页示例。
 
 ## 使用方式
 
@@ -15,33 +15,33 @@
 | 能力 | 说明 |
 |------|------|
 | 环境探测 | 自动检测 Node.js/Java/Android SDK/Xcode |
-| Expo 推荐 | 默认使用 Expo 简化配置 |
-| 一键启动 | `npx expo start` |
-| 热重载 | 修改代码即时预览 |
-| 生产打包 | Expo build:android/ios |
-| 导航 | React Navigation |
-| 状态管理 | Zustand |
+| 项目生成 | 基于实际商业项目验证的完整骨架 |
+| 登录页 | 带用户名/密码输入、登录按钮的完整示例 |
+| 导航 | React Navigation 7.x 根导航 + 底部 Tab |
+| 状态管理 | Zustand 5.x + AsyncStorage 持久化 |
+| 一键启动 | `npx react-native start` |
 
 ## 依赖包规范
 
-常用依赖已写入 `references/packages.md`，包括：
-- 导航：@react-navigation/native
-- 状态：zustand
-- UI：react-native-paper
-- 图标：@expo/vector-icons
+基于 `D:\projects\cq-app-merchant` 实际项目验证：
+
+- 框架：React Native 0.86.2
+- 导航：@react-navigation/native 7.x + react-native-screens 4.x
+- 状态：zustand 5.x + @react-native-async-storage/async-storage
+- UI：react-native-paper 5.x + react-native-vector-icons
 - 网络：axios
 
-## 目录说明
+详见 [references/packages.md](references/packages.md)
+
+## 技能目录
 
 ```
-react-native-init-skill/
+react-native-generate-skill/
 ├── SKILL.md                    # 技能定义
 ├── README.md                   # 本文件
 └── references/                 # 参考资料
-    ├── skeleton.md            # 项目结构
-    ├── env-setup.md           # 环境探测
+    ├── skeleton.md            # 项目结构 + 核心代码模板
     ├── packages.md           # 依赖包规范
-    ├── navigation.md         # 导航配置
-    ├── state-management.md  # 状态管理
-    └── packaging.md         # 打包配置
+    ├── navigation.md         # React Navigation 配置
+    └── state-management.md  # Zustand 状态管理
 ```

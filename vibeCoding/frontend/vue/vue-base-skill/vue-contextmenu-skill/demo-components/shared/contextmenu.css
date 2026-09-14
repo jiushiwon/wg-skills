@@ -1,0 +1,123 @@
+/* base-contextmenu 弹层样式 —— 复用 list-item 的菜单项渲染 */
+
+.base-contextmenu {
+  position: fixed;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  padding: 4px 0;
+  min-width: 160px;
+  max-width: 240px;
+  user-select: none;
+  z-index: 1000;
+}
+
+.base-contextmenu__divider {
+  height: 1px;
+  background: var(--color-border);
+  margin: 4px 6px;
+}
+
+.base-contextmenu__submenu {
+  position: relative;
+}
+
+.base-contextmenu__arrow {
+  color: var(--color-text-muted);
+  font-size: 11px;
+  margin-left: auto;
+}
+
+.base-contextmenu--nested {
+  z-index: 1001;
+  margin-top: -22px;
+}
+
+/* 触发区域 */
+.ctx-host {
+  padding: 16px;
+  border: 2px dashed var(--color-border);
+  border-radius: 8px;
+  background: var(--color-bg-secondary);
+  text-align: center;
+  cursor: context-menu;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  transition: border-color 0.15s, background 0.15s;
+}
+.ctx-host:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+/* 网格 + 行右键 */
+.ctx-row-list { display: flex; flex-direction: column; gap: 4px; }
+.ctx-row {
+  padding: 8px 12px;
+  background: var(--color-bg-secondary);
+  border-radius: 6px;
+  cursor: context-menu;
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ctx-row:hover { background: var(--color-primary-light); }
+
+/* 桌面图标右键 */
+.ctx-desktop {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  padding: 12px;
+  background: linear-gradient(135deg, #1e3a8a, #312e81);
+  border-radius: 8px;
+}
+.ctx-icon {
+  text-align: center;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: context-menu;
+  color: #fff;
+  font-size: 11px;
+}
+.ctx-icon:hover { background: rgba(255, 255, 255, 0.15); }
+.ctx-icon__img { font-size: 28px; margin-bottom: 4px; }
+
+/* 动画 */
+.ctx-fade-enter-active, .ctx-fade-leave-active {
+  transition: opacity 0.15s, transform 0.15s;
+}
+.ctx-fade-enter-from, .ctx-fade-leave-to {
+  opacity: 0;
+  transform: scale(0.96);
+}
+
+/* SVG 图标适配（替换 emoji） */
+.list-item__icon svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  color: #6b7280;
+}
+.base-contextmenu .list-item.is-active .list-item__icon svg { color: #ffffff; }
+.base-contextmenu .list-item.is-danger .list-item__icon svg { color: #ef4444; }
+.base-contextmenu .list-item.is-active.is-danger .list-item__icon svg { color: #ffffff; }
+
+/* 桌面图标 SVG */
+.ctx-icon__img svg {
+  width: 28px;
+  height: 28px;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+/* 文件浏览器行 SVG */
+.ctx-row__icon {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 8px;
+}
+.ctx-row__icon svg { width: 16px; height: 16px; color: #6b7280; }

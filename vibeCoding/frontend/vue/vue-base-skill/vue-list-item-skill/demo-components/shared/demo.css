@@ -1,0 +1,88 @@
+/* 演示页面样式（demo）*/
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+.page {
+  font-family: var(--font-family);
+  font-size: var(--font-base);
+  color: var(--color-text-primary);
+  background: var(--color-bg);
+  min-height: 100vh;
+  padding: 32px 24px;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 32px;
+  padding: 24px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border-radius: 12px;
+  color: #fff;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.page-header__title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.page-header__desc {
+  font-size: 13px;
+  opacity: 0.9;
+  line-height: 1.7;
+}
+
+.section {
+  max-width: 1200px;
+  margin: 0 auto 24px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.section__title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.section__tag {
+  font-size: 11px;
+  padding: 2px 8px;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  border-radius: 999px;
+  font-family: monospace;
+}
+
+.section__body { min-height: 60px; }
+
+/* 日志输出 */
+.log-panel {
+  max-width: 1200px;
+  margin: 24px auto 0;
+  padding: 12px 16px;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', 'Consolas', monospace;
+  font-size: 13px;
+  min-height: 40px;
+  line-height: 1.7;
+}
+
+/* 工具样式 */
+.divider {
+  height: 1px;
+  background: var(--color-border);
+  margin: 4px 0;
+}

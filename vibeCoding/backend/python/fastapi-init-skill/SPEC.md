@@ -612,7 +612,7 @@ const eventSource = new EventSource(
 | 被引用技能 | 引用内容 |
 |-----------|---------|
 | `backend-convention-skill` | 响应信封 `{ code, message, data }`、错误码体系、JWT 规范（规范对齐；模板已内置本 skill） |
-| `database-skill` | MySQL/PostgreSQL/MongoDB 选型规则、表前缀 `wg`、连接参数、Alembic 迁移规则 |
+| `database-design-skill` | MySQL/PostgreSQL/MongoDB 设计规范、表前缀 `wg`、连接参数、Alembic 迁移规则 |
 | `frontend-request-skill` | 前端请求层规范、响应信封解析、错误码映射、Token/SSE/上传对接方式 |
 
 ---

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BaseCrudPage 增删改查页面展示</title>
+  <style>
+    /* CSS Variables - 对齐 vue-theme-skill */
+    :root {
+      --color-primary: #409eff;
+      --color-primary-light: #a0cfff;
+      --color-bg-secondary: #f5f7fa;
+      --color-surface: #ffffff;
+      --color-border: #dcdfe6;
+      --color-text: #303133;
+      --color-text-secondary: #909399;
+      --color-text-tertiary: #c0c4cc;
+      --color-success: #67c23a;
+      --color-danger: #f56c6c;
+      --height-input-md: 32px;
+      --radius-md: 4px;
+      --font-base: 14px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--color-bg-secondary); min-height: 100vh; padding: 40px; }
+    .demo-container { max-width: 1200px; margin: 0 auto; }
+    .demo-title { font-size: 24px; font-weight: 600; color: var(--color-text); margin-bottom: 24px; }
+
+    /* CRUD 页面样式 */
+    .base-crud-page { background: var(--color-surface); border-radius: 8px; padding: 20px; }
+    .base-crud-page__search { display: flex; flex-wrap: wrap; gap: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--color-border); margin-bottom: 16px; }
+    .base-crud-page__search-fields { display: flex; flex-wrap: wrap; gap: 12px; flex: 1; }
+    .base-crud-page__search-field { min-width: 200px; }
+    .base-crud-page__search-btns { display: flex; gap: 8px; align-items: center; }
+    .base-crud-page__toolbar { margin-bottom: 16px; }
+    .base-crud-page__btn { height: 32px; padding: 0 16px; border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); cursor: pointer; font-size: var(--font-base); transition: all 0.2s; }
+    .base-crud-page__btn:hover { border-color: var(--color-primary); color: var(--color-primary); }
+    .base-crud-page__btn--primary { background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
+    .base-crud-page__btn--primary:hover { background: var(--color-primary-light); border-color: var(--color-primary-light); color: #fff; }
+    .base-crud-page__btn--danger { border-color: var(--color-danger); color: var(--color-danger); }
+    .base-crud-page__btn--danger:hover { background: var(--color-danger); color: #fff; }
+
+    .base-table { width: 100%; border-collapse: collapse; }
+    .base-table th, .base-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--color-border); }
+    .base-table th { background: var(--color-bg-secondary); font-weight: 500; color: var(--color-text); }
+    .base-table tbody tr:hover { background: var(--color-bg-secondary); }
+    .base-crud-page__empty { text-align: center; color: var(--color-text-secondary); padding: 40px !important; }
+    .base-crud-page__actions { display: flex; gap: 8px; }
+    .base-crud-page__action-btn { padding: 4px 12px; border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); cursor: pointer; font-size: 12px; transition: all 0.2s; }
+    .base-crud-page__action-btn:hover { border-color: var(--color-primary); color: var(--color-primary); }
+    .base-crud-page__action-btn--danger:hover { border-color: var(--color-danger); color: var(--color-danger); }
+
+    .base-crud-page__pagination { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--color-border); }
+    .base-crud-page__total { color: var(--color-text); font-size: var(--font-base); }
+    .base-crud-page__pages { display: flex; align-items: center; gap: 8px; }
+    .base-crud-page__page-btn { padding: 6px 12px; border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); cursor: pointer; font-size: var(--font-base); }
+    .base-crud-page__page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .base-crud-page__page-current { padding: 6px 12px; background: var(--color-primary); color: #fff; border-radius: var(--radius-md); }
+
+    /* 模拟表单组件 */
+    .base-input { display: inline-flex; align-items: center; width: 100%; height: var(--height-input-md); padding: 0 12px; background-color: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); transition: all 0.2s; }
+    .base-input:hover { border-color: var(--color-text-secondary); }
+    .base-input__inner { flex: 1; border: none; outline: none; font-size: var(--font-base); color: var(--color-text); background: transparent; }
+    .base-input__inner::placeholder { color: var(--color-text-secondary); }
+
+    .base-select { position: relative; display: inline-block; width: 100%; cursor: pointer; }
+    .base-select__trigger { display: flex; align-items: center; justify-content: space-between; height: var(--height-input-md); padding: 0 28px 0 12px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); transition: all 0.2s; }
+    .base-select:hover .base-select__trigger { border-color: var(--color-text-secondary); }
+    .base-select__placeholder { color: var(--color-text-secondary); font-size: var(--font-base); }
+    .base-select__value { color: var(--color-text); font-size: var(--font-base); }
+    .base-select__arrow { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: var(--color-text-secondary); font-size: 10px; }
+    .base-select__dropdown { display: none; position: absolute; top: 100%; left: 0; right: 0; margin-top: 4px; max-height: 200px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1); overflow-y: auto; z-index: 100; }
+    .base-select.opened .base-select__dropdown { display: block; }
+    .base-select__option { padding: 8px 12px; cursor: pointer; font-size: var(--font-base); }
+    .base-select__option:hover { background: var(--color-bg-secondary); }
+
+    /* 弹窗 */
+    .base-crud-page__modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+    .base-crud-page__modal { background: var(--color-surface); border-radius: 8px; width: 90%; max-width: 600px; max-height: 80vh; overflow: hidden; display: flex; flex-direction: column; }
+    .base-crud-page__modal-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--color-border); }
+    .base-crud-page__modal-header h3 { margin: 0; font-size: 16px; color: var(--color-text); }
+    .base-crud-page__modal-close { border: none; background: none; font-size: 18px; cursor: pointer; color: var(--color-text-secondary); }
+    .base-crud-page__modal-body { padding: 20px; overflow-y: auto; flex: 1; }
+    .base-crud-page__form-item { margin-bottom: 16px; }
+    .base-crud-page__form-label { display: block; margin-bottom: 8px; font-size: 14px; color: var(--color-text); }
+    .base-crud-page__textarea { width: 100%; min-height: 80px; padding: 8px 12px; border: 1px solid var(--color-border); border-radius: 4px; font-size: 14px; resize: vertical; font-family: inherit; }
+    .base-crud-page__textarea:focus { outline: none; border-color: var(--color-primary); }
+    .base-crud-page__modal-footer { display: flex; justify-content: flex-end; gap: 12px; padding: 16px 20px; border-top: 1px solid var(--color-border); }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    <h1 class="demo-title">BaseCrudPage 增删改查页面</h1>
+
+    <div class="base-crud-page">
+      <!-- 搜索区 -->
+      <div class="base-crud-page__search">
+        <div class="base-crud-page__search-fields">
+          <div class="base-crud-page__search-field">
+            <div class="base-input">
+              <input type="text" class="base-input__inner" placeholder="请输入姓名">
+            </div>
+          </div>
+          <div class="base-crud-page__search-field">
+            <div class="base-input">
+              <input type="text" class="base-input__inner" placeholder="请输入邮箱">
+            </div>
+          </div>
+          <div class="base-crud-page__search-field">
+            <div class="base-select" onclick="toggleSelect(this)">
+              <div class="base-select__trigger">
+                <span class="base-select__placeholder">请选择状态</span>
+                <span class="base-select__arrow">v</span>
+              </div>
+              <div class="base-select__dropdown">
+                <div class="base-select__option">启用</div>
+                <div class="base-select__option">禁用</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="base-crud-page__search-btns">
+          <button class="base-crud-page__btn base-crud-page__btn--primary">搜索</button>
+          <button class="base-crud-page__btn">重置</button>
+        </div>
+      </div>
+
+      <!-- 工具栏 -->
+      <div class="base-crud-page__toolbar">
+        <button class="base-crud-page__btn base-crud-page__btn--primary" onclick="openModal('add')">新增</button>
+      </div>
+
+      <!-- 表格区 -->
+      <div class="base-crud-page__table">
+        <table class="base-table">
+          <thead>
+            <tr>
+              <th width="80">ID</th>
+              <th width="120">姓名</th>
+              <th>邮箱</th>
+              <th width="80">性别</th>
+              <th width="80">状态</th>
+              <th width="180">创建时间</th>
+              <th width="150">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>张三</td>
+              <td>zhangsan@example.com</td>
+              <td>男</td>
+              <td style="color: var(--color-success);">启用</td>
+              <td>2024-01-15 10:30:00</td>
+              <td class="base-crud-page__actions">
+                <button class="base-crud-page__action-btn" onclick="openModal('edit', {id:1,name:'张三',email:'zhangsan@example.com'})">编辑</button>
+                <button class="base-crud-page__action-btn base-crud-page__action-btn--danger">删除</button>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>李四</td>
+              <td>lisi@example.com</td>
+              <td>女</td>
+              <td style="color: var(--color-success);">启用</td>
+              <td>2024-01-14 09:20:00</td>
+              <td class="base-crud-page__actions">
+                <button class="base-crud-page__action-btn" onclick="openModal('edit', {id:2,name:'李四',email:'lisi@example.com'})">编辑</button>
+                <button class="base-crud-page__action-btn base-crud-page__action-btn--danger">删除</button>
+              </td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>王五</td>
+              <td>wangwu@example.com</td>
+              <td>男</td>
+              <td style="color: var(--color-danger);">禁用</td>
+              <td>2024-01-13 16:45:00</td>
+              <td class="base-crud-page__actions">
+                <button class="base-crud-page__action-btn" onclick="openModal('edit', {id:3,name:'王五',email:'wangwu@example.com'})">编辑</button>
+                <button class="base-crud-page__action-btn base-crud-page__action-btn--danger">删除</button>
+              </td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>赵六</td>
+              <td>zhaoliu@example.com</td>
+              <td>女</td>
+              <td style="color: var(--color-success);">启用</td>
+              <td>2024-01-12 14:10:00</td>
+              <td class="base-crud-page__actions">
+                <button class="base-crud-page__action-btn" onclick="openModal('edit', {id:4,name:'赵六',email:'zhaoliu@example.com'})">编辑</button>
+                <button class="base-crud-page__action-btn base-crud-page__action-btn--danger">删除</button>
+              </td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>孙七</td>
+              <td>sunqi@example.com</td>
+              <td>男</td>
+              <td style="color: var(--color-success);">启用</td>
+              <td>2024-01-11 11:25:00</td>
+              <td class="base-crud-page__actions">
+                <button class="base-crud-page__action-btn" onclick="openModal('edit', {id:5,name:'孙七',email:'sunqi@example.com'})">编辑</button>
+                <button class="base-crud-page__action-btn base-crud-page__action-btn--danger">删除</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 分页区 -->
+      <div class="base-crud-page__pagination">
+        <span class="base-crud-page__total">共 86 条</span>
+        <div class="base-crud-page__pages">
+          <button class="base-crud-page__page-btn" disabled>上一页</button>
+          <span class="base-crud-page__page-current">1</span>
+          <button class="base-crud-page__page-btn">2</button>
+          <button class="base-crud-page__page-btn">3</button>
+          <button class="base-crud-page__page-btn">...</button>
+          <button class="base-crud-page__page-btn">9</button>
+          <button class="base-crud-page__page-btn">下一页</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 弹窗 -->
+  <div id="modal" class="base-crud-page__modal-overlay hidden">
+    <div class="base-crud-page__modal" onclick="event.stopPropagation()">
+      <div class="base-crud-page__modal-header">
+        <h3 id="modal-title">新增 用户</h3>
+        <button class="base-crud-page__modal-close" onclick="closeModal()">x</button>
+      </div>
+      <div class="base-crud-page__modal-body">
+        <div class="base-crud-page__form-item">
+          <label class="base-crud-page__form-label">姓名 *</label>
+          <div class="base-input">
+            <input type="text" class="base-input__inner" id="form-name" placeholder="请输入姓名">
+          </div>
+        </div>
+        <div class="base-crud-page__form-item">
+          <label class="base-crud-page__form-label">邮箱 *</label>
+          <div class="base-input">
+            <input type="email" class="base-input__inner" id="form-email" placeholder="请输入邮箱">
+          </div>
+        </div>
+        <div class="base-crud-page__form-item">
+          <label class="base-crud-page__form-label">性别</label>
+          <div class="base-select" onclick="toggleSelect(this)">
+            <div class="base-select__trigger">
+              <span class="base-select__placeholder">请选择性别</span>
+              <span class="base-select__arrow">v</span>
+            </div>
+            <div class="base-select__dropdown">
+              <div class="base-select__option">男</div>
+              <div class="base-select__option">女</div>
+            </div>
+          </div>
+        </div>
+        <div class="base-crud-page__form-item">
+          <label class="base-crud-page__form-label">状态</label>
+          <div class="base-select" onclick="toggleSelect(this)">
+            <div class="base-select__trigger">
+              <span class="base-select__placeholder">请选择状态</span>
+              <span class="base-select__arrow">v</span>
+            </div>
+            <div class="base-select__dropdown">
+              <div class="base-select__option">启用</div>
+              <div class="base-select__option">禁用</div>
+            </div>
+          </div>
+        </div>
+        <div class="base-crud-page__form-item">
+          <label class="base-crud-page__form-label">备注</label>
+          <textarea class="base-crud-page__textarea" id="form-remark" placeholder="请输入备注"></textarea>
+        </div>
+      </div>
+      <div class="base-crud-page__modal-footer">
+        <button class="base-crud-page__btn" onclick="closeModal()">取消</button>
+        <button class="base-crud-page__btn base-crud-page__btn--primary" onclick="handleSubmit()">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentMode = 'add';
+    let currentRow = null;
+
+    function toggleSelect(el) {
+      event.stopPropagation();
+      el.classList.toggle('opened');
+      document.querySelectorAll('.base-select.opened').forEach(s => { if (s !== el) s.classList.remove('opened'); });
+    }
+
+    function openModal(mode, row = null) {
+      currentMode = mode;
+      currentRow = row;
+      const modal = document.getElementById('modal');
+      const title = document.getElementById('modal-title');
+      const nameInput = document.getElementById('form-name');
+      const emailInput = document.getElementById('form-email');
+      const remarkInput = document.getElementById('form-remark');
+
+      title.textContent = mode === 'add' ? '新增 用户' : '编辑 用户';
+      nameInput.value = row ? row.name || '' : '';
+      emailInput.value = row ? row.email || '' : '';
+      remarkInput.value = '';
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.add('hidden');
+    }
+
+    function handleSubmit() {
+      const name = document.getElementById('form-name').value;
+      const email = document.getElementById('form-email').value;
+
+      if (!name || !email) {
+        alert('请填写必填项');
+        return;
+      }
+
+      console.log(currentMode === 'add' ? '新增' : '编辑', { name, email });
+      closeModal();
+      alert(currentMode === 'add' ? '新增成功' : '保存成功');
+    }
+
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.base-select.opened').forEach(s => s.classList.remove('opened'));
+    });
+
+    // 点击遮罩关闭弹窗
+    document.getElementById('modal').addEventListener('click', closeModal);
+  </script>
+</body>
+</html>

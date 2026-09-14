@@ -230,7 +230,7 @@ openssl rand -base64 32
 |------|------|
 | `java-backend-skill` | 嵌套子技能，提供现场生成 Spring Boot 骨架的能力（开发者导向）。本 skill 是零基础小白版，自动检测环境、一键启动脚本、更多默认配置 |
 | `backend-convention-skill` | 规范层：响应信封、错误码、API 契约、项目指南规范。本 skill 模板已内置这些规范 |
-| `database-skill` | 数据库选型与连接规范 |
+| `database-design-skill` | 数据库设计规范与连接规范 |
 | `frontend-request-skill` | 前端请求层规范。生成的接口契约可直接被前端消费（响应信封、Token、SSE、上传） |
 | `fastapi-init-skill` | Python 平行技能，能力清单 1:1 镜像 |
 

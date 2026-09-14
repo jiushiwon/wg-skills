@@ -53,6 +53,90 @@ client = AsyncIOMotorClient(f"mongodb://{host}:{port}")
 db = client[database]
 ```
 
+### Go (Gin + mongo-driver)
+
+```go
+// config/config.go
+package config
+
+import (
+    "fmt"
+    "os"
+)
+
+type Config struct {
+    MongoHost     string
+    MongoPort     string
+    MongoDatabase string
+}
+
+func Load() *Config {
+    return &Config{
+        MongoHost:     getEnv("MONGO_HOST", "localhost"),
+        MongoPort:     getEnv("MONGO_PORT", "27017"),
+        MongoDatabase: getEnv("MONGO_DATABASE", "myapp"),
+    }
+}
+
+func (c *Config) URI() string {
+    return fmt.Sprintf("mongodb://%s:%s", c.MongoHost, c.MongoPort)
+}
+
+func getEnv(key, defaultVal string) string {
+    if val := os.Getenv(key); val != "" {
+        return val
+    }
+    return defaultVal
+}
+```
+
+```go
+// database/database.go
+package database
+
+import (
+    "context"
+    "fmt"
+    "log"
+    "time"
+
+    "go.mongodb.org/mongo-driver/mongo"
+    "go.mongodb.org/mongo-driver/mongo/options"
+    "go.mongodb.org/mongo-driver/mongo/readpref"
+)
+
+var (
+    Client *mongo.Client
+    DB     *mongo.Database
+)
+
+func Init(uri, dbName string) {
+    ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+    defer cancel()
+
+    var err error
+    Client, err = mongo.Connect(ctx, options.Client().ApplyURI(uri))
+    if err != nil {
+        log.Fatalf("连接 MongoDB 失败: %v", err)
+    }
+
+    if err = Client.Ping(ctx, readpref.Primary()); err != nil {
+        log.Fatalf("Ping MongoDB 失败: %v", err)
+    }
+
+    DB = Client.Database(dbName)
+    fmt.Println("MongoDB 连接成功")
+}
+
+func Close() {
+    if Client != nil {
+        ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+        defer cancel()
+        Client.Disconnect(ctx)
+    }
+}
+```
+
 ## 文档模型设计
 
 ### 基础文档模板
