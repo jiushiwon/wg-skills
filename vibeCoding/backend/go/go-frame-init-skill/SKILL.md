@@ -1,5 +1,5 @@
 ---
-name: go-frame-skill
+name: go-frame-init-skill
 description: Go Web 框架初始化技能。面向零基础小白，提供多种 Go Web 框架（Hertz/Fiber/Chi）的项目初始化、骨架生成、一键启动脚本。触发词："Go 框架"、"Go Web 框架"、"Hertz"、"Fiber"、"初始化 Go 项目"、"Go 脚手架"。
 ---
 

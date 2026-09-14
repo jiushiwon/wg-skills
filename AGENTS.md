@@ -130,13 +130,13 @@ wg-skills/
 │   │   │   ├── java-fast-skill/             # Java 快速入门（小白友好）
 │   │   │   ├── springboot-init-skill/        # Spring Boot 一键初始化
 │   │   │   └── springboot-module/            # Java 业务模块矩阵
-│   │   │       ├── java-auth-module-skill/
-│   │   │       ├── java-redis-module-skill/
-│   │   │       ├── java-kafka-module-skill/
-│   │   │       ├── java-ai-chat-module-skill/
-│   │   │       ├── java-notification-module-skill/
-│   │   │       ├── java-org-permission-module-skill/
-│   │   │       └── java-payment-module-skill/
+│   │   │       ├── springboot-auth-module-skill/
+│   │   │       ├── springboot-redis-module-skill/
+│   │   │       ├── springboot-kafka-module-skill/
+│   │   │       ├── springboot-agent-module-skill/
+│   │   │       ├── springboot-notification-module-skill/
+│   │   │       ├── springboot-org-permission-module-skill/
+│   │   │       └── springboot-payment-module-skill/
 │   │   ├── python/                          # Python 语言矩阵
 │   │   │   ├── python-fast-skill/           # Python 快速入门（小白友好）
 │   │   │   ├── fastapi-init-skill/          # FastAPI 一键初始化
@@ -214,16 +214,16 @@ wg-skills/
 │   │       ├── vue-switch-skill/            # Vue 开关组件
 │   │       ├── vue-upload-skill/            # Vue 上传组件
 │   │       ├── vue-list-page-skill/        # Vue 列表页（搜索+表格+分页）
-│   │       └── vue-complex-skill/            # Vue 综合页面（含登录页、增删改查页面）
+│   │       ├── vue-complex-skill/            # Vue 综合页面（含登录页、增删改查页面）
 │   │       ├── vue-contextmenu-skill/        # Vue 右键菜单组件
 │   │       ├── vue-list-item-skill/          # Vue 列表项抽象（tree/menu/dropdown 复用基座）
 │   │       ├── vue-generate-skill/           # Vue 项目生成
 │   │       ├── vue-theme-skill/              # Vue 主题系统
 │   │       ├── vue-style-skill/              # Vue 样式规范
 │   │       ├── vue-tui-skill/                # Vue TUI 终端界面
-│   │       └── electron-vue3-skill/         # Electron + Vue3 桌面端初始化
+│   │       └── electron-vue-init-skill/         # Electron + Vue3 桌面端初始化
 │   │   └── react/                            # React 技能矩阵
-│   │       ├── react-init-skill/            # React + TS + Vite 项目生成
+│   │       ├── react-generate-skill/            # React + TS + Vite 项目生成
 │   │       └── react-native-generate-skill/  # React Native 移动端初始化
 │   │   └── video/                           # 视频处理技能矩阵
 │   │       ├── remotion-skill/              # Remotion 代码生成视频

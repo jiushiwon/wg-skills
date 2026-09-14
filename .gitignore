@@ -6,6 +6,7 @@ demo/
 
 # 依赖目录
 node_modules/
+venv/
 
 # 操作系统文件
 .DS_Store
@@ -32,6 +33,7 @@ __pycache__/
 dist/
 build/
 out/
+target/
 
 # IDE / 编辑器
 .idea/
