@@ -1,6 +1,6 @@
 # wg-skills — Claude Code 精选技能集
 
-> 精选 10 个高频实用技能，覆盖后端、前端、数据库全栈场景。
+> 精选 11 个高频实用技能，覆盖后端、前端、数据库、工具全栈场景。
 > 完整技能体系（90+ 个）请访问 [VibeCoding Portal](https://github.com/jiushiwon/vibecoding-portal)（私有）
 
 ---
@@ -44,11 +44,12 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 | 📊 **vue-table-skill** | Vue 表格组件 | `vibeCoding/frontend/vue/` |
 | ⚛️ **react-generate-skill** | React 页面生成 | `vibeCoding/frontend/react/` |
 
-### 工具（1 个）
+### 工具（2 个）
 
 | 技能 | 说明 | 路径 |
 |------|------|------|
 | 🔍 **skill-auditor** | 技能质量审计工具 | `others/` |
+| 🎙️ **ai-speech-detector** | AI 内容检测（识别 AI 生成文本） | `others/` |
 
 ---
 
