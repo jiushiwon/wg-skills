@@ -7,21 +7,17 @@ description: Go 项目一键初始化技能。面向零基础小白，提供环�
 
 面向**完全不懂编程的小白**，一键生成标准化、开箱即用的 Go Web 服务骨架。
 
-## 与 go-backend-skill 的区别
+## 4 语言 init-skill 横向对比
 
-| 维度 | go-backend-skill | 本 skill |
-|------|-----------------|----------|
-| 目标用户 | 后端开发者 | 零基础小白 |
-| 环境安装 | 用户自己装 | **自动检测 + 自动安装** |
-| 启动方式 | go run main.go | **一条命令：`./restart.sh [dev|prod]`** |
-| Web 框架 | 无默认 | **Gin（最流行）** |
-| SSE 支持 | 无 | **内置 SSE 流式框架** |
-| 文件上传 | 无 | **内置文件上传接口** |
-| 默认数据库 | PostgreSQL | **MySQL**（可选 PostgreSQL / 无数据库） |
-| 脚本 | 无 | **只生成 `restart.sh` / `restart.bat`（dev/prod 双模式）** |
-| Swagger | 无 | **swaggo/gin-swagger 集成** |
-| 交互次数 | 多个技术问题 | **最多 3 个问题** |
-| 文件数 | ~25 | **~20** |
+| 维度 | springboot-init（Java） | fastapi-init（Python） | **go-gin-init（Go）** | nodejs-init（Node.js） |
+|------|------------------------|----------------------|---------------------|----------------------|
+| 框架 | Spring Boot 3 | FastAPI + uvicorn | **Gin** | Express |
+| 启动方式 | `mvn spring-boot:run` | `uvicorn main:app` | **`./restart.sh [dev|prod]`** | `npm run dev` |
+| 默认数据库 | MySQL | MySQL / PostgreSQL | **MySQL**（可选 PostgreSQL） | MySQL |
+| ORM | MyBatis-Plus | SQLAlchemy | **GORM** | Sequelize |
+| 鉴权 | JWT + Spring Security | JWT + OAuth2 | **JWT + 中间件** | JWT + Passport |
+| SSE | WebFlux SSE | StreamingResponse | **Gin SSE** | SSE |
+| Swagger | springdoc-openapi | FastAPI 自带 | **swaggo/gin-swagger** | swagger-jsdoc |
 
 **不重复造轮子**：统一响应信封、错误码、JWT 规范与各 init-skill 内置的统一契约层对齐，模板已内置于本 skill（`references/api-contract-template.md`、`references/project-guide-template.md`）；关系型 DB 配置引用 `database-design-skill`；前端联动规范引用 `frontend-request-skill`。本 skill 在它们之上增加「小白友好」的完整封装。
 
@@ -175,7 +171,7 @@ description: Go 项目一键初始化技能。面向零基础小白，提供环�
 
 ## 红线（不可绕过）
 
-1. **不做 go-backend-skill 已做的事**：不重复生成同样的骨架代码，本 skill 生成的是更完整、更小白友好的版本。
+1. **不生成无契约的骨架**：不重复生成无契约规范的骨架代码，本 skill 生成的是包含完整契约层（响应信封/错误码/JWT/api-contract）的版本。
 2. **不硬编码版本号**：Go / Gin / 依赖版本一律现场查询官方源最新稳定版。
 3. **不跳过环境探测**：生成前必须先检查用户环境，无法安装则给出明确提示。
 4. **不强制安装系统级数据库**：若本机有 Docker，生成逻辑可自动拉起开发数据库容器（可选）；否则提供 `references/db-guide.md` 中的 Docker 命令，由用户自行启动。
@@ -200,7 +196,7 @@ create go project、go starter
 
 ## 不做
 
-- 不生成与 go-backend-skill 完全相同的骨架（本 skill 额外包含 SSE、上传、一键脚本、环境探测）
+- 不生成无契约规范的骨架（本 skill 包含完整契约层、SSE、上传、一键脚本、环境探测）
 - 不询问技术细节（Gin vs Echo、ORM 选择、目录结构等——全部自动选最佳实践）
 - 不安装系统级依赖（如 MySQL Server），只提供 Docker 启动命令
 - 不在 SKILL.md 锁定版本号

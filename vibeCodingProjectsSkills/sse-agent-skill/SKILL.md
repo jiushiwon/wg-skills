@@ -1,6 +1,6 @@
 ---
 name: sse-agent-skill
-description: SSE AI 对话 Agent 技能。组合前端（vue-base-skill）+ 后端（fastapi-init/springboot-init/go-gin-init）+ 数据库（database-design-skill）+ 鉴权（auth-module-skill），一键生成 SSE 流式输出的 AI 对话系统。不使用任何第三方 SDK，全部基于 wg-skills 技能矩阵。触发词："SSE 对话"、"AI 聊天"、"流式输出"、"ChatGPT 克隆"、"SSE chat"、"AI agent demo"。
+description: SSE AI 对话 Agent 技能。组合前端（vue-base-skill）+ 后端（fastapi-init/springboot-init/go-gin-init）+ 数据库（database-design-skill）+ 鉴权（auth-module-skill，按语言选择）+ 统一规范（backend/shared/），一键生成 SSE 流式输出的 AI 对话系统。不使用任何第三方 SDK，全部基于 wg-skills 技能矩阵。触发词："SSE 对话"、"AI 聊天"、"流式输出"、"ChatGPT 克隆"、"SSE chat"、"AI agent demo"。
 ---
 
 # SSE Agent Skill
@@ -37,15 +37,15 @@ description: SSE AI 对话 Agent 技能。组合前端（vue-base-skill）+ 后�
 | 技能 | 用途 |
 |------|------|
 | `database-design-skill` | 数据库设计规范 |
-| `mysql-module-skill` / `pgsql-module-skill` | 会话存储 |
-| `redis-module-skill` | 会话缓存（可选） |
+| `mysql-guide-skill` / `pgsql-guide-skill` | 会话存储参考 |
+| `redis-guide-skill` | 会话缓存（可选） |
 
 ### 鉴权层
 
 | 技能 | 用途 |
 |------|------|
-| `auth-module-skill` | 用户认证 |
-| `backend-convention-skill` | 接口规范 |
+| `springboot-auth-module-skill` / `fastapi-auth-module-skill` | 用户认证（按语言选择） |
+| `backend/shared/` | 统一响应信封/错误码/JWT（公共规范层） |
 
 ## 交互流程
 
@@ -208,7 +208,7 @@ class AIClient:
 
 ### 4. 用户认证
 
-复用 `auth-module-skill`：
+复用 `springboot-auth-module-skill` 或 `fastapi-auth-module-skill`（按语言选择）：
 - 登录/注册
 - JWT Token 管理
 - 用户隔离（每个用户独立会话）
@@ -250,7 +250,7 @@ AI 输出：
 - 前端：Vue3 + vue-base-skill（聊天气泡、输入框、会话列表）
 - 后端：FastAPI + SSE 流式输出
 - 数据库：MySQL + database-design-skill
-- 鉴权：JWT + auth-module-skill
+- 鉴权：JWT + springboot-auth-module-skill（或 fastapi-auth-module-skill）
 - AI 调用：原生 HTTP（OpenAI 兼容接口）
 
 正在生成项目...
@@ -281,10 +281,10 @@ sse-agent-skill（编排器）
     │
     ├── 数据库技能
     │   ├── database-design-skill
-    │   ├── mysql-module-skill / pgsql-module-skill
-    │   └── redis-module-skill（可选）
+    │   ├── mysql-guide-skill / pgsql-guide-skill
+    │   └── redis-guide-skill（可选）
     │
-    └── 鉴权技能
-        ├── auth-module-skill
-        └── backend-convention-skill
+    └── 规范层
+        ├── backend/shared/（响应信封/错误码/JWT/分页）
+        └── springboot-auth-module-skill / fastapi-auth-module-skill
 ```

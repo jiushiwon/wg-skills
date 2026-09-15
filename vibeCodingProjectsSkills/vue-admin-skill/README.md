@@ -29,7 +29,7 @@
 | 后端 | fastapi-init-skill | Python 骨架 |
 | 后端 | go-gin-init-skill | Go 骨架 |
 | 数据库 | database-design-skill | 设计规范 |
-| 鉴权 | auth-module-skill | JWT 鉴权 |
+| 鉴权 | springboot-auth-module-skill / fastapi-auth-module-skill | JWT 鉴权（按语言选择） |
 
 ## 生成内容
 

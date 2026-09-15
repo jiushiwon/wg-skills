@@ -41,16 +41,16 @@ description: 管理后台一键生成技能。组合前端（vue-base-skill/vue-
 | 技能 | 用途 |
 |------|------|
 | `database-design-skill` | 数据库设计规范（表名/索引/关联） |
-| `mysql-module-skill` | MySQL 集成 |
-| `pgsql-module-skill` | PostgreSQL 集成 |
-| `redis-module-skill` | Redis 缓存（可选） |
+| `mysql-guide-skill` | MySQL 集成参考 |
+| `pgsql-guide-skill` | PostgreSQL 集成参考 |
+| `redis-guide-skill` | Redis 缓存（可选） |
 
-### 鉴权层
+### 规范层
 
 | 技能 | 用途 |
 |------|------|
-| `backend-convention-skill` | 接口规范、响应格式 |
-| `auth-module-skill` | JWT 鉴权、权限控制 |
+| `backend/shared/` | 统一响应信封、错误码、JWT、分页（公共规范层） |
+| `springboot-auth-module-skill` / `fastapi-auth-module-skill` | JWT 鉴权、权限控制（按语言选择） |
 
 ## 交互流程
 
@@ -201,7 +201,7 @@ AI 输出：
 - 前端：Vue3 + vue-base-skill + vue-table-skill + vue-form-skill
 - 后端：Spring Boot + springboot-auth-module-skill
 - 数据库：MySQL + database-design-skill
-- 鉴权：JWT + auth-module-skill
+- 鉴权：JWT + springboot-auth-module-skill（或 fastapi-auth-module-skill）
 
 正在生成项目...
 ```
@@ -235,10 +235,10 @@ vue-admin-skill（编排器）
     │
     ├── 数据库技能
     │   ├── database-design-skill
-    │   ├── mysql-module-skill / pgsql-module-skill
-    │   └── redis-module-skill（可选）
+    │   ├── mysql-guide-skill / pgsql-guide-skill
+    │   └── redis-guide-skill（可选）
     │
-    └── 规范技能
-        ├── backend-convention-skill
-        └── auth-module-skill
+    └── 规范层
+        ├── backend/shared/（响应信封/错误码/JWT/分页）
+        └── springboot-auth-module-skill / fastapi-auth-module-skill
 ```

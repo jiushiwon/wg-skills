@@ -208,6 +208,6 @@ Lambda相关：Lambda、stream、filter、map、reduce
 
 - 不提供完整的 Java 教程（太长）
 - 不深入 JVM 原理、内存模型等进阶内容
-- 不讲解具体项目开发（那是 java-backend-skill / springboot-init-skill 的事）
+- 不讲解具体项目开发（那是 springboot-init-skill 的事）
 - 不回答具体业务代码问题（只回答概念/语法/示例）
 - 不提供 IDE 安装使用教程（那是另一套技能）

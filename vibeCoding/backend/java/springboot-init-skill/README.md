@@ -17,7 +17,7 @@
 
 - 已有现成 Spring Boot 项目需要维护（请参考各 init-skill 内置的统一规范）
 - 需要复杂微服务架构（请用 Spring Cloud 套件）
-- 要定制 ORM、构建工具等非主流栈（请用 `java-backend-skill` 的生成器模式）
+- 要定制 ORM、构建工具等非主流栈（请参考 `references/api-contract-template.md` 自行调整）
 
 ## 触发关键词
 
@@ -211,8 +211,9 @@ openssl rand -base64 32
 
 | 技能 | 关系 |
 |------|------|
-| `java-backend-skill` | 嵌套子技能，提供现场生成 Spring Boot 骨架的能力（开发者导向）。本 skill 是零基础小白版，自动检测环境、一键启动脚本、更多默认配置 |
 | init-skill 内置契约层 | 统一规范：响应信封、错误码、API 契约、项目指南。本 skill 模板已内置这些规范 |
+| `backend/shared/` | 公共规范层：响应信封、错误码、JWT、分页。本 skill 已集成 |
+| 4 语言 init-skill 横向对比 | `springboot-init`（Java） / `fastapi-init`（Python） / `go-gin-init`（Go） / `nodejs-init`（Node.js） |
 | `database-design-skill` | 数据库设计规范与连接规范 |
 | `frontend-request-skill` | 前端请求层规范。生成的接口契约可直接被前端消费（响应信封、Token、SSE、上传） |
 | `fastapi-init-skill` | Python 平行技能，能力清单 1:1 镜像 |

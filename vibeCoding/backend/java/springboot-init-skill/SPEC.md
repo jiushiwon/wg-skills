@@ -23,12 +23,14 @@
 **与现有技能的关系**：
 
 ```
-init-skill 内置契约层        ← 规范层（响应信封、错误码、契约，已内置于各 init-skill）
+backend/shared/                ← 公共规范层（响应信封、错误码、JWT、分页，跨语言）
         ↓
-java-backend-skill          ← 开发者导向（现场生成，开发者填细节）
+springboot-init-skill          ← Java 骨架（一键完成，环境探测+脚本+默认配置）
         ↓
-springboot-init-skill       ← 小白导向（一键完成，环境探测+脚本+默认配置）
+springboot-*-module-skill      ← 业务模块（按需集成 auth/upload/dict 等）
 ```
+
+4 语言并列：springboot-init（Java） / fastapi-init（Python） / go-gin-init（Go） / nodejs-init（Node.js）
 
 ---
 

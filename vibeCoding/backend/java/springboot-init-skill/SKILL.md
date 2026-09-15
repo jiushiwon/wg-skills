@@ -25,7 +25,7 @@ description: Spring Boot 项目一键初始化技能。面向零基础小白，�
 
 - **init-skill 内置契约层**：响应信封 `{ code, message, data }`、错误码（-1001 校验 / -2000 系统）、JWT Bearer、api-contract、project-guide 规范已内置本 skill
 - **database-design-skill**：MySQL / PostgreSQL / MongoDB 选型规则、表前缀 `wg`、连接参数
-- **java-backend-skill**：Spring Boot 骨架基础结构与 pom 依赖参考
+- **骨架参考**：`references/api-contract-template.md` 提供完整骨架结构与依赖参考
 - **frontend-request-skill**：前端请求层规范，确保后端生成的接口契约可直接被前端消费
 
 ## 核心能力清单（11 项）
@@ -171,7 +171,7 @@ description: Spring Boot 项目一键初始化技能。面向零基础小白，�
 
 ## 红线（不可绕过）
 
-1. **不做 java-backend-skill 已做的事**：不重复生成同样的骨架代码，本 skill 生成的是更完整、更小白友好的版本。
+1. **不生成无契约的骨架**：不重复生成无契约规范的骨架代码，本 skill 生成的是包含完整契约层（响应信封/错误码/JWT/api-contract）的版本。
 2. **不硬编码版本号**：JDK / Spring Boot / 依赖版本一律现场查询官方源最新稳定版（Adoptium、Spring Initializr、Maven Central）。
 3. **不跳过环境探测**：生成前必须先检查用户环境，无法安装则给出明确提示。
 4. **不强制安装系统级数据库**：若本机有 Docker，生成逻辑可自动拉起开发数据库容器（可选）；否则提供 `references/db-guide.md` 中的 Docker 命令，由用户自行启动。
@@ -192,7 +192,7 @@ create springboot project、springboot starter
 
 ## 不做
 
-- 不生成与 java-backend-skill 完全相同的骨架（本 skill 额外包含 SSE、上传、一键脚本、环境探测、安全头）
+- 不生成无契约规范的骨架（本 skill 包含完整契约层、SSE、上传、一键脚本、环境探测、安全头）
 - 不询问技术细节（ORM 选择、目录结构等——全部自动选最佳实践）
 - 不安装系统级依赖（如 MySQL Server），只提供 Docker 启动命令
 - 不在 SKILL.md 锁定版本号

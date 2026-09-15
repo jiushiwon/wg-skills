@@ -82,12 +82,12 @@ AI 时代的编程不是"取代程序员"，而是把传统工程中**重复、�
 | **数据库** | | |
 | `database/` | **数据库设计规范体系** | |
 | └ `database-design-skill/` | 数据库设计规范（表名/索引/分库分表/性能） | "数据库设计规范"、"表名规范" |
-| └ `mysql-module-skill/` | MySQL 模块集成 | "MySQL 集成" |
-| └ `mongodb-module-skill/` | MongoDB 模块集成 | "MongoDB 集成" |
-| └ `pgsql-module-skill/` | PostgreSQL 模块集成 | "PostgreSQL 集成" |
-| └ `redis-module-skill/` | Redis 缓存/分布式锁 | "Redis 集成"、"分布式锁" |
-| └ `kafka-module-skill/` | Kafka 消息队列 | "Kafka 集成"、"消息队列" |
-| └ `sqlite-module-skill/` | SQLite 轻量数据库 | "SQLite 集成"、"嵌入式数据库" |
+| └ `mysql-guide-skill/` | MySQL 集成参考 | "MySQL 集成" |
+| └ `mongodb-guide-skill/` | MongoDB 集成参考 | "MongoDB 集成" |
+| └ `pgsql-guide-skill/` | PostgreSQL 集成参考 | "PostgreSQL 集成" |
+| └ `redis-guide-skill/` | Redis 缓存/分布式锁 | "Redis 集成"、"分布式锁" |
+| └ `kafka-guide-skill/` | Kafka 消息队列 | "Kafka 集成"、"消息队列" |
+| └ `sqlite-guide-skill/` | SQLite 轻量数据库 | "SQLite 集成"、"嵌入式数据库" |
 | └ `database-learning-skill/` | 数据库学习与选型 | "数据库学习"、"MySQL vs PostgreSQL" |
 | **辅助** | | |
 | `backend-analysis-skill/` | 后端项目全景分析 | "分析这个后端项目" |
