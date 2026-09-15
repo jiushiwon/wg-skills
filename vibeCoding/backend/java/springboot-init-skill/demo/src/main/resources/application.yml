@@ -1,0 +1,103 @@
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /
+  tomcat:
+    threads:
+      max: ${TOMCAT_THREADS_MAX:200}
+    accept-count: ${TOMCAT_ACCEPT_COUNT:100}
+    connection-timeout: ${TOMCAT_CONNECTION_TIMEOUT:20000}
+  shutdown: graceful
+
+spring:
+  application:
+    name: ${APP_NAME:demo}
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+
+  lifecycle:
+    timeout-per-shutdown-phase: ${SHUTDOWN_TIMEOUT:30s}
+
+  datasource:
+    url: ${DB_URL:jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:demo}?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
+    driver-class-name: ${DB_DRIVER:com.mysql.cj.jdbc.Driver}
+    hikari:
+      pool-name: ${APP_NAME:demo}-pool
+      maximum-pool-size: ${DB_POOL_MAX_SIZE:20}
+      minimum-idle: ${DB_POOL_MIN_IDLE:5}
+      connection-timeout: ${DB_POOL_CONNECTION_TIMEOUT:20000}
+      idle-timeout: ${DB_POOL_IDLE_TIMEOUT:300000}
+      max-lifetime: ${DB_POOL_MAX_LIFETIME:1200000}
+      leak-detection-threshold: ${DB_POOL_LEAK_DETECTION_THRESHOLD:60000}
+
+  jpa:
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO:update}
+    show-sql: ${JPA_SHOW_SQL:false}
+    properties:
+      hibernate:
+        dialect: ${JPA_DIALECT:org.hibernate.dialect.MySQLDialect}
+        format_sql: true
+
+  flyway:
+    enabled: ${FLYWAY_ENABLED:false}
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+  # Redis（可选）：需同时引入 spring-boot-starter-data-redis 依赖才会生效
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      database: ${REDIS_DATABASE:0}
+
+  servlet:
+    multipart:
+      max-file-size: ${UPLOAD_MAX_FILE_SIZE:10MB}
+      max-request-size: ${UPLOAD_MAX_REQUEST_SIZE:50MB}
+
+# SSE 流式配置
+sse:
+  timeout-ms: ${SSE_TIMEOUT_MS:30000}
+  heartbeat-seconds: ${SSE_HEARTBEAT_SECONDS:2}
+
+jwt:
+  secret: ${JWT_SECRET:Y2hhbmdlLW1lLXBsZWFzZS11c2Utb3BlbnNzbC1yYW5kLWJhc2U2NC0zMg==}
+  access-expire-minutes: ${JWT_ACCESS_EXPIRE_MINUTES:60}
+  refresh-expire-days: ${JWT_REFRESH_EXPIRE_DAYS:7}
+  issuer: ${JWT_ISSUER:demo}
+  header: ${JWT_HEADER:Authorization}
+  prefix: ${JWT_PREFIX:Bearer }
+
+cors:
+  origins: ${CORS_ORIGINS:*}
+
+upload:
+  dir: ${UPLOAD_DIR:./uploads}
+  allowed-types: ${UPLOAD_ALLOWED_TYPES:jpg,jpeg,png,gif,pdf}
+  allowed-mime-types: ${UPLOAD_ALLOWED_MIME_TYPES:image/jpeg,image/png,image/gif,application/pdf}
+  max-size-bytes: ${UPLOAD_MAX_SIZE_BYTES:10485760}
+
+logging:
+  level:
+    root: ${LOG_LEVEL_ROOT:INFO}
+    com.example: ${LOG_LEVEL_APP:DEBUG}
+  file:
+    path: ${LOG_PATH:./logs}
+    name: ${LOG_FILE_NAME:app.log}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  show-actuator: false
+
+app:
+  debug: ${APP_DEBUG:true}
+  table-prefix: ${DB_TABLE_PREFIX:wg}

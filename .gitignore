@@ -1,6 +1,4 @@
-# 文档 / demo / Claude 配置（不纳入仓库）
-docs/
-demo/
+# Claude 配置
 .claude/
 .superpowers/
 
@@ -14,9 +12,6 @@ Thumbs.db
 
 # 日志文件
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 
 # Python
 __pycache__/
@@ -47,14 +42,3 @@ target/
 
 # 工作区
 .worktrees/
-
-# 本地开发技能（不纳入版本控制）
-module-generate-skill/
-
-# workflow-diagram-skill 运行时产物
-workflow-diagram-skill/test-*.svg
-workflow-diagram-skill/test-*.png
-workflow-diagram-skill/scripts/svg2png_core.js
-workflow-diagram-skill/assets/
-workflow-diagram-skill/.tmp-*.js
-super-deploy-skills/

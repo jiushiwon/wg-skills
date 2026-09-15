@@ -1,0 +1,24 @@
+# IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# 构建
+target/
+build/
+out/
+
+# 运行时
+.env
+logs/
+uploads/
+*.pid
+
+# 系统
+.DS_Store
+Thumbs.db
+
+# 日志
+*.log

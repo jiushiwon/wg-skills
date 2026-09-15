@@ -1,0 +1,24 @@
+#!/bin/sh
+# Spring Boot Init Skill 简化版 Maven Wrapper
+# 假设 .mvn/wrapper/maven-wrapper.jar 已存在
+
+set -eu
+
+MAVEN_PROJECTBASEDIR="${MAVEN_BASEDIR:-$(pwd)}"
+export MAVEN_PROJECTBASEDIR
+
+if [ -z "${JAVA_HOME:-}" ]; then
+  JAVA_CMD="java"
+else
+  JAVA_CMD="$JAVA_HOME/bin/java"
+fi
+
+WRAPPER_JAR="$MAVEN_PROJECTBASEDIR/.mvn/wrapper/maven-wrapper.jar"
+if [ ! -f "$WRAPPER_JAR" ]; then
+  echo "Error: $WRAPPER_JAR not found. Please run 'mvn wrapper:wrapper' first." >&2
+  exit 1
+fi
+
+exec "$JAVA_CMD" -classpath "$WRAPPER_JAR" \
+    -Dmaven.multiModuleProjectDirectory="$MAVEN_PROJECTBASEDIR" \
+    org.apache.maven.wrapper.MavenWrapperMain "$@"
