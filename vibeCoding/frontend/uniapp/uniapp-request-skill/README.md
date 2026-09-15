@@ -90,7 +90,7 @@ uniapp 项目**请求层设计**技能入口。基于 `uni.request` / `uni.uploa
 
 ❌ **不适用**：
 - 通用 Web/Vue/React 项目，应用 `frontend-request-skill`
-- 完整登录鉴权体系设计，应用 `uniapp-components-skill`
+- 完整登录鉴权体系设计，应用 `uniapp-auth-skill`
 - 跨平台兼容性审计，应用 `uniapp-crossplatform-audit-skill`
 
 ---

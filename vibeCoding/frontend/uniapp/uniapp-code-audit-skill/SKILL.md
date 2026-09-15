@@ -67,7 +67,7 @@ Phase 4: 输出报告
 
 | 维度 | 参考文件 | 主要规范来源 |
 |------|----------|--------------|
-| **安全合规** | `references/security-checklist.md` | `uniapp-components-skill` 红线规则、通用安全规范 |
+| **安全合规** | `references/security-checklist.md` | `uniapp-auth-skill` 红线规则、通用安全规范 |
 | **性能** | `references/performance-checklist.md` | `uniapp-standard-skill` 性能规范、`uniapp-app-generate-skill` |
 | **代码质量** | `references/code-quality-checklist.md` | `uniapp-standard-skill` 红线规则、TS/Vue3 通用规范 |
 | **架构与规范** | `references/architecture-checklist.md` | `uniapp-app-generate-skill/references/project-structure.md`、`uniapp-standard-skill` R01-R20 |
@@ -122,7 +122,7 @@ Phase 4: 输出报告
 - 位置：第 10 行
 - 风险描述：源代码中直接写入 API Key，存在泄露风险
 - 判定依据：安全清单 1. 敏感信息硬编码
-- 参考标准：`uniapp-components-skill` 安全规范
+- 参考标准：`uniapp-auth-skill` 安全规范
 
 ### P1 / P2 / P3（同上格式）
 
@@ -158,7 +158,7 @@ Phase 4: 输出报告
 - `uniapp-standard-skill` — 红线规则（R01-R20）、目录结构、接口规范、性能规范
 - `uniapp-app-generate-skill` — 项目骨架、主题系统、组件标准、跨平台规范
 - `frontend-request-skill` — 请求层封装、API 契约、错误处理（通用 Web/uniapp 双端）
-- `uniapp-components-skill` — 登录鉴权、Token 管理、安全规范（详见 `references/auth-framework.md` 与 `security.md`）
+- `uniapp-auth-skill` — 登录鉴权、Token 管理、安全规范（详见 `references/auth-framework.md` 与 `security.md`）
 - `uniapp-style-skill` — 设计系统、Token 体系、组件规范
 - `uniapp-theme-skill` — 主题系统一致性治理
 
@@ -170,7 +170,7 @@ Phase 4: 输出报告
 
 | 配合 Skill | 场景 |
 |------------|------|
-| `uniapp-standardization-skill` | 按报告进行项目规范化 |
+| `uniapp-diagnostic-skill` | 按报告进行项目规范化 |
 | `uniapp-style-skill` | 设计系统与 Token 治理 |
 | `uniapp-theme-skill` | 主题系统一致性治理 |
 | `frontend-code-doctor` | 通用前端代码审查补充 |

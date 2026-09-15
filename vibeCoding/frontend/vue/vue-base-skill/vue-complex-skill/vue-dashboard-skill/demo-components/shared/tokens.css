@@ -1,0 +1,89 @@
+/* Dashboard Page Design Tokens */
+:root {
+  /* ---- 背景 ---- */
+  --dash-bg-primary: #f5f7fa;
+  --dash-bg-card: #fff;
+  --dash-bg-card-hover: #fafbfc;
+  --dash-bg-dark: #0a0f1a;
+  --dash-bg-dark-card: #111827;
+
+  /* ---- 文本 ---- */
+  --dash-text-primary: #1a1a2e;
+  --dash-text-secondary: #6b7280;
+  --dash-text-muted: #9ca3af;
+  --dash-text-light: #e2e8f0;
+
+  /* ---- 品牌色 ---- */
+  --dash-accent-blue: #1890ff;
+  --dash-accent-green: #52c41a;
+  --dash-accent-orange: #fa8c16;
+  --dash-accent-red: #f5222d;
+  --dash-accent-purple: #722ed1;
+  --dash-accent-cyan: #13c2c2;
+  --dash-accent-neon: #00f0ff;
+  --dash-accent-led: #00d4ff;
+
+  /* ---- 趋势色 ---- */
+  --dash-trend-up: #52c41a;
+  --dash-trend-down: #f5222d;
+  --dash-trend-flat: #9ca3af;
+
+  /* ---- 边框 ---- */
+  --dash-border-light: #e8e8e8;
+  --dash-border-dark: #1f2937;
+
+  /* ---- 卡片 ---- */
+  --dash-card-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --dash-card-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --dash-card-radius: 12px;
+  --dash-card-padding: 24px;
+
+  /* ---- KPI ---- */
+  --dash-kpi-height: 120px;
+  --dash-kpi-icon-size: 48px;
+
+  /* ---- 间距 ---- */
+  --dash-spacing-xs: 4px;
+  --dash-spacing-sm: 8px;
+  --dash-spacing-md: 16px;
+  --dash-spacing-lg: 24px;
+  --dash-spacing-xl: 32px;
+
+  /* ---- 圆角 ---- */
+  --dash-radius-sm: 6px;
+  --dash-radius-base: 12px;
+  --dash-radius-lg: 16px;
+
+  /* ---- 字体 ---- */
+  --dash-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --dash-mono-family: 'JetBrains Mono', 'Fira Code', monospace;
+  --dash-font-size-xs: 11px;
+  --dash-font-size-sm: 12px;
+  --dash-font-size-base: 14px;
+  --dash-font-size-lg: 16px;
+  --dash-font-size-xl: 20px;
+  --dash-font-size-2xl: 28px;
+  --dash-font-size-3xl: 36px;
+
+  /* ---- 表格 ---- */
+  --dash-table-header-bg: #fafafa;
+  --dash-table-row-hover: #f0f5ff;
+  --dash-table-border: #f0f0f0;
+  --dash-table-row-height: 48px;
+
+  /* ---- 图表色板 ---- */
+  --dash-chart-color-1: #1890ff;
+  --dash-chart-color-2: #52c41a;
+  --dash-chart-color-3: #fa8c16;
+  --dash-chart-color-4: #f5222d;
+  --dash-chart-color-5: #722ed1;
+  --dash-chart-color-6: #13c2c2;
+
+  /* ---- 动画 ---- */
+  --dash-transition-fast: 0.15s ease;
+  --dash-transition-base: 0.3s ease;
+
+  /* ---- 侧边 ---- */
+  --dash-activity-avatar-size: 36px;
+  --dash-top-rank-size: 24px;
+}

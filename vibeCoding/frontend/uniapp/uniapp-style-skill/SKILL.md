@@ -15,7 +15,7 @@ description: uniapp 微信小程序设计系统与组件规范。覆盖 Design T
 |-------|------|-------------------|
 | [uniapp-standard-skill](../uniapp-standard-skill/) | 通用开发规范（红线规则、目录结构、接口规范） | 前置依赖，本 skill 专注 UI 与视觉层面 |
 | [uniapp-theme-skill](../uniapp-theme-skill/) | 主题系统引擎：基于 CSS 变量的三维度（色阶+尺寸+圆角）一键换肤 | **默认引用**。本 skill 的中性色阶（文字灰/背景灰/边框灰）由自己管理；品牌主色及色阶生成委托给 theme-skill。未安装 theme-skill 时，`$theme-primary` 回退到 `_theme-config.scss` 的默认值 `#1CC8C4` |
-| [uniapp-components-skill](../uniapp-components-skill/) | 登录鉴权与安全规范 | 无交集（命名易与 page-components-skill 混淆，勿混用） |
+| [uniapp-auth-skill](../uniapp-auth-skill/) | 登录鉴权与安全规范 | 无交集（命名易与 page-components-skill 混淆，勿混用） |
 | [uniapp-page-components-skill](../uniapp-page-components-skill/) | 常用组件化页面生成（BaseCard 托底 + 6 类页面组件：Tab+列表/聊天/朋友圈/商品详情/我的/图片卡片） | 正交关系，互补协作（style-skill 定义组件视觉规范，page-components-skill 落地为可复用页面组件，并遵循本 skill 红线） |
 
 > 打开 `demo.html` 可查看 **Design Token 速查盘**：色彩 / 尺寸 / 组件 Token / 触发词 四合一可视化。主题色可切换，所有色阶通过 CSS `color-mix()` 动态重算。中性色阶独立不变。

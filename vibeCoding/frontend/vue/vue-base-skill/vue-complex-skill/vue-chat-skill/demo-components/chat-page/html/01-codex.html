@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>Codex 暗色终端 - Vue3 Chat Skill Demo</title>
+  <link rel="stylesheet" href="../../shared/demo.css" />
+  <style>
+    /* Codex variant: terminal dark theme */
+    :root {
+      --chat-bg-primary: #0d1117;
+      --chat-bg-secondary: #161b22;
+      --chat-bg-tertiary: #1c2128;
+      --chat-text-primary: #c9d1d9;
+      --chat-text-secondary: #8b949e;
+      --chat-text-muted: #6e7681;
+      --chat-border-light: #21262d;
+      --chat-accent-green: #3fb950;
+      --chat-input-bg: #161b22;
+      --chat-input-bg-dark: #0d1117;
+      --chat-input-border: #30363d;
+      --chat-input-border-focus: #3fb950;
+      --chat-code-bg: #0d1117;
+      --chat-code-header-bg: #161b22;
+      --chat-card-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    body {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+    }
+
+    /* 侧边栏 */
+    .chat-sidebar {
+      background: #010409;
+      border-right-color: #21262d;
+    }
+    .chat-sidebar__new-btn {
+      border-color: #30363d;
+      color: #8b949e;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .chat-sidebar__new-btn:hover {
+      border-color: #3fb950;
+      color: #3fb950;
+      background: rgba(63, 185, 80, 0.08);
+    }
+    .chat-sidebar__search-input {
+      background: #161b22;
+      border-color: #30363d;
+      color: #c9d1d9;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .chat-sidebar__item:hover { background: #161b22; }
+    .chat-sidebar__item--active {
+      background: #161b22;
+      border-left-color: #3fb950;
+      border-left-width: 3px;
+    }
+    .chat-sidebar__item-title { color: #c9d1d9; }
+    .chat-sidebar__item-badge {
+      background: #3fb950;
+    }
+
+    /* 头部 */
+    .chat-header {
+      background: #0d1117;
+      border-bottom-color: #21262d;
+    }
+    .chat-header__title { color: #e6edf3; }
+    .chat-header__model {
+      background: #161b22;
+      color: #8b949e;
+      border: 1px solid #21262d;
+    }
+    .chat-header__model-dot { background: #3fb950; }
+
+    /* 消息区域 */
+    .chat-messages { background: #0d1117; }
+
+    /* 系统消息 */
+    .chat-message__system-text {
+      background: rgba(63, 185, 80, 0.08);
+      color: #3fb950;
+      border: 1px solid rgba(63, 185, 80, 0.15);
+    }
+
+    /* 用户消息 - 无背景，细边框 */
+    .chat-message__bubble--user {
+      background: transparent;
+      border: 1px solid #30363d;
+      color: #c9d1d9;
+      border-radius: 6px;
+    }
+
+    /* 助手消息 - 透明，无边框 */
+    .chat-message--assistant {
+      background: transparent;
+      border: none;
+      padding: var(--chat-spacing-md) 0;
+      max-width: 85%;
+    }
+    .chat-message__avatar { color: #3fb950; }
+    .chat-message__content { color: #c9d1d9; }
+    .chat-message__time { color: #6e7681; }
+
+    /* 内联代码 */
+    .chat-inline-code {
+      background: rgba(63, 185, 80, 0.1);
+      color: #3fb950;
+      border: 1px solid rgba(63, 185, 80, 0.2);
+    }
+
+    /* 代码块 - 终端红点 */
+    .chat-code-block {
+      background: #0d1117;
+      border-color: #21262d;
+    }
+    .chat-code-block__header {
+      background: #161b22;
+      border-bottom-color: #21262d;
+    }
+    .chat-code-block__dots {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .chat-code-block__dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .chat-code-block__dots span:nth-child(1) { background: #ff5f56; }
+    .chat-code-block__dots span:nth-child(2) { background: #ffbd2e; }
+    .chat-code-block__dots span:nth-child(3) { background: #27c93f; }
+    .chat-code-block__lang { color: #6e7681; }
+    .chat-code-block__copy { color: #3fb950; }
+    .chat-code-block__copy:hover { background: rgba(63, 185, 80, 0.1); }
+    .chat-code-block__pre { color: #c9d1d9; }
+
+    /* 流式光标 - 绿色方块 */
+    .chat-streaming-cursor::after {
+      content: '\2588';
+      width: auto;
+      height: auto;
+      background: none;
+      color: #3fb950;
+      font-size: 14px;
+      animation: cursor-blink 1s step-end infinite;
+    }
+
+    /* 输入区 */
+    .chat-input-area {
+      background: #0d1117;
+      border-top-color: #21262d;
+    }
+    .chat-input-area__wrapper {
+      background: #161b22;
+      border-color: #30363d;
+      border-radius: 8px;
+    }
+    .chat-input-area__wrapper:focus-within {
+      border-color: #3fb950;
+      box-shadow: 0 0 0 2px rgba(63, 185, 80, 0.1);
+    }
+    .chat-input-area__prompt {
+      color: #3fb950;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      flex-shrink: 0;
+      user-select: none;
+    }
+    .chat-input-area__textarea {
+      color: #c9d1d9;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .chat-input-area__send-btn {
+      background: #3fb950;
+      color: #0d1117;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .chat-input-area__send-btn:hover { background: #2ea043; }
+    .chat-input-area__hint { color: #6e7681; }
+
+    /* 状态栏 */
+    .chat-status-bar {
+      background: #161b22;
+      border-top-color: #21262d;
+      color: #6e7681;
+    }
+    .chat-status-bar__dot { background: #3fb950; }
+  </style>
+</head>
+<body>
+  <div class="chat-page chat-page--codex">
+    <aside class="chat-sidebar">
+      <div class="chat-sidebar__header">
+        <div class="chat-sidebar__new-btn">+ 新对话</div>
+      </div>
+      <div class="chat-sidebar__search">
+        <div class="chat-sidebar__search-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        </div>
+        <input class="chat-sidebar__search-input" placeholder="搜索对话..." />
+      </div>
+      <div class="chat-sidebar__list" id="sidebar-list"></div>
+    </aside>
+
+    <main class="chat-main">
+      <header class="chat-header">
+        <div class="chat-header__left">
+          <div class="chat-header__title" id="header-title">Vue3 组件设计</div>
+          <div class="chat-header__model">
+            <span class="chat-header__model-dot"></span>
+            <span>Claude Sonnet</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="chat-messages" id="messages"></div>
+
+      <div class="chat-input-area">
+        <div class="chat-input-area__wrapper">
+          <span class="chat-input-area__prompt">&gt;</span>
+          <textarea class="chat-input-area__textarea" placeholder="输入消息..." rows="1"></textarea>
+          <div class="chat-input-area__send-btn">发送</div>
+        </div>
+        <div class="chat-input-area__hint">Enter 发送 · Shift+Enter 换行</div>
+      </div>
+
+      <div class="chat-status-bar">
+        <div class="chat-status-bar__connection">
+          <span class="chat-status-bar__dot"></span>
+          <span>connected</span>
+        </div>
+        <span class="chat-status-bar__divider">|</span>
+        <span>Tokens: 2,847</span>
+        <span class="chat-status-bar__divider">|</span>
+        <span>延迟: 128ms</span>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const conversations = [
+      { id: '1', title: 'Vue3 组件设计', lastMessage: 'Composition API 最佳实践...', timestamp: '10:30', unread: 2 },
+      { id: '2', title: 'Python 部署问题', lastMessage: 'Docker 容器配置优化...', timestamp: '昨天' },
+      { id: '3', title: '数据库索引优化', lastMessage: '复合索引 vs 单列索引...', timestamp: '昨天' },
+      { id: '4', title: 'CSS Grid 布局', lastMessage: '如何实现响应式网格...', timestamp: '3天前' },
+      { id: '5', title: 'Git 分支管理', lastMessage: 'Rebase vs Merge 策略...', timestamp: '1周前' },
+    ]
+
+    const messages = [
+      { id: 'm1', role: 'system', content: '对话已开始，使用 Claude Sonnet 模型', timestamp: '' },
+      { id: 'm2', role: 'user', content: '帮我设计一个 Vue3 的可复用表格组件，需要支持排序、筛选、分页', timestamp: '10:15' },
+      { id: 'm3', role: 'assistant', content: '好的，我来设计一个高性能的表格组件。核心思路是使用 Composition API 将排序、筛选、分页逻辑抽离成独立的 composable。\n\n首先定义类型接口：', timestamp: '10:16', code: 'interface TableColumn {\n  key: string\n  title: string\n  sortable?: boolean\n  filterable?: boolean\n  width?: number | string\n  render?: (row: any) => VNode\n}\n\ninterface TableProps {\n  columns: TableColumn[]\n  dataSource: any[]\n  pagination?: { page: number; pageSize: number; total: number }\n  loading?: boolean\n}', language: 'TypeScript' },
+      { id: 'm4', role: 'user', content: '很好，分页逻辑怎么处理？后端分页和前端分页能统一吗？', timestamp: '10:20' },
+      { id: 'm5', role: 'assistant', content: '可以统一。通过 `usePagination` composable 抽象分页逻辑，支持两种模式：\n\n**前端分页**：数据一次性加载，在内存中切片\n**后端分页**：每次翻页触发 API 请求\n\n关键在于通过 `mode` 参数切换行为，对外暴露统一的 `currentPage`、`pageSize`、`totalPages` 状态。', timestamp: '10:22', code: 'function usePagination(options) {\n  const currentPage = ref(1)\n  const pageSize = ref(options.pageSize ?? 10)\n  \n  const paginatedData = computed(() => {\n    if (options.mode === "server") return options.data\n    const start = (currentPage.value - 1) * pageSize.value\n    return options.data.slice(start, start + pageSize.value)\n  })\n  \n  return { currentPage, pageSize, paginatedData, totalPages }\n}', language: 'TypeScript' },
+    ]
+
+    function renderSidebar() {
+      const list = document.getElementById('sidebar-list')
+      list.innerHTML = conversations.map(c => `
+        <div class="chat-sidebar__item${c.id === '1' ? ' chat-sidebar__item--active' : ''}" data-id="${c.id}">
+          <div class="chat-sidebar__item-content">
+            <div class="chat-sidebar__item-title">${c.title}</div>
+            <div class="chat-sidebar__item-preview">${c.lastMessage}</div>
+          </div>
+          <div class="chat-sidebar__item-meta">
+            <span class="chat-sidebar__item-time">${c.timestamp}</span>
+            ${c.unread ? `<span class="chat-sidebar__item-badge">${c.unread}</span>` : ''}
+          </div>
+        </div>
+      `).join('')
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    }
+
+    function formatContent(content) {
+      return escapeHtml(content)
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/`([^`]+)`/g, '<span class="chat-inline-code">$1</span>')
+        .replace(/\n/g, '<br>')
+    }
+
+    function renderCodeBlock(code, language) {
+      return `
+        <div class="chat-code-block">
+          <div class="chat-code-block__header">
+            <div class="chat-code-block__dots">
+              <span></span><span></span><span></span>
+            </div>
+            <span class="chat-code-block__lang">${language || ''}</span>
+            <button class="chat-code-block__copy" onclick="this.textContent='已复制';setTimeout(()=>this.textContent='复制',1500)">复制</button>
+          </div>
+          <pre class="chat-code-block__pre"><code>${escapeHtml(code)}</code></pre>
+        </div>
+      `
+    }
+
+    function renderMessages() {
+      const container = document.getElementById('messages')
+      container.innerHTML = messages.map(m => {
+        if (m.role === 'system') {
+          return `<div class="chat-message--system"><span class="chat-message__system-text">${m.content}</span></div>`
+        }
+        if (m.role === 'user') {
+          return `
+            <div class="chat-message--user">
+              <div class="chat-message__bubble--user">
+                <div class="chat-message__content">${formatContent(m.content)}</div>
+                ${m.timestamp ? `<div class="chat-message__time">${m.timestamp}</div>` : ''}
+              </div>
+            </div>
+          `
+        }
+        return `
+          <div class="chat-message--assistant">
+            <div class="chat-message__avatar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/><circle cx="12" cy="16" r="1"/></svg></div>
+            <div class="chat-message__body">
+              <div class="chat-message__content">${formatContent(m.content)}</div>
+              ${m.code ? renderCodeBlock(m.code, m.language) : ''}
+              ${m.timestamp ? `<div class="chat-message__time">${m.timestamp}</div>` : ''}
+            </div>
+          </div>
+        `
+      }).join('')
+      container.scrollTop = container.scrollHeight
+    }
+
+    renderSidebar()
+    renderMessages()
+  </script>
+</body>
+</html>

@@ -15,18 +15,13 @@
 
 ## 不适合场景
 
-- 已有现成 Spring Boot 项目需要维护（请用 `backend-convention-skill` 的规范）
+- 已有现成 Spring Boot 项目需要维护（请参考各 init-skill 内置的统一规范）
 - 需要复杂微服务架构（请用 Spring Cloud 套件）
 - 要定制 ORM、构建工具等非主流栈（请用 `java-backend-skill` 的生成器模式）
 
 ## 触发关键词
 
-```
-Spring Boot 脚手架、Spring Boot 一键生成、初始化 Spring Boot 项目、Spring Boot 快速开始、
-springboot init、搭建 Spring Boot 服务、Java Web 骨架、Spring Boot 开箱即用、
-Spring Boot 零基础、Spring Boot 小白、帮我搭一个 Spring Boot、新建 Spring Boot、
-create springboot project、springboot starter
-```
+> 触发词定义在 [SKILL.md](SKILL.md) frontmatter 中，常用：`"帮我搭一个 Spring Boot"` / `"Spring Boot 脚手架"` / `"初始化 Spring Boot"`。
 
 ## 三步上手
 
@@ -52,19 +47,7 @@ restart.bat dev         # Windows
 
 ## 内置能力
 
-| # | 能力 | 说明 |
-|---|------|------|
-| 1 | **环境探测** | JDK / Maven 自动检测 |
-| 2 | **自动安装** | Maven wrapper、依赖下载 |
-| 3 | **一键启动/重启** | `./restart.sh [dev\|prod]` |
-| 4 | **开发模式** | spring-boot-devtools 热重载 |
-| 5 | **生产模式** | 后台运行，日志归档 |
-| 6 | **SSE 流式** | Spring WebFlux `ServerSentEvent` |
-| 7 | **文件上传** | `/api/upload` 单文件 + `/api/uploads` 多文件 |
-| 8 | **统一响应** | `ResponseBodyAdvice` 自动包装信封 |
-| 9 | **全局异常** | `@RestControllerAdvice` 三类异常统一处理 |
-| 10 | **JWT 鉴权** | Spring Security 6 + jjwt 0.12.x |
-| 11 | **安全头** | X-Frame-Options / X-Content-Type-Options |
+共 11 项能力（环境探测、自动安装、一键启动/重启、SSE 流式、文件上传、统一响应、全局异常、JWT 鉴权等），详见 [SKILL.md](SKILL.md) "核心能力清单"。
 
 ## 技术栈
 
@@ -229,7 +212,7 @@ openssl rand -base64 32
 | 技能 | 关系 |
 |------|------|
 | `java-backend-skill` | 嵌套子技能，提供现场生成 Spring Boot 骨架的能力（开发者导向）。本 skill 是零基础小白版，自动检测环境、一键启动脚本、更多默认配置 |
-| `backend-convention-skill` | 规范层：响应信封、错误码、API 契约、项目指南规范。本 skill 模板已内置这些规范 |
+| init-skill 内置契约层 | 统一规范：响应信封、错误码、API 契约、项目指南。本 skill 模板已内置这些规范 |
 | `database-design-skill` | 数据库设计规范与连接规范 |
 | `frontend-request-skill` | 前端请求层规范。生成的接口契约可直接被前端消费（响应信封、Token、SSE、上传） |
 | `fastapi-init-skill` | Python 平行技能，能力清单 1:1 镜像 |
@@ -266,7 +249,7 @@ openssl rand -base64 32
 - ✅ 一键启动脚本（restart.sh / restart.bat，dev/prod 双模式）
 - ✅ Maven Wrapper
 - ✅ Docker 编排（MySQL / PG / MongoDB 三套）
-- ✅ 与 backend-convention-skill 规范对齐
+- ✅ 与 init-skill 内置契约层规范对齐
 - ✅ 与 frontend-request-skill 前端联动
 
 ## 仓库地址

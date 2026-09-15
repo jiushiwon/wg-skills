@@ -22,10 +22,11 @@
 >
 > 完整规范见 [SKILL.md](./SKILL.md) → 「🚫 零 HTML5 标签铁律」。
 
-## 13 个子技能
+## 14 个子技能
 
 | 子技能 | 内容 | 状态 |
 |--------|------|------|
+| [vue-layout-skill](vue-layout-skill/SKILL.md) | AppLayout 管理端布局（侧边栏+顶栏+内容区） | ✅ |
 | [vue-card-skill](vue-card-skill/SKILL.md) | base-card 容器 + 12 种卡片布局 | ✅ |
 | [vue-button-skill](vue-button-skill/SKILL.md) | 6 type × 5 variant × 3 size 按钮 | ✅ |
 | [vue-tag-skill](vue-tag-skill/SKILL.md) | 6 type × 3 variant 标签 | ✅ |
@@ -81,6 +82,7 @@ vue-base-skill/
 ├── base-card.md            # 卡片基础规范
 ├── references/
 │   └── skill-matrix.md
+├── vue-layout-skill/       # 管理端布局（侧边栏+顶栏+内容区）
 ├── vue-card-skill/         # 卡片组件
 ├── vue-button-skill/       # 按钮组件
 ├── vue-tag-skill/          # 标签组件

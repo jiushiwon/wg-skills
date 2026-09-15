@@ -61,5 +61,5 @@
 ## 相关组件
 
 - [base-card.md](../../base-card.md) — 卡片容器（base-popup 内置）
-- [uniapp-form-skill](../../uniapp-form-skill/) — base-select / base-radio 等表单组件
-- [uniapp-page-skill](../../uniapp-page-skill/) — 业务页面层
+- [uniapp-form-skill](../../../uniapp-form-skill/) — base-select / base-radio 等表单组件
+- [uniapp-page-skill](../../../uniapp-page-skill/) — 业务页面层

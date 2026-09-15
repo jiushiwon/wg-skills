@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>上传集成综合演示 — vue-upload-integration-skill</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <style>
+    /*
+     * ========== 设计令牌 ==========
+     * 来源: vue-theme-skill (design-tokens.md)
+     * 所有颜色/间距/字号/圆角均使用 --color-* / --space-* / --font-* / --radius-*
+     */
+    :root {
+      --color-primary: #3b82f6;
+      --color-primary-50: rgba(59,130,246,.08);
+      --color-success: #22c55e;
+      --color-danger: #ef4444;
+      --color-warning: #f59e0b;
+      --color-bg: #f3f4f6;
+      --color-surface: #fff;
+      --color-border: #e5e7eb;
+      --color-text: #1f2937;
+      --color-text-sec: #6b7280;
+      --color-text-ter: #9ca3af;
+      --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+      --space-5: 20px; --space-6: 24px; --space-8: 32px;
+      --font-xs: 12px; --font-sm: 13px; --font-base: 14px; --font-lg: 16px;
+      --font-xl: 18px; --font-2xl: 22px;
+      --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.06);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--color-bg); color: var(--color-text); padding: 24px; line-height: 1.5; }
+    .page-head { margin-bottom: 32px; }
+    .page-head h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+    .page-head p { color: var(--color-text-sec); font-size: var(--font-base); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 24px; }
+
+    /*
+     * ========== base-card 样式 ==========
+     * 来源: vue-card-skill (base-card.md)
+     * BEM: .card / .card--full / .card__title / .card__desc
+     * 实际项目中直接使用 <base-card> 组件，此处为纯 CSS 还原
+     */
+    .card { background: var(--color-surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 24px; }
+    .card-title { font-size: var(--font-lg); font-weight: 600; margin-bottom: 4px; }
+    .card-desc { font-size: var(--font-sm); color: var(--color-text-sec); margin-bottom: 16px; }
+    .card-full { grid-column: 1 / -1; }
+
+    /* 模式切换 */
+    .mode-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+    .mode-tab { padding: 6px 16px; border-radius: 20px; border: 1px solid var(--color-border); background: var(--color-surface); cursor: pointer; font-size: var(--font-sm); transition: all .15s; }
+    .mode-tab:hover { border-color: var(--color-primary); color: var(--color-primary); }
+    .mode-tab.active { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+
+    /*
+     * ========== base-upload 样式 ==========
+     * 来源: vue-upload-skill (base-upload.md)
+     * BEM: .base-upload__* / .base-upload--*
+     * 以下为三种 mode 的完整 UI 实现
+     */
+
+    /* -- 上传触发器 -- */
+    .trigger { display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed var(--color-border); border-radius: var(--radius-md); cursor: pointer; transition: all .15s; gap: 4px; }
+    .trigger:hover, .trigger.drag-over { border-color: var(--color-primary); background: var(--color-primary-50); }
+    .trigger-plus { font-size: 28px; color: var(--color-text-ter); line-height: 1; }
+    .trigger:hover .trigger-plus, .trigger.drag-over .trigger-plus { color: var(--color-primary); }
+    .trigger-text { font-size: var(--font-xs); color: var(--color-text-ter); }
+    .trigger.drag-over .trigger-text { color: var(--color-primary); }
+
+    /* -- picture-card 模式 (mode="image" list-type="picture-card") -- */
+    .card-list { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; }
+    .pic-card { position: relative; width: 96px; }
+    .pic-card__thumb { width: 96px; height: 96px; border-radius: var(--radius-md); background: var(--color-bg); background-size: cover; background-position: center; cursor: pointer; transition: transform .15s; overflow: hidden; position: relative; }
+    .pic-card__thumb:hover { transform: scale(1.03); }
+    .pic-card__name { font-size: var(--font-xs); color: var(--color-text-sec); margin-top: 4px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .pic-card__remove { position: absolute; top: -6px; right: -6px; width: 20px; height: 20px; border-radius: 50%; background: var(--color-danger); color: #fff; text-align: center; line-height: 20px; font-size: var(--font-xs); cursor: pointer; z-index: 1; border: none; }
+    .pic-card__remove:hover { background: #dc2626; }
+    .pic-card__progress { position: absolute; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center; justify-content: center; border-radius: var(--radius-md); }
+    .pic-card__pct { color: #fff; font-size: var(--font-sm); font-weight: 600; }
+    .pic-card__ok { position: absolute; bottom: 4px; right: 4px; width: 22px; height: 22px; border-radius: 50%; background: var(--color-success); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+    .pic-card__err { position: absolute; inset: 0; background: rgba(239,68,68,.12); display: flex; align-items: center; justify-content: center; border-radius: var(--radius-md); }
+    .pic-card__err-badge { width: 24px; height: 24px; border-radius: 50%; background: var(--color-danger); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
+
+    /* -- text 模式 (mode="file" list-type="text") -- */
+    .text-list { display: flex; flex-direction: column; gap: 6px; }
+    .text-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border: 1px solid var(--color-border); border-radius: var(--radius-sm); background: var(--color-surface); }
+    .text-item__icon { font-size: 10px; font-weight: 700; flex-shrink: 0; width: 32px; height: 22px; display: inline-flex; align-items: center; justify-content: center; border-radius: 4px; background: var(--color-primary-50); color: var(--color-primary); letter-spacing: .5px; }
+    .text-item__name { font-size: var(--font-sm); color: var(--color-text); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .text-item__size { font-size: var(--font-xs); color: var(--color-text-ter); flex-shrink: 0; }
+    .text-item__ok { color: var(--color-success); font-weight: 600; }
+    .text-item__bar { flex: 1; height: 4px; background: var(--color-border); border-radius: 2px; overflow: hidden; }
+    .text-item__bar-fill { height: 100%; background: var(--color-primary); border-radius: 2px; transition: width .2s; }
+    .text-item__remove { color: var(--color-text-ter); cursor: pointer; flex-shrink: 0; background: none; border: none; font-size: 14px; padding: 0 2px; }
+    .text-item__remove:hover { color: var(--color-danger); }
+
+    /* -- picture 列表模式 (mode="file" list-type="picture") -- */
+    .pic-list { display: flex; flex-direction: column; gap: 8px; }
+    .pic-row { display: flex; align-items: center; gap: 12px; padding: 8px; border: 1px solid var(--color-border); border-radius: var(--radius-md); position: relative; }
+    .pic-row__thumb { width: 48px; height: 48px; border-radius: var(--radius-sm); background: var(--color-bg); background-size: cover; background-position: center; flex-shrink: 0; }
+    .pic-row__info { flex: 1; min-width: 0; }
+    .pic-row__name { font-size: var(--font-sm); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .pic-row__size { font-size: var(--font-xs); color: var(--color-text-ter); margin-top: 2px; }
+    .pic-row__remove { position: absolute; top: 6px; right: 6px; width: 18px; height: 18px; border-radius: 50%; background: var(--color-bg); color: var(--color-text-ter); text-align: center; line-height: 18px; font-size: 11px; cursor: pointer; border: none; }
+    .pic-row__remove:hover { background: var(--color-danger); color: #fff; }
+
+    /* -- 拖拽区 (mode="file" drag) -- */
+    .drag-zone { border: 2px dashed var(--color-border); border-radius: var(--radius-md); padding: 40px; text-align: center; transition: all .15s; cursor: pointer; }
+    .drag-zone:hover, .drag-zone.drag-over { border-color: var(--color-primary); background: var(--color-primary-50); }
+    .drag-zone__icon { font-size: 36px; color: var(--color-text-ter); margin-bottom: 8px; display: block; transition: color .15s; }
+    .drag-zone:hover .drag-zone__icon, .drag-zone.drag-over .drag-zone__icon { color: var(--color-primary); }
+    .drag-zone__text { font-size: var(--font-sm); color: var(--color-text-sec); }
+    .drag-zone__link { color: var(--color-primary); cursor: pointer; text-decoration: underline; }
+
+    /* -- 头像上传 (mode="image" avatar) -- */
+    .avatar-wrap { position: relative; width: 96px; height: 96px; }
+    .avatar-circle { width: 96px; height: 96px; border-radius: 50%; background: var(--color-bg); background-size: cover; background-position: center; cursor: pointer; border: 2px solid var(--color-border); }
+    .avatar-empty { display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--color-text-ter); }
+    .avatar-edit { position: absolute; inset: 0; border-radius: 50%; background: rgba(0,0,0,.45); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .15s; cursor: pointer; }
+    .avatar-wrap:hover .avatar-edit { opacity: 1; }
+    .avatar-edit span { color: #fff; font-size: 18px; }
+
+    /* -- 裁剪弹窗 -- */
+    .crop-mask { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: flex; align-items: center; justify-content: center; z-index: 100; }
+    .crop-dialog { background: var(--color-surface); border-radius: var(--radius-lg); overflow: hidden; max-width: 520px; width: calc(100% - 32px); }
+    .crop-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--color-border); }
+    .crop-header span:first-child { font-size: var(--font-lg); font-weight: 600; }
+    .crop-close { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--color-text-ter); font-size: 18px; background: none; border: none; }
+    .crop-close:hover { background: var(--color-bg); }
+    .crop-body { padding: 16px; display: flex; justify-content: center; }
+    .crop-canvas { cursor: move; border-radius: var(--radius-sm); }
+    .crop-footer { display: flex; justify-content: flex-end; gap: 12px; padding: 16px 20px; border-top: 1px solid var(--color-border); }
+
+    /* -- 预览弹窗 -- */
+    .preview-mask { position: fixed; inset: 0; background: rgba(0,0,0,.85); display: flex; align-items: center; justify-content: center; z-index: 101; cursor: zoom-out; }
+    .preview-img { max-width: 90vw; max-height: 90vh; border-radius: var(--radius-md); object-fit: contain; }
+    .preview-close { position: fixed; top: 20px; right: 20px; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,.15); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px; border: none; backdrop-filter: blur(4px); }
+
+    /*
+     * ========== base-button 样式 ==========
+     * 来源: vue-button-skill (base-button.md)
+     * BEM: .base-button / .base-button--primary / .base-button--sm
+     * 实际项目中直接使用 <base-button> 组件
+     */
+    .btn { height: 36px; padding: 0 20px; border-radius: var(--radius-sm); font-size: var(--font-sm); cursor: pointer; transition: all .15s; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text); }
+    .btn:hover { border-color: var(--color-primary); color: var(--color-primary); }
+    .btn-primary { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+    .btn-primary:hover { background: #2563eb; border-color: #2563eb; }
+    .btn-sm { height: 30px; padding: 0 14px; font-size: var(--font-xs); }
+    .btn-ghost { border: none; background: none; padding: 0 8px; }
+
+    /*
+     * ========== base-tag 样式 ==========
+     * 来源: vue-tag-skill (base-tag.md)
+     * BEM: .base-tag / .base-tag--info / .base-tag--success / .base-tag--warning
+     * 实际项目中直接使用 <base-tag> 组件
+     */
+    .tag { display: inline-flex; align-items: center; font-size: var(--font-xs); padding: 2px 10px; border-radius: 20px; }
+    .tag--info { background: var(--color-primary-50); color: var(--color-primary); }
+    .tag--success { background: rgba(34,197,94,.1); color: var(--color-success); }
+    .tag--warn { background: rgba(245,158,11,.1); color: var(--color-warning); }
+
+    /* 辅助 */
+    .tip { font-size: var(--font-xs); color: var(--color-text-ter); margin-top: 8px; line-height: 1.5; }
+    .sep { height: 1px; background: var(--color-border); margin: 16px 0; }
+    .crop-presets { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+    .crop-preset { padding: 4px 12px; border-radius: 16px; border: 1px solid var(--color-border); background: var(--color-surface); font-size: var(--font-xs); cursor: pointer; transition: all .15s; }
+    .crop-preset:hover, .crop-preset.active { border-color: var(--color-primary); color: var(--color-primary); background: var(--color-primary-50); }
+    .section-label { font-size: var(--font-sm); font-weight: 500; color: var(--color-text-sec); margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <!--
+    ============================================================
+    vue-upload-integration-skill · 综合交互演示
+    ============================================================
+    引用的 SKILL：
+      1. vue-upload-skill    → base-upload 三种 mode (file/image/list) + crop + compress + drag
+      2. vue-card-skill      → base-card 容器（所有区块包裹在卡片中）
+      3. vue-button-skill    → base-button 操作按钮（选择文件、确认裁剪等）
+      4. vue-tag-skill       → base-tag 状态标签（上传状态、文件类型、大小）
+      5. vue-theme-skill     → design-tokens CSS 变量（颜色/间距/字号/圆角/阴影）
+      6. frontend-request-skill → upload() 上传请求（本 demo 用模拟代替真实请求）
+    ============================================================
+  -->
+  <div id="app">
+    <div class="page-head">
+      <h1>上传集成综合演示</h1>
+      <p>vue-upload-integration-skill · base-upload + base-card + base-button + base-tag 联动</p>
+    </div>
+
+    <div class="grid">
+
+      <!-- ======== 1. 图片上传 Picture-Card ======== -->
+      <!-- 包裹: base-card | 组件: base-upload mode="image" list-type="picture-card" -->
+      <div class="card">
+        <div class="card-title">图片上传 · Picture-Card</div>
+        <div class="card-desc">mode="image" · 点击选择图片 · 自动模拟上传进度</div>
+        <div class="card-list">
+          <div v-for="f in imgFiles" :key="f.uid" class="pic-card">
+            <div class="pic-card__thumb" :style="f.thumb ? {backgroundImage:'url('+f.thumb+')'} : {}" @click="f.status==='success' && openPreview(f.thumb)">
+              <div v-if="f.status==='uploading'" class="pic-card__progress"><span class="pic-card__pct">{{f.pct}}%</span></div>
+              <div v-else-if="f.status==='error'" class="pic-card__err"><span class="pic-card__err-badge">!</span></div>
+              <div v-else-if="f.status==='success'" class="pic-card__ok">✓</div>
+            </div>
+            <button class="pic-card__remove" @click="removeFile(imgFiles, f.uid)">×</button>
+            <div class="pic-card__name">{{f.name}}</div>
+          </div>
+          <div v-if="imgFiles.length < 9" class="trigger" style="width:96px;height:96px;" @click="$refs.imgInput.click()" @dragover.prevent="imgDragOver=true" @dragleave="imgDragOver=false" @drop.prevent="handleImgDrop($event)" :class="{'drag-over':imgDragOver}">
+            <span class="trigger-plus">+</span>
+          </div>
+        </div>
+        <input ref="imgInput" type="file" accept="image/*" multiple hidden @change="handleImgSelect($event)" />
+        <div class="tip">支持 JPG、PNG、GIF，单文件 ≤ 5MB，最多 9 张</div>
+      </div>
+
+      <!-- ======== 2. 头像上传 ======== -->
+      <!-- 包裹: base-card | 组件: base-upload mode="image" avatar -->
+      <div class="card">
+        <div class="card-title">头像上传 · Avatar</div>
+        <div class="card-desc">mode="image" avatar · 单图 · 圆形 · 点击裁剪</div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div class="avatar-wrap" @click="$refs.avatarInput.click()">
+            <div class="avatar-circle" :class="{'avatar-empty':!avatarImg}" :style="avatarImg ? {backgroundImage:'url('+avatarImg+')'} : {}">
+              <span v-if="!avatarImg">+</span>
+            </div>
+            <div class="avatar-edit"><span>✎</span></div>
+          </div>
+          <div>
+            <div style="font-size:var(--font-sm);color:var(--color-text-sec);">{{ avatarImg ? '点击更换头像' : '点击上传头像' }}</div>
+            <div class="tip">JPG/PNG，建议 256×256，自动压缩</div>
+          </div>
+        </div>
+        <input ref="avatarInput" type="file" accept="image/*" hidden @change="handleAvatarSelect($event)" />
+      </div>
+
+      <!-- ======== 3. 文件附件 Text ======== -->
+      <!-- 包裹: base-card | 组件: base-upload mode="file" list-type="text" | 按钮: base-button -->
+      <div class="card">
+        <div class="card-title">文件附件 · Text 模式</div>
+        <div class="card-desc">mode="file" list-type="text" · 文件名+大小+状态</div>
+        <div class="text-list">
+          <div v-for="f in txtFiles" :key="f.uid" class="text-item">
+            <span class="text-item__icon">{{ fileIcon(f.name) }}</span>
+            <span class="text-item__name">{{ f.name }}</span>
+            <span v-if="f.size" class="text-item__size">{{ fmtSize(f.size) }}</span>
+            <template v-if="f.status==='uploading'">
+              <div class="text-item__bar"><div class="text-item__bar-fill" :style="{width:f.pct+'%'}"></div></div>
+            </template>
+            <span v-else-if="f.status==='success'" class="text-item__ok">✓</span>
+            <button class="text-item__remove" @click="removeFile(txtFiles, f.uid)">×</button>
+          </div>
+        </div>
+        <div style="margin-top:12px;">
+          <button class="btn btn-sm" @click="$refs.txtInput.click()">选择文件</button>
+        </div>
+        <input ref="txtInput" type="file" multiple hidden @change="handleTxtSelect($event)" />
+        <div class="tip">支持 PDF、Word、Excel、ZIP，单文件 ≤ 20MB</div>
+      </div>
+
+      <!-- ======== 4. Picture 模式 ======== -->
+      <!-- 包裹: base-card | 组件: base-upload mode="file" list-type="picture" | 按钮: base-button -->
+      <div class="card">
+        <div class="card-title">Picture 模式</div>
+        <div class="card-desc">mode="file" list-type="picture" · 左缩略图 + 右信息</div>
+        <div class="pic-list">
+          <div v-for="f in picRowFiles" :key="f.uid" class="pic-row">
+            <div class="pic-row__thumb" :style="f.thumb ? {backgroundImage:'url('+f.thumb+')'} : {}"></div>
+            <div class="pic-row__info">
+              <div class="pic-row__name">{{ f.name }}</div>
+              <div v-if="f.size" class="pic-row__size">{{ fmtSize(f.size) }}</div>
+              <div v-if="f.status==='uploading'" style="margin-top:4px;"><div class="text-item__bar"><div class="text-item__bar-fill" :style="{width:f.pct+'%'}"></div></div></div>
+            </div>
+            <button class="pic-row__remove" @click="removeFile(picRowFiles, f.uid)">×</button>
+          </div>
+        </div>
+        <div style="margin-top:12px;">
+          <button class="btn btn-sm" @click="$refs.picRowInput.click()">选择图片</button>
+        </div>
+        <input ref="picRowInput" type="file" accept="image/*" multiple hidden @change="handlePicRowSelect($event)" />
+      </div>
+
+      <!-- ======== 5. 拖拽上传 ======== -->
+      <!-- 包裹: base-card | 组件: base-upload mode="file" drag -->
+      <div class="card card-full">
+        <div class="card-title">拖拽上传区域</div>
+        <div class="card-desc">mode="file" drag · 拖入文件或点击选择</div>
+        <div class="drag-zone" :class="{'drag-over':dragOver}" @click="$refs.dragInput.click()" @dragover.prevent="dragOver=true" @dragleave="dragOver=false" @drop.prevent="handleDragDrop($event)">
+          <span class="drag-zone__icon">↓</span>
+          <div class="drag-zone__text">将文件拖到此处，或 <span class="drag-zone__link">点击上传</span></div>
+        </div>
+        <input ref="dragInput" type="file" multiple hidden @change="handleDragSelect($event)" />
+        <div v-if="dragFiles.length" style="margin-top:16px;">
+          <div class="text-list">
+            <div v-for="f in dragFiles" :key="f.uid" class="text-item">
+              <span class="text-item__icon">{{ fileIcon(f.name) }}</span>
+              <span class="text-item__name">{{ f.name }}</span>
+              <span v-if="f.size" class="text-item__size">{{ fmtSize(f.size) }}</span>
+              <template v-if="f.status==='uploading'">
+                <div class="text-item__bar"><div class="text-item__bar-fill" :style="{width:f.pct+'%'}"></div></div>
+              </template>
+              <span v-else-if="f.status==='success'" class="text-item__ok">✓</span>
+              <button class="text-item__remove" @click="removeFile(dragFiles, f.uid)">×</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======== 6. 裁剪演示 ======== -->
+      <!-- 包裹: base-card | 组件: base-upload mode="image" crop | 按钮: base-button -->
+      <div class="card card-full">
+        <div class="card-title">图片裁剪 · Canvas 交互</div>
+        <div class="card-desc">mode="image" crop · 拖拽裁剪框移动 · 选择比例预设</div>
+        <div class="crop-presets">
+          <button v-for="p in cropPresets" :key="p.label" class="crop-preset" :class="{active: cropRatio===p.ratio}" @click="cropRatio=p.ratio; redrawCrop()">{{ p.label }}</button>
+        </div>
+        <div v-if="cropImgSrc" style="position:relative;display:inline-block;">
+          <canvas ref="cropCanvas" class="crop-canvas" width="480" height="320" @mousedown="cropDown" @mousemove="cropMove" @mouseup="cropUp" @mouseleave="cropUp"></canvas>
+          <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end;">
+            <button class="btn" @click="cropImgSrc=null">取消</button>
+            <button class="btn btn-primary" @click="confirmCrop">确认裁剪</button>
+          </div>
+        </div>
+        <div v-else style="padding:30px;text-align:center;">
+          <button class="btn btn-primary" @click="$refs.cropInput.click()">选择图片进行裁剪</button>
+          <input ref="cropInput" type="file" accept="image/*" hidden @change="handleCropSelect($event)" />
+          <div class="tip" style="margin-top:8px;">选择后可在画布上拖拽裁剪框</div>
+        </div>
+        <div v-if="cropResult" style="margin-top:16px;">
+          <div class="section-label">裁剪结果：</div>
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:120px;height:120px;border-radius:var(--radius-md);background-size:cover;background-position:center;border:1px solid var(--color-border);" :style="{backgroundImage:'url('+cropResult+')'}"></div>
+            <div>
+              <div class="tag tag--success">裁剪成功</div>
+              <div class="tip" style="margin-top:4px;">可通过 toBlob() 导出为文件上传</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======== 7. 状态标签 ======== -->
+      <!-- 包裹: base-card | 标签: base-tag -->
+      <div class="card">
+        <div class="card-title">上传状态标签</div>
+        <div class="card-desc">引用 base-tag · 文件状态一目了然</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <span class="tag tag--success">✓ 上传成功</span>
+          <span class="tag tag--info">⟳ 上传中 68%</span>
+          <span class="tag tag--warn">! 上传失败</span>
+        </div>
+        <div class="sep"></div>
+        <div class="section-label">文件类型标签</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <span class="tag tag--info">JPG</span>
+          <span class="tag tag--info">PNG</span>
+          <span class="tag tag--success">PDF</span>
+          <span class="tag tag--warn">5.2 MB</span>
+        </div>
+      </div>
+
+      <!-- ======== 8. 压缩对比 ======== -->
+      <!-- 包裹: base-card | 组件: base-upload mode="image" compress | 按钮: base-button | 标签: base-tag -->
+      <div class="card">
+        <div class="card-title">压缩对比</div>
+        <div class="card-desc">mode="image" compress · Canvas 客户端压缩</div>
+        <button class="btn btn-sm" @click="$refs.compressInput.click()" style="margin-bottom:12px;">选择图片测试压缩</button>
+        <input ref="compressInput" type="file" accept="image/*" hidden @change="handleCompressSelect($event)" />
+        <div v-if="compressResult" style="display:flex;gap:16px;">
+          <div style="flex:1;text-align:center;">
+            <div style="width:100%;height:100px;border-radius:var(--radius-md);background:var(--color-bg);background-size:cover;background-position:center;" :style="{backgroundImage:'url('+compressResult.originalUrl+')'}"></div>
+            <div class="tip" style="margin-top:4px;">原始 {{ fmtSize(compressResult.originalSize) }}</div>
+          </div>
+          <div style="display:flex;align-items:center;font-size:20px;color:var(--color-primary);">→</div>
+          <div style="flex:1;text-align:center;">
+            <div style="width:100%;height:100px;border-radius:var(--radius-md);background:var(--color-bg);background-size:cover;background-position:center;" :style="{backgroundImage:'url('+compressResult.compressedUrl+')'}"></div>
+            <div class="tip" style="margin-top:4px;">压缩后 {{ fmtSize(compressResult.compressedSize) }}</div>
+          </div>
+        </div>
+        <div v-if="compressResult" style="margin-top:8px;text-align:center;">
+          <span class="tag tag--success">节省 {{ compressResult.ratio }}%</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 预览弹窗 -->
+    <div v-if="previewSrc" class="preview-mask" @click="previewSrc=null">
+      <img :src="previewSrc" class="preview-img" @click.stop />
+      <button class="preview-close" @click="previewSrc=null">×</button>
+    </div>
+
+    <!-- 头像裁剪弹窗 -->
+    <div v-if="avatarCrop.show" class="crop-mask" @click.self="avatarCrop.show=false">
+      <div class="crop-dialog">
+        <div class="crop-header">
+          <span>裁剪头像</span>
+          <button class="crop-close" @click="avatarCrop.show=false">×</button>
+        </div>
+        <div class="crop-body">
+          <canvas ref="avatarCropCanvas" class="crop-canvas" width="320" height="320" @mousedown="avatarCropDown" @mousemove="avatarCropMove" @mouseup="avatarCropUp" @mouseleave="avatarCropUp"></canvas>
+        </div>
+        <div class="crop-footer">
+          <button class="btn" @click="avatarCrop.show=false">取消</button>
+          <button class="btn btn-primary" @click="confirmAvatarCrop">确认裁剪</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /*
+     * upload() 模拟说明:
+     * 真实项目中使用 frontend-request-skill 的 upload() 函数:
+     *   import { upload } from '@/utils/request'
+     *   const res = await upload('/api/file/upload', file)
+     *   // res.data.url / res.data.name / res.data.size
+     * 本 demo 使用 simulateUpload() 模拟上传进度
+     */
+    const { createApp, ref, reactive, nextTick } = Vue
+
+    let uid = 0
+
+    createApp({
+      setup() {
+        // ===== 工具函数 =====
+        function fmtSize(bytes) {
+          if (bytes < 1024) return bytes + ' B'
+          if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB'
+          return (bytes / (1024 * 1024)).toFixed(1) + ' MB'
+        }
+        function fileIcon(name) {
+          const ext = (name.split('.').pop() || '').toLowerCase()
+          const map = { pdf:'PDF', doc:'DOC', docx:'DOC', xls:'XLS', xlsx:'XLS', ppt:'PPT', pptx:'PPT', zip:'ZIP', rar:'RAR', '7z':'7Z', txt:'TXT', csv:'CSV', json:'JSON', jpg:'IMG', jpeg:'IMG', png:'IMG', gif:'IMG', webp:'IMG' }
+          return map[ext] || 'FILE'
+        }
+        function makeFile(raw) {
+          const f = { uid: ++uid, name: raw.name, size: raw.size, type: raw.type, raw, status: 'ready', pct: 0, thumb: null }
+          if (raw.type.startsWith('image/')) f.thumb = URL.createObjectURL(raw)
+          return f
+        }
+        function removeFile(list, uid) {
+          const idx = list.findIndex(f => f.uid === uid)
+          if (idx > -1) { if (list[idx].thumb) URL.revokeObjectURL(list[idx].thumb); list.splice(idx, 1) }
+        }
+        function simulateUpload(f) {
+          f.status = 'uploading'; f.pct = 0
+          const timer = setInterval(() => {
+            f.pct += Math.floor(Math.random() * 20) + 10
+            if (f.pct >= 100) { f.pct = 100; f.status = 'success'; clearInterval(timer) }
+          }, 200 + Math.random() * 300)
+        }
+
+        // ===== 1. 图片上传 =====
+        const imgFiles = reactive([])
+        const imgDragOver = ref(false)
+        function handleImgSelect(e) { Array.from(e.target.files).slice(0, 9 - imgFiles.length).forEach(raw => { const f = makeFile(raw); imgFiles.push(f); simulateUpload(f) }); e.target.value = '' }
+        function handleImgDrop(e) { imgDragOver.value = false; Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/')).slice(0, 9 - imgFiles.length).forEach(raw => { const f = makeFile(raw); imgFiles.push(f); simulateUpload(f) }) }
+
+        // ===== 2. 头像 =====
+        const avatarImg = ref(null)
+        const avatarCrop = reactive({ show: false, img: null, x: 80, y: 80, size: 160, dragging: false, dx: 0, dy: 0 })
+        const avatarCropCanvas = ref(null)
+        function handleAvatarSelect(e) {
+          const raw = e.target.files[0]; if (!raw) return
+          const reader = new FileReader()
+          reader.onload = ev => {
+            const img = new Image()
+            img.onload = () => { avatarCrop.img = img; avatarCrop.show = true; nextTick(() => drawAvatarCrop()) }
+            img.src = ev.target.result
+          }
+          reader.readAsDataURL(raw); e.target.value = ''
+        }
+        function drawAvatarCrop() {
+          const c = avatarCropCanvas.value; if (!c || !avatarCrop.img) return
+          const ctx = c.getContext('2d'), img = avatarCrop.img, cw = 320, ch = 320
+          c.width = cw; c.height = ch
+          const ratio = Math.min(cw / img.width, ch / img.height)
+          const dw = img.width * ratio, dh = img.height * ratio
+          const ox = (cw - dw) / 2, oy = (ch - dh) / 2
+          ctx.clearRect(0, 0, cw, ch)
+          ctx.drawImage(img, ox, oy, dw, dh)
+          ctx.fillStyle = 'rgba(0,0,0,0.5)'; ctx.fillRect(0, 0, cw, ch)
+          ctx.save(); ctx.beginPath()
+          ctx.arc(avatarCrop.x + avatarCrop.size / 2, avatarCrop.y + avatarCrop.size / 2, avatarCrop.size / 2, 0, Math.PI * 2)
+          ctx.clip(); ctx.drawImage(img, ox, oy, dw, dh); ctx.restore()
+          ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.beginPath()
+          ctx.arc(avatarCrop.x + avatarCrop.size / 2, avatarCrop.y + avatarCrop.size / 2, avatarCrop.size / 2, 0, Math.PI * 2)
+          ctx.stroke()
+          c._drawParams = { ox, oy, dw, dh, cw, ch }
+        }
+        function avatarCropDown(e) { const r = avatarCropCanvas.value.getBoundingClientRect(); avatarCrop.dragging = true; avatarCrop.dx = e.clientX - r.left - avatarCrop.x; avatarCrop.dy = e.clientY - r.top - avatarCrop.y }
+        function avatarCropMove(e) {
+          if (!avatarCrop.dragging) return
+          const r = avatarCropCanvas.value.getBoundingClientRect()
+          let nx = e.clientX - r.left - avatarCrop.dx, ny = e.clientY - r.top - avatarCrop.dy
+          nx = Math.max(0, Math.min(320 - avatarCrop.size, nx)); ny = Math.max(0, Math.min(320 - avatarCrop.size, ny))
+          avatarCrop.x = nx; avatarCrop.y = ny; drawAvatarCrop()
+        }
+        function avatarCropUp() { avatarCrop.dragging = false }
+        function confirmAvatarCrop() {
+          const c = avatarCropCanvas.value, p = c._drawParams, img = avatarCrop.img
+          const out = document.createElement('canvas'); out.width = 256; out.height = 256
+          const ctx = out.getContext('2d')
+          const sx = (avatarCrop.x - p.ox) / p.dw * img.width
+          const sy = (avatarCrop.y - p.oy) / p.dh * img.height
+          const ss = avatarCrop.size / p.dw * img.width
+          ctx.beginPath(); ctx.arc(128, 128, 128, 0, Math.PI * 2); ctx.clip()
+          ctx.drawImage(img, sx, sy, ss, ss, 0, 0, 256, 256)
+          avatarImg.value = out.toDataURL('image/jpeg', 0.9); avatarCrop.show = false
+        }
+
+        // ===== 3. 文件附件 =====
+        const txtFiles = reactive([])
+        function handleTxtSelect(e) { Array.from(e.target.files).forEach(raw => { const f = makeFile(raw); f.thumb = null; txtFiles.push(f); simulateUpload(f) }); e.target.value = '' }
+
+        // ===== 4. Picture =====
+        const picRowFiles = reactive([])
+        function handlePicRowSelect(e) { Array.from(e.target.files).forEach(raw => { const f = makeFile(raw); picRowFiles.push(f); simulateUpload(f) }); e.target.value = '' }
+
+        // ===== 5. 拖拽 =====
+        const dragFiles = reactive([])
+        const dragOver = ref(false)
+        function handleDragSelect(e) { Array.from(e.target.files).forEach(raw => { const f = makeFile(raw); f.thumb = null; dragFiles.push(f); simulateUpload(f) }); e.target.value = '' }
+        function handleDragDrop(e) { dragOver.value = false; Array.from(e.dataTransfer.files).forEach(raw => { const f = makeFile(raw); f.thumb = null; dragFiles.push(f); simulateUpload(f) }) }
+
+        // ===== 6. 裁剪 =====
+        const cropImgSrc = ref(null)
+        const cropResult = ref(null)
+        const cropRatio = ref(1)
+        const cropCanvas = ref(null)
+        const cropPresets = [{ label: '1:1 正方形', ratio: 1 }, { label: '16:9 宽屏', ratio: 16 / 9 }, { label: '3:4 证件', ratio: 3 / 4 }, { label: '4:3 横版', ratio: 4 / 3 }]
+        let cropImg = null, cropState = { x: 0, y: 0, w: 0, h: 0 }, cropDrag = { on: false, dx: 0, dy: 0 }, cropDraw = { ox: 0, oy: 0, dw: 0, dh: 0 }
+        function handleCropSelect(e) {
+          const raw = e.target.files[0]; if (!raw) return
+          const reader = new FileReader()
+          reader.onload = ev => { const img = new Image(); img.onload = () => { cropImg = img; cropImgSrc.value = ev.target.result; nextTick(() => initCrop()) }; img.src = ev.target.result }
+          reader.readAsDataURL(raw); e.target.value = ''
+        }
+        function initCrop() {
+          const c = cropCanvas.value; if (!c || !cropImg) return
+          const cw = 480, ch = 320; c.width = cw; c.height = ch
+          const ratio = Math.min(cw / cropImg.width, ch / cropImg.height)
+          cropDraw.dw = cropImg.width * ratio; cropDraw.dh = cropImg.height * ratio
+          cropDraw.ox = (cw - cropDraw.dw) / 2; cropDraw.oy = (ch - cropDraw.dh) / 2
+          calcCropBox(); redrawCrop()
+        }
+        function calcCropBox() {
+          const r = cropRatio.value, maxW = cropDraw.dw * 0.8, maxH = cropDraw.dh * 0.8
+          let w, h
+          if (r >= 1) { w = maxW; h = w / r; if (h > maxH) { h = maxH; w = h * r } }
+          else { h = maxH; w = h * r; if (w > maxW) { w = maxW; h = w / r } }
+          cropState.w = w; cropState.h = h
+          cropState.x = cropDraw.ox + (cropDraw.dw - w) / 2
+          cropState.y = cropDraw.oy + (cropDraw.dh - h) / 2
+        }
+        function redrawCrop() {
+          const c = cropCanvas.value; if (!c || !cropImg) return
+          const ctx = c.getContext('2d'), { x, y, w, h } = cropState
+          ctx.clearRect(0, 0, c.width, c.height)
+          ctx.drawImage(cropImg, cropDraw.ox, cropDraw.oy, cropDraw.dw, cropDraw.dh)
+          ctx.fillStyle = 'rgba(0,0,0,0.5)'; ctx.fillRect(0, 0, c.width, c.height)
+          ctx.save(); ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip()
+          ctx.drawImage(cropImg, cropDraw.ox, cropDraw.oy, cropDraw.dw, cropDraw.dh); ctx.restore()
+          ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.strokeRect(x, y, w, h)
+          ctx.strokeStyle = 'rgba(255,255,255,0.3)'; ctx.lineWidth = 1
+          for (let i = 1; i < 3; i++) {
+            ctx.beginPath(); ctx.moveTo(x + w / 3 * i, y); ctx.lineTo(x + w / 3 * i, y + h); ctx.stroke()
+            ctx.beginPath(); ctx.moveTo(x, y + h / 3 * i); ctx.lineTo(x + w, y + h / 3 * i); ctx.stroke()
+          }
+        }
+        function cropDown(e) { const r = cropCanvas.value.getBoundingClientRect(); const mx = e.clientX - r.left, my = e.clientY - r.top; if (mx >= cropState.x && mx <= cropState.x + cropState.w && my >= cropState.y && my <= cropState.y + cropState.h) { cropDrag.on = true; cropDrag.dx = mx - cropState.x; cropDrag.dy = my - cropState.y } }
+        function cropMove(e) { if (!cropDrag.on) return; const r = cropCanvas.value.getBoundingClientRect(); let nx = e.clientX - r.left - cropDrag.dx, ny = e.clientY - r.top - cropDrag.dy; nx = Math.max(cropDraw.ox, Math.min(cropDraw.ox + cropDraw.dw - cropState.w, nx)); ny = Math.max(cropDraw.oy, Math.min(cropDraw.oy + cropDraw.dh - cropState.h, ny)); cropState.x = nx; cropState.y = ny; redrawCrop() }
+        function cropUp() { cropDrag.on = false }
+        function confirmCrop() {
+          const out = document.createElement('canvas')
+          const sx = (cropState.x - cropDraw.ox) / cropDraw.dw * cropImg.width
+          const sy = (cropState.y - cropDraw.oy) / cropDraw.dh * cropImg.height
+          const sw = cropState.w / cropDraw.dw * cropImg.width
+          const sh = cropState.h / cropDraw.dh * cropImg.height
+          out.width = Math.round(sw); out.height = Math.round(sh)
+          out.getContext('2d').drawImage(cropImg, sx, sy, sw, sh, 0, 0, out.width, out.height)
+          cropResult.value = out.toDataURL('image/jpeg', 0.9); cropImgSrc.value = null; cropImg = null
+        }
+
+        // ===== 7. 压缩 =====
+        const compressResult = ref(null)
+        function handleCompressSelect(e) {
+          const raw = e.target.files[0]; if (!raw) return
+          const img = new Image()
+          img.onload = () => {
+            let w = img.width, h = img.height
+            if (w > 1920 || h > 1080) { const r = Math.min(1920 / w, 1080 / h); w = Math.round(w * r); h = Math.round(h * r) }
+            const canvas = document.createElement('canvas'); canvas.width = w; canvas.height = h
+            canvas.getContext('2d').drawImage(img, 0, 0, w, h)
+            canvas.toBlob(blob => {
+              compressResult.value = { originalUrl: URL.createObjectURL(raw), originalSize: raw.size, compressedUrl: URL.createObjectURL(blob), compressedSize: blob.size, ratio: Math.round((1 - blob.size / raw.size) * 100) }
+            }, 'image/jpeg', 0.8)
+          }
+          img.src = URL.createObjectURL(raw); e.target.value = ''
+        }
+
+        // ===== 预览 =====
+        const previewSrc = ref(null)
+        function openPreview(src) { previewSrc.value = src }
+
+        return {
+          fmtSize, fileIcon, removeFile, openPreview, previewSrc,
+          imgFiles, imgDragOver, handleImgSelect, handleImgDrop,
+          avatarImg, avatarCrop, avatarCropCanvas, handleAvatarSelect, avatarCropDown, avatarCropMove, avatarCropUp, confirmAvatarCrop,
+          txtFiles, handleTxtSelect,
+          picRowFiles, handlePicRowSelect,
+          dragFiles, dragOver, handleDragSelect, handleDragDrop,
+          cropImgSrc, cropResult, cropRatio, cropCanvas, cropPresets, handleCropSelect, redrawCrop, cropDown, cropMove, cropUp, confirmCrop,
+          compressResult, handleCompressSelect,
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+</html>

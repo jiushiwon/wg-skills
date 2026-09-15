@@ -7,30 +7,23 @@ description: Spring Boot 项目一键初始化技能。面向零基础小白，�
 
 面向**完全不懂 Java 编程的小白**，一键生成标准化、开箱即用的 Spring Boot Web 服务骨架。
 
-## 与 java-backend-skill 的区别
+## 与其他后端 init-skill 的区别
 
-| 维度 | java-backend-skill | 本 skill |
-|------|-------------------|----------|
-| 目标用户 | 后端开发者 | 零基础小白 |
-| 环境安装 | 用户自己装 | **自动检测 + 自动安装** |
-| 启动方式 | mvn spring-boot:run | **一条命令：`./restart.sh [dev\|prod]`** |
-| SSE 支持 | 无 | **内置 SSE 流式框架**（WebFlux） |
-| 文件上传 | 基础 | **增强版 `/api/upload` 单文件 + `/api/uploads` 多文件** |
-| 默认数据库 | PostgreSQL | **MySQL**（可选 PG / MongoDB / 无数据库） |
-| ORM | Spring Data JPA | Spring Data JPA（不变） |
-| 鉴权 | 无 | **Spring Security 6 + JWT（jjwt 0.12.x）** |
-| 文档 | 无 | **springdoc-openapi 2（Swagger UI）** |
-| 响应包装 | 手动 | **ResponseBodyAdvice 自动包装 `{ code, message, data }`** |
-| 脚本 | 无 | **只生成 `restart.sh` / `restart.bat`（dev/prod 双模式）** |
-| Swagger | 无 | 有 + **增强注释 + 中文说明** |
-| 交互次数 | 多个技术问题 | **最多 3 个问题** |
-| 文件数 | ~30 | **~25** |
+| 维度 | 本 skill (Java) | fastapi-init (Python) | go-gin-init (Go) | nodejs-init (Node.js) |
+|------|-----------------|----------------------|-------------------|----------------------|
+| 目标用户 | 零基础小白 | 零基础小白 | 零基础小白 | 零基础小白 |
+| 框架 | Spring Boot 3.x | FastAPI | Gin | Express.js |
+| 默认数据库 | MySQL | MySQL | MySQL | MongoDB |
+| 鉴权 | Spring Security 6 + JWT | Pydantic + JWT | Gin + JWT | passport.js + JWT |
+| 启动方式 | `./restart.sh [dev\|prod]` | `./restart.sh [dev\|prod]` | `./restart.sh [dev\|prod]` | `npm start / npm run dev` |
 
-**不重复造轮子**：统一响应信封、错误码、JWT 规范与 `backend-convention-skill` 对齐，模板已内置于本 skill（`references/api-contract-template.md`、`references/project-guide-template.md`），生成项目不依赖 `backend-convention-skill` 文件；关系型 DB 配置引用 `database-design-skill`；前端联动规范引用 `frontend-request-skill`。本 skill 在它们之上增加「小白友好」的完整封装。
+**统一规范**：所有 init-skill 共享相同的响应信封 `{ code, message, data }`、错误码表、JWT 规范、分页约定和 `api-contract.md` 模板。
+
+**不重复造轮子**：统一响应信封、错误码、JWT 规范与各 init-skill 内置的统一契约层对齐，模板已内置于本 skill（`references/api-contract-template.md`、`references/project-guide-template.md`）；关系型 DB 配置引用 `database-design-skill`；前端联动规范引用 `frontend-request-skill`。本 skill 在它们之上增加「小白友好」的完整封装。
 
 ## 依赖
 
-- **backend-convention-skill**：响应信封 `{ code, message, data }`、错误码（-1001 校验 / -2000 系统）、JWT Bearer、api-contract、project-guide 规范对齐（模板已内置本 skill）
+- **init-skill 内置契约层**：响应信封 `{ code, message, data }`、错误码（-1001 校验 / -2000 系统）、JWT Bearer、api-contract、project-guide 规范已内置本 skill
 - **database-design-skill**：MySQL / PostgreSQL / MongoDB 选型规则、表前缀 `wg`、连接参数
 - **java-backend-skill**：Spring Boot 骨架基础结构与 pom 依赖参考
 - **frontend-request-skill**：前端请求层规范，确保后端生成的接口契约可直接被前端消费

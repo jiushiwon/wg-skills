@@ -16,7 +16,7 @@ description: This skill should be used when the user wants to create a standardi
 | `src/utils/{error,toast,auth}.ts` | `references/error-handling.md` + `auth-patterns.md` |
 | `src/config/{api,error}.config.ts` | `references/frontend-spec.md`（BASE_URL + ERROR_CODE_MAP） |
 | `src/composables/useAuth.ts` | `references/auth-patterns.md` |
-| 响应信封 `{ code, message, data }` | 与 `backend-convention-skill/references/response-format.md` 一致 |
+| 响应信封 `{ code, message, data }` | 与 `各 init-skill 内置的统一响应规范` 一致 |
 
 **接入本 Skill 前，请先阅读 `frontend-request-skill` 的 SKILL.md 与核心 reference。**
 

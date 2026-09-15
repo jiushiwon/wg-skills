@@ -20,6 +20,8 @@ description: Vue3 增删改查页面组件技能，提供 base-crud 组件。触
 | vue-select-skill | 下拉选择器 |
 | vue-datepicker-skill | 日期选择器 |
 | vue-button-skill | 按钮 |
+| vue-toast-skill | 操作反馈提示 |
+| vue-dialog-skill | 确认弹窗 |
 
 ## 使用方式
 

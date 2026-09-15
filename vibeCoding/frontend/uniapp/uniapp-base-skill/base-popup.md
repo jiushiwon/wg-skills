@@ -219,5 +219,5 @@ description: 通用弹窗/抽屉组件（根目录容器）。slide in/out 动�
 
 - [base-card.md](base-card.md) — 卡片容器（base-popup 内置）
 - [base-input.md](base-input.md) — 输入框（根目录通用）
-- [uniapp-form-skill](../uniapp-form-skill/) — 表单子技能（含 base-select）
-- [uniapp-page-skill](../uniapp-page-skill/) — 页面子技能
+- [uniapp-form-skill](./uniapp-form-skill/) — 表单子技能（含 base-select）
+- [uniapp-page-skill](./uniapp-page-skill/) — 页面子技能

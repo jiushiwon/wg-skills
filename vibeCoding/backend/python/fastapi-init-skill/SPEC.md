@@ -592,7 +592,7 @@ const eventSource = new EventSource(
 | -1032 | 不支持的文件类型 | 上传文件 MIME 不在白名单 |
 | -2000 | 系统异常 | 未预期的内部错误 |
 
-> 错误码与 `backend-convention-skill` 规范对齐；`api-contract-template.md`、`project-guide-template.md` 已内置本 skill，生成项目不依赖 `backend-convention-skill` 文件。前端 `frontend-request-skill` 的 `ERROR_CODE_MAP` 可直接复用。
+> 错误码与 `各 init-skill 内置契约层` 规范对齐；`api-contract-template.md`、`project-guide-template.md` 已内置本 skill，生成项目不依赖 `各 init-skill 内置契约层` 文件。前端 `frontend-request-skill` 的 `ERROR_CODE_MAP` 可直接复用。
 
 ---
 
@@ -611,7 +611,7 @@ const eventSource = new EventSource(
 
 | 被引用技能 | 引用内容 |
 |-----------|---------|
-| `backend-convention-skill` | 响应信封 `{ code, message, data }`、错误码体系、JWT 规范（规范对齐；模板已内置本 skill） |
+| `各 init-skill 内置契约层` | 响应信封 `{ code, message, data }`、错误码体系、JWT 规范（规范对齐；模板已内置本 skill） |
 | `database-design-skill` | MySQL/PostgreSQL/MongoDB 设计规范、表前缀 `wg`、连接参数、Alembic 迁移规则 |
 | `frontend-request-skill` | 前端请求层规范、响应信封解析、错误码映射、Token/SSE/上传对接方式 |
 

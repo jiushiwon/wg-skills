@@ -1,6 +1,6 @@
 ---
 name: vue-style-skill
-description: Vue 样式系统技能。提供 CSS 变量、主题系统、动画库、工具类等纯 HTML/CSS 实现的样式基础设施。遵循 vue-generate-skill 规范，纯 CSS 实现禁止原生组件。触发词："Vue 样式"、"CSS 变量"、"主题系统"、"动画"、"vue-style"。
+description: Vue 样式系统技能。提供 CSS 变量、动画库、工具类、布局方案等纯 HTML/CSS 实现的样式基础设施（主题 Token/色阶/换肤请用 vue-theme-skill）。遵循 vue-generate-skill 规范，纯 CSS 实现禁止原生组件。触发词："Vue 样式"、"CSS 变量"、"动画"、"工具类"、"vue-style"。
 ---
 
 # Vue Style Skill

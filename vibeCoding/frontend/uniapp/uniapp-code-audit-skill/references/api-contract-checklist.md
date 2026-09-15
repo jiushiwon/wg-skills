@@ -8,7 +8,7 @@
 | 检查项 | 风险等级 | 风险描述 | 判定依据 | 参考标准 | 检测命令 |
 |--------|----------|----------|----------|----------|----------|
 | 缺少统一 request 封装 | P0 | 请求逻辑散落，难以维护 | 不存在 `src/api/request.ts` 或 `src/utils/request.ts` | `uniapp-standard-skill` 3.1 / `frontend-request-skill` 设计要点 1. 统一入口 | `ls src/api/request.ts src/utils/request.ts` |
-| 页面直接使用 `uni.request` | P1 | 缺少统一拦截与错误处理 | `src/pages/` 中出现 `uni.request(` | `uniapp-standardization-skill` 2.1 | `grep -rnE 'uni\.request\(' src/pages/` |
+| 页面直接使用 `uni.request` | P1 | 缺少统一拦截与错误处理 | `src/pages/` 中出现 `uni.request(` | `uniapp-diagnostic-skill` 2.1 | `grep -rnE 'uni\.request\(' src/pages/` |
 | 请求封装未暴露便捷方法 | P2 | 调用方重复写配置 | 未提供 `get/post/put/del` 等便捷方法 | `uniapp-standard-skill` 3.1 | 检查 `src/api/request.ts` |
 
 ## 2. 响应结构标准化
@@ -22,7 +22,7 @@
 
 | 检查项 | 风险等级 | 风险描述 | 判定依据 | 参考标准 | 检测命令 |
 |--------|----------|----------|----------|----------|----------|
-| 未自动注入 Token | P1 | 每个调用方需手动传 Token | 请求封装未读取 Storage 中的 Token | `uniapp-components-skill/references/auth-framework.md` | 检查 `src/api/request.ts` 拦截器 |
+| 未自动注入 Token | P1 | 每个调用方需手动传 Token | 请求封装未读取 Storage 中的 Token | `uniapp-auth-skill/references/auth-framework.md` | 检查 `src/api/request.ts` 拦截器 |
 | 不支持 `needAuth: false` | P2 | 登录/验证码等接口也被注入 Token | 请求封装无 `needAuth` 选项 | `frontend-request-skill` 设计要点 2. 鉴权衔接 / `uniapp-standard-skill` 3.1 | 检查 `RequestOptions` 定义 |
 | 不支持 `authMode` 切换 | P2 | 无法适配多种鉴权头格式 | 请求封装无 `authMode: 'bearer' \| 'customer-token'` | `frontend-request-skill` 设计要点 2. 鉴权衔接 / `uniapp-standard-skill` 3.1 | 检查 `RequestOptions` 定义 |
 
@@ -30,8 +30,8 @@
 
 | 检查项 | 风险等级 | 风险描述 | 判定依据 | 参考标准 | 检测命令 |
 |--------|----------|----------|----------|----------|----------|
-| 401 未统一处理 | P1 | 各页面自行跳转登录，体验不一致 | 响应拦截器未识别 401 或未交给 `auth.service.ts` | `uniapp-components-skill/references/auth-framework.md` | 检查 `src/api/request.ts` 响应拦截器 |
-| 401 并发未加锁 | P1 | 多个请求同时 401 导致多次跳转 | 未实现 3 秒窗口期或等效去重 | `uniapp-components-skill/references/auth-framework.md` | 检查 `src/services/auth.service.ts` |
+| 401 未统一处理 | P1 | 各页面自行跳转登录，体验不一致 | 响应拦截器未识别 401 或未交给 `auth.service.ts` | `uniapp-auth-skill/references/auth-framework.md` | 检查 `src/api/request.ts` 响应拦截器 |
+| 401 并发未加锁 | P1 | 多个请求同时 401 导致多次跳转 | 未实现 3 秒窗口期或等效去重 | `uniapp-auth-skill/references/auth-framework.md` | 检查 `src/services/auth.service.ts` |
 | 403 未统一处理 | P2 | 权限不足场景无统一提示 | 响应拦截器未处理 403 | `frontend-request-skill` 设计要点 2. 鉴权衔接 | 检查 `src/api/request.ts` |
 | 业务鉴权失败码未处理 | P1 | 后端自定义失效码与 401 等效处理缺失 | 未配置 `AUTH_FAILURE_CODES` | `uniapp-standard-skill` 3.5 | 检查 `src/config/api.config.ts` |
 

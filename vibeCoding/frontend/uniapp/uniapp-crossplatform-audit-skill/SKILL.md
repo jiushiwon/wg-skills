@@ -89,7 +89,7 @@ Phase 4: 输出报告
 |------------|------|
 | `uniapp-code-audit-skill` | 跨平台仅是 10 维度之一，需要全维度审计时调用 |
 | `uniapp-app-generate-skill` | 按报告进行项目骨架调整 |
-| `uniapp-standardization-skill` | 按报告进行项目规范化 |
+| `uniapp-diagnostic-skill` | 按报告进行项目规范化 |
 
 ## 扫描方式
 

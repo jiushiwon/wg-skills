@@ -19,6 +19,8 @@ Vue3 增删改查页面技能，整合搜索+表格+表单+弹窗的完整 CRUD 
 - vue-select-skill - 选择器
 - vue-datepicker-skill - 日期选择器
 - vue-button-skill - 按钮
+- vue-toast-skill - 操作反馈提示
+- vue-dialog-skill - 确认弹窗
 
 ## 使用方式
 

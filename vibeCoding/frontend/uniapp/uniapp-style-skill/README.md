@@ -60,7 +60,7 @@
 | [uniapp-standard-skill](../uniapp-standard-skill/) | 前置依赖（通用架构规范） |
 | [uniapp-theme-skill](../uniapp-theme-skill/) | **默认引用**（品牌色阶 + 一键换肤），未安装时回退默认值 |
 | [uniapp-page-components-skill](../uniapp-page-components-skill/) | 互补（style-skill 定义组件视觉规范，page-components-skill 落地为可复用页面组件） |
-| [uniapp-components-skill](../uniapp-components-skill/) | 无交集（登录鉴权与安全规范） |
+| [uniapp-auth-skill](../uniapp-auth-skill/) | 无交集（登录鉴权与安全规范） |
 | [uniapp-code-audit-skill](../uniapp-code-audit-skill/) | 正交（全景审计，只出报告不修复） |
 
 ## 文档结构

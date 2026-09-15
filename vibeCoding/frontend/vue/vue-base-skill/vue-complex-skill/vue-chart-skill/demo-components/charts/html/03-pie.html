@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>饼图 · Pie Chart</title>
+<link rel="stylesheet" href="../../shared/tokens.css">
+<link rel="stylesheet" href="../../shared/demo.css">
+</head>
+<body>
+<div class="chart-demo-page">
+  <h1 class="chart-demo-page__title">饼图 · Pie Chart</h1>
+  <p class="chart-demo-page__subtitle">环形图、实心饼图、南丁格尔玫瑰图、带标签饼图</p>
+  <div class="chart-demo-grid">
+    <div class="chart-demo-card">
+      <div class="chart-demo-card__header">
+        <div class="chart-demo-card__title">环形图</div>
+        <div class="chart-demo-card__desc">中心白色镂空 + 总计文字</div>
+      </div>
+      <div class="chart-demo-card__body"><canvas id="c1" width="560" height="320"></canvas></div>
+    </div>
+    <div class="chart-demo-card">
+      <div class="chart-demo-card__header">
+        <div class="chart-demo-card__title">实心饼图</div>
+        <div class="chart-demo-card__desc">经典实心扇形</div>
+      </div>
+      <div class="chart-demo-card__body"><canvas id="c2" width="560" height="320"></canvas></div>
+    </div>
+    <div class="chart-demo-card">
+      <div class="chart-demo-card__header">
+        <div class="chart-demo-card__title">南丁格尔玫瑰图</div>
+        <div class="chart-demo-card__desc">半径映射数值大小</div>
+      </div>
+      <div class="chart-demo-card__body"><canvas id="c3" width="560" height="320"></canvas></div>
+    </div>
+    <div class="chart-demo-card">
+      <div class="chart-demo-card__header">
+        <div class="chart-demo-card__title">带标签饼图</div>
+        <div class="chart-demo-card__desc">外侧百分比标签 + 图例</div>
+      </div>
+      <div class="chart-demo-card__body"><canvas id="c4" width="560" height="320"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<script>
+var colors = ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4'];
+var pieData = [
+  { name: '搜索引擎', value: 35 },
+  { name: '直接访问', value: 25 },
+  { name: '邮件', value: 15 },
+  { name: '联盟', value: 15 },
+  { name: '视频', value: 10 }
+];
+
+function drawPieChart(canvas, data, options) {
+  var ctx = canvas.getContext('2d');
+  var w = canvas.width, h = canvas.height;
+  var cx = w / 2, cy = h / 2;
+  var radius = Math.min(w, h) / 2 - 50;
+  var total = 0;
+  data.forEach(function(d) { total += d.value; });
+  var maxVal = Math.max.apply(null, data.map(function(d) { return d.value; }));
+  var startAngle = -Math.PI / 2;
+
+  data.forEach(function(d, i) {
+    var sliceAngle = (d.value / total) * Math.PI * 2;
+    var color = colors[i % colors.length];
+    var r = options.roseType ? radius * (0.4 + 0.6 * d.value / maxVal) : radius;
+
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, startAngle, startAngle + sliceAngle);
+    ctx.closePath();
+    ctx.fillStyle = color;
+    ctx.fill();
+
+    startAngle += sliceAngle;
+  });
+
+  // Donut hole
+  if (options.type === 'donut') {
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius * 0.6, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
+
+    ctx.fillStyle = '#1a1a2e';
+    ctx.font = 'bold 24px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('100%', cx, cy - 8);
+    ctx.font = '12px sans-serif';
+    ctx.fillStyle = '#9ca3af';
+    ctx.fillText('总计', cx, cy + 14);
+  }
+
+  // External labels
+  if (options.showLabels) {
+    startAngle = -Math.PI / 2;
+    data.forEach(function(d, i) {
+      var sliceAngle = (d.value / total) * Math.PI * 2;
+      var midAngle = startAngle + sliceAngle / 2;
+      var labelR = radius + 24;
+      var lx = cx + labelR * Math.cos(midAngle);
+      var ly = cy + labelR * Math.sin(midAngle);
+      var pct = Math.round(d.value / total * 100);
+
+      ctx.fillStyle = '#6b7280';
+      ctx.font = '12px sans-serif';
+      ctx.textAlign = Math.cos(midAngle) < 0 ? 'right' : 'left';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(d.name + ' ' + pct + '%', lx, ly);
+
+      // Leader line
+      var lineStart = radius + 4;
+      var lineEnd = radius + 16;
+      ctx.beginPath();
+      ctx.moveTo(cx + lineStart * Math.cos(midAngle), cy + lineStart * Math.sin(midAngle));
+      ctx.lineTo(cx + lineEnd * Math.cos(midAngle), cy + lineEnd * Math.sin(midAngle));
+      ctx.strokeStyle = '#d9d9d9';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      startAngle += sliceAngle;
+    });
+  }
+
+  // Legend (bottom)
+  if (options.showLegend) {
+    var legendY = h - 20;
+    var legendItems = data.map(function(d, i) {
+      return { name: d.name, color: colors[i % colors.length] };
+    });
+    var totalW = 0;
+    ctx.font = '12px sans-serif';
+    legendItems.forEach(function(item) { totalW += ctx.measureText(item.name).width + 28; });
+    var startX = (w - totalW) / 2;
+    legendItems.forEach(function(item) {
+      ctx.fillStyle = item.color;
+      ctx.fillRect(startX, legendY - 5, 12, 12);
+      ctx.fillStyle = '#6b7280';
+      ctx.fillText(item.name, startX + 16, legendY + 5);
+      startX += ctx.measureText(item.name).width + 28;
+    });
+  }
+}
+
+// Card 1 - Donut
+drawPieChart(document.getElementById('c1'), pieData, { type: 'donut' });
+
+// Card 2 - Pie
+drawPieChart(document.getElementById('c2'), pieData, { type: 'pie' });
+
+// Card 3 - Rose
+drawPieChart(document.getElementById('c3'), pieData, { type: 'pie', roseType: true });
+
+// Card 4 - Labeled
+drawPieChart(document.getElementById('c4'), pieData, { type: 'pie', showLabels: true, showLegend: true });
+</script>
+</body>
+</html>

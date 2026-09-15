@@ -118,7 +118,7 @@ Phase 5: 验证交付
 | `uniapp-code-audit-skill` | 升级前后用同一审计 skill 对比 |
 | `uniapp-app-generate-skill` | 参考 Vue3 骨架标准 |
 | `uniapp-standard-skill` | 升级后规范符合性核查 |
-| `uniapp-components-skill` | 鉴权相关代码迁移参考 |
+| `uniapp-auth-skill` | 鉴权相关代码迁移参考 |
 
 ## 自我审计
 

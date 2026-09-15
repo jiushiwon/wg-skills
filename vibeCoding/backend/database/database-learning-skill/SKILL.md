@@ -206,8 +206,8 @@ EXPLAIN SELECT * FROM users WHERE username = 'test';
 ## 相关技能
 
 - `database-design-skill`：数据库设计规范
-- `mysql-module-skill`：MySQL 集成
-- `pgsql-module-skill`：PostgreSQL 集成
+- `mysql-guide-skill`：MySQL 集成
+- `pgsql-guide-skill`：PostgreSQL 集成
 - `springboot-init-skill`：后端骨架（含数据库集成）
 - `fastapi-init-skill`：后端骨架（含数据库集成）
 - `go-gin-init-skill`：后端骨架（含数据库集成）

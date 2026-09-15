@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>暗色霓虹 - Vue3 Dashboard Skill Demo</title>
+  <link rel="stylesheet" href="../../shared/tokens.css" />
+  <link rel="stylesheet" href="../../shared/demo.css" />
+  <style>
+    :root {
+      --dash-bg-primary: #0a0f1a;
+      --dash-bg-card: #111827;
+      --dash-bg-card-hover: #1a2332;
+      --dash-text-primary: #e2e8f0;
+      --dash-text-secondary: #94a3b8;
+      --dash-text-muted: #64748b;
+      --dash-border-light: #1f2937;
+      --dash-table-header-bg: #0d1424;
+      --dash-table-row-hover: #1a2332;
+      --dash-table-border: #1f2937;
+      --dash-card-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      --dash-card-shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    body { background: #0a0f1a; }
+    .dash-page { background: linear-gradient(135deg, #0a0f1a, #0d1424); }
+    .dash-kpi-card {
+      box-shadow: 0 0 0 1px rgba(0,240,255,0.1);
+      border-left: 3px solid #00f0ff;
+    }
+    .dash-kpi-card__value {
+      color: #00f0ff;
+      text-shadow: 0 0 10px rgba(0,240,255,0.3);
+    }
+    .dash-chart__bar {
+      background: linear-gradient(to top, #00f0ff, #0080ff);
+      box-shadow: 0 0 8px rgba(0,240,255,0.3);
+    }
+    .dash-chart-card,
+    .dash-activity-card,
+    .dash-orders-card,
+    .dash-top-card {
+      box-shadow: 0 0 0 1px rgba(0,240,255,0.1);
+    }
+    .dash-header__title { color: #e2e8f0; }
+    .dash-header__subtitle { color: #94a3b8; }
+    .dash-table { color: #e2e8f0; }
+    .dash-table th { background: #0d1424; color: #94a3b8; }
+    .dash-table td { border-color: #1f2937; }
+    .dash-header__btn {
+      background: #111827;
+      border-color: #1f2937;
+      color: #e2e8f0;
+    }
+    .dash-header__btn:hover {
+      border-color: #00f0ff;
+      color: #00f0ff;
+    }
+    .dash-header__btn--primary {
+      background: rgba(0, 240, 255, 0.15);
+      border-color: rgba(0, 240, 255, 0.3);
+      color: #00f0ff;
+    }
+    .dash-header__btn--primary:hover {
+      background: rgba(0, 240, 255, 0.25);
+    }
+    .dash-status-tag--completed { background: rgba(0,240,255,0.1); color: #00f0ff; }
+    .dash-status-tag--pending { background: rgba(250,140,22,0.1); color: #fa8c16; }
+    .dash-status-tag--processing { background: rgba(0,128,255,0.1); color: #40a9ff; }
+    .dash-status-tag--cancelled { background: rgba(245,34,45,0.1); color: #f5222d; }
+    .dash-activity-item:hover { background: rgba(0,240,255,0.04); }
+    .dash-activity-item__avatar { background: rgba(0,240,255,0.08); }
+    .dash-top-item__rank { background: rgba(0,240,255,0.08); color: #64748b; }
+    .dash-top-item__rank--1 { background: rgba(0,240,255,0.15); color: #00f0ff; }
+    .dash-top-item__rank--2 { background: rgba(139,92,246,0.15); color: #a78bfa; }
+    .dash-top-item__rank--3 { background: rgba(250,140,22,0.15); color: #fa8c16; }
+    /* Grid background */
+    .dash-page::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .dash-page > * { position: relative; z-index: 1; }
+  </style>
+</head>
+<body>
+  <div class="dash-page">
+    <header class="dash-header">
+      <div>
+        <h1 class="dash-header__title">数据看板</h1>
+        <p class="dash-header__subtitle">实时业务数据概览</p>
+      </div>
+      <div class="dash-header__actions">
+        <div class="dash-header__btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="vertical-align:-2px"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg> 刷新</div>
+        <div class="dash-header__btn dash-header__btn--primary">导出</div>
+      </div>
+    </header>
+    <div class="dash-kpi-row" id="kpi-row"></div>
+    <div class="dash-content-grid">
+      <div class="dash-chart-card">
+        <div class="dash-chart-card__title">营收趋势（近7天）</div>
+        <div class="dash-chart" id="chart"></div>
+      </div>
+      <div class="dash-activity-card">
+        <div class="dash-activity-card__title">实时动态</div>
+        <div class="dash-activity-list" id="activity-list"></div>
+      </div>
+    </div>
+    <div class="dash-table-grid">
+      <div class="dash-orders-card">
+        <div class="dash-orders-card__title">最近订单</div>
+        <table class="dash-table">
+          <thead><tr><th>订单号</th><th>商品</th><th>客户</th><th>金额</th><th>状态</th><th>日期</th></tr></thead>
+          <tbody id="orders-body"></tbody>
+        </table>
+      </div>
+      <div class="dash-top-card">
+        <div class="dash-top-card__title">Top 商品</div>
+        <div class="dash-top-list" id="top-list"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const svgIcons = {
+      revenue: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>',
+      users: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>',
+      orders: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/></svg>',
+      trend: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
+      cart: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>',
+      refresh: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>'
+    }
+    const kpis = [
+      { label: '总营收', value: '¥1,284,520', trend: 'up', change: '+12.5%', icon: svgIcons.revenue, color: '#1890ff' },
+      { label: '活跃用户', value: '28,461', trend: 'up', change: '+8.3%', icon: svgIcons.users, color: '#52c41a' },
+      { label: '新增订单', value: '1,847', trend: 'down', change: '-2.1%', icon: svgIcons.orders, color: '#fa8c16' },
+      { label: '转化率', value: '3.24%', trend: 'up', change: '+0.5%', icon: svgIcons.trend, color: '#722ed1' },
+      { label: '客单价', value: '¥695', trend: 'up', change: '+15.8%', icon: svgIcons.cart, color: '#13c2c2' },
+      { label: '退款率', value: '1.2%', trend: 'down', change: '-0.3%', icon: svgIcons.refresh, color: '#f5222d' }
+    ]
+    const activities = [
+      { initial: '张', name: '张三', action: '完成了一笔 ¥12,800 的订单', time: '2 分钟前', color: '#1890ff' },
+      { initial: '李', name: '李四', action: '注册了新账号', time: '5 分钟前', color: '#52c41a' },
+      { initial: '系', name: '系统', action: '自动备份完成', time: '15 分钟前', color: '#8c8c8c' },
+      { initial: '王', name: '王五', action: '提交了退款申请', time: '30 分钟前', color: '#fa8c16' },
+      { initial: '赵', name: '赵六', action: '升级到 VIP 会员', time: '1 小时前', color: '#722ed1' },
+      { initial: '系', name: '系统', action: '检测到异常登录', time: '2 小时前', color: '#f5222d' }
+    ]
+    const orders = [
+      { id: 'ORD-001', product: 'iPhone 15 Pro', customer: '张三', amount: '¥8,999', status: 'completed', date: '2024-01-15' },
+      { id: 'ORD-002', product: 'MacBook Air M3', customer: '李四', amount: '¥9,499', status: 'processing', date: '2024-01-15' },
+      { id: 'ORD-003', product: 'AirPods Pro', customer: '王五', amount: '¥1,899', status: 'pending', date: '2024-01-14' },
+      { id: 'ORD-004', product: 'iPad Air', customer: '赵六', amount: '¥4,799', status: 'completed', date: '2024-01-14' },
+      { id: 'ORD-005', product: 'Apple Watch', customer: '钱七', amount: '¥2,999', status: 'cancelled', date: '2024-01-13' }
+    ]
+    const chartData = [
+      { label: '周一', value: 152000 },
+      { label: '周二', value: 186000 },
+      { label: '周三', value: 145000 },
+      { label: '周四', value: 210000 },
+      { label: '周五', value: 198000 },
+      { label: '周六', value: 235000 },
+      { label: '周日', value: 158000 }
+    ]
+
+    const statusMap = { completed: '已完成', pending: '待处理', processing: '处理中', cancelled: '已取消' }
+    const trendIcon = { up: '↑', down: '↓', flat: '→' }
+
+    document.getElementById('kpi-row').innerHTML = kpis.map(k => `
+      <div class="dash-kpi-card">
+        <div class="dash-kpi-card__icon" style="background:${k.color}15;color:${k.color}">${k.icon}</div>
+        <div class="dash-kpi-card__info">
+          <div class="dash-kpi-card__label">${k.label}</div>
+          <div class="dash-kpi-card__value">${k.value}</div>
+          <div class="dash-kpi-card__trend dash-kpi-card__trend--${k.trend}">
+            ${trendIcon[k.trend]} ${k.change}
+          </div>
+        </div>
+      </div>
+    `).join('')
+
+    const maxVal = Math.max(...chartData.map(d => d.value))
+    document.getElementById('chart').innerHTML = chartData.map(d => `
+      <div class="dash-chart__col">
+        <div class="dash-chart__bar" style="height:${(d.value/maxVal)*180}px"></div>
+        <div class="dash-chart__label">${d.label}</div>
+      </div>
+    `).join('')
+
+    document.getElementById('activity-list').innerHTML = activities.map(a => `
+      <div class="dash-activity-item">
+        <div class="dash-activity-item__avatar" style="background:${a.color}15;color:${a.color}">${a.initial}</div>
+        <div class="dash-activity-item__info">
+          <div class="dash-activity-item__text"><strong>${a.name}</strong> ${a.action}</div>
+          <div class="dash-activity-item__time">${a.time}</div>
+        </div>
+      </div>
+    `).join('')
+
+    document.getElementById('orders-body').innerHTML = orders.map(o => `
+      <tr>
+        <td>${o.id}</td>
+        <td>${o.product}</td>
+        <td>${o.customer}</td>
+        <td><strong>${o.amount}</strong></td>
+        <td><span class="dash-status-tag dash-status-tag--${o.status}">${statusMap[o.status]}</span></td>
+        <td>${o.date}</td>
+      </tr>
+    `).join('')
+
+    document.getElementById('top-list').innerHTML = orders.slice().sort((a,b) => parseFloat(b.amount.slice(1).replace(',','')) - parseFloat(a.amount.slice(1).replace(',',''))).slice(0,5).map((o,i) => `
+      <div class="dash-top-item">
+        <div class="dash-top-item__rank ${i < 3 ? 'dash-top-item__rank--'+(i+1) : ''}">${i+1}</div>
+        <div class="dash-top-item__name">${o.product}</div>
+        <div class="dash-top-item__amount">${o.amount}</div>
+      </div>
+    `).join('')
+  </script>
+</body>
+</html>

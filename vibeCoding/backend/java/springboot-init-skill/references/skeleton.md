@@ -793,15 +793,15 @@ import lombok.Data;
 @Data
 public class PageRequest {
     private int page = 1;
-    private int size = 10;
+    private int pageSize = 20;
 
     public int getOffset() {
-        return (page - 1) * size;
+        return (page - 1) * pageSize;
     }
 
     public org.springframework.data.domain.PageRequest toJpaPageRequest() {
         return org.springframework.data.domain.PageRequest.of(
-            Math.max(0, page - 1), size
+            Math.max(0, page - 1), pageSize
         );
     }
 }
@@ -822,17 +822,17 @@ import java.util.List;
  */
 @Data
 public class PageResponse<T> {
-    private List<T> items;
+    private List<T> list;
     private long total;
     private int page;
-    private int size;
+    private int pageSize;
 
     public static <T> PageResponse<T> from(Page<T> p) {
         PageResponse<T> r = new PageResponse<>();
-        r.setItems(p.getContent());
+        r.setList(p.getContent());
         r.setTotal(p.getTotalElements());
         r.setPage(p.getNumber() + 1);
-        r.setSize(p.getSize());
+        r.setPageSize(p.getSize());
         return r;
     }
 }
@@ -1423,8 +1423,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
-    public Page<UserResponse> list(int page, int size) {
-        Page<User> p = userRepository.findAll(PageRequest.of(Math.max(0, page - 1), size));
+    public Page<UserResponse> list(int page, int pageSize) {
+        Page<User> p = userRepository.findAll(PageRequest.of(Math.max(0, page - 1), pageSize));
         return p.map(UserResponse::from);
     }
 
@@ -1888,8 +1888,8 @@ public class UserController {
     @GetMapping
     public ApiResponse<PageResponse<UserResponse>> list(
         @RequestParam(defaultValue = "1") int page,
-        @RequestParam(defaultValue = "10") int size) {
-        return ApiResponse.success(PageResponse.from(userService.list(page, size)));
+        @RequestParam(defaultValue = "20") int pageSize) {
+        return ApiResponse.success(PageResponse.from(userService.list(page, pageSize)));
     }
 
     @Operation(summary = "用户详情")

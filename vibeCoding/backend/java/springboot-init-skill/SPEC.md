@@ -23,7 +23,7 @@
 **与现有技能的关系**：
 
 ```
-backend-convention-skill    ← 规范层（响应信封、错误码、契约）
+init-skill 内置契约层        ← 规范层（响应信封、错误码、契约，已内置于各 init-skill）
         ↓
 java-backend-skill          ← 开发者导向（现场生成，开发者填细节）
         ↓

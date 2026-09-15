@@ -31,7 +31,7 @@ description: 当用户在 uniapp 项目中需要设计或审查请求层（reque
 ## 不触发场景
 
 - 通用 Web/Vue/React 请求设计（用 `frontend-request-skill`）
-- 完整登录鉴权体系（用 `uniapp-components-skill`）
+- 完整登录鉴权体系（用 `uniapp-auth-skill`）
 - 跨平台兼容性审计（用 `uniapp-crossplatform-audit-skill`）
 
 ## Workflow
@@ -96,7 +96,7 @@ Phase 5: 验证
 ## 参考标准
 
 - [`frontend-request-skill/references/uniapp-spec.md`](../../frontend-request-skill/references/uniapp-spec.md) — 权威规范
-- [`uniapp-components-skill`](../uniapp-components-skill/) — 鉴权体系
+- [`uniapp-auth-skill`](../uniapp-auth-skill/) — 鉴权体系
 - [`uniapp-crossplatform-audit-skill`](../uniapp-crossplatform-audit-skill/) — 跨端 API 兼容
 
 ## 自我审计

@@ -160,7 +160,46 @@ export const ERROR_CODE_MAP: Record<string, string> = {
 };
 ```
 
-> **重要**：以上错误码与 `backend-convention-skill/references/response-format.md` 及 `fastapi-init-skill` 生成后端保持一致。接入真实项目时，请与后端确认错误码表并替换。
+> **重要**：以上错误码与各 init-skill 内置契约（`fastapi-init-skill`、`springboot-init-skill` 等）保持一致。接入真实项目时，请与后端确认错误码表并替换。
+
+### 分页约定
+
+前后端统一的分页请求/响应格式：
+
+**请求参数**：
+
+| 参数 | 类型 | 默认 | 说明 |
+|------|------|------|------|
+| `page` | number | 1 | 页码，从 1 开始 |
+| `pageSize` | number | 20 | 每页条数，上限 100 |
+
+**响应结构**（在 `data` 内）：
+
+```typescript
+export interface PageResponse<T> {
+  list: T[];       // 数据列表
+  total: number;   // 总条数
+  page: number;    // 当前页码
+  pageSize: number; // 每页条数
+}
+```
+
+> 各后端 init-skill（springboot / fastapi / go-gin）的分页格式已对齐此约定。
+
+### Token 响应约定
+
+后端登录接口返回 Token 时，统一使用以下字段：
+
+```typescript
+export interface TokenResponse {
+  accessToken: string;   // 访问令牌（Java 后端为 camelCase，Python 后端为 access_token snake_case）
+  refreshToken: string;  // 刷新令牌
+  tokenType: string;     // 固定 "Bearer"
+  expiresIn: number;     // 过期时间（秒）
+}
+```
+
+> **注意**：Java 后端使用 camelCase，Python 后端使用 snake_case。前端应做兼容处理（优先 camelCase，fallback snake_case）。
 
 ## 设计要点
 
@@ -339,7 +378,7 @@ function handleLike() {
 
 ## 与后端规范的联动
 
-本 skill 的响应信封、错误码表与 `backend-convention-skill/references/response-format.md` 完全一致。当配合 `fastapi-init-skill` 等后端脚手架使用时，前后端可直接通过 `api-contract.md` 对齐：
+本 skill 的响应信封、错误码表与 `各 init-skill 内置的统一响应规范` 完全一致。当配合 `fastapi-init-skill` 等后端脚手架使用时，前后端可直接通过 `api-contract.md` 对齐：
 
 - 后端 `EnvelopeRoute` 输出 `{ code, message, data }`
 - 前端 `request.ts` 按相同结构解析

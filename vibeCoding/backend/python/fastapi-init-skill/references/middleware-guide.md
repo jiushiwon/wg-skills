@@ -123,7 +123,7 @@ POST /api/auth/logout
 | -1032 | 不支持的文件类型 | 上传文件 MIME 不在白名单 |
 | -2000 | 系统异常 | 未预期的内部错误 |
 
-> 错误码与 `backend-convention-skill` 规范对齐，前端 `frontend-request-skill` 的 `ERROR_CODE_MAP` 可直接复用。
+> 错误码与 `各 init-skill 内置契约层` 规范对齐，前端 `frontend-request-skill` 的 `ERROR_CODE_MAP` 可直接复用。
 
 ## 生产环境安全中间件
 

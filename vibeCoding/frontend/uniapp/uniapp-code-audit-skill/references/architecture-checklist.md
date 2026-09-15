@@ -80,14 +80,14 @@
 |--------|----------|----------|----------|----------|----------|
 | 未使用 Pinia | P1 | 全局状态管理混乱 | 项目未引入 Pinia | `uniapp-app-generate-skill` 3.7 | 检查 `package.json` 与 `src/stores/` |
 | store 未按领域拆分 | P2 | store 臃肿 | 所有状态集中在一个文件 | `uniapp-standard-skill` 2.1 | `ls src/stores/modules/` |
-| Storage Key 未集中定义 | P2 | 命名冲突、难以维护 | `uni.setStorageSync` 直接使用字符串 key | `uniapp-components-skill/references/auth-framework.md` | `grep -rnE 'setStorageSync\("' src/` |
+| Storage Key 未集中定义 | P2 | 命名冲突、难以维护 | `uni.setStorageSync` 直接使用字符串 key | `uniapp-auth-skill/references/auth-framework.md` | `grep -rnE 'setStorageSync\("' src/` |
 
 ## 6. 错误处理与日志
 
 | 检查项 | 风险等级 | 风险描述 | 判定依据 | 参考标准 | 检测命令 |
 |--------|----------|----------|----------|----------|----------|
 | 错误提示不统一 | P2 | 用户体验差 | 各页面自行处理错误提示 | `frontend-request-skill` | 检查 `src/utils/toast.ts` 使用情况 |
-| 错误上报泄露用户信息 | P1 | 隐私泄露 | 上报内容含 Token、完整手机号 | `uniapp-components-skill/references/security.md` | 检查错误上报封装 |
+| 错误上报泄露用户信息 | P1 | 隐私泄露 | 上报内容含 Token、完整手机号 | `uniapp-auth-skill/references/security.md` | 检查错误上报封装 |
 
 ## 7. 构建 / CI / Lint
 

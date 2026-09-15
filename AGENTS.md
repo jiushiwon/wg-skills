@@ -16,6 +16,8 @@
 
 每个子目录对应一个独立 skill（技能），技能通过 `SKILL.md` 定义触发条件、审查维度与输出格式。**任何支持 Skill / Agent 协议的智能体都可以加载并使用本仓库的技能**。
 
+**核心设计理念**：前后端一体化。前端 4 套体系（Vue / UniApp / React / HTML）与后端 5 语言矩阵（Java / Python / Go / Node.js / Rust）通过 `api-contract.md` 契约连接，前端请求层自动适配后端响应信封和错误码，Design Token 命名体系跨框架对齐。
+
 ### 1.1 核心理念
 
 > **将"古法编程"容纳到 AI 体系之中。**
@@ -26,6 +28,8 @@ AI 时代的编程不是"取代程序员"，而是把传统工程中**重复、�
 |------|----------|---------------|
 | 写一个 CRUD 接口 | 查文档、写代码、写测试、写文档（半天） | 一句话触发技能（5 分钟） |
 | 搭一套后端骨架 | 选型、写配置、写中间件、写鉴权、写重启脚本（1-2 天） | 触发 `xxx-init-skill`（10 分钟） |
+| 前后端联调 | 口头约定接口格式、反复沟通 | `api-contract.md` 契约连接，零沟通成本 |
+| 前端样式不统一 | 各页面颜色/间距/字号随意 | Design Token 体系，Vue 与 UniApp 命名完全对齐 |
 | 学一门新语言 | 买书、查文档、写 demo（1-2 周） | 触发"一天学会 xxx 体系"技能（半天） |
 | 多人协作 | 各自风格、风格不统一 | 技能强制规范（生成即遵守） |
 | 项目迭代 | 重构历史债、文档落后 | 技能可平滑升级，文档同步 |
@@ -51,7 +55,7 @@ AI 时代的编程不是"取代程序员"，而是把传统工程中**重复、�
 - 🗄️ **分库分表**：ShardingSphere / MyCAT
 - 📦 **对象存储**：MinIO / OSS / S3 兼容
 
-> 对应技能：`super-deploy-skills/`（部署套件，含数据库 / 运行时 / 服务器 / Nginx / Docker / 原生部署 6 大子技能，**含 redis / kafka / mongodb / mysql / postgres / go / java / python / nodejs 等中间件安装**）。
+> 对应技能：`database/` 下各模块技能（mysql/pgsql/mongodb/redis/kafka/sqlite）提供中间件配置参考。
 
 #### 场景 3：学习各种语言规范
 **针对小白、追求更高效的 Vibecoding**：
@@ -61,7 +65,7 @@ AI 时代的编程不是"取代程序员"，而是把传统工程中**重复、�
 - 🐹 **一天学会 Go 体系** → 触发 `go-gin-init-skill`
 - 🟢 **一天学会 Node.js 体系** → 触发 `nodejs-init-skill`
 - 🎨 **一天学会 Vue 体系** → 触发 `vue-base-skill` / `vue-generate-skill`
-- 📱 **一天学会 React 体系** → 触发 `react-init-skill`
+- 📱 **一天学会 React 体系** → 触发 `react-generate-skill`
 - 📱 **一天学会 uni-app 体系** → 触发 `uniapp-base-skill` 及其 21 个子技能
 
 > 一句"帮我用 Java 搭一个商城"，智能体会按"选型 → 骨架 → 业务模块"的顺序串起多个技能，**小白也能跟着提示词完成一个完整项目**。
@@ -72,7 +76,8 @@ AI 时代的编程不是"取代程序员"，而是把传统工程中**重复、�
 |------|-------------------|----------------|
 | 输出 | 一次性代码片段 | **完整可运行、可演进**的项目 |
 | 文档 | 通常无 | 强制交付 `api-contract.md` + `docs/project-guide.md` |
-| 前后端 | 只生成一端 | **完整前后端 + 数据库 + 架构** |
+| 前后端 | 只生成一端 | **完整前后端 + 数据库 + 架构**，通过 `api-contract.md` 契约连接 |
+| 前端体系 | 单一框架 | **4 套体系**（Vue/UniApp/React/HTML），共享 Design Token 和请求层 |
 | 规范 | AI 自由发挥 | 技能强制约束（生成即遵守） |
 | 迭代 | 重做 | 技能可平滑升级、向下兼容 |
 | 学习曲线 | 一次性的"惊喜" | 可**循序渐进**的体系 |
@@ -131,55 +136,72 @@ wg-skills/
 │   │   │   ├── springboot-init-skill/        # Spring Boot 一键初始化
 │   │   │   └── springboot-module/            # Java 业务模块矩阵
 │   │   │       ├── springboot-auth-module-skill/
-│   │   │       ├── springboot-redis-module-skill/
-│   │   │       ├── springboot-kafka-module-skill/
 │   │   │       ├── springboot-agent-module-skill/
+│   │   │       ├── springboot-dict-module-skill/
+│   │   │       ├── springboot-kafka-module-skill/
+│   │   │       ├── springboot-log-module-skill/
 │   │   │       ├── springboot-notification-module-skill/
 │   │   │       ├── springboot-org-permission-module-skill/
-│   │   │       └── springboot-payment-module-skill/
+│   │   │       ├── springboot-payment-module-skill/
+│   │   │       ├── springboot-redis-module-skill/
+│   │   │       ├── springboot-storage-module-skill/
+│   │   │       └── springboot-upload-module-skill/
 │   │   ├── python/                          # Python 语言矩阵
 │   │   │   ├── python-fast-skill/           # Python 快速入门（小白友好）
 │   │   │   ├── fastapi-init-skill/          # FastAPI 一键初始化
+│   │   │   ├── article-generator/           # 多平台文章生成
+│   │   │   ├── hot-trend-collector/         # 热点抓取工具
 │   │   │   └── fastapi-module/              # Python 业务模块矩阵
 │   │   │       ├── fastapi-auth-module-skill/
-│   │   │       ├── python-redis-module-skill/
-│   │   │       ├── python-kafka-module-skill/
-│   │   │       ├── fastapi-ws-module-skill/
 │   │   │       ├── fastapi-agent-module-skill/
 │   │   │       ├── fastapi-ai-chat-module-skill/
+│   │   │       ├── fastapi-dict-module-skill/
+│   │   │       ├── fastapi-log-module-skill/
 │   │   │       ├── fastapi-notification-module-skill/
 │   │   │       ├── fastapi-org-permission-module-skill/
-│   │   │       └── fastapi-payment-module-skill/
+│   │   │       ├── fastapi-payment-module-skill/
+│   │   │       ├── fastapi-storage-module-skill/
+│   │   │       ├── fastapi-upload-module-skill/
+│   │   │       ├── fastapi-ws-module-skill/
+│   │   │       ├── python-redis-module-skill/
+│   │   │       └── python-kafka-module-skill/
 │   │   ├── go/                              # Go 语言矩阵
 │   │   │   ├── go-gin-init-skill/           # Go + Gin 一键初始化
-│   │   │   └── go-ws-module-skill/          # Go WebSocket 模块
+│   │   │   ├── go-frame-init-skill/         # Go 多框架初始化（Hertz/Fiber/Chi）
+│   │   │   ├── go-ws-module-skill/          # Go WebSocket 模块
+│   │   │   └── go-module/                   # Go 模块矩阵
+│   │   │       └── go-storage-module-skill/ # 文件存储模块
 │   │   ├── nodejs/                          # Node.js 语言矩阵
 │   │   │   └── nodejs-init-skill/           # Node.js + Express 一键初始化
+│   │   ├── rust/                            # Rust 语言矩阵
+│   │   │   └── rust-backend-skill/          # Rust Axum 后端初始化
+│   │   ├── shared/                          # 后端公共规范层（响应信封/错误码/JWT/分页）
+│   │   │   ├── response-envelope-spec.md    # 统一响应信封
+│   │   │   ├── error-code-spec.md           # 全局错误码（单一事实来源）
+│   │   │   ├── jwt-auth-spec.md             # JWT 鉴权规范
+│   │   │   ├── pagination-spec.md           # 分页规范
+│   │   │   ├── api-contract-template.md     # 通用契约模板
+│   │   │   └── module-output-spec.md        # 模块接口输出规范
 │   │   ├── database/                        # 数据库设计规范体系
 │   │   │   ├── database-design-skill/       # 数据库设计规范（表名/索引/分库分表/性能）
-│   │   │   ├── mysql-module-skill/          # MySQL 模块集成
-│   │   │   ├── mongodb-module-skill/        # MongoDB 模块集成
-│   │   │   ├── pgsql-module-skill/          # PostgreSQL 模块集成
-│   │   │   ├── redis-module-skill/          # Redis 缓存/分布式锁
-│   │   │   ├── kafka-module-skill/          # Kafka 消息队列
-│   │   │   ├── sqlite-module-skill/         # SQLite 轻量数据库
+│   │   │   ├── mysql-guide-skill/          # MySQL 模块集成
+│   │   │   ├── mongodb-guide-skill/        # MongoDB 模块集成
+│   │   │   ├── pgsql-guide-skill/          # PostgreSQL 模块集成
+│   │   │   ├── redis-guide-skill/           # Redis 缓存/分布式锁
+│   │   │   ├── kafka-guide-skill/          # Kafka 消息队列
+│   │   │   ├── sqlite-guide-skill/         # SQLite 轻量数据库
 │   │   │   └── database-learning-skill/     # 数据库学习与选型
-│   │   ├── backend-analysis-skill/           # 后端项目分析
-│   │   ├── backend-select-skill/            # 技术选型
-│   │   ├── backend-convention-skill/        # 通用规范
-│   │   └── module-generate-skill/           # 业务模块（跨语言）
-│   │       ├── auth-skill/
-│   │       ├── org-permission-skill/
-│   │       ├── ai-chat-skill/
-│   │       ├── notification-skill/
-│   │       └── payment-skill/
 │   │
-│   ├── frontend/                      # 前端框架矩阵
+│   ├── frontend/                      # 前端 4 套体系（Vue / UniApp / React / HTML）
 │   │   ├── frontend-code-doctor/             # 前端代码审查
-│   │   ├── frontend-request-skill/           # 前端请求层规范
+│   │   ├── frontend-request-skill/           # 前端请求层规范（4 套体系共用）
 │   │   ├── frontend-style-harmonizer-skill/  # 前端样式一致性
 │   │   ├── frontend-ui-foundry/              # 综合前端 UI
+│   │   ├── html/                             # HTML 体系（下一个重点方向）
+│   │   │   └── html-frontend-template/       # 纯 HTML 管理后台模板
 │   │   ├── icon-image-catch-skill/           # 素材抓取（父技能 + 2 嵌套子）
+│   │   │   ├── icon-catch-skill/             # 图标抓取
+│   │   │   └── image-catch-skill/            # 图片抓取
 │   │   ├── image-forge-skill/                # 图片处理 + 图标生成
 │   │   ├── uniapp/                           # uni-app 技能矩阵（15+ skill）
 │   │   │   ├── uniapp-base-skill/            # uni-app 基础组件（父技能，内含 21 组件）
@@ -190,10 +212,10 @@ wg-skills/
 │   │   │   ├── uniapp-standard-skill/        # 开发通用规范
 │   │   │   ├── uniapp-style-skill/           # 设计系统
 │   │   │   ├── uniapp-theme-skill/           # 主题系统
-│   │   │   ├── uniapp-components-skill/      # 登录鉴权与安全
+│   │   │   ├── uniapp-auth-skill/      # 登录鉴权与安全
 │   │   │   ├── uniapp-page-components-skill/ # 组件化页面
 │   │   │   ├── uniapp-request-skill/         # 请求层设计
-│   │   │   ├── uniapp-standardization-skill/ # 项目规范化
+│   │   │   ├── uniapp-diagnostic-skill/ # 项目规范化
 │   │   │   ├── uniapp-code-audit-skill/      # 代码审计
 │   │   │   ├── uniapp-crossplatform-audit-skill/ # 跨平台兼容审计
 │   │   │   ├── uniapp-vue2-upgrade-skill/    # Vue2 → Vue3
@@ -201,45 +223,42 @@ wg-skills/
 │   │   │   ├── uniapp-ui-component-commands-skill/ # UI 组件指令
 │   │   │   └── uniapp-ui-template-builder-skill/   # UI 页面模板
 │   │   └── vue/                              # Vue 通用技能矩阵
-│   │       ├── vue-base-skill/               # Vue 基础（按钮/卡片/表格/标签/表单/树/菜单/输入框/选择器/日期选择器/列表页）
-│   │       ├── vue-table-skill/              # Vue 表格组件（20+ 形态，3 个独立组件）
-│   │       ├── vue-form-skill/               # Vue 表单体系（组装型，引用独立技能）
-│   │       ├── vue-dropdown-skill/           # Vue 万能浮层
-│   │       ├── vue-tree-skill/               # Vue 树形组件（10+ 形态）
-│   │       ├── vue-input-skill/              # Vue 输入框组件
-│   │       ├── vue-select-skill/             # Vue 下拉选择器
-│   │       ├── vue-datepicker-skill/         # Vue 日期选择器
-│   │       ├── vue-checkbox-skill/           # Vue 复选框组件
-│   │       ├── vue-radio-skill/              # Vue 单选框组件
-│   │       ├── vue-switch-skill/            # Vue 开关组件
-│   │       ├── vue-upload-skill/            # Vue 上传组件
-│   │       ├── vue-list-page-skill/        # Vue 列表页（搜索+表格+分页）
-│   │       ├── vue-complex-skill/            # Vue 综合页面（含登录页、增删改查页面）
-│   │       ├── vue-contextmenu-skill/        # Vue 右键菜单组件
-│   │       ├── vue-list-item-skill/          # Vue 列表项抽象（tree/menu/dropdown 复用基座）
-│   │       ├── vue-generate-skill/           # Vue 项目生成
-│   │       ├── vue-theme-skill/              # Vue 主题系统
-│   │       ├── vue-style-skill/              # Vue 样式规范
+│   │       ├── vue-base-skill/               # Vue 基础（父技能，含 21 个子技能）
+│   │       │   ├── references/               # 技能矩阵与协同说明
+│   │       │   ├── vue-button-skill/         # 按钮组件（6 种形态）
+│   │       │   ├── vue-card-skill/           # 卡片容器
+│   │       │   ├── vue-table-skill/          # 表格组件（23 种形态，3 个独立组件）
+│   │       │   ├── vue-form-skill/           # 表单体系（组装型，引用独立技能）
+│   │       │   ├── vue-dropdown-skill/       # 万能浮层
+│   │       │   ├── vue-tree-skill/           # 树形组件（10+ 形态）
+│   │       │   ├── vue-input-skill/          # 输入框组件
+│   │       │   ├── vue-select-skill/         # 下拉选择器
+│   │       │   ├── vue-datepicker-skill/     # 日期选择器
+│   │       │   ├── vue-checkbox-skill/       # 复选框组件
+│   │       │   ├── vue-radio-skill/          # 单选框组件
+│   │       │   ├── vue-switch-skill/         # 开关组件
+│   │       │   ├── vue-upload-skill/         # 上传组件
+│   │       │   ├── vue-list-page-skill/      # 列表页（搜索+表格+分页）
+│   │       │   ├── vue-list-item-skill/      # 列表项抽象（tree/menu/dropdown 复用基座）
+│   │       │   ├── vue-contextmenu-skill/    # 右键菜单组件
+│   │       │   ├── vue-collapse-skill/       # 折叠面板组件
+│   │       │   ├── vue-status-skill/         # 状态标签组件
+│   │       │   ├── vue-tag-skill/            # 标签组件
+│   │       │   ├── vue-generate-skill/       # Vue 项目生成
+│   │       │   └── vue-complex-skill/        # 综合页面
+│   │       │       ├── vue-crud-skill/       # 增删改查页面
+│   │       │       └── vue-login-skill/      # 登录页
+│   │       ├── vue-theme-skill/              # Vue 主题系统（设计 Token 层）
+│   │       ├── vue-style-skill/              # Vue 样式规范（动画/工具类/布局）
 │   │       ├── vue-tui-skill/                # Vue TUI 终端界面
-│   │       └── electron-vue-init-skill/         # Electron + Vue3 桌面端初始化
+│   │       └── electron-vue-init-skill/      # Electron + Vue3 桌面端初始化
 │   │   └── react/                            # React 技能矩阵
 │   │       ├── react-generate-skill/            # React + TS + Vite 项目生成
 │   │       └── react-native-generate-skill/  # React Native 移动端初始化
-│   │   └── video/                           # 视频处理技能矩阵
-│   │       ├── remotion-skill/              # Remotion 代码生成视频
-│   │       └── ffmpeg-skill/               # FFmpeg 视频处理
 │   │
 │   ├── vibeCodingProjectsSkills/            # 🎯 项目级技能（开箱即用项目骨架）
-│   │   └── vue-admin-skill/                # Vue3 管理后台项目
-│   │
-│   ├── super-deploy-skills/           # 🚀 一键部署套件（父技能 + 13 嵌套子技能）
-│   │   ├── database-install-skill/           # 数据库安装（mysql/pg/redis/mongo 子技能）
-│   │   ├── runtime-install-skill/            # 运行时安装（go/java/python/nodejs 子技能）
-│   │   ├── deploy-detect-skill/              # 环境探测
-│   │   ├── deploy-docker-skill/              # Docker 部署
-│   │   ├── deploy-native-skill/              # 原生部署
-│   │   ├── server-setup-skill/               # 服务器初始化
-│   │   └── static-nginx-skill/               # Nginx 静态站点
+│   │   ├── vue-admin-skill/                # Vue3 管理后台项目
+│   │   └── sse-agent-skill/                # SSE Agent 项目
 │   │
 │
 └── others/                            # 🧰 板块二：其他领域工具
@@ -255,9 +274,8 @@ wg-skills/
 
 | 板块 | 占比 | 业务定位 |
 |------|------|---------|
-| **vibeCoding** | 85% | 编程开发：覆盖前后端、数据库、部署、AI 编程教学 |
+| **vibeCoding** | 90% | 编程开发：前后端一体化体系（4 套前端 × 5 语言后端 × 统一契约） |
 | **others** | 10% | 其他领域工具：写作、审计、流程图等 |
-| **others** | 5% | 其他工具：写作、绘图、审计、流程图 |
 
 ### 3.2 父子嵌套结构（5 个父技能）
 
@@ -265,12 +283,9 @@ wg-skills/
 
 | 父技能 | 嵌套子技能数 | 子技能定位 |
 |--------|------------|-----------|
-| `vibeCoding/backend/backend-generate-skill` | 7 | 语言/框架/DB 选型 + 规范 + 各语言骨架 |
 | `vibeCoding/frontend/icon-image-catch-skill` | 2 | 图标抓取 / 图片抓取 |
-| `vibeCoding/super-deploy-skills` | 13（含 2 级嵌套） | 数据库安装 / 运行时安装 / 各种部署 |
 | `vibeCoding/frontend/uniapp/uniapp-base-skill` | 3 | uniapp 表单/卡片/页面 |
-
-> `super-deploy-skills` 含二级嵌套：`database-install-skill/children/{mysql,postgres,redis,mongodb}-install-skill` 与 `runtime-install-skill/children/{go,java,python,nodejs}-install-skill`，**对应"大量中间件多插件部署"的真实需求**。
+| `vibeCoding/frontend/vue/vue-base-skill` | 20+ | Vue 组件体系（按钮/卡片/表格/表单/树等） |
 
 ### 3.3 顶层遗留目录
 
@@ -355,7 +370,7 @@ wg-skills/
 ```
                 ┌─────────────────────────────────────────────────────────┐
                 │            wg-skills —— Agents Skills 集合              │
-                │   让 AI 时代的编程更高效：古法编程 → AI 体系化            │
+                │   前后端一体化：契约连接 + 统一主题 + 标准化技能         │
                 └──────────────────────┬──────────────────────────────────┘
                                        │
         ┌──────────────────────────────┼──────────────────────────────┐
@@ -366,23 +381,35 @@ wg-skills/
         │                              │                              │
    ┌────┴────────────────┐             │                              │
    │   backend           │        ┌────┴─────┐                  ┌──────┴───────┐
-   │   ├ java            │        │  remotion│                  │ai-speech-det │
-   │   ├ python/fastapi  │        │  ffmpeg  │                  │article-illus │
-   │   ├ backend-gen     │        └──────────┘                  │skill-auditor │
-   │   └ module-gen      │                                       │workflow-diag │
-   │                     │                                       │xhs-writer    │
-   │   frontend          │                                       └──────────────┘
-   │   ├ uniapp (15+)    │
-   │   ├ vue (7)         │
-   │   └ ui-foundry      │
+   │   ├ java/springboot │        │humanizer │                  │ai-speech-det │
+   │   ├ python/fastapi  │        │article-il│                  │skill-auditor │
+   │   ├ go/gin          │        │workflow-d│                  │xhs-writer    │
+   │   ├ nodejs/express  │        └──────────┘                  └──────────────┘
+   │   ├ rust/axum       │
+   │   └ database (7)    │ ← mysql / pgsql / mongodb / redis / kafka / sqlite
    │                     │
-   │   super-deploy (13) │ ← 大量中间件：redis / kafka / mysql / pg / mongo
+   │   frontend (4 套)   │
+   │   ├ vue (85%)       │ 20+ 组件 + theme + request
+   │   ├ uniapp (90%)    │ 21 组件 + theme + style + request
+   │   ├ react (25%)     │ generate only
+   │   └ html (10%)      │ template only ← 下一个重点
+   │                     │
+   │   项目级技能         │
+   │   ├ vue-admin-skill │ 编排器：前端 + 后端 + 数据库
+   │   └ sse-agent-skill │ 编排器：SSE 流式 AI 对话
+   │                     │
+   │   部署套件 (7)       │
+   │   └ super-deploy    │ docker / native / nginx / db-install
    │                     │
    └─────────────────────┘
                 │
                 ▼
-   真实项目：商城 / 管理系统 / App / 小程序 / 大型平台（多中间件）
-   学习场景：一天学会 Java / Python / Go / Node / Vue / React / uni-app 体系
+   api-contract.md ← 前后端契约连接（响应信封 + 错误码 + JWT + 分页）
+                │
+        ┌───────┼───────┐
+        │       │       │
+   request.ts  SKILL.md  database-design
+   (前端消费)  (后端生成)  (表结构规范)
 ```
 
 ---
@@ -524,6 +551,201 @@ grep -rnE '<button' ./vibeCoding/frontend/vue/vue-table-skill/demo-components
 - [ ] demo HTML 是否与 md 视觉一致？
 - [ ] demo 底部是否列出了完整入参（props / columns / events / slots）？
 - [ ] 是否跑过 `grep -rnE '<(button|input|select|table|...)' --include="*.md"` 确认零违规？
+- [ ] 代码中是否包含彩色 emoji？（必须替换为纯文本/Unicode 符号）
+
+### 12.8 零 Emoji 铁律
+
+所有组件代码（`.md` 的 template/script/style + `demo-components/**/*.html`）**严禁使用彩色 emoji**。
+
+| 位置 | 约束 |
+|------|------|
+| `.md` 组件代码（template / script / style） | ❌ 禁止任何 emoji |
+| `demo-components/**/*.html` 的可见 UI | ❌ 禁止彩色 emoji |
+| `.md` 文档正文（标题、说明、表格） | ✅ 允许（仅文档，不进运行时） |
+| 约定标记（❌ ✅ ⚠️） | ✅ 允许（Unicode 基本区段，非彩色） |
+| 标准 Unicode 符号（✓ × ✎ →） | ✅ 允许（跨平台一致） |
+
+**理由**：
+1. 不同操作系统/浏览器对 emoji 渲染差异大（iOS vs Android vs Windows）
+2. uniapp 跨端场景下 emoji 可能导致布局错乱或白屏
+3. emoji 不可控的字形宽度影响精确布局
+
+**替代方案**：
+
+| emoji 用途 | 替代写法 |
+|-----------|---------|
+| 文件类型图标 | 纯文本标记 `PDF` `DOC` `IMG` + CSS badge 样式 |
+| 状态指示 | `✓` `×` `!` 等 Unicode 符号 + CSS 着色 |
+| 装饰性图标 | CSS mask / background-image / SVG |
+| 区域标题 | 纯文本，不用 emoji 前缀 |
+
+---
+
+## 十三、前后端一体化设计规范
+
+本仓库不是"前端技能 + 后端技能"的松散集合，而是一套**前后端打通的一体化体系**。前后端通过**接口契约（api-contract.md）** 连接，前端通过**统一请求层（request.ts）** 消费后端接口，后端通过**统一响应信封**输出数据。
+
+### 13.1 一体化架构
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    用户触发一句话                         │
+│              "帮我做一个管理后台"                          │
+└────────────────────────┬────────────────────────────────┘
+                         │
+         ┌───────────────┼───────────────┐
+         │               │               │
+    ┌────▼─────┐   ┌─────▼─────┐   ┌─────▼─────┐
+    │  前端层   │   │  后端层    │   │  数据库层  │
+    │          │   │           │   │           │
+    │ 组件库    │   │ init-skill│   │ database- │
+    │ 主题系统  │   │ module-   │   │ design-   │
+    │ 请求层    │   │ skill     │   │ skill     │
+    │ 样式规范  │   │           │   │           │
+    └────┬─────┘   └─────┬─────┘   └───────────┘
+         │               │
+         │    ┌──────────┘
+         │    │
+    ┌────▼────▼────┐
+    │ api-contract │  ← 前后端唯一事实来源
+    │    .md       │
+    └──────────────┘
+```
+
+### 13.2 前端 4 套体系
+
+本仓库的前端技能按框架分为 4 套体系，共享同一套设计理念（Design Token、响应信封、请求层规范）：
+
+| 体系 | 完成度 | 组件库 | 主题系统 | 样式规范 | 请求层 | 项目生成 | 定位 |
+|------|--------|--------|---------|---------|--------|---------|------|
+| **Vue** | 85% | vue-base-skill (20+) | vue-theme-skill | vue-style-skill | frontend-request-skill | vue-generate-skill | Web 管理后台、H5 |
+| **UniApp** | 90% | uniapp-base-skill (21) | uniapp-theme-skill | uniapp-style-skill | uniapp-request-skill | uniapp-app-generate-skill | 小程序、App、跨端 |
+| **React** | 25% | 待建设 | 待建设 | 待建设 | 可复用 frontend-request-skill | react-generate-skill | Web SPA |
+| **HTML** | 10% | 待建设 | 待建设 | 待建设 | api.js（不标准） | html-frontend-template | 轻量后台、原型 |
+
+**优先级**：HTML 体系是下一个重点建设方向。HTML 组件的核心原则**参考 Vue 体系**——因为 Vue 组件技能的核心原则就是使用纯 H5（div + CSS3 + ARIA），与纯 HTML 天然一致。
+
+**体系间共享**：
+- `frontend-request-skill`：4 套体系共用同一套请求层规范（响应信封、错误码、Token 注入、防抖、Mock、SSE）
+- Design Token 命名：Vue 与 UniApp **完全对齐**（`--color-primary-{50~950}`、`--space-{n}`、`--font-{size}`）
+- api-contract.md：4 套体系共用同一份后端接口契约
+
+### 13.3 后端统一分层
+
+后端技能按**语言 × 框架 × 统一规范**三层组织：
+
+| 层级 | 说明 | 示例 |
+|------|------|------|
+| **语言** | 编程语言选择 | Java / Python / Go / Node.js / Rust |
+| **框架** | Web 框架选择 | Spring Boot / FastAPI / Gin / Express / Axum |
+| **统一规范** | 跨语言不变的契约层 | 响应信封 / 错误码 / JWT / 分页 / api-contract |
+
+**统一规范（跨语言一致）**：
+
+| 规范 | 定义 | 所有后端技能必须遵守 |
+|------|------|-------------------|
+| 响应信封 | `{ code: 0, message: "success", data: {} }` | ✅ |
+| 错误码 | `-1001` 校验 / `-1002` 未授权 / `-1003` 无权限 / ... | ✅ |
+| JWT | `Authorization: Bearer {token}` | ✅ |
+| 分页 | `page` + `pageSize`（上限 100） | ✅ |
+| API 前缀 | `/api` | ✅ |
+| 接口契约 | `api-contract.md`（生成产物） | ✅ |
+
+### 13.4 契约连接机制
+
+前后端通过 **api-contract.md** 连接：
+
+```
+后端 init-skill 生成 → api-contract.md ← 前端 request.ts 消费
+                            │
+                    ┌───────┼───────┐
+                    │       │       │
+              响应格式   错误码表   接口清单
+              {code,    -1001~    GET /api/users
+               message, -2000    POST /api/login
+               data}             ...
+```
+
+**强制规则**：
+1. 每个 init-skill **必须**生成 `api-contract.md`（模板在 `references/api-contract-template.md`）
+2. 每个 module-skill **必须**输出 `api-contract-<module>.md`（接口清单 + 错误码扩展）
+3. `frontend-request-skill` 的 `ERROR_CODE_MAP` **必须**与后端 `api-contract.md` 错误码表对齐
+4. 项目级编排器（vue-admin-skill / sse-agent-skill）**必须**确保契约从后端传递到前端
+
+### 13.5 README.md 与 SKILL.md 分工
+
+| 文件 | 面向对象 | 内容 | 禁止 |
+|------|---------|------|------|
+| **SKILL.md** | AI 智能体 | 触发条件、生成流程、输出规范、依赖关系、契约定义 | 安装教程、人类快速上手 |
+| **README.md** | 人类用户 | 安装方式、快速上手、目录结构、贡献指南 | 与 SKILL.md 重复的能力清单、触发词列表 |
+
+**禁止重叠**：README.md 不得复制 SKILL.md 中的"核心能力清单"表格或触发词列表。README 应引用 SKILL.md：`详见 [SKILL.md](SKILL.md)`。
+
+---
+
+## 十四、Vibecoding 场景矩阵
+
+本仓库的核心使用场景：**一句话触发，完整前后端项目**。
+
+| 场景 | 前端 | 后端 | 数据库 | 触发示例 |
+|------|------|------|--------|---------|
+| 管理后台 | vue-base-skill + vue-table-skill + vue-form-skill | springboot-init-skill + auth-module + dict-module | database-design-skill (MySQL) | "帮我做一个管理后台" |
+| 小程序 | uniapp-base-skill + uniapp-request-skill | fastapi-init-skill + auth-module | database-design-skill (MySQL) | "帮我做一个小程序" |
+| AI 聊天 | vue-base-skill + frontend-request-skill (SSE) | fastapi-init-skill + agent-module | database-design-skill | "帮我做一个 AI 聊天" |
+| 轻量后台 | html-frontend-template | nodejs-init-skill | database-design-skill (MongoDB) | "帮我做一个简单的后台" |
+| 电商系统 | uniapp-base-skill + vue-form-skill | springboot-init-skill + auth-module + payment-module + storage-module | database-design-skill (MySQL) | "帮我做一个商城" |
+
+---
+
+## 十五、Skill 文档格式强制规范
+
+### 15.1 SKILL.md 必备章节
+
+```markdown
+---
+name: skill-name
+description: 一句话描述（含触发词）
+---
+
+# 技能名称
+
+## 定位 / 边界声明（做/不做）
+
+## When to Use / When NOT to Use
+
+## 核心能力清单（表格）
+
+## 生成流程 / 实现规范
+
+## 依赖（引用了哪些其他 skill）
+
+## 输出产物清单
+```
+
+### 15.2 README.md 必备章节
+
+```markdown
+# 技能名称
+
+> 一句话定位
+
+## 适合场景 / 不适合场景
+
+## 快速上手（人类视角，3 步以内）
+
+## 目录结构
+
+## 详细规范 → [SKILL.md](SKILL.md)
+
+## 贡献指南（可选）
+```
+
+### 15.3 禁止事项
+
+- ❌ README.md 复制 SKILL.md 的能力清单表格
+- ❌ README.md 复制 SKILL.md 的触发词列表
+- ❌ SKILL.md 写安装教程（这是 README 的职责）
+- ❌ 同一规范在多个 init-skill 中各自内联（应引用公共层）
 
 ---
 

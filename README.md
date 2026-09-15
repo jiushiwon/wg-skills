@@ -1,10 +1,10 @@
-# wg-skills 🛠️
+# wg-skills
 
-> **Agents Skills 集合 —— 让 AI 时代的编程更高效、更体系、更可进阶**
+> **前后端一体化的 Agents Skills 集合 —— 一句话触发，完整前后端项目**
 >
-> 任何智能体（Claude / Codex / Workbuddy / OpenCode / VS Code / Cursor / Cline / Kimi 等）都可以加载并使用本仓库的技能。
+> 4 套前端体系 × 5 语言后端 × 统一契约连接。任何智能体都可以加载并使用。
 
-[![Skills](https://img.shields.io/badge/skills-50%2B-blue)]() [![Blocks](https://img.shields.io/badge/blocks-3-success)]() [![Agents](https://img.shields.io/badge/agents-multi--platform-orange)]()
+[![Skills](https://img.shields.io/badge/skills-80%2B-blue)]() [![Frontend](https://img.shields.io/badge/frontend-4体系-green)]() [![Backend](https://img.shields.io/badge/backend-5语言-orange)]() [![Agents](https://img.shields.io/badge/agents-multi--platform-purple)]()
 
 ---
 
@@ -14,10 +14,14 @@
 
 AI 时代的编程不是"取代程序员"，而是把传统工程中**重复、规范、体系化**的部分抽出来，沉淀成可被 AI 调用的技能，让人类专注于业务决策与架构判断。
 
+**前后端一体化**：本仓库不是"前端技能 + 后端技能"的松散集合。前端通过 `api-contract.md` 契约消费后端接口，Design Token 命名体系 Vue 与 UniApp 完全对齐，请求层规范 4 套前端体系共用。
+
 | 古法编程痛点 | Agents Skills 解决方案 |
 |------------|----------------------|
 | 写一个 CRUD 接口要半天 | 一句话触发（5 分钟） |
 | 搭后端骨架要 1-2 天 | 触发 `xxx-init-skill`（10 分钟） |
+| 前后端联调靠口头约定 | `api-contract.md` 契约连接，前后端零沟通成本 |
+| 前端样式/主题不统一 | Design Token 体系，Vue 与 UniApp 命名完全对齐 |
 | 学一门新语言要 1-2 周 | 触发"一天学会 xxx 体系"技能（半天） |
 | 多人风格不统一 | 技能强制规范（生成即遵守） |
 | 项目迭代是历史债 | 技能可平滑升级（向下兼容） |
@@ -91,9 +95,18 @@ AI 时代的编程不是"取代程序员"，而是把传统工程中**重复、�
 | `hot-trend-collector/` | 热点抓取（知乎/微博/百度/微信） | "热点抓取"、"自媒体热点" |
 | `article-generator/` | 多平台文章生成 | "文章生成"、"AI 写作" |
 
-#### 1.2 `vibeCoding/frontend/` —— 前端框架矩阵
+#### 1.2 `vibeCoding/frontend/` —— 前端 4 套体系
 
-> 覆盖 uni-app / Vue / 通用前端，组件库、请求层、样式规范全部沉淀。
+> 覆盖 Vue / uni-app / React / HTML 四套前端体系，组件库、主题系统、请求层、样式规范全部沉淀。前后端通过 `api-contract.md` 契约连接。
+
+| 体系 | 完成度 | 组件库 | 主题/样式 | 请求层 | 项目生成 | 定位 |
+|------|--------|--------|----------|--------|---------|------|
+| **Vue** | 85% | 20+ 组件 | vue-theme-skill | frontend-request-skill | vue-generate-skill | Web 管理后台、H5 |
+| **UniApp** | 90% | 21 组件 | uniapp-theme/style | uniapp-request-skill | uniapp-app-generate | 小程序、App、跨端 |
+| **React** | 25% | 待建设 | 待建设 | 可复用请求层 | react-generate-skill | Web SPA |
+| **HTML** | 10% | 待建设 | 待建设 | api.js | html-frontend-template | 轻量后台、原型 |
+
+> **HTML 体系是下一个重点方向**，核心原则参考 Vue 体系（纯 H5：div + CSS3 + ARIA）。
 
 | 技能 | 用途 | 触发词 |
 |------|------|--------|
@@ -138,7 +151,7 @@ AI 时代的编程不是"取代程序员"，而是把传统工程中**重复、�
 | `video/` | **视频处理技能矩阵** | "视频生成"、"视频处理" |
 | └─ `remotion-skill/` | Remotion 代码生成视频 | "Remotion"、"代码做视频" |
 | └─ `ffmpeg-skill/` | FFmpeg 视频处理 | "FFmpeg"、"视频剪辑" |
-| `html-frontend-template/` | 纯 HTML 管理后台（无框架） | "HTML 管理后台"、"自媒体前端" |
+| `html/html-frontend-template/` | 纯 HTML 管理后台（无框架） | "HTML 管理后台"、"自媒体前端" |
 
 #### 1.3 `vibeCodingProjectsSkills/` —— 项目级技能
 
@@ -224,7 +237,8 @@ AI 时代的编程不是"取代程序员"，而是把传统工程中**重复、�
 |------|-------------------|-------------------------|
 | 输出 | 一次性代码片段 | **完整可运行、可演进**的项目 |
 | 文档 | 通常无 | 强制交付 `api-contract.md` + `docs/project-guide.md` |
-| 前后端 | 只生成一端 | **完整前后端 + 数据库 + 架构** |
+| 前后端 | 只生成一端 | **完整前后端 + 数据库 + 架构**，通过 `api-contract.md` 契约连接 |
+| 前端体系 | 单一框架 | **4 套体系**（Vue / UniApp / React / HTML），共享 Design Token 和请求层 |
 | 规范 | AI 自由发挥 | 技能强制约束（生成即遵守） |
 | 迭代 | 重做 | 技能可平滑升级、向下兼容 |
 | 学习曲线 | 一次性的"惊喜" | **可循序渐进**的体系 |
@@ -283,6 +297,18 @@ git clone https://github.com/your-org/wg-skills.git ~/.claude/skills/wg-skills
 帮我做一个流程图              → workflow-diagram-skill
 ```
 
+### 前后端一体化场景（一句话 → 完整项目）
+
+| 场景 | 前端 | 后端 | 数据库 | 触发 |
+|------|------|------|--------|------|
+| 管理后台 | vue-base + table + form | springboot-init + auth + dict | MySQL | "帮我做一个管理后台" |
+| 小程序 | uniapp-base + request | fastapi-init + auth | MySQL | "帮我做一个小程序" |
+| AI 聊天 | vue-base + SSE | fastapi-init + agent-module | MySQL | "帮我做一个 AI 聊天" |
+| 轻量后台 | html-frontend-template | nodejs-init | MongoDB | "帮我做一个简单的后台" |
+| 电商系统 | uniapp-base + form | springboot-init + auth + payment + storage | MySQL | "帮我做一个商城" |
+
+> 前后端通过 `api-contract.md` 契约连接，前端请求层自动适配后端响应信封和错误码。
+
 ---
 
 ## 🛠️ 贡献与开发
@@ -300,11 +326,12 @@ git clone https://github.com/your-org/wg-skills.git ~/.claude/skills/wg-skills
 
 | 板块 | skill 总数 | 占比 |
 |------|----------|------|
-| **vibeCoding** | 70+ | 93% |
-| └ backend | 30+ | |
-| └ frontend | 35+ | |
+| **vibeCoding** | 80+ | 90% |
+| └ backend | 40+（5 语言 × init + module 矩阵） | |
+| └ frontend | 40+（4 套体系：Vue/UniApp/React/HTML） | |
 | └ super-deploy | 7（含 13 嵌套子） | |
-| **others** | 5 | 7% |
+| └ 项目级技能 | 2（vue-admin / sse-agent） | |
+| **others** | 6 | 10% |
 | **合计** | **75+ skills** | 100% |
 
 ---

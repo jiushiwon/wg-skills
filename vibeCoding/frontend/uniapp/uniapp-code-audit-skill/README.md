@@ -111,7 +111,7 @@
 - `uniapp-standard-skill` — 红线规则（R01-R20）、目录结构、接口规范、性能规范
 - `uniapp-app-generate-skill` — 项目骨架、主题系统、组件标准、跨平台规范
 - `frontend-request-skill` — 请求层封装、API 契约、错误处理（通用 Web/uniapp 双端）
-- `uniapp-components-skill` — 登录鉴权、Token 管理、安全规范（详见 `references/auth-framework.md` 与 `security.md`）
+- `uniapp-auth-skill` — 登录鉴权、Token 管理、安全规范（详见 `references/auth-framework.md` 与 `security.md`）
 - `uniapp-style-skill` — 设计系统、Token 体系、组件规范
 - `uniapp-theme-skill` — 主题系统一致性治理
 
@@ -123,7 +123,7 @@
 
 | 配合 Skill | 场景 |
 |------------|------|
-| `uniapp-standardization-skill` | 按报告进行项目规范化 |
+| `uniapp-diagnostic-skill` | 按报告进行项目规范化 |
 | `uniapp-style-skill` | 设计系统与 Token 治理 |
 | `uniapp-theme-skill` | 主题系统一致性治理 |
 | `frontend-code-doctor` | 通用前端代码审查补充 |
@@ -160,7 +160,7 @@ A: 按 P0 → P1 → P2 → P3 顺序查看报告。P0 级问题表示违反红�
 
 ### Q: 审计后如何落地改进？
 
-A: 本 skill 不执行修复。可基于 `uniapp-audit-report.md` 调用 `uniapp-standardization-skill` 等项目规范化 skill 进行落地。
+A: 本 skill 不执行修复。可基于 `uniapp-audit-report.md` 调用 `uniapp-diagnostic-skill` 等项目规范化 skill 进行落地。
 
 ### Q: 可以审计非 uniapp 项目吗？
 

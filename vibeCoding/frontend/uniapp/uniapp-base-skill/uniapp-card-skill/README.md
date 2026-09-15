@@ -71,5 +71,5 @@
 
 ## 相关技能
 
-- [uniapp-form-skill](../uniapp-form-skill/) - 表单组件（依赖 base-input）
-- [uniapp-page-skill](../uniapp-page-skill/) - 页面模板（依赖 base-card）
+- [uniapp-form-skill](../../uniapp-form-skill/) - 表单组件（依赖 base-input）
+- [uniapp-page-skill](../../uniapp-page-skill/) - 页面模板（依赖 base-card）

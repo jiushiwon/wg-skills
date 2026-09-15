@@ -138,11 +138,11 @@ vue-login-skill
 
 ## 设计 Token
 
-所有组件统一引用 [vue-theme-skill](../vue-theme-skill/)。
+所有组件统一引用 [vue-theme-skill](../../vue-theme-skill/)。
 
 ## 相关技能
 
 - [vue-base-skill](../SKILL.md) — 基础组件父技能
 - [vue-form-skill](../vue-form-skill/SKILL.md) — 表单体系
 - [vue-button-skill](../vue-button-skill/SKILL.md) — 按钮组件
-- [vue-theme-skill](../vue-theme-skill/SKILL.md) — 设计 Token
+- [vue-theme-skill](../../vue-theme-skill/SKILL.md) — 设计 Token

@@ -37,7 +37,7 @@
 
 | 检查项 | 判定标准 | 检查方式 |
 |--------|----------|----------|
-| 引用 skill 存在 | 文中引用的 `uniapp-standard-skill`、`uniapp-app-generate-skill`、`frontend-request-skill`、`uniapp-components-skill`、`uniapp-standardization-skill`、`uniapp-style-skill`、`uniapp-theme-skill` 均存在于仓库 | `ls vibeCoding/frontend/uniapp/uniapp-*-skill` |
+| 引用 skill 存在 | 文中引用的 `uniapp-standard-skill`、`uniapp-app-generate-skill`、`frontend-request-skill`、`uniapp-auth-skill`、`uniapp-diagnostic-skill`、`uniapp-style-skill`、`uniapp-theme-skill` 均存在于仓库 | `ls vibeCoding/frontend/uniapp/uniapp-*-skill` |
 | 引用 reference 存在 | 引用的 `theme-system.md`、`project-structure.md`、`component-standards.md`、`cross-platform-compatibility.md`、`mini-program-checklist.md` 等存在于对应 skill 目录 | `ls vibeCoding/frontend/uniapp/uniapp-app-generate-skill/references/` |
 | 无死链 | 不引用 `uniapp-common-skill`、`uniapp-crossplatform-audit-skill`、`uniapp-request-skill`、`uniapp-vue2-upgrade-skill` 等已删除/重命名 skill | `grep -rnE 'uniapp-common-skill\|uniapp-crossplatform-audit-skill\|uniapp-request-skill\|uniapp-vue2-upgrade-skill' vibeCoding/frontend/uniapp/uniapp-code-audit-skill/` |
 
@@ -46,7 +46,7 @@
 | 检查项 | 判定标准 | 检查方式 |
 |--------|----------|----------|
 | 不暗示本 skill 执行修复 | “可配合技能”段落明确说明“本 skill 不执行修复，如需按报告调整可调用其他 skill” | 检查 `SKILL.md` 与 `README.md` |
-| 协作 skill 描述中性 | 不将 `uniapp-standardization-skill` 描述为“审计后做规范化修复” | 人工检查协作技能段落 |
+| 协作 skill 描述中性 | 不将 `uniapp-diagnostic-skill` 描述为“审计后做规范化修复” | 人工检查协作技能段落 |
 
 ## 7. 风险等级无修复色彩
 

@@ -33,21 +33,25 @@ export function extractMessage(data: any, fallback = '请求失败'): string {
 
 统一错误码到用户友好文案，避免后端文案直接暴露。
 
+> 以下错误码与后端 init-skill 的 `api-contract.md` 严格对齐（`-1001` 参数校验 / `-1002` 未授权 / ...）。详见 [SKILL.md](../SKILL.md) 的"错误码映射约定"章节。
+
 ```typescript
 // src/config/error.config.ts
 export const ERROR_CODE_MAP: Record<string, string> = {
   // HTTP 状态异常（请求层）
-  NO_AUTH_TOKEN: '请先登录',
   UNAUTHORIZED: '登录已过期，请重新登录',
   FORBIDDEN: '权限不足',
   TIMEOUT: '请求超时，请检查网络',
   NETWORK_ERROR: '网络异常，请稍后重试',
-  UPLOAD_ERROR: '上传失败',
 
-  // 业务异常（按后端 code 约定，例如 code < 0）
-  '-1001': '手机号已存在',
-  '-1002': '必填项不能为空',
-  '-1003': '重复提交，请稍后再试',
+  // 业务异常（与后端 api-contract.md 错误码表对齐）
+  '-1001': '参数校验错误',
+  '-1002': '未登录或 Token 无效',
+  '-1003': '无权限',
+  '-1004': '资源不存在',
+  '-1005': '资源冲突',
+  '-1006': '请求过于频繁',
+  '-2000': '系统繁忙，请稍后再试',
 };
 
 export function resolveErrorMessage(err: RequestError): string {

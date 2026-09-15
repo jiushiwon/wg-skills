@@ -24,6 +24,7 @@ const THEMES = {
   cyan:   { hue: 180, sat: 77,  base: 47 },
   pink:   { hue: 330, sat: 81,  base: 60 },
   slate:  { hue: 220, sat: 9,   base: 46 },
+  brown:  { hue: 26,  sat: 45,  base: 45 },
 }
 
 /**
@@ -33,6 +34,10 @@ const THEMES = {
  * @param {number} base - 基准亮度 0-100
  */
 function hslScale(hue, sat, base) {
+  const l600 = Math.max(base - 8, 0)
+  // 700 必须比 600 深，800 必须比 700 深（base < 48 时固定值会倒挂）
+  const l700 = Math.min(l600 - 7, 40)
+  const l800 = Math.min(l700 - 8, 32)
   return {
     50:  `hsl(${hue}, ${sat}%, 96%)`,
     100: `hsl(${hue}, ${sat}%, 92%)`,
@@ -40,9 +45,9 @@ function hslScale(hue, sat, base) {
     300: `hsl(${hue}, ${sat}%, 76%)`,
     400: `hsl(${hue}, ${sat}%, 66%)`,
     500: `hsl(${hue}, ${sat}%, ${base}%)`,
-    600: `hsl(${hue}, ${sat}%, ${Math.max(base - 8, 0)}%)`,
-    700: `hsl(${hue}, ${sat}%, 40%)`,
-    800: `hsl(${hue}, ${sat}%, 32%)`,
+    600: `hsl(${hue}, ${sat}%, ${l600}%)`,
+    700: `hsl(${hue}, ${sat}%, ${Math.max(l700, 0)}%)`,
+    800: `hsl(${hue}, ${sat}%, ${Math.max(l800, 0)}%)`,
     950: `hsl(${hue}, ${sat}%, 16%)`,
   }
 }

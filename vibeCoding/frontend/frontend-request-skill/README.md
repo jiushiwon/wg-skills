@@ -6,38 +6,11 @@
 
 ## 功能
 
-- **统一请求封装**：`request.ts` 入口，`get/post/put/del`
-- **鉴权拦截**：自动注入 Token，401/403 响应交给 auth service 统一处理
-- **Token 刷新衔接**：401 触发刷新后自动重试原请求，并发请求入队避免多次登录
-- **游客模式**：请求层直接拦截未登录请求
-- **防抖去重**：同一请求避免重复发送
-- **失败重试**：超时/网络错误可按需自动重试
-- **Mock 机制**：开发期不依赖后端
-- **错误处理**：统一错误码映射与分级提示
-- **文件上传**：独立封装不走 request 去重，支持进度回调
-- **SSE 流式请求**：跨端 Server-Sent Events 封装，支持 AI 聊天打字机效果
+统一请求封装、鉴权拦截、Token 刷新、游客模式、防抖去重、Mock、错误处理、文件上传、SSE 流式请求共 10 项能力。详见 [SKILL.md](SKILL.md) "Quick Reference"。
 
 ## 使用方式
 
-### 触发词
-
-```
-请求封装
-request.ts 怎么写
-前端请求统一处理
-uniapp 请求统一处理
-接口拦截
-Token 刷新
-游客模式拦截
-Mock 数据配置
-接口防抖
-错误处理
-文件上传
-SSE 流式请求
-打字机效果
-Server-Sent Events
-AI 聊天流式回复
-```
+> 触发词定义在 [SKILL.md](SKILL.md) frontmatter 中，常用：`"请求封装"` / `"request.ts 怎么写"` / `"前端请求统一处理"` / `"SSE 流式请求"`。
 
 ### 前置依赖
 
@@ -148,7 +121,7 @@ interface ApiResponse<T> {
 - `code < 0`：业务异常，由 `ERROR_CODE_MAP` 映射提示文案。
 - `401 / 403 / 500 / 超时 / 断网`：走 HTTP 状态异常分支，错误码为 `UNAUTHORIZED`、`FORBIDDEN`、`HTTP_ERROR`、`TIMEOUT`、`NETWORK_ERROR`。
 
-> 本 skill 内置的 `-1001`、`-1002`、`-2000` 等错误码与 `backend-convention-skill/references/response-format.md` 对齐。接入真实项目时，请与后端确认错误码表并替换。
+> 本 skill 内置的 `-1001`、`-1002`、`-2000` 等错误码与 `各 init-skill 内置的统一响应规范` 对齐。接入真实项目时，请与后端确认错误码表并替换。
 
 ### 游客拦截
 
@@ -282,7 +255,7 @@ onUnmounted(() => {
 
 ## 与后端规范的联动
 
-本 skill 的响应信封与错误码表和 `backend-convention-skill/references/response-format.md` 保持一致。当配合 `fastapi-init-skill` 等后端脚手架使用时：
+本 skill 的响应信封与错误码表和 `各 init-skill 内置的统一响应规范` 保持一致。当配合 `fastapi-init-skill` 等后端脚手架使用时：
 
 - 后端 `EnvelopeRoute` 输出 `{ code, message, data }`
 - 前端 `request.ts` 按相同结构解析

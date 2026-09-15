@@ -608,7 +608,7 @@ export const userApi = {
 
 ## 11. 与后端的契约联动
 
-后端必须遵守 `backend-convention-skill/references/response-format.md`：
+后端必须遵守 `各 init-skill 内置的统一响应规范`：
 
 ```
 HTTP 200 + { code: 0, message: "ok", data: {...} }  // 成功

@@ -19,7 +19,7 @@ description: uniapp 常用「组件化页面」技能。内置 22 个组件（6 
 | [uniapp-app-generate-skill](../uniapp-app-generate-skill/) | uni-app 项目骨架生成 + 共享组件体系（AppButton/AppTab/AppCard...） | 上游。新项目先生成骨架，再调用本 skill 填充页面组件；组件内基础 UI 可用其共享组件替换（见协作要点） |
 | [uniapp-request-skill](../uniapp-request-skill/) | 统一请求封装（Token/防抖/Mock/SSE） | 数据层。组件只接收数据、`emit` 事件，获取逻辑走 request 封装 |
 | [uniapp-code-audit-skill](../uniapp-code-audit-skill/) | uniapp 全维度代码审计（报告-only） | 后置体检。组件上线前可交付审计 |
-| [uniapp-components-skill](../uniapp-components-skill/) | 登录鉴权与安全规范 | 无交集 |
+| [uniapp-auth-skill](../uniapp-auth-skill/) | 登录鉴权与安全规范 | 无交集 |
 
 ## 组合工作流（与其它 uniapp 技能配合）
 

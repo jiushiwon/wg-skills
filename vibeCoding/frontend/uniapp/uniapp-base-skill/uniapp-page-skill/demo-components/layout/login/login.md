@@ -91,7 +91,7 @@
 
 ## 主题变量
 
-> 详见 [uniapp-theme-skill](../../uniapp-theme-skill/)
+> 详见 [uniapp-theme-skill](../../../../../uniapp-theme-skill/)
 
 ## 适用场景
 

@@ -13,7 +13,7 @@
 
 ## 通用字段约定
 
-- 主键：`id`（自增整数或 UUID，见 backend-convention-skill 契约）。
+- 主键：`id`（自增整数或 UUID，见 init-skill 内置契约规范）。
 - 时间：`created_at`、`updated_at`（UTC，ISO 8601）。
 - 软删除：`deleted_at`，未删除为 `null`。
 - 密码：`password_hash`（bcrypt，禁存明文）。

@@ -29,7 +29,7 @@
 | 请求未缓存 | P2 | 静态数据重复请求 | 配置类/字典类接口每次进入页面都重新请求 | `uniapp-standard-skill` 4.3 | 检查配置接口调用逻辑 |
 | 大数据未分页 | P1 | 一次性返回/渲染大量数据 | 列表接口无分页参数或分页大小 > 20 | `uniapp-standard-skill` 4.3 | 检查 API 调用与页面渲染逻辑 |
 | 请求未防重提交 | P2 | 提交类接口重复触发 | 表单提交无 loading 状态锁定 | `uniapp-standard-skill` R09 | 检查提交按钮与 API 调用 |
-| 页面直接使用 `uni.request` | P1 | 缺少统一错误处理与拦截 | `src/pages/` 中出现 `uni.request(` | `uniapp-standard-skill` R17 / `uniapp-standardization-skill` 2.1 | `grep -rnE 'uni\.request\(' src/pages/` |
+| 页面直接使用 `uni.request` | P1 | 缺少统一错误处理与拦截 | `src/pages/` 中出现 `uni.request(` | `uniapp-standard-skill` R17 / `uniapp-diagnostic-skill` 2.1 | `grep -rnE 'uni\.request\(' src/pages/` |
 
 ## 4. 长列表与渲染
 

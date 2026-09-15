@@ -14,7 +14,7 @@
 | 列表页 | vue-table-skill + vue-input-skill + vue-select-skill + vue-datepicker-skill |
 | 表单页 | vue-form-skill + vue-input-skill + vue-select-skill + vue-datepicker-skill |
 | 详情页 | vue-card-skill + vue-input-skill |
-| 仪表盘 | vue-card-skill + vue-table-skill |
+| 仪表盘 | vue-card-skill + vue-table-skill + vue-chart-skill |
 | 设置页 | vue-form-skill + vue-card-skill |
 
 ## 使用方式

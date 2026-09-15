@@ -202,7 +202,7 @@ curl http://localhost:8080/api/health
 
 ## 与其他 skill 的关系
 
-- 与 `backend-convention-skill` 规范对齐（响应信封、错误码、JWT），但 `api-contract` 与 `project-guide` 模板已内置本 skill，生成项目不依赖外部文件
+- 与 `各 init-skill 内置契约层` 规范对齐（响应信封、错误码、JWT），但 `api-contract` 与 `project-guide` 模板已内置本 skill，生成项目不依赖外部文件
 - 引用 `database-design-skill`（DB 设计规范与迁移规则）
 - 引用 `frontend-request-skill`（前端请求层规范，接口契约联动）
 - **不替代** `python-backend-skill`（后者面向开发者，在 backend-generate-skill 体系内）

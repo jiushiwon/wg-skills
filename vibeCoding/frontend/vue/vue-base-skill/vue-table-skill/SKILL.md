@@ -272,8 +272,8 @@ vue-table-skill/
 
 ## 📚 参考
 
-- [vue-theme-skill](../vue-theme-skill/) — 主题变量
-- [vue-style-skill](../vue-style-skill/) — 样式规范
+- [vue-theme-skill](../../vue-theme-skill/) — 主题变量
+- [vue-style-skill](../../vue-style-skill/) — 样式规范
 - [vue-button-skill](../vue-button-skill/) — base-button
 - [vue-status-skill](../vue-status-skill/) — base-status
 - [vue-card-skill](../vue-card-skill/) — base-card

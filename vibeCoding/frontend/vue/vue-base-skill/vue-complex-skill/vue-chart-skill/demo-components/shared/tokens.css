@@ -1,0 +1,21 @@
+/* Chart Demo Design Tokens */
+:root {
+  --chart-bg: #fff;
+  --chart-bg-card: #fff;
+  --chart-text: #1a1a2e;
+  --chart-text-secondary: #6b7280;
+  --chart-text-muted: #9ca3af;
+  --chart-border: #f0f0f0;
+  --chart-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  --chart-radius: 12px;
+  --chart-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --chart-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --chart-color-1: #5470c6;
+  --chart-color-2: #91cc75;
+  --chart-color-3: #fac858;
+  --chart-color-4: #ee6666;
+  --chart-color-5: #73c0de;
+  --chart-color-6: #3ba272;
+  --chart-color-7: #fc8452;
+  --chart-color-8: #9a60b4;
+}

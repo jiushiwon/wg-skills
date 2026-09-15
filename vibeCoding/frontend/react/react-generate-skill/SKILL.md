@@ -1,5 +1,5 @@
 ---
-name: react-init-skill
+name: react-generate-skill
 description: This skill should be used when the user wants to create a standardized React 18 + TypeScript + Vite + Zustand project from scratch. It guides through pre-development brainstorming, project initialization, dynamic theme system setup, layout design, and post-development verification. Strictly aligned with frontend-request-skill for HTTP layer (fetch + response envelope + token refresh queue), frontend conventions, and React 18 + TypeScript strict mode (tsc --noEmit must pass). Invoke when the user says "帮我做一个 React 项目"、"初始化 React + TS 模板"、"做一个 React 后台管理系统"、"用 React 搭一个 xxx" or similar requests.
 ---
 
@@ -16,7 +16,7 @@ description: This skill should be used when the user wants to create a standardi
 | `src/utils/{error,toast,auth}.ts` | `references/error-handling.md` + `auth-patterns.md` |
 | `src/config/{api,error}.config.ts` | `references/frontend-spec.md`（BASE_URL + ERROR_CODE_MAP） |
 | `src/hooks/useAuth.ts` | `references/auth-patterns.md` |
-| 响应信封 `{ code, message, data }` | 与 `backend-convention-skill/references/response-format.md` 一致 |
+| 响应信封 `{ code, message, data }` | 与 `各 init-skill 内置的统一响应规范` 一致 |
 
 **接入本 Skill 前，请先阅读 `frontend-request-skill` 的 SKILL.md 与核心 reference。**
 

@@ -163,6 +163,14 @@ grep -E '<(button|input|select|table|tr|td|th|textarea|form|option)' base-*.md
 
 如需弹窗、Drawer、Tabs 等组件 → 在 vue-base-skill 内扩展对应子技能，而非引入第三方。
 
+## 零 Emoji 铁律
+
+> 所有组件代码（`.md` template/script/style + demo HTML）**严禁使用彩色 emoji**。
+>
+> **替代**：文件类型用 `PDF` `DOC` 等纯文本 + CSS badge；图标用 CSS mask / SVG；状态用 `✓` `×` 等 Unicode 符号。
+>
+> **理由**：跨平台渲染不一致，uniapp 下可能白屏，字形宽度不可控。
+
 ## 命名对齐矩阵（与 uniapp-theme-skill / uniapp-base-skill 完全对齐）
 
 ```

@@ -25,7 +25,7 @@
 
 | 检查项 | 风险等级 | 风险描述 | 判定依据 | 参考标准 | 检测命令 |
 |--------|----------|----------|----------|----------|----------|
-| 相同 API 请求多处 | P1 | 一处变更需多处同步 | 同一接口在多个页面重复定义 | `uniapp-standardization-skill` 2.1 | `grep -rnE 'uni\.request\|post\|get\(' src/pages/` |
+| 相同 API 请求多处 | P1 | 一处变更需多处同步 | 同一接口在多个页面重复定义 | `uniapp-diagnostic-skill` 2.1 | `grep -rnE 'uni\.request\|post\|get\(' src/pages/` |
 | 相同逻辑多处 | P2 | 工具函数未抽离 | 日期格式化、金额格式化等在多页面重复 | `uniapp-standard-skill` R08 | 人工检查常见工具函数 |
 | 相同 UI 多处 | P2 | 组件复用不足 | 两个及以上页面存在相似模板与样式 | `uniapp-app-generate-skill` component-standards | 人工比对页面模板 |
 | 相同样式多处 | P3 | 样式散落，维护困难 | 多页面出现相同 CSS 声明块 | `uniapp-app-generate-skill` theme-system | 人工检查 `.scss` 文件 |
@@ -64,7 +64,7 @@
 | 未使用 Pinia | P1 | 全局状态管理混乱 | 项目未引入 Pinia 或仍使用 Vuex/options API 全局变量 | `uniapp-app-generate-skill` 3.7 | 检查 `package.json` 与 `src/stores/` |
 | store 未按模块拆分 | P2 | store 臃肿 | 所有状态集中在一个 store 文件 | `uniapp-standard-skill` 2.1 | 检查 `src/stores/modules/` |
 | 页面间传值用 URL | P2 | 复杂状态通过 URL 传递，难以维护 | 页面跳转通过 URL 传递对象/复杂参数 | `uniapp-standard-skill` 2.1 | 检查 `uni.navigateTo` 的 `url` 参数 |
-| 全局状态散落 | P2 | 状态未收口到 store | 组件/页面中存在跨页面共享的局部变量 | `uniapp-standardization-skill` 2.3 | 人工检查跨页面状态 |
+| 全局状态散落 | P2 | 状态未收口到 store | 组件/页面中存在跨页面共享的局部变量 | `uniapp-diagnostic-skill` 2.3 | 人工检查跨页面状态 |
 
 ## 8. Vue3 / Composition API 规范
 
