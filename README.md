@@ -44,6 +44,19 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 | 📊 **vue-table-skill** | Vue 表格组件 | `vibeCoding/frontend/vue/` |
 | ⚛️ **react-generate-skill** | React 页面生成 | `vibeCoding/frontend/react/` |
 
+### 依赖说明
+
+部分技能之间存在依赖关系：
+
+| 技能 | 依赖 | 说明 |
+|------|------|------|
+| vue-table-skill | vue-button-skill / vue-status-skill / vue-card-skill / vue-theme-skill | 表格组件强依赖基础组件，完整版含全部依赖 |
+| vue-form-skill | vue-theme-skill | 表单样式依赖主题系统 |
+| vue-generate-skill | 无外部依赖 | 请求层规范已内嵌在 `references/api-integration.md` |
+| react-generate-skill | 无外部依赖 | 同上 |
+
+> 如果使用 vue-table-skill 时缺少基础组件技能，可购买完整版（90+ 技能含全部依赖链）。
+
 ### 工具（2 个）
 
 | 技能 | 说明 | 路径 |

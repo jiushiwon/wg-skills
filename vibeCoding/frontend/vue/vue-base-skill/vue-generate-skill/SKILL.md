@@ -5,9 +5,9 @@ description: This skill should be used when the user wants to create a standardi
 
 # Vue Generate Skill
 
-## ⚠️ 重要：本 Skill 严格依赖 `frontend-request-skill`
+## 请求层规范
 
-本 Skill **不重新发明请求层**。所有 HTTP / 错误处理 / 鉴权相关代码必须复用 `frontend-request-skill` 的标准实现：
+本 Skill 内置请求层标准实现（见 `references/api-integration.md`），无需额外安装其他 Skill。所有 HTTP / 错误处理 / 鉴权相关代码遵循以下规范：
 
 | vue-generate-skill 输出 | 对应 frontend-request-skill 标准 |
 |----------------------|--------------------------------|
