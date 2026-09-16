@@ -1,0 +1,71 @@
+@use 'sass:map';
+@use '../config/theme-config' as cfg;
+@use '../functions' as *;
+
+$primary-scale: generate-hsl-scale(cfg.$theme-primary);
+$secondary-scale: if(cfg.$theme-secondary, generate-hsl-scale(cfg.$theme-secondary), null);
+$tertiary-scale: if(cfg.$theme-tertiary, generate-hsl-scale(cfg.$theme-tertiary), null);
+$gray-scale: generate-hsl-scale('#6B7280');
+
+$success-scale: generate-hsl-scale('#10B981');
+$warning-scale: generate-hsl-scale('#F59E0B');
+$error-scale: generate-hsl-scale('#EF4444');
+$info-scale: generate-hsl-scale('#3B82F6');
+
+$white: #ffffff;
+$black: #000000;
+
+$font-2xs: static-rpx(20);
+$font-xs: static-rpx(24);
+$font-sm: static-rpx(26);
+$font-md: static-rpx(28);
+$font-lg: static-rpx(30);
+$font-xl: static-rpx(32);
+$font-2xl: static-rpx(40);
+$font-3xl: static-rpx(48);
+
+$space-0: static-rpx(0);
+$space-1: static-rpx(4);
+$space-2: static-rpx(8);
+$space-3: static-rpx(12);
+$space-4: static-rpx(16);
+$space-5: static-rpx(20);
+$space-6: static-rpx(24);
+$space-7: static-rpx(28);
+$space-8: static-rpx(32);
+$space-10: static-rpx(40);
+$space-12: static-rpx(48);
+$space-14: static-rpx(56);
+$space-16: static-rpx(64);
+$space-20: static-rpx(80);
+$space-24: static-rpx(96);
+
+$radius-none: static-rpx(0);
+$radius-sm: static-rpx(8);
+$radius-md: static-rpx(16);
+$radius-lg: static-rpx(24);
+$radius-xl: static-rpx(32);
+$radius-full: static-rpx(9999);
+
+$height-btn-sm: static-rpx(56);
+$height-btn-md: static-rpx(72);
+$height-btn-lg: static-rpx(88);
+
+$icon-xs: static-rpx(24);
+$icon-sm: static-rpx(36);
+$icon-md: static-rpx(48);
+$icon-lg: static-rpx(72);
+$icon-xl: static-rpx(96);
+
+$shadow-sm: shadow('sm', cfg.$theme-shadow-opacity);
+$shadow-md: shadow('md', cfg.$theme-shadow-opacity);
+$shadow-lg: shadow('lg', cfg.$theme-shadow-opacity);
+
+$weight-normal: theme-get(cfg.$theme-font-weight-scale, 'normal');
+$weight-medium: theme-get(cfg.$theme-font-weight-scale, 'medium');
+$weight-semibold: theme-get(cfg.$theme-font-weight-scale, 'semibold');
+$weight-bold: theme-get(cfg.$theme-font-weight-scale, 'bold');
+
+$line-tight: theme-get(cfg.$theme-line-height-scale, 'tight');
+$line-normal: theme-get(cfg.$theme-line-height-scale, 'normal');
+$line-relaxed: theme-get(cfg.$theme-line-height-scale, 'relaxed');

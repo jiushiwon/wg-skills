@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>开关 - 图标按钮</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --radius-full: 50px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-primary: #4a90e2;
+      --color-success: #52c41a;
+      --color-text: #333;
+      --color-text-secondary: #666;
+      --color-text-tertiary: #999;
+      --color-bg: #f5f5f5;
+      --color-bg-surface: #fff;
+      --color-border: #e8e8e8;
+    }
+    body { background: var(--color-bg); padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; background: var(--color-bg-surface); border-radius: var(--radius-lg); overflow: hidden; }
+    .preview-body { padding: var(--space-4); }
+
+    .switch-item { display: flex; align-items: center; justify-content: space-between; padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); }
+    .switch-item:last-child { border-bottom: none; }
+    .switch-label { font-size: 15px; color: var(--color-text); }
+
+    /* 图标按钮开关 */
+    .switch-icon {
+      width: 56px;
+      height: 32px;
+      background: #e0e0e0;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .switch-icon.on { background: var(--color-primary); }
+    .switch-icon svg { width: 14px; height: 14px; }
+    .switch-icon .off { color: #999; }
+    .switch-icon .on { color: #fff; }
+    .switch-icon .dot {
+      width: 24px;
+      height: 24px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .switch-icon.on .dot { transform: translateX(24px); }
+
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 70px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="preview">
+    <div class="preview-body">
+      <div class="switch-item">
+        <span class="switch-label">飞行模式</span>
+        <div class="switch-icon on" onclick="this.classList.toggle('on')">
+          <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2M3 10l9-7 9 7M5 7l9 7M19 7l9-7"/></svg>
+          <div class="dot">
+            <svg class="on" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="switch-item">
+        <span class="switch-label">静音模式</span>
+        <div class="switch-icon" onclick="this.classList.toggle('on')">
+          <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/></svg>
+          <div class="dot">
+            <svg class="on" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12.55a11 11 0 0 1 14.08 0"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="switch-item">
+        <span class="switch-label">省电模式</span>
+        <div class="switch-icon on" onclick="this.classList.toggle('on')">
+          <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          <div class="dot">
+            <svg class="on" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title" style="font-size:14px;font-weight:600;color:#333;margin-bottom:12px;">图标按钮开关</div>
+    <div class="param-title">base-switch 参数</div>
+    <div class="param-row"><span class="param-key">showIcon:</span><span class="param-val">true</span></div>
+    <div class="param-row"><span class="param-key">iconOn/iconOff:</span><span class="param-val">自定义图标</span></div>
+  </div>
+</body>
+</html>

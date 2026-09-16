@@ -1,6 +1,6 @@
 # wg-skills — Claude Code 精选技能集
 
-> 精选 17 个自包含技能，覆盖后端、前端、数据库、工具全栈场景。所有开放技能零外部依赖，开箱即用。
+> 精选 21 个自包含技能，覆盖后端、前端、小程序、数据库、工具全栈场景。所有开放技能零外部依赖，开箱即用。
 > 完整技能体系（90+ 个）请访问 [VibeCoding Portal](https://github.com/jiushiwon/vibecoding-portal)（私有）
 
 ---
@@ -49,6 +49,15 @@ git clone https://github.comjiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 | **vue-base-skill** | 基础组件父技能（规范层） | 无 |
 | **react-generate-skill** | React 页面生成（请求层已内嵌） | 无 |
 
+### 小程序（4 个）
+
+| 技能 | 说明 | 依赖 |
+|------|------|------|
+| **uniapp-base-skill** | 基础组件父技能（规范层） | 无 |
+| **uniapp-theme-skill** | 主题/样式 Token 系统 | 无 |
+| **uniapp-request-skill** | 请求层（小程序适配） | 无 |
+| **uniapp-app-generate-skill** | 小程序项目脚手架 | 无 |
+
 ### 工具（2 个）
 
 | 技能 | 说明 | 路径 |
@@ -60,7 +69,7 @@ git clone https://github.comjiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 ## 开放 vs 私有边界
 
-| 维度 | 开放（本仓库 17 个） | 私有（VibeCoding Portal 90+ 个） |
+| 维度 | 开放（本仓库 21 个） | 私有（VibeCoding Portal 90+ 个） |
 |------|------|------|
 | 定位 | 积木块：单技能闭环，可独立使用 | 高级组合：多技能编排、业务场景 |
 | 复杂度 | 基础能力（初始化 / 组件 / 规范） | 完整模块（auth / payment / ws / ai-chat） |
@@ -112,8 +121,13 @@ wg-skills/
 │       │   ├── vue-generate-skill/
 │       │   ├── vue-form-skill/
 │       │   └── vue-table-skill/
-│       └── react/
-│           └── react-generate-skill/
+│       ├── react/
+│       │   └── react-generate-skill/
+│       └── uniapp/
+│           ├── uniapp-base-skill/
+│           ├── uniapp-theme-skill/
+│           ├── uniapp-request-skill/
+│           └── uniapp-app-generate-skill/
 ├── others/
 │   ├── skill-auditor/
 │   └── ai-speech-detector/

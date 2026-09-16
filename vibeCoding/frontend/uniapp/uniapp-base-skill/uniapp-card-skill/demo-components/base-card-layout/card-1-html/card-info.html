@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>信息卡片</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      /* 主题变量 - 来自 uniapp-style-skill */
+      --color-primary: #07c160;
+      --color-bg-surface: #ffffff;
+      --color-text-primary: #1a1a1a;
+      --color-text-secondary: #666666;
+      --color-text-tertiary: #999999;
+      --radius-md: 12px;
+      --spacing-lg: 16px;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    body { background: #f0f0f0; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; }
+    .preview-header { height: 44px; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee; font-size: 16px; font-weight: 500; }
+    .preview-body { padding: 16px; }
+    .card { background: #fff; border-radius: var(--radius-md); box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden; }
+    .card-title { font-size: 15px; font-weight: 600; color: #1a1a1a; padding: 12px 16px; border-bottom: 1px solid #f0f0f0; }
+    .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 16px; }
+    .stat-item { text-align: center; }
+    .stat-value { font-size: 20px; font-weight: 700; color: #1a1a1a; margin-bottom: 2px; }
+    .stat-label { font-size: 12px; color: #999; }
+    .info-row { display: flex; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid #f5f5f5; }
+    .info-row:last-child { border-bottom: none; }
+    .info-label { font-size: 14px; color: #666; }
+    .info-value { font-size: 14px; color: #1a1a1a; font-weight: 500; }
+    .info-value.primary { color: var(--color-primary); }
+    .progress-bar { height: 6px; background: #f0f0f0; border-radius: 3px; overflow: hidden; margin: 8px 16px; }
+    .progress-fill { height: 100%; background: var(--color-primary); border-radius: 3px; }
+    .progress-text { display: flex; justify-content: space-between; margin: 6px 16px 16px; font-size: 12px; color: #999; }
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 90px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="preview">
+    <div class="preview-header">信息卡片</div>
+    <div class="preview-body">
+      <div class="card">
+        <div class="card-title">数据统计</div>
+        <div class="stat-grid">
+          <div class="stat-item">
+            <div class="stat-value">1,234</div>
+            <div class="stat-label">关注</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">5,678</div>
+            <div class="stat-label">粉丝</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">999+</div>
+            <div class="stat-label">获赞</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="param-bar">
+    <div class="param-title">参数</div>
+    <div class="param-row"><span class="param-key">layout:</span><span class="param-val">info</span></div>
+    <div class="param-row"><span class="param-key">type:</span><span class="param-val">stats / detail / progress / tags / rating</span></div>
+    <div class="param-row"><span class="param-key">columns:</span><span class="param-val">2 / 3 / 4</span></div>
+    <div class="param-row"><span class="param-key">showBorder:</span><span class="param-val">true / false</span></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>获赞与收藏 - 参考[021_获赞与收藏]</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #f5f5f5; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; background: #fff; overflow: hidden; }
+    .preview-header { height: 44px; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee; font-size: 16px; font-weight: 500; }
+
+    /* Tab切换 */
+    .tab-bar { display: flex; background: #fff; border-bottom: 1px solid #eee; }
+    .tab-item { flex: 1; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #999; position: relative; }
+    .tab-item.active { color: #333; font-weight: 500; }
+    .tab-item.active::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 20px; height: 2px; background: #07c160; }
+
+    .preview-body { padding: 0; }
+
+    /* 获赞与收藏 - 无圆角，紧凑，头像+内容预览 */
+    .like-card {
+      background: #fff;
+      border-radius: 0;
+      padding: 12px 16px;
+      display: flex;
+      gap: 12px;
+      border-bottom: 1px solid #f5f5f5;
+    }
+    .like-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+      background: url(../images/avatar1.jpg) center/cover;
+      flex-shrink: 0;
+    }
+    .like-content { flex: 1; min-width: 0; }
+    .like-header { display: flex; justify-content: space-between; align-items: center; }
+    .like-name { font-size: 14px; color: #333; font-weight: 500; }
+    .like-time { font-size: 12px; color: #999; }
+    .like-text { font-size: 13px; color: #666; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .like-preview {
+      margin-top: 8px;
+      padding: 8px;
+      background: #f7f7f7;
+      border-radius: 4px;
+      font-size: 13px;
+      color: #666;
+    }
+    .like-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: #ff4d4f;
+      margin-top: 6px;
+    }
+    .like-icon { width: 14px; height: 14px; }
+
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: #ff4d4f; width: 70px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="title" style="text-align:center;margin-bottom:10px;font-size:14px;color:#666;">参考: 021_获赞与收藏.jpg</div>
+  <div class="preview">
+    <div class="preview-header">获赞与收藏</div>
+    <div class="tab-bar">
+      <div class="tab-item active">赞</div>
+      <div class="tab-item">收藏</div>
+      <div class="tab-item">评论</div>
+    </div>
+    <div class="preview-body">
+      <!-- 获赞1 -->
+      <div class="like-card">
+        <div class="like-avatar"></div>
+        <div class="like-content">
+          <div class="like-header">
+            <span class="like-name">前端艺术家</span>
+            <span class="like-time">10分钟前</span>
+          </div>
+          <div class="like-text">赞了你的作品</div>
+          <div class="like-badge"><img class="like-icon" src="../static/icons/heart.svg" alt="heart"> +1</div>
+        </div>
+      </div>
+
+      <!-- 获赞2 -->
+      <div class="like-card">
+        <div class="like-avatar" style="background: url(../images/avatar2.jpg) center/cover;"></div>
+        <div class="like-content">
+          <div class="like-header">
+            <span class="like-name">UI设计师小王</span>
+            <span class="like-time">2小时前</span>
+          </div>
+          <div class="like-text">赞了你的评论</div>
+          <div class="like-badge"><img class="like-icon" src="../static/icons/heart.svg" alt="heart"> +1</div>
+        </div>
+      </div>
+
+      <!-- 收藏 -->
+      <div class="like-card">
+        <div class="like-avatar" style="background: url(../images/avatar3.jpg) center/cover;"></div>
+        <div class="like-content">
+          <div class="like-header">
+            <span class="like-name">产品经理</span>
+            <span class="like-time">昨天</span>
+          </div>
+          <div class="like-text">收藏了你的文章</div>
+          <div class="like-preview">Vue3 响应式原理深度解析...</div>
+        </div>
+      </div>
+
+      <!-- 获赞3 -->
+      <div class="like-card">
+        <div class="like-avatar" style="background: url(../images/avatar1.jpg) center/cover;"></div>
+        <div class="like-content">
+          <div class="like-header">
+            <span class="like-name">技术总监</span>
+            <span class="like-time">昨天</span>
+          </div>
+          <div class="like-text">赞了你的作品</div>
+          <div class="like-badge"><img class="like-icon" src="../static/icons/heart.svg" alt="heart"> +1</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title">base-card 参数</div>
+    <div class="param-row"><span class="param-key">radius:</span><span class="param-val">0（无圆角）</span></div>
+    <div class="param-row"><span class="param-key">padding:</span><span class="param-val">12px 16px</span></div>
+    <div class="param-row"><span class="param-key">border:</span><span class="param-val">1px solid #f5f5f5</span></div>
+  </div>
+</body>
+</html>

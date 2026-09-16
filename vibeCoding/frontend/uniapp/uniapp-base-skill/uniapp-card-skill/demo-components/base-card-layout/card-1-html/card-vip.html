@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIP会员卡片</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      /* 主题变量 - 来自 uniapp-style-skill */
+      --color-primary: #07c160;
+      --color-bg-surface: #ffffff;
+      --color-text-primary: #1a1a1a;
+      --color-text-secondary: #666666;
+      --color-text-tertiary: #999999;
+      --radius-md: 12px;
+      --spacing-lg: 16px;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+      /* VIP 主题 */
+      --color-vip-bg: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      --color-vip-gold: #ffd700;
+      --color-vip-gold-bg: rgba(255,215,0,0.2);
+    }
+    body { background: #f0f0f0; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; }
+    .preview-header { height: 44px; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee; font-size: 16px; font-weight: 500; }
+    .preview-body { padding: 16px; }
+    .card { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: var(--radius-md); overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+    .vip-header { display: flex; align-items: center; padding: 20px; gap: 12px; }
+    .vip-avatar { width: 56px; height: 56px; border-radius: 50%; border: 2px solid #ffd700; object-fit: cover; }
+    .vip-info { flex: 1; }
+    .vip-name { font-size: 18px; font-weight: 600; color: #fff; }
+    .vip-level { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; background: rgba(255,215,0,0.2); border-radius: 12px; font-size: 12px; color: #ffd700; margin-top: 4px; }
+    .vip-tag { font-size: 11px; color: #ffd700; }
+    .vip-desc { padding: 0 20px 16px; font-size: 12px; color: rgba(255,255,255,0.6); }
+    .vip-rights { display: flex; gap: 12px; padding: 12px 20px; background: rgba(255,255,255,0.05); }
+    .vip-right { flex: 1; text-align: center; }
+    .vip-right-icon { font-size: 20px; margin-bottom: 4px; }
+    .vip-right-text { font-size: 11px; color: rgba(255,255,255,0.7); }
+    .vip-btn { display: block; width: calc(100% - 40px); margin: 0 20px 20px; padding: 12px; background: linear-gradient(135deg, #ffd700, #ffaa00); color: #1a1a2e; font-size: 15px; font-weight: 600; border: none; border-radius: 24px; cursor: pointer; }
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 90px; }
+    .param-val { color: #666; }
+  
+    .icon { display: inline-block; width: 1em; height: 1em; vertical-align: -0.125em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+    .icon-14 { font-size: 14px; }
+    .icon-18 { font-size: 18px; }
+    .icon-primary { color: var(--color-primary); }
+    .icon-warning { color: var(--color-warning); }
+  </style>
+</head>
+<body>
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="i-crown" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294zM5 21h14"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 22a10 10 0 1 1 10-10c0 1.66-1.34 3-3 3h-2.5a1.5 1.5 0 0 0-.83 2.83a1.5 1.5 0 0 1-2.55 1.32A11 11 0 0 1 12 22M7 9a1 1 0 1 0 0-2a1 1 0 0 0 0 2m5-5a1 1 0 1 0 0-2a1 1 0 0 0 0 2m5 5a1 1 0 1 0 0-2a1 1 0 0 0 0 2"/></symbol>
+  </svg>
+  <div class="preview">
+    <div class="preview-header">VIP会员卡片</div>
+    <div class="preview-body">
+      <div class="card">
+        <div class="vip-header">
+          <img class="vip-avatar" src="https://picsum.photos/seed/vip1/56/56" alt="头像">
+          <div class="vip-info">
+            <div class="vip-name">考拉搞AI</div>
+            <div class="vip-level"><svg class="icon icon-14 icon-warning"><use href="#i-crown"/></svg> SVIP</div>
+          </div>
+        </div>
+        <div class="vip-desc">开通VIP享专属权益，限时优惠中</div>
+        <div class="vip-rights">
+          <div class="vip-right">
+            <div class="vip-right-icon"><svg class="icon icon-18 icon-primary"><use href="#i-gift"/></svg></div>
+            <div class="vip-right-text">专属礼包</div>
+          </div>
+          <div class="vip-right">
+            <div class="vip-right-icon"><svg class="icon icon-18 icon-warning"><use href="#i-zap"/></svg></div>
+            <div class="vip-right-text">极速下载</div>
+          </div>
+          <div class="vip-right">
+            <div class="vip-right-icon"><svg class="icon icon-18 icon-primary"><use href="#i-palette"/></svg></div>
+            <div class="vip-right-text">专属主题</div>
+          </div>
+        </div>
+        <button class="vip-btn">立即开通</button>
+      </div>
+    </div>
+  </div>
+  <div class="param-bar">
+    <div class="param-title">参数</div>
+    <div class="param-row"><span class="param-key">layout:</span><span class="param-val">vip</span></div>
+    <div class="param-row"><span class="param-key">level:</span><span class="param-val">VIP / SVIP / 管理员</span></div>
+    <div class="param-row"><span class="param-key">showRights:</span><span class="param-val">true / false</span></div>
+    <div class="param-row"><span class="param-key">theme:</span><span class="param-val">gold / purple / blue</span></div>
+  </div>
+</body>
+</html>

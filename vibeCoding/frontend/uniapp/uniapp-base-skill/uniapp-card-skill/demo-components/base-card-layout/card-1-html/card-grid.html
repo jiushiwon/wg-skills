@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>功能网格卡片</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --color-primary: #07c160;
+      --color-bg-surface: #ffffff;
+      --color-text-primary: #1a1a1a;
+      --color-text-secondary: #666666;
+      --color-text-tertiary: #999999;
+      --radius-md: 12px;
+      --spacing-lg: 16px;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    body { background: #f0f0f0; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; }
+    .preview-header { height: 44px; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee; font-size: 16px; font-weight: 500; }
+    .preview-body { padding: 16px; }
+    .section-title { font-size: 14px; color: #666; margin-bottom: 8px; font-weight: 500; }
+    .card { background: #fff; border-radius: var(--radius-md); box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden; margin-bottom: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .grid-item { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 16px 8px; }
+    /* 风格1: 格子内部分割线 - 每个格子右下边框 */
+    .grid-inner .grid-item { border-right: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; }
+    .grid-inner .grid-item:nth-child(3n) { border-right: none; }
+    .grid-inner .grid-item:nth-last-child(-n+3) { border-bottom: none; }
+    /* 风格2: 行分隔线 - 每行一个grid，第二行开始有上边框，两侧留边距 */
+    .grid-row-line { position: relative; }
+    .grid-row-line::before { content: ''; position: absolute; left: 16px; right: 16px; top: 0; height: 1px; background: #f0f0f0; }
+    .card > .grid-row-line:first-child::before { display: none; }
+    /* 风格3: 无分隔线 */
+    .grid-none .grid-item { border: none; }
+    .grid-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; position: relative; }
+    .grid-icon img { width: 22px; height: 22px; }
+    .grid-label { font-size: 12px; color: #333; }
+    .grid-badge { position: absolute; top: -4px; right: -4px; min-width: 16px; height: 16px; padding: 0 4px; background: #ff4d4f; color: #fff; font-size: 10px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 90px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="preview">
+    <div class="preview-header">功能网格</div>
+    <div class="preview-body">
+      <!-- 风格1: 格子内部分割线 -->
+      <div class="section-title">风格1: 格子内部分割线</div>
+      <div class="card">
+        <div class="grid grid-inner">
+          <div class="grid-item">
+            <div class="grid-icon" style="background:#e8f5e9;">
+              <img src="https://api.iconify.design/mdi/shopping.svg?color=%2307c160">
+              <span class="grid-badge">3</span>
+            </div>
+            <span class="grid-label">订单</span>
+          </div>
+          <div class="grid-item">
+            <div class="grid-icon" style="background:#fff3e0;">
+              <img src="https://api.iconify.design/mdi/shop.svg?color=%23ff9800">
+            </div>
+            <span class="grid-label">商品</span>
+          </div>
+          <div class="grid-item">
+            <div class="grid-icon" style="background:#e3f2fd;">
+              <img src="https://api.iconify.design/mdi/account-group.svg?color=%232196f3">
+            </div>
+            <span class="grid-label">好友</span>
+          </div>
+          <div class="grid-item">
+            <div class="grid-icon" style="background:#fce4ec;">
+              <img src="https://api.iconify.design/mdi/heart.svg?color=%23e91e63">
+            </div>
+            <span class="grid-label">关注</span>
+          </div>
+          <div class="grid-item">
+            <div class="grid-icon" style="background:#f3e5f5;">
+              <img src="https://api.iconify.design/mdi/eye.svg?color=%239c27b0">
+            </div>
+            <span class="grid-label">浏览</span>
+          </div>
+          <div class="grid-item">
+            <div class="grid-icon" style="background:#e0f7fa;">
+              <img src="https://api.iconify.design/mdi/history.svg?color=%2300bcd4">
+            </div>
+            <span class="grid-label">足迹</span>
+          </div>
+        </div>
+      </div>
+      <!-- 风格2: 行分隔线 -->
+      <div class="section-title">风格2: 行分隔线</div>
+      <div class="card">
+        <div class="grid grid-row-line">
+          <div class="grid-item">
+            <div class="grid-icon" style="background:#fff8e1;">
+              <img src="https://api.iconify.design/mdi/cog.svg?color=%23ffc107">
+            </div>
+            <span class="grid-label">配置</span>
+          </div>
+          <div class="grid-item">
+            <div class="grid-icon" style="background:#efebe9;">
+              <img src="https://api.iconify.design/mdi/headset.svg?color=%23795548">
+            </div>
+            <span class="grid-label">客服</span>
+          </div>
+          <div class="grid-item">
+            <div class="grid-icon" style="background:#ede7f6;">
+              <img src="https://api.iconify.design/mdi/cog-outline.svg?color=%23673ab7">
+            </div>
+            <span class="grid-label">设置</span>
+          </div>
+        </div>
+        <div class="grid grid-row-line">
+          <div class="grid-item">
+            <div class="grid-icon" style="background:#e8f5e9;">
+              <img src="https://api.iconify.design/mdi/information.svg?color=%2307c160">
+            </div>
+            <span class="grid-label">关于</span>
+          </div>
+          <div class="grid-item">
+            <div class="grid-icon" style="background:#fff3e0;">
+              <img src="https://api.iconify.design/mdi/file-document.svg?color=%23ff9800">
+            </div>
+            <span class="grid-label">协议</span>
+          </div>
+          <div class="grid-item">
+            <div class="grid-icon" style="background:#e3f2fd;">
+              <img src="https://api.iconify.design/mdi/logout.svg?color=%232196f3">
+            </div>
+            <span class="grid-label">退出</span>
+          </div>
+        </div>
+      </div>
+      <!-- 风格3: 无分隔线 -->
+      <div class="section-title">风格3: 无分隔线</div>
+      <div class="card">
+        <div class="grid grid-none">
+          <div class="grid-item">
+            <div class="grid-icon" style="background:#fce4ec;">
+              <img src="https://api.iconify.design/mdi/star.svg?color=%23e91e63">
+            </div>
+            <span class="grid-label">收藏</span>
+          </div>
+          <div class="grid-item">
+            <div class="grid-icon" style="background:#e0f7fa;">
+              <img src="https://api.iconify.design/mdi/wallet.svg?color=%2300bcd4">
+            </div>
+            <span class="grid-label">钱包</span>
+          </div>
+          <div class="grid-item">
+            <div class="grid-icon" style="background:#fff8e1;">
+              <img src="https://api.iconify.design/mdi/clock.svg?color=%23ffc107">
+            </div>
+            <span class="grid-label">历史</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="param-bar">
+    <div class="param-title">参数</div>
+    <div class="param-row"><span class="param-key">layout:</span><span class="param-val">grid</span></div>
+    <div class="param-row"><span class="param-key">columns:</span><span class="param-val">3</span></div>
+    <div class="param-row"><span class="param-key">lineStyle:</span><span class="param-val">inner / row / none</span></div>
+    <div class="param-row"><span class="param-key">showBadge:</span><span class="param-val">true / false</span></div>
+    <div class="param-row"><span class="param-key">iconStyle:</span><span class="param-val">circle / square / rounded</span></div>
+  </div>
+</body>
+</html>

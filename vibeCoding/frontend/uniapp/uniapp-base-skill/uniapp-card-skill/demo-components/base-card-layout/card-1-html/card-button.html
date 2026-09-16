@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>按钮卡片</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --color-primary: #07c160;
+      --color-bg-surface: #ffffff;
+      --color-text-primary: #1a1a1a;
+      --color-text-secondary: #666666;
+      --color-text-tertiary: #999999;
+      --radius-md: 12px;
+      --spacing-lg: 16px;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    body { background: #f0f0f0; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; }
+    .preview-header { height: 44px; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee; font-size: 16px; font-weight: 500; }
+    .preview-body { padding: 16px; min-height: 500px; position: relative; }
+    .card { background: #fff; border-radius: var(--radius-md); box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden; margin-bottom: 16px; }
+    .card-title { font-size: 14px; font-weight: 600; color: #1a1a1a; padding: 12px 16px; border-bottom: 1px solid #f5f5f5; }
+    .btn-row { padding: 16px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0 20px; font-size: 14px; font-weight: 500; border-radius: 8px; cursor: pointer; border: none; outline: none; height: 40px; }
+    /* 背景色 */
+    .btn-primary { background: #07c160; color: #fff; }
+    .btn-secondary { background: #ff7a45; color: #fff; }
+    .btn-default { background: #fff; color: #333; border: 1px solid #e0e0e0; }
+    .btn-danger { background: #ff4d4f; color: #fff; }
+    .btn-warning { background: #ff9500; color: #fff; }
+    /* 尺寸 */
+    .btn-lg { height: 48px; padding: 0 24px; font-size: 16px; }
+    .btn-md { height: 40px; padding: 0 20px; font-size: 14px; }
+    .btn-sm { height: 32px; padding: 0 16px; font-size: 13px; }
+    .btn-xs { height: 24px; padding: 0 12px; font-size: 12px; }
+    /* 圆角 */
+    .radius-0 { border-radius: 0; }
+    .radius-sm { border-radius: 4px; }
+    .radius-md { border-radius: 8px; }
+    .radius-lg { border-radius: 12px; }
+    .radius-full { border-radius: 20px; }
+    /* 全宽 */
+    .btn-block { width: 100%; display: flex; }
+    /* 禁用 */
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    /* 底部悬浮按钮 - 全宽度 */
+    .fixed-bottom { position: absolute; bottom: 0; left: 0; right: 0; display: flex; }
+    .fixed-bottom-inner { width: 100%; padding: 16px; display: flex; gap: 12px; background: transparent; }
+    .fixed-bottom-inner .btn { flex: 1; height: 44px; border-radius: 22px; }
+    .section-title { font-size: 14px; color: #666; margin-bottom: 8px; font-weight: 500; }
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: var(--color-primary); width: 90px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="preview">
+    <div class="preview-header">按钮卡片</div>
+    <div class="preview-body">
+      <!-- 背景色 -->
+      <div class="section-title">背景色</div>
+      <div class="card">
+        <div class="btn-row">
+          <button class="btn btn-primary">主色</button>
+          <button class="btn btn-secondary">次色</button>
+          <button class="btn btn-default">默认</button>
+          <button class="btn btn-danger">危险</button>
+          <button class="btn btn-warning">警告</button>
+        </div>
+      </div>
+      <!-- 尺寸 -->
+      <div class="section-title">尺寸</div>
+      <div class="card">
+        <div class="btn-row">
+          <button class="btn btn-primary btn-lg">大</button>
+          <button class="btn btn-primary btn-md">中</button>
+          <button class="btn btn-primary btn-sm">小</button>
+          <button class="btn btn-primary btn-xs">迷你</button>
+        </div>
+      </div>
+      <!-- 圆角 -->
+      <div class="section-title">圆角</div>
+      <div class="card">
+        <div class="btn-row">
+          <button class="btn btn-primary radius-0">无</button>
+          <button class="btn btn-primary radius-sm">小</button>
+          <button class="btn btn-primary radius-md">中</button>
+          <button class="btn btn-primary radius-lg">大</button>
+          <button class="btn btn-primary radius-full">圆形</button>
+        </div>
+      </div>
+      <!-- 全宽 -->
+      <div class="section-title">全宽</div>
+      <div class="card">
+        <div class="btn-row">
+          <button class="btn btn-primary btn-block">全宽按钮</button>
+        </div>
+      </div>
+      <!-- 图标 -->
+      <div class="section-title">图标</div>
+      <div class="card">
+        <div class="btn-row">
+          <button class="btn btn-primary"><img src="https://api.iconify.design/mdi/plus.svg?color=%23fff" style="width:16px;height:16px;margin-right:4px;">新增</button>
+          <button class="btn btn-default"><img src="https://api.iconify.design/mdi/search.svg?color=%23333" style="width:16px;height:16px;margin-right:4px;">搜索</button>
+          <button class="btn btn-danger"><img src="https://api.iconify.design/mdi/delete.svg?color=%23fff" style="width:16px;height:16px;margin-right:4px;">删除</button>
+          <button class="btn btn-primary" style="padding:0;width:40px;"><img src="https://api.iconify.design/mdi/plus.svg?color=%23fff" style="width:18px;height:18px;"></button>
+        </div>
+      </div>
+      <!-- 状态 -->
+      <div class="section-title">状态</div>
+      <div class="card">
+        <div class="btn-row">
+          <button class="btn btn-primary">正常</button>
+          <button class="btn btn-primary" disabled>禁用</button>
+        </div>
+      </div>
+      <!-- 固定底部悬浮 -->
+      <div class="section-title">固定底部悬浮</div>
+      <div class="card" style="min-height: 200px; position: relative; margin-bottom: 60px;">
+        <div style="padding: 16px; color: #999; text-align: center;">页面内容区域</div>
+        <!-- 全宽度底部悬浮，内部容器有背景和圆角 -->
+        <div class="fixed-bottom">
+          <div class="fixed-bottom-inner">
+            <button class="btn btn-default">取消</button>
+            <button class="btn btn-primary">确定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="param-bar">
+    <div class="param-title">参数</div>
+    <div class="param-row"><span class="param-key">layout:</span><span class="param-val">button</span></div>
+    <div class="param-row"><span class="param-key">type:</span><span class="param-val">primary / secondary / default / danger / warning</span></div>
+    <div class="param-row"><span class="param-key">size:</span><span class="param-val">xs / sm / md / lg</span></div>
+    <div class="param-row"><span class="param-key">radius:</span><span class="param-val">0 / 4px / 8px / 12px / 20px</span></div>
+    <div class="param-row"><span class="param-key">icon:</span><span class="param-val">true / false</span></div>
+    <div class="param-row"><span class="param-key">iconPosition:</span><span class="param-val">left / right</span></div>
+    <div class="param-row"><span class="param-key">iconOnly:</span><span class="param-val">true / false</span></div>
+    <div class="param-row"><span class="param-key">block:</span><span class="param-val">true / false</span></div>
+    <div class="param-row"><span class="param-key">fixed:</span><span class="param-val">true / false</span></div>
+    <div class="param-row"><span class="param-key">position:</span><span class="param-val">bottom / top</span></div>
+    <div class="param-row"><span class="param-key">status:</span><span class="param-val">default / disabled / loading</span></div>
+  </div>
+</body>
+</html>

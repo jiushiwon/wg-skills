@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>收藏设置 - 分组卡片</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #f5f5f5; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+    .preview { max-width: 375px; margin: 0 auto; background: #f5f5f5; }
+    .preview-header { height: 44px; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee; font-size: 16px; font-weight: 500; }
+    .preview-body { padding: 16px; }
+
+    /* 大卡片容器 - 圆角+间距+阴影 */
+    .setting-group {
+      background: #fff;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      overflow: hidden;
+    }
+    .setting-group:last-child { margin-bottom: 0; }
+
+    /* 小卡片 - 无圆角，border分割 */
+    .setting-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .setting-item:last-child { border-bottom: none; }
+
+    .setting-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: #e6f7ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .setting-icon img { width: 16px; height: 16px; }
+    .setting-info { flex: 1; }
+    .setting-title { font-size: 15px; color: #333; }
+    .setting-desc { font-size: 12px; color: #999; margin-top: 2px; }
+    .setting-switch {
+      width: 44px;
+      height: 24px;
+      background: #ddd;
+      border-radius: 12px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .setting-switch.on { background: #07c160; }
+    .setting-switch::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border-radius: 50%;
+      top: 2px;
+      left: 2px;
+      transition: 0.2s;
+    }
+    .setting-switch.on::after { left: 22px; }
+    .setting-arrow {
+      font-size: 16px;
+      color: #ccc;
+      flex-shrink: 0;
+    }
+
+    .param-bar { background: #f7f7f7; padding: 12px; border-radius: 8px; margin-top: 16px; }
+    .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
+    .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
+    .param-key { color: #07c160; width: 70px; }
+    .param-val { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="preview">
+    <div class="preview-header">收藏设置</div>
+    <div class="preview-body">
+      <!-- 大卡片1: 通知设置 -->
+      <div class="setting-group">
+        <div class="setting-item">
+          <div class="setting-icon"><img src="../static/icons/bell.svg" alt="bell"></div>
+          <div class="setting-info">
+            <div class="setting-title">降价通知</div>
+            <div class="setting-desc">商品降价时通知您</div>
+          </div>
+          <div class="setting-switch on"></div>
+        </div>
+        <div class="setting-item">
+          <div class="setting-icon" style="background:#fff7e6;"><img src="../static/icons/mail.svg" alt="mail"></div>
+          <div class="setting-info">
+            <div class="setting-title">库存紧张提醒</div>
+            <div class="setting-desc">商品库存不足时通知</div>
+          </div>
+          <div class="setting-switch on"></div>
+        </div>
+        <div class="setting-item">
+          <div class="setting-icon" style="background:#f6ffed;"><img src="../static/icons/clock.svg" alt="clock"></div>
+          <div class="setting-info">
+            <div class="setting-title">下架提醒</div>
+            <div class="setting-desc">商品即将下架时通知</div>
+          </div>
+          <div class="setting-switch"></div>
+        </div>
+      </div>
+
+      <!-- 大卡片2: 其他设置 -->
+      <div class="setting-group">
+        <div class="setting-item">
+          <div class="setting-icon" style="background:#fff1f0;"><img src="../static/icons/gift.svg" alt="gift"></div>
+          <div class="setting-info">
+            <div class="setting-title">优惠活动</div>
+            <div class="setting-desc">收藏商品优惠活动通知</div>
+          </div>
+          <div class="setting-switch on"></div>
+        </div>
+        <div class="setting-item">
+          <div class="setting-icon" style="background:#f0f5ff;"><img src="../static/icons/settings.svg" alt="settings"></div>
+          <div class="setting-info">
+            <div class="setting-title">其他设置</div>
+            <div class="setting-desc">更多偏好设置</div>
+          </div>
+          <span class="setting-arrow">›</span>
+        </div>
+        <div class="setting-item">
+          <div class="setting-icon" style="background:#fff0f6;"><img src="../static/icons/help-circle.svg" alt="help"></div>
+          <div class="setting-info">
+            <div class="setting-title">帮助中心</div>
+            <div class="setting-desc">常见问题解答</div>
+          </div>
+          <span class="setting-arrow">›</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="param-bar">
+    <div class="param-title">base-card 参数</div>
+    <div class="param-row"><span class="param-key">大卡片 radius:</span><span class="param-val">12px</span></div>
+    <div class="param-row"><span class="param-key">大卡片 margin:</span><span class="param-val">16px（间距）</span></div>
+    <div class="param-row"><span class="param-key">小卡片 radius:</span><span class="param-val">0</span></div>
+    <div class="param-row"><span class="param-key">小卡片 border:</span><span class="param-val">1px solid #f0f0f0</span></div>
+  </div>
+</body>
+</html>

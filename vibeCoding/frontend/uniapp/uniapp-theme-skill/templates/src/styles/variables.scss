@@ -1,0 +1,81 @@
+@use 'config/theme-config' as cfg;
+@use 'tokens/primitive' as prim;
+@use 'tokens/semantic' as sem;
+@use 'functions' as fn;
+
+@forward 'config/theme-config';
+@forward 'tokens/primitive';
+@forward 'tokens/semantic';
+@forward 'functions';
+
+page {
+  --color-primary: #{prim.$color-primary};
+  --color-primary-light: #{prim.$color-primary-light};
+  --color-primary-dark: #{prim.$color-primary-dark};
+
+  --color-secondary: #{if(prim.$color-secondary, prim.$color-secondary, 'inherit')};
+  --color-tertiary: #{if(prim.$color-tertiary, prim.$color-tertiary, 'inherit')};
+
+  --color-success: #{prim.$color-success};
+  --color-warning: #{prim.$color-warning};
+  --color-error: #{prim.$color-error};
+  --color-info: #{prim.$color-info};
+
+  --color-text-primary: #{prim.$color-text-primary};
+  --color-text-secondary: #{prim.$color-text-secondary};
+  --color-text-tertiary: #{prim.$color-text-tertiary};
+  --color-text-inverse: #{prim.$color-text-inverse};
+
+  --color-bg-page: #{prim.$color-bg-page};
+  --color-bg-card: #{prim.$color-bg-card};
+  --color-bg-light: #{prim.$color-bg-secondary};
+
+  --color-border: #{prim.$color-border};
+  --color-border-light: #{prim.$color-border-light};
+
+  --font-2xs: #{prim.$font-2xs};
+  --font-xs: #{prim.$font-xs};
+  --font-sm: #{prim.$font-sm};
+  --font-md: #{prim.$font-md};
+  --font-lg: #{prim.$font-lg};
+  --font-xl: #{prim.$font-xl};
+  --font-2xl: #{prim.$font-2xl};
+  --font-3xl: #{prim.$font-3xl};
+
+  --space-0: #{prim.$space-0};
+  --space-1: #{prim.$space-1};
+  --space-2: #{prim.$space-2};
+  --space-3: #{prim.$space-3};
+  --space-4: #{prim.$space-4};
+  --space-5: #{prim.$space-5};
+  --space-6: #{prim.$space-6};
+  --space-7: #{prim.$space-7};
+  --space-8: #{prim.$space-8};
+  --space-10: #{prim.$space-10};
+  --space-12: #{prim.$space-12};
+  --space-14: #{prim.$space-14};
+  --space-16: #{prim.$space-16};
+  --space-20: #{prim.$space-20};
+  --space-24: #{prim.$space-24};
+
+  --radius-none: #{prim.$radius-none};
+  --radius-sm: #{prim.$radius-sm};
+  --radius-md: #{prim.$radius-md};
+  --radius-lg: #{prim.$radius-lg};
+  --radius-xl: #{prim.$radius-xl};
+  --radius-full: #{prim.$radius-full};
+
+  --height-btn-sm: #{prim.$height-btn-sm};
+  --height-btn-md: #{prim.$height-btn-md};
+  --height-btn-lg: #{prim.$height-btn-lg};
+
+  --icon-xs: #{prim.$icon-xs};
+  --icon-sm: #{prim.$icon-sm};
+  --icon-md: #{prim.$icon-md};
+  --icon-lg: #{prim.$icon-lg};
+  --icon-xl: #{prim.$icon-xl};
+
+  --shadow-sm: #{prim.$shadow-sm};
+  --shadow-md: #{prim.$shadow-md};
+  --shadow-lg: #{prim.$shadow-lg};
+}

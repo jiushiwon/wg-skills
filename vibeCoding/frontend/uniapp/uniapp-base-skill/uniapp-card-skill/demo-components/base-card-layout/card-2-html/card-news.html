@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新闻卡片 - 标题 + 摘要 + 缩略图 + 来源</title>
+  <link rel="stylesheet" href="../../../../demo-components/shared/base-preview.css" />
+  <style>
+    .news-list { padding: 0; }
+    .news-item {
+      display: flex;
+      gap: var(--space-3);
+      padding: var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .news-item:last-child { border-bottom: none; }
+    .news-content { flex: 1; min-width: 0; }
+    .news-headline-row {
+      display: flex; align-items: center; gap: var(--space-2);
+    }
+    .news-headline {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-text);
+      line-height: 1.4;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .news-hot {
+      font-size: 10px;
+      padding: 1px 5px;
+      background: #ef4444;
+      color: #fff;
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+    }
+    .news-summary {
+      margin-top: var(--space-2);
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .news-meta {
+      display: flex; gap: var(--space-2);
+      margin-top: var(--space-3);
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+      align-items: center;
+    }
+    .news-source {
+      font-weight: 500;
+      color: var(--color-text-secondary);
+    }
+    .news-meta-divider { color: var(--color-text-tertiary); }
+
+    /* Demo 标题（phone shell 底部、param-bar 顶部） */
+    .case-title {
+      max-width: 375px;
+      margin: 16px auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    .case-title-desc {
+      max-width: 375px;
+      margin: 0 auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+    }
+    .news-thumb {
+      width: 100px; height: 70px;
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+      background-image: url('https://picsum.photos/seed/news1/300/200');
+      background-size: cover;
+      background-position: center;
+      align-self: flex-start;
+    }
+    .news-thumb.thumb-2 {
+      background-image: url('https://picsum.photos/seed/news2/300/200');
+    }
+  </style>
+</head>
+<body>
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="i-trending-up" viewBox="0 0 24 24">
+      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <polyline points="17 6 23 6 23 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    </symbol>
+  </svg>
+
+  <div class="preview base-card">
+    <div class="preview-header base-card__header">新闻卡片 · 列表型</div>
+    <div class="preview-body base-card__body" style="padding: 0;">
+      <div class="news-list">
+        <div class="news-item">
+          <div class="news-content">
+            <div class="news-headline-row">
+              <div class="news-headline">
+                苹果发布新一代 M4 芯片：性能提升 40%，AI 算力翻倍
+              </div>
+              <span class="news-hot">
+                <svg class="icon icon-10"><use href="#i-trending-up"/></svg>
+                热
+              </span>
+            </div>
+            <div class="news-summary">
+              苹果在最新发布会上正式推出 M4 Pro 与 M4 Max 芯片，采用第二代 3nm 制程，神经网络引擎算力提升至 38 TOPS…
+            </div>
+            <div class="news-meta">
+              <span class="news-source">科技日报</span>
+              <span class="news-meta-divider">·</span>
+              <span>2.3 万阅读</span>
+              <span class="news-meta-divider">·</span>
+              <span>30 分钟前</span>
+            </div>
+          </div>
+          <div class="news-thumb"></div>
+        </div>
+
+        <div class="news-item">
+          <div class="news-content">
+            <div class="news-headline-row">
+              <div class="news-headline">
+                国务院发布数字经济发展新规划：2026 年规模突破 60 万亿
+              </div>
+            </div>
+            <div class="news-summary">
+              规划明确提出加快数字基础设施升级、推动产业数字化转型、深化数据要素市场化配置改革等十大重点任务…
+            </div>
+            <div class="news-meta">
+              <span class="news-source">人民网</span>
+              <span class="news-meta-divider">·</span>
+              <span>5.1 万阅读</span>
+              <span class="news-meta-divider">·</span>
+              <span>1 小时前</span>
+            </div>
+          </div>
+          <div class="news-thumb thumb-2"></div>
+        </div>
+
+        <div class="news-item">
+          <div class="news-content">
+            <div class="news-headline-row">
+              <div class="news-headline">
+                国内首条自动驾驶公交线路在深落地，全程 23 公里
+              </div>
+            </div>
+            <div class="news-summary">
+              线路覆盖深圳前海合作区至宝安中心区，配备 12 辆 L4 级自动驾驶巴士，初期免费向市民开放体验…
+            </div>
+            <div class="news-meta">
+              <span class="news-source">南方都市报</span>
+              <span class="news-meta-divider">·</span>
+              <span>1.8 万阅读</span>
+              <span class="news-meta-divider">·</span>
+              <span>2 小时前</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-title">card-news</div>
+  <div class="case-title-desc">新闻卡片 · 标题 + 热门徽标 + 摘要 + 来源 + 缩略图</div>
+
+  <div class="param-bar">
+    <div class="param-title">card-news Props</div>
+    <div class="param-row"><span class="param-key">headline:</span><span class="param-val">string ｜ 标题</span></div>
+    <div class="param-row"><span class="param-key">summary:</span><span class="param-val">string ｜ 摘要</span></div>
+    <div class="param-row"><span class="param-key">source:</span><span class="param-val">string ｜ 来源</span></div>
+    <div class="param-row"><span class="param-key">views:</span><span class="param-val">number ｜ 阅读数</span></div>
+    <div class="param-row"><span class="param-key">time:</span><span class="param-val">string ｜ 发布时间</span></div>
+    <div class="param-row"><span class="param-key">thumb:</span><span class="param-val">string ｜ 缩略图（可选）</span></div>
+    <div class="param-row"><span class="param-key">hot:</span><span class="param-val">boolean ｜ 是否热门</span></div>
+    <div class="param-row"><span class="param-key">容器:</span><span class="param-val">base-card 作为根容器</span></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文章卡片 - 封面 + 作者 + 摘要</title>
+  <link rel="stylesheet" href="../../../../demo-components/shared/base-preview.css" />
+  <style>
+    .article-card { padding: 0; }
+    .article-cover {
+      aspect-ratio: 16 / 9;
+      background-image: url('https://picsum.photos/seed/article1/640/360');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .article-cover::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.3));
+    }
+    .article-category {
+      position: absolute;
+      top: var(--space-3);
+      left: var(--space-3);
+      padding: 3px 10px;
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      font-size: 11px;
+      border-radius: var(--radius-sm);
+      backdrop-filter: blur(4px);
+    }
+    .article-body {
+      padding: var(--space-4);
+    }
+    .article-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--color-text);
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .article-summary {
+      margin-top: var(--space-2);
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .article-footer {
+      display: flex;
+      align-items: center;
+      margin-top: var(--space-4);
+      gap: var(--space-2);
+    }
+    .article-avatar {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background-image: url('https://picsum.photos/seed/author1/48/48');
+      background-size: cover;
+      background-position: center;
+      flex-shrink: 0;
+    }
+    .article-author {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      flex: 1;
+    }
+    .article-stats {
+      display: flex; gap: var(--space-3);
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+    }
+    .article-stats span {
+      display: flex; align-items: center; gap: 3px;
+    }
+
+    /* Demo 标题（phone shell 底部、param-bar 顶部） */
+    .case-title {
+      max-width: 375px;
+      margin: 16px auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    .case-title-desc {
+      max-width: 375px;
+      margin: 0 auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+    }
+  </style>
+</head>
+<body>
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="i-eye" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/>
+      <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+    </symbol>
+    <symbol id="i-message-circle" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+    </symbol>
+    <symbol id="i-bookmark" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+    </symbol>
+  </svg>
+
+  <div class="preview base-card">
+    <div class="preview-header base-card__header">文章卡片 · 16:9 封面</div>
+    <div class="preview-body base-card__body" style="padding: 0;">
+      <div class="article-card">
+        <div class="article-cover">
+          <span class="article-category">技术</span>
+        </div>
+
+        <div class="article-body">
+          <div class="article-title">
+            从零搭建企业级 uni-app 组件库：架构、设计、落地全流程
+          </div>
+          <div class="article-summary">
+            本文从架构设计到代码落地，系统讲解如何从 0 到 1 搭建一套可维护、可扩展、跨端兼容的 uni-app 组件库，涵盖设计规范、主题系统、组件封装、单元测试…
+          </div>
+
+          <div class="article-footer">
+            <div class="article-avatar"></div>
+            <span class="article-author">考拉搞 AI</span>
+            <div class="article-stats">
+              <span>
+                <svg class="icon icon-12"><use href="#i-eye"/></svg>
+                8.6k
+              </span>
+              <span>
+                <svg class="icon icon-12"><use href="#i-message-circle"/></svg>
+                42
+              </span>
+              <span>
+                <svg class="icon icon-12"><use href="#i-bookmark"/></svg>
+                156
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-title">card-article</div>
+  <div class="case-title-desc">文章卡片 · 16:9 封面 + 分类角标 + 标题 + 摘要 + 作者 + 数据</div>
+
+  <div class="param-bar">
+    <div class="param-title">card-article Props</div>
+    <div class="param-row"><span class="param-key">cover:</span><span class="param-val">string ｜ 封面 URL</span></div>
+    <div class="param-row"><span class="param-key">category:</span><span class="param-val">string ｜ 分类角标</span></div>
+    <div class="param-row"><span class="param-key">title:</span><span class="param-val">string ｜ 文章标题</span></div>
+    <div class="param-row"><span class="param-key">summary:</span><span class="param-val">string ｜ 摘要</span></div>
+    <div class="param-row"><span class="param-key">author:</span><span class="param-val">string ｜ 作者</span></div>
+    <div class="param-row"><span class="param-key">avatar:</span><span class="param-val">string ｜ 作者头像</span></div>
+    <div class="param-row"><span class="param-key">views:</span><span class="param-val">number ｜ 阅读量</span></div>
+    <div class="param-row"><span class="param-key">comments:</span><span class="param-val">number ｜ 评论数</span></div>
+    <div class="param-row"><span class="param-key">bookmarks:</span><span class="param-val">number ｜ 收藏数</span></div>
+    <div class="param-row"><span class="param-key">容器:</span><span class="param-val">base-card 作为根容器</span></div>
+  </div>
+</body>
+</html>

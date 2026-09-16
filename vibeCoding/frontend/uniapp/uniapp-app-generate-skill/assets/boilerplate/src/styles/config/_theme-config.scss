@@ -1,0 +1,23 @@
+// 主题唯一人工配置入口：由 theme.json 自动生成
+// 修改 theme.json 后运行 npm run theme:sync 同步
+
+// 主色
+$theme-primary: #10b981;
+
+// 功能色
+$theme-success: #4caf50;
+$theme-warning: #ff9800;
+$theme-error: #f44336;
+$theme-info: #2196f3;
+
+// 灰阶基础
+$theme-gray-base: #6b7280;
+
+// 间距基数
+$theme-spacing-base: 4rpx;
+
+// 字体基数
+$theme-font-base: 12rpx;
+
+// 圆角基数
+$theme-radius-base: 4rpx;

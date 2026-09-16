@@ -1,0 +1,19 @@
+{
+  "colors": {
+    "primary": "#10b981",
+    "success": "#4caf50",
+    "warning": "#ff9800",
+    "error": "#f44336",
+    "info": "#2196f3",
+    "grayBase": "#6b7280"
+  },
+  "spacing": {
+    "base": "4rpx"
+  },
+  "font": {
+    "base": "12rpx"
+  },
+  "radius": {
+    "base": "4rpx"
+  }
+}

@@ -1,0 +1,88 @@
+$theme-primary: #14b8a6;
+$theme-secondary: #6366f1;
+$theme-tertiary: #f59e0b;
+$theme-quaternary: null;
+$theme-quinary: null;
+
+$theme-success: #16ac57;
+$theme-warning: #f59e0b;
+$theme-error: #dc2626;
+$theme-info: #3b82f6;
+
+$theme-font-base: 28;
+$theme-spacing-base: 4;
+$theme-radius-base: 4;
+
+$theme-font-scale: (
+  '2xs': 0.75,
+  'xs': 0.857,
+  'sm': 0.929,
+  'md': 1,
+  'lg': 1.071,
+  'xl': 1.214,
+  '2xl': 1.429,
+  '3xl': 1.714,
+  '4xl': 2
+);
+
+$theme-spacing-scale: (
+  '0': 0,
+  '1': 1,
+  '2': 2,
+  '3': 3,
+  '4': 4,
+  '5': 5,
+  '6': 6,
+  '7': 7,
+  '8': 8,
+  '10': 10,
+  '12': 12,
+  '14': 14,
+  '16': 16,
+  '20': 20,
+  '24': 24
+);
+
+$theme-radius-scale: (
+  'none': 0,
+  'sm': 2,
+  'md': 4,
+  'lg': 6,
+  'xl': 8,
+  'full': 9999
+);
+
+$theme-height-scale: (
+  'btn-sm': 56,
+  'btn-md': 72,
+  'btn-lg': 88,
+  'input-sm': 56,
+  'input-md': 64,
+  'input-lg': 72,
+  'avatar-sm': 64,
+  'avatar-md': 96,
+  'avatar-lg': 128
+);
+
+$theme-icon-scale: (
+  'xs': 24,
+  'sm': 36,
+  'md': 48,
+  'lg': 72,
+  'xl': 96
+);
+
+$theme-font-weight-scale: (
+  'normal': 400,
+  'medium': 500,
+  'semibold': 600,
+  'bold': 700
+);
+
+$theme-line-height-scale: (
+  'tight': 1.25,
+  'normal': 1.5,
+  'relaxed': 1.75
+);
+
+$theme-shadow-opacity: 0.06;

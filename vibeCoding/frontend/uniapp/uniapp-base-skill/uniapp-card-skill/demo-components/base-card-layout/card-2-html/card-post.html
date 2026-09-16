@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>动态卡片 - 朋友圈 / 微博</title>
+  <link rel="stylesheet" href="../../../../demo-components/shared/base-preview.css" />
+  <style>
+    /* 业务专属样式 */
+    .post-card { padding: 0; }
+    .post-header {
+      display: flex; align-items: center; gap: var(--space-3);
+      padding: var(--space-4);
+    }
+    .post-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, #fbbf24, #f97316);
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 16px; font-weight: 600;
+    }
+    .post-meta { flex: 1; min-width: 0; }
+    .post-name {
+      font-size: 15px; font-weight: 600; color: var(--color-text);
+      display: flex; align-items: center; gap: var(--space-2);
+    }
+    .post-name-tag {
+      font-size: 10px; padding: 1px 6px;
+      background: var(--color-primary);
+      color: #fff; border-radius: var(--radius-sm);
+      font-weight: 400;
+    }
+    .post-time {
+      font-size: 12px; color: var(--color-text-tertiary);
+      margin-top: 2px;
+    }
+    .post-more {
+      color: var(--color-text-tertiary);
+      cursor: pointer;
+      padding: var(--space-2);
+    }
+
+    .post-content {
+      padding: 0 var(--space-4) var(--space-3);
+      font-size: 15px; line-height: 1.6; color: var(--color-text);
+    }
+
+    .post-images {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-2);
+      padding: 0 var(--space-4) var(--space-3);
+    }
+    .post-image {
+      aspect-ratio: 1 / 1;
+      border-radius: var(--radius-sm);
+      background-size: cover;
+      background-position: center;
+    }
+    .post-image:nth-child(1) { background-image: url('https://picsum.photos/seed/post1/300/300'); }
+    .post-image:nth-child(2) { background-image: url('https://picsum.photos/seed/post2/300/300'); }
+    .post-image:nth-child(3) { background-image: url('https://picsum.photos/seed/post3/300/300'); }
+
+    .post-location {
+      padding: 0 var(--space-4) var(--space-3);
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      display: flex; align-items: center; gap: var(--space-1);
+    }
+
+    .post-actions {
+      display: flex; gap: var(--space-4);
+      padding: var(--space-3) var(--space-4);
+      border-top: 1px solid var(--color-border);
+    }
+    .post-action {
+      display: flex; align-items: center; gap: var(--space-1);
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+    }
+    .post-action.liked { color: var(--color-primary); }
+
+    /* Demo 标题（phone shell 底部、param-bar 顶部） */
+    .case-title {
+      max-width: 375px;
+      margin: 16px auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    .case-title-desc {
+      max-width: 375px;
+      margin: 0 auto 8px;
+      padding: 0 var(--space-4);
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+    }
+  </style>
+</head>
+<body>
+  <!-- 内联图标 sprite -->
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="i-more-horizontal" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+      <circle cx="5" cy="12" r="1.5" fill="currentColor"/>
+      <circle cx="19" cy="12" r="1.5" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+    </symbol>
+    <symbol id="i-message-circle" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+    </symbol>
+    <symbol id="i-share" viewBox="0 0 24 24">
+      <circle cx="18" cy="5" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+      <circle cx="6" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+      <circle cx="18" cy="19" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+      <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" stroke="currentColor" stroke-width="2"/>
+      <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" stroke="currentColor" stroke-width="2"/>
+    </symbol>
+    <symbol id="i-map-pin" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+      <circle cx="12" cy="10" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+    </symbol>
+  </svg>
+
+  <div class="preview base-card">
+    <div class="preview-header base-card__header">动态卡片 · 朋友圈</div>
+    <div class="preview-body base-card__body" style="padding: 0;">
+      <div class="post-card">
+        <div class="post-header">
+          <div class="post-avatar">考</div>
+          <div class="post-meta">
+            <div class="post-name">
+              考拉搞 AI
+              <span class="post-name-tag">作者</span>
+            </div>
+            <div class="post-time">15 分钟前</div>
+          </div>
+          <div class="post-more">
+            <svg class="icon icon-18"><use href="#i-more-horizontal"/></svg>
+          </div>
+        </div>
+
+        <div class="post-content">
+          今天的夕阳真好看，下班路上随手拍的，分享给大家。<br>
+          工作之余也要记得抬头看看天空呀～
+        </div>
+
+        <div class="post-images">
+          <div class="post-image"></div>
+          <div class="post-image"></div>
+          <div class="post-image"></div>
+        </div>
+
+        <div class="post-location">
+          <svg class="icon icon-12"><use href="#i-map-pin"/></svg>
+          <span>北京市 · 海淀区</span>
+        </div>
+
+        <div class="post-actions">
+          <div class="post-action liked">
+            <svg class="icon icon-14"><use href="#i-heart"/></svg>
+            <span>128</span>
+          </div>
+          <div class="post-action">
+            <svg class="icon icon-14"><use href="#i-message-circle"/></svg>
+            <span>16</span>
+          </div>
+          <div class="post-action">
+            <svg class="icon icon-14"><use href="#i-share"/></svg>
+            <span>分享</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-title">card-post</div>
+  <div class="case-title-desc">动态卡片 · 头像 + 作者徽标 + 内容 + 多图 + 位置 + 互动</div>
+
+  <div class="param-bar">
+    <div class="param-title">card-post Props</div>
+    <div class="param-row"><span class="param-key">avatar:</span><span class="param-val">string ｜ 头像 URL 或首字</span></div>
+    <div class="param-row"><span class="param-key">name:</span><span class="param-val">string ｜ 用户名</span></div>
+    <div class="param-row"><span class="param-key">time:</span><span class="param-val">string ｜ 发布时间</span></div>
+    <div class="param-row"><span class="param-key">content:</span><span class="param-val">string ｜ 文字内容</span></div>
+    <div class="param-row"><span class="param-key">images:</span><span class="param-val">string[] ｜ 图片列表（最多 9 张）</span></div>
+    <div class="param-row"><span class="param-key">location:</span><span class="param-val">string ｜ 地理位置（可选）</span></div>
+    <div class="param-row"><span class="param-key">stats:</span><span class="param-val">object ｜ { likes, comments }</span></div>
+    <div class="param-row"><span class="param-key">容器:</span><span class="param-val">base-card 作为根容器</span></div>
+  </div>
+</body>
+</html>
