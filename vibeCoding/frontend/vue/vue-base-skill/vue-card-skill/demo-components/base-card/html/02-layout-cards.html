@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>vue-card-skill · 02 Layout 卡片</title>
+<link rel="stylesheet" href="../../shared/tokens.css" />
+<link rel="stylesheet" href="../../shared/icons.css" />
+<link rel="stylesheet" href="../../shared/demo.css" />
+</head>
+<body>
+<div class="page">
+
+  <!-- ===== 页头 ===== -->
+  <div class="page-header">
+    <h1>Layout 卡片 · 8 种业务模式</h1>
+    <p>basic · product · profile · friend · set · vip · menu · grid</p>
+    <div class="nav">
+      <a href="00-showcase.html">总览</a>
+      <a href="01-base-card.html">参数矩阵</a>
+      <a href="02-layout-cards.html" class="active">Layout 卡片</a>
+      <a href="03-flow-cards.html">信息流卡片</a>
+    </div>
+  </div>
+
+  <div class="layout-with-side">
+
+    <!-- ===== 侧边目录 ===== -->
+    <aside class="side-nav">
+      <div class="side-nav__title">8 种 Layout</div>
+      <a href="#basic" class="side-nav__link active"><span class="icon icon--grid"></span> card-basic</a>
+      <a href="#product" class="side-nav__link"><span class="icon icon--cart"></span> card-product</a>
+      <a href="#profile" class="side-nav__link"><span class="icon icon--user"></span> card-profile</a>
+      <a href="#friend" class="side-nav__link"><span class="icon icon--chat"></span> card-friend</a>
+      <a href="#set" class="side-nav__link"><span class="icon icon--settings"></span> card-set</a>
+      <a href="#vip" class="side-nav__link"><span class="icon icon--crown"></span> card-vip</a>
+      <a href="#menu" class="side-nav__link"><span class="icon icon--home"></span> card-menu</a>
+      <a href="#grid" class="side-nav__link"><span class="icon icon--grid"></span> card-grid</a>
+    </aside>
+
+    <main>
+
+    <!-- ===== 1. card-basic ===== -->
+    <section id="basic" class="section">
+      <div class="section-header">
+        <span class="section-num">1</span>
+        <h2>card-basic · 基础卡片</h2>
+        <span class="cat-tag cat-tag--layout">Layout</span>
+        <span class="badge">title + desc + content</span>
+      </div>
+
+      <div class="matrix-grid grid-2">
+
+        <div class="base-card base-card--radius-lg base-card--padding-md base-card--shadow-sm">
+          <div class="base-card__header base-card--has-header-border">
+            <div class="base-card__header-main">
+              <div class="base-card__title">账户安全</div>
+              <p class="base-card__desc">管理密码与登录方式</p>
+            </div>
+          </div>
+          <div class="base-card__body">
+            <p style="color:var(--color-text-secondary);font-size:var(--font-sm);">已开启双因素认证，登录设备 3 台</p>
+          </div>
+        </div>
+
+        <div class="base-card base-card--radius-lg base-card--padding-md base-card--shadow-sm">
+          <div class="base-card__header base-card--has-header-border">
+            <div class="base-card__header-main">
+              <div class="base-card__title">数据看板</div>
+              <p class="base-card__desc">实时业务指标</p>
+            </div>
+            <div class="base-card__header-right">
+              <span class="base-tag base-tag--success">实时</span>
+              <span class="base-button base-button--ghost base-button--sm">刷新</span>
+            </div>
+          </div>
+          <div class="base-card__body">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-3);">
+              <div style="padding:var(--space-3);background:var(--color-bg);border-radius:var(--radius-md);">
+                <div style="font-size:var(--font-xs);color:var(--color-text-tertiary);">用户数</div>
+                <div style="font-size:var(--font-2xl);font-weight:var(--weight-bold);margin-top:var(--space-1);">12,834</div>
+              </div>
+              <div style="padding:var(--space-3);background:var(--color-bg);border-radius:var(--radius-md);">
+                <div style="font-size:var(--font-xs);color:var(--color-text-tertiary);">订单数</div>
+                <div style="font-size:var(--font-2xl);font-weight:var(--weight-bold);margin-top:var(--space-1);">856</div>
+              </div>
+              <div style="padding:var(--space-3);background:var(--color-bg);border-radius:var(--radius-md);">
+                <div style="font-size:var(--font-xs);color:var(--color-text-tertiary);">营收</div>
+                <div style="font-size:var(--font-2xl);font-weight:var(--weight-bold);margin-top:var(--space-1);color:var(--color-success);">¥ 89k</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== 2. card-product ===== -->
+    <section id="product" class="section">
+      <div class="section-header">
+        <span class="section-num">2</span>
+        <h2>card-product · 商品卡片</h2>
+        <span class="cat-tag cat-tag--layout">Layout</span>
+        <span class="badge">图片 + 价格 + 按钮</span>
+      </div>
+
+      <div class="matrix-grid grid-4">
+
+        <div class="base-card base-card--radius-lg base-card--padding-none base-card--shadow-sm base-card--clickable">
+          <div class="card-product__cover" style="background:linear-gradient(135deg,#fda4af,#fb7185);">
+            <span class="icon icon--image"></span>
+            <span class="card-product__badge">新品</span>
+          </div>
+          <div class="card-product__body">
+            <div class="card-product__title">时尚运动鞋</div>
+            <div class="card-product__desc">透气轻便 · 舒适耐穿</div>
+            <div class="card-product__footer">
+              <span class="card-product__price">¥ 299</span>
+              <span class="base-button base-button--primary base-button--sm">购买</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="base-card base-card--radius-lg base-card--padding-none base-card--shadow-sm base-card--clickable">
+          <div class="card-product__cover" style="background:linear-gradient(135deg,#a5b4fc,#818cf8);">
+            <span class="icon icon--image"></span>
+            <span class="card-product__badge" style="background:var(--color-danger);">-30%</span>
+          </div>
+          <div class="card-product__body">
+            <div class="card-product__title">微单相机</div>
+            <div class="card-product__desc">专业级拍摄体验</div>
+            <div class="card-product__footer">
+              <div>
+                <span class="card-product__price">¥ 4,999</span>
+                <span style="text-decoration:line-through;color:var(--color-text-tertiary);font-size:var(--font-xs);margin-left:var(--space-1);">¥ 6,999</span>
+              </div>
+              <span class="base-button base-button--primary base-button--sm">抢购</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="base-card base-card--radius-lg base-card--padding-none base-card--shadow-sm base-card--clickable">
+          <div class="card-product__cover" style="background:linear-gradient(135deg,#86efac,#22c55e);">
+            <span class="icon icon--image"></span>
+          </div>
+          <div class="card-product__body">
+            <div class="card-product__title">降噪耳机</div>
+            <div class="card-product__desc">主动降噪 · 40h 续航</div>
+            <div class="card-product__footer">
+              <span class="card-product__price">¥ 1,299</span>
+              <span class="base-button base-button--primary base-button--sm">购买</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="base-card base-card--radius-lg base-card--padding-none base-card--shadow-sm base-card--clickable">
+          <div class="card-product__cover" style="background:linear-gradient(135deg,#fdba74,#f97316);">
+            <span class="icon icon--image"></span>
+            <span class="card-product__badge">热销</span>
+          </div>
+          <div class="card-product__body">
+            <div class="card-product__title">咖啡礼盒</div>
+            <div class="card-product__desc">3 种口味组合</div>
+            <div class="card-product__footer">
+              <span class="card-product__price">¥ 158</span>
+              <span class="base-button base-button--primary base-button--sm">购买</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== 3. card-profile ===== -->
+    <section id="profile" class="section">
+      <div class="section-header">
+        <span class="section-num">3</span>
+        <h2>card-profile · 个人中心</h2>
+        <span class="cat-tag cat-tag--layout">Layout</span>
+        <span class="badge">封面 + 头像 + 昵称 + 统计</span>
+      </div>
+
+      <div class="matrix-grid grid-2">
+
+        <div class="base-card base-card--radius-xl base-card--padding-none base-card--shadow-md">
+          <div class="card-profile__cover" style="background:linear-gradient(135deg,#818cf8,#6366f1);"></div>
+          <div class="card-profile__avatar">
+            <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=zhangxiaoming&backgroundColor=818cf8" alt="张小明" />
+          </div>
+          <div class="card-profile__body">
+            <div class="card-profile__name">张小明</div>
+            <div class="card-profile__bio">前端工程师 · Vue 3 + TypeScript</div>
+            <div class="card-profile__stats">
+              <div><strong>128</strong><span>关注</span></div>
+              <div><strong>1.2k</strong><span>粉丝</span></div>
+              <div><strong>56</strong><span>获赞</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="base-card base-card--radius-xl base-card--padding-none base-card--shadow-md">
+          <div class="card-profile__cover" style="background:linear-gradient(135deg,#fb7185,#f43f5e);"></div>
+          <div class="card-profile__avatar">
+            <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=lixiaohong&backgroundColor=fb7185" alt="李小红" />
+          </div>
+          <div class="card-profile__body">
+            <div class="card-profile__name">李小红</div>
+            <div class="card-profile__bio">UI 设计师 · 让产品更有温度</div>
+            <div class="card-profile__stats">
+              <div><strong>286</strong><span>关注</span></div>
+              <div><strong>3.8k</strong><span>粉丝</span></div>
+              <div><strong>892</strong><span>获赞</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== 4. card-friend ===== -->
+    <section id="friend" class="section">
+      <div class="section-header">
+        <span class="section-num">4</span>
+        <h2>card-friend · 好友 / 聊天列表</h2>
+        <span class="cat-tag cat-tag--layout">Layout</span>
+        <span class="badge">头像 + 昵称 + 状态 + 箭头</span>
+      </div>
+
+      <div class="matrix-grid grid-2">
+
+        <div class="base-card base-card--radius-lg base-card--padding-sm base-card--shadow-sm">
+          <div class="card-friend">
+            <div class="card-friend__avatar">
+              <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=lilei&backgroundColor=fb7185" alt="李雷" />
+              <span class="card-friend__online"></span>
+            </div>
+            <div class="card-friend__main">
+              <div class="card-friend__name">李雷</div>
+              <div class="card-friend__bio">在吗？晚上一起吃饭</div>
+            </div>
+            <div class="flex flex-col items-center" style="gap:var(--space-1);">
+              <span class="card-notify__badge">2</span>
+              <span style="font-size:var(--font-xs);color:var(--color-text-tertiary);">12:30</span>
+            </div>
+          </div>
+          <div class="card-set__divider"></div>
+          <div class="card-friend">
+            <div class="card-friend__avatar">
+              <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=hanmeimei&backgroundColor=60a5fa" alt="韩梅梅" />
+              <span class="card-friend__online"></span>
+            </div>
+            <div class="card-friend__main">
+              <div class="card-friend__name">韩梅梅</div>
+              <div class="card-friend__bio">[图片]</div>
+            </div>
+            <div class="flex flex-col items-center" style="gap:var(--space-1);">
+              <span style="font-size:var(--font-xs);color:var(--color-text-tertiary);">昨天</span>
+            </div>
+          </div>
+          <div class="card-set__divider"></div>
+          <div class="card-friend">
+            <div class="card-friend__avatar">
+              <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=madong&backgroundColor=a78bfa" alt="马东" />
+            </div>
+            <div class="card-friend__main">
+              <div class="card-friend__name">马东</div>
+              <div class="card-friend__bio">已离线</div>
+            </div>
+            <span class="card-friend__arrow"><span class="icon icon--chevron"></span></span>
+          </div>
+        </div>
+
+        <div class="base-card base-card--radius-lg base-card--padding-sm base-card--shadow-sm">
+          <div class="card-friend">
+            <div class="card-friend__avatar">
+              <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=wangfang&backgroundColor=fbbf24" alt="王芳" />
+              <span class="card-friend__online"></span>
+            </div>
+            <div class="card-friend__main">
+              <div class="card-friend__name">王芳</div>
+              <div class="card-friend__bio">项目进度同步：已完成 80%</div>
+            </div>
+            <div class="flex flex-col items-center" style="gap:var(--space-1);">
+              <span style="font-size:var(--font-xs);color:var(--color-text-tertiary);">10:15</span>
+            </div>
+          </div>
+          <div class="card-set__divider"></div>
+          <div class="card-friend">
+            <div class="card-friend__avatar">
+              <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=chenchen&backgroundColor=34d399" alt="陈晨" />
+            </div>
+            <div class="card-friend__main">
+              <div class="card-friend__name">陈晨</div>
+              <div class="card-friend__bio">好的，我看一下</div>
+            </div>
+            <div class="flex flex-col items-center" style="gap:var(--space-1);">
+              <span class="card-notify__badge">5</span>
+              <span style="font-size:var(--font-xs);color:var(--color-text-tertiary);">09:42</span>
+            </div>
+          </div>
+          <div class="card-set__divider"></div>
+          <div class="card-friend">
+            <div class="card-friend__avatar">
+              <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=zhaogang&backgroundColor=f87171" alt="赵刚" />
+              <span class="card-friend__online"></span>
+            </div>
+            <div class="card-friend__main">
+              <div class="card-friend__name">赵刚</div>
+              <div class="card-friend__bio">[语音] 5"</div>
+            </div>
+            <span class="card-friend__arrow"><span class="icon icon--chevron"></span></span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== 5. card-set ===== -->
+    <section id="set" class="section">
+      <div class="section-header">
+        <span class="section-num">5</span>
+        <h2>card-set · 设置项卡片</h2>
+        <span class="cat-tag cat-tag--layout">Layout</span>
+        <span class="badge">图标 + 标签 + 开关 / 箭头</span>
+      </div>
+
+      <div class="matrix-grid grid-2">
+
+        <div class="base-card base-card--radius-lg base-card--padding-none base-card--bordered">
+          <div class="card-set__item">
+            <div class="card-set__icon" style="background:#dbeafe;color:var(--color-primary);"><span class="icon icon--bell"></span></div>
+            <div class="card-set__label">消息推送</div>
+            <div class="base-switch base-switch--on" onclick="this.classList.toggle('base-switch--on')"></div>
+          </div>
+          <div class="card-set__divider"></div>
+          <div class="card-set__item">
+            <div class="card-set__icon" style="background:#e9d5ff;color:#7c3aed;"><span class="icon icon--moon"></span></div>
+            <div class="card-set__label">深色模式</div>
+            <div class="base-switch" onclick="this.classList.toggle('base-switch--on')"></div>
+          </div>
+          <div class="card-set__divider"></div>
+          <div class="card-set__item">
+            <div class="card-set__icon" style="background:#d1fae5;color:#047857;"><span class="icon icon--lock"></span></div>
+            <div class="card-set__label">指纹解锁</div>
+            <div class="base-switch base-switch--on" onclick="this.classList.toggle('base-switch--on')"></div>
+          </div>
+          <div class="card-set__divider"></div>
+          <div class="card-set__item">
+            <div class="card-set__icon" style="background:#fee2e2;color:#b91c1c;"><span class="icon icon--globe"></span></div>
+            <div class="card-set__label">语言设置</div>
+            <div class="flex items-center gap-2">
+              <span class="text-muted" style="font-size:var(--font-sm);">简体中文</span>
+              <span class="card-set__arrow"><span class="icon icon--chevron"></span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="base-card base-card--radius-lg base-card--padding-none base-card--bordered">
+          <div class="card-set__item">
+            <div class="card-set__icon" style="background:#fef3c7;color:#b45309;"><span class="icon icon--wallet"></span></div>
+            <div class="card-set__label">钱包</div>
+            <div class="flex items-center gap-2">
+              <span style="font-size:var(--font-sm);color:var(--color-success);font-weight:var(--weight-semibold);">¥ 1,280.50</span>
+              <span class="card-set__arrow"><span class="icon icon--chevron"></span></span>
+            </div>
+          </div>
+          <div class="card-set__divider"></div>
+          <div class="card-set__item">
+            <div class="card-set__icon" style="background:#cffafe;color:#0e7490;"><span class="icon icon--chart"></span></div>
+            <div class="card-set__label">数据统计</div>
+            <span class="card-set__arrow"><span class="icon icon--chevron"></span></span>
+          </div>
+          <div class="card-set__divider"></div>
+          <div class="card-set__item">
+            <div class="card-set__icon" style="background:#fce7f3;color:#be185d;"><span class="icon icon--bookmark"></span></div>
+            <div class="card-set__label">我的收藏</div>
+            <div class="flex items-center gap-2">
+              <span class="text-muted" style="font-size:var(--font-sm);">32 个</span>
+              <span class="card-set__arrow"><span class="icon icon--chevron"></span></span>
+            </div>
+          </div>
+          <div class="card-set__divider"></div>
+          <div class="card-set__item">
+            <div class="card-set__icon" style="background:#e0e7ff;color:#4338ca;"><span class="icon icon--help"></span></div>
+            <div class="card-set__label">帮助与反馈</div>
+            <span class="card-set__arrow"><span class="icon icon--chevron"></span></span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== 6. card-vip ===== -->
+    <section id="vip" class="section">
+      <div class="section-header">
+        <span class="section-num">6</span>
+        <h2>card-vip · VIP 卡片</h2>
+        <span class="cat-tag cat-tag--layout">Layout</span>
+        <span class="badge">深色渐变 + 头像 + 等级 + 权益</span>
+      </div>
+
+      <div class="matrix-grid grid-2">
+
+        <div class="base-card base-card--radius-xl base-card--padding-lg card-vip" style="box-shadow:var(--shadow-lg);">
+          <div class="card-vip__bg"></div>
+          <div class="card-vip__header">
+            <span class="card-vip__crown"><span class="icon icon--crown"></span></span>
+            <div class="card-vip__level">钻石会员</div>
+          </div>
+          <div class="card-vip__avatar"><span class="icon icon--star"></span></div>
+          <div class="card-vip__name">张小明</div>
+          <div class="card-vip__expire">有效期至 2027-12-31</div>
+          <div class="card-vip__benefits">
+            <div class="card-vip__benefits-row"><span class="icon icon--check"></span> 专属客服 7×24h</div>
+            <div class="card-vip__benefits-row"><span class="icon icon--check"></span> 全场商品 8 折优惠</div>
+            <div class="card-vip__benefits-row"><span class="icon icon--check"></span> 优先发货特权</div>
+            <div class="card-vip__benefits-row"><span class="icon icon--check"></span> 生日双倍积分</div>
+          </div>
+        </div>
+
+        <div class="base-card base-card--radius-xl base-card--padding-lg" style="background:linear-gradient(135deg,#7c2d12,#9a3412);color:white;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);">
+          <div style="position:absolute;top:-50%;left:-20%;width:200px;height:200px;background:radial-gradient(circle,rgba(251,146,60,.3),transparent 70%);border-radius:50%;"></div>
+          <div style="display:flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-4);">
+            <span style="color:#fdba74;"><span class="icon icon--crown"></span></span>
+            <div style="font-size:var(--font-md);font-weight:var(--weight-semibold);color:#fdba74;">至尊会员</div>
+          </div>
+          <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#fbbf24,#f59e0b);display:flex;align-items:center;justify-content:center;margin-bottom:var(--space-3);border:3px solid #fbbf24;color:white;"><span class="icon icon--star"></span></div>
+          <div style="font-size:var(--font-xl);font-weight:var(--weight-bold);margin-bottom:var(--space-1);">李小红</div>
+          <div style="font-size:var(--font-xs);opacity:0.7;margin-bottom:var(--space-4);">有效期至 2028-06-30</div>
+          <div style="display:flex;flex-direction:column;gap:var(--space-2);">
+            <div class="card-vip__benefits-row"><span class="icon icon--check"></span> 钻石全部权益</div>
+            <div class="card-vip__benefits-row"><span class="icon icon--check"></span> 专属投资顾问</div>
+            <div class="card-vip__benefits-row"><span class="icon icon--check"></span> 年度大礼包</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== 7. card-menu ===== -->
+    <section id="menu" class="section">
+      <div class="section-header">
+        <span class="section-num">7</span>
+        <h2>card-menu · 九宫格菜单</h2>
+        <span class="cat-tag cat-tag--layout">Layout</span>
+        <span class="badge">图标 + 标签 · 4 列网格</span>
+      </div>
+
+      <div class="matrix-grid grid-2">
+
+        <div class="base-card base-card--radius-lg base-card--padding-lg base-card--bordered">
+          <div style="font-size:var(--font-md);font-weight:var(--weight-semibold);margin-bottom:var(--space-4);">常用功能</div>
+          <div class="card-menu__grid">
+            <div class="card-menu__item"><div class="card-menu__icon"><span class="icon icon--home"></span></div><div class="card-menu__label">首页</div></div>
+            <div class="card-menu__item"><div class="card-menu__icon"><span class="icon icon--package"></span></div><div class="card-menu__label">订单</div></div>
+            <div class="card-menu__item"><div class="card-menu__icon"><span class="icon icon--wallet"></span></div><div class="card-menu__label">钱包</div></div>
+            <div class="card-menu__item"><div class="card-menu__icon"><span class="icon icon--chat"></span></div><div class="card-menu__label">消息</div></div>
+            <div class="card-menu__item"><div class="card-menu__icon"><span class="icon icon--chart"></span></div><div class="card-menu__label">数据</div></div>
+            <div class="card-menu__item"><div class="card-menu__icon"><span class="icon icon--user"></span></div><div class="card-menu__label">团队</div></div>
+            <div class="card-menu__item"><div class="card-menu__icon"><span class="icon icon--settings"></span></div><div class="card-menu__label">设置</div></div>
+            <div class="card-menu__item"><div class="card-menu__icon"><span class="icon icon--help"></span></div><div class="card-menu__label">帮助</div></div>
+          </div>
+        </div>
+
+        <div class="base-card base-card--radius-lg base-card--padding-lg base-card--bordered">
+          <div style="font-size:var(--font-md);font-weight:var(--weight-semibold);margin-bottom:var(--space-4);">生活服务</div>
+          <div class="card-menu__grid">
+            <div class="card-menu__item"><div class="card-menu__icon" style="background:#dbeafe;color:var(--color-primary);"><span class="icon icon--cart"></span></div><div class="card-menu__label">购物</div></div>
+            <div class="card-menu__item"><div class="card-menu__icon" style="background:#fee2e2;color:#b91c1c;"><span class="icon icon--package"></span></div><div class="card-menu__label">外卖</div></div>
+            <div class="card-menu__item"><div class="card-menu__icon" style="background:#d1fae5;color:#047857;"><span class="icon icon--truck"></span></div><div class="card-menu__label">出行</div></div>
+            <div class="card-menu__item"><div class="card-menu__icon" style="background:#fef3c7;color:#b45309;"><span class="icon icon--home"></span></div><div class="card-menu__label">酒店</div></div>
+            <div class="card-menu__item"><div class="card-menu__icon" style="background:#fce7f3;color:#be185d;"><span class="icon icon--image"></span></div><div class="card-menu__label">电影</div></div>
+            <div class="card-menu__item"><div class="card-menu__icon" style="background:#e0e7ff;color:#4338ca;"><span class="icon icon--bookmark"></span></div><div class="card-menu__label">阅读</div></div>
+            <div class="card-menu__item"><div class="card-menu__icon" style="background:#cffafe;color:#0e7490;"><span class="icon icon--heart"></span></div><div class="card-menu__label">健康</div></div>
+            <div class="card-menu__item"><div class="card-menu__icon" style="background:#fae8ff;color:#86198f;"><span class="icon icon--star"></span></div><div class="card-menu__label">音乐</div></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== 8. card-grid ===== -->
+    <section id="grid" class="section">
+      <div class="section-header">
+        <span class="section-num">8</span>
+        <h2>card-grid · 功能网格</h2>
+        <span class="cat-tag cat-tag--layout">Layout</span>
+        <span class="badge">N 列图标网格（2/3/4）</span>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection__title">8.1 · 4 列网格</div>
+        <div class="base-card base-card--radius-lg base-card--padding-md base-card--shadow-sm">
+          <div class="card-grid" style="grid-template-columns:repeat(4,1fr);">
+            <div class="card-grid__item"><div class="card-grid__icon"><span class="icon icon--palette"></span></div><div class="card-grid__title">设计系统</div><div class="card-grid__desc">统一视觉规范</div></div>
+            <div class="card-grid__item"><div class="card-grid__icon"><span class="icon icon--zap"></span></div><div class="card-grid__title">性能优化</div><div class="card-grid__desc">极致加载速度</div></div>
+            <div class="card-grid__item"><div class="card-grid__icon"><span class="icon icon--shield"></span></div><div class="card-grid__title">安全保障</div><div class="card-grid__desc">多层防护机制</div></div>
+            <div class="card-grid__item"><div class="card-grid__icon"><span class="icon icon--chart"></span></div><div class="card-grid__title">数据分析</div><div class="card-grid__desc">实时业务洞察</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection__title">8.2 · 3 列网格</div>
+        <div class="base-card base-card--radius-lg base-card--padding-md base-card--shadow-sm">
+          <div class="card-grid" style="grid-template-columns:repeat(3,1fr);">
+            <div class="card-grid__item"><div class="card-grid__icon"><span class="icon icon--user"></span></div><div class="card-grid__title">企业管理</div><div class="card-grid__desc">权限、角色、组织架构</div></div>
+            <div class="card-grid__item"><div class="card-grid__icon"><span class="icon icon--truck"></span></div><div class="card-grid__title">业务增长</div><div class="card-grid__desc">获客、转化、留存</div></div>
+            <div class="card-grid__item"><div class="card-grid__icon"><span class="icon icon--heart"></span></div><div class="card-grid__title">客户关系</div><div class="card-grid__desc">CRM + 营销自动化</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection__title">8.3 · 2 列网格</div>
+        <div class="base-card base-card--radius-lg base-card--padding-md base-card--shadow-sm">
+          <div class="card-grid" style="grid-template-columns:repeat(2,1fr);">
+            <div class="card-grid__item"><div class="card-grid__icon"><span class="icon icon--zap"></span></div><div class="card-grid__title">快速部署</div><div class="card-grid__desc">5 分钟接入完整体系</div></div>
+            <div class="card-grid__item"><div class="card-grid__icon"><span class="icon icon--star"></span></div><div class="card-grid__title">精准定位</div><div class="card-grid__desc">Token 驱动主题系统</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    </main>
+  </div>
+
+  <script>
+    const navLinks = document.querySelectorAll('.side-nav__link');
+    const sections = document.querySelectorAll('main section[id]');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 100) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.classList.remove('active');
+        if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+      });
+    });
+  </script>
+
+</div>
+</body>
+</html>

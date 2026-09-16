@@ -1,60 +1,76 @@
 ---
 name: vue-status-skill
-description: Vue 状态标签组件技能。base-status 统一状态标识实现，零 HTML5 标签，用 div/span + CSS3 模拟。支持 type / size / dot 模式，对齐 vue-theme-skill CSS 变量。当用户说"状态标签"、"badge"、"base-status"时触发。
+description: Vue 通用状态/标签组件。Vue3 + TypeScript 泛型，支持 7 种 type（primary/success/warning/danger/info/default/neutral）、5 种 variant（solid/light/outline/ghost/dot）、3 种 size（sm/md/lg）、圆角/方形/可关闭/带图标。零第三方组件库。
+trigger: |
+  帮我做一个标签 | 做一个状态标签 | 做一个徽章
+  做一个 success 标签 | 做一个 danger 标签 | 做一个 warning 标签
+  做一个 info 标签 | 做一个带点的标签 | 做一个可关闭的标签
+  做一个带图标的标签 | 做一个不同大小的标签
+  做一个状态指示器 | 做一个标记 | 做一个 chip
 ---
 
 # vue-status-skill
 
-> 零 HTML5 标签：用 `<span class="base-status">` + CSS3 实现。
+> Vue 通用状态/标签/徽章组件，Vue3 + TypeScript，零第三方依赖。
 
-## 组件规格
+## 核心组件
 
-```vue
-<!-- base-status.vue -->
-<template>
-  <span :class="['base-status', `base-status--${type}`, `base-status--${size}`, { 'base-status--dot': dot }]">
-    <span v-if="dot" class="base-status__dot"></span>
-    <span class="base-status__text"><slot /></span>
-  </span>
-</template>
+| 组件 | 说明 |
+|------|------|
+| **base-status** | 状态/标签/徽章 |
+
+## 设计要点
+
+- ✅ 7 种 type：primary / success / warning / danger / info / default / neutral
+- ✅ 5 种 variant：solid / light / outline / ghost / dot（仅圆点）
+- ✅ 3 种 size：sm / md / lg
+- ✅ 圆角 / 方形可切换
+- ✅ 可关闭、可带图标、可带数字徽标
+- ✅ 支持禁用、动画、闪烁
+
+## 文件结构
+
+```
+vue-status-skill/
+├── SKILL.md
+├── README.md
+├── base-status.md                      # 状态/标签组件
+└── demo-components/
+    └── base-status/
+        └── html/
+            └── base-status.html        # 所有形态展示
 ```
 
-## Props
+## 容器原则
 
-| Prop | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| type | `'success' \| 'warning' \| 'error' \| 'info' \| 'default'` | `'default'` | 状态类型 |
-| size | `'sm' \| 'md'` | `'md'` | 尺寸 |
-| dot | `boolean` | `false` | 仅显示圆点（无文字） |
+> **必须嵌入 `<base-card>` 使用。**
 
-## 样式规范
+```vue
+<!-- ✅ 正确 -->
+<base-card title="订单状态">
+  <base-status type="success">已支付</base-status>
+</base-card>
+
+<!-- ❌ 错误 -->
+<base-status type="success">已支付</base-status>
+```
+
+## 设计 Token
 
 ```css
 .base-status {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 2px 10px;
-  border-radius: var(--radius-full, 999px);
-  font-size: 12px; font-weight: 500; line-height: 1.4;
-}
-.base-status--success { background: rgba(16,185,129,0.1); color: #059669; }
-.base-status--warning { background: rgba(245,158,11,0.1); color: #d97706; }
-.base-status--error   { background: rgba(225,29,72,0.1);  color: #e11d48; }
-.base-status--info    { background: rgba(59,130,246,0.1); color: #2563eb; }
-.base-status--default { background: var(--color-bg-muted); color: var(--color-text-secondary); }
-
-.base-status--sm { padding: 1px 6px; font-size: 11px; }
-
-.base-status__dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: currentColor; flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-full);
+  font-size: var(--font-xs);
+  font-weight: var(--weight-medium);
 }
 ```
 
-## 使用示例
+## 跨技能协同
 
-```vue
-<base-status type="success">已完成</base-status>
-<base-status type="warning">进行中</base-status>
-<base-status type="error">失败</base-status>
-<base-status type="success" dot />
-```
+- **base-card**（[vue-card-skill](../vue-card-skill/)）：所有标签的容器
+- **vue-theme-skill**（[../../vue-theme-skill/](../../vue-theme-skill/)）：所有 Token 来源
+- **vue-button-skill**：标签通常和按钮组合使用

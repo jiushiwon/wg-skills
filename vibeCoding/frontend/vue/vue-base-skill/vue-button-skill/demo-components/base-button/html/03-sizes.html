@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>base-button / 03 - 三种尺寸</title>
+  <link rel="stylesheet" href="../../shared/tokens.css" />
+  <link rel="stylesheet" href="../../shared/demo.css" />
+  <style>
+    .base-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      border-radius: var(--radius-md);
+      font-weight: var(--weight-medium);
+      font-family: inherit;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      border: 1px solid transparent;
+      user-select: none;
+      white-space: nowrap;
+      outline: none;
+    }
+    .base-button:focus-visible { box-shadow: 0 0 0 2px var(--color-primary-light); }
+    .base-button:active:not(:disabled) { transform: scale(0.98); }
+
+    /* size 三档 */
+    .base-button--size-sm {
+      height: var(--height-btn-sm);
+      padding: 0 var(--space-3);
+      font-size: var(--font-xs);
+    }
+    .base-button--size-md {
+      height: var(--height-btn-md);
+      padding: 0 var(--space-5);
+      font-size: var(--font-base);
+    }
+    .base-button--size-lg {
+      height: var(--height-btn-lg);
+      padding: 0 var(--space-6);
+      font-size: var(--font-lg);
+    }
+
+    /* primary 实色 */
+    .base-button--type-primary {
+      background: var(--color-primary);
+      color: var(--color-white);
+    }
+    .base-button--type-primary:hover { background: var(--color-primary-hover); }
+
+    /* default 描边 */
+    .base-button--type-default {
+      background: var(--color-bg-card);
+      border-color: var(--color-border);
+      color: var(--color-text-primary);
+    }
+    .base-button--type-default:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-page">
+    <h1 class="demo-page-title">三种尺寸 — size="sm / md / lg"</h1>
+    <p class="demo-page-desc">size: sm (32px) | md (40px) | lg (48px)。支持所有 type / variant 组合。</p>
+
+    <div class="demo-card">
+      <div class="demo-card__title">primary 类型</div>
+      <div class="demo-card__body">
+        <div class="demo-row">
+          <button class="base-button base-button--type-primary base-button--size-sm">小 sm</button>
+          <button class="base-button base-button--type-primary base-button--size-md">中 md</button>
+          <button class="base-button base-button--type-primary base-button--size-lg">大 lg</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-card">
+      <div class="demo-card__title">default 类型</div>
+      <div class="demo-card__body">
+        <div class="demo-row">
+          <button class="base-button base-button--type-default base-button--size-sm">小 sm</button>
+          <button class="base-button base-button--type-default base-button--size-md">中 md</button>
+          <button class="base-button base-button--type-default base-button--size-lg">大 lg</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-card">
+      <div class="demo-card__title">块级按钮 block</div>
+      <div class="demo-card__body">
+        <button class="base-button base-button--type-primary base-button--size-md base-button--block">块级按钮铺满容器</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

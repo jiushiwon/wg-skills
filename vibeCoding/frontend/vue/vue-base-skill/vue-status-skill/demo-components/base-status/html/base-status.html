@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-status 状态/标签组件</title>
+  <link rel="stylesheet" href="status.css">
+</head>
+<body>
+  <div class="page">
+    <h1 class="page__title">base-status 状态/标签组件</h1>
+    <p class="page__subtitle">7 种 type · 5 种 variant · 3 种 size · 可关闭 · 可闪烁 · 带图标</p>
+
+    <!-- 1. 7 种 type -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">1. 7 种 type（solid 默认）</span>
+        <span class="demo-card__tag">type</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body" id="s-types"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. 5 种 variant -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">2. 5 种 variant（success 演示）</span>
+        <span class="demo-card__tag">variant</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body" id="s-variants"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. 3 种 size -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">3. 3 种 size</span>
+        <span class="demo-card__tag">size</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body" id="s-sizes"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. 形状 -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">4. 形状（圆角 / 方形）</span>
+        <span class="demo-card__tag">shape</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body" id="s-shapes"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. 可关闭 -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">5. 可关闭</span>
+        <span class="demo-card__tag">closable</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body" id="s-closable"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. 闪烁 -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">6. 闪烁动画</span>
+        <span class="demo-card__tag">blink</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body" id="s-blink"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. 带数字徽标 -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">7. 带数字徽标</span>
+        <span class="demo-card__tag">count</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body" id="s-count"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. 业务场景 -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">8. 业务场景（订单状态）</span>
+        <span class="demo-card__tag">business</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="base-card">
+          <div class="base-card__body" id="s-business"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Props -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">Props 速查</span>
+      </div>
+      <div class="demo-card__body">
+        <pre class="demo-code">7 种 type: primary / success / warning / danger / info / default / neutral
+5 种 variant: solid / light / outline / ghost / dot
+3 种 size: sm / md / lg
+可选: shape / closable / blink / count / overflow / customColor / disabled
+禁止: &lt;button&gt; 等 HTML5 标签（必须用 &lt;span&gt;）</pre>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="status.js"></script>
+</body>
+</html>
