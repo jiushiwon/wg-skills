@@ -235,7 +235,7 @@ vue-generate-skill/
 ❌ **不适用**：
 - 微信小程序 / 抖音小程序 → 用 `uniapp-app-generate-skill`
 - 移动 App → 用 `uniapp-app-generate-skill` 或 React Native 方案
-- Next.js / Nuxt 等 SSR 框架 → 待扩展的 `nuxt-generate-skill` / `next-generate-skill`
+- Next.js / Nuxt 等 SSR 框架 → 已扩展为 `nuxt-generate-skill` / `next-generate-skill`
 
 ---
 

@@ -64,8 +64,8 @@ AI 时代的编程不是"取代程序员"，而是把传统工程中**重复、�
 - 🐍 **一天学会 Python 体系** → 触发 `python-fast-skill` / `fastapi-init-skill`
 - 🐹 **一天学会 Go 体系** → 触发 `go-gin-init-skill`
 - 🟢 **一天学会 Node.js 体系** → 触发 `nodejs-init-skill`
-- 🎨 **一天学会 Vue 体系** → 触发 `vue-base-skill` / `vue-generate-skill`
-- 📱 **一天学会 React 体系** → 触发 `react-generate-skill`
+- 🎨 **一天学会 Vue 体系** → 触发 `vue-base-skill` / `vue-generate-skill`（SPA）/ `nuxt-generate-skill`（SSR）
+- 📱 **一天学会 React 体系** → 触发 `react-generate-skill` / `next-generate-skill`
 - 📱 **一天学会 uni-app 体系** → 触发 `uniapp-base-skill` 及其 21 个子技能
 
 > 一句"帮我用 Java 搭一个商城"，智能体会按"选型 → 骨架 → 业务模块"的顺序串起多个技能，**小白也能跟着提示词完成一个完整项目**。
@@ -251,9 +251,11 @@ wg-skills/
 │   │       ├── vue-theme-skill/              # Vue 主题系统（设计 Token 层）
 │   │       ├── vue-style-skill/              # Vue 样式规范（动画/工具类/布局）
 │   │       ├── vue-tui-skill/                # Vue TUI 终端界面
-│   │       └── electron-vue-init-skill/      # Electron + Vue3 桌面端初始化
+│   │       ├── electron-vue-init-skill/      # Electron + Vue3 桌面端初始化
+│   │       └── nuxt-generate-skill/         # Nuxt 3 + TS + Pinia 全栈项目生成
 │   │   └── react/                            # React 技能矩阵
 │   │       ├── react-generate-skill/            # React + TS + Vite 项目生成
+│   │       ├── next-generate-skill/         # Next.js 14+ App Router 全栈项目生成
 │   │       └── react-native-generate-skill/  # React Native 移动端初始化
 │   │
 │   ├── vibeCodingProjectsSkills/            # 🎯 项目级技能（开箱即用项目骨架）
@@ -389,9 +391,9 @@ wg-skills/
    │   └ database (7)    │ ← mysql / pgsql / mongodb / redis / kafka / sqlite
    │                     │
    │   frontend (4 套)   │
-   │   ├ vue (85%)       │ 20+ 组件 + theme + request
+   │   ├ vue (85%)       │ 20+ 组件 + theme + request + nuxt
    │   ├ uniapp (90%)    │ 21 组件 + theme + style + request
-   │   ├ react (25%)     │ generate only
+   │   ├ react (30%)     │ generate + next.js fullstack
    │   └ html (10%)      │ template only ← 下一个重点
    │                     │
    │   项目级技能         │
@@ -618,9 +620,9 @@ grep -rnE '<button' ./vibeCoding/frontend/vue/vue-table-skill/demo-components
 
 | 体系 | 完成度 | 组件库 | 主题系统 | 样式规范 | 请求层 | 项目生成 | 定位 |
 |------|--------|--------|---------|---------|--------|---------|------|
-| **Vue** | 85% | vue-base-skill (20+) | vue-theme-skill | vue-style-skill | frontend-request-skill | vue-generate-skill | Web 管理后台、H5 |
+| **Vue** | 85% | vue-base-skill (20+) | vue-theme-skill | vue-style-skill | frontend-request-skill | vue-generate-skill（SPA）/ **nuxt-generate-skill**（SSR） | Web 管理后台、H5、SSR 全栈 |
 | **UniApp** | 90% | uniapp-base-skill (21) | uniapp-theme-skill | uniapp-style-skill | uniapp-request-skill | uniapp-app-generate-skill | 小程序、App、跨端 |
-| **React** | 25% | 待建设 | 待建设 | 待建设 | 可复用 frontend-request-skill | react-generate-skill | Web SPA |
+| **React** | 30% | 待建设 | 待建设 | 待建设 | 可复用 frontend-request-skill | react-generate-skill / next-generate-skill | Web SPA / 全栈 SSR |
 | **HTML** | 10% | 待建设 | 待建设 | 待建设 | api.js（不标准） | html-frontend-template | 轻量后台、原型 |
 
 **优先级**：HTML 体系是下一个重点建设方向。HTML 组件的核心原则**参考 Vue 体系**——因为 Vue 组件技能的核心原则就是使用纯 H5（div + CSS3 + ARIA），与纯 HTML 天然一致。
