@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>紧凑高密 · 商城运营看板 - Vue3 Dashboard Skill Demo</title>
+  <link rel="stylesheet" href="../../shared/tokens.css" />
+  <link rel="stylesheet" href="../../shared/base-card.css" />
+  <link rel="stylesheet" href="../../shared/demo.css" />
+  <style>
+    :root {
+      --color-bg: #fafafa;
+      --color-surface: #fff;
+      --color-text: #111827;
+      --color-text-secondary: #6b7280;
+      --color-text-tertiary: #9ca3af;
+      --color-border: #e5e7eb;
+      --color-border-light: #f3f4f6;
+      --color-bg-secondary: #f9fafb;
+      --color-bg-hover: #f3f4f6;
+      --space-6: 12px;
+      --space-4: 8px;
+      --font-base: 12px;
+      --font-lg: 14px;
+    }
+    body { background: #fafafa; }
+    .dash-page { padding: 8px; gap: 8px; }
+    .dash-header__title { font-size: 16px; }
+    .dash-header__subtitle { font-size: 12px; }
+    .dash-scene-tag { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 500; background: #f3f4f6; color: #6b7280; border: 1px solid #e5e7eb; margin-bottom: 8px; }
+    .header-actions { display: flex; align-items: center; gap: var(--space-3); }
+    .btn { padding: 4px 10px; font-size: 12px; border-radius: var(--radius-md); cursor: pointer; border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text); transition: all 0.2s ease; }
+    .btn:hover { border-color: #111827; }
+    .btn--primary { background: #111827; border-color: #111827; color: #fff; }
+
+    /* 紧凑卡片覆盖 */
+    .base-card { box-shadow: 0 1px 1px rgba(0,0,0,0.04); border: none; border-radius: 8px; padding: 10px 12px; }
+    .base-card__title { font-size: 12px; font-weight: 600; color: #6b7280; margin-bottom: 6px; }
+
+    /* ---- layout: grid4 ---- */
+    .dash-grid4 {
+      display: grid; grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto auto;
+      grid-template-areas: "kpi chart" "table misc" "alerts progress";
+      gap: 8px; flex: 1;
+    }
+    .zone--kpi { grid-area: kpi; }
+    .zone--chart { grid-area: chart; }
+    .zone--table { grid-area: table; }
+    .zone--misc { grid-area: misc; }
+    .zone--alerts { grid-area: alerts; }
+    .zone--progress { grid-area: progress; }
+
+    /* ---- KPI 迷你 ---- */
+    .kpi-mini-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .kpi-mini { padding: 8px; border-radius: 6px; background: #f9fafb; display: flex; flex-direction: column; gap: 4px; }
+    .kpi-mini__label { font-size: 10px; color: #9ca3af; }
+    .kpi-mini__row { display: flex; align-items: baseline; gap: 4px; }
+    .kpi-mini__value { font-size: 16px; font-weight: 700; color: #111827; }
+    .kpi-mini__change { font-size: 10px; }
+    .kpi-mini__change--up { color: #16a34a; }
+    .kpi-mini__change--down { color: #dc2626; }
+    .kpi-mini__bar { height: 3px; background: #e5e7eb; border-radius: 2px; overflow: hidden; }
+    .kpi-mini__bar-fill { height: 100%; border-radius: 2px; }
+
+    /* ---- sparkline ---- */
+    .sparkline-card { flex: 1; display: flex; flex-direction: column; }
+    .sparkline-row { display: flex; gap: 8px; flex: 1; }
+    .sparkline-item { flex: 1; display: flex; flex-direction: column; gap: 4px; padding: 8px; background: #f9fafb; border-radius: 6px; }
+    .sparkline-item__header { display: flex; justify-content: space-between; align-items: baseline; }
+    .sparkline-item__name { font-size: 10px; color: #9ca3af; }
+    .sparkline-item__val { font-size: 14px; font-weight: 700; color: #111827; }
+    .sparkline-svg { width: 100%; height: 32px; }
+    .sparkline-line { fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .sparkline-area { opacity: 0.1; }
+
+    /* ---- 密集表格 ---- */
+    .compact-table { width: 100%; font-size: 11px; }
+    .compact-table__head { display: flex; background: #f9fafb; border-radius: 4px; margin-bottom: 2px; }
+    .compact-table__head-cell { padding: 5px 8px; font-weight: 600; color: #6b7280; flex: 1; text-align: left; }
+    .compact-table__row { display: flex; padding: 4px 8px; border-bottom: 1px solid #f3f4f6; align-items: center; }
+    .compact-table__cell { flex: 1; padding: 2px 0; }
+    .compact-table__cell strong { color: #111827; }
+    .compact-table__status { font-size: 10px; padding: 1px 6px; border-radius: 999px; }
+    .compact-table__status--ok { background: #f0fdf4; color: #16a34a; }
+    .compact-table__status--pending { background: #fefce8; color: #ca8a04; }
+    .compact-table__status--process { background: #eff6ff; color: #2563eb; }
+    .compact-table__status--fail { background: #fef2f2; color: #dc2626; }
+
+    /* ---- 迷你排行 + 活动 ---- */
+    .misc-split { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .mini-rank { display: flex; flex-direction: column; }
+    .mini-rank-item { display: flex; align-items: center; gap: 6px; padding: 3px 0; font-size: 11px; }
+    .mini-rank-item__num { width: 16px; height: 16px; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; background: #f3f4f6; color: #6b7280; flex-shrink: 0; }
+    .mini-rank-item__num--1 { background: #111827; color: #fff; }
+    .mini-rank-item__name { flex: 1; color: #374151; }
+    .mini-rank-item__val { font-weight: 600; color: #111827; }
+    .mini-activity { display: flex; flex-direction: column; gap: 4px; }
+    .mini-act-item { display: flex; align-items: center; gap: 6px; padding: 3px 0; font-size: 11px; color: #374151; }
+    .mini-act-item__dot { width: 4px; height: 4px; border-radius: 50%; background: #111827; flex-shrink: 0; }
+    .mini-act-item__time { font-size: 10px; color: #9ca3af; flex-shrink: 0; }
+
+    /* ---- 迷你进度 ---- */
+    .mini-progress-list { display: flex; flex-direction: column; gap: 6px; }
+    .mini-progress { display: flex; align-items: center; gap: 6px; }
+    .mini-progress__label { font-size: 10px; color: #9ca3af; width: 48px; flex-shrink: 0; }
+    .mini-progress__bar { flex: 1; height: 4px; background: #e5e7eb; border-radius: 2px; overflow: hidden; }
+    .mini-progress__fill { height: 100%; border-radius: 2px; }
+    .mini-progress__val { font-size: 10px; font-weight: 600; color: #111827; width: 36px; text-align: right; }
+
+    @media (max-width: 1024px) {
+      .dash-grid4 { grid-template-columns: 1fr; grid-template-areas: "kpi" "chart" "table" "misc" "alerts" "progress"; }
+    }
+  </style>
+</head>
+<body>
+  <div class="dash-page">
+    <div class="dash-header" role="banner">
+      <div>
+        <span class="dash-scene-tag">商城</span>
+        <div class="dash-header__title">商城运营看板</div>
+        <div class="dash-header__subtitle">实时电商运营数据 · 紧凑模式</div>
+      </div>
+      <div class="header-actions">
+        <div class="btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="vertical-align:-2px"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg> 刷新</div>
+        <div class="btn btn--primary">导出</div>
+      </div>
+    </div>
+
+    <div class="dash-grid4">
+      <!-- 左上：KPI -->
+      <div class="base-card zone--kpi">
+        <div class="base-card__title">关键指标</div>
+        <div class="kpi-mini-grid" id="kpi-grid"></div>
+      </div>
+
+      <!-- 右上：sparkline -->
+      <div class="base-card zone--chart">
+        <div class="base-card__title">多维趋势</div>
+        <div class="sparkline-card">
+          <div class="sparkline-row" id="sparklines"></div>
+        </div>
+      </div>
+
+      <!-- 左中：表格 -->
+      <div class="base-card zone--table">
+        <div class="base-card__title">最近订单</div>
+        <div class="compact-table" id="compact-table"></div>
+      </div>
+
+      <!-- 右中：排行+动态 -->
+      <div class="base-card zone--misc">
+        <div class="misc-split">
+          <div>
+            <div class="base-card__title" style="margin-top:0">热销商品</div>
+            <div class="mini-rank" id="mini-rank"></div>
+          </div>
+          <div>
+            <div class="base-card__title">最新动态</div>
+            <div class="mini-activity" id="mini-activity"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 左下：告警 -->
+      <div class="base-card zone--alerts">
+        <div class="base-card__title">库存预警</div>
+        <div class="mini-activity" id="alert-list"></div>
+      </div>
+
+      <!-- 右下：服务状态 -->
+      <div class="base-card zone--progress">
+        <div class="base-card__title">服务健康</div>
+        <div class="mini-progress-list" id="service-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const kpis = [
+      { label: '日营收', value: '¥28.6万', change: '+12%', dir: 'up', pct: 78, color: '#111827' },
+      { label: '订单量', value: '428', change: '+8%', dir: 'up', pct: 65, color: '#111827' },
+      { label: '客单价', value: '¥668', change: '+5%', dir: 'up', pct: 82, color: '#111827' },
+      { label: '转化率', value: '3.8%', change: '-0.2%', dir: 'down', pct: 57, color: '#dc2626' },
+      { label: '退货率', value: '1.2%', change: '-0.3%', dir: 'down', pct: 12, color: '#16a34a' },
+      { label: '在线', value: '1,842', change: '+218', dir: 'up', pct: 91, color: '#111827' }
+    ]
+    const tIcon = { up: '↑', down: '↓' }
+    document.getElementById('kpi-grid').innerHTML = kpis.map(k => `<div class="kpi-mini"><div class="kpi-mini__label">${k.label}</div><div class="kpi-mini__row"><span class="kpi-mini__value">${k.value}</span><span class="kpi-mini__change kpi-mini__change--${k.dir}">${tIcon[k.dir]}${k.change}</span></div><div class="kpi-mini__bar"><div class="kpi-mini__bar-fill" style="width:${k.pct}%;background:${k.color}"></div></div></div>`).join('')
+
+    const sparkData = [
+      { name: '营收', color: '#111827', data: [65,72,68,80,75,88,82,95,90,98,92,105] },
+      { name: '订单', color: '#6b7280', data: [40,45,42,55,50,60,58,65,62,70,68,72] },
+      { name: 'UV', color: '#9ca3af', data: [200,220,210,280,260,300,290,320,310,340,330,350] }
+    ]
+    document.getElementById('sparklines').innerHTML = sparkData.map(s => {
+      const max = Math.max(...s.data), min = Math.min(...s.data), range = max - min || 1
+      const pts = s.data.map((v, i) => `${(i / (s.data.length - 1)) * 100},${30 - ((v - min) / range) * 26 + 1}`).join(' ')
+      return `<div class="sparkline-item"><div class="sparkline-item__header"><span class="sparkline-item__name">${s.name}</span><span class="sparkline-item__val">${s.data[s.data.length-1]}</span></div><svg class="sparkline-svg" viewBox="0 0 100 32" preserveAspectRatio="none"><polygon points="0,32 ${pts} 100,32" fill="${s.color}" class="sparkline-area"/><polyline points="${pts}" stroke="${s.color}" class="sparkline-line"/></svg></div>`
+    }).join('')
+
+    const orders = [
+      { id: 'ORD-428', product: 'iPhone 15 Pro', customer: '张三', amount: '¥8,999', status: 'ok', statusText: '已完成', time: '14:32' },
+      { id: 'ORD-427', product: 'MacBook Air M3', customer: '李四', amount: '¥9,499', status: 'process', statusText: '处理中', time: '14:28' },
+      { id: 'ORD-426', product: 'AirPods Pro', customer: '王五', amount: '¥1,899', status: 'pending', statusText: '待处理', time: '14:15' },
+      { id: 'ORD-425', product: 'iPad Air', customer: '赵六', amount: '¥4,799', status: 'ok', statusText: '已完成', time: '14:02' },
+      { id: 'ORD-424', product: 'Apple Watch', customer: '钱七', amount: '¥2,999', status: 'fail', statusText: '已取消', time: '13:48' },
+      { id: 'ORD-423', product: 'AirTag 4件装', customer: '孙八', amount: '¥799', status: 'ok', statusText: '已完成', time: '13:35' },
+      { id: 'ORD-422', product: 'Magic Keyboard', customer: '周九', amount: '¥2,499', status: 'process', statusText: '处理中', time: '13:20' },
+      { id: 'ORD-421', product: 'Studio Display', customer: '吴十', amount: '¥11,499', status: 'ok', statusText: '已完成', time: '13:05' }
+    ]
+    document.getElementById('compact-table').innerHTML = `<div class="compact-table__head"><span class="compact-table__head-cell" style="flex:0.8">时间</span><span class="compact-table__head-cell" style="flex:1.2">订单号</span><span class="compact-table__head-cell">商品</span><span class="compact-table__head-cell" style="flex:0.8">客户</span><span class="compact-table__head-cell" style="flex:0.8">金额</span><span class="compact-table__head-cell" style="flex:0.8">状态</span></div>` + orders.map(o => `<div class="compact-table__row"><span class="compact-table__cell" style="flex:0.8;color:#9ca3af">${o.time}</span><span class="compact-table__cell" style="flex:1.2">${o.id}</span><span class="compact-table__cell">${o.product}</span><span class="compact-table__cell" style="flex:0.8">${o.customer}</span><span class="compact-table__cell" style="flex:0.8"><strong>${o.amount}</strong></span><span class="compact-table__cell" style="flex:0.8"><span class="compact-table__status compact-table__status--${o.status}">${o.statusText}</span></span></div>`).join('')
+
+    const topProducts = [
+      { name: 'iPhone 15 Pro', val: '¥89.9万' },
+      { name: 'MacBook Air M3', val: '¥67.2万' },
+      { name: 'AirPods Pro', val: '¥42.1万' },
+      { name: 'iPad Air', val: '¥38.6万' },
+      { name: 'Apple Watch', val: '¥29.9万' }
+    ]
+    document.getElementById('mini-rank').innerHTML = topProducts.map((p, i) => `<div class="mini-rank-item"><span class="mini-rank-item__num ${i===0?'mini-rank-item__num--1':''}">${i+1}</span><span class="mini-rank-item__name">${p.name}</span><span class="mini-rank-item__val">${p.val}</span></div>`).join('')
+
+    const acts = [
+      { text: '张三 完成支付 ¥8,999', time: '2分钟前' },
+      { text: '李四 订单已发货', time: '5分钟前' },
+      { text: '王五 提交退款申请', time: '8分钟前' },
+      { text: '新用户注册 +3', time: '12分钟前' },
+      { text: '库存预警：AirPods Pro', time: '20分钟前' }
+    ]
+    document.getElementById('mini-activity').innerHTML = acts.map(a => `<div class="mini-act-item"><span class="mini-act-item__dot"></span><span>${a.text}</span><span class="mini-act-item__time">${a.time}</span></div>`).join('')
+
+    const alerts = [
+      { text: 'AirPods Pro 库存 < 50 件', time: '10分钟前' },
+      { text: 'Magic Keyboard 库存 < 20 件', time: '30分钟前' },
+      { text: 'Studio Display 补货到仓', time: '1小时前' },
+      { text: 'Apple Watch 退货率上升至 2.1%', time: '2小时前' }
+    ]
+    document.getElementById('alert-list').innerHTML = alerts.map(a => `<div class="mini-act-item"><span class="mini-act-item__dot" style="background:#dc2626"></span><span>${a.text}</span><span class="mini-act-item__time">${a.time}</span></div>`).join('')
+
+    const services = [
+      { label: 'API', pct: 99, color: '#16a34a' },
+      { label: '支付', pct: 100, color: '#16a34a' },
+      { label: '库存', pct: 98, color: '#16a34a' },
+      { label: '物流', pct: 95, color: '#ca8a04' },
+      { label: 'CDN', pct: 100, color: '#16a34a' }
+    ]
+    document.getElementById('service-list').innerHTML = services.map(d => `<div class="mini-progress"><span class="mini-progress__label">${d.label}</span><div class="mini-progress__bar"><div class="mini-progress__fill" style="width:${d.pct}%;background:${d.color}"></div></div><span class="mini-progress__val">${d.pct}%</span></div>`).join('')
+  </script>
+</body>
+</html>

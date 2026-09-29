@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login / 01 - 毛玻璃登录</title>
+  <link rel="stylesheet" href="../../shared/demo.css" />
+  <style>
+    .login-bg {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      overflow: hidden;
+    }
+
+    .login-bg::before {
+      content: '';
+      position: absolute;
+      inset: -50%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.1)"/></svg>') center/cover;
+      animation: rotate 30s linear infinite;
+    }
+
+    .login-bg__overlay {
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(20px);
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .login-card--frosted {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(30px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 48px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      width: 420px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .login-card--frosted .login-title {
+      color: #fff;
+      font-size: 28px;
+    }
+
+    .login-card--frosted .login-subtitle {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .login-card--frosted .login-form__label {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .login-card--frosted .login-input {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.3);
+      color: #fff;
+    }
+
+    .login-card--frosted .login-input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .login-card--frosted .login-input:focus {
+      border-color: #fff;
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+    }
+
+    .login-card--frosted .login-button {
+      background: #fff;
+      color: #667eea;
+      font-weight: 600;
+    }
+
+    .login-card--frosted .login-button:hover {
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .login-card--frosted .login-links a {
+      color: #fff;
+    }
+
+    .login-card--frosted .login-links span {
+      color: rgba(255, 255, 255, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <div class="login-page">
+    <!-- 背景 -->
+    <div class="login-bg">
+      <div class="login-bg__overlay" />
+    </div>
+
+    <!-- 登录卡片 -->
+    <div class="login-card--frosted">
+      <div class="login-header">
+        <h1 class="login-title">欢迎回来</h1>
+        <p class="login-subtitle">请登录您的账户</p>
+      </div>
+
+      <form class="login-form" onsubmit="return handleSubmit(event)">
+        <div class="login-form__group">
+          <label class="login-form__label">邮箱地址</label>
+          <input type="email" class="login-input" placeholder="请输入邮箱" required />
+        </div>
+
+        <div class="login-form__group">
+          <label class="login-form__label">密码</label>
+          <input type="password" class="login-input" placeholder="请输入密码" required />
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
+          <label style="display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.8); cursor: pointer;">
+            <input type="checkbox" style="width: 16px; height: 16px;" />
+            记住我
+          </label>
+          <a href="#" style="color: #fff; text-decoration: none;">忘记密码？</a>
+        </div>
+
+        <button type="submit" class="login-button">登 录</button>
+      </form>
+
+      <div class="login-links">
+        <a href="#">注册账户</a>
+        <span>|</span>
+        <a href="#">手机号登录</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault()
+      alert('登录成功！（Demo）')
+      return false
+    }
+  </script>
+</body>
+</html>

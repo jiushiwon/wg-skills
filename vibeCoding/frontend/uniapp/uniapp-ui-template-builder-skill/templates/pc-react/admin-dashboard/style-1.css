@@ -1,0 +1,22 @@
+/* Admin Dashboard - 默认风格 */
+.admin-layout { display: flex; min-height: 100vh; }
+.admin-sidebar { width: 220px; background: #1a1a2e; padding: 20px 0; flex-shrink: 0; }
+.admin-logo { font-size: 24px; font-weight: 700; color: #fff; padding: 0 24px 30px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; }
+.admin-nav a { display: block; padding: 12px 24px; color: rgba(255,255,255,0.6); text-decoration: none; font-size: 14px; transition: all 0.2s; }
+.admin-nav a:hover, .admin-nav a.active { color: #fff; background: rgba(255,255,255,0.05); border-left: 3px solid #667eea; }
+.admin-main { flex: 1; background: #f5f7fa; }
+.admin-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 30px; background: #fff; border-bottom: 1px solid #eee; }
+.admin-header h1 { font-size: 20px; font-weight: 600; color: #1a1a1a; margin: 0; }
+.admin-user { width: 36px; height: 36px; border-radius: 50%; background: #667eea; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+.admin-content { padding: 24px 30px; }
+.admin-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 24px; }
+.admin-stat-card { background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.admin-stat-label { font-size: 13px; color: #999; margin-bottom: 8px; }
+.admin-stat-value { font-size: 28px; font-weight: 700; color: #1a1a1a; }
+.admin-stat-trend { font-size: 13px; margin-top: 8px; }
+.admin-stat-trend.up { color: #10b981; }
+.admin-stat-trend.down { color: #ef4444; }
+.admin-chart { background: #fff; border-radius: 10px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.admin-chart h3 { font-size: 16px; font-weight: 600; color: #1a1a1a; margin: 0 0 20px; }
+.admin-chart-area { display: flex; align-items: flex-end; gap: 12px; height: 180px; padding: 0 10px; }
+.admin-bar { flex: 1; background: linear-gradient(180deg, #667eea, #764ba2); border-radius: 4px 4px 0 0; }

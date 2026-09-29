@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>经典白色 · 财务数据看板 - Vue3 Dashboard Skill Demo</title>
+  <link rel="stylesheet" href="../../shared/tokens.css" />
+  <link rel="stylesheet" href="../../shared/base-card.css" />
+  <link rel="stylesheet" href="../../shared/demo.css" />
+  <style>
+    :root {
+      --color-bg: #f5f7fa;
+      --color-surface: #fff;
+      --color-text: #1f2937;
+      --color-primary: #1890ff;
+      --color-primary-50: #e6f4ff;
+      --color-primary-200: #bae0ff;
+    }
+    body { background: var(--color-bg); }
+    .dash-page { max-width: 1400px; margin: 0 auto; padding: var(--space-6) var(--space-8); gap: var(--space-6); }
+    .dash-scene-tag {
+      display: inline-block; padding: var(--space-1) var(--space-3); border-radius: var(--radius-full);
+      font-size: var(--font-xs); font-weight: var(--weight-medium);
+      background: var(--color-primary-50); color: var(--color-primary);
+      border: 1px solid var(--color-primary-200); margin-bottom: var(--space-2);
+    }
+    .dash-kpi-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
+    .dash-kpi-card { flex-direction: row; align-items: center; gap: var(--space-4); }
+    .dash-kpi-card__icon {
+      width: 48px; height: 48px; border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .dash-kpi-card__info { display: flex; flex-direction: column; gap: 2px; }
+    .dash-kpi-card__label { font-size: var(--font-sm); color: var(--color-text-secondary); }
+    .dash-kpi-card__value { font-size: var(--font-4xl); font-weight: var(--weight-bold); line-height: 1.2; }
+    .dash-kpi-card__trend { display: flex; align-items: center; gap: var(--space-1); font-size: var(--font-xs); font-weight: var(--weight-medium); }
+    .dash-kpi-card__trend--up { color: var(--color-success); }
+    .dash-kpi-card__trend--down { color: var(--color-danger); }
+    .content-grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-6); }
+    .content-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-6); }
+    .content-grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); }
+    .dash-chart { display: flex; align-items: flex-end; gap: var(--space-2); height: 200px; padding: var(--space-4) 0; }
+    .dash-chart__col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; min-width: 30px; }
+    .dash-chart__bar { width: 100%; border-radius: 4px 4px 0 0; transition: height 0.3s ease; background: linear-gradient(to top, var(--color-primary), var(--color-primary-200)); }
+    .dash-chart__label { font-size: var(--font-2xs); color: var(--color-text-tertiary); text-align: center; margin-top: var(--space-1); }
+    .grouped-chart { display: flex; gap: var(--space-6); align-items: flex-end; height: 180px; padding: var(--space-4) 0; }
+    .grouped-chart__bar { width: 24px; border-radius: 3px 3px 0 0; transition: height 0.3s ease; }
+    .grouped-chart__label { font-size: var(--font-2xs); color: var(--color-text-tertiary); text-align: center; margin-top: var(--space-1); }
+    .donut-section { display: flex; align-items: center; gap: var(--space-6); }
+    .donut-chart { width: 160px; height: 160px; border-radius: 50%; position: relative; flex-shrink: 0; }
+    .donut-chart__hole { position: absolute; inset: 40px; background: var(--color-surface); border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .donut-chart__hole-value { font-size: var(--font-xl); font-weight: var(--weight-bold); }
+    .donut-chart__hole-label { font-size: var(--font-2xs); color: var(--color-text-tertiary); margin-top: 2px; }
+    .donut-legend { display: flex; flex-direction: column; gap: var(--space-3); flex: 1; }
+    .donut-legend-item { display: flex; align-items: center; gap: var(--space-2); }
+    .donut-legend-item__dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .donut-legend-item__name { font-size: var(--font-sm); color: var(--color-text-secondary); flex: 1; }
+    .donut-legend-item__val { font-size: var(--font-sm); font-weight: var(--weight-semibold); }
+    .progress-list { display: flex; flex-direction: column; gap: var(--space-3); }
+    .progress-item { display: flex; align-items: center; gap: var(--space-3); }
+    .progress-item__label { font-size: var(--font-sm); color: var(--color-text-secondary); width: 80px; flex-shrink: 0; }
+    .progress-item__bar { flex: 1; height: 8px; background: var(--color-bg-secondary); border-radius: var(--radius-full); overflow: hidden; }
+    .progress-item__fill { height: 100%; border-radius: var(--radius-full); transition: width 0.3s ease; }
+    .progress-item__val { font-size: var(--font-sm); font-weight: var(--weight-semibold); width: 50px; text-align: right; }
+    .hbar-list { display: flex; flex-direction: column; gap: var(--space-3); }
+    .hbar-item { display: flex; align-items: center; gap: var(--space-3); }
+    .hbar-item__label { font-size: var(--font-sm); color: var(--color-text-secondary); width: 60px; flex-shrink: 0; }
+    .hbar-item__bar { flex: 1; height: 24px; background: var(--color-bg-secondary); border-radius: var(--radius-sm); overflow: hidden; }
+    .hbar-item__fill { height: 100%; border-radius: var(--radius-sm); display: flex; align-items: center; padding-left: var(--space-2); font-size: var(--font-xs); color: #fff; font-weight: var(--weight-medium); }
+    .hbar-item__val { font-size: var(--font-sm); font-weight: var(--weight-semibold); width: 70px; text-align: right; }
+    .dash-activity-list { display: flex; flex-direction: column; gap: var(--space-2); max-height: 320px; overflow-y: auto; }
+    .dash-activity-item { display: flex; gap: var(--space-3); align-items: center; padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm); transition: background 0.2s ease; }
+    .dash-activity-item:hover { background: var(--color-bg-hover); }
+    .dash-activity-item__avatar { width: var(--dash-activity-avatar-size); height: var(--dash-activity-avatar-size); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--font-sm); flex-shrink: 0; }
+    .dash-activity-item__info { flex: 1; min-width: 0; }
+    .dash-activity-item__text { font-size: var(--font-base); }
+    .dash-activity-item__time { font-size: var(--font-2xs); color: var(--color-text-tertiary); margin-top: 2px; }
+    .dash-table { width: 100%; display: table; }
+    .dash-table__head { display: table-header-group; }
+    .dash-table__body { display: table-row-group; }
+    .dash-table__row { display: table-row; height: var(--dash-table-row-height); transition: background 0.2s ease; }
+    .dash-table__row--header { background: var(--dash-table-header-bg); }
+    .dash-table__cell { display: table-cell; padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--dash-table-border); font-size: var(--font-sm); vertical-align: middle; }
+    .dash-table__cell--header { font-weight: var(--weight-semibold); color: var(--color-text-secondary); }
+    .dash-table__body .dash-table__row:hover .dash-table__cell { background: var(--dash-table-row-hover); }
+    .dash-table__body .dash-table__row:nth-child(even) .dash-table__cell { background: var(--color-bg-secondary); }
+    .dash-status-tag { display: inline-flex; padding: 2px 10px; border-radius: var(--radius-full); font-size: var(--font-xs); font-weight: var(--weight-medium); line-height: 1.6; }
+    .dash-status-tag--completed { background: #f0fdf4; color: #16a34a; }
+    .dash-status-tag--pending { background: #fefce8; color: #ca8a04; }
+    .dash-status-tag--processing { background: #eff6ff; color: #2563eb; }
+    .dash-status-tag--cancelled { background: #fef2f2; color: #dc2626; }
+    .dash-top-list { display: flex; flex-direction: column; }
+    .dash-top-item { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border-light); }
+    .dash-top-item:last-child { border-bottom: none; }
+    .dash-top-item__rank { width: var(--dash-top-rank-size); height: var(--dash-top-rank-size); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--font-xs); font-weight: var(--weight-bold); background: var(--color-bg-secondary); color: var(--color-text-secondary); flex-shrink: 0; }
+    .dash-top-item__rank--1 { background: #fef3c7; color: #b45309; }
+    .dash-top-item__rank--2 { background: #e5e7eb; color: #4b5563; }
+    .dash-top-item__rank--3 { background: #fed7aa; color: #c2410c; }
+    .dash-top-item__name { flex: 1; font-size: var(--font-base); }
+    .dash-top-item__amount { font-weight: var(--weight-semibold); font-size: var(--font-base); }
+    .approval-list { display: flex; flex-direction: column; gap: var(--space-2); }
+    .approval-item { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); border-radius: var(--radius-sm); border: 1px solid var(--color-border-light); transition: border-color 0.2s ease; }
+    .approval-item:hover { border-color: var(--color-primary-200); }
+    .approval-item__badge { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .approval-item__info { flex: 1; min-width: 0; }
+    .approval-item__title { font-size: var(--font-sm); font-weight: var(--weight-medium); }
+    .approval-item__meta { font-size: var(--font-2xs); color: var(--color-text-tertiary); margin-top: 2px; }
+    .approval-item__amount { font-size: var(--font-sm); font-weight: var(--weight-semibold); }
+    .header-actions { display: flex; align-items: center; gap: var(--space-3); }
+    .btn { padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); font-size: var(--font-sm); cursor: pointer; border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text); transition: all 0.2s ease; display: flex; align-items: center; gap: var(--space-1); }
+    .btn:hover { border-color: var(--color-primary); color: var(--color-primary); }
+    .btn--primary { background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
+    .btn--primary:hover { background: var(--color-primary-hover, #40a9ff); }
+    @media (max-width: 1024px) {
+      .dash-kpi-row { grid-template-columns: repeat(2, 1fr); }
+      .content-grid-2, .content-grid-3, .content-grid-2x2 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .dash-page { padding: var(--space-4); }
+      .dash-kpi-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="dash-page">
+    <!-- 页头 -->
+    <div class="dash-header" role="banner">
+      <div>
+        <span class="dash-scene-tag">财务</span>
+        <div class="dash-header__title">财务数据看板</div>
+        <div class="dash-header__subtitle">实时财务数据概览 · 2024 年度 Q4</div>
+      </div>
+      <div class="header-actions">
+        <div class="btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="vertical-align:-2px"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg> 刷新</div>
+        <div class="btn btn--primary">导出报表</div>
+      </div>
+    </div>
+
+    <!-- KPI 指标 -->
+    <div class="dash-kpi-row" id="kpi-row"></div>
+
+    <!-- 第一行：营收趋势 + 实时动态 -->
+    <div class="content-grid-2">
+      <div class="base-card base-card--radius-md base-card--padding-lg">
+        <div class="base-card__title" style="margin-bottom:var(--space-4)">营收趋势（近 7 月）</div>
+        <div class="dash-chart" id="chart"></div>
+      </div>
+      <div class="base-card base-card--radius-md base-card--padding-lg">
+        <div class="base-card__title" style="margin-bottom:var(--space-4)">实时动态</div>
+        <div class="dash-activity-list" id="activity-list"></div>
+      </div>
+    </div>
+
+    <!-- 第二行：部门收支 + 费用分布 + 预算执行 -->
+    <div class="content-grid-3">
+      <div class="base-card base-card--radius-md base-card--padding-lg">
+        <div class="base-card__title" style="margin-bottom:var(--space-4)">部门收支对比</div>
+        <div class="grouped-chart" id="dept-chart"></div>
+      </div>
+      <div class="base-card base-card--radius-md base-card--padding-lg">
+        <div class="base-card__title" style="margin-bottom:var(--space-4)">费用类别分布</div>
+        <div class="donut-section" id="donut-section"></div>
+      </div>
+      <div class="base-card base-card--radius-md base-card--padding-lg">
+        <div class="base-card__title" style="margin-bottom:var(--space-4)">预算执行率</div>
+        <div class="progress-list" id="budget-list"></div>
+      </div>
+    </div>
+
+    <!-- 第三行：订单表格 + Top排行 -->
+    <div class="content-grid-2">
+      <div class="base-card base-card--radius-md base-card--padding-none">
+        <div class="base-card__header base-card--has-header-border">
+          <div class="base-card__title">费用审批订单</div>
+          <div class="base-card__header-actions"><span style="font-size:var(--font-xs);color:var(--color-text-tertiary)">共 42 笔</span></div>
+        </div>
+        <div class="base-card__body" style="padding:0">
+          <div class="dash-table" role="table">
+            <div class="dash-table__head" role="rowgroup">
+              <div class="dash-table__row dash-table__row--header" role="row">
+                <div class="dash-table__cell dash-table__cell--header" role="columnheader">订单号</div>
+                <div class="dash-table__cell dash-table__cell--header" role="columnheader">费用项目</div>
+                <div class="dash-table__cell dash-table__cell--header" role="columnheader">申请部门</div>
+                <div class="dash-table__cell dash-table__cell--header" role="columnheader">金额</div>
+                <div class="dash-table__cell dash-table__cell--header" role="columnheader">状态</div>
+                <div class="dash-table__cell dash-table__cell--header" role="columnheader">日期</div>
+              </div>
+            </div>
+            <div class="dash-table__body" role="rowgroup" id="orders-body"></div>
+          </div>
+        </div>
+      </div>
+      <div class="base-card base-card--radius-md base-card--padding-lg">
+        <div class="base-card__title" style="margin-bottom:var(--space-4)">Top 费用排行</div>
+        <div class="dash-top-list" id="top-list"></div>
+      </div>
+    </div>
+
+    <!-- 第四行：应收账款 + 待办审批 -->
+    <div class="content-grid-2x2">
+      <div class="base-card base-card--radius-md base-card--padding-lg">
+        <div class="base-card__title" style="margin-bottom:var(--space-4)">应收账款账龄</div>
+        <div class="hbar-list" id="aging-list"></div>
+      </div>
+      <div class="base-card base-card--radius-md base-card--padding-lg">
+        <div class="base-card__title" style="margin-bottom:var(--space-4)">待办审批</div>
+        <div class="approval-list" id="approval-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const svgIcons = {
+      revenue: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>',
+      expense: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/></svg>',
+      profit: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
+      receivable: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>',
+      budget: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>',
+      turnover: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>'
+    }
+    const trendIcon = { up: '↑', down: '↓', flat: '→' }
+    const statusMap = { completed: '已完成', pending: '待处理', processing: '审批中', cancelled: '已驳回' }
+
+    // ---- KPI ----
+    const kpis = [
+      { label: '总收入', value: '¥2,846万', trend: 'up', change: '+12.5%', icon: svgIcons.revenue, color: '#1890ff' },
+      { label: '总支出', value: '¥1,823万', trend: 'down', change: '-3.2%', icon: svgIcons.expense, color: '#fa8c16' },
+      { label: '净利润', value: '¥1,023万', trend: 'up', change: '+18.7%', icon: svgIcons.profit, color: '#52c41a' },
+      { label: '应收账款', value: '¥384万', trend: 'up', change: '+5.1%', icon: svgIcons.receivable, color: '#722ed1' },
+      { label: '预算执行率', value: '87.3%', trend: 'up', change: '+2.4%', icon: svgIcons.budget, color: '#13c2c2' },
+      { label: '资金周转天数', value: '42 天', trend: 'down', change: '-5 天', icon: svgIcons.turnover, color: '#f5222d' }
+    ]
+    document.getElementById('kpi-row').innerHTML = kpis.map(k => `
+      <div class="dash-kpi-card base-card base-card--tone-primary base-card--radius-md base-card--padding-lg" >
+        <div class="dash-kpi-card__icon" style="background:${k.color}15;color:${k.color}">${k.icon}</div>
+        <div class="dash-kpi-card__info">
+          <div class="dash-kpi-card__label">${k.label}</div>
+          <div class="dash-kpi-card__value">${k.value}</div>
+          <div class="dash-kpi-card__trend dash-kpi-card__trend--${k.trend}">${trendIcon[k.trend]} ${k.change}</div>
+        </div>
+      </div>
+    `).join('')
+
+    // ---- 营收趋势 ----
+    const chartData = [
+      { label: '1月', value: 2150 }, { label: '2月', value: 1860 }, { label: '3月', value: 2450 },
+      { label: '4月', value: 2780 }, { label: '5月', value: 2560 }, { label: '6月', value: 2980 }, { label: '7月', value: 2680 }
+    ]
+    const maxVal = Math.max(...chartData.map(d => d.value))
+    document.getElementById('chart').innerHTML = chartData.map(d => `
+      <div class="dash-chart__col"><div class="dash-chart__bar" style="height:${(d.value/maxVal)*180}px"></div><div class="dash-chart__label">${d.label}</div></div>
+    `).join('')
+
+    // ---- 实时动态 ----
+    const activities = [
+      { avatar: '财', name: '财务部', action: '完成 Q4 季度报表审核', time: '2 分钟前', color: '#1890ff' },
+      { avatar: '张', name: '张经理', action: '审批通过市场部 ¥128,000 报销', time: '15 分钟前', color: '#52c41a' },
+      { avatar: '系', name: '系统', action: '自动完成银行对账，差异 ¥0', time: '30 分钟前', color: '#8c8c8c' },
+      { avatar: '李', name: '李会计', action: '录入供应商付款 ¥256,000', time: '1 小时前', color: '#fa8c16' },
+      { avatar: '王', name: '王总监', action: '发起年度预算编制流程', time: '2 小时前', color: '#722ed1' },
+      { avatar: '系', name: '系统', action: '税务申报提醒（距截止 3 天）', time: '3 小时前', color: '#f5222d' }
+    ]
+    document.getElementById('activity-list').innerHTML = activities.map(a => `
+      <div class="dash-activity-item">
+        <div class="dash-activity-item__avatar" style="background:${a.color}15;color:${a.color}">${a.avatar}</div>
+        <div class="dash-activity-item__info">
+          <div class="dash-activity-item__text"><strong>${a.name}</strong> ${a.action}</div>
+          <div class="dash-activity-item__time">${a.time}</div>
+        </div>
+      </div>
+    `).join('')
+
+    // ---- 部门收支对比 ----
+    const deptData = [
+      { label: '销售部', income: 860, expense: 420 },
+      { label: '技术部', income: 320, expense: 580 },
+      { label: '市场部', income: 180, expense: 350 },
+      { label: '行政部', income: 45, expense: 280 },
+      { label: '人力部', income: 30, expense: 195 }
+    ]
+    const dMax = Math.max(...deptData.flatMap(d => [d.income, d.expense]))
+    document.getElementById('dept-chart').innerHTML = deptData.map(d => `
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:var(--space-1)">
+        <div style="display:flex;gap:4px;align-items:flex-end;justify-content:center">
+          <div class="grouped-chart__bar" style="height:${(d.income/dMax)*160}px;background:#1890ff"></div>
+          <div class="grouped-chart__bar" style="height:${(d.expense/dMax)*160}px;background:#fa8c16"></div>
+        </div>
+        <div class="grouped-chart__label">${d.label}</div>
+      </div>
+    `).join('') + '<div style="display:flex;gap:var(--space-4);justify-content:center;margin-top:var(--space-2)"><span style="font-size:var(--font-xs);color:#1890ff">● 收入</span><span style="font-size:var(--font-xs);color:#fa8c16">● 支出</span></div>'
+
+    // ---- 费用类别分布 ----
+    const feeData = [
+      { name: '人力成本', val: 860, color: '#1890ff' },
+      { name: '市场推广', val: 520, color: '#52c41a' },
+      { name: '云服务', val: 340, color: '#fa8c16' },
+      { name: '办公采购', val: 180, color: '#722ed1' },
+      { name: '差旅招待', val: 120, color: '#13c2c2' }
+    ]
+    const fTotal = feeData.reduce((s, d) => s + d.val, 0)
+    let acc = 0
+    const gradParts = feeData.map(s => { const start = (acc/fTotal)*360; acc += s.val; return `${s.color} ${start}deg ${(acc/fTotal)*360}deg` })
+    document.getElementById('donut-section').innerHTML = `
+      <div class="donut-chart" style="background:conic-gradient(${gradParts.join(',')})">
+        <div class="donut-chart__hole"><div class="donut-chart__hole-value">¥${fTotal}万</div><div class="donut-chart__hole-label">本季总费用</div></div>
+      </div>
+      <div class="donut-legend">${feeData.map(s => `<div class="donut-legend-item"><span class="donut-legend-item__dot" style="background:${s.color}"></span><span class="donut-legend-item__name">${s.name}</span><span class="donut-legend-item__val">¥${s.val}万</span></div>`).join('')}</div>
+    `
+
+    // ---- 预算执行率 ----
+    const budgetData = [
+      { label: '销售部', pct: 92, color: '#52c41a' },
+      { label: '技术部', pct: 78, color: '#1890ff' },
+      { label: '市场部', pct: 105, color: '#f5222d' },
+      { label: '行政部', pct: 65, color: '#fa8c16' },
+      { label: '人力部', pct: 88, color: '#13c2c2' }
+    ]
+    document.getElementById('budget-list').innerHTML = budgetData.map(d => `
+      <div class="progress-item">
+        <span class="progress-item__label">${d.label}</span>
+        <div class="progress-item__bar"><div class="progress-item__fill" style="width:${Math.min(d.pct,100)}%;background:${d.color}"></div></div>
+        <span class="progress-item__val" style="color:${d.pct>100?'var(--color-danger)':'var(--color-text)'}">${d.pct}%</span>
+      </div>
+    `).join('')
+
+    // ---- 费用审批订单 ----
+    const orders = [
+      { id: 'FIN-2024-0412', product: '年度服务器扩容', customer: '技术部', amount: '¥428,000', status: 'processing', date: '2024-12-18' },
+      { id: 'FIN-2024-0411', product: 'Q1 市场投放预算', customer: '市场部', amount: '¥350,000', status: 'pending', date: '2024-12-17' },
+      { id: 'FIN-2024-0410', product: '办公设备采购', customer: '行政部', amount: '¥128,600', status: 'completed', date: '2024-12-16' },
+      { id: 'FIN-2024-0409', product: '年终奖发放', customer: '人力资源', amount: '¥1,260,000', status: 'completed', date: '2024-12-15' },
+      { id: 'FIN-2024-0408', product: '客户答谢晚宴', customer: '销售部', amount: '¥86,500', status: 'cancelled', date: '2024-12-14' },
+      { id: 'FIN-2024-0407', product: '差旅报销（北京）', customer: '销售部', amount: '¥42,800', status: 'completed', date: '2024-12-13' },
+      { id: 'FIN-2024-0406', product: 'SaaS 订阅续费', customer: '技术部', amount: '¥168,000', status: 'processing', date: '2024-12-12' },
+      { id: 'FIN-2024-0405', product: '培训讲师费用', customer: '人力资源', amount: '¥35,000', status: 'completed', date: '2024-12-11' }
+    ]
+    document.getElementById('orders-body').innerHTML = orders.map(o => `
+      <div class="dash-table__row" role="row">
+        <div class="dash-table__cell" role="cell">${o.id}</div>
+        <div class="dash-table__cell" role="cell">${o.product}</div>
+        <div class="dash-table__cell" role="cell">${o.customer}</div>
+        <div class="dash-table__cell" role="cell"><strong>${o.amount}</strong></div>
+        <div class="dash-table__cell" role="cell"><span class="dash-status-tag dash-status-tag--${o.status}">${statusMap[o.status]}</span></div>
+        <div class="dash-table__cell" role="cell">${o.date}</div>
+      </div>
+    `).join('')
+
+    // ---- Top 费用排行 ----
+    document.getElementById('top-list').innerHTML = orders.slice().sort((a,b) => parseFloat(b.amount.replace(/[¥,]/g,'')) - parseFloat(a.amount.replace(/[¥,]/g,''))).slice(0,5).map((o,i) => `
+      <div class="dash-top-item">
+        <div class="dash-top-item__rank ${i < 3 ? 'dash-top-item__rank--'+(i+1) : ''}">${i+1}</div>
+        <div class="dash-top-item__name">${o.product}</div>
+        <div class="dash-top-item__amount">${o.amount}</div>
+      </div>
+    `).join('')
+
+    // ---- 应收账款账龄 ----
+    const agingData = [
+      { label: '0-30天', val: 186, pct: 48, color: '#52c41a' },
+      { label: '31-60天', val: 98, pct: 25, color: '#1890ff' },
+      { label: '61-90天', val: 56, pct: 15, color: '#fa8c16' },
+      { label: '91-180天', val: 28, pct: 7, color: '#f5222d' },
+      { label: '180天+', val: 16, pct: 5, color: '#722ed1' }
+    ]
+    document.getElementById('aging-list').innerHTML = agingData.map(d => `
+      <div class="hbar-item">
+        <span class="hbar-item__label">${d.label}</span>
+        <div class="hbar-item__bar"><div class="hbar-item__fill" style="width:${d.pct}%;background:${d.color}">¥${d.val}万</div></div>
+        <span class="hbar-item__val">${d.pct}%</span>
+      </div>
+    `).join('')
+
+    // ---- 待办审批 ----
+    const approvals = [
+      { title: '市场部 Q1 广告投放预算', meta: '申请人：赵市场 · 2 小时前', amount: '¥350,000', color: '#fa8c16' },
+      { title: '技术部云服务扩容申请', meta: '申请人：钱技术 · 4 小时前', amount: '¥428,000', color: '#1890ff' },
+      { title: '销售部年终客户答谢', meta: '申请人：孙销售 · 1 天前', amount: '¥86,500', color: '#52c41a' },
+      { title: '行政部办公家具更换', meta: '申请人：周行政 · 1 天前', amount: '¥52,000', color: '#722ed1' },
+      { title: '人力资源培训课程采购', meta: '申请人：吴人力 · 2 天前', amount: '¥35,000', color: '#13c2c2' }
+    ]
+    document.getElementById('approval-list').innerHTML = approvals.map(a => `
+      <div class="approval-item">
+        <div class="approval-item__badge" style="background:${a.color}"></div>
+        <div class="approval-item__info">
+          <div class="approval-item__title">${a.title}</div>
+          <div class="approval-item__meta">${a.meta}</div>
+        </div>
+        <div class="approval-item__amount">${a.amount}</div>
+      </div>
+    `).join('')
+  </script>
+</body>
+</html>

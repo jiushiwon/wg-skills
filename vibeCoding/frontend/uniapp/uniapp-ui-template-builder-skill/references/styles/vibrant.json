@@ -1,0 +1,77 @@
+{
+  "name": "活力炫彩",
+  "id": "vibrant",
+  "description": "渐变色，圆形图标，活跃氛围。适合电商、社交、娱乐类应用。",
+  "tokens": {
+    "colors": {
+      "primary": "#FF6B6B",
+      "primaryLight": "#FF8E53",
+      "primaryDark": "#EE5A24",
+      "secondary": "#FFB347",
+      "accent": "#FF6B6B",
+      "background": "#FFFFFF",
+      "backgroundSecondary": "#FFF5F5",
+      "surface": "#FFFFFF",
+      "surfaceSecondary": "#FFF9F0",
+      "border": "#FFE4E4",
+      "textPrimary": "#1A1A1A",
+      "textSecondary": "#666666",
+      "textTertiary": "#999999",
+      "success": "#10B981",
+      "warning": "#F59E0B",
+      "error": "#EF4444",
+      "info": "#3B82F6",
+      "gradient": "linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%)",
+      "gradientSecondary": "linear-gradient(135deg, #667EEA 0%, #764BA2 100%)"
+    },
+    "typography": {
+      "fontFamily": "-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif",
+      "fontSizeXs": "10px",
+      "fontSizeSm": "12px",
+      "fontSizeMd": "14px",
+      "fontSizeLg": "16px",
+      "fontSizeXl": "18px",
+      "fontSize2xl": "20px",
+      "fontSize3xl": "24px",
+      "fontWeightNormal": "400",
+      "fontWeightMedium": "500",
+      "fontWeightSemibold": "600",
+      "fontWeightBold": "700"
+    },
+    "spacing": {
+      "xs": "4px",
+      "sm": "8px",
+      "md": "12px",
+      "lg": "16px",
+      "xl": "20px",
+      "2xl": "24px",
+      "3xl": "32px",
+      "4xl": "48px"
+    },
+    "radius": {
+      "none": "0px",
+      "sm": "6px",
+      "md": "12px",
+      "lg": "16px",
+      "xl": "20px",
+      "2xl": "24px",
+      "full": "9999px"
+    },
+    "shadow": {
+      "sm": "0 2px 8px rgba(255, 107, 107, 0.15)",
+      "md": "0 4px 16px rgba(255, 107, 107, 0.2)",
+      "lg": "0 8px 24px rgba(255, 107, 107, 0.25)",
+      "xl": "0 12px 32px rgba(255, 107, 107, 0.3)"
+    },
+    "transition": {
+      "fast": "150ms",
+      "normal": "250ms",
+      "slow": "350ms"
+    }
+  },
+  "usage": {
+    "scenarios": ["电商平台", "社交应用", "娱乐产品", "促销活动"],
+    "avoid": ["金融", "医疗", "企业后台"]
+  },
+  "examples": ["拼多多", "小红书", "抖音", "京东"]
+}

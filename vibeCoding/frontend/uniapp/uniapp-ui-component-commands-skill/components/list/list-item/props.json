@@ -1,0 +1,17 @@
+{
+  "name": "list-item",
+  "title": "列表项",
+  "category": "list",
+  "description": "列表项，支持图标、标题、描述、箭头",
+  "aliases": ["单元格", "cell", "listcell"],
+  "props": [
+    { "name": "icon", "type": "string", "default": "", "desc": "左侧图标" },
+    { "name": "title", "type": "string", "default": "", "desc": "标题" },
+    { "name": "label", "type": "string", "default": "", "desc": "描述文字" },
+    { "name": "value", "type": "string", "default": "", "desc": "右侧值" },
+    { "name": "arrow", "type": "boolean", "default": false, "desc": "显示箭头" },
+    { "name": "disabled", "type": "boolean", "default": false, "desc": "禁用" }
+  ],
+  "events": ["click"],
+  "slots": ["default", "icon", "right"]
+}

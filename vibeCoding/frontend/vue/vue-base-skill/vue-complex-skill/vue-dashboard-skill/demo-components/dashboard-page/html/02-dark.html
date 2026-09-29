@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>暗黑 · 班级管理看板 - Vue3 Dashboard Skill Demo</title>
+  <link rel="stylesheet" href="../../shared/tokens.css" />
+  <link rel="stylesheet" href="../../shared/base-card.css" />
+  <link rel="stylesheet" href="../../shared/demo.css" />
+  <style>
+    :root {
+      --color-bg: #0d1117;
+      --color-surface: #161b22;
+      --color-text: #e6edf3;
+      --color-text-secondary: #8b949e;
+      --color-text-tertiary: #6e7681;
+      --color-primary: #58a6ff;
+      --color-primary-50: rgba(88,166,255,0.12);
+      --color-primary-200: rgba(88,166,255,0.3);
+      --color-border: #30363d;
+      --color-border-light: #21262d;
+      --color-bg-secondary: #21262d;
+      --color-bg-hover: #1c2128;
+      --color-success: #3fb950;
+      --color-danger: #f85149;
+    }
+    body { background: var(--color-bg); }
+    .dash-page { max-width: 1400px; margin: 0 auto; padding: var(--space-6) var(--space-8); gap: var(--space-6); }
+    .dash-scene-tag {
+      display: inline-block; padding: var(--space-1) var(--space-3); border-radius: var(--radius-full);
+      font-size: var(--font-xs); font-weight: var(--weight-medium);
+      background: var(--color-primary-50); color: var(--color-primary);
+      border: 1px solid var(--color-primary-200); margin-bottom: var(--space-2);
+    }
+    .dash-kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); }
+    .dash-kpi-card { flex-direction: row; align-items: center; gap: var(--space-4); }
+    .dash-kpi-card__icon { width: 48px; height: 48px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .dash-kpi-card__info { display: flex; flex-direction: column; gap: 2px; }
+    .dash-kpi-card__label { font-size: var(--font-sm); color: var(--color-text-secondary); }
+    .dash-kpi-card__value { font-size: var(--font-4xl); font-weight: var(--weight-bold); line-height: 1.2; }
+    .dash-kpi-card__trend { display: flex; align-items: center; gap: var(--space-1); font-size: var(--font-xs); font-weight: var(--weight-medium); }
+    .dash-kpi-card__trend--up { color: var(--color-success); }
+    .dash-kpi-card__trend--down { color: var(--color-danger); }
+    .content-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); }
+    .content-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-6); }
+    .content-grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); }
+    .hbar-list { display: flex; flex-direction: column; gap: var(--space-3); }
+    .hbar-item { display: flex; align-items: center; gap: var(--space-3); }
+    .hbar-item__label { font-size: var(--font-sm); color: var(--color-text-secondary); width: 60px; flex-shrink: 0; }
+    .hbar-item__bar { flex: 1; height: 24px; background: var(--color-bg-secondary); border-radius: var(--radius-sm); overflow: hidden; }
+    .hbar-item__fill { height: 100%; border-radius: var(--radius-sm); display: flex; align-items: center; padding-left: var(--space-2); font-size: var(--font-xs); color: #fff; font-weight: var(--weight-medium); }
+    .hbar-item__val { font-size: var(--font-sm); font-weight: var(--weight-semibold); width: 60px; text-align: right; }
+    .progress-list { display: flex; flex-direction: column; gap: var(--space-3); }
+    .progress-item { display: flex; align-items: center; gap: var(--space-3); }
+    .progress-item__label { font-size: var(--font-sm); color: var(--color-text-secondary); width: 72px; flex-shrink: 0; }
+    .progress-item__bar { flex: 1; height: 8px; background: var(--color-bg-secondary); border-radius: var(--radius-full); overflow: hidden; }
+    .progress-item__fill { height: 100%; border-radius: var(--radius-full); transition: width 0.3s ease; }
+    .progress-item__val { font-size: var(--font-sm); font-weight: var(--weight-semibold); width: 50px; text-align: right; }
+    .dash-activity-list { display: flex; flex-direction: column; gap: var(--space-2); max-height: 320px; overflow-y: auto; }
+    .dash-activity-item { display: flex; gap: var(--space-3); align-items: center; padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm); transition: background 0.2s ease; }
+    .dash-activity-item:hover { background: var(--color-bg-hover); }
+    .dash-activity-item__avatar { width: var(--dash-activity-avatar-size); height: var(--dash-activity-avatar-size); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--font-sm); flex-shrink: 0; }
+    .dash-activity-item__info { flex: 1; min-width: 0; }
+    .dash-activity-item__text { font-size: var(--font-base); }
+    .dash-activity-item__time { font-size: var(--font-2xs); color: var(--color-text-tertiary); margin-top: 2px; }
+    .dash-table { width: 100%; display: table; }
+    .dash-table__head { display: table-header-group; }
+    .dash-table__body { display: table-row-group; }
+    .dash-table__row { display: table-row; height: var(--dash-table-row-height); transition: background 0.2s ease; }
+    .dash-table__row--header { background: var(--dash-table-header-bg); }
+    .dash-table__cell { display: table-cell; padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--dash-table-border); font-size: var(--font-sm); vertical-align: middle; }
+    .dash-table__cell--header { font-weight: var(--weight-semibold); color: var(--color-text-secondary); }
+    .dash-table__body .dash-table__row:hover .dash-table__cell { background: var(--dash-table-row-hover); }
+    .dash-status-tag { display: inline-flex; padding: 2px 10px; border-radius: var(--radius-full); font-size: var(--font-xs); font-weight: var(--weight-medium); line-height: 1.6; }
+    .dash-status-tag--completed { background: rgba(63,185,80,0.15); color: #3fb950; }
+    .dash-status-tag--pending { background: rgba(210,153,34,0.15); color: #d29922; }
+    .dash-status-tag--processing { background: rgba(88,166,255,0.15); color: #58a6ff; }
+    .dash-status-tag--cancelled { background: rgba(248,81,73,0.15); color: #f85149; }
+    .approval-list { display: flex; flex-direction: column; gap: var(--space-2); }
+    .approval-item { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); border-radius: var(--radius-sm); border: 1px solid var(--color-border-light); transition: border-color 0.2s ease; }
+    .approval-item:hover { border-color: var(--color-primary-200); }
+    .approval-item__badge { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .approval-item__info { flex: 1; min-width: 0; }
+    .approval-item__title { font-size: var(--font-sm); font-weight: var(--weight-medium); }
+    .approval-item__meta { font-size: var(--font-2xs); color: var(--color-text-tertiary); margin-top: 2px; }
+    .approval-item__amount { font-size: var(--font-sm); font-weight: var(--weight-semibold); }
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+    .stat-item { padding: var(--space-3); border-radius: var(--radius-sm); background: var(--color-bg-secondary); }
+    .stat-item__label { font-size: var(--font-xs); color: var(--color-text-tertiary); }
+    .stat-item__value { font-size: var(--font-xl); font-weight: var(--weight-bold); margin-top: var(--space-1); }
+    .header-actions { display: flex; align-items: center; gap: var(--space-3); }
+    .btn { padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); font-size: var(--font-sm); cursor: pointer; border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text); transition: all 0.2s ease; display: flex; align-items: center; gap: var(--space-1); }
+    .btn:hover { border-color: var(--color-primary); color: var(--color-primary); }
+    .btn--primary { background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
+    @media (max-width: 1024px) { .dash-kpi-row { grid-template-columns: repeat(2, 1fr); } .content-grid-2, .content-grid-3, .content-grid-2x2 { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) { .dash-page { padding: var(--space-4); } .dash-kpi-row { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="dash-page">
+    <div class="dash-header" role="banner">
+      <div>
+        <span class="dash-scene-tag">教育</span>
+        <div class="dash-header__title">班级管理看板</div>
+        <div class="dash-header__subtitle">高二年级（3）班 · 2024 秋季学期</div>
+      </div>
+      <div class="header-actions">
+        <div class="btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="vertical-align:-2px"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg> 刷新</div>
+        <div class="btn btn--primary">导出报告</div>
+      </div>
+    </div>
+
+    <!-- KPI -->
+    <div class="dash-kpi-row" id="kpi-row"></div>
+
+    <!-- 第一行：教师概览 + 班级统计 -->
+    <div class="content-grid-2">
+      <div class="base-card base-card--radius-md base-card--padding-lg">
+        <div class="base-card__title" style="margin-bottom:var(--space-4)">教师概览</div>
+        <div class="dash-activity-list" id="teacher-list"></div>
+      </div>
+      <div class="base-card base-card--radius-md base-card--padding-lg">
+        <div class="base-card__title" style="margin-bottom:var(--space-4)">班级统计</div>
+        <div class="stat-grid" id="stat-grid"></div>
+      </div>
+    </div>
+
+    <!-- 第二行：成绩分布 + 学科及格率 + 出勤率 -->
+    <div class="content-grid-3">
+      <div class="base-card base-card--radius-md base-card--padding-lg">
+        <div class="base-card__title" style="margin-bottom:var(--space-4)">成绩分布</div>
+        <div class="hbar-list" id="grade-dist"></div>
+      </div>
+      <div class="base-card base-card--radius-md base-card--padding-lg">
+        <div class="base-card__title" style="margin-bottom:var(--space-4)">学科及格率</div>
+        <div class="progress-list" id="pass-rate"></div>
+      </div>
+      <div class="base-card base-card--radius-md base-card--padding-lg">
+        <div class="base-card__title" style="margin-bottom:var(--space-4)">月度出勤率</div>
+        <div class="progress-list" id="attendance"></div>
+      </div>
+    </div>
+
+    <!-- 第三行：学生表格 + 教学资产 -->
+    <div class="content-grid-2">
+      <div class="base-card base-card--radius-md base-card--padding-none">
+        <div class="base-card__header base-card--has-header-border">
+          <div class="base-card__title">学生成绩</div>
+          <div class="base-card__header-actions"><span style="font-size:var(--font-xs);color:var(--color-text-tertiary)">共 45 名</span></div>
+        </div>
+        <div class="base-card__body" style="padding:0">
+          <div class="dash-table" role="table">
+            <div class="dash-table__head" role="rowgroup">
+              <div class="dash-table__row dash-table__row--header" role="row">
+                <div class="dash-table__cell dash-table__cell--header" role="columnheader">学号</div>
+                <div class="dash-table__cell dash-table__cell--header" role="columnheader">姓名</div>
+                <div class="dash-table__cell dash-table__cell--header" role="columnheader">语文</div>
+                <div class="dash-table__cell dash-table__cell--header" role="columnheader">数学</div>
+                <div class="dash-table__cell dash-table__cell--header" role="columnheader">英语</div>
+                <div class="dash-table__cell dash-table__cell--header" role="columnheader">总分</div>
+                <div class="dash-table__cell dash-table__cell--header" role="columnheader">状态</div>
+              </div>
+            </div>
+            <div class="dash-table__body" role="rowgroup" id="student-body"></div>
+          </div>
+        </div>
+      </div>
+      <div class="base-card base-card--radius-md base-card--padding-lg">
+        <div class="base-card__title" style="margin-bottom:var(--space-4)">教学资产</div>
+        <div class="hbar-list" id="assets-list"></div>
+      </div>
+    </div>
+
+    <!-- 第四行：告警日志 + 待办事项 -->
+    <div class="content-grid-2x2">
+      <div class="base-card base-card--radius-md base-card--padding-lg">
+        <div class="base-card__title" style="margin-bottom:var(--space-4)">告警日志</div>
+        <div class="dash-activity-list" id="alert-list"></div>
+      </div>
+      <div class="base-card base-card--radius-md base-card--padding-lg">
+        <div class="base-card__title" style="margin-bottom:var(--space-4)">待办事项</div>
+        <div class="approval-list" id="todo-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const svgIcons = {
+      students: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>',
+      teachers: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+      score: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+      rate: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
+      attend: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+      alert: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
+    }
+    const trendIcon = { up: '↑', down: '↓', flat: '→' }
+    const statusMap = { excellent: '优秀', good: '良好', average: '一般', fail: '待提升' }
+
+    const kpis = [
+      { label: '在班人数', value: '45', trend: 'flat', change: '0', icon: svgIcons.students, color: '#58a6ff' },
+      { label: '授课教师', value: '8', trend: 'flat', change: '0', icon: svgIcons.teachers, color: '#3fb950' },
+      { label: '班级均分', value: '486.5', trend: 'up', change: '+12.3', icon: svgIcons.score, color: '#d29922' },
+      { label: '及格率', value: '91.2%', trend: 'up', change: '+3.1%', icon: svgIcons.rate, color: '#f0883e' },
+      { label: '出勤率', value: '97.8%', trend: 'down', change: '-0.5%', icon: svgIcons.attend, color: '#a371f7' },
+      { label: '待处理告警', value: '3', trend: 'up', change: '+1', icon: svgIcons.alert, color: '#f85149' }
+    ]
+    document.getElementById('kpi-row').innerHTML = kpis.map(k => `
+      <div class="dash-kpi-card base-card base-card--radius-md base-card--padding-lg" >
+        <div class="dash-kpi-card__icon" style="background:${k.color}15;color:${k.color}">${k.icon}</div>
+        <div class="dash-kpi-card__info">
+          <div class="dash-kpi-card__label">${k.label}</div>
+          <div class="dash-kpi-card__value">${k.value}</div>
+          <div class="dash-kpi-card__trend dash-kpi-card__trend--${k.trend}">${k.change !== '0' ? trendIcon[k.trend] + ' ' + k.change : '—'}</div>
+        </div>
+      </div>
+    `).join('')
+
+    const teachers = [
+      { avatar: '王', name: '王建华', action: '语文 · 班主任', time: '教龄 15 年', color: '#58a6ff' },
+      { avatar: '李', name: '李雪梅', action: '数学 · 年级组长', time: '教龄 12 年', color: '#3fb950' },
+      { avatar: '张', name: '张志强', action: '英语 · 骨干教师', time: '教龄 10 年', color: '#d29922' },
+      { avatar: '陈', name: '陈明辉', action: '物理 · 实验组长', time: '教龄 8 年', color: '#f0883e' },
+      { avatar: '刘', name: '刘芳芳', action: '化学 · 教研员', time: '教龄 6 年', color: '#a371f7' },
+      { avatar: '赵', name: '赵伟', action: '体育 · 教练', time: '教龄 9 年', color: '#f85149' }
+    ]
+    document.getElementById('teacher-list').innerHTML = teachers.map(t => `
+      <div class="dash-activity-item">
+        <div class="dash-activity-item__avatar" style="background:${t.color}15;color:${t.color}">${t.avatar}</div>
+        <div class="dash-activity-item__info">
+          <div class="dash-activity-item__text"><strong>${t.name}</strong> ${t.action}</div>
+          <div class="dash-activity-item__time">${t.time}</div>
+        </div>
+      </div>
+    `).join('')
+
+    const stats = [
+      { label: '男生', value: '24' }, { label: '女生', value: '21' },
+      { label: '团员', value: '32' }, { label: '住校生', value: '28' },
+      { label: '平均年龄', value: '16.8' }, { label: '班级排名', value: '年级第 2' }
+    ]
+    document.getElementById('stat-grid').innerHTML = stats.map(s => `
+      <div class="stat-item"><div class="stat-item__label">${s.label}</div><div class="stat-item__value">${s.value}</div></div>
+    `).join('')
+
+    const gradeDist = [
+      { label: '优秀(500+)', pct: 33, val: 15, color: '#3fb950' },
+      { label: '良好(450+)', pct: 36, val: 16, color: '#58a6ff' },
+      { label: '一般(360+)', pct: 22, val: 10, color: '#d29922' },
+      { label: '待提升(<360)', pct: 9, val: 4, color: '#f85149' }
+    ]
+    document.getElementById('grade-dist').innerHTML = gradeDist.map(d => `
+      <div class="hbar-item">
+        <span class="hbar-item__label">${d.label}</span>
+        <div class="hbar-item__bar"><div class="hbar-item__fill" style="width:${d.pct}%;background:${d.color}">${d.val} 人</div></div>
+        <span class="hbar-item__val">${d.pct}%</span>
+      </div>
+    `).join('')
+
+    const passRate = [
+      { label: '语文', pct: 95, color: '#58a6ff' },
+      { label: '数学', pct: 82, color: '#3fb950' },
+      { label: '英语', pct: 89, color: '#d29922' },
+      { label: '物理', pct: 78, color: '#f0883e' },
+      { label: '化学', pct: 85, color: '#a371f7' }
+    ]
+    document.getElementById('pass-rate').innerHTML = passRate.map(d => `
+      <div class="progress-item">
+        <span class="progress-item__label">${d.label}</span>
+        <div class="progress-item__bar"><div class="progress-item__fill" style="width:${d.pct}%;background:${d.color}"></div></div>
+        <span class="progress-item__val">${d.pct}%</span>
+      </div>
+    `).join('')
+
+    const attendance = [
+      { label: '9月', pct: 98, color: '#3fb950' },
+      { label: '10月', pct: 97, color: '#58a6ff' },
+      { label: '11月', pct: 96, color: '#d29922' },
+      { label: '12月', pct: 98, color: '#3fb950' }
+    ]
+    document.getElementById('attendance').innerHTML = attendance.map(d => `
+      <div class="progress-item">
+        <span class="progress-item__label">${d.label}</span>
+        <div class="progress-item__bar"><div class="progress-item__fill" style="width:${d.pct}%;background:${d.color}"></div></div>
+        <span class="progress-item__val">${d.pct}%</span>
+      </div>
+    `).join('')
+
+    const students = [
+      { id: '20240301', name: '陈思远', cn: 128, math: 142, eng: 135, total: 405, status: 'excellent' },
+      { id: '20240302', name: '李雨桐', cn: 135, math: 138, eng: 140, total: 413, status: 'excellent' },
+      { id: '20240303', name: '王浩然', cn: 118, math: 145, eng: 128, total: 391, status: 'good' },
+      { id: '20240304', name: '张诗涵', cn: 142, math: 130, eng: 145, total: 417, status: 'excellent' },
+      { id: '20240305', name: '刘子轩', cn: 110, math: 125, eng: 118, total: 353, status: 'average' },
+      { id: '20240306', name: '赵雅琴', cn: 125, math: 135, eng: 132, total: 392, status: 'good' },
+      { id: '20240307', name: '孙博文', cn: 105, math: 118, eng: 112, total: 335, status: 'fail' },
+      { id: '20240308', name: '周梦瑶', cn: 138, math: 140, eng: 138, total: 416, status: 'excellent' }
+    ]
+    document.getElementById('student-body').innerHTML = students.map(s => `
+      <div class="dash-table__row" role="row">
+        <div class="dash-table__cell" role="cell">${s.id}</div>
+        <div class="dash-table__cell" role="cell">${s.name}</div>
+        <div class="dash-table__cell" role="cell">${s.cn}</div>
+        <div class="dash-table__cell" role="cell">${s.math}</div>
+        <div class="dash-table__cell" role="cell">${s.eng}</div>
+        <div class="dash-table__cell" role="cell"><strong>${s.total}</strong></div>
+        <div class="dash-table__cell" role="cell"><span class="dash-status-tag dash-status-tag--${s.status}">${statusMap[s.status]}</span></div>
+      </div>
+    `).join('')
+
+    const assets = [
+      { label: '教室', pct: 100, val: '1 间', color: '#58a6ff' },
+      { label: '多媒体设备', pct: 100, val: '1 套', color: '#3fb950' },
+      { label: '实验器材', pct: 85, val: '32 件', color: '#d29922' },
+      { label: '图书', pct: 92, val: '286 册', color: '#f0883e' },
+      { label: '体育器材', pct: 78, val: '18 件', color: '#a371f7' }
+    ]
+    document.getElementById('assets-list').innerHTML = assets.map(d => `
+      <div class="hbar-item">
+        <span class="hbar-item__label">${d.label}</span>
+        <div class="hbar-item__bar"><div class="hbar-item__fill" style="width:${d.pct}%;background:${d.color}">${d.val}</div></div>
+        <span class="hbar-item__val">${d.pct}%</span>
+      </div>
+    `).join('')
+
+    const alerts = [
+      { avatar: '系', name: '系统', action: '刘子轩 本月迟到 3 次，建议关注', time: '10 分钟前', color: '#f85149' },
+      { avatar: '教', name: '教务处', action: '期末考试安排已发布（1月15-17日）', time: '1 小时前', color: '#58a6ff' },
+      { avatar: '系', name: '系统', action: '孙博文 数学成绩连续 2 次低于 120 分', time: '2 小时前', color: '#d29922' },
+      { avatar: '家', name: '家长群', action: '张诗涵 家长请求请假（12月20日）', time: '3 小时前', color: '#3fb950' },
+      { avatar: '系', name: '系统', action: '物理实验课设备需补充（差 3 套）', time: '1 天前', color: '#f0883e' }
+    ]
+    document.getElementById('alert-list').innerHTML = alerts.map(a => `
+      <div class="dash-activity-item">
+        <div class="dash-activity-item__avatar" style="background:${a.color}15;color:${a.color}">${a.avatar}</div>
+        <div class="dash-activity-item__info">
+          <div class="dash-activity-item__text"><strong>${a.name}</strong> ${a.action}</div>
+          <div class="dash-activity-item__time">${a.time}</div>
+        </div>
+      </div>
+    `).join('')
+
+    const todos = [
+      { title: '提交期末成绩', meta: '截止：2025-01-20', amount: '教务处', color: '#f85149' },
+      { title: '组织元旦联欢会', meta: '截止：2024-12-31', amount: '班委会', color: '#58a6ff' },
+      { title: '完成学生评语', meta: '截止：2025-01-10', amount: '班主任', color: '#d29922' },
+      { title: '家长会准备', meta: '截止：2025-01-05', amount: '班主任', color: '#3fb950' },
+      { title: '寒假作业布置', meta: '截止：2025-01-18', amount: '各科教师', color: '#a371f7' }
+    ]
+    document.getElementById('todo-list').innerHTML = todos.map(t => `
+      <div class="approval-item">
+        <div class="approval-item__badge" style="background:${t.color}"></div>
+        <div class="approval-item__info">
+          <div class="approval-item__title">${t.title}</div>
+          <div class="approval-item__meta">${t.meta}</div>
+        </div>
+        <div class="approval-item__amount">${t.amount}</div>
+      </div>
+    `).join('')
+  </script>
+</body>
+</html>

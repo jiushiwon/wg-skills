@@ -1,0 +1,11 @@
+/* Form Page - 深色科技风 */
+.form-page-dark { min-height: 100vh; padding: 40px 20px; background: #0a0e27; background-image: radial-gradient(circle at 20% 50%, rgba(0,217,255,0.08) 0%, transparent 50%); }
+.form-page-dark__card { max-width: 480px; margin: 0 auto; background: rgba(22,22,46,0.8); backdrop-filter: blur(20px); border: 1px solid rgba(0,217,255,0.2); border-radius: 16px; padding: 36px; box-shadow: 0 0 40px rgba(0,217,255,0.1); }
+.form-page-dark__title { font-size: 22px; font-weight: 600; color: #fff; margin: 0 0 28px; text-align: center; }
+.form-page-dark__field { margin-bottom: 20px; }
+.form-page-dark__label { display: block; font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 8px; }
+.form-page-dark__input { width: 100%; height: 46px; padding: 0 16px; font-size: 15px; color: #fff; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; outline: none; }
+.form-page-dark__input:focus { border-color: #00d9ff; box-shadow: 0 0 0 3px rgba(0,217,255,0.1); }
+.form-page-dark__actions { margin-top: 28px; }
+.form-page-dark__btn { width: 100%; height: 46px; font-size: 15px; font-weight: 600; color: #fff; background: linear-gradient(135deg, #00d9ff, #7c4dff); border: none; border-radius: 8px; cursor: pointer; }
+.form-page-dark__btn:hover { box-shadow: 0 0 20px rgba(0,217,255,0.4); }

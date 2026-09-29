@@ -1,0 +1,17 @@
+{
+  "name": "line",
+  "title": "线条",
+  "category": "line",
+  "description": "线条 CSS 类",
+  "aliases": ["线", "分割线", "横线", "竖线", "line", "divider"],
+  "props": [],
+  "events": [],
+  "slots": [],
+  "classes": {
+    "solid-line": "实线",
+    "dashed-line": "虚线",
+    "gradient-line": "渐变线",
+    "space-line": "间隔线",
+    "v-solid-line": "竖线"
+  }
+}

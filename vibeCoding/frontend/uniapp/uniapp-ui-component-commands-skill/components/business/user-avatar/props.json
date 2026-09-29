@@ -1,0 +1,15 @@
+{
+  "name": "user-avatar",
+  "title": "用户头像",
+  "category": "business",
+  "description": "用户头像组件",
+  "aliases": ["头像", "用户图", "avatar", "head"],
+  "props": [
+    { "name": "src", "type": "string", "default": "", "desc": "头像图片" },
+    { "name": "name", "type": "string", "default": "", "desc": "用户名（无头像时显示）" },
+    { "name": "size", "type": "string", "default": "medium", "desc": "尺寸: small/medium/large/xlarge" },
+    { "name": "round", "type": "boolean", "default": true, "desc": "是否圆形" }
+  ],
+  "events": ["click"],
+  "slots": []
+}

@@ -1,0 +1,16 @@
+{
+  "name": "search-bar",
+  "title": "搜索栏",
+  "category": "form",
+  "description": "搜索栏，支持输入、清除、取消按钮",
+  "aliases": ["搜索框", "搜索输入", "search", "searchbar"],
+  "props": [
+    { "name": "modelValue", "type": "string", "default": "", "desc": "绑定值" },
+    { "name": "placeholder", "type": "string", "default": "搜索", "desc": "占位符" },
+    { "name": "clearable", "type": "boolean", "default": true, "desc": "显示清除按钮" },
+    { "name": "showCancel", "type": "boolean", "default": false, "desc": "显示取消按钮" },
+    { "name": "disabled", "type": "boolean", "default": false, "desc": "禁用" }
+  ],
+  "events": ["update:modelValue", "input", "search", "clear", "cancel"],
+  "slots": []
+}

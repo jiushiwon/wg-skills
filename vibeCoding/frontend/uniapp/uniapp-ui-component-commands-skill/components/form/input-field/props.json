@@ -1,0 +1,20 @@
+{
+  "name": "input-field",
+  "title": "表单项",
+  "category": "form",
+  "description": "表单项，支持标签、校验、清除",
+  "aliases": ["输入框", "表单项", "input", "textfield"],
+  "props": [
+    { "name": "modelValue", "type": "string|number", "default": "", "desc": "绑定值" },
+    { "name": "label", "type": "string", "default": "", "desc": "标签" },
+    { "name": "type", "type": "string", "default": "text", "desc": "输入类型" },
+    { "name": "placeholder", "type": "string", "default": "", "desc": "占位符" },
+    { "name": "disabled", "type": "boolean", "default": false, "desc": "禁用" },
+    { "name": "maxlength", "type": "number", "default": -1, "desc": "最大长度" },
+    { "name": "clearable", "type": "boolean", "default": false, "desc": "可清除" },
+    { "name": "error", "type": "boolean", "default": false, "desc": "错误状态" },
+    { "name": "errorMessage", "type": "string", "default": "", "desc": "错误信息" }
+  ],
+  "events": ["update:modelValue", "input", "blur", "focus", "clear"],
+  "slots": []
+}

@@ -1,0 +1,18 @@
+{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "title": "注册账号",
+    "subtitle": "创建您的新账号",
+    "fields": [
+      { "name": "username", "label": "用户名", "type": "text", "placeholder": "请输入用户名" },
+      { "name": "email", "label": "邮箱", "type": "email", "placeholder": "请输入邮箱" },
+      { "name": "password", "label": "密码", "type": "password", "placeholder": "请设置密码" },
+      { "name": "confirmPassword", "label": "确认密码", "type": "password", "placeholder": "请再次输入密码" }
+    ],
+    "submitText": "注册",
+    "agreementText": "我已阅读并同意服务条款",
+    "footerText": "已有账号？",
+    "footerLink": "立即登录"
+  }
+}

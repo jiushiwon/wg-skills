@@ -1,6 +1,19 @@
 <script setup lang="ts">
 // src/views/Login.vue
 // 登录页（完整示例：表单校验 + API 调用 + 错误处理 + 路由跳转）
+//
+// ponytail: 两种架构对应两种写法，AI 生成时必须先看 package.json 和 src/services/ 决定走哪一条：
+//
+// 【方案 A】标准四层架构（有 src/services/auth.service.ts）
+//   import { login } from '@/services/auth.service';
+//   await login({ username, password });
+//
+// 【方案 B】store-based 架构（无 services/，login 写在 src/store/user.ts）
+//   const userStore = useUserStore();
+//   await userStore.login({ username, password });
+//
+// ⚠️ 禁止：import 了 services/login() 但 await 了一个不存在的函数 —— 这是"API 逻辑丢失"的根因。
+// 决策流程见 frontend-request-skill/references/auth-patterns.md 末尾。
 
 import { reactive, ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';

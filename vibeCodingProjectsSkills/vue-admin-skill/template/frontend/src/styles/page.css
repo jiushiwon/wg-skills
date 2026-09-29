@@ -1,0 +1,189 @@
+/* 通用页面/表格/弹窗样式 —— 各 CRUD 页面共用
+ * 命名对齐 vue-theme-skill：--space-* + --height-* + var(--color-*)
+ */
+.page {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.page-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-6);
+}
+
+/* 表单 */
+.form-row {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 180px;
+}
+.form-field label {
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+}
+.input {
+  height: var(--height-input-md);
+  padding: 0 var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  font-size: var(--font-base);
+}
+.input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+textarea.input {
+  height: auto;
+  padding: var(--space-2);
+  resize: vertical;
+  min-height: var(--height-card-sm);
+}
+.form-actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+/* 表格 */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.data-table th,
+.data-table td {
+  padding: var(--space-2) var(--space-4);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border-light);
+  font-size: var(--font-sm);
+}
+.data-table th {
+  background: var(--color-bg);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-secondary);
+}
+.data-table tr:hover {
+  background: var(--color-bg-hover);
+}
+.text-center {
+  text-align: center;
+  padding: var(--space-6);
+}
+.actions {
+  display: flex;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+}
+
+/* 状态标签 */
+.status-tag {
+  display: inline-block;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-xs);
+}
+.status-tag.on {
+  background: var(--color-success-soft);
+  color: var(--color-success);
+}
+.status-tag.off {
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+}
+
+/* 分页 */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+.page-info {
+  color: var(--color-text-secondary);
+}
+
+/* 弹窗 */
+.dialog-mask {
+  position: fixed;
+  inset: 0;
+  background: var(--color-bg-mask);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.dialog {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  width: 520px;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-lg);
+}
+.dialog-header {
+  padding: var(--space-4) var(--space-6);
+  font-size: var(--font-lg);
+  font-weight: var(--weight-semibold);
+  border-bottom: 1px solid var(--color-border-light);
+}
+.dialog-body {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  overflow-y: auto;
+}
+.dialog-footer {
+  padding: var(--space-4) var(--space-6);
+  border-top: 1px solid var(--color-border-light);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+.dialog.lg {
+  width: 720px;
+}
+
+/* 树形 */
+.tree {
+  font-size: var(--font-sm);
+}
+.tree-node {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+.tree-node:hover {
+  background: var(--color-bg-hover);
+}
+.tree-node.active {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+.tree-toggle {
+  width: var(--icon-sm);
+  display: inline-block;
+  text-align: center;
+  user-select: none;
+}
+.tree-children {
+  padding-left: var(--space-6);
+}
+.tree-check-row {
+  padding: var(--space-1) 0;
+}

@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "title": "年轻人为什么不爱换手机了",
+    "source": "zhihu",
+    "url": "https://www.zhihu.com/question/123456",
+    "heat": 8500,
+    "tags": "科技,数码,消费",
+    "created_at": "2024-01-15T10:00:00"
+  },
+  {
+    "id": 2,
+    "title": "2024年AI创业机会在哪",
+    "source": "weibo",
+    "url": "https://weibo.com/test",
+    "heat": 12000,
+    "tags": "AI,创业,科技",
+    "created_at": "2024-01-15T09:30:00"
+  },
+  {
+    "id": 3,
+    "title": "小红书爆款笔记怎么写",
+    "source": "manual",
+    "url": "",
+    "heat": 5000,
+    "tags": "自媒体,小红书,运营",
+    "created_at": "2024-01-14T15:20:00"
+  }
+]

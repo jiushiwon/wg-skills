@@ -1,0 +1,145 @@
+/* base-tree 专属样式 —— 树节点连线 / 复选框 / 拖拽 / 大数据 */
+
+/* 树缩进连接线（finder 风格） */
+.tree--finder .list-item {
+  position: relative;
+}
+.tree--finder .list-item::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 0;
+  bottom: 0;
+  border-left: 1px dashed #d1d1d6;
+  pointer-events: none;
+}
+
+/* win 风格：左缩进区显示 ▶/▼ */
+.tree--win .list-item__expander {
+  width: 16px;
+  font-family: monospace;
+}
+
+/* 复选框节点 */
+.tree-checkbox {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-right: 4px;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 3px;
+  background: #fff;
+  position: relative;
+  cursor: pointer;
+}
+.tree-checkbox.is-checked {
+  background: #6366f1;
+  border-color: #6366f1;
+}
+.tree-checkbox.is-checked::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 4px;
+  height: 8px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.tree-checkbox.is-indeterminate {
+  background: #6366f1;
+  border-color: #6366f1;
+}
+.tree-checkbox.is-indeterminate::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 6px;
+  width: 8px;
+  height: 2px;
+  background: #fff;
+}
+
+/* 拖拽手柄 */
+.tree-handle {
+  width: 14px;
+  height: 18px;
+  margin-right: 4px;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #cbd5e1;
+  flex-shrink: 0;
+  font-size: 10px;
+}
+.tree-handle:hover { color: #6366f1; }
+
+/* 搜索高亮 */
+.tree-highlight {
+  background: #fef08a;
+  color: #92400e;
+  padding: 0 2px;
+  border-radius: 2px;
+  font-weight: 600;
+}
+
+/* 大数据节点 meta 标签 */
+.tree-meta-tag {
+  font-size: 11px;
+  color: #6b7280;
+  background: #f3f4f6;
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-right: 4px;
+}
+
+/* 节点编辑态 */
+.tree-edit-input {
+  flex: 1;
+  border: 1px solid #6366f1;
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 14px;
+  outline: none;
+  background: #fff;
+}
+
+/* SVG 图标（替换 emoji，专用于文件浏览器场景） */
+.list-item__icon svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  color: #6b7280;
+}
+.list-children .list-item__icon svg { color: #6b7280; }
+
+/* vscode 深色主题适配 */
+.list--vscode-wrap .list-item__icon svg { color: #c5c5c5; }
+.list--vscode-wrap .list-item.is-active .list-item__icon svg { color: #ffffff; }
+
+/* finder 蓝色选中态适配 */
+.list-item--finder.is-active .list-item__icon svg { color: #ffffff; }
+
+/* 树行 hover 添加按钮 */
+.tree-add-btn {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(99, 102, 241, 0.1);
+  color: #6366f1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.15s;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-left: 4px;
+}
+.list-item:hover .tree-add-btn { opacity: 1; }
+.tree-add-btn:hover { background: rgba(99, 102, 241, 0.2); }

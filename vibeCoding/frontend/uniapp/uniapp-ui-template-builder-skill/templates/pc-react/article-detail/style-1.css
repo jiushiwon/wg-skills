@@ -1,0 +1,15 @@
+/* Article Detail - 默认博客风格 */
+.article-detail { min-height: 100vh; background: #f5f7fa; padding: 40px 20px; }
+.article-detail__content { max-width: 720px; margin: 0 auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden; }
+.article-detail__header { padding: 40px 40px 24px; }
+.article-detail__meta { display: flex; gap: 16px; margin-bottom: 16px; }
+.article-detail__category { font-size: 13px; color: #2563eb; font-weight: 500; }
+.article-detail__date { font-size: 13px; color: #999; }
+.article-detail__title { font-size: 32px; font-weight: 700; color: #1a1a1a; margin: 0 0 20px; line-height: 1.3; }
+.article-detail__author { display: flex; align-items: center; gap: 10px; }
+.article-detail__avatar { width: 36px; height: 36px; border-radius: 50%; background: #667eea; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; }
+.article-detail__author-name { font-size: 14px; color: #666; }
+.article-detail__cover { width: 100%; height: 360px; }
+.article-detail__cover img { width: 100%; height: 100%; object-fit: cover; }
+.article-detail__body { padding: 24px 40px 40px; font-size: 16px; line-height: 1.8; color: #333; }
+.article-detail__body p { margin: 0 0 16px; }

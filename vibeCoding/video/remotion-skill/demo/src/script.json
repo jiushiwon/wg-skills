@@ -1,0 +1,96 @@
+{
+  "fps": 30,
+  "durationInFrames": 2340,
+  "canvas": {
+    "width": 1080,
+    "height": 1920
+  },
+  "title": {
+    "text": "remotion-skill",
+    "subtitle": "Skill Introduction",
+    "durationFrames": 90
+  },
+  "segments": [
+    {
+      "text": "还在为社媒短视频熬夜剪辑吗？",
+      "startFrame": 0,
+      "endFrame": 150
+    },
+    {
+      "text": "想让文案一键变成会动的视频？",
+      "startFrame": 150,
+      "endFrame": 300
+    },
+    {
+      "text": "想要真正属于自己的、可二次编辑的视频模板？",
+      "startFrame": 300,
+      "endFrame": 450
+    },
+    {
+      "text": "今天介绍一个工具，帮你把想法直接变成成品。",
+      "startFrame": 450,
+      "endFrame": 600
+    },
+    {
+      "text": "它就是 remotion-skill，一个面向口播场景的视频生成技能。",
+      "startFrame": 600,
+      "endFrame": 750
+    },
+    {
+      "text": "核心思路只有一句话：文案即视频。",
+      "startFrame": 750,
+      "endFrame": 900
+    },
+    {
+      "text": "你只需要把要说的内容写下来，剩下的渲染、动效、字幕，全部交给程序完成。",
+      "startFrame": 900,
+      "endFrame": 1050
+    },
+    {
+      "text": "生成的项目是标准 Remotion 工程，每一个组件都是 React 函数，每一帧画面都可追溯。",
+      "startFrame": 1050,
+      "endFrame": 1200
+    },
+    {
+      "text": "生成的视频支持竖屏九比十六与横屏十六比九两种画幅，抖音、小红书、B 站、视频号都能直接发。",
+      "startFrame": 1200,
+      "endFrame": 1350
+    },
+    {
+      "text": "字幕会随朗读自动高亮当前句，过去的句子弱化压底，再加顶部进度条，看得清进度也看得清重点。",
+      "startFrame": 1350,
+      "endFrame": 1500
+    },
+    {
+      "text": "背景采用动态渐变光晕，全程慢速漂移，不刺眼也不死板。",
+      "startFrame": 1500,
+      "endFrame": 1650
+    },
+    {
+      "text": "生成的项目完全可改：改文案、调字体、换配色、加 logo，全部都是改几行代码的事。",
+      "startFrame": 1650,
+      "endFrame": 1800
+    },
+    {
+      "text": "配合 ffmpeg-skill 还能自动压缩、统一格式、加上封面缩略图。",
+      "startFrame": 1800,
+      "endFrame": 1950
+    },
+    {
+      "text": "不用会 AE，不用会剪辑，会写一句话就能上手。",
+      "startFrame": 1950,
+      "endFrame": 2100
+    },
+    {
+      "text": "打开你的终端，输入一行命令，六十秒后视频已经在你的目录里等着了。",
+      "startFrame": 2100,
+      "endFrame": 2250
+    }
+  ],
+  "endCard": {
+    "message": "文案即视频",
+    "hint": "cd remotion-skill/demo && python ../scripts/render.py",
+    "startFrame": 2250,
+    "durationFrames": 90
+  }
+}

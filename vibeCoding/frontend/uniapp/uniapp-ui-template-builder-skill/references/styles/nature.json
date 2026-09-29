@@ -1,0 +1,78 @@
+{
+  "name": "清新自然",
+  "id": "nature",
+  "description": "绿色/蓝色系，圆角卡片，亲和力。适合健康、母婴、旅游、环保类应用。",
+  "tokens": {
+    "colors": {
+      "primary": "#2ECC71",
+      "primaryLight": "#4ADE80",
+      "primaryDark": "#16A34A",
+      "secondary": "#22D3EE",
+      "accent": "#06B6D4",
+      "background": "#F0F9F6",
+      "backgroundSecondary": "#ECFDF5",
+      "surface": "#FFFFFF",
+      "surfaceSecondary": "#F0FDF4",
+      "border": "#D1FAE5",
+      "textPrimary": "#1A1A1A",
+      "textSecondary": "#666666",
+      "textTertiary": "#999999",
+      "success": "#10B981",
+      "warning": "#F59E0B",
+      "error": "#EF4444",
+      "info": "#3B82F6",
+      "green": "#2ECC71",
+      "greenLight": "#4ADE80",
+      "blue": "#06B6D4"
+    },
+    "typography": {
+      "fontFamily": "-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif",
+      "fontSizeXs": "10px",
+      "fontSizeSm": "12px",
+      "fontSizeMd": "14px",
+      "fontSizeLg": "16px",
+      "fontSizeXl": "18px",
+      "fontSize2xl": "20px",
+      "fontSize3xl": "24px",
+      "fontWeightNormal": "400",
+      "fontWeightMedium": "500",
+      "fontWeightSemibold": "600",
+      "fontWeightBold": "700"
+    },
+    "spacing": {
+      "xs": "4px",
+      "sm": "8px",
+      "md": "12px",
+      "lg": "16px",
+      "xl": "20px",
+      "2xl": "24px",
+      "3xl": "32px",
+      "4xl": "48px"
+    },
+    "radius": {
+      "none": "0px",
+      "sm": "8px",
+      "md": "12px",
+      "lg": "16px",
+      "xl": "20px",
+      "2xl": "24px",
+      "full": "9999px"
+    },
+    "shadow": {
+      "sm": "0 2px 8px rgba(46, 204, 113, 0.1)",
+      "md": "0 4px 16px rgba(46, 204, 113, 0.15)",
+      "lg": "0 8px 24px rgba(46, 204, 113, 0.2)",
+      "xl": "0 12px 32px rgba(46, 204, 113, 0.25)"
+    },
+    "transition": {
+      "fast": "150ms",
+      "normal": "200ms",
+      "slow": "300ms"
+    }
+  },
+  "usage": {
+    "scenarios": ["健康管理", "母婴用品", "旅游出行", "环保公益", "食品生鲜"],
+    "avoid": ["金融", "游戏", "企业后台"]
+  },
+  "examples": ["Keep", "瑞幸", "luckin", "盒马", "蚂蚁森林"]
+}

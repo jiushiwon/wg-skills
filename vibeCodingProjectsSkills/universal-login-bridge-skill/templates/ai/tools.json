@@ -1,0 +1,143 @@
+{
+  "$comment": "account-hub MCP 工具定义清单。与 mcp-server.mjs 的 TOOLS 保持一致；改这里必须同步改 mjs。",
+  "server": {
+    "name": "account-hub",
+    "version": "2.0.0",
+    "transport": "stdio",
+    "baseUrl": "http://localhost:8080"
+  },
+  "identity": {
+    "app": {
+      "envKeys": ["ACCOUNT_API_KEY", "ACCOUNT_API_SECRET"],
+      "scheme": "hmac-sha256",
+      "headers": ["X-App-Key", "X-Timestamp", "X-Nonce", "X-Signature"],
+      "payload": "{apiKey}\\n{timestamp}\\n{nonce}\\n{HTTP_METHOD}\\n{requestPath}",
+      "clockSkewSeconds": 300,
+      "note": "应用身份，用于 /api/open/**。appId / appKey 只从签名反查，请求体里传了也不认。"
+    },
+    "user": {
+      "envKeys": ["ACCOUNT_ACCESS_TOKEN"],
+      "scheme": "bearer-jwt",
+      "note": "宿主登录态，用于 /api/apps/** 与 /api/bind/**。accessToken 必须由真人登录换取，AI 不得生成或伪造。"
+    }
+  },
+  "tools": [
+    {
+      "name": "account_open_apply_bind",
+      "kind": "write",
+      "identity": "app",
+      "endpoint": "POST /api/open/bind/apply",
+      "destructive": false,
+      "idempotent": false,
+      "required": ["appUserId"],
+      "returns": "BindCodeVO { code, direction=app_initiated, expireSeconds }",
+      "constraints": ["绑定码落库、5 分钟有效、一次性消费"],
+      "whenToUse": "第三方应用为其用户发起绑定，需要宿主用户确认"
+    },
+    {
+      "name": "account_open_claim_bind",
+      "kind": "write",
+      "identity": "app",
+      "endpoint": "POST /api/open/bind/claim",
+      "destructive": false,
+      "idempotent": false,
+      "required": ["code", "appUserId"],
+      "returns": "BindVO",
+      "constraints": [
+        "code 的 direction 必须是 user_initiated",
+        "code 不属于当前应用返回 code=-1003",
+        "已用 / 过期返回 code=-1005"
+      ],
+      "whenToUse": "宿主用户生成绑定码后，第三方应用认领（扫码流程）"
+    },
+    {
+      "name": "account_open_userinfo",
+      "kind": "read",
+      "identity": "app",
+      "endpoint": "GET /api/open/userinfo?appUserId=",
+      "destructive": false,
+      "idempotent": true,
+      "required": ["appUserId"],
+      "returns": "OpenUserInfoVO { bound, bindingId, userId, username, nickname, avatar, email, phone, appUserId }",
+      "constraints": ["未绑定时 bound=false 且不泄露任何宿主用户字段"],
+      "whenToUse": "按第三方用户 ID 换取宿主用户信息"
+    },
+    {
+      "name": "account_list_apps",
+      "kind": "read",
+      "identity": "user",
+      "endpoint": "GET /api/apps",
+      "permission": "system:app:list",
+      "destructive": false,
+      "idempotent": true,
+      "returns": "PageResponse<AppVO>",
+      "constraints": ["只返回 owner_id = 当前用户的应用"],
+      "whenToUse": "写操作前确认应用是否已注册；排查应用状态"
+    },
+    {
+      "name": "account_list_bindings",
+      "kind": "read",
+      "identity": "user",
+      "endpoint": "GET /api/bind/list",
+      "permission": "account:bind:list",
+      "destructive": false,
+      "idempotent": true,
+      "returns": "BindVO[]",
+      "constraints": ["主体为当前登录用户，不接受 userId 入参"],
+      "whenToUse": "排查当前用户绑了哪些应用；生成接入报告"
+    },
+    {
+      "name": "account_create_app",
+      "kind": "write",
+      "identity": "user",
+      "endpoint": "POST /api/apps",
+      "permission": "system:app:create",
+      "destructive": false,
+      "idempotent": false,
+      "required": ["appName"],
+      "returns": "AppVO",
+      "constraints": [
+        "appKey / ownerId 由服务端生成与注入，请求体不接受",
+        "appKey 服务端生成，创建后不可修改"
+      ],
+      "whenToUse": "新项目接入第一步"
+    },
+    {
+      "name": "account_create_key",
+      "kind": "write",
+      "identity": "user",
+      "endpoint": "POST /api/apps/{id}/keys",
+      "permission": "system:app:key-manage",
+      "destructive": false,
+      "idempotent": false,
+      "required": ["appId"],
+      "returns": "CreatedAppKeyVO（唯一带 apiSecret 的响应）",
+      "constraints": ["apiSecret 仅创建时返回一次", "列表 / 详情出参 AppKeyVO 无该字段"],
+      "whenToUse": "给应用发密钥；拿到 secret 后立即写入服务端环境变量"
+    },
+    {
+      "name": "account_confirm_bind",
+      "kind": "write",
+      "identity": "user",
+      "endpoint": "POST /api/bind/confirm",
+      "permission": "account:bind:create",
+      "destructive": false,
+      "idempotent": false,
+      "required": ["code"],
+      "returns": "BindVO",
+      "constraints": [
+        "请求体只有 code 一个字段，不接受任何密码",
+        "身份取自宿主登录态",
+        "已绑定同一应用返回 code=-1005"
+      ],
+      "whenToUse": "应用发起绑定后，宿主用户确认"
+    }
+  ],
+  "rules": [
+    "读工具默认返回上限 50 条",
+    "所有返回统一 { code, message, data }，按 code 判定成功",
+    "错误码：-1001 校验 / -1002 未登录·签名失败 / -1003 无权限·被禁用 / -1004 不存在 / -1005 冲突",
+    "鉴权失效：HTTP 401 或 code === -1002",
+    "删除类操作（deleteApp / deleteKey / cancelBind）不在本 server 暴露，需人工在后台执行"
+  ]
+}

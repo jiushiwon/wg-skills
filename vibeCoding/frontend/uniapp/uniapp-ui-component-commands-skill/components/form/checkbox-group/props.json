@@ -1,0 +1,15 @@
+{
+  "name": "checkbox-group",
+  "title": "多选组",
+  "category": "form",
+  "description": "多选框组",
+  "aliases": ["多选框", "checkbox", "checkgroup"],
+  "props": [
+    { "name": "modelValue", "type": "array", "default": [], "desc": "绑定值数组" },
+    { "name": "label", "type": "string", "default": "", "desc": "标签" },
+    { "name": "options", "type": "array", "default": [], "desc": "选项 [{label, value}]" },
+    { "name": "disabled", "type": "boolean", "default": false, "desc": "禁用" }
+  ],
+  "events": ["update:modelValue", "change"],
+  "slots": []
+}

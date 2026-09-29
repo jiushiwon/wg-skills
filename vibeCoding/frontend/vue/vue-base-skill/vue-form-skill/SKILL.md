@@ -1,10 +1,11 @@
 ---
 name: vue-form-skill
-description: Vue 表单体系技能。基于「容器原则」，所有表单必须嵌入 base-card。提供 base-form（表单容器+校验）、base-form-item（表单项），并引用独立组件技能（vue-input-skill、vue-select-skill、vue-datepicker-skill 等）。纯 CSS 实现，零第三方组件库。触发词："Vue 表单"、"vue-form"、"做一个表单"、"表单校验"、"万能表单"、"契约驱动表单"。
+description: Vue 表单体系技能。基于「容器原则」，所有表单必须嵌入 base-card。提供 base-form（表单容器+校验）、base-form-item（表单项），并引用独立组件技能（vue-input-skill、vue-select-skill、vue-datepicker-skill 等）。纯 CSS 实现，零第三方组件库。触发词："Vue 表单"、"vue-form"、"做一个表单"、"表单校验"、"万能表单"、"契约驱动表单"、"根据后端实体生成表单"。
 trigger: |
   做一个表单 | 做一个登录表单 | 做一个搜索表单 | 做一个注册表单
   表单校验 | 表单验证 | 表单布局 | 表单容器
   万能表单 | 契约驱动表单 | 根据契约生成表单 | ERP 表单 | 动态表单 | schema 表单
+  根据后端生成表单 | 根据 Java 实体生成表单 | 后端注解映射到表单 | 前后端字段对齐
 ---
 
 # vue-form-skill
@@ -130,3 +131,24 @@ interface FormSchema {
 - "契约驱动表单"
 - "ERP 表单"
 - "动态表单"
+- "根据后端生成表单"
+- "根据 Java 实体生成表单"
+- "后端注解映射到表单"
+- "前后端字段对齐"
+
+## 契约权威源
+
+> 本技能的契约规范（字段类型、组件映射、后端注解对齐）权威源：
+>
+> **[references/form-contract.md](references/form-contract.md)** —— 定义：
+>
+> - 10 种 `FieldType` 枚举 → 组件映射（email/phone/idcard 等通过 subType 扩展）
+> - **§3.1 零代码地基映射表**：字段类型 + 子类型 → 组件 + 校验规则
+> - **§3.2 文本类子类型**：phone/idcard/email 等正则规则
+> - **§3.3 上传类子类型**：image/files/video 联动 vue-upload-skill
+> - **§3.4 字段联动**：dependencies 声明多字段依赖
+> - **§3.5 布局规则**：字段数量自动决定单列/双列/抽屉模式
+> - **§9 后端注解 → FieldType 映射**（Java @NotBlank/@Pattern → FieldType）
+> - **§10 完整示例**：后端实体 → FormSchema → 页面自动渲染
+>
+> 与 `frontend-request-skill` 的 `api-contract.md` 共同构成**前后端完整契约体系**。

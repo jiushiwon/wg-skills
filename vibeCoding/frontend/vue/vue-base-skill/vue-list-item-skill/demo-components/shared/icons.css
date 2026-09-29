@@ -1,0 +1,23 @@
+/* SVG 图标样式（list-item 内嵌 SVG 用） */
+.list-item__icon svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  color: #6b7280;
+}
+
+/* vscode 深色主题 */
+.list--vscode-wrap .list-item__icon svg { color: #c5c5c5; }
+.list--vscode-wrap .list-item.is-active .list-item__icon svg { color: #ffffff; }
+
+/* finder 选中态 */
+.list-item--finder.is-active .list-item__icon svg { color: #ffffff; }
+
+/* notion 选中态 */
+.list-item--notion.is-active .list-item__icon svg { color: #37352f; }
+
+/* admin 选中态 */
+.list-item--admin.is-active .list-item__icon svg { color: #1890ff; }
+
+/* nav 选中态 */
+.list-item--nav.is-active .list-item__icon svg { color: #ffffff; }

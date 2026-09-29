@@ -1,0 +1,16 @@
+{
+  "name": "date-picker",
+  "title": "日期选择器",
+  "category": "form",
+  "description": "日期时间选择器",
+  "aliases": ["日期选择", "datetime", "datepicker"],
+  "props": [
+    { "name": "modelValue", "type": "string", "default": "", "desc": "绑定值" },
+    { "name": "label", "type": "string", "default": "", "desc": "标签" },
+    { "name": "placeholder", "type": "string", "default": "请选择日期", "desc": "占位符" },
+    { "name": "mode", "type": "string", "default": "date", "desc": "模式: date/time/datetime" },
+    { "name": "disabled", "type": "boolean", "default": false, "desc": "禁用" }
+  ],
+  "events": ["update:modelValue", "click"],
+  "slots": []
+}

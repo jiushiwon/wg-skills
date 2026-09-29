@@ -1,0 +1,18 @@
+{
+  "name": "frontend-icon-skill",
+  "version": "1.1.0",
+  "description": "Vue3 SVG icon 模板化生成 + SVG→PNG 批量导出 + 图片处理（合并 image-forge-skill）",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./png": "./src/png.ts",
+    "./components/*": "./components/*",
+    "./image-forge.cjs": "./image-forge.cjs"
+  },
+  "bin": { "image-forge": "./image-forge.cjs" },
+  "dependencies": {
+    "sharp": "^0.33.0"
+  }
+}

@@ -1,0 +1,90 @@
+/* ============================================
+ * 设计 Token —— vue-admin-skill
+ * 命名完全对齐 vue-theme-skill（HSL 9 级色阶 + --space-*）
+ * vue-theme-skill/SKILL.md 第 326-339 行"命名对齐表"为准
+ * ============================================ */
+
+:root {
+  /* === 主题色：HSL 9 级色阶（蓝） === */
+  --color-primary-50:   hsl(211, 100%, 96%);
+  --color-primary-100:  hsl(211, 100%, 92%);
+  --color-primary-200:  hsl(211, 100%, 86%);
+  --color-primary-300:  hsl(211, 100%, 76%);
+  --color-primary-400:  hsl(211, 100%, 66%);  /* hover */
+  --color-primary-500:  hsl(211, 100%, 56%);  /* 主色 = --color-primary */
+  --color-primary-600:  hsl(211, 100%, 48%);  /* active */
+  --color-primary-700:  hsl(211, 100%, 40%);
+  --color-primary-800:  hsl(211, 100%, 32%);
+  --color-primary-950:  hsl(211, 100%, 16%);  /* 深色文本 */
+  --color-primary:        hsl(211, 100%, 56%);
+  --color-primary-light:  hsl(211, 100%, 76%);
+  --color-primary-soft:   hsl(211, 100%, 92%); /* 10% 透明度背景 */
+
+  /* === 语义色 === */
+  --color-success:        hsl(152, 69%, 45%);
+  --color-success-soft:   hsl(152, 69%, 92%);
+  --color-warning:        hsl(33, 100%, 56%);
+  --color-danger:         hsl(0, 84%, 60%);
+  --color-danger-soft:    hsl(0, 84%, 92%);
+
+  /* === 中性色 === */
+  --color-bg:             hsl(0, 0%, 98%);
+  --color-surface:        hsl(0, 0%, 100%);   /* 卡片 / 容器背景 */
+  --color-bg-mask:        hsla(0, 0%, 0%, 0.45);
+  --color-border:         hsl(220, 14%, 96%);
+  --color-border-light:   hsl(220, 14%, 92%);
+
+  /* === 文本 === */
+  --color-text:           hsl(220, 13%, 18%);
+  --color-text-secondary: hsl(220, 9%, 46%);
+  --color-text-tertiary:  hsl(220, 9%, 65%);
+  --color-text-inverse:   hsl(0, 0%, 100%);
+
+  /* === 间距（4px 基准） === */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;   /* 基准 */
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-12: 48px;
+
+  /* === 字号（无 size- 中缀，对齐 vue-theme-skill） === */
+  --font-xs:   12px;
+  --font-sm:   13px;
+  --font-base: 14px;   /* 基准 */
+  --font-lg:   16px;
+  --font-2xl:  22px;
+
+  /* === 圆角 === */
+  --radius-sm:   8px;
+  --radius-md:   12px;   /* 输入框、缩略图 */
+
+  /* === 组件高度 === */
+  --height-button-sm:        32px;
+  --height-button-md:        40px;   /* 基准 */
+  --height-input-md:         40px;
+  --height-card-sm:          80px;
+
+  /* === 图标 === */
+  --icon-sm: 16px;
+
+  /* === 字重 === */
+  --weight-semibold: 600;
+
+  /* === 行高 === */
+  --leading-normal:  1.5;
+
+  /* === 阴影 === */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  /* === 过渡 === */
+  --transition-fast: 0.15s;
+  --transition-base: 0.2s;
+
+  /* === 布局（vue-admin 模板特有，非通用 token） === */
+  --layout-sidebar-width:           220px;
+  --layout-sidebar-collapsed-width: 64px;
+  --layout-header-height:           56px;
+}

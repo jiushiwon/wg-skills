@@ -1,0 +1,28 @@
+{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "title": "用户管理",
+    "columns": [
+      { "key": "id", "title": "ID", "width": "80px", "align": "center" },
+      { "key": "name", "title": "姓名", "sortable": true },
+      { "key": "email", "title": "邮箱", "sortable": true },
+      { "key": "role", "title": "角色" },
+      { "key": "status", "title": "状态", "align": "center" },
+      { "key": "createdAt", "title": "创建时间" }
+    ],
+    "rows": [
+      { "id": 1, "name": "张三", "email": "zhangsan@example.com", "role": "管理员", "status": "正常", "createdAt": "2024-01-15" },
+      { "id": 2, "name": "李四", "email": "lisi@example.com", "role": "编辑", "status": "正常", "createdAt": "2024-02-20" },
+      { "id": 3, "name": "王五", "email": "wangwu@example.com", "role": "用户", "status": "禁用", "createdAt": "2024-03-10" },
+      { "id": 4, "name": "赵六", "email": "zhaoliu@example.com", "role": "用户", "status": "正常", "createdAt": "2024-04-05" },
+      { "id": 5, "name": "钱七", "email": "qianqi@example.com", "role": "编辑", "status": "待审核", "createdAt": "2024-05-12" }
+    ],
+    "pagination": {
+      "current": 1,
+      "pageSize": 10,
+      "total": 56,
+      "totalPages": 6
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "side-menu",
+  "title": "侧边栏菜单",
+  "category": "navigation",
+  "description": "侧边栏抽屉菜单",
+  "aliases": ["侧边导航", "抽屉", "drawer", "sidemenu"],
+  "props": [
+    { "name": "show", "type": "boolean", "default": false, "desc": "显示状态" },
+    { "name": "title", "type": "string", "default": "菜单", "desc": "标题" },
+    { "name": "width", "type": "string", "default": "80%", "desc": "抽屉宽度" },
+    { "name": "background", "type": "string", "default": "#ffffff", "desc": "背景色" }
+  ],
+  "events": ["close"],
+  "slots": ["default", "header"]
+}

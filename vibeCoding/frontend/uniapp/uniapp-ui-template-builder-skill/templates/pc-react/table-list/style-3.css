@@ -1,0 +1,138 @@
+/* Table List 表格列表 - 深色科技风 */
+
+.table-list-dark {
+  background: #0d1b2a;
+  border-radius: 12px;
+  border: 1px solid #1e3a5f;
+  overflow: hidden;
+}
+
+.table-list-dark__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  background: linear-gradient(135deg, #1b2838 0%, #0d1b2a 100%);
+  border-bottom: 1px solid #1e3a5f;
+}
+
+.table-list-dark__title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+.table-list-dark__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.table-list-dark__btn {
+  height: 34px;
+  padding: 0 14px;
+  font-size: 14px;
+  color: #8892a6;
+  background: transparent;
+  border: 1px solid #2d4356;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.table-list-dark__btn:hover {
+  color: #00d9ff;
+  border-color: #00d9ff;
+}
+
+.table-list-dark__btn--primary {
+  color: #0d1b2a;
+  background: linear-gradient(135deg, #00d9ff 0%, #7c4dff 100%);
+  border: none;
+  font-weight: 500;
+}
+
+.table-list-dark__btn--primary:hover {
+  box-shadow: 0 0 20px rgba(0, 217, 255, 0.4);
+}
+
+.table-list-dark__table-wrap {
+  overflow-x: auto;
+}
+
+.table-list-dark__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-list-dark__table th {
+  padding: 14px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #5c7a99;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: #152238;
+  border-bottom: 1px solid #1e3a5f;
+}
+
+.table-list-dark__table td {
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #b8c5d6;
+  border-bottom: 1px solid #1a2d45;
+}
+
+.table-list-dark__table tbody tr:hover td {
+  background: rgba(0, 217, 255, 0.03);
+}
+
+.table-list-dark__table input {
+  accent-color: #00d9ff;
+}
+
+.table-list-dark__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background: #152238;
+}
+
+.table-list-dark__pagination span {
+  font-size: 13px;
+  color: #5c7a99;
+}
+
+.table-list-dark__pages {
+  display: flex;
+  gap: 4px;
+}
+
+.table-list-dark__pages button {
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  font-size: 13px;
+  color: #8892a6;
+  background: transparent;
+  border: 1px solid #2d4356;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.table-list-dark__pages button:hover {
+  color: #00d9ff;
+  border-color: #00d9ff;
+}
+
+.table-list-dark__pages button.active {
+  color: #0d1b2a;
+  background: #00d9ff;
+  border-color: #00d9ff;
+}
+
+.table-list-dark__pages button:disabled {
+  color: #3d4f66;
+  cursor: not-allowed;
+  border-color: #2d4356;
+}

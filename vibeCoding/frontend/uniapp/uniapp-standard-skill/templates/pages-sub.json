@@ -1,0 +1,51 @@
+{
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "首页"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "应用名称",
+    "navigationBarBackgroundColor": "#ffffff"
+  },
+  "subPackages": [
+    {
+      "root": "pages-sub/detail/",
+      "pages": [
+        {
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "详情页"
+          }
+        }
+      ]
+    },
+    {
+      "root": "pages-sub/user/",
+      "pages": [
+        {
+          "path": "profile",
+          "style": {
+            "navigationBarTitleText": "个人资料"
+          }
+        },
+        {
+          "path": "settings",
+          "style": {
+            "navigationBarTitleText": "设置"
+          }
+        }
+      ]
+    }
+  ],
+  "preloadRule": {
+    "pages/index/index": {
+      "network": "all",
+      "packages": ["pages-sub/detail"]
+    }
+  }
+}

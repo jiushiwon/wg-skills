@@ -219,7 +219,7 @@ vue-generate-skill/
 - **`frontend-request-skill`**（强依赖）：请求层规范（fetch + 响应信封 + Token 刷新队列），所有 HTTP 代码必须按其标准实现。
 - `ponytail`：保持实现最小化，避免过度设计。
 - `frontend-design` / `ui-ux-pro-max`：关键页面的 UI/UX 方案。
-- `image-forge-skill`：生成页面所需的图标（如果项目需要）。
+- `frontend-icon-skill`：生成页面所需的图标（如果项目需要）。
 
 ---
 
@@ -235,7 +235,7 @@ vue-generate-skill/
 ❌ **不适用**：
 - 微信小程序 / 抖音小程序 → 用 `uniapp-app-generate-skill`
 - 移动 App → 用 `uniapp-app-generate-skill` 或 React Native 方案
-- Next.js / Nuxt 等 SSR 框架 → 已扩展为 `nuxt-generate-skill` / `next-generate-skill`
+- Next.js / Nuxt 等 SSR 框架 → 待扩展的 `nuxt-generate-skill` / `next-generate-skill`
 
 ---
 

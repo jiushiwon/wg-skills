@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="{{size}}" height="{{size}}" viewBox="0 0 24 24" fill="none" stroke="{{color}}" stroke-width="{{strokeWidth}}" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="12" cy="4" r="2"/>
+  <circle cx="5" cy="14" r="2"/>
+  <circle cx="19" cy="14" r="2"/>
+  <circle cx="12" cy="20" r="2"/>
+  <path d="M12 6L6 12"/>
+  <path d="M12 6l6 6"/>
+  <path d="M7 16l3 2"/>
+  <path d="M17 16l-3 2"/>
+</svg>

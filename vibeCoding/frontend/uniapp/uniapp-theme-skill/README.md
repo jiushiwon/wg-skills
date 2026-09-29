@@ -298,14 +298,14 @@ uniapp-theme-skill        →  添加主题系统
 | `32rpx` | `var(--radius-xl)` |
 | `9999rpx` | `var(--radius-full)` |
 
-### 第4步：生成主题图标（配合 image-forge-skill）
+### 第4步：生成主题图标（配合 frontend-icon-skill）
 
 ```bash
 # 安装依赖（首次）
-cd "$SKILL_DIR/image-forge-skill" && npm install
+cd "$SKILL_DIR/frontend-icon-skill" && npm install
 
 # 生成选中状态图标（蓝色）
-node image-forge.js config.json
+node image-forge.cjs config.json
 ```
 
 配置示例：
@@ -337,7 +337,7 @@ node image-forge.js config.json
 
 | 技能 | 用途 |
 |------|------|
-| image-forge-skill | 生成主题色图标（tabBar、按钮等） |
+| frontend-icon-skill | 生成主题色图标（tabBar、按钮等） |
 | frontend-style-harmonizer | 扫描并替换硬编码 |
 
 ## 注意事项

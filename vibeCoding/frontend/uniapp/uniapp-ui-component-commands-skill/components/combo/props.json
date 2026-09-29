@@ -1,0 +1,14 @@
+{
+  "name": "combo",
+  "title": "组合",
+  "category": "combo",
+  "description": "组合类 CSS 类",
+  "aliases": ["图标标签", "徽章", "角标", "combo", "tag", "badge"],
+  "props": [],
+  "events": [],
+  "slots": [],
+  "classes": {
+    "icon-tag": "图标标签 - 图标+文字组合",
+    "badge": "徽章 - 右上角标记 (--dot 红点模式)"
+  }
+}

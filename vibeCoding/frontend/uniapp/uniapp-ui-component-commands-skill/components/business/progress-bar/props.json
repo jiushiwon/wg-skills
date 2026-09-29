@@ -1,0 +1,17 @@
+{
+  "name": "progress-bar",
+  "title": "进度条",
+  "category": "business",
+  "description": "进度条组件",
+  "aliases": ["进度", "progress", "bar"],
+  "props": [
+    { "name": "percent", "type": "number", "default": 0, "desc": "进度百分比(0-100)" },
+    { "name": "type", "type": "string", "default": "primary", "desc": "类型: primary/success/warning/error" },
+    { "name": "showText", "type": "boolean", "default": true, "desc": "显示文字" },
+    { "name": "text", "type": "string", "default": "", "desc": "自定义文字" },
+    { "name": "strokeWidth", "type": "number", "default": 6, "desc": "进度条高度" },
+    { "name": "round", "type": "boolean", "default": true, "desc": "圆角" }
+  ],
+  "events": [],
+  "slots": []
+}

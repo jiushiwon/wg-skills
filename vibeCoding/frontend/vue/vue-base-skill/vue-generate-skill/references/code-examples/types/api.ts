@@ -38,20 +38,30 @@ export interface PageResponse<T> {
   pageSize: number;
 }
 
+// ==================== 鉴权模块类型 ====================
+
 /** 登录请求 */
 export interface LoginRequest {
   username: string;
   password: string;
 }
 
-/** 登录响应 */
+/** 登录响应（token + 用户信息） */
 export interface LoginResponse {
   token: string;
   refreshToken: string;
   user: User;
+  expiresIn?: number;
+  tokenType?: string;
 }
 
 /** 刷新 Token 请求 */
 export interface RefreshTokenRequest {
+  refreshToken: string;
+}
+
+/** 刷新 Token 响应 */
+export interface RefreshTokenResponse {
+  token: string;
   refreshToken: string;
 }

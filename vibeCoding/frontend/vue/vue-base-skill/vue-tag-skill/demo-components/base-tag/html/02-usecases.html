@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>base-tag / 02 - 业务场景</title>
+  <link rel="stylesheet" href="../../shared/tokens.css" />
+  <link rel="stylesheet" href="../../shared/demo.css" />
+</head>
+<body>
+  <h1 class="demo-section-title">业务场景示例</h1>
+  <p class="demo-helper">状态、分类、计数、新功能标记等。</p>
+
+  <base-card title="订单状态">
+    <div class="demo-row">
+      <span class="base-tag base-tag--type-warning">待付款</span>
+      <span class="base-tag base-tag--type-info">待发货</span>
+      <span class="base-tag base-tag--type-primary">配送中</span>
+      <span class="base-tag base-tag--type-success">已完成</span>
+      <span class="base-tag base-tag--type-danger">已取消</span>
+    </div>
+  </base-card>
+
+  <base-card title="商品分类">
+    <div class="demo-row">
+      <span class="base-tag base-tag--variant-outline">手机</span>
+      <span class="base-tag base-tag--variant-outline">电脑</span>
+      <span class="base-tag base-tag--variant-outline">耳机</span>
+      <span class="base-tag base-tag--variant-outline">平板</span>
+      <span class="base-tag base-tag--variant-outline">智能穿戴</span>
+    </div>
+  </base-card>
+
+  <base-card title="新功能 / 计数">
+    <div class="demo-row">
+      <span class="base-tag base-tag--variant-solid base-tag--type-danger">NEW</span>
+      <span class="base-tag base-tag--variant-solid base-tag--type-primary">HOT</span>
+      <span class="base-tag">消息 <strong>99+</strong></span>
+      <span class="base-tag base-tag--type-primary">购物车 <strong>3</strong></span>
+    </div>
+  </base-card>
+</body>
+</html>

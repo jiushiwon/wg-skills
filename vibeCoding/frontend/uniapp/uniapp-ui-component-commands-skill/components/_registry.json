@@ -1,0 +1,49 @@
+{
+  "description": "内置组件库注册表 - 预置组件无需用户每次重新定义",
+  "version": "1.0.0",
+  "components": [
+    // 导航类
+    { "name": "nav-bar", "category": "navigation", "type": "vue", "path": "navigation/nav-bar/" },
+    { "name": "tab-bar", "category": "navigation", "type": "vue", "path": "navigation/tab-bar/" },
+    { "name": "top-tab", "category": "navigation", "type": "vue", "path": "navigation/top-tab/" },
+    { "name": "side-menu", "category": "navigation", "type": "vue", "path": "navigation/side-menu/" },
+    { "name": "breadcrumb", "category": "navigation", "type": "vue", "path": "navigation/breadcrumb/" },
+    // 列表类
+    { "name": "list-item", "category": "list", "type": "vue", "path": "list/list-item/" },
+    { "name": "product-card", "category": "list", "type": "vue", "path": "list/product-card/" },
+    { "name": "article-card", "category": "list", "type": "vue", "path": "list/article-card/" },
+    { "name": "chat-bubble", "category": "list", "type": "vue", "path": "list/chat-bubble/" },
+    { "name": "timeline", "category": "list", "type": "vue", "path": "list/timeline/" },
+    // 表单类
+    { "name": "search-bar", "category": "form", "type": "vue", "path": "form/search-bar/" },
+    { "name": "input-field", "category": "form", "type": "vue", "path": "form/input-field/" },
+    { "name": "picker", "category": "form", "type": "vue", "path": "form/picker/" },
+    { "name": "date-picker", "category": "form", "type": "vue", "path": "form/date-picker/" },
+    { "name": "switch", "category": "form", "type": "vue", "path": "form/switch/" },
+    { "name": "checkbox-group", "category": "form", "type": "vue", "path": "form/checkbox-group/" },
+    { "name": "radio-group", "category": "form", "type": "vue", "path": "form/radio-group/" },
+    // 反馈类
+    { "name": "toast", "category": "feedback", "type": "vue", "path": "feedback/toast/" },
+    { "name": "modal", "category": "feedback", "type": "vue", "path": "feedback/modal/" },
+    { "name": "action-sheet", "category": "feedback", "type": "vue", "path": "feedback/action-sheet/" },
+    { "name": "loading", "category": "feedback", "type": "vue", "path": "feedback/loading/" },
+    { "name": "empty-state", "category": "feedback", "type": "vue", "path": "feedback/empty-state/" },
+    // 业务类
+    { "name": "user-avatar", "category": "business", "type": "vue", "path": "business/user-avatar/" },
+    { "name": "price-tag", "category": "business", "type": "vue", "path": "business/price-tag/" },
+    { "name": "count-down", "category": "business", "type": "vue", "path": "business/count-down/" },
+    { "name": "progress-bar", "category": "business", "type": "vue", "path": "business/progress-bar/" },
+    { "name": "stepper", "category": "business", "type": "vue", "path": "business/stepper/" },
+    { "name": "coupon", "category": "business", "type": "vue", "path": "business/coupon/" },
+    // 按钮类
+    { "name": "btn", "category": "button", "type": "css", "path": "button/" },
+    // 线条类
+    { "name": "line", "category": "line", "type": "css", "path": "line/" },
+    // 图形类
+    { "name": "shape", "category": "shape", "type": "css", "path": "shape/" },
+    // 组合类
+    { "name": "combo", "category": "combo", "type": "css", "path": "combo/" },
+    // 卡片类
+    { "name": "card", "category": "card", "type": "css", "path": "card/" }
+  ]
+}

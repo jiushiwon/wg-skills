@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>会议二维码 - 中后台样例</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body class="bg-[#F3F4F6] text-[#111827]">
+  <div class="flex h-screen">
+    <!-- Sidebar -->
+    <aside class="w-[232px] bg-white border-r border-[#E5E7EB] flex flex-col">
+      <div class="h-16 flex items-center px-6 border-b border-[#E5E7EB]">
+        <div class="w-8 h-8 bg-[#2563EB] rounded-lg mr-3"></div>
+        <span class="font-semibold">会议系统</span>
+      </div>
+      <nav class="flex-1 p-4 space-y-1">
+        <a href="#" class="flex items-center px-3 py-2 rounded-lg text-[#6B7280] hover:bg-[#F9FAFB]">
+          <span class="w-5 h-5 mr-3 bg-[#E5E7EB] rounded"></span>
+          工作台
+        </a>
+        <a href="#" class="flex items-center px-3 py-2 rounded-lg bg-[#EFF6FF] text-[#2563EB]">
+          <span class="w-5 h-5 mr-3 bg-[#2563EB] rounded"></span>
+          学术会议管理
+        </a>
+        <a href="#" class="flex items-center px-3 py-2 rounded-lg text-[#6B7280] hover:bg-[#F9FAFB]">
+          <span class="w-5 h-5 mr-3 bg-[#E5E7EB] rounded"></span>
+          参会人员管理
+        </a>
+      </nav>
+      <div class="p-4 border-t border-[#E5E7EB]">
+        <button class="w-full py-2 bg-[#2563EB] text-white rounded-lg hover:bg-[#1D4ED8]">发起会议</button>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="flex-1 flex flex-col min-w-0">
+      <!-- Header -->
+      <header class="h-16 bg-white border-b border-[#E5E7EB] flex items-center justify-between px-6">
+        <div class="flex space-x-6 text-sm">
+          <span class="text-[#111827] font-medium">二维码与接入</span>
+          <span class="text-[#6B7280]">会议设置</span>
+        </div>
+        <div class="flex items-center space-x-4">
+          <div class="w-8 h-8 bg-[#E5E7EB] rounded-full"></div>
+          <span class="text-sm text-[#6B7280]">管理员</span>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="flex-1 overflow-auto p-6">
+        <!-- Steps -->
+        <div class="bg-white rounded-xl p-6 mb-6 shadow-sm">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+              <div class="w-8 h-8 rounded-full bg-[#2563EB] text-white flex items-center justify-center text-sm">1</div>
+              <span class="text-sm font-medium">基础信息</span>
+            </div>
+            <div class="flex-1 h-0.5 bg-[#2563EB] mx-4"></div>
+            <div class="flex items-center space-x-4">
+              <div class="w-8 h-8 rounded-full bg-[#2563EB] text-white flex items-center justify-center text-sm">2</div>
+              <span class="text-sm font-medium">时间地点</span>
+            </div>
+            <div class="flex-1 h-0.5 bg-[#2563EB] mx-4"></div>
+            <div class="flex items-center space-x-4">
+              <div class="w-8 h-8 rounded-full bg-[#2563EB] text-white flex items-center justify-center text-sm">3</div>
+              <span class="text-sm font-medium">嘉宾设置</span>
+            </div>
+            <div class="flex-1 h-0.5 bg-[#E5E7EB] mx-4"></div>
+            <div class="flex items-center space-x-4">
+              <div class="w-8 h-8 rounded-full border-2 border-[#2563EB] text-[#2563EB] flex items-center justify-center text-sm">4</div>
+              <span class="text-sm font-medium text-[#2563EB]">二维码与接入</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Two Column Cards -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Left: QR Code -->
+          <div class="lg:col-span-5 bg-white rounded-xl p-6 shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-semibold">会议二维码</h3>
+              <button class="text-sm text-[#2563EB] hover:underline">自定义外观</button>
+            </div>
+            <div class="bg-[#1F2937] rounded-lg p-8 flex items-center justify-center">
+              <div id="qrcode"></div>
+            </div>
+            <p class="text-sm text-[#6B7280] mt-4">参会人员扫码即可加入会议</p>
+            <div class="flex space-x-3 mt-4">
+              <button class="flex-1 py-2 border border-[#E5E7EB] rounded-lg text-sm hover:bg-[#F9FAFB]">下载 PNG</button>
+              <button class="flex-1 py-2 border border-[#E5E7EB] rounded-lg text-sm hover:bg-[#F9FAFB]">下载 JPG</button>
+              <button class="flex-1 py-2 border border-[#E5E7EB] rounded-lg text-sm hover:bg-[#F9FAFB]">下载 PDF</button>
+            </div>
+          </div>
+
+          <!-- Right: Integration Cards -->
+          <div class="lg:col-span-7 space-y-6">
+            <div class="bg-white rounded-xl p-6 shadow-sm">
+              <h3 class="font-semibold mb-2">外部平台集成</h3>
+              <p class="text-sm text-[#6B7280]">一键同步到腾讯会议、钉钉、飞书等平台</p>
+            </div>
+            <div class="bg-white rounded-xl p-6 shadow-sm">
+              <h3 class="font-semibold mb-2">准入与考勤控制</h3>
+              <p class="text-sm text-[#6B7280]">设置参会半径、报名审核、签到方式</p>
+            </div>
+            <div class="bg-white rounded-xl p-6 shadow-sm">
+              <h3 class="font-semibold mb-2">社交分享与链接</h3>
+              <p class="text-sm text-[#6B7280]">复制会议链接，分享到微信、邮件等渠道</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    new QRCode(document.getElementById("qrcode"), {
+      text: "https://example.com/meeting/452889601",
+      width: 128,
+      height: 128,
+      colorDark: "#FFFFFF",
+      colorLight: "#1F2937"
+    });
+  </script>
+</body>
+</html>

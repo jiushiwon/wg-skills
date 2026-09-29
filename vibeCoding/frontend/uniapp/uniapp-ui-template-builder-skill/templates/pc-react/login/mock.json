@@ -1,0 +1,16 @@
+{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "title": "登录",
+    "logoText": "UI Template Builder",
+    "subtitle": "欢迎回来，请登录您的账号",
+    "fields": [
+      { "name": "email", "label": "邮箱", "type": "email", "placeholder": "请输入邮箱" },
+      { "name": "password", "label": "密码", "type": "password", "placeholder": "请输入密码" }
+    ],
+    "submitText": "登录",
+    "footerText": "还没有账号？",
+    "footerLink": "立即注册"
+  }
+}

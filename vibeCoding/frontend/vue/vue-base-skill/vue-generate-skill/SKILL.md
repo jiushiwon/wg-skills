@@ -221,7 +221,11 @@ src/
 | 目标文件 | 来源 | 必须 |
 |----------|------|------|
 | `src/api/request.ts` | `references/api-integration.md` § 3 | ✅ |
-| `src/services/auth.service.ts` | `references/api-integration.md` § 4 | ✅ |
+| `src/api/_mocks_/index.ts` | `references/code-examples/api/_mocks_/index.ts` | ✅ |
+| `src/api/_mocks_/auth.mock.ts` | `references/code-examples/api/_mocks_/auth.mock.ts` | ✅ |
+| `src/api/modules/auth.ts` | `references/code-examples/api/modules/auth.ts` | ✅ |
+| `src/api/modules/user.ts` | `references/code-examples/api/modules/user.ts` | 按需 |
+| `src/services/auth.service.ts` | `references/code-examples/services/auth.service.ts` | ✅ |
 | `src/utils/auth.ts` | `references/api-integration.md` § 5 | ✅ |
 | `src/utils/error.ts` | `references/api-integration.md` § 6 | ✅ |
 | `src/utils/toast.ts` | `references/api-integration.md` § 7 | ✅ |
@@ -231,10 +235,12 @@ src/
 | `src/types/api.ts` | `references/code-examples/types/api.ts` | ✅ |
 | `src/types/user.ts` | `references/code-examples/types/user.ts` | 按需 |
 
-**禁止**：
+**绝对禁止**：
 - ❌ 自己写 request.ts（必须按标准复制）
 - ❌ 在组件里直接调 `localStorage`（必须走 `utils/auth.ts`）
 - ❌ 在组件里写 401 处理（必须交给 `auth.service.ts`）
+- ❌ **生成 Login.vue 时 import `@/services/auth.service` 但不生成对应文件** —— 永远先确认 services / store / api 模块存在再生成 Login.vue（决策流程见 `frontend-request-skill/references/auth-patterns.md` 末尾"AI 生成 Login.vue 的决策流程"）
+- ❌ **生成 Login.vue 时只 import 不接 store / services** —— AI 必须 await 一个真实的登录入口（`authApi.login` / `userStore.login()` / `services.login()` 三选一），不能让 Login.vue 的 `@submit` 是 `console.log`
 
 ### 2.6 Generate CLAUDE.md (≤ 50 lines)
 

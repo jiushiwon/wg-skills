@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LED 大屏 · 企业经营大屏 - Vue3 Dashboard Skill Demo</title>
+  <link rel="stylesheet" href="../../shared/tokens.css" />
+  <link rel="stylesheet" href="../../shared/base-card.css" />
+  <link rel="stylesheet" href="../../shared/demo.css" />
+  <style>
+    :root {
+      --color-bg: #04143d;
+      --color-surface: rgba(4, 30, 80, 0.6);
+      --color-text: #e2e8f0;
+      --color-text-secondary: #8899bb;
+      --color-text-tertiary: #64748b;
+      --color-border: rgba(0, 212, 255, 0.15);
+      --color-border-light: rgba(0, 212, 255, 0.08);
+      --color-bg-secondary: rgba(0, 212, 255, 0.04);
+      --color-bg-hover: rgba(0, 212, 255, 0.06);
+    }
+    body { background: #04143d; }
+    .dash-page { max-width: 1920px; margin: 0 auto; padding: 0; }
+    .dash-page::after {
+      content: ''; position: fixed; inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,212,255,0.01) 2px, rgba(0,212,255,0.01) 4px);
+      pointer-events: none; z-index: 99;
+    }
+    .dash-header {
+      justify-content: center; background: rgba(0,20,60,0.8);
+      border-bottom: 1px solid rgba(0,212,255,0.2); padding: 16px 32px;
+    }
+    .dash-header__title { font-size: 32px; color: #00d4ff; letter-spacing: 4px; text-shadow: 0 0 20px rgba(0,212,255,0.4); }
+    .dash-header__subtitle { color: #8899bb; }
+    .dash-scene-tag { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 500; background: rgba(0,212,255,0.08); color: #00d4ff; border: 1px solid rgba(0,212,255,0.2); margin-bottom: 8px; }
+
+    /* LED 大屏专用卡片覆盖 */
+    .base-card { background: rgba(4,30,80,0.6); box-shadow: 0 0 0 1px rgba(0,212,255,0.15); border-radius: 8px; border: none; }
+    .base-card__title { font-size: 16px; font-weight: 600; color: #00d4ff; }
+
+    /* ---- layout: three-col ---- */
+    .dash-three-col { display: grid; grid-template-columns: 320px 1fr 360px; flex: 1; }
+    .dash-col { padding: 16px; display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
+    .dash-col--left { border-right: 1px solid rgba(0,212,255,0.1); }
+    .dash-col--right { border-left: 1px solid rgba(0,212,255,0.1); }
+
+    /* ---- 超大数字 KPI ---- */
+    .big-kpi { padding: 20px; display: flex; flex-direction: column; gap: 6px; }
+    .big-kpi__label { font-size: 13px; color: #8899bb; }
+    .big-kpi__value { font-size: 42px; font-weight: 800; color: #00d4ff; font-family: 'JetBrains Mono','Fira Code',monospace; text-shadow: 0 0 15px rgba(0,212,255,0.4); line-height: 1.1; }
+    .big-kpi__sub { display: flex; align-items: center; gap: 6px; font-size: 13px; }
+    .big-kpi__sub--up { color: #52c41a; }
+    .big-kpi__sub--down { color: #f5222d; }
+    .big-kpi__bar { height: 6px; background: rgba(0,212,255,0.1); border-radius: 3px; overflow: hidden; margin-top: 4px; }
+    .big-kpi__bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #00d4ff, #0066cc); box-shadow: 0 0 8px rgba(0,212,255,0.3); }
+
+    /* ---- 中栏 ---- */
+    .mid-section { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+    .mid-section__title { font-size: 16px; font-weight: 600; color: #00d4ff; margin-bottom: 16px; }
+    .pie-wrap { display: flex; align-items: center; gap: 32px; flex: 1; }
+    .pie-svg { width: 220px; height: 220px; flex-shrink: 0; }
+    .pie-legend { display: flex; flex-direction: column; gap: 14px; flex: 1; }
+    .pie-legend-item { display: flex; align-items: center; gap: 10px; }
+    .pie-legend-item__dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+    .pie-legend-item__name { font-size: 14px; color: #8899bb; flex: 1; }
+    .pie-legend-item__val { font-size: 16px; font-weight: 700; color: #00d4ff; font-family: 'JetBrains Mono',monospace; }
+
+    /* ---- 实时滚动 ---- */
+    .scroll-section { padding: 20px; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .scroll-section__title { font-size: 16px; font-weight: 600; color: #00d4ff; margin-bottom: 12px; }
+    .scroll-data { flex: 1; overflow: hidden; position: relative; }
+    .scroll-data__inner { animation: scroll-up 20s linear infinite; }
+    @keyframes scroll-up { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+    .scroll-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(0,212,255,0.06); }
+    .scroll-row__icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; background: rgba(0,212,255,0.08); flex-shrink: 0; }
+    .scroll-row__text { flex: 1; font-size: 13px; color: #c0ccdd; }
+    .scroll-row__text strong { color: #00d4ff; }
+    .scroll-row__time { font-size: 11px; color: #64748b; flex-shrink: 0; }
+
+    /* ---- 右栏 ---- */
+    .rank-card { padding: 20px; }
+    .rank-card__title { font-size: 16px; font-weight: 600; color: #00d4ff; margin-bottom: 14px; }
+    .rank-big-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(0,212,255,0.06); }
+    .rank-big-item__num { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; background: rgba(0,212,255,0.08); color: #8899bb; flex-shrink: 0; }
+    .rank-big-item__num--1 { background: rgba(0,212,255,0.2); color: #00d4ff; font-size: 15px; }
+    .rank-big-item__name { flex: 1; font-size: 14px; color: #c0ccdd; }
+    .rank-big-item__val { font-size: 16px; font-weight: 700; color: #00d4ff; font-family: 'JetBrains Mono',monospace; }
+
+    /* ---- 中栏底部：双指标 ---- */
+    .mid-bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .metric-panel { padding: 16px; }
+    .metric-panel__title { font-size: 13px; color: #8899bb; margin-bottom: 8px; }
+    .metric-panel__value { font-size: 28px; font-weight: 700; color: #00d4ff; font-family: 'JetBrains Mono',monospace; text-shadow: 0 0 10px rgba(0,212,255,0.3); }
+    .metric-panel__bar { height: 4px; background: rgba(0,212,255,0.1); border-radius: 2px; overflow: hidden; margin-top: 8px; }
+    .metric-panel__bar-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, #00d4ff, #0066cc); }
+
+    @media (max-width: 1200px) {
+      .dash-three-col { grid-template-columns: 1fr; }
+      .dash-col--left, .dash-col--right { border: none; }
+      .pie-wrap { flex-direction: column; }
+      .mid-bottom-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="dash-page">
+    <div class="dash-header" role="banner">
+      <div>
+        <span class="dash-scene-tag">企业</span>
+        <div class="dash-header__title">企 业 经 营 大 屏</div>
+        <div class="dash-header__subtitle" id="clock"></div>
+      </div>
+    </div>
+
+    <div class="dash-three-col">
+      <!-- 左栏：KPI -->
+      <div role="complementary" class="dash-col dash-col--left" id="left-col"></div>
+
+      <!-- 中栏：饼图 + 滚动 + 双指标 -->
+      <div role="main" class="dash-col dash-col--center">
+        <div class="base-card mid-section">
+          <div class="base-card__title" style="margin-bottom:16px">营收来源分布</div>
+          <div class="pie-wrap">
+            <svg class="pie-svg" viewBox="-1.1 -1.1 2.2 2.2" id="pie-chart"></svg>
+            <div class="pie-legend" id="pie-legend"></div>
+          </div>
+        </div>
+        <div class="mid-bottom-grid">
+          <div class="base-card metric-panel">
+            <div class="metric-panel__title">本月目标完成率</div>
+            <div class="metric-panel__value">86.4%</div>
+            <div class="metric-panel__bar"><div class="metric-panel__bar-fill" style="width:86%"></div></div>
+          </div>
+          <div class="base-card metric-panel">
+            <div class="metric-panel__title">客户留存率</div>
+            <div class="metric-panel__value">94.2%</div>
+            <div class="metric-panel__bar"><div class="metric-panel__bar-fill" style="width:94%"></div></div>
+          </div>
+        </div>
+        <div class="base-card scroll-section">
+          <div class="scroll-section__title">实时交易动态</div>
+          <div class="scroll-data"><div class="scroll-data__inner" id="scroll-feed"></div></div>
+        </div>
+      </div>
+
+      <!-- 右栏：排行 -->
+      <div role="complementary" class="dash-col dash-col--right">
+        <div class="base-card rank-card">
+          <div class="rank-card__title">城市销售 TOP 5</div>
+          <div id="city-rank"></div>
+        </div>
+        <div class="base-card rank-card">
+          <div class="rank-card__title">品类销售 TOP 5</div>
+          <div id="category-rank"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date()
+      const pad = n => String(n).padStart(2, '0')
+      document.getElementById('clock').textContent = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`
+    }
+    updateClock(); setInterval(updateClock, 1000)
+
+    const kpis = [
+      { label: '今日营收', value: '¥286.4万', change: '+18.2%', dir: 'up', pct: 78 },
+      { label: '订单量', value: '4,286', change: '+12.5%', dir: 'up', pct: 65 },
+      { label: '客单价', value: '¥668', change: '+5.3%', dir: 'up', pct: 82 },
+      { label: '转化率', value: '3.84%', change: '-0.2%', dir: 'down', pct: 57 },
+      { label: '退货率', value: '1.2%', change: '-0.3%', dir: 'down', pct: 12 },
+      { label: '在线用户', value: '18,429', change: '+2,180', dir: 'up', pct: 91 }
+    ]
+    document.getElementById('left-col').innerHTML = kpis.map(k => `
+      <div class="base-card big-kpi">
+        <div class="big-kpi__label">${k.label}</div>
+        <div class="big-kpi__value">${k.value}</div>
+        <div class="big-kpi__sub big-kpi__sub--${k.dir}">${k.dir === 'up' ? '↑' : '↓'} ${k.change} 较昨日</div>
+        <div class="big-kpi__bar"><div class="big-kpi__bar-fill" style="width:${k.pct}%"></div></div>
+      </div>
+    `).join('')
+
+    const pieData = [
+      { name: '在线商城', val: 42, color: '#00d4ff' },
+      { name: '线下门店', val: 25, color: '#0080ff' },
+      { name: '企业客户', val: 20, color: '#8b5cf6' },
+      { name: '跨境业务', val: 13, color: '#fa8c16' }
+    ]
+    const pieTotal = pieData.reduce((s,d) => s + d.val, 0)
+    let pieAcc = -Math.PI / 2
+    const piePaths = pieData.map(d => {
+      const angle = (d.val / pieTotal) * Math.PI * 2
+      const x1 = Math.cos(pieAcc), y1 = Math.sin(pieAcc); pieAcc += angle
+      const x2 = Math.cos(pieAcc), y2 = Math.sin(pieAcc)
+      const large = angle > Math.PI ? 1 : 0
+      return `<path d="M0,0 L${x1},${y1} A1,1 0 ${large},1 ${x2},${y2} Z" fill="${d.color}" stroke="#04143d" stroke-width="0.02"/>`
+    }).join('')
+    document.getElementById('pie-chart').innerHTML = piePaths + '<circle r="0.5" fill="#04143d"/><text text-anchor="middle" dy="0.05" fill="#00d4ff" font-size="0.25" font-weight="700">100%</text>'
+    document.getElementById('pie-legend').innerHTML = pieData.map(d => `<div class="pie-legend-item"><span class="pie-legend-item__dot" style="background:${d.color}"></span><span class="pie-legend-item__name">${d.name}</span><span class="pie-legend-item__val">${d.val}%</span></div>`).join('')
+
+    const feedItems = [
+      { icon: '¥', text: '<strong>张三</strong> 完成支付 ¥12,800', time: '刚刚' },
+      { icon: '▸', text: '<strong>李四</strong> 订单已发货 ORD-2891', time: '1分钟前' },
+      { icon: '+', text: '<strong>王五</strong> 注册新账号', time: '2分钟前' },
+      { icon: '¥', text: '<strong>赵六</strong> 完成支付 ¥3,599', time: '3分钟前' },
+      { icon: '←', text: '<strong>钱七</strong> 申请退款 ¥899', time: '5分钟前' },
+      { icon: '¥', text: '<strong>孙八</strong> 完成支付 ¥21,400', time: '6分钟前' },
+      { icon: '↑', text: '<strong>周九</strong> 升级为 VIP 会员', time: '8分钟前' },
+      { icon: '✓', text: '<strong>吴十</strong> 订单已签收 ORD-2887', time: '10分钟前' },
+      { icon: '¥', text: '<strong>郑一</strong> 完成支付 ¥6,200', time: '12分钟前' },
+      { icon: '+', text: '<strong>冯二</strong> 注册新账号', time: '15分钟前' }
+    ]
+    const feedHTML = [...feedItems, ...feedItems].map(f => `<div class="scroll-row"><span class="scroll-row__icon">${f.icon}</span><span class="scroll-row__text">${f.text}</span><span class="scroll-row__time">${f.time}</span></div>`).join('')
+    document.getElementById('scroll-feed').innerHTML = feedHTML
+
+    const cities = [
+      { name: '上海', val: '¥486万' }, { name: '北京', val: '¥412万' },
+      { name: '深圳', val: '¥328万' }, { name: '杭州', val: '¥276万' },
+      { name: '广州', val: '¥245万' }
+    ]
+    document.getElementById('city-rank').innerHTML = cities.map((c, i) => `<div class="rank-big-item"><div class="rank-big-item__num ${i===0?'rank-big-item__num--1':''}">${i+1}</div><div class="rank-big-item__name">${c.name}</div><div class="rank-big-item__val">${c.val}</div></div>`).join('')
+
+    const categories = [
+      { name: '数码电子', val: '¥862万' }, { name: '服装鞋帽', val: '¥534万' },
+      { name: '食品饮料', val: '¥428万' }, { name: '家居日用', val: '¥312万' },
+      { name: '美妆个护', val: '¥286万' }
+    ]
+    document.getElementById('category-rank').innerHTML = categories.map((c, i) => `<div class="rank-big-item"><div class="rank-big-item__num ${i===0?'rank-big-item__num--1':''}">${i+1}</div><div class="rank-big-item__name">${c.name}</div><div class="rank-big-item__val">${c.val}</div></div>`).join('')
+  </script>
+</body>
+</html>

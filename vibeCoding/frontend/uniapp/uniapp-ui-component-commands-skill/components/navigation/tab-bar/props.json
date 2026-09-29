@@ -1,0 +1,17 @@
+{
+  "name": "tab-bar",
+  "title": "底部Tab栏",
+  "category": "navigation",
+  "description": "底部Tab切换，支持图标+文字、选中态",
+  "aliases": ["底部导航", "tab切换", "底部菜单", "bottom-nav", "tabbar"],
+  "props": [
+    { "name": "tabs", "type": "array", "default": [], "desc": "Tab配置 [{name, icon, activeIcon}]" },
+    { "name": "current", "type": "number", "default": 0, "desc": "当前选中索引" },
+    { "name": "fixed", "type": "boolean", "default": false, "desc": "固定底部" },
+    { "name": "background", "type": "string", "default": "#ffffff", "desc": "背景色" },
+    { "name": "activeColor", "type": "string", "default": "#007AFF", "desc": "选中颜色" },
+    { "name": "inactiveColor", "type": "string", "default": "#6C6C70", "desc": "未选中颜色" }
+  ],
+  "events": ["change"],
+  "slots": []
+}

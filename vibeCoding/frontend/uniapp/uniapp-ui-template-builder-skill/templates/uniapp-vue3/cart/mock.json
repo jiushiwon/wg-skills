@@ -1,0 +1,26 @@
+{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "title": "购物车",
+    "groups": [
+      {
+        "shopName": "官方旗舰店",
+        "items": [
+          { "id": "c1", "name": "无线蓝牙耳机", "spec": "黑色", "price": 299, "count": 1, "image": "https://picsum.photos/100/100", "selected": true },
+          { "id": "c2", "name": "便携充电宝", "spec": "白色", "price": 99, "count": 2, "image": "https://picsum.photos/100/101", "selected": false }
+        ]
+      },
+      {
+        "shopName": "数码专营店",
+        "items": [
+          { "id": "c3", "name": "机械键盘", "spec": "青轴", "price": 459, "count": 1, "image": "https://picsum.photos/100/102", "selected": true }
+        ]
+      }
+    ],
+    "summary": {
+      "selectedCount": 2,
+      "totalPrice": 758
+    }
+  }
+}

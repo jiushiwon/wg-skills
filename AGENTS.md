@@ -135,6 +135,7 @@ wg-skills/
 │   │   │   ├── java-fast-skill/             # Java 快速入门（小白友好）
 │   │   │   ├── springboot-init-skill/        # Spring Boot 一键初始化
 │   │   │   └── springboot-module/            # Java 业务模块矩阵
+│   │   │       ├── universal-login-api/      # 万能登录后端 API
 │   │   │       ├── springboot-auth-module-skill/
 │   │   │       ├── springboot-agent-module-skill/
 │   │   │       ├── springboot-dict-module-skill/
@@ -202,7 +203,7 @@ wg-skills/
 │   │   ├── icon-image-catch-skill/           # 素材抓取（父技能 + 2 嵌套子）
 │   │   │   ├── icon-catch-skill/             # 图标抓取
 │   │   │   └── image-catch-skill/            # 图片抓取
-│   │   ├── image-forge-skill/                # 图片处理 + 图标生成
+│   │   ├── frontend-icon-skill/              # SVG 模板生成 + SVG→PNG 导出 + 图片处理（合并自 image-forge-skill）
 │   │   ├── uniapp/                           # uni-app 技能矩阵（15+ skill）
 │   │   │   ├── uniapp-base-skill/            # uni-app 基础组件（父技能，内含 21 组件）
 │   │   │   │   ├── uniapp-form-skill/        # 表单组件
@@ -248,6 +249,7 @@ wg-skills/
 │   │       │   └── vue-complex-skill/        # 综合页面
 │   │       │       ├── vue-crud-skill/       # 增删改查页面
 │   │       │       └── vue-login-skill/      # 登录页
+│   │       ├── universal-login-page/        # 万能登录页（嵌入式登录组件）
 │   │       ├── vue-theme-skill/              # Vue 主题系统（设计 Token 层）
 │   │       ├── vue-style-skill/              # Vue 样式规范（动画/工具类/布局）
 │   │       ├── vue-tui-skill/                # Vue TUI 终端界面

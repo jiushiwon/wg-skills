@@ -1,0 +1,16 @@
+{
+  "name": "price-tag",
+  "title": "价格标签",
+  "category": "business",
+  "description": "价格显示组件",
+  "aliases": ["价格", "金额", "price", "money"],
+  "props": [
+    { "name": "price", "type": "string|number", "default": "0.00", "desc": "价格" },
+    { "name": "originalPrice", "type": "string|number", "default": "", "desc": "原价" },
+    { "name": "size", "type": "string", "default": "medium", "desc": "尺寸: small/medium/large" },
+    { "name": "symbol", "type": "boolean", "default": true, "desc": "显示¥符号" },
+    { "name": "decimal", "type": "boolean", "default": true, "desc": "显示小数" }
+  ],
+  "events": [],
+  "slots": []
+}

@@ -1,0 +1,111 @@
+/* ============================================
+ * base-card 核心样式（从 vue-card-skill 提取）
+ * 与 vue-theme-skill Token 对齐
+ * ============================================ */
+
+/* ---- 基础容器 ---- */
+.base-card {
+  background: var(--color-surface, #fff);
+  border-radius: var(--radius-lg, 16px);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- 圆角 ---- */
+.base-card--radius-sm  { border-radius: var(--radius-sm, 8px); }
+.base-card--radius-md  { border-radius: var(--radius-md, 12px); }
+.base-card--radius-lg  { border-radius: var(--radius-lg, 16px); }
+.base-card--radius-xl  { border-radius: var(--radius-xl, 20px); }
+.base-card--radius-full { border-radius: var(--radius-full, 999px); }
+
+/* ---- 内边距 ---- */
+.base-card--padding-none { padding: 0; }
+.base-card--padding-sm   { padding: var(--space-3, 12px); }
+.base-card--padding-md   { padding: var(--space-4, 16px); }
+.base-card--padding-lg   { padding: var(--space-6, 24px); }
+.base-card--padding-xl   { padding: var(--space-8, 32px); }
+
+/* ---- 阴影 ---- */
+.base-card--shadow-none { box-shadow: none; }
+.base-card--shadow-sm   { box-shadow: var(--shadow-sm); }
+.base-card--shadow-md   { box-shadow: var(--shadow-md); }
+.base-card--shadow-lg   { box-shadow: var(--shadow-lg); }
+
+/* ---- 边框 ---- */
+.base-card--bordered {
+  border: 1px solid var(--color-border, #e5e7eb);
+}
+
+/* ---- 色调（背景微调，无左边框） ---- */
+.base-card--tone-neutral { }
+.base-card--tone-primary { background: #f0f5ff; }
+.base-card--tone-success { background: #f0fdf4; }
+.base-card--tone-warning { background: #fffbeb; }
+.base-card--tone-danger  { background: #fef2f2; }
+
+/* ---- 视觉变体 ---- */
+.base-card--variant-flat    { box-shadow: none; }
+.base-card--variant-elevated { box-shadow: var(--shadow-lg); }
+.base-card--variant-outlined {
+  box-shadow: none;
+  border: 1px solid var(--color-border, #e5e7eb);
+}
+
+/* ---- 交互态 ---- */
+.base-card--clickable {
+  cursor: pointer;
+}
+.base-card--clickable:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+/* ---- 头部 ---- */
+.base-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-4, 16px) var(--space-6, 24px);
+  flex-shrink: 0;
+}
+.base-card--has-header-border {
+  border-bottom: 1px solid var(--color-border-light, #f3f4f6);
+}
+.base-card__header-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1, 4px);
+}
+.base-card__title {
+  font-size: var(--font-lg, 16px);
+  font-weight: var(--weight-semibold, 600);
+  color: var(--color-text, #1f2937);
+  line-height: var(--leading-tight, 1.25);
+}
+.base-card__desc {
+  font-size: var(--font-sm, 13px);
+  color: var(--color-text-secondary, #4b5563);
+}
+.base-card__header-actions {
+  display: flex;
+  gap: var(--space-2, 8px);
+  align-items: center;
+}
+
+/* ---- 内容区域 ---- */
+.base-card__body {
+  padding: var(--space-6, 24px);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- 底部 ---- */
+.base-card__footer {
+  padding: var(--space-4, 16px) var(--space-6, 24px);
+  border-top: 1px solid var(--color-border-light, #f3f4f6);
+  flex-shrink: 0;
+}

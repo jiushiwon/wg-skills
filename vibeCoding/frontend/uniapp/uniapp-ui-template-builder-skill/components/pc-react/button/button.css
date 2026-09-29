@@ -1,0 +1,187 @@
+/* 按钮组件 - 3种风格主题 */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 500;
+  line-height: 1.5;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 200ms ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  min-width: 0;
+  user-select: none;
+  vertical-align: middle;
+}
+
+.btn-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.btn-spinner {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: btn-spin 1s linear infinite;
+}
+
+/* 尺寸 */
+.btn-sm { height: 28px; padding: 0 12px; font-size: 12px; }
+.btn-md { height: 36px; padding: 0 16px; font-size: 14px; }
+.btn-lg { height: 44px; padding: 0 24px; font-size: 16px; }
+
+/* 风格主题: default - 简约现代 */
+.btn-theme-default.btn-primary {
+  background: #333333;
+  color: #ffffff;
+  border-color: #333333;
+}
+.btn-theme-default.btn-primary:hover:not(:disabled) {
+  background: #000000;
+  border-color: #000000;
+}
+
+.btn-theme-default.btn-secondary {
+  background: #ffffff;
+  color: #333333;
+  border-color: #e5e5e5;
+}
+.btn-theme-default.btn-secondary:hover:not(:disabled) {
+  border-color: #999999;
+}
+
+.btn-theme-default.btn-ghost {
+  background: transparent;
+  color: #333333;
+  border-color: transparent;
+}
+.btn-theme-default.btn-ghost:hover:not(:disabled) {
+  background: #f5f5f5;
+}
+
+.btn-theme-default.btn-danger {
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #ef4444;
+}
+.btn-theme-default.btn-danger:hover:not(:disabled) {
+  background: #dc2626;
+  border-color: #dc2626;
+}
+
+/* 风格主题: elegant - 优雅渐变 */
+.btn-theme-elegant.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+.btn-theme-elegant.btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-theme-elegant.btn-secondary {
+  background: #f8f9fa;
+  color: #495057;
+  border: 1px solid #dee2e6;
+}
+.btn-theme-elegant.btn-secondary:hover:not(:disabled) {
+  background: #e9ecef;
+}
+
+.btn-theme-elegant.btn-ghost {
+  background: transparent;
+  color: #667eea;
+  border: 1px solid #667eea;
+}
+.btn-theme-elegant.btn-ghost:hover:not(:disabled) {
+  background: rgba(102, 126, 234, 0.1);
+}
+
+.btn-theme-elegant.btn-danger {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(245, 87, 108, 0.3);
+}
+
+/* 风格主题: gradient - 深色科技 */
+.btn-theme-gradient.btn-primary {
+  background: linear-gradient(135deg, #00d9ff 0%, #7c4dff 100%);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+}
+.btn-theme-gradient.btn-primary:hover:not(:disabled) {
+  box-shadow: 0 0 30px rgba(0, 217, 255, 0.5);
+}
+
+.btn-theme-gradient.btn-secondary {
+  background: rgba(0, 217, 255, 0.1);
+  color: #00d9ff;
+  border: 1px solid rgba(0, 217, 255, 0.3);
+}
+.btn-theme-gradient.btn-secondary:hover:not(:disabled) {
+  background: rgba(0, 217, 255, 0.2);
+}
+
+.btn-theme-gradient.btn-ghost {
+  background: transparent;
+  color: #00d9ff;
+  border: 1px solid transparent;
+}
+.btn-theme-gradient.btn-ghost:hover:not(:disabled) {
+  border-color: #00d9ff;
+}
+
+.btn-theme-gradient.btn-danger {
+  background: linear-gradient(135deg, #ff0844 0%, #ffb199 100%);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 0 20px rgba(255, 8, 68, 0.3);
+}
+
+/* link 按钮所有风格通用 */
+.btn-link {
+  background: transparent;
+  color: #2563eb;
+  border-color: transparent;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.btn-link:hover:not(:disabled) {
+  text-decoration: underline;
+}
+
+/* 状态 */
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-block {
+  display: flex;
+  width: 100%;
+}
+
+.btn-loading .btn-text {
+  opacity: 0.8;
+}
+
+@keyframes btn-spin {
+  to { transform: rotate(360deg); }
+}

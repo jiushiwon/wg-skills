@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>柱状图 · Bar Chart</title>
+<link rel="stylesheet" href="../../shared/tokens.css">
+<link rel="stylesheet" href="../../shared/demo.css">
+</head>
+<body>
+<div class="chart-demo-page">
+  <h1 class="chart-demo-page__title">柱状图 · Bar Chart</h1>
+  <p class="chart-demo-page__subtitle">基础柱状、分组柱状、堆叠柱状、水平柱状</p>
+  <div class="chart-demo-grid">
+    <div class="chart-demo-card">
+      <div class="chart-demo-card__header">
+        <div class="chart-demo-card__title">基础柱状</div>
+        <div class="chart-demo-card__desc">6 个月销售额，蓝色圆角柱</div>
+      </div>
+      <div class="chart-demo-card__body"><canvas id="c1" width="560" height="320"></canvas></div>
+    </div>
+    <div class="chart-demo-card">
+      <div class="chart-demo-card__header">
+        <div class="chart-demo-card__title">分组柱状</div>
+        <div class="chart-demo-card__desc">线上 vs 线下并排对比</div>
+      </div>
+      <div class="chart-demo-card__body"><canvas id="c2" width="560" height="320"></canvas></div>
+    </div>
+    <div class="chart-demo-card">
+      <div class="chart-demo-card__header">
+        <div class="chart-demo-card__title">堆叠柱状</div>
+        <div class="chart-demo-card__desc">产品 A + 产品 B 累计堆叠</div>
+      </div>
+      <div class="chart-demo-card__body"><canvas id="c3" width="560" height="320"></canvas></div>
+    </div>
+    <div class="chart-demo-card">
+      <div class="chart-demo-card__header">
+        <div class="chart-demo-card__title">水平柱状</div>
+        <div class="chart-demo-card__desc">横向柱子，Y 轴标签在左侧</div>
+      </div>
+      <div class="chart-demo-card__body"><canvas id="c4" width="560" height="320"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<script>
+var colors = ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4'];
+
+function fillRoundRect(ctx, x, y, w, h, r) {
+  if (r > h / 2) r = h / 2;
+  if (r > w / 2) r = w / 2;
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+function drawBarChart(canvas, data, options) {
+  var ctx = canvas.getContext('2d');
+  var w = canvas.width, h = canvas.height;
+  var padding = { top: 40, right: 30, bottom: 40, left: 60 };
+  var plotW = w - padding.left - padding.right;
+  var plotH = h - padding.top - padding.bottom;
+
+  var allValues = [];
+  data.series.forEach(function(s) { s.values.forEach(function(v) { allValues.push(v); }); });
+  var maxVal = Math.max.apply(null, allValues) * 1.15;
+
+  // Grid
+  ctx.strokeStyle = '#f0f0f0'; ctx.lineWidth = 1;
+  for (var i = 0; i <= 5; i++) {
+    var y = padding.top + plotH * i / 5;
+    ctx.beginPath(); ctx.moveTo(padding.left, y); ctx.lineTo(w - padding.right, y); ctx.stroke();
+    ctx.fillStyle = '#9ca3af'; ctx.font = '11px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(Math.round(maxVal * (1 - i / 5)).toLocaleString(), padding.left - 8, y + 4);
+  }
+
+  var barGroupWidth = (plotW / data.labels.length) * 0.7;
+  var barWidth = barGroupWidth / data.series.length;
+
+  // Bars
+  data.series.forEach(function(s, si) {
+    var color = options.colors[si % options.colors.length];
+    s.values.forEach(function(v, i) {
+      var groupX = padding.left + plotW * i / data.labels.length + plotW / data.labels.length * 0.15;
+      var barH = (v / maxVal) * plotH;
+      var x = groupX + barWidth * si;
+      var y = padding.top + plotH - barH;
+      fillRoundRect(ctx, x, y, barWidth - 2, barH, 4);
+      ctx.fillStyle = color; ctx.fill();
+    });
+  });
+
+  // X labels
+  data.labels.forEach(function(label, i) {
+    var x = padding.left + plotW * i / data.labels.length + plotW / data.labels.length / 2;
+    ctx.fillStyle = '#9ca3af'; ctx.font = '11px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(label, x, h - padding.bottom + 20);
+  });
+
+  // Legend
+  if (data.series.length > 1 && options.legend !== false) {
+    var lx = w - padding.right;
+    var ly = 12;
+    for (var si = data.series.length - 1; si >= 0; si--) {
+      var s = data.series[si];
+      var color = options.colors[si % options.colors.length];
+      ctx.font = '12px sans-serif';
+      var tw = ctx.measureText(s.name).width;
+      lx -= tw + 30;
+      ctx.fillStyle = color; ctx.fillRect(lx, ly - 4, 12, 3);
+      ctx.fillStyle = '#6b7280'; ctx.fillText(s.name, lx + 16, ly);
+    }
+  }
+}
+
+function drawStackedBarChart(canvas, data, options) {
+  var ctx = canvas.getContext('2d');
+  var w = canvas.width, h = canvas.height;
+  var padding = { top: 40, right: 30, bottom: 40, left: 60 };
+  var plotW = w - padding.left - padding.right;
+  var plotH = h - padding.top - padding.bottom;
+
+  // Max stacked value
+  var maxVal = 0;
+  data.labels.forEach(function(_, i) {
+    var total = 0;
+    data.series.forEach(function(s) { total += s.values[i]; });
+    if (total > maxVal) maxVal = total;
+  });
+  maxVal *= 1.15;
+
+  // Grid
+  ctx.strokeStyle = '#f0f0f0'; ctx.lineWidth = 1;
+  for (var i = 0; i <= 5; i++) {
+    var y = padding.top + plotH * i / 5;
+    ctx.beginPath(); ctx.moveTo(padding.left, y); ctx.lineTo(w - padding.right, y); ctx.stroke();
+    ctx.fillStyle = '#9ca3af'; ctx.font = '11px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(Math.round(maxVal * (1 - i / 5)).toLocaleString(), padding.left - 8, y + 4);
+  }
+
+  var barWidth = (plotW / data.labels.length) * 0.55;
+
+  data.labels.forEach(function(_, i) {
+    var x = padding.left + plotW * i / data.labels.length + (plotW / data.labels.length - barWidth) / 2;
+    var cumulative = 0;
+    data.series.forEach(function(s, si) {
+      var color = options.colors[si % options.colors.length];
+      var v = s.values[i];
+      var barH = (v / maxVal) * plotH;
+      var y = padding.top + plotH - (cumulative + v) / maxVal * plotH;
+      fillRoundRect(ctx, x, y, barWidth, barH, si === data.series.length - 1 ? 4 : 0);
+      ctx.fillStyle = color; ctx.fill();
+      cumulative += v;
+    });
+  });
+
+  // X labels
+  data.labels.forEach(function(label, i) {
+    var x = padding.left + plotW * i / data.labels.length + plotW / data.labels.length / 2;
+    ctx.fillStyle = '#9ca3af'; ctx.font = '11px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(label, x, h - padding.bottom + 20);
+  });
+
+  // Legend
+  var lx = w - padding.right, ly = 12;
+  for (var si = data.series.length - 1; si >= 0; si--) {
+    var s = data.series[si]; var color = options.colors[si % options.colors.length];
+    ctx.font = '12px sans-serif'; var tw = ctx.measureText(s.name).width;
+    lx -= tw + 30;
+    ctx.fillStyle = color; ctx.fillRect(lx, ly - 4, 12, 3);
+    ctx.fillStyle = '#6b7280'; ctx.fillText(s.name, lx + 16, ly);
+  }
+}
+
+function drawHorizontalBarChart(canvas, data, options) {
+  var ctx = canvas.getContext('2d');
+  var w = canvas.width, h = canvas.height;
+  var padding = { top: 20, right: 40, bottom: 30, left: 80 };
+  var plotW = w - padding.left - padding.right;
+  var plotH = h - padding.top - padding.bottom;
+
+  var maxVal = Math.max.apply(null, data.values) * 1.15;
+  var barH = plotH / data.labels.length * 0.6;
+  var gap = plotH / data.labels.length;
+
+  // Grid vertical
+  ctx.strokeStyle = '#f0f0f0'; ctx.lineWidth = 1;
+  for (var i = 0; i <= 5; i++) {
+    var x = padding.left + plotW * i / 5;
+    ctx.beginPath(); ctx.moveTo(x, padding.top); ctx.lineTo(x, h - padding.bottom); ctx.stroke();
+    ctx.fillStyle = '#9ca3af'; ctx.font = '11px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(Math.round(maxVal * i / 5).toLocaleString(), x, h - padding.bottom + 18);
+  }
+
+  data.values.forEach(function(v, i) {
+    var y = padding.top + gap * i + (gap - barH) / 2;
+    var bw = (v / maxVal) * plotW;
+    fillRoundRect(ctx, padding.left, y, bw, barH, 4);
+    ctx.fillStyle = options.colors[i % options.colors.length]; ctx.fill();
+
+    // Value label
+    ctx.fillStyle = '#6b7280'; ctx.font = '12px sans-serif'; ctx.textAlign = 'left';
+    ctx.fillText(v.toLocaleString(), padding.left + bw + 6, y + barH / 2 + 4);
+
+    // Y label
+    ctx.fillStyle = '#6b7280'; ctx.font = '12px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(data.labels[i], padding.left - 8, y + barH / 2 + 4);
+  });
+}
+
+// Card 1 - Basic
+drawBarChart(document.getElementById('c1'), {
+  labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
+  series: [{ name: '销售额', values: [3200, 2800, 4500, 3900, 5200, 4800] }]
+}, { colors: colors });
+
+// Card 2 - Grouped
+drawBarChart(document.getElementById('c2'), {
+  labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
+  series: [
+    { name: '线上', values: [2200, 1900, 3100, 2700, 3600, 3300] },
+    { name: '线下', values: [1000, 900, 1400, 1200, 1600, 1500] }
+  ]
+}, { colors: colors });
+
+// Card 3 - Stacked
+drawStackedBarChart(document.getElementById('c3'), {
+  labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
+  series: [
+    { name: '产品 A', values: [2000, 1800, 2800, 2400, 3200, 2900] },
+    { name: '产品 B', values: [1200, 1000, 1700, 1500, 2000, 1900] }
+  ]
+}, { colors: colors });
+
+// Card 4 - Horizontal
+drawHorizontalBarChart(document.getElementById('c4'), {
+  labels: ['JavaScript', 'Python', 'Java', 'Go', 'Rust', 'TypeScript'],
+  values: [9200, 7800, 6500, 4300, 3100, 8600]
+}, { colors: colors });
+</script>
+</body>
+</html>

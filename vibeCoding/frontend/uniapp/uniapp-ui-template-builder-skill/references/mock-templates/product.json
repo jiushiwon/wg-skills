@@ -1,0 +1,126 @@
+{
+  "name": "商品相关Mock",
+  "description": "商品模块Mock数据模板，包含商品信息、分类、评价等",
+  "filename": "product.json",
+  "structure": {
+    "product": {
+      "id": "商品ID",
+      "name": "商品名称",
+      "subtitle": "副标题",
+      "categoryId": "分类ID",
+      "categoryName": "分类名称",
+      "price": "售价",
+      "originalPrice": "原价",
+      "costPrice": "成本价",
+      "stock": "库存",
+      "sales": "销量",
+      "images": "图片列表",
+      "detail": "详情内容",
+      "tags": "标签",
+      "rating": "评分",
+      "ratingCount": "评价数",
+      "status": "状态: 0上架/1下架"
+    },
+    "category": {
+      "id": "分类ID",
+      "name": "分类名称",
+      "icon": "图标",
+      "parentId": "父分类ID",
+      "sort": "排序"
+    },
+    "sku": {
+      "id": "SKU ID",
+      "productId": "商品ID",
+      "specs": "规格详情",
+      "price": "价格",
+      "stock": "库存",
+      "image": "图片"
+    },
+    "rating": {
+      "id": "评价ID",
+      "productId": "商品ID",
+      "userId": "用户ID",
+      "userName": "用户名",
+      "avatar": "头像",
+      "score": "评分1-5",
+      "content": "评价内容",
+      "images": "评价图片",
+      "reply": "商家回复",
+      "createTime": "评价时间"
+    }
+  },
+  "example": {
+    "products": [
+      {
+        "id": "p001",
+        "name": "iPhone 15 Pro Max 256GB",
+        "subtitle": "A17 Pro芯片，钛金属设计",
+        "categoryId": "c001",
+        "categoryName": "手机通讯",
+        "price": 9999,
+        "originalPrice": 10999,
+        "stock": 99,
+        "sales": 1000,
+        "images": [
+          "https://picsum.photos/750/750?random=1",
+          "https://picsum.photos/750/750?random=2"
+        ],
+        "tags": ["热销", "新品", "分期免息"],
+        "rating": 4.8,
+        "ratingCount": 500,
+        "status": 0
+      }
+    ],
+    "categories": [
+      {
+        "id": "c001",
+        "name": "手机通讯",
+        "icon": "https://via.placeholder.com/48",
+        "parentId": "0",
+        "sort": 1
+      },
+      {
+        "id": "c002",
+        "name": "电脑办公",
+        "icon": "https://via.placeholder.com/48",
+        "parentId": "0",
+        "sort": 2
+      }
+    ],
+    "skus": [
+      {
+        "id": "s001",
+        "productId": "p001",
+        "specs": [
+          { "name": "颜色", "value": "原色钛金属" },
+          { "name": "容量", "value": "256GB" }
+        ],
+        "price": 9999,
+        "stock": 50
+      }
+    ],
+    "ratings": [
+      {
+        "id": "r001",
+        "productId": "p001",
+        "userName": "用户***1",
+        "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=user1",
+        "score": 5,
+        "content": "手机非常好用，拍照清晰，运行流畅！",
+        "images": [
+          "https://picsum.photos/200/200?random=3"
+        ],
+        "reply": "感谢您的支持，我们会继续努力！",
+        "createTime": "2024-01-15 10:30:00"
+      }
+    ]
+  },
+  "states": {
+    "normal": "10-20条商品数据",
+    "empty": "空数组",
+    "loading": "延迟500ms响应",
+    "error": "返回错误码500",
+    "noStock": "库存为0的商品",
+    "offShelf": "已下架商品"
+  }
+}

@@ -1,0 +1,26 @@
+// 卡片类组件
+
+// 基础卡片
+.card-basic {
+  background: var(--bg-primary, #fff);
+  border-radius: var(--radius-md, 10px);
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+// 高海拔卡片
+.card-elevated {
+  background: var(--bg-primary, #fff);
+  border-radius: var(--radius-md, 10px);
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+// 玻璃拟态卡片
+.card-glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-md, 10px);
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}

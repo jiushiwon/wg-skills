@@ -1,0 +1,23 @@
+{
+  "name": "组件名",
+  "title": "组件中文名",
+  "category": "navigation|list|form|feedback|business|custom",
+  "description": "组件描述",
+  "aliases": ["别名1", "别名2"],
+  "props": [
+    {
+      "name": "className",
+      "type": "string",
+      "default": "",
+      "desc": "自定义class"
+    },
+    {
+      "name": "style",
+      "type": "object",
+      "default": {},
+      "desc": "内联样式"
+    }
+  ],
+  "events": [],
+  "slots": ["default"]
+}

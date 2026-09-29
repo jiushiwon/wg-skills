@@ -1,0 +1,20 @@
+{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "title": "数据大屏",
+    "updateTime": "2024-01-15 14:30:00",
+    "stats": [
+      { "label": "今日访问", "value": "12,856", "trend": "+12.5%", "color": "cyan" },
+      { "label": "注册用户", "value": "8,432", "trend": "+8.2%", "color": "green" },
+      { "label": "订单总量", "value": "3,652", "trend": "-2.1%", "color": "purple" },
+      { "label": "总收入", "value": "¥128,560", "trend": "+18.6%", "color": "yellow" }
+    ],
+    "chartData": [35, 52, 48, 65, 72, 58, 80],
+    "pieData": [
+      { "label": "移动端", "value": 45 },
+      { "label": "PC端", "value": 30 },
+      { "label": "小程序", "value": 25 }
+    ]
+  }
+}

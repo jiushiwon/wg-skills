@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BaseDatePicker 展示</title>
+  <style>
+    /* CSS Variables - 对齐 vue-theme-skill */
+    :root {
+      --color-primary: #409eff;
+      --color-primary-light: #a0cfff;
+      --color-bg-secondary: #f5f7fa;
+      --color-surface: #ffffff;
+      --color-border: #dcdfe6;
+      --color-text: #303133;
+      --color-text-secondary: #909399;
+      --color-text-tertiary: #c0c4cc;
+      --height-input-md: 36px;
+      --radius-md: 4px;
+      --font-base: 14px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--color-bg-secondary); min-height: 100vh; padding: 40px; }
+    .demo-container { max-width: 900px; margin: 0 auto; }
+    .demo-title { font-size: 24px; font-weight: 600; color: var(--color-text); margin-bottom: 24px; }
+    .demo-section { background: var(--color-surface); border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .demo-section-title { font-size: 16px; font-weight: 600; color: var(--color-text); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--color-border); }
+    .demo-row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+    .demo-label { width: 80px; font-size: var(--font-base); color: var(--color-text); flex-shrink: 0; }
+
+    .base-datepicker { position: relative; display: inline-block; width: 240px; cursor: pointer; }
+    .base-datepicker.is-disabled { cursor: not-allowed; opacity: 0.6; }
+    .base-datepicker__trigger { display: flex; align-items: center; justify-content: space-between; height: var(--height-input-md); padding: 0 12px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); transition: all 0.2s; }
+    .base-datepicker:hover .base-datepicker__trigger { border-color: var(--color-text-tertiary); }
+    .base-datepicker.is-opened .base-datepicker__trigger { border-color: var(--color-primary); box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.1); }
+    .base-datepicker__placeholder { color: var(--color-text-tertiary); }
+    .base-datepicker__value { color: var(--color-text); font-size: var(--font-base); }
+    .base-datepicker__icon { color: var(--color-text-tertiary); font-size: var(--font-base); }
+    .base-datepicker__clear { margin-right: 8px; }
+    .base-datepicker__clear:hover { color: var(--color-primary); }
+    .base-datepicker__dropdown { display: none; position: absolute; top: 100%; left: 0; margin-top: 4px; padding: 12px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1); z-index: 100; }
+    .base-datepicker.is-opened .base-datepicker__dropdown { display: block; }
+
+    .base-datepicker__shortcuts { display: flex; gap: 8px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--color-border); }
+    .base-datepicker__shortcut { padding: 4px 10px; font-size: 12px; color: var(--color-primary); background: #ecf5ff; border-radius: var(--radius-md); cursor: pointer; }
+    .base-datepicker__shortcut:hover { background: var(--color-primary-light); }
+
+    .base-datepicker__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .base-datepicker__nav { width: 24px; height: 24px; border: none; background: none; cursor: pointer; color: var(--color-text); border-radius: var(--radius-md); }
+    .base-datepicker__nav:hover { background: var(--color-bg-secondary); }
+    .base-datepicker__current { font-size: var(--font-base); font-weight: 500; color: var(--color-text); }
+
+    .base-datepicker__week { display: grid; grid-template-columns: repeat(7, 32px); margin-bottom: 8px; }
+    .base-datepicker__week span { width: 32px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--color-text-secondary); }
+
+    .base-datepicker__days { display: grid; grid-template-columns: repeat(7, 32px); gap: 2px; }
+    .base-datepicker__day { width: 32px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--color-text); cursor: pointer; border-radius: var(--radius-md); transition: all 0.15s; }
+    .base-datepicker__day:hover:not(.is-disabled) { background: var(--color-bg-secondary); }
+    .base-datepicker__day.is-other-month { color: var(--color-text-tertiary); }
+    .base-datepicker__day.is-today { color: var(--color-primary); font-weight: bold; }
+    .base-datepicker__day.is-selected { background: var(--color-primary) !important; color: #fff !important; }
+    .base-datepicker__day.is-in-range { background: #ecf5ff; }
+    .base-datepicker__day.is-disabled { color: var(--color-text-tertiary); cursor: not-allowed; }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    <h1 class="demo-title">BaseDatePicker 日期选择器</h1>
+
+    <div class="demo-section">
+      <h3 class="demo-section-title">日期选择</h3>
+      <div class="demo-row">
+        <span class="demo-label">基本</span>
+        <div class="base-datepicker" id="datepicker1" onclick="toggleDatepicker(this)">
+          <div class="base-datepicker__trigger">
+            <span class="base-datepicker__placeholder">请选择日期</span>
+            <svg class="base-datepicker__icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
+          </div>
+          <div class="base-datepicker__dropdown">
+            <div class="base-datepicker__shortcuts">
+              <span class="base-datepicker__shortcut" onclick="setToday()">今天</span>
+              <span class="base-datepicker__shortcut" onclick="setYesterday()">昨天</span>
+            </div>
+            <div class="base-datepicker__header">
+              <button class="base-datepicker__nav" onclick="prevMonth()"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></button>
+              <span class="base-datepicker__current" id="month-label">2024年1月</span>
+              <button class="base-datepicker__nav" onclick="nextMonth()"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></button>
+            </div>
+            <div class="base-datepicker__week">
+              <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+            </div>
+            <div class="base-datepicker__days" id="calendar-days"></div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-row">
+        <span class="demo-label">选中值</span>
+        <span id="datepicker1-value" style="color: var(--color-primary); font-size: var(--font-base);"></span>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h3 class="demo-section-title">范围选择</h3>
+      <div class="demo-row">
+        <span class="demo-label">范围</span>
+        <div class="base-datepicker" id="datepicker2" onclick="toggleDatepicker(this)">
+          <div class="base-datepicker__trigger">
+            <span class="base-datepicker__placeholder">开始日期 - 结束日期</span>
+            <svg class="base-datepicker__icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h3 class="demo-section-title">禁用状态</h3>
+      <div class="demo-row">
+        <span class="demo-label">禁用</span>
+        <div class="base-datepicker is-disabled">
+          <div class="base-datepicker__trigger">
+            <span class="base-datepicker__value">2024-01-15</span>
+            <svg class="base-datepicker__icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentDatepicker = null;
+    let currentMonth = new Date(2024, 0, 1);
+    let selectedDate = null;
+    const today = new Date();
+
+    function toggleDatepicker(el) {
+      event.stopPropagation();
+      if (currentDatepicker && currentDatepicker !== el) {
+        currentDatepicker.classList.remove('is-opened');
+      }
+      el.classList.toggle('is-opened');
+      currentDatepicker = el.classList.contains('is-opened') ? el : null;
+      if (currentDatepicker) { renderCalendar(); }
+    }
+
+    function renderCalendar() {
+      const year = currentMonth.getFullYear();
+      const month = currentMonth.getMonth();
+      document.getElementById('month-label').textContent = `${year}年${month + 1}月`;
+
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+      const days = [];
+      const firstWeekDay = firstDay.getDay();
+
+      for (let i = firstWeekDay - 1; i >= 0; i--) { days.push(new Date(year, month, -i)); }
+      for (let i = 1; i <= lastDay.getDate(); i++) { days.push(new Date(year, month, i)); }
+      for (let i = 1; i <= 42 - days.length; i++) { days.push(new Date(year, month + 1, i)); }
+
+      let html = '';
+      days.forEach(d => {
+        const isOtherMonth = d.getMonth() !== month;
+        const isToday = d.getFullYear() === today.getFullYear() && d.getMonth() === today.getMonth() && d.getDate() === today.getDate();
+        const isSelected = selectedDate && d.getFullYear() === selectedDate.getFullYear() && d.getMonth() === selectedDate.getMonth() && d.getDate() === selectedDate.getDate();
+        html += `<div class="base-datepicker__day ${isOtherMonth ? 'is-other-month' : ''} ${isToday ? 'is-today' : ''} ${isSelected ? 'is-selected' : ''}" onclick="selectDate(${d.getFullYear()}, ${d.getMonth()}, ${d.getDate()})">${d.getDate()}</div>`;
+      });
+      document.getElementById('calendar-days').innerHTML = html;
+    }
+
+    function selectDate(y, m, d) {
+      selectedDate = new Date(y, m, d);
+      const value = `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+      const trigger = currentDatepicker.querySelector('.base-datepicker__trigger');
+      trigger.querySelector('.base-datepicker__placeholder').textContent = value;
+      trigger.querySelector('.base-datepicker__placeholder').classList.remove('base-datepicker__placeholder');
+      trigger.querySelector('.base-datepicker__value') || trigger.insertAdjacentHTML('afterbegin', '<span class="base-datepicker__value"></span>');
+      trigger.querySelector('.base-datepicker__value').textContent = value;
+      currentDatepicker.classList.remove('is-opened');
+      document.getElementById('datepicker1-value').textContent = value;
+    }
+
+    function prevMonth() { currentMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1); renderCalendar(); }
+    function nextMonth() { currentMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1); renderCalendar(); }
+    function setToday() { selectDate(today.getFullYear(), today.getMonth(), today.getDate()); }
+    function setYesterday() { const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1); selectDate(yesterday.getFullYear(), yesterday.getMonth(), yesterday.getDate()); }
+
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.base-datepicker.is-opened').forEach(el => el.classList.remove('is-opened'));
+      currentDatepicker = null;
+    });
+  </script>
+</body>
+</html>

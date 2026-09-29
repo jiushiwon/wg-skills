@@ -42,3 +42,6 @@ target/
 
 # 工作区
 .worktrees/
+
+# 本地文档沉淀（按 AGENTS.md 第十一节）
+docs/

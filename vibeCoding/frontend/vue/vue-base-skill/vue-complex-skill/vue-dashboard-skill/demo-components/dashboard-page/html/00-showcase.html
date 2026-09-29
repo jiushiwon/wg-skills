@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vue3 Dashboard Skill — 风格画廊</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0f1a;
+      color: #e2e8f0;
+      min-height: 100vh;
+    }
+
+    /* ---- Hero ---- */
+    .hero {
+      text-align: center;
+      padding: 80px 24px 60px;
+      background: linear-gradient(135deg, #0a0f1a 0%, #04143d 50%, #0a0f1a 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(rgba(0, 212, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 212, 255, 0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, #00d4ff, #8b5cf6, #00f0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+    }
+    .hero p {
+      font-size: 18px;
+      color: #94a3b8;
+      margin-top: 12px;
+      position: relative;
+    }
+    .hero .badge {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      background: rgba(139, 92, 246, 0.15);
+      color: #a78bfa;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      position: relative;
+    }
+
+    /* ---- Grid ---- */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* ---- Card ---- */
+    .card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+
+    /* ---- Preview ---- */
+    .preview {
+      height: 200px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    .preview__header {
+      height: 12px;
+      border-radius: 6px;
+      width: 60%;
+      opacity: 0.6;
+    }
+    .preview__kpi-row {
+      display: flex;
+      gap: 6px;
+    }
+    .preview__kpi {
+      flex: 1;
+      height: 32px;
+      border-radius: 6px;
+      opacity: 0.4;
+    }
+    .preview__body {
+      display: flex;
+      gap: 6px;
+      flex: 1;
+    }
+    .preview__chart {
+      flex: 2;
+      border-radius: 6px;
+      opacity: 0.3;
+    }
+    .preview__side {
+      flex: 1;
+      border-radius: 6px;
+      opacity: 0.25;
+    }
+    .preview__table {
+      height: 40px;
+      border-radius: 6px;
+      opacity: 0.2;
+    }
+
+    /* ---- Info ---- */
+    .info {
+      padding: 20px 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .info__num {
+      font-size: 12px;
+      font-weight: 700;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+    .info__name {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .info__desc {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-bottom: 12px;
+    }
+    .info__link {
+      display: inline-block;
+      font-size: 13px;
+      color: #00d4ff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .info__link:hover {
+      text-decoration: underline;
+    }
+
+    /* ---- Variant Previews ---- */
+    .preview--classic { background: #f5f7fa; }
+    .preview--classic .preview__header { background: #1890ff; }
+    .preview--classic .preview__kpi { background: #e6f4ff; border: 1px solid #bae0ff; }
+    .preview--classic .preview__chart { background: #fff; border: 1px solid #e8e8e8; }
+    .preview--classic .preview__side { background: #fff; border: 1px solid #e8e8e8; }
+    .preview--classic .preview__table { background: #fff; border: 1px solid #e8e8e8; }
+
+    .preview--dark { background: linear-gradient(135deg, #0a0f1a, #0d1424); }
+    .preview--dark .preview__header { background: #00f0ff; box-shadow: 0 0 8px rgba(0,240,255,0.4); }
+    .preview--dark .preview__kpi { background: rgba(0,240,255,0.08); border: 1px solid rgba(0,240,255,0.2); }
+    .preview--dark .preview__chart { background: rgba(17,24,39,0.8); border: 1px solid #1f2937; }
+    .preview--dark .preview__side { background: rgba(17,24,39,0.8); border: 1px solid #1f2937; }
+    .preview--dark .preview__table { background: rgba(17,24,39,0.8); border: 1px solid #1f2937; }
+
+    .preview--minimal { background: #fff; }
+    .preview--minimal .preview__header { background: #111827; }
+    .preview--minimal .preview__kpi { background: transparent; border-bottom: 1px solid #f3f4f6; border-radius: 0; }
+    .preview--minimal .preview__chart { background: transparent; border-bottom: 1px solid #f3f4f6; }
+    .preview--minimal .preview__side { background: transparent; border-bottom: 1px solid #f3f4f6; }
+    .preview--minimal .preview__table { background: transparent; border-bottom: 1px solid #f3f4f6; }
+
+    .preview--bigscreen { background: #04143d; }
+    .preview--bigscreen .preview__header { background: #00d4ff; }
+    .preview--bigscreen .preview__kpi { background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.2); }
+    .preview--bigscreen .preview__chart { background: rgba(4,30,80,0.6); border: 1px solid rgba(0,212,255,0.15); }
+    .preview--bigscreen .preview__side { background: rgba(4,30,80,0.6); border: 1px solid rgba(0,212,255,0.15); }
+    .preview--bigscreen .preview__table { background: rgba(4,30,80,0.6); border: 1px solid rgba(0,212,255,0.15); }
+
+    .preview--glass { background: linear-gradient(135deg, #0f0f23, #1a1a3e); }
+    .preview--glass .preview__header { background: #8b5cf6; }
+    .preview--glass .preview__kpi { background: rgba(139,92,246,0.08); border: 1px solid rgba(139,92,246,0.2); backdrop-filter: blur(10px); }
+    .preview--glass .preview__chart { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(10px); }
+    .preview--glass .preview__side { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(10px); }
+    .preview--glass .preview__table { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); }
+
+    .preview--compact { background: #fafafa; }
+    .preview--compact .preview__header { background: #1890ff; height: 8px; }
+    .preview--compact .preview__kpi-row { gap: 3px; }
+    .preview--compact .preview__kpi { height: 24px; background: #e6f4ff; border: 1px solid #bae0ff; }
+    .preview--compact .preview__body { gap: 3px; }
+    .preview--compact .preview__chart { background: #fff; border: 1px solid #e8e8e8; }
+    .preview--compact .preview__side { background: #fff; border: 1px solid #e8e8e8; }
+    .preview--compact .preview__table { background: #fff; border: 1px solid #e8e8e8; height: 32px; }
+
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <div class="hero" role="region">
+    <h1>Vue3 Dashboard Skill</h1>
+    <p>6 大业务场景：财务 · 教务 · 小区物业 · 企业 · 物流 · 商城</p>
+    <span class="badge">variant × layout × content</span>
+  </div><!-- /region -->
+
+  <!-- Grid -->
+  <div class="grid" role="region">
+
+    <!-- 01 Classic：标准流式布局 -->
+    <a class="card" href="01-classic.html">
+      <div class="preview preview--classic" style="flex-direction:column;gap:6px;padding:12px">
+        <div class="preview__header" style="width:60%;height:10px"></div>
+        <div class="preview__kpi-row"><div class="preview__kpi"></div><div class="preview__kpi"></div><div class="preview__kpi"></div></div>
+        <div class="preview__body"><div class="preview__chart"></div><div class="preview__side"></div></div>
+        <div class="preview__table"></div>
+      </div>
+      <div class="info">
+        <div class="info__num">01</div>
+        <div class="info__name">财务</div>
+        <div class="info__desc">标准流式 · KPI + 营收趋势 + 部门收支 + 费用分布 + 预算执行 + 订单表格 + 排行 + 应收账款 + 待办审批</div>
+        <span class="info__link">查看 Demo &rarr;</span>
+      </div>
+    </a>
+
+    <!-- 02 Dark：多面板监控布局 -->
+    <a class="card" href="02-dark.html">
+      <div class="preview preview--dark" style="flex-direction:column;gap:4px">
+        <div class="preview__kpi-row" style="gap:3px"><div class="preview__kpi" style="height:24px"></div><div class="preview__kpi" style="height:24px"></div><div class="preview__kpi" style="height:24px"></div><div class="preview__kpi" style="height:24px"></div></div>
+        <div style="display:flex;gap:4px;flex:1">
+          <div style="flex:1;display:flex;flex-direction:column;gap:4px">
+            <div class="preview__chart" style="flex:2"></div>
+            <div class="preview__side" style="flex:1"></div>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:4px">
+            <div class="preview__table" style="flex:2"></div>
+            <div class="preview__side" style="flex:1"></div>
+          </div>
+        </div>
+      </div>
+      <div class="info">
+        <div class="info__num">02</div>
+        <div class="info__name">教务</div>
+        <div class="info__desc">KPI 通栏 + 左右面板 · 折线图 + 班级管理 + 成绩分布 + 教师概览 + 教学资产 + 告警</div>
+        <span class="info__link">查看 Demo &rarr;</span>
+      </div>
+    </a>
+
+    <!-- 03 Minimal：单列流式布局 -->
+    <a class="card" href="03-minimal.html">
+      <div class="preview preview--minimal" style="align-items:center;padding:12px 24px">
+        <div class="preview__header" style="width:40%;height:10px"></div>
+        <div class="preview__kpi-row" style="width:80%"><div class="preview__kpi" style="height:28px"></div><div class="preview__kpi" style="height:28px"></div></div>
+        <div class="preview__chart" style="width:80%;flex:none;height:40px"></div>
+        <div class="preview__table" style="width:80%"></div>
+        <div class="preview__side" style="width:80%;flex:none;height:30px"></div>
+      </div>
+      <div class="info">
+        <div class="info__num">03</div>
+        <div class="info__name">小区物业</div>
+        <div class="info__desc">居中单列 · 环形图 + 报修漏斗 + 关键指标 + 缴费排行 + 服务动态 + 设施维护</div>
+        <span class="info__link">查看 Demo &rarr;</span>
+      </div>
+    </a>
+
+    <!-- 04 Bigscreen：左中右三栏大屏 -->
+    <a class="card" href="04-bigscreen.html">
+      <div class="preview preview--bigscreen" style="flex-direction:column;gap:0">
+        <div class="preview__header" style="width:100%;height:16px;margin:0;border-radius:4px 4px 0 0"></div>
+        <div style="display:flex;flex:1;gap:0">
+          <div style="width:22%;display:flex;flex-direction:column;gap:3px;padding:6px 4px">
+            <div class="preview__kpi" style="height:20px"></div><div class="preview__kpi" style="height:20px"></div><div class="preview__kpi" style="height:20px"></div><div class="preview__kpi" style="height:20px"></div>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:3px;padding:6px 4px;border-left:1px solid rgba(0,212,255,0.15);border-right:1px solid rgba(0,212,255,0.15)">
+            <div class="preview__chart" style="flex:2"></div>
+            <div class="preview__table" style="flex:1"></div>
+          </div>
+          <div style="width:25%;display:flex;flex-direction:column;gap:3px;padding:6px 4px">
+            <div class="preview__side" style="flex:1"></div>
+            <div class="preview__side" style="flex:1"></div>
+          </div>
+        </div>
+      </div>
+      <div class="info">
+        <div class="info__num">04</div>
+        <div class="info__name">企业</div>
+        <div class="info__desc">超大数字 KPI + SVG 饼图 + 目标完成率 + 客户留存 + 实时滚动 + 城市/品类双排行</div>
+        <span class="info__link">查看 Demo &rarr;</span>
+      </div>
+    </a>
+
+    <!-- 05 Glass：Bento Grid 自由布局 -->
+    <a class="card" href="05-glass.html">
+      <div class="preview preview--glass" style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto;gap:4px;padding:8px">
+        <div class="preview__kpi" style="height:36px;border-radius:8px"></div>
+        <div class="preview__kpi" style="height:36px;border-radius:8px"></div>
+        <div class="preview__kpi" style="height:36px;border-radius:8px"></div>
+        <div class="preview__kpi" style="height:36px;border-radius:8px"></div>
+        <div class="preview__chart" style="grid-column:1/3;height:50px;border-radius:8px"></div>
+        <div class="preview__side" style="grid-column:1/3;height:36px;border-radius:8px"></div>
+      </div>
+      <div class="info">
+        <div class="info__num">05</div>
+        <div class="info__name">物流</div>
+        <div class="info__desc">Bento 网格 · 包裹量趋势 + 指标达成率 + 区域同比 + 月度明细 + 告警 + 网点状态</div>
+        <span class="info__link">查看 Demo &rarr;</span>
+      </div>
+    </a>
+
+    <!-- 06 Compact：4 区均分网格 -->
+    <a class="card" href="06-compact.html">
+      <div class="preview preview--compact" style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:3px;padding:6px">
+        <div style="background:#f0f5ff;border:1px solid #bae0ff;border-radius:4px;padding:4px;display:grid;grid-template-columns:repeat(3,1fr);gap:2px">
+          <div style="background:#e6f4ff;height:12px;border-radius:2px"></div>
+          <div style="background:#e6f4ff;height:12px;border-radius:2px"></div>
+          <div style="background:#e6f4ff;height:12px;border-radius:2px"></div>
+          <div style="background:#e6f4ff;height:12px;border-radius:2px"></div>
+          <div style="background:#e6f4ff;height:12px;border-radius:2px"></div>
+          <div style="background:#e6f4ff;height:12px;border-radius:2px"></div>
+        </div>
+        <div class="preview__chart" style="border-radius:4px"></div>
+        <div class="preview__table" style="border-radius:4px"></div>
+        <div class="preview__side" style="border-radius:4px"></div>
+      </div>
+      <div class="info">
+        <div class="info__num">06</div>
+        <div class="info__name">商城</div>
+        <div class="info__desc">2×2 网格 · 迷你 KPI + sparkline + 订单表格 + 热销排行 + 库存预警 + 服务健康</div>
+        <span class="info__link">查看 Demo &rarr;</span>
+      </div>
+    </a>
+
+  </div><!-- /region -->
+
+</body>
+</html>

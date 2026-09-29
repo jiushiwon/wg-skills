@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login / 10 - 极简风格</title>
+  <link rel="stylesheet" href="../../shared/demo.css" />
+  <style>
+    .login-page--minimal {
+      min-height: 100vh;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px;
+    }
+
+    /* 极简卡片 */
+    .login-card--minimal {
+      background: #fff;
+      border: none;
+      box-shadow: none;
+      padding: 48px 0;
+      width: 360px;
+    }
+
+    .login-card--minimal .login-logo {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .login-card--minimal .login-logo__text {
+      font-size: 24px;
+      font-weight: 300;
+      letter-spacing: 8px;
+      color: #333;
+    }
+
+    .login-card--minimal .login-form__group {
+      margin-bottom: 24px;
+    }
+
+    .login-card--minimal .login-form__label {
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #999;
+      margin-bottom: 8px;
+    }
+
+    .login-card--minimal .login-input {
+      border: none;
+      border-bottom: 1px solid #e0e0e0;
+      border-radius: 0;
+      padding: 12px 0;
+      font-size: 16px;
+      color: #333;
+      background: transparent;
+    }
+
+    .login-card--minimal .login-input:focus {
+      border-bottom-color: #333;
+      box-shadow: none;
+    }
+
+    .login-card--minimal .login-input::placeholder {
+      color: #ccc;
+    }
+
+    .login-card--minimal .login-button {
+      background: #333;
+      border-radius: 4px;
+      height: 48px;
+      margin-top: 24px;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 2px;
+    }
+
+    .login-card--minimal .login-button:hover {
+      background: #555;
+    }
+
+    .login-card--minimal .login-footer {
+      text-align: center;
+      margin-top: 32px;
+    }
+
+    .login-card--minimal .login-link {
+      color: #666;
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    .login-card--minimal .login-link:hover {
+      color: #333;
+    }
+
+    /* 底部链接 */
+    .login-bottom {
+      position: fixed;
+      bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: #999;
+    }
+
+    .login-bottom a {
+      color: #666;
+      text-decoration: none;
+    }
+
+    .login-bottom a:hover {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-page login-page--minimal">
+    <div class="login-card--minimal">
+      <div class="login-logo">
+        <div class="login-logo__text">LOGO</div>
+      </div>
+
+      <form class="login-form" onsubmit="return handleSubmit(event)">
+        <div class="login-form__group">
+          <label class="login-form__label">邮箱</label>
+          <input type="email" class="login-input" placeholder="your@email.com" required />
+        </div>
+
+        <div class="login-form__group">
+          <label class="login-form__label">密码</label>
+          <input type="password" class="login-input" placeholder="请输入密码" required />
+        </div>
+
+        <button type="submit" class="login-button">登 录</button>
+      </form>
+
+      <div class="login-footer">
+        <a href="#" class="login-link">还没有账户？立即注册</a>
+      </div>
+    </div>
+
+    <div class="login-bottom">
+      <a href="#">帮助中心</a>
+      <span>·</span>
+      <a href="#">隐私政策</a>
+      <span>·</span>
+      <a href="#">服务条款</a>
+    </div>
+  </div>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault()
+      alert('登录成功！（Demo）')
+      return false
+    }
+  </script>
+</body>
+</html>

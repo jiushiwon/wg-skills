@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>Vue3 Login Skill - 8 种风格画廊</title>
+  <link rel="stylesheet" href="../../shared/demo.css" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #f5f7fa;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+    }
+
+    /* 顶部 */
+    .hero {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+      padding: 80px 48px 60px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .hero__title {
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .hero__subtitle {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .hero__meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 999px;
+      font-size: 14px;
+      backdrop-filter: blur(8px);
+    }
+
+    /* 画廊网格 */
+    .gallery {
+      max-width: 1400px;
+      margin: -40px auto 0;
+      padding: 0 48px 80px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 32px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    /* 缩略图（纯 CSS 模拟）*/
+    .card__preview {
+      height: 220px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card__preview-inner {
+      width: 240px;
+      height: 160px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .card__preview-inner input {
+      height: 16px;
+      background: #e5e7eb;
+      border-radius: 3px;
+      padding: 0 8px;
+      font-size: 8px;
+      color: #9ca3af;
+    }
+
+    .card__preview-inner button {
+      height: 22px;
+      background: #6366f1;
+      border-radius: 3px;
+      color: #fff;
+      font-size: 9px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 1. 毛玻璃 */
+    .preview--frosted {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .preview--frosted .card__preview-inner {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .preview--frosted .card__preview-inner input,
+    .preview--frosted .card__preview-inner button {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+    .preview--frosted .card__preview-inner button {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* 2. 粒子 */
+    .preview--particles {
+      background: #0f172a;
+    }
+    .preview--particles::before,
+    .preview--particles::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(99, 102, 241, 0.6);
+    }
+    .preview--particles::before {
+      width: 4px;
+      height: 4px;
+      top: 30%;
+      left: 25%;
+      box-shadow:
+        80px 40px 0 rgba(139, 92, 246, 0.6),
+        -60px 60px 0 rgba(236, 72, 153, 0.6),
+        100px -20px 0 rgba(99, 102, 241, 0.6);
+    }
+    .preview--particles .card__preview-inner {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+    }
+    .preview--particles .card__preview-inner input,
+    .preview--particles .card__preview-inner button {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      color: #c7d2fe;
+    }
+
+    /* 3. 翻转 */
+    .preview--flip {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .preview--flip .card__preview-inner {
+      transform: rotateY(15deg);
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    /* 4. 分屏 */
+    .preview--split {
+      background: #fff;
+      display: flex;
+      padding: 0;
+    }
+    .preview--split::before {
+      content: '';
+      flex: 1;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .preview--split .card__preview-inner {
+      width: auto;
+      flex: 1;
+      height: auto;
+      box-shadow: none;
+      background: transparent;
+    }
+
+    /* 5. 暗黑 */
+    .preview--dark {
+      background: #0a0a0f;
+    }
+    .preview--dark .card__preview-inner {
+      background: rgba(10, 10, 15, 0.9);
+      border: 1px solid rgba(0, 255, 255, 0.3);
+    }
+    .preview--dark .card__preview-inner input,
+    .preview--dark .card__preview-inner button {
+      background: rgba(0, 255, 255, 0.05);
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      color: #0ff;
+    }
+    .preview--dark .card__preview-inner button {
+      background: transparent;
+    }
+
+    /* 6. 极简 */
+    .preview--minimal {
+      background: #fff;
+    }
+    .preview--minimal .card__preview-inner {
+      box-shadow: none;
+      border: none;
+      padding: 24px 8px;
+    }
+    .preview--minimal .card__preview-inner input {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid #e0e0e0;
+      border-radius: 0;
+    }
+    .preview--minimal .card__preview-inner button {
+      background: #1a1a2e;
+    }
+
+    /* 7. 打字机 */
+    .preview--typewriter {
+      background: #0d1117;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .preview--typewriter::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 24px;
+      background: #21262d;
+      border-bottom: 1px solid #30363d;
+    }
+    .preview--typewriter::after {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 12px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #f85149;
+      box-shadow:
+        14px 0 0 #d29922,
+        28px 0 0 #3fb950;
+    }
+    .preview--typewriter .card__preview-inner {
+      background: #161b22;
+      border: 1px solid #30363d;
+      margin-top: 16px;
+    }
+    .preview--typewriter .card__preview-inner input,
+    .preview--typewriter .card__preview-inner button {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      color: #c9d1d9;
+      font-family: inherit;
+    }
+    .preview--typewriter .card__preview-inner button {
+      background: #238636;
+      color: #fff;
+    }
+
+    /* 8. 品牌分屏 */
+    .preview--splitpro {
+      background: #e8e0d0;
+      display: flex;
+      padding: 0;
+    }
+    .preview--splitpro::before {
+      content: '';
+      flex: 1.2;
+      background: linear-gradient(135deg, #1a1a3e 0%, #3d2e6e 100%);
+    }
+    .preview--splitpro .card__preview-inner {
+      width: auto;
+      flex: 1;
+      height: auto;
+      box-shadow: none;
+      background: #fff;
+      border-radius: 6px;
+    }
+
+    /* 9. 拼图 */
+    .preview--puzzle {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+    }
+    .preview--puzzle::after {
+      content: '';
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 24px;
+      background: #f3f4f6;
+      border-radius: 12px;
+      box-shadow: inset 0 0 0 9999px rgba(0, 0, 0, 0.05);
+    }
+    .preview--puzzle::before {
+      content: '';
+      position: absolute;
+      bottom: 34px;
+      left: calc(50% + 50px);
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      z-index: 10;
+    }
+
+    /* 卡片信息 */
+    .card__info {
+      padding: 20px 24px;
+    }
+
+    .card__number {
+      display: inline-block;
+      padding: 2px 8px;
+      background: #f3f4f6;
+      color: #6b7280;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .card__title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a1a2e;
+      margin-bottom: 6px;
+    }
+
+    .card__desc {
+      font-size: 13px;
+      color: #6b7280;
+      line-height: 1.6;
+    }
+
+    .card__arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 12px;
+      font-size: 13px;
+      color: #6366f1;
+      font-weight: 500;
+    }
+
+    .card__arrow svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      transition: transform 0.2s;
+    }
+
+    .card:hover .card__arrow svg {
+      transform: translateX(4px);
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部 -->
+  <header class="hero">
+    <h1 class="hero__title">Vue3 Login Skill</h1>
+    <p class="hero__subtitle">8 种真正差异化的视觉风格，覆盖高端 SaaS / 后台 / 工具产品</p>
+    <div class="hero__meta">
+      <span>📦 vue-login-skill</span>
+      <span>·</span>
+      <span>vue-base-skill + vue-form-skill</span>
+    </div>
+  </header>
+
+  <!-- 画廊 -->
+  <div class="gallery">
+    <!-- 1. 毛玻璃 -->
+    <a href="01-frosted.html" class="card">
+      <div class="card__preview preview--frosted">
+        <div class="card__preview-inner">
+          <input placeholder="用户名" />
+          <input placeholder="密码" />
+          <button>登录</button>
+        </div>
+      </div>
+      <div class="card__info">
+        <span class="card__number">01 · 默认</span>
+        <h3 class="card__title">毛玻璃登录</h3>
+        <p class="card__desc">backdrop-filter 模糊 + 半透明卡片，经典 frosted glass 效果</p>
+        <span class="card__arrow">查看 Demo <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
+    <!-- 2. 粒子 -->
+    <a href="02-particles.html" class="card">
+      <div class="card__preview preview--particles">
+        <div class="card__preview-inner">
+          <input placeholder="用户名" />
+          <input placeholder="密码" />
+          <button>登录</button>
+        </div>
+      </div>
+      <div class="card__info">
+        <span class="card__number">02 · 动画</span>
+        <h3 class="card__title">粒子背景</h3>
+        <p class="card__desc">Canvas 粒子连线 + 鼠标交互，技术感强</p>
+        <span class="card__arrow">查看 Demo <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
+    <!-- 3. 翻转 -->
+    <a href="03-flip.html" class="card">
+      <div class="card__preview preview--flip">
+        <div class="card__preview-inner">
+          <input placeholder="用户名" />
+          <input placeholder="密码" />
+          <button>登录</button>
+        </div>
+      </div>
+      <div class="card__info">
+        <span class="card__number">03 · 3D</span>
+        <h3 class="card__title">3D 翻转</h3>
+        <p class="card__desc">登录/注册卡片翻转切换，perspective + transform-style</p>
+        <span class="card__arrow">查看 Demo <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
+    <!-- 4. 分屏 -->
+    <a href="04-split.html" class="card">
+      <div class="card__preview preview--split">
+        <div class="card__preview-inner">
+          <input placeholder="用户名" />
+          <input placeholder="密码" />
+          <button>登录</button>
+        </div>
+      </div>
+      <div class="card__info">
+        <span class="card__number">04 · 分屏</span>
+        <h3 class="card__title">分屏登录</h3>
+        <p class="card__desc">左品牌右表单经典布局，flex 1:1 分配</p>
+        <span class="card__arrow">查看 Demo <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
+    <!-- 5. 暗黑 -->
+    <a href="05-dark.html" class="card">
+      <div class="card__preview preview--dark">
+        <div class="card__preview-inner">
+          <input placeholder="USER" />
+          <input placeholder="PASSWORD" />
+          <button>LOGIN</button>
+        </div>
+      </div>
+      <div class="card__info">
+        <span class="card__number">05 · 科技</span>
+        <h3 class="card__title">暗黑科技</h3>
+        <p class="card__desc">深色系 + 扫描线 + 霓虹光效，开发者向</p>
+        <span class="card__arrow">查看 Demo <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
+    <!-- 6. 极简 -->
+    <a href="06-minimal.html" class="card">
+      <div class="card__preview preview--minimal">
+        <div class="card__preview-inner">
+          <input placeholder="Email" />
+          <input placeholder="Password" />
+          <button>LOGIN</button>
+        </div>
+      </div>
+      <div class="card__info">
+        <span class="card__number">06 · 极简</span>
+        <h3 class="card__title">极简风格</h3>
+        <p class="card__desc">超简洁 + 大量留白，下划线输入框</p>
+        <span class="card__arrow">查看 Demo <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
+    <!-- 7. 打字机 -->
+    <a href="07-typewriter.html" class="card">
+      <div class="card__preview preview--typewriter">
+        <div class="card__preview-inner">
+          <input placeholder="username" />
+          <input placeholder="password" />
+          <button>$ login</button>
+        </div>
+      </div>
+      <div class="card__info">
+        <span class="card__number">07 · 终端</span>
+        <h3 class="card__title">打字机风格</h3>
+        <p class="card__desc">终端 UI + 代码雨 + 打字动画，JetBrains Mono</p>
+        <span class="card__arrow">查看 Demo <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
+    <!-- 8. 品牌分屏 -->
+    <a href="08-split-pro.html" class="card">
+      <div class="card__preview preview--splitpro">
+        <div class="card__preview-inner">
+          <input placeholder="用户名" />
+          <input placeholder="密码" />
+          <button>登录</button>
+        </div>
+      </div>
+      <div class="card__info">
+        <span class="card__number">08 · 落地页</span>
+        <h3 class="card__title">品牌分屏</h3>
+        <p class="card__desc">左侧品牌宣传 + 右侧白色登录卡，SaaS 落地页风格</p>
+        <span class="card__arrow">查看 Demo <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
+    <!-- 9. 拼图 -->
+    <a href="09-puzzle.html" class="card">
+      <div class="card__preview preview--puzzle">
+        <div class="card__preview-inner">
+          <input placeholder="用户名" />
+          <input placeholder="密码" />
+          <button>登录</button>
+        </div>
+      </div>
+      <div class="card__info">
+        <span class="card__number">09 · 反爬虫</span>
+        <h3 class="card__title">滑块拼图</h3>
+        <p class="card__desc">拖动滑块完成拼图验证，clip-path 凸字形 + 拖拽逻辑</p>
+        <span class="card__arrow">查看 Demo <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+  </div>
+</body>
+</html>

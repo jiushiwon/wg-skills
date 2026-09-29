@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>vue-contextmenu-skill · 00 总览（8 形态 + 4 联动场景）</title>
+  <link rel="stylesheet" href="../../shared/tokens.css" />
+  <link rel="stylesheet" href="../../shared/list-item.css" />
+  <link rel="stylesheet" href="../../shared/contextmenu.css" />
+  <link rel="stylesheet" href="../../shared/demo.css" />
+</head>
+<body>
+<div class="page">
+
+  <div class="page-header">
+    <div class="page-header__title">vue-contextmenu-skill · 8 形态 + 4 联动</div>
+    <div class="page-header__desc">
+      菜单项渲染统一收敛到 base-list-item，4 槽位（icon / label / shortcut / divider）<br>
+      实际场景：树节点 / 表格行 / 桌面图标 / 文件浏览器 / 通用任意区域
+    </div>
+  </div>
+
+  <!-- ===== 形态 01 · 基础菜单（点击右键弹出） ===== -->
+  <div class="section">
+    <div class="section__title">
+      <span>形态 01 · 基础菜单（右键空白区）</span>
+      <span class="section__tag">trigger=contextmenu</span>
+    </div>
+    <div class="ctx-host" id="s-basic">右键此区域 → 弹出基础菜单</div>
+  </div>
+
+  <!-- ===== 形态 02 · 嵌套子菜单 ===== -->
+  <div class="section">
+    <div class="section__title">
+      <span>形态 02 · 嵌套子菜单（hover 展开多级）</span>
+      <span class="section__tag">option.children</span>
+    </div>
+    <div class="ctx-host" id="s-nested">右键此区域 → 含「视图 / 编辑」二级子菜单</div>
+  </div>
+
+  <!-- ===== 形态 03 · 图标 + 快捷键菜单 ===== -->
+  <div class="section">
+    <div class="section__title">
+      <span>形态 03 · 图标 + 快捷键菜单（编辑器式）</span>
+      <span class="section__tag">option.icon + option.shortcut</span>
+    </div>
+    <div class="ctx-host" id="s-editor">右键此区域 → 复制 / 粘贴 / 撤销 / 重做</div>
+  </div>
+
+  <!-- ===== 形态 04 · 分割线 + 危险项 ===== -->
+  <div class="section">
+    <div class="section__title">
+      <span>形态 04 · 分割线 + 危险项（删除置底，红色高亮）</span>
+      <span class="section__tag">option.divider + option.danger</span>
+    </div>
+    <div class="ctx-host" id="s-danger">右键此区域 → 重命名 / 复制 / 移动 / 删除（红色）</div>
+  </div>
+
+  <!-- ===== 形态 05 · 动态条件菜单（按权限显示） ===== -->
+  <div class="section">
+    <div class="section__title">
+      <span>形态 05 · 动态条件菜单（按角色切换菜单项）</span>
+      <span class="section__tag">option.show</span>
+    </div>
+    <div class="section__body">
+      <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+        <div class="section__tag" id="role-tag">当前角色：管理员</div>
+        <button id="role-toggle" style="padding: 4px 12px; border: 1px solid #d1d5db; background: #fff; border-radius: 4px; cursor: pointer; font-size: 12px;">切换为访客</button>
+      </div>
+      <div class="ctx-host" id="s-dynamic">右键此区域 → 菜单项随角色变化</div>
+    </div>
+  </div>
+
+  <!-- ===== 形态 06 · 左键点击触发 ===== -->
+  <div class="section">
+    <div class="section__title">
+      <span>形态 06 · 左键点击触发（按钮下拉）</span>
+      <span class="section__tag">trigger=click</span>
+    </div>
+    <div style="display: flex; gap: 8px;">
+      <div class="ctx-host" id="s-click" style="flex: 1;">左键点击此区域 → 弹出菜单（与右键触发共存）</div>
+    </div>
+  </div>
+
+  <!-- ===== 形态 07 · 键盘导航 + 边缘检测 ===== -->
+  <div class="section">
+    <div class="section__title">
+      <span>形态 07 · 键盘导航（↑↓ Enter Esc）+ 边缘检测</span>
+      <span class="section__tag">内置 keyboard + adjustPosition</span>
+    </div>
+    <div class="ctx-host" id="s-keyboard">右键此区域 → 弹出菜单后按 ↑↓ Enter Esc</div>
+    <div style="font-size: 12px; color: var(--color-text-muted); margin-top: 6px;">
+      提示：在右下角右键可触发边缘检测，菜单会自动左 / 上翻转
+    </div>
+  </div>
+
+  <!-- ===== 形态 08 · 不同 variant 风格 ===== -->
+  <div class="section">
+    <div class="section__title">
+      <span>形态 08 · 7 种 variant 风格（basic / finder / win / vscode / admin / notion / nav）</span>
+      <span class="section__tag">variant=basic/finder/win/vscode/admin/notion/nav</span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+      <div class="ctx-host" data-variant="basic">basic（默认）</div>
+      <div class="ctx-host" data-variant="finder">finder（macOS）</div>
+      <div class="ctx-host" data-variant="win">win（资源管理器）</div>
+      <div class="ctx-host" data-variant="vscode" style="background:#252526;color:#ccc;">vscode（深色）</div>
+      <div class="ctx-host" data-variant="admin">admin（Ant Design）</div>
+      <div class="ctx-host" data-variant="notion">notion（极简）</div>
+    </div>
+    <div class="ctx-host" data-variant="nav" style="margin-top: 8px;">nav（强引导渐变）</div>
+  </div>
+
+  <!-- ===== 联动 01 · 树节点右键菜单 ===== -->
+  <div class="section">
+    <div class="section__title">
+      <span>联动 01 · 树节点右键菜单（与 vue-tree-skill）</span>
+      <span class="section__tag">base-tree @contextmenu → base-contextmenu</span>
+    </div>
+    <div class="section__body" id="s-tree"></div>
+  </div>
+
+  <!-- ===== 联动 02 · 表格行右键菜单 ===== -->
+  <div class="section">
+    <div class="section__title">
+      <span>联动 02 · 表格行右键菜单（订单列表）</span>
+      <span class="section__tag">行 @contextmenu → base-contextmenu</span>
+    </div>
+    <div class="ctx-row-list" id="s-table"></div>
+  </div>
+
+  <!-- ===== 联动 03 · 桌面图标右键菜单 ===== -->
+  <div class="section">
+    <div class="section__title">
+      <span>联动 03 · 桌面图标右键菜单（macOS 风）</span>
+      <span class="section__tag">图标 @contextmenu → base-contextmenu</span>
+    </div>
+    <div class="ctx-desktop" id="s-desktop"></div>
+  </div>
+
+  <!-- ===== 联动 04 · 文件浏览器右键菜单 ===== -->
+  <div class="section">
+    <div class="section__title">
+      <span>联动 04 · 文件浏览器右键菜单（多类型动态）</span>
+      <span class="section__tag">文件 / 文件夹 菜单不同</span>
+    </div>
+    <div class="ctx-row-list" id="s-files"></div>
+  </div>
+
+  <div class="log-panel" id="log">- 在任意区域点击右键 / 左键查看事件 -</div>
+</div>
+
+<script src="./ctx-render.js"></script>
+</body>
+</html>

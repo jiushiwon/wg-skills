@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>base-tag / 01 - 类型与变体</title>
+  <link rel="stylesheet" href="../../shared/tokens.css" />
+  <link rel="stylesheet" href="../../shared/demo.css" />
+</head>
+<body>
+  <h1 class="demo-section-title">标签 — 6 种 type × 3 种 variant</h1>
+  <p class="demo-helper">用于状态标记、分类、计数。variant: light（默认）/ outline / solid。</p>
+
+  <base-card title="variant=light（默认，浅色背景）">
+    <div class="demo-row">
+      <span class="base-tag">默认</span>
+      <span class="base-tag base-tag--type-primary">主要</span>
+      <span class="base-tag base-tag--type-success">成功</span>
+      <span class="base-tag base-tag--type-warning">警告</span>
+      <span class="base-tag base-tag--type-danger">危险</span>
+      <span class="base-tag base-tag--type-info">信息</span>
+    </div>
+  </base-card>
+
+  <base-card title="variant=outline（描边）">
+    <div class="demo-row">
+      <span class="base-tag base-tag--variant-outline">默认</span>
+      <span class="base-tag base-tag--variant-outline base-tag--type-primary">主要</span>
+      <span class="base-tag base-tag--variant-outline base-tag--type-success">成功</span>
+      <span class="base-tag base-tag--variant-outline base-tag--type-warning">警告</span>
+      <span class="base-tag base-tag--variant-outline base-tag--type-danger">危险</span>
+    </div>
+  </base-card>
+
+  <base-card title="variant=solid（实色背景）">
+    <div class="demo-row">
+      <span class="base-tag base-tag--variant-solid base-tag--type-primary">主要</span>
+      <span class="base-tag base-tag--variant-solid base-tag--type-success">成功</span>
+      <span class="base-tag base-tag--variant-solid base-tag--type-warning">警告</span>
+      <span class="base-tag base-tag--variant-solid base-tag--type-danger">危险</span>
+    </div>
+  </base-card>
+</body>
+</html>

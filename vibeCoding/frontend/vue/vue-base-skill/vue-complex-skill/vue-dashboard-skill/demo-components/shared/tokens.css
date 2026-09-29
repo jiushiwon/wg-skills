@@ -1,0 +1,112 @@
+/* ============================================
+ * vue-dashboard-skill 演示 Token
+ * 与 vue-theme-skill / vue-card-skill 对齐
+ * ============================================ */
+:root {
+  /* ---- 主色 ---- */
+  --color-primary-50:  #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary:     #3b82f6;
+
+  /* ---- 状态色 ---- */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger:  #ef4444;
+  --color-info:    #6366f1;
+
+  /* ---- 中性色 ---- */
+  --color-text:            #1f2937;
+  --color-text-secondary:  #4b5563;
+  --color-text-tertiary:   #9ca3af;
+  --color-text-inverse:    #f9fafb;
+  --color-border:          #e5e7eb;
+  --color-border-light:    #f3f4f6;
+  --color-surface:         #ffffff;
+  --color-bg:              #f9fafb;
+  --color-bg-secondary:    #f3f4f6;
+  --color-bg-hover:        #f3f4f6;
+
+  /* ---- 间距 ---- */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* ---- 字号 ---- */
+  --font-2xs: 10px;
+  --font-xs:  12px;
+  --font-sm:  13px;
+  --font-base: 14px;
+  --font-md:  15px;
+  --font-lg:  16px;
+  --font-xl:  18px;
+  --font-2xl: 20px;
+  --font-3xl: 24px;
+  --font-4xl: 28px;
+  --font-5xl: 36px;
+
+  /* ---- 圆角 ---- */
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   20px;
+  --radius-full: 999px;
+
+  /* ---- 阴影 ---- */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.04), 0 1px 3px rgba(0,0,0,.06);
+  --shadow-md: 0 4px 6px rgba(0,0,0,.05), 0 2px 4px rgba(0,0,0,.06);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,.08), 0 4px 6px rgba(0,0,0,.04);
+
+  /* ---- 字重 ---- */
+  --weight-normal:   400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  /* ---- 行高 ---- */
+  --leading-tight:   1.25;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.75;
+
+  /* ---- 图标 ---- */
+  --icon-sm: 16px;
+  --icon-md: 20px;
+  --icon-lg: 24px;
+  --icon-xl: 32px;
+
+  /* ---- Dashboard 专用（映射到 vue-theme-skill） ---- */
+  --dash-accent-blue:   var(--color-primary);
+  --dash-accent-green:  var(--color-success);
+  --dash-accent-orange: var(--color-warning);
+  --dash-accent-red:    var(--color-danger);
+  --dash-accent-purple: #8b5cf6;
+  --dash-accent-cyan:   #06b6d4;
+  --dash-trend-up:      var(--color-success);
+  --dash-trend-down:    var(--color-danger);
+  --dash-trend-flat:    var(--color-text-tertiary);
+  --dash-chart-color-1: #3b82f6;
+  --dash-chart-color-2: #10b981;
+  --dash-chart-color-3: #f59e0b;
+  --dash-chart-color-4: #ef4444;
+  --dash-chart-color-5: #8b5cf6;
+  --dash-chart-color-6: #06b6d4;
+  --dash-mono-family:   'JetBrains Mono', 'Fira Code', monospace;
+  --dash-table-header-bg:  var(--color-bg-secondary);
+  --dash-table-row-hover:  var(--color-primary-50);
+  --dash-table-border:     var(--color-border-light);
+  --dash-table-row-height: 48px;
+  --dash-activity-avatar-size: 36px;
+  --dash-top-rank-size: 24px;
+  --dash-transition-base: 0.3s ease;
+  --dash-kpi-icon-size: 48px;
+}

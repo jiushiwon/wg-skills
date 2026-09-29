@@ -1,0 +1,16 @@
+{
+  "name": "loading",
+  "title": "加载态",
+  "category": "feedback",
+  "description": "加载中状态",
+  "aliases": ["加载", "loading", "spinner"],
+  "props": [
+    { "name": "show", "type": "boolean", "default": true, "desc": "显示状态" },
+    { "name": "text", "type": "string", "default": "", "desc": "加载文字" },
+    { "name": "type", "type": "string", "default": "spinner", "desc": "类型: spinner/circle" },
+    { "name": "size", "type": "string", "default": "medium", "desc": "尺寸: small/medium/large" },
+    { "name": "color", "type": "string", "default": "#007AFF", "desc": "颜色" }
+  ],
+  "events": [],
+  "slots": []
+}

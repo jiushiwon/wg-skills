@@ -1,0 +1,51 @@
+// 图形类组件
+
+// 半圆
+.semi-circle {
+  width: 100px;
+  height: 50px;
+  border-radius: 50px 50px 0 0;
+  background: var(--primary, #007AFF);
+}
+
+// 圆形
+.circle {
+  border-radius: 50%;
+  background: var(--primary, #007AFF);
+
+  &--small {
+    width: 20px;
+    height: 20px;
+  }
+
+  &--medium {
+    width: 40px;
+    height: 40px;
+  }
+
+  &--large {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+// 圆点
+.dot {
+  border-radius: 50%;
+  background: var(--primary, #007AFF);
+
+  &--small {
+    width: 4px;
+    height: 4px;
+  }
+
+  &--medium {
+    width: 8px;
+    height: 8px;
+  }
+
+  &--large {
+    width: 12px;
+    height: 12px;
+  }
+}

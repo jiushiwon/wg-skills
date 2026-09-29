@@ -1,0 +1,48 @@
+{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "title": "朋友圈",
+    "user": {
+      "nickname": "用户昵称",
+      "avatar": "https://picsum.photos/100/100",
+      "cover": "https://picsum.photos/750/300"
+    },
+    "moments": [
+      {
+        "id": 1,
+        "name": "张三",
+        "avatar": "https://picsum.photos/80/80",
+        "time": "2小时前",
+        "content": "今天天气真好，出去走走！",
+        "images": ["https://picsum.photos/300/300"],
+        "likes": 12,
+        "comments": 3
+      },
+      {
+        "id": 2,
+        "name": "李四",
+        "avatar": "https://picsum.photos/80/81",
+        "time": "5小时前",
+        "content": "新买的手机到了，开心！🎉",
+        "images": [
+          "https://picsum.photos/200/200",
+          "https://picsum.photos/200/201",
+          "https://picsum.photos/200/202"
+        ],
+        "likes": 28,
+        "comments": 5
+      },
+      {
+        "id": 3,
+        "name": "王五",
+        "avatar": "https://picsum.photos/80/82",
+        "time": "昨天",
+        "content": "学习Vue3中，组合式API真香！",
+        "images": [],
+        "likes": 45,
+        "comments": 8
+      }
+    ]
+  }
+}

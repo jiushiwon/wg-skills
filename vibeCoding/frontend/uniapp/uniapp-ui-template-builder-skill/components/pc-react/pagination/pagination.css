@@ -1,0 +1,321 @@
+/* Pagination 分页组件样式 - 3种风格 */
+
+.t-pagination {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3, 12px);
+  font-size: var(--text-sm, 14px);
+}
+
+/* ========== 风格1: default 简约 ========== */
+.t-pagination--default {
+  padding: var(--space-3, 12px) 0;
+}
+
+.t-pagination--default .t-pagination__total {
+  color: var(--color-text-secondary, #6b7280);
+  margin-right: var(--space-2, 8px);
+}
+
+.t-pagination--default .t-pagination__total-num {
+  color: var(--color-text-primary, #111827);
+  font-weight: 600;
+}
+
+.t-pagination--default .t-pagination__pagers {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1, 4px);
+}
+
+.t-pagination--default .t-pagination__btn {
+  min-width: 32px;
+  height: 32px;
+  padding: 0 var(--space-2, 8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-sm, 14px);
+  color: var(--color-text-secondary, #6b7280);
+  background: var(--color-bg-surface, #fff);
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: var(--radius-sm, 4px);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.t-pagination--default .t-pagination__btn:hover:not(:disabled) {
+  color: var(--color-primary, #333);
+  border-color: var(--color-primary, #333);
+}
+
+.t-pagination--default .t-pagination__btn--active {
+  color: #fff;
+  background: var(--color-primary, #333);
+  border-color: var(--color-primary, #333);
+}
+
+.t-pagination--default .t-pagination__btn--disabled {
+  color: var(--color-text-disabled, #d1d5db);
+  cursor: not-allowed;
+  background: var(--color-bg-surface-hover, #f9fafb);
+}
+
+.t-pagination--default .t-pagination__ellipsis {
+  padding: 0 var(--space-1, 4px);
+  color: var(--color-text-tertiary, #9ca3af);
+}
+
+.t-pagination--default .t-pagination__size-select {
+  height: 32px;
+  padding: 0 var(--space-6, 24px) 0 var(--space-2, 8px);
+  font-size: var(--text-sm, 14px);
+  color: var(--color-text-secondary, #6b7280);
+  background: var(--color-bg-surface, #fff);
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: var(--radius-sm, 4px);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+
+.t-pagination--default .t-pagination__jumper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1, 4px);
+  color: var(--color-text-secondary, #6b7280);
+}
+
+.t-pagination--default .t-pagination__jumper-input {
+  width: 48px;
+  height: 28px;
+  padding: 0 var(--space-2, 8px);
+  font-size: var(--text-sm, 14px);
+  text-align: center;
+  color: var(--color-text-primary, #111827);
+  background: var(--color-bg-surface, #fff);
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: var(--radius-sm, 4px);
+  outline: none;
+}
+
+.t-pagination--default .t-pagination__jumper-input:focus {
+  border-color: var(--color-primary, #333);
+}
+
+/* ========== 风格2: rounded 圆角胶囊 ========== */
+.t-pagination--rounded {
+  padding: var(--space-4, 16px) 0;
+}
+
+.t-pagination--rounded .t-pagination__total {
+  color: var(--color-text-secondary, #6b7280);
+  margin-right: var(--space-3, 12px);
+}
+
+.t-pagination--rounded .t-pagination__total-num {
+  color: var(--color-primary, #333);
+  font-weight: 700;
+}
+
+.t-pagination--rounded .t-pagination__pagers {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+}
+
+.t-pagination--rounded .t-pagination__btn {
+  min-width: 40px;
+  height: 40px;
+  padding: 0 var(--space-4, 16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-base, 16px);
+  font-weight: 500;
+  color: var(--color-text-secondary, #6b7280);
+  background: var(--color-bg-surface, #fff);
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.t-pagination--rounded .t-pagination__btn:hover:not(:disabled) {
+  color: var(--color-primary, #333);
+  background: var(--color-gray-100, #f3f4f6);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.t-pagination--rounded .t-pagination__btn--active {
+  color: #fff;
+  background: linear-gradient(135deg, var(--color-primary, #333) 0%, var(--color-primary-light, #666) 100%);
+  box-shadow: 0 2px 8px rgba(51, 51, 51, 0.3);
+}
+
+.t-pagination--rounded .t-pagination__btn--disabled {
+  color: var(--color-text-disabled, #d1d5db);
+  cursor: not-allowed;
+  background: var(--color-gray-100, #f3f4f6);
+  box-shadow: none;
+  transform: none;
+}
+
+.t-pagination--rounded .t-pagination__ellipsis {
+  padding: 0 var(--space-1, 4px);
+  color: var(--color-text-tertiary, #9ca3af);
+  font-weight: 600;
+}
+
+.t-pagination--rounded .t-pagination__size-select {
+  height: 40px;
+  padding: 0 var(--space-8, 32px) 0 var(--space-3, 12px);
+  font-size: var(--text-base, 16px);
+  font-weight: 500;
+  color: var(--color-text-secondary, #6b7280);
+  background: var(--color-bg-surface, #fff);
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  appearance: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+.t-pagination--rounded .t-pagination__jumper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  font-weight: 500;
+  color: var(--color-text-secondary, #6b7280);
+}
+
+.t-pagination--rounded .t-pagination__jumper-input {
+  width: 56px;
+  height: 36px;
+  padding: 0 var(--space-2, 8px);
+  font-size: var(--text-base, 16px);
+  font-weight: 500;
+  text-align: center;
+  color: var(--color-text-primary, #111827);
+  background: var(--color-bg-surface, #fff);
+  border: none;
+  border-radius: 18px;
+  outline: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.t-pagination--rounded .t-pagination__jumper-input:focus {
+  box-shadow: 0 2px 8px rgba(51, 51, 51, 0.15);
+}
+
+/* ========== 风格3: modern 现代紧凑 ========== */
+.t-pagination--modern {
+  padding: var(--space-2, 8px) 0;
+}
+
+.t-pagination--modern .t-pagination__total {
+  color: var(--color-text-tertiary, #9ca3af);
+  font-size: var(--text-xs, 12px);
+  margin-right: var(--space-3, 12px);
+}
+
+.t-pagination--modern .t-pagination__total-num {
+  color: var(--color-primary, #333);
+  font-weight: 600;
+}
+
+.t-pagination--modern .t-pagination__pagers {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.t-pagination--modern .t-pagination__btn {
+  min-width: 28px;
+  height: 28px;
+  padding: 0 var(--space-2, 8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-xs, 12px);
+  color: var(--color-text-secondary, #6b7280);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm, 4px);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.t-pagination--modern .t-pagination__btn:hover:not(:disabled) {
+  color: var(--color-primary, #333);
+  background: var(--color-gray-100, #f3f4f6);
+}
+
+.t-pagination--modern .t-pagination__btn--active {
+  color: #fff;
+  background: var(--color-primary, #333);
+}
+
+.t-pagination--modern .t-pagination__btn--disabled {
+  color: var(--color-text-disabled, #d1d5db);
+  cursor: not-allowed;
+  background: transparent;
+}
+
+.t-pagination--modern .t-pagination__num {
+  min-width: 28px;
+  height: 28px;
+}
+
+.t-pagination--modern .t-pagination__ellipsis {
+  padding: 0 2px;
+  color: var(--color-text-tertiary, #9ca3af);
+  font-size: var(--text-xs, 12px);
+}
+
+.t-pagination--modern .t-pagination__size-select {
+  height: 28px;
+  padding: 0 var(--space-5, 20px) 0 var(--space-2, 8px);
+  font-size: var(--text-xs, 12px);
+  color: var(--color-text-secondary, #6b7280);
+  background: transparent;
+  border: 1px solid var(--color-border-light, #f3f4f6);
+  border-radius: var(--radius-sm, 4px);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+}
+
+.t-pagination--modern .t-pagination__jumper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1, 4px);
+  font-size: var(--text-xs, 12px);
+  color: var(--color-text-tertiary, #9ca3af);
+}
+
+.t-pagination--modern .t-pagination__jumper-input {
+  width: 40px;
+  height: 24px;
+  padding: 0 var(--space-1, 4px);
+  font-size: var(--text-xs, 12px);
+  text-align: center;
+  color: var(--color-text-primary, #111827);
+  background: transparent;
+  border: 1px solid var(--color-border-light, #f3f4f6);
+  border-radius: var(--radius-sm, 4px);
+  outline: none;
+}
+
+.t-pagination--modern .t-pagination__jumper-input:focus {
+  border-color: var(--color-primary, #333);
+}

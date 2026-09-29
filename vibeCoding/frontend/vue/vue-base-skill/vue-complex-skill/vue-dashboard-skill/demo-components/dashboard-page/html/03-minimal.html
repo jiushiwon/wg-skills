@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>极简无框 · 物业管理看板 - Vue3 Dashboard Skill Demo</title>
+  <link rel="stylesheet" href="../../shared/tokens.css" />
+  <link rel="stylesheet" href="../../shared/base-card.css" />
+  <link rel="stylesheet" href="../../shared/demo.css" />
+  <style>
+    :root {
+      --color-bg: #fff;
+      --color-surface: #fff;
+      --color-text: #111827;
+      --color-text-secondary: #6b7280;
+      --color-text-tertiary: #9ca3af;
+      --color-border: #e5e7eb;
+      --color-border-light: #f3f4f6;
+      --color-bg-secondary: #f9fafb;
+    }
+    body { background: #fff; }
+    .dash-page { max-width: 960px; margin: 0 auto; padding: 60px 24px 80px; gap: 56px; }
+    .dash-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .dash-header__title { font-weight: 300; font-size: 40px; letter-spacing: -1px; line-height: 1.1; }
+    .dash-header__subtitle { font-size: 15px; color: #9ca3af; }
+    .dash-scene-tag { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 500; background: #f3f4f6; color: #6b7280; border: 1px solid #e5e7eb; margin-bottom: 8px; }
+    .header-actions { display: flex; align-items: center; gap: var(--space-3); }
+    .btn { padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); font-size: var(--font-sm); cursor: pointer; border: 1px solid var(--color-border); background: transparent; color: var(--color-text); transition: all 0.2s ease; }
+    .btn:hover { border-color: #111827; }
+    .btn--primary { background: #111827; border-color: #111827; color: #fff; }
+    .btn--primary:hover { background: #374151; }
+
+    /* 覆盖 base-card 样式：极简无框 */
+    .base-card { box-shadow: none; border: none; border-radius: 0; padding: 0; }
+    .base-card__title { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: #9ca3af; font-weight: 400; }
+
+    /* KPI：2 列 */
+    .dash-kpi-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; }
+    .dash-kpi-card { flex-direction: row; align-items: center; gap: var(--space-4); padding: 20px 0; border-bottom: 1px solid #f3f4f6; }
+    .dash-kpi-card__icon { width: 40px; height: 40px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: #f9fafb; }
+    .dash-kpi-card__info { display: flex; flex-direction: column; gap: 2px; }
+    .dash-kpi-card__label { font-size: 13px; color: #9ca3af; }
+    .dash-kpi-card__value { font-size: 28px; font-weight: 300; line-height: 1.2; }
+    .dash-kpi-card__trend { display: flex; align-items: center; gap: var(--space-1); font-size: var(--font-xs); font-weight: var(--weight-medium); }
+    .dash-kpi-card__trend--up { color: #16a34a; }
+    .dash-kpi-card__trend--down { color: #dc2626; }
+
+    /* 内容网格 */
+    .content-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .content-grid-2 > * { padding: 24px 0; border-bottom: 1px solid #f3f4f6; }
+    .content-grid-2 > *:nth-child(odd) { padding-right: 32px; }
+    .content-grid-2 > *:nth-child(even) { padding-left: 32px; border-left: 1px solid #f3f4f6; }
+
+    /* 环形图 */
+    .donut-section { display: flex; align-items: center; gap: 48px; }
+    .donut-chart { width: 180px; height: 180px; border-radius: 50%; position: relative; flex-shrink: 0; }
+    .donut-chart__hole { position: absolute; inset: 45px; background: #fff; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .donut-chart__hole-value { font-size: 24px; font-weight: 300; color: #111827; }
+    .donut-chart__hole-label { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+    .donut-legend { display: flex; flex-direction: column; gap: 12px; flex: 1; }
+    .donut-legend-item { display: flex; align-items: center; gap: 10px; }
+    .donut-legend-item__dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .donut-legend-item__name { font-size: 14px; color: #374151; flex: 1; }
+    .donut-legend-item__val { font-size: 14px; font-weight: 600; color: #111827; }
+
+    /* 转化漏斗 */
+    .funnel { display: flex; flex-direction: column; gap: 4px; align-items: center; }
+    .funnel-step { position: relative; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 4px; transition: all 0.3s ease; }
+    .funnel-step:hover { opacity: 0.85; }
+    .funnel-step__label { font-size: 13px; color: #fff; font-weight: 500; }
+    .funnel-step__val { position: absolute; right: -80px; font-size: 14px; font-weight: 600; color: #111827; }
+    .funnel-step__pct { position: absolute; right: -130px; font-size: 12px; color: #9ca3af; }
+    .funnel-arrow { text-align: center; color: #d1d5db; font-size: 12px; }
+
+    /* 排行 */
+    .rank-list { display: flex; flex-direction: column; }
+    .rank-item { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid #f3f4f6; }
+    .rank-item__num { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #9ca3af; background: #f9fafb; border-radius: 50%; }
+    .rank-item__num--1 { background: #111827; color: #fff; }
+    .rank-item__name { flex: 1; font-size: 14px; color: #374151; }
+    .rank-item__bar { width: 100px; height: 4px; background: #f3f4f6; border-radius: 2px; overflow: hidden; }
+    .rank-item__bar-fill { height: 100%; border-radius: 2px; background: #111827; }
+    .rank-item__val { font-size: 13px; font-weight: 600; color: #111827; min-width: 60px; text-align: right; }
+
+    /* 活动列表 */
+    .activity-list { display: flex; flex-direction: column; gap: var(--space-2); }
+    .activity-item { display: flex; gap: var(--space-3); align-items: center; padding: var(--space-2) 0; }
+    .activity-item__avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--font-xs); flex-shrink: 0; background: #f9fafb; color: #6b7280; }
+    .activity-item__info { flex: 1; min-width: 0; }
+    .activity-item__text { font-size: 14px; color: #374151; }
+    .activity-item__time { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+
+    /* 进度列表 */
+    .progress-list { display: flex; flex-direction: column; gap: var(--space-3); }
+    .progress-item { display: flex; align-items: center; gap: var(--space-3); }
+    .progress-item__label { font-size: 14px; color: #6b7280; width: 80px; flex-shrink: 0; }
+    .progress-item__bar { flex: 1; height: 6px; background: #f3f4f6; border-radius: 3px; overflow: hidden; }
+    .progress-item__fill { height: 100%; border-radius: 3px; background: #111827; }
+    .progress-item__val { font-size: 13px; font-weight: 600; color: #111827; width: 50px; text-align: right; }
+
+    @media (max-width: 640px) {
+      .dash-kpi-row { grid-template-columns: 1fr; }
+      .donut-section { flex-direction: column; gap: 24px; }
+      .content-grid-2 { grid-template-columns: 1fr; }
+      .content-grid-2 > *:nth-child(odd) { padding-right: 0; }
+      .content-grid-2 > *:nth-child(even) { padding-left: 0; border-left: none; }
+      .funnel-step__val, .funnel-step__pct { position: static; margin-left: 12px; font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="dash-page">
+    <div class="dash-header" role="banner">
+      <div>
+        <span class="dash-scene-tag">小区物业</span>
+        <div class="dash-header__title">物业管理看板</div>
+        <div class="dash-header__subtitle">2024 年 Q4 · 小区运营数据</div>
+      </div>
+      <div class="header-actions">
+        <div class="btn">筛选</div>
+        <div class="btn btn--primary">导出报告</div>
+      </div>
+    </div>
+
+    <!-- KPI -->
+    <div class="dash-kpi-row" id="kpi-row"></div>
+
+    <!-- 第一行：营收分布 + 报修漏斗 -->
+    <div class="content-grid-2">
+      <div class="base-card">
+        <div class="base-card__title" style="margin-bottom:24px">营收来源分布</div>
+        <div class="donut-section">
+          <div class="donut-chart" id="donut"></div>
+          <div class="donut-legend" id="donut-legend"></div>
+        </div>
+      </div>
+      <div class="base-card">
+        <div class="base-card__title" style="margin-bottom:24px">报修处理漏斗</div>
+        <div class="funnel" id="funnel"></div>
+      </div>
+    </div>
+
+    <!-- 第二行：关键指标 + 缴费排行 -->
+    <div class="content-grid-2">
+      <div class="base-card">
+        <div class="base-card__title" style="margin-bottom:24px">关键运营指标</div>
+        <div class="progress-list" id="metrics-list"></div>
+      </div>
+      <div class="base-card">
+        <div class="base-card__title" style="margin-bottom:24px">缴费排行</div>
+        <div class="rank-list" id="rank-list"></div>
+      </div>
+    </div>
+
+    <!-- 第三行：服务动态 + 设施维护 -->
+    <div class="content-grid-2">
+      <div class="base-card">
+        <div class="base-card__title" style="margin-bottom:24px">最新服务动态</div>
+        <div class="activity-list" id="activity-list"></div>
+      </div>
+      <div class="base-card">
+        <div class="base-card__title" style="margin-bottom:24px">设施维护状态</div>
+        <div class="progress-list" id="facility-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const trendIcon = { up: '↑', down: '↓', flat: '→' }
+
+    const kpis = [
+      { label: '总户数', value: '2,486', trend: 'flat', change: '0', icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>', color: '#111827' },
+      { label: '物业费收缴率', value: '92.4%', trend: 'up', change: '+3.1%', icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>', color: '#111827' },
+      { label: '本月投诉', value: '18', trend: 'down', change: '-6', icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>', color: '#111827' },
+      { label: '满意度评分', value: '4.6/5', trend: 'up', change: '+0.2', icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>', color: '#111827' }
+    ]
+    document.getElementById('kpi-row').innerHTML = kpis.map(k => `
+      <div class="dash-kpi-card">
+        <div class="dash-kpi-card__icon" style="color:#111827">${k.icon}</div>
+        <div class="dash-kpi-card__info">
+          <div class="dash-kpi-card__label">${k.label}</div>
+          <div class="dash-kpi-card__value">${k.value}</div>
+          <div class="dash-kpi-card__trend dash-kpi-card__trend--${k.trend}">${k.change !== '0' ? trendIcon[k.trend] + ' ' + k.change : '—'}</div>
+        </div>
+      </div>
+    `).join('')
+
+    const segments = [
+      { name: '住宅物业费', val: 1536000, color: '#111827' },
+      { name: '车位管理费', val: 892000, color: '#6b7280' },
+      { name: '商铺租金', val: 780000, color: '#d1d5db' },
+      { name: '增值服务', val: 634600, color: '#e5e7eb' }
+    ]
+    const total = segments.reduce((s,d) => s + d.val, 0)
+    let acc = 0
+    const gradParts = segments.map(s => { const start = (acc/total)*360; acc += s.val; return `${s.color} ${start}deg ${(acc/total)*360}deg` })
+    document.getElementById('donut').style.background = `conic-gradient(${gradParts.join(',')})`
+    document.getElementById('donut').innerHTML = `<div class="donut-chart__hole"><div class="donut-chart__hole-value">¥${(total/10000).toFixed(1)}万</div><div class="donut-chart__hole-label">季度总营收</div></div>`
+    document.getElementById('donut-legend').innerHTML = segments.map(s => `<div class="donut-legend-item"><span class="donut-legend-item__dot" style="background:${s.color}"></span><span class="donut-legend-item__name">${s.name}</span><span class="donut-legend-item__val">¥${(s.val/10000).toFixed(1)}万</span></div>`).join('')
+
+    const funnel = [
+      { label: '报修工单', val: 486, color: '#111827' },
+      { label: '已派单', val: 412, color: '#374151' },
+      { label: '已上门', val: 368, color: '#6b7280' },
+      { label: '已解决', val: 342, color: '#9ca3af' },
+      { label: '业主满意', val: 318, color: '#d1d5db' }
+    ]
+    const fMax = funnel[0].val
+    document.getElementById('funnel').innerHTML = funnel.map((f, i) => {
+      const w = Math.max(20, (f.val / fMax) * 100)
+      const pct = i === 0 ? '100%' : (f.val / funnel[i-1].val * 100).toFixed(1) + '%'
+      return `<div class="funnel-step" style="width:${w}%;background:${f.color}"><span class="funnel-step__label">${f.label}</span><span class="funnel-step__val">${f.val.toLocaleString()}</span>${i > 0 ? `<span class="funnel-step__pct">↓ ${pct}</span>` : ''}</div>${i < funnel.length - 1 ? '<div class="funnel-arrow">↓</div>' : ''}`
+    }).join('')
+
+    const metrics = [
+      { label: '绿化达标率', pct: 96, color: '#111827' },
+      { label: '安保巡逻', pct: 99, color: '#374151' },
+      { label: '车位出租率', pct: 91, color: '#6b7280' },
+      { label: '电梯维保', pct: 100, color: '#111827' },
+      { label: '消防检查', pct: 88, color: '#6b7280' }
+    ]
+    document.getElementById('metrics-list').innerHTML = metrics.map(d => `<div class="progress-item"><span class="progress-item__label">${d.label}</span><div class="progress-item__bar"><div class="progress-item__fill" style="width:${d.pct}%;background:${d.color}"></div></div><span class="progress-item__val">${d.pct}%</span></div>`).join('')
+
+    const pages = [
+      { name: '物业费缴纳', val: 2280 },
+      { name: '报修申请', val: 1860 },
+      { name: '访客登记', val: 1420 },
+      { name: '公告通知', val: 980 },
+      { name: '社区活动', val: 640 }
+    ]
+    const pMax = pages[0].val
+    document.getElementById('rank-list').innerHTML = pages.map((p, i) => `<div class="rank-item"><div class="rank-item__num ${i===0?'rank-item__num--1':''}">${i+1}</div><div class="rank-item__name">${p.name}</div><div class="rank-item__bar"><div class="rank-item__bar-fill" style="width:${(p.val/pMax*100)}%"></div></div><div class="rank-item__val">${(p.val/1000).toFixed(1)}K</div></div>`).join('')
+
+    const activities = [
+      { avatar: '张', name: '张管家', action: '完成 3 号楼楼道清洁检查', time: '10 分钟前', color: '#111827' },
+      { avatar: '李', name: '李师傅', action: '修复 5 单元门禁系统', time: '30 分钟前', color: '#374151' },
+      { avatar: '系', name: '系统', action: '自动发送 12 月缴费提醒（2,486 户）', time: '1 小时前', color: '#6b7280' },
+      { avatar: '王', name: '王保安', action: '完成夜间巡逻签到', time: '2 小时前', color: '#9ca3af' },
+      { avatar: '系', name: '系统', action: '电梯年检报告已归档', time: '3 小时前', color: '#d1d5db' }
+    ]
+    document.getElementById('activity-list').innerHTML = activities.map(a => `<div class="activity-item"><div class="activity-item__avatar" style="color:${a.color}">${a.avatar}</div><div class="activity-item__info"><div class="activity-item__text"><strong>${a.name}</strong> ${a.action}</div><div class="activity-item__time">${a.time}</div></div></div>`).join('')
+
+    const facilities = [
+      { label: '电梯运行', pct: 100, color: '#111827' },
+      { label: '供水系统', pct: 98, color: '#374151' },
+      { label: '供电系统', pct: 100, color: '#111827' },
+      { label: '监控设备', pct: 95, color: '#6b7280' },
+      { label: '门禁系统', pct: 92, color: '#9ca3af' }
+    ]
+    document.getElementById('facility-list').innerHTML = facilities.map(d => `<div class="progress-item"><span class="progress-item__label">${d.label}</span><div class="progress-item__bar"><div class="progress-item__fill" style="width:${d.pct}%;background:${d.color}"></div></div><span class="progress-item__val">${d.pct}%</span></div>`).join('')
+  </script>
+</body>
+</html>

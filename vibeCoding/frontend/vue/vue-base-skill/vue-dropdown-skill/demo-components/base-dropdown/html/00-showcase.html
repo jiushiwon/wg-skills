@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-dropdown 万能浮层组件 · 总览</title>
+  <link rel="stylesheet" href="../../shared/tokens.css">
+  <link rel="stylesheet" href="../../shared/icons.css">
+  <link rel="stylesheet" href="../../shared/dropdown.css">
+  <link rel="stylesheet" href="../../shared/demo.css">
+</head>
+<body>
+  <div class="demo-layout">
+
+    <!-- ============================== -->
+    <!-- 左侧导航                       -->
+    <!-- ============================== -->
+    <nav class="side-nav">
+      <div class="side-nav__title">vue-dropdown-skill</div>
+
+      <div class="side-nav__group">
+        <div class="side-nav__group-title">总览</div>
+        <a class="side-nav__item is-active" href="#overview">组件概览</a>
+      </div>
+
+      <div class="side-nav__group">
+        <div class="side-nav__group-title">5 种 mode</div>
+        <a class="side-nav__item" href="#mode-dropdown">dropdown 下拉菜单</a>
+        <a class="side-nav__item" href="#mode-popover">popover 气泡框</a>
+        <a class="side-nav__item" href="#mode-select">select 单选选择</a>
+        <a class="side-nav__item" href="#mode-multi-select">multi-select 多选</a>
+        <a class="side-nav__item" href="#mode-menu">menu 右键菜单</a>
+      </div>
+
+      <div class="side-nav__group">
+        <div class="side-nav__group-title">参数矩阵</div>
+        <a class="side-nav__item" href="#position">position 定位（6 种）</a>
+        <a class="side-nav__item" href="#trigger">trigger 触发（4 种）</a>
+        <a class="side-nav__item" href="#size">size 尺寸（3 种）</a>
+        <a class="side-nav__item" href="#tone">tone 色调（5 种）</a>
+      </div>
+
+      <div class="side-nav__group">
+        <div class="side-nav__group-title">能力演示</div>
+        <a class="side-nav__item" href="#searchable">searchable 搜索</a>
+        <a class="side-nav__item" href="#remote">remote 远程加载</a>
+        <a class="side-nav__item" href="#virtual">virtual 虚拟滚动</a>
+        <a class="side-nav__item" href="#disabled">disabled 禁用</a>
+        <a class="side-nav__item" href="#loading">loading 加载态</a>
+      </div>
+
+      <div class="side-nav__group">
+        <div class="side-nav__group-title">参数文档</div>
+        <a class="side-nav__item" href="#api-props">Props 完整表</a>
+        <a class="side-nav__item" href="#api-events">Events 事件表</a>
+        <a class="side-nav__item" href="#api-slots">Slots 插槽表</a>
+      </div>
+    </nav>
+
+    <!-- ============================== -->
+    <!-- 主内容                         -->
+    <!-- ============================== -->
+    <main class="demo-main">
+
+      <!-- ====== 顶部摘要 ====== -->
+      <header class="page-header">
+        <span class="page-header__eyebrow">L1 业务组件 · 融合 5 种浮层形态</span>
+        <h1 class="page-header__title">base-dropdown · 万能浮层</h1>
+        <p class="page-header__desc">
+          单组件 + <code>mode</code> 切换，下拉菜单 / 气泡框 / 选择器 / 多选 / 右键菜单 5 种形态自由切换。
+          面板统一走 <code>base-card</code> 容器，纯 H5 + CSS3 实现，零样式标签。
+        </p>
+      </header>
+
+      <!-- ============================== -->
+      <!-- Section 1 · 概览              -->
+      <!-- ============================== -->
+      <section id="overview" class="section">
+        <span class="section__num">01</span>
+        <h2 class="section__title">组件概览</h2>
+        <p class="section__desc">
+          base-dropdown 是 vue-base-skill 的 L1 业务组件，统一封装 5 种浮层形态。
+          所有形态共享 trigger（触发器）+ panel（浮层面板）+ 显隐逻辑，
+          通过 <code>mode</code> prop 切换行为，通过 <code>position</code> / <code>trigger</code> / <code>tone</code> / <code>size</code> 控制外观。
+        </p>
+
+        <div class="demo-card">
+          <div class="demo-card__title">5 种 mode 速览 <span class="demo-card__title-tag">5 modes</span></div>
+          <div class="demo-card__row">
+
+            <div class="wg-dropdown wg-dropdown--pos-bottom-start is-open">
+              <div class="wg-dropdown__trigger">
+                <span class="wg-dropdown__trigger-text">下拉菜单</span>
+                <span class="icon icon--sm icon--chevron"></span>
+              </div>
+              <div class="wg-dropdown__panel">
+                <div class="wg-dropdown__panel-body">
+                  <div class="wg-dropdown__item">
+                    <span class="icon icon--md icon--edit wg-dropdown__item-icon"></span>
+                    <span class="wg-dropdown__item-text">编辑</span>
+                  </div>
+                  <div class="wg-dropdown__item">
+                    <span class="icon icon--md icon--copy wg-dropdown__item-icon"></span>
+                    <span class="wg-dropdown__item-text">复制</span>
+                  </div>
+                  <div class="wg-dropdown__divider"></div>
+                  <div class="wg-dropdown__item wg-dropdown__item--danger">
+                    <span class="icon icon--md icon--trash wg-dropdown__item-icon"></span>
+                    <span class="wg-dropdown__item-text">删除</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wg-dropdown wg-dropdown--popover wg-dropdown--pos-top is-open">
+              <div class="wg-dropdown__trigger">悬停看气泡</div>
+              <div class="wg-dropdown__panel">
+                <span class="wg-dropdown__arrow"></span>
+                <div class="wg-dropdown__panel-body">
+                  <div>这是气泡内容，可以放任意 HTML</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wg-dropdown wg-dropdown--select wg-dropdown--pos-bottom-start is-open">
+              <div class="wg-dropdown__trigger">
+                <span class="wg-dropdown__trigger-text">单选选择</span>
+                <span class="icon icon--sm icon--chevron wg-dropdown__trigger-icon"></span>
+              </div>
+              <div class="wg-dropdown__panel">
+                <div class="wg-dropdown__panel-body">
+                  <div class="wg-dropdown__option is-selected">
+                    <span class="wg-dropdown__option-text">北京</span>
+                    <span class="icon icon--md icon--check wg-dropdown__option-check"></span>
+                  </div>
+                  <div class="wg-dropdown__option"><span class="wg-dropdown__option-text">上海</span></div>
+                  <div class="wg-dropdown__option"><span class="wg-dropdown__option-text">深圳</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wg-dropdown wg-dropdown--select wg-dropdown--pos-bottom-start is-open">
+              <div class="wg-dropdown__trigger">
+                <div class="wg-dropdown__tags">
+                  <span class="wg-dropdown__tag">北京<span class="icon icon--sm icon--x wg-dropdown__tag-remove"></span></span>
+                  <span class="wg-dropdown__tag">上海<span class="icon icon--sm icon--x wg-dropdown__tag-remove"></span></span>
+                </div>
+                <span class="icon icon--sm icon--chevron wg-dropdown__trigger-icon"></span>
+              </div>
+              <div class="wg-dropdown__panel">
+                <div class="wg-dropdown__panel-body">
+                  <div class="wg-dropdown__option is-selected"><span>北京</span><span class="icon icon--md icon--check wg-dropdown__option-check"></span></div>
+                  <div class="wg-dropdown__option is-selected"><span>上海</span><span class="icon icon--md icon--check wg-dropdown__option-check"></span></div>
+                  <div class="wg-dropdown__option"><span>深圳</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wg-dropdown wg-dropdown--menu wg-dropdown--pos-bottom-start is-open">
+              <div class="wg-dropdown__trigger">
+                <span class="wg-dropdown__trigger-text">右键菜单</span>
+                <span class="icon icon--sm icon--chevron"></span>
+              </div>
+              <div class="wg-dropdown__panel">
+                <div class="wg-dropdown__panel-body">
+                  <div class="wg-dropdown__item"><span class="wg-dropdown__item-text">剪切</span><span class="wg-dropdown__item-suffix">Ctrl+X</span></div>
+                  <div class="wg-dropdown__item"><span class="wg-dropdown__item-text">复制</span><span class="wg-dropdown__item-suffix">Ctrl+C</span></div>
+                  <div class="wg-dropdown__item"><span class="wg-dropdown__item-text">粘贴</span><span class="wg-dropdown__item-suffix">Ctrl+V</span></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================== -->
+      <!-- Section 2 · mode=dropdown     -->
+      <!-- ============================== -->
+      <section id="mode-dropdown" class="section">
+        <span class="section__num">02</span>
+        <h2 class="section__title">mode='dropdown' 下拉菜单 <span class="cat-tag cat-tag--mode">mode=dropdown</span></h2>
+        <p class="section__desc">
+          最常见的操作下拉，点击触发，浮层出现在触发器下方。
+          适合：操作按钮组（编辑 / 删除 / 分享）、筛选器、批量操作菜单。
+        </p>
+
+        <div class="subsection">
+          <h3 class="subsection__title">基础用法</h3>
+          <div class="demo-card">
+            <div class="demo-card__title">基础下拉 <span class="demo-card__title-tag">trigger=click · position=bottom-start</span></div>
+            <div class="demo-card__row">
+
+              <div class="wg-dropdown wg-dropdown--pos-bottom-start is-open">
+                <div class="wg-dropdown__trigger">
+                  <span class="icon icon--sm icon--settings"></span>
+                  <span class="wg-dropdown__trigger-text">操作</span>
+                  <span class="icon icon--sm icon--chevron"></span>
+                </div>
+                <div class="wg-dropdown__panel">
+                  <div class="wg-dropdown__panel-body">
+                    <div class="wg-dropdown__item">
+                      <span class="icon icon--md icon--edit wg-dropdown__item-icon"></span>
+                      <span class="wg-dropdown__item-text">编辑</span>
+                    </div>
+                    <div class="wg-dropdown__item">
+                      <span class="icon icon--md icon--copy wg-dropdown__item-icon"></span>
+                      <span class="wg-dropdown__item-text">复制</span>
+                    </div>
+                    <div class="wg-dropdown__divider"></div>
+                    <div class="wg-dropdown__item wg-dropdown__item--danger">
+                      <span class="icon icon--md icon--trash wg-dropdown__item-icon"></span>
+                      <span class="wg-dropdown__item-text">删除</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wg-dropdown wg-dropdown--pos-bottom-start is-open">
+                <div class="wg-dropdown__trigger">
+                  <span class="icon icon--sm icon--filter"></span>
+                  <span class="wg-dropdown__trigger-text">筛选</span>
+                  <span class="icon icon--sm icon--chevron"></span>
+                </div>
+                <div class="wg-dropdown__panel">
+                  <div class="wg-dropdown__panel-body">
+                    <div class="wg-dropdown__group-title">排序方式</div>
+                    <div class="wg-dropdown__item"><span class="wg-dropdown__item-text">最新发布</span></div>
+                    <div class="wg-dropdown__item is-active"><span class="wg-dropdown__item-text">最多浏览</span><span class="icon icon--md icon--check" style="color:var(--color-primary)"></span></div>
+                    <div class="wg-dropdown__divider"></div>
+                    <div class="wg-dropdown__group-title">状态</div>
+                    <div class="wg-dropdown__item"><span class="wg-dropdown__item-text">进行中</span></div>
+                    <div class="wg-dropdown__item"><span class="wg-dropdown__item-text">已结束</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wg-dropdown wg-dropdown--pos-bottom-end is-open">
+                <div class="wg-dropdown__trigger">
+                  <span class="wg-dropdown__trigger-text">用户菜单</span>
+                  <span class="wg-dropdown__trigger-clear" style="margin-left:auto;display:flex">
+                    <div class="avatar avatar--sm" style="background-image:url('https://api.dicebear.com/9.x/avataaars/svg?seed=user-1&backgroundColor=c0aede')"></div>
+                  </span>
+                  <span class="icon icon--sm icon--chevron"></span>
+                </div>
+                <div class="wg-dropdown__panel">
+                  <div class="wg-dropdown__panel-body">
+                    <div class="wg-dropdown__group-title">账户</div>
+                    <div class="wg-dropdown__item"><span class="wg-dropdown__item-text">个人资料</span></div>
+                    <div class="wg-dropdown__item"><span class="wg-dropdown__item-text">账户设置</span></div>
+                    <div class="wg-dropdown__divider"></div>
+                    <div class="wg-dropdown__item wg-dropdown__item--danger"><span class="wg-dropdown__item-text">退出登录</span></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3 class="subsection__title">键盘快捷键</h3>
+          <div class="demo-card">
+            <div class="demo-card__title">带 shortcut 后缀 <span class="demo-card__title-tag">item-suffix</span></div>
+            <div class="demo-card__row">
+              <div class="wg-dropdown wg-dropdown--pos-bottom-start is-open">
+                <div class="wg-dropdown__trigger">
+                  <span class="wg-dropdown__trigger-text">文件</span>
+                  <span class="icon icon--sm icon--chevron"></span>
+                </div>
+                <div class="wg-dropdown__panel">
+                  <div class="wg-dropdown__panel-body">
+                    <div class="wg-dropdown__item"><span class="wg-dropdown__item-text">新建</span><span class="wg-dropdown__item-suffix">Ctrl+N</span></div>
+                    <div class="wg-dropdown__item"><span class="wg-dropdown__item-text">打开</span><span class="wg-dropdown__item-suffix">Ctrl+O</span></div>
+                    <div class="wg-dropdown__divider"></div>
+                    <div class="wg-dropdown__item"><span class="wg-dropdown__item-text">保存</span><span class="wg-dropdown__item-suffix">Ctrl+S</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================== -->
+      <!-- Section 3 · mode=popover      -->
+      <!-- ============================== -->
+      <section id="mode-popover" class="section">
+        <span class="section__num">03</span>
+        <h2 class="section__title">mode='popover' 气泡框 <span class="cat-tag cat-tag--mode">mode=popover</span></h2>
+        <p class="section__desc">
+          带箭头的浮层气泡，4 种位置 + 3 种对齐，箭头自动跟随位置旋转。
+          适合：表单提示、详情预览、操作确认、用户头像卡片。
+        </p>
+
+        <div class="subsection">
+          <h3 class="subsection__title">6 种 position</h3>
+          <div class="demo-card">
+            <div class="demo-card__title">4 个基础位置 × 2 个对齐 <span class="demo-card__title-tag">position=*</span></div>
+            <div class="demo-card__row" style="gap:var(--space-8);padding:var(--space-12) 0;justify-content:center;align-items:center;">
+
+              <div class="wg-dropdown wg-dropdown--popover wg-dropdown--pos-bottom-start is-open">
+                <div class="wg-dropdown__trigger">bottom-start</div>
+                <div class="wg-dropdown__panel">
+                  <span class="wg-dropdown__arrow"></span>
+                  <div class="wg-dropdown__panel-body"><div>气泡内容，下方靠左</div></div>
+                </div>
+              </div>
+
+              <div class="wg-dropdown wg-dropdown--popover wg-dropdown--pos-bottom is-open">
+                <div class="wg-dropdown__trigger">bottom</div>
+                <div class="wg-dropdown__panel">
+                  <span class="wg-dropdown__arrow"></span>
+                  <div class="wg-dropdown__panel-body"><div>气泡内容，下方居中</div></div>
+                </div>
+              </div>
+
+              <div class="wg-dropdown wg-dropdown--popover wg-dropdown--pos-bottom-end is-open">
+                <div class="wg-dropdown__trigger">bottom-end</div>
+                <div class="wg-dropdown__panel">
+                  <span class="wg-dropdown__arrow"></span>
+                  <div class="wg-dropdown__panel-body"><div>气泡内容，下方靠右</div></div>
+                </div>
+              </div>
+
+              <div class="wg-dropdown wg-dropdown--popover wg-dropdown--pos-top is-open">
+                <div class="wg-dropdown__trigger">top</div>
+                <div class="wg-dropdown__panel">
+                  <span class="wg-dropdown__arrow"></span>
+                  <div class="wg-dropdown__panel-body"><div>气泡内容，上方居中</div></div>
+                </div>
+              </div>
+
+              <div class="wg-dropdown wg-dropdown--popover wg-dropdown--pos-right-start is-open">
+                <div class="wg-dropdown__trigger">right-start</div>
+                <div class="wg-dropdown__panel">
+                  <span class="wg-dropdown__arrow"></span>
+                  <div class="wg-dropdown__panel-body"><div>气泡内容，右侧</div></div>
+                </div>
+              </div>
+
+              <div class="wg-dropdown wg-dropdown--popover wg-dropdown--pos-left-start is-open">
+                <div class="wg-dropdown__trigger">left-start</div>
+                <div class="wg-dropdown__panel">
+                  <span class="wg-dropdown__arrow"></span>
+                  <div class="wg-dropdown__panel-body"><div>气泡内容，左侧</div></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3 class="subsection__title">富内容（卡片预览）</h3>
+          <div class="demo-card">
+            <div class="demo-card__title">气泡内放 base-card <span class="demo-card__title-tag">container principle</span></div>
+            <div class="demo-card__row" style="padding:var(--space-12) 0;justify-content:flex-start;">
+
+              <div class="wg-dropdown wg-dropdown--popover wg-dropdown--pos-bottom-start is-open">
+                <div class="wg-dropdown__trigger">
+                  <div class="avatar avatar--sm" style="background-image:url('https://api.dicebear.com/9.x/avataaars/svg?seed=hover-1&backgroundColor=ffd5dc')"></div>
+                  <span class="wg-dropdown__trigger-text">悬停看资料</span>
+                </div>
+                <div class="wg-dropdown__panel">
+                  <span class="wg-dropdown__arrow"></span>
+                  <div class="wg-dropdown__panel-body" style="padding:var(--space-3);min-width:240px">
+                    <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-2)">
+                      <div class="avatar avatar--lg" style="background-image:url('https://api.dicebear.com/9.x/avataaars/svg?seed=hover-1&backgroundColor=ffd5dc')"></div>
+                      <div>
+                        <div style="font-weight:var(--weight-semibold)">昵称</div>
+                        <div style="font-size:var(--font-xs);color:var(--color-text-tertiary)">前端工程师</div>
+                      </div>
+                    </div>
+                    <div style="font-size:var(--font-sm);color:var(--color-text-secondary)">
+                      这是一个嵌套在气泡里的 base-card 风格的资料卡。
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wg-dropdown wg-dropdown--popover wg-dropdown--pos-bottom is-open">
+                <div class="wg-dropdown__trigger">
+                  <span class="icon icon--md icon--info"></span>
+                  <span class="wg-dropdown__trigger-text">什么是 base-dropdown</span>
+                </div>
+                <div class="wg-dropdown__panel">
+                  <span class="wg-dropdown__arrow"></span>
+                  <div class="wg-dropdown__panel-body" style="max-width:280px">
+                    <div style="font-weight:var(--weight-semibold);margin-bottom:var(--space-1)">万能浮层组件</div>
+                    <div style="font-size:var(--font-sm);color:var(--color-text-secondary);line-height:var(--leading-relaxed)">
+                      通过 mode 切换下拉 / 气泡 / 选择器 5 种形态，面板统一走 base-card 容器。
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================== -->
+      <!-- Section 4 · mode=select       -->
+      <!-- ============================== -->
+      <section id="mode-select" class="section">
+        <span class="section__num">04</span>
+        <h2 class="section__title">mode='select' 单选选择 <span class="cat-tag cat-tag--select">mode=select</span></h2>
+        <p class="section__desc">
+          替代原生 <code>select</code>，支持搜索、清空、分组、禁用项、远程加载、虚拟滚动。
+          <code>v-model</code> 单值绑定，change 事件返回选中项的完整对象。
+        </p>
+
+        <div class="subsection">
+          <h3 class="subsection__title">基础单选</h3>
+          <div class="demo-card">
+            <div class="demo-card__title">单选 + 占位符 <span class="demo-card__title-tag">v-model + placeholder</span></div>
+            <div class="demo-card__row">
+
+              <div class="wg-dropdown wg-dropdown--select wg-dropdown--pos-bottom-start is-open">
+                <div class="wg-dropdown__trigger">
+                  <span class="wg-dropdown__trigger-text wg-dropdown__trigger-text--placeholder">请选择城市</span>
+                  <span class="icon icon--sm icon--chevron wg-dropdown__trigger-icon"></span>
+                </div>
+                <div class="wg-dropdown__panel">
+                  <div class="wg-dropdown__panel-body">
+                    <div class="wg-dropdown__option"><span>北京</span></div>
+                    <div class="wg-dropdown__option"><span>上海</span></div>
+                    <div class="wg-dropdown__option"><span>深圳</span></div>
+                    <div class="wg-dropdown__option"><span>广州</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wg-dropdown wg-dropdown--select wg-dropdown--pos-bottom-start is-open">
+                <div class="wg-dropdown__trigger">
+                  <span class="wg-dropdown__trigger-text">北京</span>
+                  <span class="icon icon--sm icon--x wg-dropdown__trigger-clear"></span>
+                  <span class="icon icon--sm icon--chevron wg-dropdown__trigger-icon"></span>
+                </div>
+                <div class="wg-dropdown__panel">
+                  <div class="wg-dropdown__panel-body">
+                    <div class="wg-dropdown__option is-selected"><span>北京</span><span class="icon icon--md icon--check wg-dropdown__option-check"></span></div>
+                    <div class="wg-dropdown__option"><span>上海</span></div>
+                    <div class="wg-dropdown__option"><span>深圳</span></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div id="searchable" class="subsection">
+          <h3 class="subsection__title">searchable 搜索</h3>
+          <div class="demo-card">
+            <div class="demo-card__title">本地搜索 + 关键字高亮 <span class="demo-card__title-tag">searchable=true</span></div>
+            <div class="demo-card__row">
+
+              <div class="wg-dropdown wg-dropdown--select wg-dropdown--pos-bottom-start is-open">
+                <div class="wg-dropdown__trigger">
+                  <span class="wg-dropdown__trigger-text">深圳</span>
+                  <span class="icon icon--sm icon--x wg-dropdown__trigger-clear"></span>
+                  <span class="icon icon--sm icon--chevron wg-dropdown__trigger-icon"></span>
+                </div>
+                <div class="wg-dropdown__panel">
+                  <div class="wg-dropdown__search">
+                    <span class="icon icon--md icon--search wg-dropdown__search-icon"></span>
+                    <input class="wg-dropdown__search-input" placeholder="搜索城市..." value="深">
+                  </div>
+                  <div class="wg-dropdown__panel-body">
+                    <div class="wg-dropdown__option is-selected is-active">
+                      <span><span class="wg-dropdown__option-mark">深</span>圳</span>
+                      <span class="icon icon--md icon--check wg-dropdown__option-check"></span>
+                    </div>
+                    <div class="wg-dropdown__empty">没有匹配的结果</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3 class="subsection__title">分组 + 禁用项</h3>
+          <div class="demo-card">
+            <div class="demo-card__title">option-group + option-disabled <span class="demo-card__title-tag">分组结构</span></div>
+            <div class="demo-card__row">
+
+              <div class="wg-dropdown wg-dropdown--select wg-dropdown--pos-bottom-start is-open">
+                <div class="wg-dropdown__trigger">
+                  <span class="wg-dropdown__trigger-text wg-dropdown__trigger-text--placeholder">请选择</span>
+                  <span class="icon icon--sm icon--chevron wg-dropdown__trigger-icon"></span>
+                </div>
+                <div class="wg-dropdown__panel">
+                  <div class="wg-dropdown__panel-body">
+                    <div class="wg-dropdown__group-title">中国大陆</div>
+                    <div class="wg-dropdown__option"><span>北京</span></div>
+                    <div class="wg-dropdown__option is-selected"><span>上海</span><span class="icon icon--md icon--check wg-dropdown__option-check"></span></div>
+                    <div class="wg-dropdown__option is-disabled"><span>深圳（暂不可选）</span></div>
+                    <div class="wg-dropdown__divider"></div>
+                    <div class="wg-dropdown__group-title">海外</div>
+                    <div class="wg-dropdown__option"><span>东京</span></div>
+                    <div class="wg-dropdown__option"><span>纽约</span></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================== -->
+      <!-- Section 5 · mode=multi-select -->
+      <!-- ============================== -->
+      <section id="mode-multi-select" class="section">
+        <span class="section__num">05</span>
+        <h2 class="section__title">mode='multi-select' 多选 <span class="cat-tag cat-tag--select">mode=multi-select</span></h2>
+        <p class="section__desc">
+          多选选择器，<code>v-model</code> 数组绑定，选中项以 tag pill 展示在 trigger 内。
+          支持 <code>max</code> 限制最多选几项、<code>searchable</code> 搜索、<code>clearable</code> 一键清空。
+        </p>
+
+        <div class="subsection">
+          <h3 class="subsection__title">多选 tag 展示</h3>
+          <div class="demo-card">
+            <div class="demo-card__title">trigger 内嵌 tag 列表 <span class="demo-card__title-tag">v-model=array</span></div>
+            <div class="demo-card__row">
+
+              <div class="wg-dropdown wg-dropdown--select wg-dropdown--pos-bottom-start is-open" style="min-width:280px">
+                <div class="wg-dropdown__trigger">
+                  <div class="wg-dropdown__tags">
+                    <span class="wg-dropdown__tag">北京<span class="icon icon--sm icon--x wg-dropdown__tag-remove"></span></span>
+                    <span class="wg-dropdown__tag">上海<span class="icon icon--sm icon--x wg-dropdown__tag-remove"></span></span>
+                    <span class="wg-dropdown__tag">深圳<span class="icon icon--sm icon--x wg-dropdown__tag-remove"></span></span>
+                  </div>
+                  <span class="icon icon--sm icon--x wg-dropdown__trigger-clear"></span>
+                  <span class="icon icon--sm icon--chevron wg-dropdown__trigger-icon"></span>
+                </div>
+                <div class="wg-dropdown__panel">
+                  <div class="wg-dropdown__search">
+                    <span class="icon icon--md icon--search wg-dropdown__search-icon"></span>
+                    <input class="wg-dropdown__search-input" placeholder="搜索...">
+                  </div>
+                  <div class="wg-dropdown__panel-body">
+                    <div class="wg-dropdown__option is-selected"><span>北京</span><span class="icon icon--md icon--check wg-dropdown__option-check"></span></div>
+                    <div class="wg-dropdown__option is-selected"><span>上海</span><span class="icon icon--md icon--check wg-dropdown__option-check"></span></div>
+                    <div class="wg-dropdown__option is-selected"><span>深圳</span><span class="icon icon--md icon--check wg-dropdown__option-check"></span></div>
+                    <div class="wg-dropdown__option"><span>广州</span></div>
+                    <div class="wg-dropdown__option"><span>杭州</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wg-dropdown wg-dropdown--select wg-dropdown--pos-bottom-start is-open" style="min-width:280px">
+                <div class="wg-dropdown__trigger">
+                  <div class="wg-dropdown__tags">
+                    <span class="wg-dropdown__tag">前端<span class="icon icon--sm icon--x wg-dropdown__tag-remove"></span></span>
+                    <span class="wg-dropdown__tag">Vue<span class="icon icon--sm icon--x wg-dropdown__tag-remove"></span></span>
+                    <span class="wg-dropdown__tag">+5<span class="icon icon--sm icon--x wg-dropdown__tag-remove"></span></span>
+                  </div>
+                  <span class="icon icon--sm icon--chevron wg-dropdown__trigger-icon"></span>
+                </div>
+                <div class="wg-dropdown__panel">
+                  <div class="wg-dropdown__panel-body">
+                    <div class="wg-dropdown__option is-selected"><span>前端</span><span class="icon icon--md icon--check wg-dropdown__option-check"></span></div>
+                    <div class="wg-dropdown__option is-selected"><span>Vue</span><span class="icon icon--md icon--check wg-dropdown__option-check"></span></div>
+                    <div class="wg-dropdown__option is-selected"><span>React</span><span class="icon icon--md icon--check wg-dropdown__option-check"></span></div>
+                    <div class="wg-dropdown__option is-selected"><span>TypeScript</span><span class="icon icon--md icon--check wg-dropdown__option-check"></span></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================== -->
+      <!-- Section 6 · remote 远程加载    -->
+      <!-- ============================== -->
+      <section id="remote" class="section">
+        <span class="section__num">06</span>
+        <h2 class="section__title">remote 远程加载 <span class="cat-tag cat-tag--select">remote</span></h2>
+        <p class="section__desc">
+          <code>remote</code> + <code>remote-function</code> 异步搜索，输入关键字时调 API，
+          配合 <code>loading</code> 状态展示加载动画、防抖（debounce）内置 300ms。
+        </p>
+
+        <div class="subsection">
+          <h3 class="subsection__title">远程搜索（演示）</h3>
+          <div class="demo-card">
+            <div class="demo-card__title">remote=true + remote-function <span class="demo-card__title-tag">异步</span></div>
+            <div class="demo-card__row">
+
+              <div class="wg-dropdown wg-dropdown--select wg-dropdown--pos-bottom-start is-open" style="min-width:280px">
+                <div class="wg-dropdown__trigger">
+                  <span class="wg-dropdown__trigger-text">前端工程师</span>
+                  <span class="icon icon--sm icon--chevron wg-dropdown__trigger-icon"></span>
+                </div>
+                <div class="wg-dropdown__panel">
+                  <div class="wg-dropdown__search">
+                    <span class="icon icon--md icon--search wg-dropdown__search-icon"></span>
+                    <input class="wg-dropdown__search-input" placeholder="搜索职位..." value="前端">
+                  </div>
+                  <div class="wg-dropdown__loading">
+                    <div class="wg-dropdown__spinner"></div>
+                    <span>正在加载...</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wg-dropdown wg-dropdown--select wg-dropdown--pos-bottom-start is-open" style="min-width:280px">
+                <div class="wg-dropdown__trigger">
+                  <span class="wg-dropdown__trigger-text">前端工程师</span>
+                  <span class="icon icon--sm icon--chevron wg-dropdown__trigger-icon"></span>
+                </div>
+                <div class="wg-dropdown__panel">
+                  <div class="wg-dropdown__search">
+                    <span class="icon icon--md icon--search wg-dropdown__search-icon"></span>
+                    <input class="wg-dropdown__search-input" placeholder="搜索职位..." value="前端">
+                  </div>
+                  <div class="wg-dropdown__panel-body">
+                    <div class="wg-dropdown__option is-selected">
+                      <span>前端工程师</span>
+                      <span class="wg-dropdown__option-desc">北京 · 15-30K</span>
+                    </div>
+                    <div class="wg-dropdown__option">
+                      <span>高级前端工程师</span>
+                      <span class="wg-dropdown__option-desc">上海 · 25-50K</span>
+                    </div>
+                    <div class="wg-dropdown__option">
+                      <span>前端架构师</span>
+                      <span class="wg-dropdown__option-desc">深圳 · 40-80K</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================== -->
+      <!-- Section 7 · virtual 虚拟滚动   -->
+      <!-- ============================== -->
+      <section id="virtual" class="section">
+        <span class="section__num">07</span>
+        <h2 class="section__title">virtual 虚拟滚动 <span class="cat-tag cat-tag--select">virtual</span></h2>
+        <p class="section__desc">
+          <code>virtual=true</code> 启用虚拟滚动，超过 1000 条选项时只渲染可视区域 + 缓冲区的 DOM，
+          性能稳定在 60fps。展示 10000 条模拟数据。
+        </p>
+
+        <div class="subsection">
+          <h3 class="subsection__title">10000 行虚拟列表</h3>
+          <div class="demo-card">
+            <div class="demo-card__title">virtual=true · row-height=36 <span class="demo-card__title-tag">10000 rows</span></div>
+            <div class="demo-card__row">
+
+              <div class="wg-dropdown wg-dropdown--select wg-dropdown--pos-bottom-start is-open" style="min-width:240px">
+                <div class="wg-dropdown__trigger">
+                  <span class="wg-dropdown__trigger-text">第 256 项</span>
+                  <span class="icon icon--sm icon--chevron wg-dropdown__trigger-icon"></span>
+                </div>
+                <div class="wg-dropdown__panel" style="width:240px">
+                  <div class="wg-dropdown__search">
+                    <span class="icon icon--md icon--search wg-dropdown__search-icon"></span>
+                    <input class="wg-dropdown__search-input" placeholder="搜索 10000 项...">
+                  </div>
+                  <div class="wg-dropdown__virtual">
+                    <div class="wg-dropdown__virtual-viewport" style="height:288000px">
+                      <div class="wg-dropdown__virtual-row" style="top:0px">第 1 项</div>
+                      <div class="wg-dropdown__virtual-row" style="top:36px">第 2 项</div>
+                      <div class="wg-dropdown__virtual-row" style="top:72px">第 3 项</div>
+                      <div class="wg-dropdown__virtual-row" style="top:108px">第 4 项</div>
+                      <div class="wg-dropdown__virtual-row" style="top:144px">第 5 项</div>
+                      <div class="wg-dropdown__virtual-row" style="top:180px">第 6 项</div>
+                      <div class="wg-dropdown__virtual-row" style="top:216px">第 7 项</div>
+                      <div class="wg-dropdown__virtual-row" style="top:252px">第 8 项</div>
+                      <div class="wg-dropdown__virtual-row is-active" style="top:9000px;background:var(--color-bg)">第 256 项（可视区）</div>
+                    </div>
+                    <div class="wg-dropdown__virtual-info">
+                      <span>共 10000 项</span>
+                      <span>已选：第 256 项</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================== -->
+      <!-- Section 8 · mode=menu 右键    -->
+      <!-- ============================== -->
+      <section id="mode-menu" class="section">
+        <span class="section__num">08</span>
+        <h2 class="section__title">mode='menu' 右键菜单 <span class="cat-tag cat-tag--mode">mode=menu</span></h2>
+        <p class="section__desc">
+          <code>trigger='contextmenu'</code> 右键触发，鼠标位置定位。
+          适合：表格行操作、文件资源管理器、画布元素操作。
+        </p>
+
+        <div class="subsection">
+          <h3 class="subsection__title">右键菜单演示</h3>
+          <div class="demo-card">
+            <div class="demo-card__title">trigger=contextmenu <span class="demo-card__title-tag">右键区域</span></div>
+            <div style="padding:var(--space-12);background:var(--color-bg);border-radius:var(--radius-md);text-align:center;color:var(--color-text-tertiary);font-size:var(--font-sm)">
+              <span class="icon icon--md icon--info" style="vertical-align:middle;margin-right:var(--space-2)"></span>
+              在此区域右键触发菜单（演示中默认展开）
+            </div>
+            <div class="demo-card__row">
+              <div class="wg-dropdown wg-dropdown--menu wg-dropdown--pos-right-start is-open">
+                <div class="wg-dropdown__trigger">触发器</div>
+                <div class="wg-dropdown__panel">
+                  <div class="wg-dropdown__panel-body">
+                    <div class="wg-dropdown__item">
+                      <span class="icon icon--md icon--edit wg-dropdown__item-icon"></span>
+                      <span class="wg-dropdown__item-text">编辑</span>
+                    </div>
+                    <div class="wg-dropdown__item">
+                      <span class="icon icon--md icon--copy wg-dropdown__item-icon"></span>
+                      <span class="wg-dropdown__item-text">复制</span>
+                    </div>
+                    <div class="wg-dropdown__item">
+                      <span class="icon icon--md icon--upload wg-dropdown__item-icon"></span>
+                      <span class="wg-dropdown__item-text">上传</span>
+                    </div>
+                    <div class="wg-dropdown__divider"></div>
+                    <div class="wg-dropdown__item wg-dropdown__item--danger">
+                      <span class="icon icon--md icon--trash wg-dropdown__item-icon"></span>
+                      <span class="wg-dropdown__item-text">删除</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================== -->
+      <!-- Section 9 · position 矩阵      -->
+      <!-- ============================== -->
+      <section id="position" class="section">
+        <span class="section__num">09</span>
+        <h2 class="section__title">position 定位矩阵 <span class="cat-tag cat-tag--position">position</span></h2>
+        <p class="section__desc">4 个基础位置 × 3 种对齐 = 12 种定位。下拉 / 选择器只用 bottom-* / top-*；气泡框全部可用。</p>
+
+        <div class="demo-card">
+          <div class="demo-card__title">12 种 position 完整矩阵 <span class="demo-card__title-tag">4 × 3</span></div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-6);padding:var(--space-8) var(--space-4)">
+
+            <div class="wg-dropdown wg-dropdown--popover wg-dropdown--pos-bottom-start is-open">
+              <div class="wg-dropdown__trigger">bottom-start</div>
+              <div class="wg-dropdown__panel"><span class="wg-dropdown__arrow"></span><div class="wg-dropdown__panel-body"><div>panel</div></div></div>
+            </div>
+            <div class="wg-dropdown wg-dropdown--popover wg-dropdown--pos-bottom is-open">
+              <div class="wg-dropdown__trigger">bottom</div>
+              <div class="wg-dropdown__panel"><span class="wg-dropdown__arrow"></span><div class="wg-dropdown__panel-body"><div>panel</div></div></div>
+            </div>
+            <div class="wg-dropdown wg-dropdown--popover wg-dropdown--pos-bottom-end is-open">
+              <div class="wg-dropdown__trigger">bottom-end</div>
+              <div class="wg-dropdown__panel"><span class="wg-dropdown__arrow"></span><div class="wg-dropdown__panel-body"><div>panel</div></div></div>
+            </div>
+
+            <div class="wg-dropdown wg-dropdown--popover wg-dropdown--pos-top-start is-open">
+              <div class="wg-dropdown__trigger">top-start</div>
+              <div class="wg-dropdown__panel"><span class="wg-dropdown__arrow"></span><div class="wg-dropdown__panel-body"><div>panel</div></div></div>
+            </div>
+            <div class="wg-dropdown wg-dropdown--popover wg-dropdown--pos-top is-open">
+              <div class="wg-dropdown__trigger">top</div>
+              <div class="wg-dropdown__panel"><span class="wg-dropdown__arrow"></span><div class="wg-dropdown__panel-body"><div>panel</div></div></div>
+            </div>
+            <div class="wg-dropdown wg-dropdown--popover wg-dropdown--pos-top-end is-open">
+              <div class="wg-dropdown__trigger">top-end</div>
+              <div class="wg-dropdown__panel"><span class="wg-dropdown__arrow"></span><div class="wg-dropdown__panel-body"><div>panel</div></div></div>
+            </div>
+
+            <div class="wg-dropdown wg-dropdown--popover wg-dropdown--pos-left-start is-open">
+              <div class="wg-dropdown__trigger">left-start</div>
+              <div class="wg-dropdown__panel"><span class="wg-dropdown__arrow"></span><div class="wg-dropdown__panel-body"><div>panel</div></div></div>
+            </div>
+            <div class="wg-dropdown wg-dropdown--popover wg-dropdown--pos-left is-open">
+              <div class="wg-dropdown__trigger">left</div>
+              <div class="wg-dropdown__panel"><span class="wg-dropdown__arrow"></span><div class="wg-dropdown__panel-body"><div>panel</div></div></div>
+            </div>
+            <div class="wg-dropdown wg-dropdown--popover wg-dropdown--pos-left-end is-open">
+              <div class="wg-dropdown__trigger">left-end</div>
+              <div class="wg-dropdown__panel"><span class="wg-dropdown__arrow"></span><div class="wg-dropdown__panel-body"><div>panel</div></div></div>
+            </div>
+
+            <div class="wg-dropdown wg-dropdown--popover wg-dropdown--pos-right-start is-open">
+              <div class="wg-dropdown__trigger">right-start</div>
+              <div class="wg-dropdown__panel"><span class="wg-dropdown__arrow"></span><div class="wg-dropdown__panel-body"><div>panel</div></div></div>
+            </div>
+            <div class="wg-dropdown wg-dropdown--popover wg-dropdown--pos-right is-open">
+              <div class="wg-dropdown__trigger">right</div>
+              <div class="wg-dropdown__panel"><span class="wg-dropdown__arrow"></span><div class="wg-dropdown__panel-body"><div>panel</div></div></div>
+            </div>
+            <div class="wg-dropdown wg-dropdown--popover wg-dropdown--pos-right-end is-open">
+              <div class="wg-dropdown__trigger">right-end</div>
+              <div class="wg-dropdown__panel"><span class="wg-dropdown__arrow"></span><div class="wg-dropdown__panel-body"><div>panel</div></div></div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================== -->
+      <!-- Section 10 · trigger 矩阵      -->
+      <!-- ============================== -->
+      <section id="trigger" class="section">
+        <span class="section__num">10</span>
+        <h2 class="section__title">trigger 触发方式 <span class="cat-tag cat-tag--trigger">trigger</span></h2>
+        <p class="section__desc">4 种触发方式覆盖所有交互场景：click / hover / focus / manual / contextmenu。</p>
+
+        <div class="demo-card">
+          <div class="demo-card__title">5 种 trigger <span class="demo-card__title-tag">5 types</span></div>
+          <div class="demo-card__row">
+
+            <div class="wg-dropdown wg-dropdown--pos-bottom-start is-open">
+              <div class="wg-dropdown__trigger">click（默认）</div>
+              <div class="wg-dropdown__panel"><div class="wg-dropdown__panel-body"><div class="wg-dropdown__item">菜单项 1</div></div></div>
+            </div>
+
+            <div class="wg-dropdown wg-dropdown--popover wg-dropdown--pos-bottom is-open">
+              <div class="wg-dropdown__trigger">hover</div>
+              <div class="wg-dropdown__panel"><span class="wg-dropdown__arrow"></span><div class="wg-dropdown__panel-body"><div>hover 200ms 后展示</div></div></div>
+            </div>
+
+            <div class="wg-dropdown wg-dropdown--popover wg-dropdown--pos-bottom is-open">
+              <div class="wg-dropdown__trigger">focus</div>
+              <div class="wg-dropdown__panel"><span class="wg-dropdown__arrow"></span><div class="wg-dropdown__panel-body"><div>focus 时展示（输入框场景）</div></div></div>
+            </div>
+
+            <div class="wg-dropdown wg-dropdown--pos-bottom-start is-open">
+              <div class="wg-dropdown__trigger">manual（受控）</div>
+              <div class="wg-dropdown__panel"><div class="wg-dropdown__panel-body"><div>v-model:visible 控制</div></div></div>
+            </div>
+
+            <div class="wg-dropdown wg-dropdown--menu wg-dropdown--pos-bottom-start is-open">
+              <div class="wg-dropdown__trigger">contextmenu</div>
+              <div class="wg-dropdown__panel"><div class="wg-dropdown__panel-body"><div class="wg-dropdown__item">右键触发</div></div></div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================== -->
+      <!-- Section 11 · size + tone       -->
+      <!-- ============================== -->
+      <section id="size" class="section">
+        <span class="section__num">11</span>
+        <h2 class="section__title">size 尺寸 + tone 色调 <span class="cat-tag cat-tag--mode">size + tone</span></h2>
+
+        <div class="demo-card">
+          <div class="demo-card__title">3 种 size <span class="demo-card__title-tag">sm / md / lg</span></div>
+          <div class="demo-card__row">
+
+            <div class="wg-dropdown wg-dropdown--sm wg-dropdown--pos-bottom-start is-open">
+              <div class="wg-dropdown__trigger">小型 sm</div>
+              <div class="wg-dropdown__panel"><div class="wg-dropdown__panel-body"><div class="wg-dropdown__item">菜单项</div></div></div>
+            </div>
+
+            <div class="wg-dropdown wg-dropdown--pos-bottom-start is-open">
+              <div class="wg-dropdown__trigger">默认 md</div>
+              <div class="wg-dropdown__panel"><div class="wg-dropdown__panel-body"><div class="wg-dropdown__item">菜单项</div></div></div>
+            </div>
+
+            <div class="wg-dropdown wg-dropdown--lg wg-dropdown--pos-bottom-start is-open">
+              <div class="wg-dropdown__trigger">大型 lg</div>
+              <div class="wg-dropdown__panel"><div class="wg-dropdown__panel-body"><div class="wg-dropdown__item">菜单项</div></div></div>
+            </div>
+
+          </div>
+        </div>
+
+        <div id="tone" class="demo-card">
+          <div class="demo-card__title">5 种 tone（panel 顶边色） <span class="demo-card__title-tag">5 tones</span></div>
+          <div class="demo-card__row">
+
+            <div class="wg-dropdown wg-dropdown--pos-bottom-start is-open">
+              <div class="wg-dropdown__trigger">neutral</div>
+              <div class="wg-dropdown__panel"><div class="wg-dropdown__panel-body"><div class="wg-dropdown__item">默认</div></div></div>
+            </div>
+            <div class="wg-dropdown wg-dropdown--pos-bottom-start is-open">
+              <div class="wg-dropdown__trigger">primary</div>
+              <div class="wg-dropdown__panel wg-dropdown__panel--tone-primary"><div class="wg-dropdown__panel-body"><div class="wg-dropdown__item">主色调</div></div></div>
+            </div>
+            <div class="wg-dropdown wg-dropdown--pos-bottom-start is-open">
+              <div class="wg-dropdown__trigger">success</div>
+              <div class="wg-dropdown__panel wg-dropdown__panel--tone-success"><div class="wg-dropdown__panel-body"><div class="wg-dropdown__item">成功</div></div></div>
+            </div>
+            <div class="wg-dropdown wg-dropdown--pos-bottom-start is-open">
+              <div class="wg-dropdown__trigger">warning</div>
+              <div class="wg-dropdown__panel wg-dropdown__panel--tone-warning"><div class="wg-dropdown__panel-body"><div class="wg-dropdown__item">警告</div></div></div>
+            </div>
+            <div class="wg-dropdown wg-dropdown--pos-bottom-start is-open">
+              <div class="wg-dropdown__trigger">danger</div>
+              <div class="wg-dropdown__panel wg-dropdown__panel--tone-danger"><div class="wg-dropdown__panel-body"><div class="wg-dropdown__item">危险</div></div></div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================== -->
+      <!-- Section 12 · disabled + loading -->
+      <!-- ============================== -->
+      <section id="disabled" class="section">
+        <span class="section__num">12</span>
+        <h2 class="section__title">disabled 禁用态 + loading 加载态 <span class="cat-tag cat-tag--select">states</span></h2>
+
+        <div class="demo-card">
+          <div class="demo-card__title">disabled + loading <span class="demo-card__title-tag">states</span></div>
+          <div class="demo-card__row">
+
+            <div class="wg-dropdown is-disabled">
+              <div class="wg-dropdown__trigger">
+                <span class="wg-dropdown__trigger-text">禁用态</span>
+                <span class="icon icon--sm icon--chevron wg-dropdown__trigger-icon"></span>
+              </div>
+            </div>
+
+            <div class="wg-dropdown wg-dropdown--select wg-dropdown--pos-bottom-start is-open">
+              <div class="wg-dropdown__trigger">
+                <span class="wg-dropdown__trigger-text">加载中</span>
+                <span class="icon icon--sm icon--chevron wg-dropdown__trigger-icon"></span>
+              </div>
+              <div class="wg-dropdown__panel">
+                <div class="wg-dropdown__loading">
+                  <div class="wg-dropdown__spinner"></div>
+                  <span>正在加载选项...</span>
+                </div>
+              </div>
+            </div>
+
+            <div id="loading" class="wg-dropdown wg-dropdown--select wg-dropdown--pos-bottom-start is-open">
+              <div class="wg-dropdown__trigger">
+                <span class="wg-dropdown__trigger-text wg-dropdown__trigger-text--placeholder">暂无数据</span>
+                <span class="icon icon--sm icon--chevron wg-dropdown__trigger-icon"></span>
+              </div>
+              <div class="wg-dropdown__panel">
+                <div class="wg-dropdown__panel-body">
+                  <div class="wg-dropdown__empty">暂无匹配的数据</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================== -->
+      <!-- Section 13 · API 参数文档       -->
+      <!-- ============================== -->
+      <section id="api-props" class="section">
+        <span class="section__num">13</span>
+        <h2 class="section__title">Props 完整参数表 <span class="cat-tag cat-tag--mode">API</span></h2>
+        <p class="section__desc">所有 prop 按 mode 分组列示，覆盖 dropdown / popover / select / multi-select / menu 5 种 mode。</p>
+
+        <table class="param-table">
+          <thead>
+            <tr>
+              <th style="width:160px">Prop</th>
+              <th style="width:140px">类型</th>
+              <th style="width:120px">默认值</th>
+              <th>说明 / 适用 mode</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>mode</code><span class="required"> *</span></td><td class="type">'dropdown' | 'popover' | 'select' | 'multi-select' | 'menu'</td><td>'dropdown'</td><td>组件模式，5 选 1</td></tr>
+            <tr><td><code>modelValue</code><span class="required"> *</span></td><td class="type">string | number | Array | null</td><td>null</td><td>v-model 绑定值（select/multi-select 必填）</td></tr>
+            <tr><td><code>options</code></td><td class="type">Array&lt;Option&gt;</td><td>[]</td><td>选项数组（select/multi-select 用）</td></tr>
+            <tr><td><code>items</code></td><td class="type">Array&lt;Item&gt;</td><td>[]</td><td>菜单项数组（dropdown/mmenu 用）</td></tr>
+            <tr><td><code>trigger</code></td><td class="type">'click' | 'hover' | 'focus' | 'manual' | 'contextmenu'</td><td>随 mode 变</td><td>触发方式，详见下方 trigger 表</td></tr>
+            <tr><td><code>position</code></td><td class="type">'bottom-start' | 'bottom' | 'bottom-end' | 'top-start' | 'top' | 'top-end' | 'left-start' | 'left' | 'left-end' | 'right-start' | 'right' | 'right-end'</td><td>'bottom-start'</td><td>浮层位置，12 种</td></tr>
+            <tr><td><code>arrow</code></td><td class="type">boolean</td><td>false</td><td>是否显示气泡箭头（popover 用）</td></tr>
+            <tr><td><code>offset</code></td><td class="type">number</td><td>6</td><td>浮层距 trigger 的偏移（px）</td></tr>
+            <tr><td><code>size</code></td><td class="type">'sm' | 'md' | 'lg'</td><td>'md'</td><td>trigger 尺寸</td></tr>
+            <tr><td><code>tone</code></td><td class="type">'neutral' | 'primary' | 'success' | 'warning' | 'danger'</td><td>'neutral'</td><td>色调（panel 顶边 3px）</td></tr>
+            <tr><td><code>placeholder</code></td><td class="type">string</td><td>'请选择'</td><td>占位文字（select 用）</td></tr>
+            <tr><td><code>searchable</code></td><td class="type">boolean</td><td>false</td><td>开启本地搜索（select/multi-select 用）</td></tr>
+            <tr><td><code>clearable</code></td><td class="type">boolean</td><td>false</td><td>显示清空按钮（select/multi-select 用）</td></tr>
+            <tr><td><code>multiple</code></td><td class="type">boolean</td><td>false</td><td>多选模式（等价于 mode='multi-select'）</td></tr>
+            <tr><td><code>max</code></td><td class="type">number</td><td>Infinity</td><td>最多可选几项（multi-select 用）</td></tr>
+            <tr><td><code>remote</code></td><td class="type">boolean</td><td>false</td><td>开启远程搜索</td></tr>
+            <tr><td><code>remoteFunction</code></td><td class="type">(keyword: string) =&gt; Promise&lt;Option[]&gt;</td><td>-</td><td>远程搜索函数</td></tr>
+            <tr><td><code>debounce</code></td><td class="type">number</td><td>300</td><td>远程搜索防抖（ms）</td></tr>
+            <tr><td><code>virtual</code></td><td class="type">boolean</td><td>false</td><td>启用虚拟滚动（options &gt; 100 时建议开启）</td></tr>
+            <tr><td><code>rowHeight</code></td><td class="type">number</td><td>36</td><td>虚拟滚动行高</td></tr>
+            <tr><td><code>loading</code></td><td class="type">boolean</td><td>false</td><td>加载态</td></tr>
+            <tr><td><code>disabled</code></td><td class="type">boolean</td><td>false</td><td>禁用态</td></tr>
+            <tr><td><code>visible</code></td><td class="type">boolean</td><td>-</td><td>v-model:visible 受控显隐（trigger='manual' 时用）</td></tr>
+            <tr><td><code>closeOnClickOutside</code></td><td class="type">boolean</td><td>true</td><td>点击外部关闭</td></tr>
+            <tr><td><code>closeOnEsc</code></td><td class="type">boolean</td><td>true</td><td>按 Esc 关闭</td></tr>
+            <tr><td><code>hideOnSelect</code></td><td class="type">boolean</td><td>true</td><td>选中后自动关闭（multi-select 默认 false）</td></tr>
+            <tr><td><code>block</code></td><td class="type">boolean</td><td>false</td><td>trigger 撑满父容器宽度</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Events -->
+      <section id="api-events" class="section">
+        <span class="section__num">14</span>
+        <h2 class="section__title">Events 事件表 <span class="cat-tag cat-tag--mode">API</span></h2>
+
+        <table class="param-table">
+          <thead>
+            <tr>
+              <th style="width:200px">Event</th>
+              <th style="width:240px">参数</th>
+              <th>说明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>update:modelValue</code></td><td class="type">(value: any)</td><td>v-model 绑定值变化时触发</td></tr>
+            <tr><td><code>update:visible</code></td><td class="type">(visible: boolean)</td><td>v-model:visible 显隐变化时触发</td></tr>
+            <tr><td><code>change</code></td><td class="type">(option: Option, index: number)</td><td>选项变化时触发（select/multi-select）</td></tr>
+            <tr><td><code>select</code></td><td class="type">(option: Option)</td><td>选中某项时触发</td></tr>
+            <tr><td><code>deselect</code></td><td class="type">(option: Option)</td><td>取消选中时触发（multi-select）</td></tr>
+            <tr><td><code>clear</code></td><td class="type">()</td><td>点击清空按钮时触发</td></tr>
+            <tr><td><code>visible-change</code></td><td class="type">(visible: boolean)</td><td>面板显隐切换时触发</td></tr>
+            <tr><td><code>search</code></td><td class="type">(keyword: string)</td><td>搜索输入变化时触发</td></tr>
+            <tr><td><code>scroll-bottom</code></td><td class="type">()</td><td>虚拟列表滚到底部触发（远程加载更多）</td></tr>
+            <tr><td><code>command</code></td><td class="type">(item: Item, index: number)</td><td>点击菜单项时触发（dropdown/menu）</td></tr>
+            <tr><td><code>click-outside</code></td><td class="type">(event: MouseEvent)</td><td>点击外部时触发</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Slots -->
+      <section id="api-slots" class="section">
+        <span class="section__num">15</span>
+        <h2 class="section__title">Slots 插槽表 <span class="cat-tag cat-tag--mode">API</span></h2>
+
+        <table class="param-table">
+          <thead>
+            <tr>
+              <th style="width:180px">Slot</th>
+              <th style="width:140px">scope</th>
+              <th>说明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>default</code></td><td class="type">-</td><td>面板内容（覆盖默认渲染；通常用于 popover 富内容）</td></tr>
+            <tr><td><code>trigger</code></td><td class="type">-</td><td>触发器内容（覆盖默认文本 trigger）</td></tr>
+            <tr><td><code>prefix</code></td><td class="type">-</td><td>trigger 内的前缀图标</td></tr>
+            <tr><td><code>suffix</code></td><td class="type">-</td><td>trigger 内的后缀图标</td></tr>
+            <tr><td><code>empty</code></td><td class="type">-</td><td>空状态自定义内容（select 用）</td></tr>
+            <tr><td><code>loading</code></td><td class="type">-</td><td>加载态自定义内容（select 用）</td></tr>
+            <tr><td><code>option</code></td><td class="type">{ option, index, selected }</td><td>自定义 option 渲染（select/multi-select）</td></tr>
+            <tr><td><code>item</code></td><td class="type">{ item, index, disabled }</td><td>自定义菜单项渲染（dropdown/mmenu）</td></tr>
+            <tr><td><code>tag</code></td><td class="type">{ option, index }</td><td>自定义 tag 渲染（multi-select）</td></tr>
+            <tr><td><code>header</code></td><td class="type">-</td><td>面板头部（通常放搜索框或说明）</td></tr>
+            <tr><td><code>footer</code></td><td class="type">-</td><td>面板底部（通常放分页或确认按钮）</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <footer style="padding:var(--space-6) 0;color:var(--color-text-tertiary);font-size:var(--font-sm);text-align:center;border-top:1px solid var(--color-border-light);margin-top:var(--space-8)">
+        vue-dropdown-skill · base-dropdown 万能浮层 · 5 mode × 12 position × 4 trigger = 240+ 组合
+      </footer>
+
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "title": "商品列表",
+    "filters": ["综合", "销量", "价格", "新品"],
+    "products": [
+      { "id": "p001", "name": "无线蓝牙耳机", "price": 299, "originalPrice": 599, "image": "https://picsum.photos/200/200", "sales": 1200 },
+      { "id": "p002", "name": "智能手表", "price": 1299, "originalPrice": 1999, "image": "https://picsum.photos/200/201", "sales": 856 },
+      { "id": "p003", "name": "便携充电宝", "price": 99, "originalPrice": 199, "image": "https://picsum.photos/200/202", "sales": 3400 },
+      { "id": "p004", "name": "机械键盘", "price": 459, "originalPrice": 899, "image": "https://picsum.photos/200/203", "sales": 567 }
+    ]
+  }
+}

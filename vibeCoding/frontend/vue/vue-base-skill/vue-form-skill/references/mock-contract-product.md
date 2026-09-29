@@ -124,20 +124,22 @@ export const goodsSchema: FormSchema = {
       dateType: 'date',
     },
 
-    // ---- 特殊类型：手机号 ----
+    // ---- 文本子类型：手机号（type 固定 input，靠 subType 推导正则） ----
     {
       prop: 'supplierPhone',
       label: '供应商电话',
-      type: 'phone',
+      type: 'input',
+      subType: 'phone',
       required: true,
       placeholder: '请输入供应商联系电话',
     },
 
-    // ---- 特殊类型：身份证 ----
+    // ---- 文本子类型：身份证 ----
     {
       prop: 'supplierIdCard',
       label: '供应商证件号',
-      type: 'idcard',
+      type: 'input',
+      subType: 'idcard',
       placeholder: '请输入供应商法人身份证号',
     },
   ],

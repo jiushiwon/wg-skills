@@ -1,0 +1,16 @@
+{
+  "name": "action-sheet",
+  "title": "操作菜单",
+  "category": "feedback",
+  "description": "底部操作菜单",
+  "aliases": ["底部菜单", "actionsheet", "bottom-menu"],
+  "props": [
+    { "name": "show", "type": "boolean", "default": false, "desc": "显示状态" },
+    { "name": "title", "type": "string", "default": "", "desc": "标题" },
+    { "name": "options", "type": "array", "default": [], "desc": "选项 [{text, value, destructive}]" },
+    { "name": "showCancel", "type": "boolean", "default": true, "desc": "显示取消按钮" },
+    { "name": "cancelText", "type": "string", "default": "取消", "desc": "取消按钮文字" }
+  ],
+  "events": ["close", "select"],
+  "slots": []
+}

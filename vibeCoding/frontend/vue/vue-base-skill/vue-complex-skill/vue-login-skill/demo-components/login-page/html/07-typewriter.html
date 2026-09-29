@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login / 12 - 打字机风格</title>
+  <link rel="stylesheet" href="../../shared/demo.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+    .login-page--typewriter {
+      min-height: 100vh;
+      background: #0d1117;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* 代码雨 */
+    .code-rain {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: space-around;
+      overflow: hidden;
+    }
+
+    .code-column {
+      width: 20px;
+      height: 200%;
+      background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(0, 255, 0, 0.1) 50%,
+        transparent 100%
+      );
+      animation: code-fall 3s linear infinite;
+    }
+
+    .code-column:nth-child(1) { animation-delay: 0s; }
+    .code-column:nth-child(2) { animation-delay: 0.15s; }
+    .code-column:nth-child(3) { animation-delay: 0.3s; }
+    .code-column:nth-child(4) { animation-delay: 0.45s; }
+    .code-column:nth-child(5) { animation-delay: 0.6s; }
+    .code-column:nth-child(6) { animation-delay: 0.75s; }
+    .code-column:nth-child(7) { animation-delay: 0.9s; }
+    .code-column:nth-child(8) { animation-delay: 1.05s; }
+    .code-column:nth-child(9) { animation-delay: 1.2s; }
+    .code-column:nth-child(10) { animation-delay: 1.35s; }
+    .code-column:nth-child(11) { animation-delay: 1.5s; }
+    .code-column:nth-child(12) { animation-delay: 1.65s; }
+    .code-column:nth-child(13) { animation-delay: 1.8s; }
+    .code-column:nth-child(14) { animation-delay: 1.95s; }
+    .code-column:nth-child(15) { animation-delay: 2.1s; }
+    .code-column:nth-child(16) { animation-delay: 2.25s; }
+    .code-column:nth-child(17) { animation-delay: 2.4s; }
+    .code-column:nth-child(18) { animation-delay: 2.55s; }
+    .code-column:nth-child(19) { animation-delay: 2.7s; }
+    .code-column:nth-child(20) { animation-delay: 2.85s; }
+
+    @keyframes code-fall {
+      from { transform: translateY(-50%); }
+      to { transform: translateY(0); }
+    }
+
+    /* 终端卡片 */
+    .login-card--terminal {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      overflow: hidden;
+      width: 420px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* 终端头部 */
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: #21262d;
+      border-bottom: 1px solid #30363d;
+    }
+
+    .terminal-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .dot--red { background: #f85149; }
+    .dot--yellow { background: #d29922; }
+    .dot--green { background: #3fb950; }
+
+    .terminal-title {
+      color: #8b949e;
+      font-size: 13px;
+    }
+
+    /* 终端提示 */
+    .terminal-prompt {
+      padding: 16px;
+      color: #3fb950;
+      font-size: 14px;
+    }
+
+    .prompt {
+      margin-right: 8px;
+      color: #8b949e;
+    }
+
+    .cursor {
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* 表单 */
+    .terminal-form {
+      padding: 16px;
+    }
+
+    .terminal-form .login-form__group {
+      margin-bottom: 16px;
+    }
+
+    .terminal-form .login-form__label {
+      color: #8b949e;
+      font-size: 12px;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .terminal-form .login-input {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 10px 12px;
+      color: #c9d1d9;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      width: 100%;
+    }
+
+    .terminal-form .login-input:focus {
+      border-color: #58a6ff;
+      box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+    }
+
+    .terminal-form .login-input::placeholder {
+      color: #484f58;
+    }
+
+    .terminal-form .login-button {
+      background: #238636;
+      color: #fff;
+      border: 1px solid rgba(240, 246, 252, 0.1);
+      border-radius: 6px;
+      height: 40px;
+      width: 100%;
+      margin-top: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+    }
+
+    .terminal-form .login-button:hover {
+      background: #2ea043;
+    }
+
+    /* 底部 */
+    .terminal-footer {
+      padding: 16px;
+      border-top: 1px solid #30363d;
+      text-align: center;
+    }
+
+    .terminal-footer a {
+      color: #58a6ff;
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    .terminal-footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-page login-page--typewriter">
+    <!-- 代码雨 -->
+    <div class="code-rain">
+      <div class="code-column"></div>
+      <div class="code-column"></div>
+      <div class="code-column"></div>
+      <div class="code-column"></div>
+      <div class="code-column"></div>
+      <div class="code-column"></div>
+      <div class="code-column"></div>
+      <div class="code-column"></div>
+      <div class="code-column"></div>
+      <div class="code-column"></div>
+      <div class="code-column"></div>
+      <div class="code-column"></div>
+      <div class="code-column"></div>
+      <div class="code-column"></div>
+      <div class="code-column"></div>
+      <div class="code-column"></div>
+      <div class="code-column"></div>
+      <div class="code-column"></div>
+      <div class="code-column"></div>
+      <div class="code-column"></div>
+    </div>
+
+    <!-- 终端卡片 -->
+    <div class="login-card--terminal">
+      <div class="terminal-header">
+        <div class="terminal-dots">
+          <span class="dot dot--red"></span>
+          <span class="dot dot--yellow"></span>
+          <span class="dot dot--green"></span>
+        </div>
+        <div class="terminal-title">login.sh</div>
+      </div>
+
+      <div class="terminal-prompt">
+        <span class="prompt">$</span>
+        <span id="typed-text"></span>
+        <span class="cursor">_</span>
+      </div>
+
+      <form class="terminal-form" onsubmit="return handleSubmit(event)">
+        <div class="login-form__group">
+          <label class="login-form__label">username:</label>
+          <input type="text" class="login-input" placeholder="Enter username" required />
+        </div>
+
+        <div class="login-form__group">
+          <label class="login-form__label">password:</label>
+          <input type="password" class="login-input" placeholder="Enter password" required />
+        </div>
+
+        <button type="submit" class="login-button">$ login --now</button>
+      </form>
+
+      <div class="terminal-footer">
+        <a href="#">$ register --new-account</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 打字机效果
+    const typedText = document.getElementById('typed-text')
+    const fullText = 'Welcome to the Matrix...'
+    let i = 0
+
+    function typeWriter() {
+      if (i < fullText.length) {
+        typedText.textContent += fullText.charAt(i)
+        i++
+        setTimeout(typeWriter, 100)
+      }
+    }
+
+    // 页面加载后开始打字
+    window.addEventListener('load', () => {
+      setTimeout(typeWriter, 500)
+    })
+
+    function handleSubmit(e) {
+      e.preventDefault()
+      alert('登录成功！（Demo）')
+      return false
+    }
+  </script>
+</body>
+</html>

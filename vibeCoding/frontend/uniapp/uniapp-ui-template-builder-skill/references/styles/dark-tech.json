@@ -1,0 +1,94 @@
+{
+  "name": "暗黑科技",
+  "id": "dark-tech",
+  "description": "深色背景，霓虹点缀，赛博朋克。适合游戏、科技、数据可视化。",
+  "tokens": {
+    "colors": {
+      "primary": "#00FFFF",
+      "primaryLight": "#80FFFF",
+      "primaryDark": "#00CCCC",
+      "secondary": "#FF00FF",
+      "secondaryLight": "#FF80FF",
+      "accent": "#FFFF00",
+      "background": "#0D0D0D",
+      "backgroundSecondary": "#161616",
+      "surface": "#1A1A1A",
+      "surfaceSecondary": "#0F0F0F",
+      "border": "#2A2A2A",
+      "textPrimary": "#FFFFFF",
+      "textSecondary": "#B0B0B0",
+      "textTertiary": "#707070",
+      "success": "#00FF7F",
+      "warning": "#FFD700",
+      "error": "#FF4500",
+      "info": "#00BFFF",
+      "neonCyan": "#00FFFF",
+      "neonPink": "#FF00FF",
+      "neonYellow": "#FFFF00",
+      "neonGreen": "#39FF14"
+    },
+    "typography": {
+      "fontFamily": "'SF Mono', 'Fira Code', 'Consolas', monospace",
+      "fontSizeXs": "10px",
+      "fontSizeSm": "12px",
+      "fontSizeMd": "14px",
+      "fontSizeLg": "16px",
+      "fontSizeXl": "18px",
+      "fontSize2xl": "20px",
+      "fontSize3xl": "24px",
+      "fontWeightNormal": "400",
+      "fontWeightMedium": "500",
+      "fontWeightSemibold": "600",
+      "fontWeightBold": "700"
+    },
+    "spacing": {
+      "xs": "4px",
+      "sm": "8px",
+      "md": "12px",
+      "lg": "16px",
+      "xl": "20px",
+      "2xl": "24px",
+      "3xl": "32px",
+      "4xl": "48px"
+    },
+    "radius": {
+      "none": "0px",
+      "sm": "2px",
+      "md": "4px",
+      "lg": "8px",
+      "xl": "12px",
+      "full": "9999px"
+    },
+    "shadow": {
+      "sm": "0 0 5px rgba(0, 255, 255, 0.3)",
+      "md": "0 0 10px rgba(0, 255, 255, 0.5)",
+      "lg": "0 0 20px rgba(0, 255, 255, 0.7)",
+      "glow": "0 0 30px rgba(0, 255, 255, 0.8)",
+      "pink": "0 0 20px rgba(255, 0, 255, 0.5)"
+    },
+    "transition": {
+      "fast": "100ms",
+      "normal": "150ms",
+      "slow": "250ms"
+    }
+  },
+  "effects": {
+    "glow": {
+      "text": "text-shadow: 0 0 10px currentColor",
+      "border": "box-shadow: 0 0 10px {color}",
+      "element": "filter: drop-shadow(0 0 10px {color})"
+    },
+    "scanline": {
+      "background": "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 255, 0.03) 2px, rgba(0, 255, 255, 0.03) 4px)"
+    },
+    "grid": {
+      "background": "linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px)",
+      "backgroundSize": "20px 20px"
+    }
+  },
+  "usage": {
+    "scenarios": ["游戏平台", "数据大屏", "监控系统", "科技产品", "IoT设备"],
+    "avoid": ["金融", "医疗", "儿童产品", "传统企业"]
+  },
+  "examples": ["Steam", "特斯拉", "英雄联盟", "赛博朋克2077"]
+}

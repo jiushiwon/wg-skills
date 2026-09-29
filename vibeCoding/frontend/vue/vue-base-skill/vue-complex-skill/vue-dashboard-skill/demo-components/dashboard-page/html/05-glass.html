@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>毛玻璃 · 物流监控报告 - Vue3 Dashboard Skill Demo</title>
+  <link rel="stylesheet" href="../../shared/tokens.css" />
+  <link rel="stylesheet" href="../../shared/base-card.css" />
+  <link rel="stylesheet" href="../../shared/demo.css" />
+  <style>
+    :root {
+      --color-bg: #0f0f23;
+      --color-surface: rgba(255,255,255,0.04);
+      --color-text: #e2e8f0;
+      --color-text-secondary: #94a3b8;
+      --color-text-tertiary: #64748b;
+      --color-border: rgba(255,255,255,0.08);
+      --color-border-light: rgba(255,255,255,0.04);
+      --color-bg-secondary: rgba(255,255,255,0.02);
+      --color-bg-hover: rgba(255,255,255,0.06);
+    }
+    body { background: linear-gradient(135deg, #0f0f23, #1a1a3e, #0f0f23); }
+    body::before {
+      content: ''; position: fixed; width: 500px; height: 500px; top: -150px; right: -150px;
+      background: radial-gradient(circle, rgba(139,92,246,0.1), transparent 70%);
+      border-radius: 50%; pointer-events: none; z-index: 0;
+    }
+    body::after {
+      content: ''; position: fixed; width: 400px; height: 400px; bottom: -100px; left: -100px;
+      background: radial-gradient(circle, rgba(59,130,246,0.08), transparent 70%);
+      border-radius: 50%; pointer-events: none; z-index: 0;
+    }
+    .dash-page { background: linear-gradient(135deg, #0f0f23, #1a1a3e, #0f0f23); padding: 24px; gap: 16px; position: relative; z-index: 1; }
+    .dash-header__title { color: #e2e8f0; }
+    .dash-header__subtitle { color: #94a3b8; }
+    .dash-scene-tag { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 500; background: rgba(139,92,246,0.08); color: #a78bfa; border: 1px solid rgba(139,92,246,0.2); margin-bottom: 8px; }
+    .header-actions { display: flex; align-items: center; gap: var(--space-3); }
+    .btn { padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); font-size: var(--font-sm); cursor: pointer; border: 1px solid rgba(139,92,246,0.2); background: rgba(139,92,246,0.08); color: #c4b5fd; backdrop-filter: blur(10px); transition: all 0.2s ease; }
+    .btn:hover { border-color: rgba(139,92,246,0.4); color: #a78bfa; }
+    .btn--primary { background: rgba(139,92,246,0.2); border-color: rgba(139,92,246,0.4); }
+
+    /* 毛玻璃卡片覆盖 */
+    .base-card { backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.04); border-radius: 12px; }
+    .base-card__title { color: #c4b5fd; }
+
+    /* ---- bento ---- */
+    .dash-bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .dash-kpi-card--bento { flex-direction: column; align-items: flex-start; gap: 8px; padding: 24px; }
+    .dash-kpi-card--bento .dash-kpi-card__label { font-size: 12px; color: #94a3b8; }
+    .dash-kpi-card--bento .dash-kpi-card__value { font-size: 32px; font-weight: 700; color: #c4b5fd; }
+    .dash-kpi-card--bento .dash-kpi-card__trend { font-size: 13px; }
+    .dash-kpi-card__trend--up { color: #52c41a; }
+    .dash-kpi-card__trend--down { color: #f5222d; }
+    .dash-kpi-pos-0 { grid-area: 1 / 1 / 2 / 2; }
+    .dash-kpi-pos-1 { grid-area: 1 / 2 / 2 / 3; }
+    .dash-kpi-pos-2 { grid-area: 1 / 3 / 2 / 4; }
+    .dash-kpi-pos-3 { grid-area: 1 / 4 / 2 / 5; }
+    .dash-bento-grid .bento-chart { grid-area: 2 / 1 / 3 / 3; }
+    .dash-bento-grid .bento-metrics { grid-area: 2 / 3 / 3 / 5; }
+    .dash-bento-grid .bento-compare { grid-area: 3 / 1 / 4 / 3; }
+    .dash-bento-grid .bento-table { grid-area: 3 / 3 / 4 / 5; }
+    .dash-bento-grid .bento-alerts { grid-area: 4 / 1 / 5 / 3; }
+    .dash-bento-grid .bento-progress { grid-area: 4 / 3 / 5 / 5; }
+
+    /* ---- 混合图表 ---- */
+    .combo-chart { position: relative; height: 240px; display: flex; align-items: flex-end; gap: 12px; padding: 16px 0; }
+    .combo-col { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; height: 100%; justify-content: flex-end; }
+    .combo-bar { width: 100%; border-radius: 4px 4px 0 0; min-width: 30px; }
+    .combo-bar--revenue { background: linear-gradient(to top, #8b5cf6, #a78bfa); }
+    .combo-label { font-size: 11px; color: #64748b; margin-top: 8px; }
+    .combo-dot { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; box-shadow: 0 0 8px rgba(245,158,11,0.4); z-index: 2; }
+    .combo-line { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+    .combo-legend { display: flex; gap: 24px; margin-top: 12px; }
+    .combo-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #94a3b8; }
+    .combo-legend-item__dot { width: 8px; height: 8px; border-radius: 2px; }
+
+    /* ---- 指标网格 ---- */
+    .metric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .metric-item { display: flex; flex-direction: column; gap: 6px; }
+    .metric-item__header { display: flex; justify-content: space-between; align-items: baseline; }
+    .metric-item__name { font-size: 13px; color: #94a3b8; }
+    .metric-item__val { font-size: 18px; font-weight: 700; color: #c4b5fd; }
+    .metric-item__bar { height: 6px; background: rgba(139,92,246,0.1); border-radius: 3px; overflow: hidden; }
+    .metric-item__bar-fill { height: 100%; border-radius: 3px; }
+    .metric-item__bar-fill--purple { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+    .metric-item__bar-fill--blue { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+    .metric-item__bar-fill--green { background: linear-gradient(90deg, #10b981, #34d399); }
+    .metric-item__bar-fill--orange { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+    .metric-item__sub { font-size: 11px; color: #64748b; }
+
+    /* ---- 同比 ---- */
+    .compare-list { display: flex; flex-direction: column; gap: 2px; }
+    .compare-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .compare-item__name { font-size: 14px; color: #e2e8f0; min-width: 80px; }
+    .compare-item__bars { flex: 1; display: flex; gap: 4px; align-items: center; }
+    .compare-item__bar { height: 18px; border-radius: 3px; display: flex; align-items: center; padding: 0 6px; font-size: 10px; font-weight: 600; color: #fff; min-width: 24px; }
+    .compare-item__bar--this { background: #8b5cf6; }
+    .compare-item__bar--last { background: rgba(139,92,246,0.25); color: #c4b5fd; }
+    .compare-item__change { font-size: 12px; font-weight: 600; min-width: 50px; text-align: right; }
+    .compare-item__change--up { color: #52c41a; }
+    .compare-item__change--down { color: #f5222d; }
+
+    /* ---- 表格 ---- */
+    .dash-table { width: 100%; display: table; }
+    .dash-table__head { display: table-header-group; }
+    .dash-table__body { display: table-row-group; }
+    .dash-table__row { display: table-row; }
+    .dash-table__row--header { background: rgba(139,92,246,0.05); }
+    .dash-table__cell { display: table-cell; padding: 8px 12px; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 13px; vertical-align: middle; }
+    .dash-table__cell--header { font-weight: 600; color: #94a3b8; font-size: 12px; }
+    .dash-status-tag { display: inline-flex; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 500; }
+    .dash-status-tag--completed { background: rgba(16,185,129,0.15); color: #34d399; }
+
+    /* ---- 告警列表 ---- */
+    .alert-list { display: flex; flex-direction: column; gap: var(--space-2); }
+    .alert-item { display: flex; gap: var(--space-3); align-items: center; padding: var(--space-2) 0; }
+    .alert-item__avatar { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+    .alert-item__info { flex: 1; min-width: 0; }
+    .alert-item__text { font-size: 13px; color: #c0ccdd; }
+    .alert-item__text strong { color: #a78bfa; }
+    .alert-item__time { font-size: 11px; color: #64748b; margin-top: 2px; }
+
+    /* ---- 进度列表 ---- */
+    .progress-list { display: flex; flex-direction: column; gap: 12px; }
+    .progress-item { display: flex; align-items: center; gap: 12px; }
+    .progress-item__label { font-size: 13px; color: #94a3b8; width: 80px; flex-shrink: 0; }
+    .progress-item__bar { flex: 1; height: 6px; background: rgba(139,92,246,0.1); border-radius: 3px; overflow: hidden; }
+    .progress-item__fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+    .progress-item__val { font-size: 13px; font-weight: 600; color: #c4b5fd; width: 50px; text-align: right; }
+
+    @media (max-width: 1024px) {
+      .dash-bento-grid { grid-template-columns: repeat(2, 1fr); }
+      .dash-kpi-pos-0, .dash-kpi-pos-1, .dash-kpi-pos-2, .dash-kpi-pos-3 { grid-area: auto; }
+      .dash-bento-grid .bento-chart, .dash-bento-grid .bento-metrics,
+      .dash-bento-grid .bento-compare, .dash-bento-grid .bento-table,
+      .dash-bento-grid .bento-alerts, .dash-bento-grid .bento-progress { grid-area: auto; }
+      .metric-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="dash-page">
+    <div class="dash-header" role="banner">
+      <div>
+        <span class="dash-scene-tag">物流</span>
+        <div class="dash-header__title">物流监控报告</div>
+        <div class="dash-header__subtitle">2024 年 Q4 · 物流运营数据</div>
+      </div>
+      <div class="header-actions">
+        <div class="btn">筛选</div>
+        <div class="btn btn--primary">导出 PDF</div>
+      </div>
+    </div>
+
+    <div class="dash-bento-grid">
+      <!-- KPI -->
+      <div class="base-card dash-kpi-card dash-kpi-card--bento dash-kpi-pos-0" id="kpi-0"></div>
+      <div class="base-card dash-kpi-card dash-kpi-card--bento dash-kpi-pos-1" id="kpi-1"></div>
+      <div class="base-card dash-kpi-card dash-kpi-card--bento dash-kpi-pos-2" id="kpi-2"></div>
+      <div class="base-card dash-kpi-card dash-kpi-card--bento dash-kpi-pos-3" id="kpi-3"></div>
+
+      <!-- 混合图表 -->
+      <div class="base-card bento-chart" style="padding:20px">
+        <div class="base-card__title" style="margin-bottom:12px">包裹量趋势 · 达达率</div>
+        <div class="combo-chart" id="combo-chart"></div>
+        <div class="combo-legend">
+          <span class="combo-legend-item"><span class="combo-legend-item__dot" style="background:#8b5cf6;border-radius:2px"></span> 包裹量</span>
+          <span class="combo-legend-item"><span class="combo-legend-item__dot" style="background:#f59e0b;border-radius:50%"></span> 准时率</span>
+        </div>
+      </div>
+
+      <!-- 核心指标 -->
+      <div class="base-card bento-metrics" style="padding:20px">
+        <div class="base-card__title" style="margin-bottom:12px">核心指标达成率</div>
+        <div class="metric-grid" id="metrics"></div>
+      </div>
+
+      <!-- 同比分析 -->
+      <div class="base-card bento-compare" style="padding:20px">
+        <div class="base-card__title" style="margin-bottom:12px">区域同比分析</div>
+        <div class="compare-list" id="compare-list"></div>
+      </div>
+
+      <!-- 数据表格 -->
+      <div class="base-card bento-table" style="padding:20px">
+        <div class="base-card__title" style="margin-bottom:12px">月度明细</div>
+        <div class="dash-table" role="table">
+          <div class="dash-table__head" role="rowgroup">
+            <div class="dash-table__row dash-table__row--header" role="row">
+              <div class="dash-table__cell dash-table__cell--header" role="columnheader">月份</div>
+              <div class="dash-table__cell dash-table__cell--header" role="columnheader">包裹量</div>
+              <div class="dash-table__cell dash-table__cell--header" role="columnheader">准时率</div>
+              <div class="dash-table__cell dash-table__cell--header" role="columnheader">同比增长</div>
+            </div>
+          </div>
+          <div class="dash-table__body" role="rowgroup" id="table-body"></div>
+        </div>
+      </div>
+
+      <!-- 告警 -->
+      <div class="base-card bento-alerts" style="padding:20px">
+        <div class="base-card__title" style="margin-bottom:12px">异常告警</div>
+        <div class="alert-list" id="alert-list"></div>
+      </div>
+
+      <!-- 网点状态 -->
+      <div class="base-card bento-progress" style="padding:20px">
+        <div class="base-card__title" style="margin-bottom:12px">网点运营状态</div>
+        <div class="progress-list" id="hub-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const trendIcon = { up: '↑', down: '↓', flat: '→' }
+
+    const kpis = [
+      { label: '本季包裹量', value: '842 万件', trend: 'up', change: '+22.4%' },
+      { label: '准时送达率', value: '96.8%', trend: 'up', change: '+1.2%' },
+      { label: '平均时效', value: '1.8 天', trend: 'down', change: '-0.3 天' },
+      { label: '破损率', value: '0.12%', trend: 'down', change: '-0.05%' }
+    ]
+    kpis.forEach((k, i) => {
+      document.getElementById('kpi-' + i).innerHTML = `<div class="dash-kpi-card__label">${k.label}</div><div class="dash-kpi-card__value">${k.value}</div><div class="dash-kpi-card__trend dash-kpi-card__trend--${k.trend}">${trendIcon[k.trend]} ${k.change}</div>`
+    })
+
+    const months = ['10月', '11月', '12月', '1月', '2月', '3月']
+    const volume = [245, 268, 312, 278, 296, 305]
+    const onTime = [96.2, 97.1, 95.8, 96.5, 97.3, 96.8]
+    const maxV = Math.max(...volume)
+    const minOT = Math.min(...onTime) - 1, maxOT = Math.max(...onTime) + 1
+    const otRange = maxOT - minOT
+
+    document.getElementById('combo-chart').innerHTML = months.map((m, i) => {
+      const rh = (volume[i] / maxV) * 200
+      const dotY = 200 - ((onTime[i] - minOT) / otRange) * 200
+      return `<div class="combo-col"><div class="combo-dot" style="bottom:${dotY + 24}px"></div><div class="combo-bar combo-bar--revenue" style="height:${rh}px"></div><div class="combo-label">${m}</div></div>`
+    }).join('') + `<svg class="combo-line" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="${months.map((_, i) => { const x = (i + 0.5) / months.length * 100; const y = 100 - ((onTime[i] - minOT) / otRange) * 90 - 5; return `${x},${y}` }).join(' ')}" fill="none" stroke="#f59e0b" stroke-width="0.5" vector-effect="non-scaling-stroke"/></svg>`
+
+    const metrics = [
+      { name: '日均处理量', val: '9.2 万件', target: '10 万件', pct: 92, color: '--purple' },
+      { name: '24h 达达率', val: '78.5%', target: '85%', pct: 92, color: '--blue' },
+      { name: '签收确认率', val: '99.1%', target: '99.5%', pct: 99, color: '--green' },
+      { name: '客诉率', val: '0.3%', target: '0.2%', pct: 67, color: '--orange' }
+    ]
+    document.getElementById('metrics').innerHTML = metrics.map(m => `<div class="metric-item"><div class="metric-item__header"><span class="metric-item__name">${m.name}</span><span class="metric-item__val">${m.val}</span></div><div class="metric-item__bar"><div class="metric-item__bar-fill metric-item__bar-fill${m.color}" style="width:${m.pct}%"></div></div><div class="metric-item__sub">目标 ${m.target} · 达成 ${m.pct}%</div></div>`).join('')
+
+    const compares = [
+      { name: '华东区', thisY: 85, lastY: 68, change: '+25%' },
+      { name: '华南区', thisY: 72, lastY: 65, change: '+11%' },
+      { name: '华北区', thisY: 64, lastY: 58, change: '+10%' },
+      { name: '西南区', thisY: 48, lastY: 42, change: '+14%' },
+      { name: '西北区', thisY: 32, lastY: 28, change: '+14%' }
+    ]
+    document.getElementById('compare-list').innerHTML = compares.map(c => `<div class="compare-item"><div class="compare-item__name">${c.name}</div><div class="compare-item__bars"><div class="compare-item__bar compare-item__bar--this" style="width:${c.thisY}%"></div><div class="compare-item__bar compare-item__bar--last" style="width:${c.lastY}%"></div></div><div class="compare-item__change ${c.change.startsWith('+') ? 'compare-item__change--up' : 'compare-item__change--down'}">${c.change}</div></div>`).join('')
+
+    const tableData = [
+      { month: '2024-10', vol: '245 万件', rate: '96.2%', yoy: '+18.2%' },
+      { month: '2024-11', vol: '268 万件', rate: '97.1%', yoy: '+22.1%' },
+      { month: '2024-12', vol: '312 万件', rate: '95.8%', yoy: '+15.8%' },
+      { month: '2025-01', vol: '278 万件', rate: '96.5%', yoy: '+24.6%' },
+      { month: '2025-02', vol: '296 万件', rate: '97.3%', yoy: '+19.3%' },
+      { month: '2025-03', vol: '305 万件', rate: '96.8%', yoy: '+12.7%' }
+    ]
+    document.getElementById('table-body').innerHTML = tableData.map(d => `<div class="dash-table__row" role="row"><div class="dash-table__cell" role="cell">${d.month}</div><div class="dash-table__cell" role="cell"><strong>${d.vol}</strong></div><div class="dash-table__cell" role="cell">${d.rate}</div><div class="dash-table__cell" role="cell"><span class="dash-status-tag dash-status-tag--completed">${d.yoy}</span></div></div>`).join('')
+
+    const alerts = [
+      { avatar: '运', name: '运输', action: '华东线路延迟 2 小时（天气原因）', time: '30 分钟前', color: '#f59e0b' },
+      { avatar: '仓', name: '仓储', action: '上海仓库存预警（SKU-8842）', time: '1 小时前', color: '#f5222d' },
+      { avatar: '系', name: '系统', action: '广州分拨中心设备维护完成', time: '2 小时前', color: '#10b981' },
+      { avatar: '客', name: '客服', action: '批量投诉工单 12 件（同一发货地）', time: '3 小时前', color: '#f5222d' }
+    ]
+    document.getElementById('alert-list').innerHTML = alerts.map(a => `<div class="alert-item"><div class="alert-item__avatar" style="background:${a.color}20;color:${a.color}">${a.avatar}</div><div class="alert-item__info"><div class="alert-item__text"><strong>${a.name}</strong> ${a.action}</div><div class="alert-item__time">${a.time}</div></div></div>`).join('')
+
+    const hubs = [
+      { label: '华东中心', pct: 95, color: '#8b5cf6' },
+      { label: '华南中心', pct: 92, color: '#3b82f6' },
+      { label: '华北中心', pct: 88, color: '#10b981' },
+      { label: '西南中心', pct: 78, color: '#f59e0b' },
+      { label: '西北中心', pct: 72, color: '#f5222d' }
+    ]
+    document.getElementById('hub-list').innerHTML = hubs.map(d => `<div class="progress-item"><span class="progress-item__label">${d.label}</span><div class="progress-item__bar"><div class="progress-item__fill" style="width:${d.pct}%;background:${d.color}"></div></div><span class="progress-item__val">${d.pct}%</span></div>`).join('')
+  </script>
+</body>
+</html>

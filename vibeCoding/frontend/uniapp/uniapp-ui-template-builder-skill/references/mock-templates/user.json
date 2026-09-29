@@ -1,0 +1,94 @@
+{
+  "name": "用户相关Mock",
+  "description": "用户模块Mock数据模板，包含用户信息、会员、积分等",
+  "filename": "user.json",
+  "structure": {
+    "user": {
+      "id": "用户ID",
+      "username": "用户名",
+      "nickname": "用户昵称",
+      "avatar": "头像URL",
+      "phone": "手机号",
+      "email": "邮箱",
+      "gender": "性别: 0未知/1男/2女",
+      "birthday": "生日",
+      "level": "会员等级",
+      "points": "积分",
+      "balance": "余额",
+      "status": "状态: 0正常/1禁用"
+    },
+    "address": {
+      "id": "地址ID",
+      "userId": "用户ID",
+      "name": "收货人",
+      "phone": "电话",
+      "province": "省份",
+      "city": "城市",
+      "district": "区/县",
+      "detail": "详细地址",
+      "isDefault": "是否默认"
+    },
+    "coupon": {
+      "id": "优惠券ID",
+      "name": "优惠券名称",
+      "type": "类型: 1满减/2折扣/3立减",
+      "value": "优惠值",
+      "minAmount": "最低消费",
+      "startTime": "开始时间",
+      "endTime": "结束时间",
+      "status": "状态: 0未使用/1已使用/2已过期"
+    }
+  },
+  "example": {
+    "user": {
+      "id": "u001",
+      "username": "user001",
+      "nickname": "小明同学",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=user001",
+      "phone": "138****8888",
+      "email": "user@example.com",
+      "gender": 1,
+      "level": "黄金会员",
+      "points": 9999,
+      "balance": 168.50,
+      "status": 0
+    },
+    "addresses": [
+      {
+        "id": "a001",
+        "userId": "u001",
+        "name": "张三",
+        "phone": "13800138000",
+        "province": "广东省",
+        "city": "深圳市",
+        "district": "南山区",
+        "detail": "科技园南路88号",
+        "isDefault": true
+      }
+    ],
+    "coupons": [
+      {
+        "id": "c001",
+        "name": "新人满减券",
+        "type": 1,
+        "value": 20,
+        "minAmount": 100,
+        "status": 0
+      },
+      {
+        "id": "c002",
+        "name": "会员专享券",
+        "type": 2,
+        "value": 95,
+        "minAmount": 50,
+        "status": 0
+      }
+    ]
+  },
+  "states": {
+    "normal": "5-10条正常数据",
+    "empty": "空数组",
+    "loading": "延迟500ms响应",
+    "error": "返回错误码500"
+  }
+}

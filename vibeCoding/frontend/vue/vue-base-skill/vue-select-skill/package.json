@@ -1,0 +1,14 @@
+{
+  "name": "vue-select-skill",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./components/index.ts",
+  "exports": {
+    ".": "./components/index.ts",
+    "./*": "./*"
+  },
+  "peerDependencies": {
+    "vue": "^3.4.0"
+  }
+}

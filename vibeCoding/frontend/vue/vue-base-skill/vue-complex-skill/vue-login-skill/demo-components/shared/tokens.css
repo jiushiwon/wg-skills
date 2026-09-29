@@ -1,0 +1,82 @@
+/* Login Page Design Tokens */
+:root {
+  /* 背景 */
+  --login-bg-primary: #f5f7fa;
+  --login-bg-dark: #0a0a0f;
+  --login-bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+  /* 卡片 */
+  --login-card-bg: rgba(255, 255, 255, 0.95);
+  --login-card-bg-glass: rgba(255, 255, 255, 0.15);
+  --login-card-bg-dark: rgba(255, 255, 255, 0.05);
+  --login-card-border: rgba(255, 255, 255, 0.2);
+  --login-card-border-dark: rgba(255, 255, 255, 0.1);
+  --login-card-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --login-card-shadow-dark: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+  /* 文本 */
+  --login-text-primary: #1a1a2e;
+  --login-text-secondary: #666;
+  --login-text-muted: #999;
+  --login-text-dark: #fff;
+  --login-text-dark-secondary: rgba(255, 255, 255, 0.7);
+
+  /* 品牌色 */
+  --login-brand-primary: #409eff;
+  --login-brand-primary-light: #66b1ff;
+  --login-brand-success: #67c23a;
+  --login-brand-warning: #e6a23c;
+  --login-brand-danger: #f56c6c;
+
+  /* 渐变 */
+  --login-gradient-blue: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --login-gradient-purple: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --login-gradient-cyan: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+
+  /* 输入框 */
+  --login-input-bg: rgba(255, 255, 255, 0.9);
+  --login-input-bg-dark: rgba(255, 255, 255, 0.1);
+  --login-input-border: #dcdfe6;
+  --login-input-border-dark: rgba(255, 255, 255, 0.2);
+  --login-input-border-focus: #409eff;
+  --login-input-height: 44px;
+
+  /* 按钮 */
+  --login-btn-primary: #409eff;
+  --login-btn-primary-hover: #66b1ff;
+  --login-btn-height: 44px;
+  --login-btn-radius: 8px;
+
+  /* 间距 */
+  --login-spacing-xs: 4px;
+  --login-spacing-sm: 8px;
+  --login-spacing-md: 16px;
+  --login-spacing-lg: 24px;
+  --login-spacing-xl: 32px;
+  --login-spacing-2xl: 48px;
+
+  /* 圆角 */
+  --login-radius-sm: 4px;
+  --login-radius-base: 8px;
+  --login-radius-lg: 12px;
+  --login-radius-xl: 16px;
+
+  /* 字体 */
+  --login-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --login-font-size-sm: 13px;
+  --login-font-size-base: 14px;
+  --login-font-size-lg: 16px;
+  --login-font-size-xl: 20px;
+  --login-font-size-2xl: 24px;
+  --login-font-size-3xl: 32px;
+
+  /* 动画 */
+  --login-transition-fast: 0.15s ease;
+  --login-transition-base: 0.3s ease;
+  --login-transition-slow: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* 毛玻璃 */
+  --login-blur-sm: blur(10px);
+  --login-blur-base: blur(20px);
+  --login-blur-lg: blur(30px);
+}

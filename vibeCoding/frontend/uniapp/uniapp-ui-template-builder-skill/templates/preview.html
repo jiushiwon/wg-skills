@@ -1,0 +1,3718 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI Template Builder - 模板预览</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #333333;
+      --primary-light: #666666;
+      --secondary: #999999;
+      --bg-page: #F5F5F5;
+      --bg-card: #FFFFFF;
+      --border: #E5E5E5;
+      --radius: 8px;
+      --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #FAFAFA;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 12px;
+    }
+
+    .header p {
+      color: #666666;
+      font-size: 15px;
+    }
+
+    .section {
+      margin-bottom: 60px;
+    }
+
+    .section-title {
+      color: #1a1a2e;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      padding-left: 16px;
+      border-left: 4px solid #333333;
+    }
+
+    .template-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 24px;
+    }
+
+    .template-card {
+      background: #FFFFFF;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #EEEEEE;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+
+    .template-card-header {
+      padding: 16px 20px;
+      background: #FFFFFF;
+      border-bottom: 1px solid #F0F0F0;
+    }
+
+    .template-card-header h3 {
+      color: #333333;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .template-card-header p {
+      color: #999999;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .preview-area {
+      padding: 30px 20px;
+      background: #F5F5F5;
+      min-height: 420px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ========================================
+       TABBAR STYLES - 底部导航
+       ======================================== */
+
+    /* 风格1: 简约线条 */
+    .tabbar-style1 {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #FFFFFF;
+      border-top: 1px solid #E5E5E5;
+      display: flex;
+      height: 50px;
+    }
+
+    .tabbar-style1 .tab-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tabbar-style1 .tab-icon {
+      font-size: 22px;
+      color: #999;
+    }
+
+    .tabbar-style1 .tab-item.active .tab-icon { color: #333; }
+    .tabbar-style1 .tab-text {
+      font-size: 10px;
+      color: #999;
+      margin-top: 2px;
+    }
+    .tabbar-style1 .tab-item.active .tab-text { color: #333; font-weight: 500; }
+
+    .tabbar-style1 .badge {
+      position: absolute;
+      top: 4px;
+      right: calc(50% - 24px);
+      background: #FF4400;
+      color: #fff;
+      font-size: 10px;
+      padding: 0 4px;
+      border-radius: 8px;
+      min-width: 16px;
+      text-align: center;
+    }
+
+    /* 风格2: 活力炫彩 */
+    .tabbar-style2 {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #FFFFFF;
+      border-radius: 28px 28px 0 0;
+      margin: 0 8px;
+      box-shadow: 0 -2px 16px rgba(255, 107, 107, 0.12);
+      display: flex;
+      height: 56px;
+    }
+
+    .tabbar-style2 .tab-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tabbar-style2 .tab-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: #666;
+      background: transparent;
+      transition: all 0.25s ease;
+    }
+
+    .tabbar-style2 .tab-item.active .tab-icon {
+      background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+      color: #fff;
+    }
+
+    .tabbar-style2 .tab-text {
+      font-size: 11px;
+      color: #666;
+      margin-top: 2px;
+    }
+    .tabbar-style2 .tab-item.active .tab-text { color: #FF6B6B; font-weight: 500; }
+
+    /* 风格3: 高端暗金 */
+    .tabbar-style3 {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #1A1A2E;
+      border-top: 1px solid #2D2D44;
+      display: flex;
+      height: 60px;
+    }
+
+    .tabbar-style3 .tab-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .tabbar-style3 .tab-icon { font-size: 22px; color: #666; }
+    .tabbar-style3 .tab-item.active .tab-icon { color: #D4AF37; text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
+    .tabbar-style3 .tab-text { font-size: 11px; color: #666; margin-top: 4px; }
+    .tabbar-style3 .tab-item.active .tab-text { color: #D4AF37; font-weight: 500; }
+
+    /* 风格4: 清新自然 */
+    .tabbar-style4 {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #F0F9F6;
+      padding: 8px 12px;
+      display: flex;
+      height: 64px;
+    }
+
+    .tabbar-style4 .tab-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      transition: all 0.25s ease;
+    }
+
+    .tabbar-style4 .tab-item.active {
+      background: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(46, 204, 113, 0.15);
+    }
+
+    .tabbar-style4 .tab-icon { font-size: 22px; color: #666; }
+    .tabbar-style4 .tab-item.active .tab-icon { color: #2ECC71; }
+    .tabbar-style4 .tab-text { font-size: 11px; color: #666; margin-top: 2px; }
+    .tabbar-style4 .tab-item.active .tab-text { color: #2ECC71; font-weight: 500; }
+
+    /* ========================================
+       PROFILE STYLES - 个人中心
+       ======================================== */
+
+    /* 风格1: 简约现代 */
+    .profile-style1 {
+      background: #F5F5F5;
+      min-height: 100%;
+      padding-bottom: 20px;
+    }
+
+    .profile-style1 .header-bg {
+      height: 160px;
+      background: linear-gradient(180deg, #667EEA 0%, #764BA2 100%);
+    }
+
+    .profile-style1 .header-content {
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      margin-top: -50px;
+    }
+
+    .profile-style1 .avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 35px;
+      border: 3px solid #fff;
+      background: #ddd;
+    }
+
+    .profile-style1 .user-info {
+      margin-left: 16px;
+      margin-top: -30px;
+    }
+
+    .profile-style1 .nickname {
+      font-size: 20px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .profile-style1 .level-tag {
+      display: inline-flex;
+      background: rgba(255,255,255,0.2);
+      border-radius: 10px;
+      padding: 2px 10px;
+      margin-top: 6px;
+      font-size: 12px;
+      color: #fff;
+    }
+
+    .profile-style1 .stats-card {
+      margin: 20px 16px;
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+    }
+
+    .profile-style1 .stats-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .profile-style1 .stats-value { font-size: 18px; font-weight: 600; color: #333; }
+    .profile-style1 .stats-label { font-size: 12px; color: #999; margin-top: 4px; }
+
+    .profile-style1 .menu-card {
+      margin: 0 16px;
+      background: #fff;
+      border-radius: 12px;
+    }
+
+    .profile-style1 .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 14px 16px;
+      border-bottom: 1px solid #f5f5f5;
+    }
+
+    .profile-style1 .menu-item:last-child { border-bottom: none; }
+    .profile-style1 .menu-icon { font-size: 20px; margin-right: 12px; }
+    .profile-style1 .menu-label { font-size: 15px; color: #333; }
+
+    /* 风格2: 活力炫彩 */
+    .profile-style2 {
+      background: #F8F8FF;
+    }
+
+    .profile-style2 .header {
+      padding: 50px 20px 30px;
+      background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 50%, #FFB347 100%);
+      border-radius: 0 0 24px 24px;
+    }
+
+    .profile-style2 .user-row { display: flex; align-items: center; }
+    .profile-style2 .avatar { width: 64px; height: 64px; border-radius: 32px; border: 3px solid rgba(255,255,255,0.5); background: #ddd; }
+    .profile-style2 .user-info { margin-left: 14px; }
+    .profile-style2 .nickname { font-size: 22px; font-weight: 700; color: #fff; }
+    .profile-style2 .level-badge { display: inline-block; margin-top: 6px; padding: 3px 12px; background: rgba(255,255,255,0.25); border-radius: 12px; font-size: 12px; color: #fff; }
+
+    .profile-style2 .stats-row {
+      display: flex;
+      background: rgba(255,255,255,0.2);
+      border-radius: 16px;
+      padding: 16px;
+      margin: 24px 16px;
+    }
+
+    .profile-style2 .stat-item { flex: 1; display: flex; flex-direction: column; align-items: center; }
+    .profile-style2 .stat-value { font-size: 18px; font-weight: 700; color: #fff; }
+    .profile-style2 .stat-label { font-size: 12px; color: rgba(255,255,255,0.8); margin-top: 4px; }
+
+    .profile-style2 .order-card {
+      margin: 0 16px 16px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(255, 107, 107, 0.08);
+    }
+
+    .profile-style2 .card-header { display: flex; justify-content: space-between; padding: 16px; border-bottom: 1px solid #fff5f5; }
+    .profile-style2 .card-title { font-size: 17px; font-weight: 600; color: #333; }
+    .profile-style2 .order-types { display: flex; padding: 20px 0; }
+    .profile-style2 .type-item { flex: 1; display: flex; flex-direction: column; align-items: center; }
+    .profile-style2 .type-icon { font-size: 26px; }
+    .profile-style2 .type-label { font-size: 12px; color: #666; margin-top: 8px; }
+
+    /* 风格3: 高端商务 */
+    .profile-style3 {
+      background: #0A0A12;
+      color: #fff;
+    }
+
+    .profile-style3 .header { padding: 60px 20px 40px; background: #12121F; }
+    .profile-style3 .header-content { display: flex; align-items: center; }
+    .profile-style3 .avatar { width: 72px; height: 72px; border-radius: 36px; border: 2px solid #D4AF37; box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); background: #333; }
+    .profile-style3 .user-info { margin-left: 16px; }
+    .profile-style3 .nickname { font-size: 22px; font-weight: 600; color: #fff; }
+    .profile-style3 .vip-tag { display: inline-flex; margin-top: 8px; padding: 4px 14px; background: linear-gradient(135deg, #D4AF37, #E5C76B); border-radius: 12px; font-size: 12px; color: #12121F; font-weight: 600; }
+
+    .profile-style3 .asset-card {
+      margin: 16px;
+      padding: 20px;
+      background: #16162A;
+      border-radius: 16px;
+      border: 1px solid #2A2A40;
+    }
+
+    .profile-style3 .asset-title { font-size: 15px; font-weight: 500; color: #D4AF37; margin-bottom: 20px; }
+    .profile-style3 .asset-list { display: flex; }
+    .profile-style3 .asset-item { flex: 1; display: flex; flex-direction: column; align-items: center; }
+    .profile-style3 .asset-value { font-size: 16px; font-weight: 600; color: #fff; }
+    .profile-style3 .asset-label { font-size: 12px; color: #8888A0; margin-top: 6px; }
+
+    .profile-style3 .menu-section {
+      margin: 0 16px;
+      background: #16162A;
+      border-radius: 16px;
+      border: 1px solid #2A2A40;
+    }
+
+    .profile-style3 .menu-item { display: flex; justify-content: space-between; padding: 18px 16px; border-bottom: 1px solid #2A2A40; }
+    .profile-style3 .menu-item:last-child { border-bottom: none; }
+    .profile-style3 .menu-left { display: flex; align-items: center; }
+    .profile-style3 .menu-icon { font-size: 20px; margin-right: 12px; }
+    .profile-style3 .menu-text { font-size: 14px; color: #E5E5F0; }
+
+    /* 风格4: 清新自然 */
+    .profile-style4 {
+      background: #F5FBF8;
+    }
+
+    .profile-style4 .header { padding: 50px 20px 30px; background: linear-gradient(180deg, #E8F5E9, #F5FBF8); }
+    .profile-style4 .header-content { display: flex; align-items: center; }
+    .profile-style4 .avatar { width: 68px; height: 68px; border-radius: 34px; border: 3px solid #fff; box-shadow: 0 4px 16px rgba(46, 204, 113, 0.15); background: #ddd; }
+    .profile-style4 .user-info { margin-left: 14px; }
+    .profile-style4 .nickname { font-size: 21px; font-weight: 600; color: #1A3D1C; }
+    .profile-style4 .user-id { font-size: 13px; color: #7CB684; margin-top: 4px; display: block; }
+
+    .profile-style4 .member-card { margin: 0 16px 16px; }
+    .profile-style4 .member-bg { background: linear-gradient(135deg, #2ECC71, #27AE60); border-radius: 20px; padding: 3px; }
+    .profile-style4 .member-content { background: linear-gradient(135deg, #2ECC71, #1E8449); border-radius: 18px; padding: 20px; }
+    .profile-style4 .member-top { display: flex; justify-content: space-between; margin-bottom: 20px; }
+    .profile-style4 .member-level { font-size: 18px; font-weight: 600; color: #fff; }
+    .profile-style4 .member-rights { font-size: 12px; color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 10px; }
+    .profile-style4 .member-stats { display: flex; }
+    .profile-style4 .member-stat { flex: 1; display: flex; flex-direction: column; align-items: center; }
+    .profile-style4 .ms-value { font-size: 18px; font-weight: 700; color: #fff; }
+    .profile-style4 .ms-label { font-size: 11px; color: rgba(255,255,255,0.8); margin-top: 4px; }
+
+    .profile-style4 .menu-card { margin: 0 16px; background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 2px 16px rgba(46, 204, 113, 0.08); }
+    .profile-style4 .menu-item { display: flex; justify-content: space-between; padding: 16px; border-bottom: 1px solid #F5FBF8; }
+    .profile-style4 .menu-item:last-child { border-bottom: none; }
+    .profile-style4 .menu-left { display: flex; align-items: center; }
+    .profile-style4 .menu-icon-box { width: 36px; height: 36px; background: #F0F9F4; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px; }
+    .profile-style4 .menu-icon { font-size: 18px; }
+    .profile-style4 .menu-text { font-size: 15px; color: #1A3D1C; }
+
+    /* ========================================
+       LOGIN STYLES - 登录页
+       ======================================== */
+
+    .login-style1 {
+      min-height: 400px;
+      background: #F5F7FA;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .login-style1 .card {
+      width: 100%;
+      max-width: 380px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+
+    .login-style1 .logo { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; justify-content: center; }
+    .login-style1 .logo-icon { font-size: 32px; }
+    .login-style1 .logo-text { font-size: 20px; font-weight: 700; color: #333; }
+    .login-style1 .title { font-size: 24px; font-weight: 600; color: #333; text-align: center; margin-bottom: 8px; }
+    .login-style1 .subtitle { font-size: 14px; color: #999; text-align: center; margin-bottom: 32px; }
+
+    .login-style1 .form-input {
+      width: 100%;
+      height: 48px;
+      padding: 0 16px;
+      border: 1px solid #E5E5E5;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 16px;
+      background: #FAFAFA;
+    }
+
+    .login-style1 .form-input:focus { outline: none; border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+
+    .login-style1 .submit-btn {
+      width: 100%;
+      height: 48px;
+      background: #2563EB;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      margin-top: 8px;
+      cursor: pointer;
+    }
+
+    .login-style1 .footer { text-align: center; margin-top: 24px; font-size: 14px; color: #999; }
+    .login-style1 .footer a { color: #2563EB; font-weight: 500; margin-left: 4px; }
+
+    /* 风格2: 活力炫彩 */
+    .login-style2 {
+      min-height: 400px;
+      background: linear-gradient(135deg, #FFF5F5 0%, #FFF9F0 50%, #F5F5FF 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    .login-style2 .bg-pattern {
+      position: absolute;
+      top: -50%;
+      right: -30%;
+      width: 80%;
+      height: 150%;
+      background: radial-gradient(circle, rgba(255,107,107,0.15) 0%, transparent 70%);
+    }
+
+    .login-style2 .card {
+      width: 100%;
+      max-width: 360px;
+      background: #fff;
+      border-radius: 24px;
+      padding: 40px 32px;
+      box-shadow: 0 8px 40px rgba(255,107,107,0.15);
+      position: relative;
+      z-index: 1;
+    }
+
+    .login-style2 .logo-icon { font-size: 48px; display: block; text-align: center; margin-bottom: 20px; }
+    .login-style2 .title { font-size: 28px; font-weight: 700; background: linear-gradient(135deg, #FF6B6B, #FF8E53); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin-bottom: 8px; }
+    .login-style2 .subtitle { font-size: 14px; color: #999; text-align: center; margin-bottom: 32px; }
+
+    .login-style2 .form-input {
+      width: 100%;
+      height: 52px;
+      padding: 0 20px;
+      border: 2px solid #FFE4E4;
+      border-radius: 12px;
+      font-size: 15px;
+      margin-bottom: 16px;
+      background: #FFFAFA;
+    }
+
+    .login-style2 .form-input:focus { outline: none; border-color: #FF6B6B; box-shadow: 0 0 0 4px rgba(255,107,107,0.1); }
+
+    .login-style2 .submit-btn {
+      width: 100%;
+      height: 52px;
+      background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .login-style2 .footer { text-align: center; margin-top: 24px; font-size: 14px; color: #999; }
+    .login-style2 .footer a { color: #FF6B6B; font-weight: 600; margin-left: 4px; }
+
+    /* 风格3: 深色科技 */
+    .login-style3 {
+      min-height: 400px;
+      background: #0A0E27;
+      background-image: radial-gradient(circle at 20% 50%, rgba(0,217,255,0.08) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(124,77,255,0.08) 0%, transparent 50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .login-style3 .card {
+      width: 100%;
+      max-width: 360px;
+      background: rgba(22,22,46,0.8);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0,217,255,0.2);
+      border-radius: 20px;
+      padding: 40px 32px;
+      box-shadow: 0 0 40px rgba(0,217,255,0.1);
+    }
+
+    .login-style3 .logo-box {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, #00D9FF, #7C4DFF);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 30px rgba(0,217,255,0.4);
+    }
+
+    .login-style3 .logo-icon { font-size: 28px; color: #fff; }
+    .login-style3 .title { font-size: 24px; font-weight: 600; color: #fff; text-align: center; margin-bottom: 32px; }
+
+    .login-style3 .form-input {
+      width: 100%;
+      height: 50px;
+      padding: 0 16px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      font-size: 14px;
+      color: #fff;
+      background: rgba(0,0,0,0.3);
+      margin-bottom: 20px;
+    }
+
+    .login-style3 .form-input:focus { outline: none; border-color: #00D9FF; box-shadow: 0 0 0 3px rgba(0,217,255,0.1); }
+
+    .login-style3 .submit-btn {
+      width: 100%;
+      height: 50px;
+      background: linear-gradient(135deg, #00D9FF, #7C4DFF);
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .login-style3 .footer { text-align: center; margin-top: 24px; }
+    .login-style3 .footer a { color: rgba(255,255,255,0.6); font-size: 14px; }
+    .login-style3 .footer a:hover { color: #00D9FF; }
+
+    /* ========================================
+       DASHBOARD STYLE - 数据大屏
+       ======================================== */
+
+    .dashboard-style1 {
+      min-height: 400px;
+      background: #0A0E27;
+      padding: 20px;
+    }
+
+    .dashboard-style1 .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #1A237E;
+      margin-bottom: 20px;
+    }
+
+    .dashboard-style1 .title {
+      font-size: 22px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #00D9FF, #7C4DFF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .dashboard-style1 .update-time { font-size: 13px; color: #8892B0; }
+
+    .dashboard-style1 .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .dashboard-style1 .stat-card {
+      background: #0D1238;
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid #1A237E;
+    }
+
+    .dashboard-style1 .stat-label { font-size: 13px; color: #8892B0; }
+    .dashboard-style1 .stat-value { font-size: 24px; font-weight: 700; color: #fff; margin: 8px 0; }
+    .dashboard-style1 .stat-trend { font-size: 12px; }
+    .dashboard-style1 .stat-trend.cyan { color: #00D9FF; }
+    .dashboard-style1 .stat-trend.green { color: #00E676; }
+    .dashboard-style1 .stat-trend.purple { color: #7C4DFF; }
+    .dashboard-style1 .stat-trend.yellow { color: #FFAB00; }
+
+    .dashboard-style1 .charts-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 16px;
+    }
+
+    .dashboard-style1 .chart-card {
+      background: #0D1238;
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid #1A237E;
+    }
+
+    .dashboard-style1 .chart-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 12px; }
+    .dashboard-style1 .chart-body { height: 120px; display: flex; align-items: flex-end; gap: 8px; padding: 0 10px; }
+
+    .dashboard-style1 .bar {
+      flex: 1;
+      background: linear-gradient(180deg, #00D9FF, rgba(0,217,255,0.3));
+      border-radius: 4px 4px 0 0;
+      min-height: 10px;
+    }
+
+    .dashboard-style1 .pie-chart {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: conic-gradient(#00D9FF 0% 25%, #7C4DFF 25% 50%, #00E676 50% 75%, #FFAB00 75% 100%);
+      margin: 0 auto;
+    }
+
+    /* ========================================
+       PRODUCT DETAIL - 商品详情
+       ======================================== */
+
+    .product-style1 {
+      background: #F5F5F7;
+      min-height: 520px;
+      padding-bottom: 70px;
+    }
+
+    .product-style1 .nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 44px;
+      padding: 0 8px;
+      background: rgba(255,255,255,0.95);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .product-style1 .nav-left,
+    .product-style1 .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .product-style1 .nav-btn {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 15px;
+      background: rgba(0,0,0,0.05);
+    }
+
+    .product-style1 .nav-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1D1D1F;
+    }
+
+    .product-style1 .nav-tabs {
+      display: flex;
+      gap: 18px;
+    }
+
+    .product-style1 .nav-tab {
+      font-size: 14px;
+      color: #666;
+      padding: 4px 0;
+      position: relative;
+    }
+
+    .product-style1 .nav-tab.active {
+      color: #1D1D1F;
+      font-weight: 600;
+    }
+
+    .product-style1 .nav-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 18px;
+      height: 3px;
+      background: #FF2D55;
+      border-radius: 2px;
+    }
+
+    .product-style1 .gallery {
+      background: #fff;
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-style1 .gallery-carousel {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.3s ease;
+    }
+
+    .product-style1 .gallery-slide {
+      width: 100%;
+      height: 100%;
+      flex-shrink: 0;
+    }
+
+    .product-style1 .gallery-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-style1 .gallery img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-style1 .image-indicator {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      padding: 3px 10px;
+      background: rgba(0,0,0,0.4);
+      border-radius: 10px;
+      font-size: 11px;
+      color: #fff;
+    }
+
+    .product-style1 .video-tag {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.4);
+      border-radius: 15px;
+      color: #fff;
+    }
+
+    .product-style1 .info-section { background: #fff; padding: 12px 14px 14px; margin-bottom: 8px; }
+    .product-style1 .price-row { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 10px; }
+    .product-style1 .price-main { display: flex; align-items: center; gap: 6px; }
+    .product-style1 .price-symbol { font-size: 14px; font-weight: 600; color: #FF2D55; }
+    .product-style1 .price { font-size: 26px; font-weight: 700; color: #FF2D55; }
+    .product-style1 .price-tags { display: flex; gap: 6px; }
+    .product-style1 .price-tag { padding: 2px 6px; background: #FFEBEE; border-radius: 3px; font-size: 10px; color: #FF2D55; }
+    .product-style1 .price-extra { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+    .product-style1 .original-price { font-size: 11px; color: #999; text-decoration: line-through; }
+    .product-style1 .sold-info { font-size: 11px; color: #999; }
+
+    .product-style1 .coupon-row { display: flex; gap: 6px; margin-bottom: 10px; }
+    .product-style1 .coupon-item { padding: 3px 8px; background: linear-gradient(135deg, #FFF0F0, #FFEBEE); border: 1px solid #FFCDD2; border-radius: 3px; font-size: 10px; color: #FF2D55; }
+
+    .product-style1 .title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+    .product-style1 .title-content { flex: 1; }
+    .product-style1 .title { font-size: 14px; font-weight: 600; color: #1D1D1F; line-height: 1.5; margin-bottom: 6px; }
+    .product-style1 .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .product-style1 .tag { padding: 2px 6px; background: #F5F5F7; border-radius: 3px; font-size: 10px; color: #666; }
+    .product-style1 .favorite-btn { display: flex; flex-direction: column; align-items: center; padding: 4px 7px; border-radius: 6px; background: #F5F5F7; min-width: 40px; }
+    .product-style1 .favorite-btn svg { width: 18px; height: 18px; color: #999; }
+    .product-style1 .favorite-text { margin-top: 2px; font-size: 9px; color: #666; }
+
+    .product-style1 .meta-row { display: flex; align-items: center; gap: 10px; }
+    .product-style1 .meta-item { display: flex; align-items: center; gap: 3px; }
+    .product-style1 .star { font-size: 11px; color: #FF9500; }
+    .product-style1 .star.empty { color: #DDD; }
+    .product-style1 .meta { font-size: 11px; color: #999; }
+    .product-style1 .meta-divider { width: 1px; height: 10px; background: #E5E5E5; }
+
+    .product-style1 .cell-section { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 12px 14px; margin-bottom: 8px; }
+    .product-style1 .cell-left { display: flex; gap: 10px; }
+    .product-style1 .cell-label { font-size: 12px; color: #999; }
+    .product-style1 .cell-value { font-size: 12px; color: #333; }
+    .product-style1 .cell-arrow { color: #ccc; }
+
+    .product-style1 .service-section { display: flex; flex-wrap: wrap; gap: 8px 14px; background: #fff; padding: 10px 14px; margin-bottom: 8px; }
+    .product-style1 .service-item { display: flex; align-items: center; gap: 4px; font-size: 10px; color: #666; }
+    .product-style1 .service-item svg { width: 12px; height: 12px; color: #FF2D55; }
+
+    .product-style1 .shop-section { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 12px 14px; margin-bottom: 8px; }
+    .product-style1 .shop-info { display: flex; align-items: center; gap: 10px; }
+    .product-style1 .shop-logo { width: 36px; height: 36px; border-radius: 18px; background: #F5F5F7; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .product-style1 .shop-logo img { width: 100%; height: 100%; object-fit: cover; }
+    .product-style1 .shop-detail { display: flex; flex-direction: column; gap: 2px; }
+    .product-style1 .shop-name { font-size: 13px; font-weight: 600; color: #1D1D1F; }
+    .product-style1 .shop-desc { font-size: 10px; color: #999; }
+    .product-style1 .shop-actions { display: flex; gap: 6px; }
+    .product-style1 .shop-btn { padding: 4px 10px; border: 1px solid #E5E5E5; border-radius: 12px; font-size: 11px; color: #666; }
+    .product-style1 .shop-btn-primary { border-color: #FF2D55; color: #FF2D55; }
+
+    .product-style1 .recommend-section { background: #fff; padding: 12px 0; margin-bottom: 8px; }
+    .product-style1 .section-header { display: flex; align-items: center; justify-content: space-between; padding: 0 14px; margin-bottom: 10px; }
+    .product-style1 .section-title { font-size: 14px; font-weight: 600; color: #1D1D1F; }
+    .product-style1 .recommend-list { display: flex; gap: 8px; padding: 0 14px; overflow-x: auto; }
+    .product-style1 .recommend-item { width: 90px; flex-shrink: 0; }
+    .product-style1 .recommend-image { width: 90px; height: 90px; border-radius: 6px; background: #F5F5F7; object-fit: cover; }
+    .product-style1 .recommend-title { display: block; margin-top: 6px; font-size: 11px; color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .product-style1 .recommend-price { display: block; margin-top: 3px; font-size: 12px; font-weight: 600; color: #FF2D55; }
+
+    .product-style1 .tabs-section { background: #fff; }
+    .product-style1 .tabs-bar { display: flex; border-bottom: 1px solid #F0F0F0; }
+    .product-style1 .tab-item { flex: 1; display: flex; align-items: center; justify-content: center; gap: 3px; padding: 12px 0; position: relative; }
+    .product-style1 .tab-text { font-size: 13px; color: #666; }
+    .product-style1 .tab-count { font-size: 11px; color: #999; }
+    .product-style1 .tab-item.active .tab-text { color: #1D1D1F; font-weight: 600; }
+    .product-style1 .tab-item.active::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 20px; height: 3px; background: #FF2D55; border-radius: 2px; }
+
+    .product-style1 .tab-content { background: #fff; padding: 12px 14px; margin-bottom: 8px; }
+    .product-style1 .params-title { font-size: 14px; font-weight: 600; color: #1D1D1F; margin-bottom: 10px; }
+    .product-style1 .params-list { display: flex; flex-direction: column; gap: 8px; }
+    .product-style1 .params-item { display: flex; font-size: 12px; }
+    .product-style1 .params-label { width: 70px; color: #999; flex-shrink: 0; }
+    .product-style1 .params-value { flex: 1; color: #333; }
+    .product-style1 .detail-images { width: 100%; }
+    .product-style1 .detail-image { width: 100%; display: block; margin-bottom: 6px; }
+
+    .product-style1 .review-summary { padding-bottom: 12px; border-bottom: 1px solid #F5F5F7; margin-bottom: 12px; }
+    .product-style1 .review-rate { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .product-style1 .rate-value { font-size: 24px; font-weight: 700; color: #FF9500; }
+    .product-style1 .rate-text { font-size: 11px; color: #999; }
+    .product-style1 .review-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .product-style1 .review-tag { padding: 3px 8px; background: #F5F5F7; border-radius: 10px; font-size: 11px; color: #666; }
+
+    .product-style1 .comment-list { display: flex; flex-direction: column; gap: 12px; }
+    .product-style1 .comment-item { padding-bottom: 12px; border-bottom: 1px solid #F5F5F7; }
+    .product-style1 .comment-item:last-child { border-bottom: none; }
+    .product-style1 .comment-user { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .product-style1 .comment-avatar { width: 28px; height: 28px; border-radius: 14px; background: #F5F5F7; object-fit: cover; }
+    .product-style1 .comment-user-info { display: flex; flex-direction: column; gap: 2px; }
+    .product-style1 .comment-name { font-size: 11px; color: #666; }
+    .product-style1 .comment-rating { display: flex; gap: 1px; }
+    .product-style1 .comment-content { font-size: 12px; color: #333; line-height: 1.5; }
+    .product-style1 .comment-images { display: flex; gap: 6px; margin-top: 8px; }
+    .product-style1 .comment-image { width: 60px; height: 60px; border-radius: 4px; background: #F5F5F7; object-fit: cover; }
+    .product-style1 .comment-meta { display: flex; justify-content: space-between; margin-top: 8px; font-size: 10px; color: #999; }
+
+    .product-style1 .recommend-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: #F0F0F0; }
+    .product-style1 .grid-item { background: #fff; padding: 8px; }
+    .product-style1 .grid-image { width: 100%; aspect-ratio: 1; border-radius: 4px; background: #F5F5F7; object-fit: cover; }
+    .product-style1 .grid-title { display: block; margin-top: 6px; font-size: 11px; color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .product-style1 .grid-price-row { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
+    .product-style1 .grid-price { font-size: 12px; font-weight: 600; color: #FF2D55; }
+    .product-style1 .grid-sales { font-size: 9px; color: #999; }
+
+    .product-style1 .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border-top: 1px solid #F0F0F0;
+      padding: 6px 10px;
+    }
+
+    .product-style1 .bar-left { display: flex; padding-right: 10px; }
+    .product-style1 .action-item { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 46px; padding: 2px 4px; }
+    .product-style1 .action-item svg { width: 20px; height: 20px; color: #666; }
+    .product-style1 .action-label { margin-top: 3px; font-size: 9px; color: #666; }
+    .product-style1 .cart-badge { position: absolute; top: -2px; right: 4px; min-width: 14px; height: 14px; padding: 0 3px; background: #FF2D55; border-radius: 7px; font-size: 9px; color: #fff; text-align: center; line-height: 14px; }
+
+    .product-style1 .bar-right { flex: 1; display: flex; gap: 6px; }
+    .product-style1 .btn-cart, .product-style1 .btn-buy { flex: 1; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 19px; font-size: 12px; font-weight: 600; color: #fff; padding: 0 10px; white-space: nowrap; overflow: hidden; min-width: 0; }
+    .product-style1 .btn-cart { background: #FF9500; }
+    .product-style1 .btn-buy { background: linear-gradient(135deg, #FF2D55 0%, #FF6B6B 100%); }
+
+    .icon-svg { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
+    .icon-svg svg { width: 100%; height: 100%; }
+
+    .menu-icon-svg {
+      width: 20px;
+      height: 20px;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+
+    .level-icon {
+      width: 14px;
+      height: 14px;
+      margin-right: 4px;
+    }
+
+    .type-icon-svg {
+      width: 22px;
+      height: 22px;
+      margin-bottom: 6px;
+    }
+
+    .logo-icon-svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    .vip-icon {
+      width: 14px;
+      height: 14px;
+      margin-right: 4px;
+    }
+
+    /* ========================================
+       CART STYLES - 购物车
+       ======================================== */
+
+    .cart-style1 {
+      background: #F5F5F7;
+      min-height: 100%;
+      padding-bottom: 90px;
+    }
+
+    .cart-style1 .cart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 44px;
+      padding: 0 14px;
+      background: #fff;
+      border-bottom: 1px solid #F0F0F0;
+    }
+
+    .cart-style1 .header-title { font-size: 15px; font-weight: 600; color: #1D1D1F; }
+    .cart-style1 .header-action { font-size: 13px; color: #666; }
+
+    .cart-style1 .shop-group {
+      background: #fff;
+      margin: 10px 12px;
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .cart-style1 .shop-name {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #1D1D1F;
+      margin-bottom: 12px;
+    }
+
+    .cart-style1 .cart-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #F5F5F7;
+    }
+
+    .cart-style1 .cart-item:last-child { border-bottom: none; }
+
+    .cart-style1 .checkbox {
+      width: 18px;
+      height: 18px;
+      border: 1px solid #CCC;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 18px;
+    }
+
+    .cart-style1 .checkbox.checked {
+      background: #FF2D55;
+      border-color: #FF2D55;
+    }
+
+    .cart-style1 .item-image {
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      background: #F5F5F7;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .cart-style1 .item-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .cart-style1 .item-title {
+      font-size: 13px;
+      color: #1D1D1F;
+      line-height: 1.4;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      margin-bottom: 4px;
+    }
+
+    .cart-style1 .item-spec {
+      font-size: 11px;
+      color: #999;
+      background: #F5F5F7;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    .cart-style1 .item-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .cart-style1 .item-price { font-size: 14px; font-weight: 600; color: #FF2D55; }
+    .cart-style1 .item-price span { font-size: 11px; }
+
+    .cart-style1 .quantity {
+      display: flex;
+      align-items: center;
+      border: 1px solid #E5E5E5;
+      border-radius: 4px;
+    }
+
+    .cart-style1 .qty-btn {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #666;
+      background: #fff;
+    }
+
+    .cart-style1 .qty-value {
+      width: 28px;
+      text-align: center;
+      font-size: 12px;
+      color: #333;
+      border-left: 1px solid #E5E5E5;
+      border-right: 1px solid #E5E5E5;
+    }
+
+    .cart-style1 .cart-bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      border-top: 1px solid #F0F0F0;
+      padding: 8px 12px;
+    }
+
+    .cart-style1 .select-all {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #333;
+    }
+
+    .cart-style1 .total-section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cart-style1 .total-price { font-size: 14px; color: #333; }
+    .cart-style1 .total-price strong { color: #FF2D55; font-size: 16px; }
+
+    .cart-style1 .settlement-btn {
+      padding: 8px 18px;
+      background: linear-gradient(135deg, #FF2D55 0%, #FF6B6B 100%);
+      border-radius: 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* ========================================
+       PRODUCT LIST STYLES - 商品列表
+       ======================================== */
+
+    .productlist-style1 {
+      background: #F5F5F7;
+      min-height: 100%;
+    }
+
+    .productlist-style1 .list-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 44px;
+      padding: 0 14px;
+      background: #fff;
+      border-bottom: 1px solid #F0F0F0;
+    }
+
+    .productlist-style1 .header-title { font-size: 15px; font-weight: 600; color: #1D1D1F; }
+    .productlist-style1 .header-icon { font-size: 20px; color: #333; }
+
+    .productlist-style1 .filter-bar {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      padding: 10px 14px;
+      gap: 20px;
+      border-bottom: 1px solid #F0F0F0;
+    }
+
+    .productlist-style1 .filter-item { font-size: 13px; color: #666; }
+    .productlist-style1 .filter-item.active { color: #FF2D55; font-weight: 600; }
+
+    .productlist-style1 .product-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      padding: 8px;
+    }
+
+    .productlist-style1 .product-card {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .productlist-style1 .product-image {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      background: #F5F5F7;
+    }
+
+    .productlist-style1 .product-info { padding: 8px; }
+    .productlist-style1 .product-name {
+      font-size: 12px;
+      color: #333;
+      line-height: 1.4;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      margin-bottom: 6px;
+    }
+
+    .productlist-style1 .product-price-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .productlist-style1 .product-price { font-size: 14px; font-weight: 600; color: #FF2D55; }
+    .productlist-style1 .product-price span { font-size: 10px; }
+    .productlist-style1 .product-original { font-size: 10px; color: #999; text-decoration: line-through; }
+    .productlist-style1 .product-sales { font-size: 10px; color: #999; margin-top: 4px; }
+
+    /* ========================================
+       ORDER LIST STYLES - 订单列表
+       ======================================== */
+
+    .orderlist-style1 {
+      background: #F5F5F7;
+      min-height: 100%;
+    }
+
+    .orderlist-style1 .order-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 44px;
+      background: #fff;
+      border-bottom: 1px solid #F0F0F0;
+      font-size: 15px;
+      font-weight: 600;
+      color: #1D1D1F;
+    }
+
+    .orderlist-style1 .order-tabs {
+      display: flex;
+      background: #fff;
+      padding: 0 8px;
+      border-bottom: 1px solid #F0F0F0;
+      overflow-x: auto;
+    }
+
+    .orderlist-style1 .order-tab {
+      flex-shrink: 0;
+      padding: 12px 10px;
+      font-size: 13px;
+      color: #666;
+      position: relative;
+    }
+
+    .orderlist-style1 .order-tab.active {
+      color: #FF2D55;
+      font-weight: 600;
+    }
+
+    .orderlist-style1 .order-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 2px;
+      background: #FF2D55;
+      border-radius: 1px;
+    }
+
+    .orderlist-style1 .order-card {
+      background: #fff;
+      margin: 10px 12px;
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .orderlist-style1 .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .orderlist-style1 .shop-name { font-size: 13px; font-weight: 600; color: #1D1D1F; }
+    .orderlist-style1 .order-status { font-size: 12px; color: #FF2D55; }
+
+    .orderlist-style1 .order-item {
+      display: flex;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #F5F5F7;
+    }
+
+    .orderlist-style1 .order-item:last-child { border-bottom: none; }
+
+    .orderlist-style1 .order-image {
+      width: 70px;
+      height: 70px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: #F5F5F7;
+      flex-shrink: 0;
+    }
+
+    .orderlist-style1 .order-info { flex: 1; min-width: 0; }
+    .orderlist-style1 .order-title {
+      font-size: 12px;
+      color: #333;
+      line-height: 1.4;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      margin-bottom: 4px;
+    }
+
+    .orderlist-style1 .order-spec { font-size: 11px; color: #999; margin-bottom: 6px; }
+    .orderlist-style1 .order-price { font-size: 12px; color: #999; }
+
+    .orderlist-style1 .order-total {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 0;
+      font-size: 12px;
+      color: #666;
+      border-bottom: 1px solid #F5F5F7;
+    }
+
+    .orderlist-style1 .order-total strong { color: #FF2D55; font-size: 14px; }
+
+    .orderlist-style1 .order-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      padding-top: 10px;
+    }
+
+    .orderlist-style1 .order-btn {
+      padding: 5px 12px;
+      border: 1px solid #E5E5E5;
+      border-radius: 14px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .orderlist-style1 .order-btn-primary {
+      border-color: #FF2D55;
+      color: #FF2D55;
+    }
+
+    /* ========================================
+       REGISTER STYLES - 注册页
+       ======================================== */
+
+    .register-style1 {
+      min-height: 400px;
+      background: #F5F7FA;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .register-style1 .card {
+      width: 100%;
+      max-width: 380px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+
+    .register-style1 .title { font-size: 24px; font-weight: 600; color: #333; text-align: center; margin-bottom: 8px; }
+    .register-style1 .subtitle { font-size: 14px; color: #999; text-align: center; margin-bottom: 32px; }
+
+    .register-style1 .form-input {
+      width: 100%;
+      height: 48px;
+      padding: 0 16px;
+      border: 1px solid #E5E5E5;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 16px;
+      background: #FAFAFA;
+    }
+
+    .register-style1 .form-input:focus { outline: none; border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+
+    .register-style1 .captcha-row { display: flex; gap: 10px; margin-bottom: 8px; }
+    .register-style1 .captcha-row .form-input { flex: 1; margin-bottom: 0; }
+    .register-style1 .captcha-btn {
+      width: 100px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #2563EB;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #2563EB;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .register-style1 .agreement {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 24px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .register-style1 .agreement input { width: 14px; height: 14px; }
+    .register-style1 .agreement a { color: #2563EB; }
+
+    .register-style1 .submit-btn {
+      width: 100%;
+      height: 48px;
+      background: #2563EB;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .register-style1 .footer { text-align: center; margin-top: 24px; font-size: 14px; color: #999; }
+    .register-style1 .footer a { color: #2563EB; font-weight: 500; margin-left: 4px; }
+
+    /* ========================================
+       COMPONENT DEMOS - 组件模板预览
+       ======================================== */
+
+    .component-demo-area {
+      padding: 30px 20px;
+      background: #F5F5F5;
+      min-height: 420px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .component-panel {
+      background: #FFFFFF;
+      border-radius: 12px;
+      padding: 20px;
+      min-width: 240px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    .component-panel h4 {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    /* 按钮组件样式 */
+    .demo-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      margin: 0 8px 8px 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .demo-btn-primary { background: #2563EB; color: #fff; }
+    .demo-btn-secondary { background: #F5F5F5; color: #333; border: 1px solid #E5E5E5; }
+    .demo-btn-ghost { background: transparent; color: #2563EB; border: 1px solid #2563EB; }
+    .demo-btn-danger { background: #EF4444; color: #fff; }
+    .demo-btn-sm { padding: 5px 10px; font-size: 11px; }
+    .demo-btn-lg { padding: 10px 20px; font-size: 14px; }
+    .demo-btn-loading::after {
+      content: '';
+      width: 12px;
+      height: 12px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      margin-left: 6px;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Modal 组件样式 */
+    .demo-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .demo-modal {
+      background: #fff;
+      border-radius: 12px;
+      width: 280px;
+      overflow: hidden;
+    }
+
+    .demo-modal-header {
+      padding: 16px 16px 8px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+      text-align: center;
+    }
+
+    .demo-modal-body {
+      padding: 8px 16px 16px;
+      font-size: 14px;
+      color: #666;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .demo-modal-footer {
+      display: flex;
+      border-top: 1px solid #F0F0F0;
+    }
+
+    .demo-modal-btn {
+      flex: 1;
+      padding: 12px 0;
+      text-align: center;
+      font-size: 14px;
+      color: #333;
+      cursor: pointer;
+      border: none;
+      background: #fff;
+    }
+
+    .demo-modal-btn + .demo-modal-btn { border-left: 1px solid #F0F0F0; }
+    .demo-modal-btn.primary { color: #2563EB; font-weight: 600; }
+
+    /* Toast 组件样式 */
+    .demo-toast {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: rgba(0,0,0,0.75);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 13px;
+    }
+
+    .demo-toast.success::before {
+      content: '✓';
+      width: 18px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #10B981;
+      border-radius: 50%;
+      font-size: 11px;
+    }
+
+    .demo-toast.error::before {
+      content: '✕';
+      width: 18px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #EF4444;
+      border-radius: 50%;
+      font-size: 11px;
+    }
+
+    /* Drawer 组件样式 */
+    .demo-drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .demo-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 260px;
+      height: 100%;
+      background: #fff;
+      box-shadow: -2px 0 12px rgba(0,0,0,0.1);
+      z-index: 1001;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .demo-drawer-wrapper.open .demo-drawer {
+      transform: translateX(0);
+    }
+
+    .demo-drawer-wrapper.open .demo-drawer-overlay {
+      opacity: 1;
+    }
+
+    .demo-drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      border-bottom: 1px solid #F5F5F7;
+    }
+
+    .demo-drawer-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .demo-drawer-close {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: #999;
+      cursor: pointer;
+    }
+
+    .demo-drawer-close:hover {
+      color: #333;
+    }
+
+    .demo-drawer-content {
+      padding: 20px;
+    }
+
+    .demo-drawer-item {
+      padding: 14px 20px;
+      border-bottom: 1px solid #F5F5F7;
+      font-size: 14px;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .demo-drawer-item:hover {
+      background: #F9F9F9;
+    }
+
+    /* Table 组件样式 */
+    .demo-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .demo-table th {
+      background: #F9FAFB;
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 600;
+      color: #374151;
+      border-bottom: 2px solid #E5E7EB;
+    }
+
+    .demo-table td {
+      padding: 12px 16px;
+      color: #6B7280;
+      border-bottom: 1px solid #F3F4F6;
+    }
+
+    .demo-table tr:hover td {
+      background: #F9FAFB;
+    }
+
+    .demo-table .table-primary {
+      color: #2563EB;
+      font-weight: 500;
+    }
+
+    .demo-table .table-success {
+      color: #10B981;
+    }
+
+    .demo-table .table-warning {
+      color: #F59E0B;
+    }
+
+    .demo-table .table-danger {
+      color: #EF4444;
+    }
+
+    .demo-table .table-action {
+      display: flex;
+      gap: 8px;
+    }
+
+    .demo-table .table-link {
+      color: #2563EB;
+      cursor: pointer;
+    }
+
+    .demo-table .table-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Table 紧凑样式 */
+    .demo-table-compact th,
+    .demo-table-compact td {
+      padding: 8px 12px;
+      font-size: 12px;
+    }
+
+    /* Table 斑马纹 */
+    .demo-table-striped tr:nth-child(even) td {
+      background: #F9FAFB;
+    }
+
+    /* Form 组件样式 */
+    .demo-form {
+      width: 100%;
+    }
+
+    .demo-form-item {
+      margin-bottom: 20px;
+    }
+
+    .demo-form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 8px;
+    }
+
+    .demo-form-label .required {
+      color: #EF4444;
+      margin-left: 2px;
+    }
+
+    .demo-form-input {
+      width: 100%;
+      height: 40px;
+      padding: 0 12px;
+      border: 1px solid #D1D5DB;
+      border-radius: 6px;
+      font-size: 14px;
+      color: #374151;
+      background: #fff;
+      transition: all 0.2s;
+    }
+
+    .demo-form-input:focus {
+      outline: none;
+      border-color: #2563EB;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .demo-form-input::placeholder {
+      color: #9CA3AF;
+    }
+
+    .demo-form-input.error {
+      border-color: #EF4444;
+    }
+
+    .demo-form-input.error:focus {
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    }
+
+    .demo-form-textarea {
+      min-height: 100px;
+      padding: 12px;
+      resize: vertical;
+    }
+
+    .demo-form-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 36px;
+    }
+
+    .demo-form-checkbox,
+    .demo-form-radio {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #374151;
+      margin-bottom: 8px;
+    }
+
+    .demo-form-checkbox input,
+    .demo-form-radio input {
+      width: 16px;
+      height: 16px;
+      accent-color: #2563EB;
+    }
+
+    .demo-form-error {
+      font-size: 12px;
+      color: #EF4444;
+      margin-top: 4px;
+    }
+
+    .demo-form-help {
+      font-size: 12px;
+      color: #9CA3AF;
+      margin-top: 4px;
+    }
+
+    /* Form 行内布局 */
+    .demo-form-inline {
+      display: flex;
+      gap: 16px;
+    }
+
+    .demo-form-inline .demo-form-item {
+      flex: 1;
+    }
+
+    /* Form 按钮组 */
+    .demo-form-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    /* Form 3种风格 */
+    .demo-form--filled .demo-form-input {
+      background: #F3F4F6;
+      border: 2px solid transparent;
+      border-radius: 12px;
+    }
+    .demo-form--filled .demo-form-input:focus {
+      background: #fff;
+      border-color: #333;
+    }
+    .demo-form--filled .demo-form-input.error {
+      background: #FEF2F2;
+      border-color: #EF4444;
+    }
+
+    .demo-form--outline .demo-form-input {
+      background: transparent;
+      border: 2px solid #D1D5DB;
+      border-radius: 4px;
+    }
+    .demo-form--outline .demo-form-input:focus {
+      border-color: #333;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .demo-form--outline .demo-form-input.error {
+      border-color: #EF4444;
+    }
+
+    /* Pagination 组件样式 */
+    .demo-pagination {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* default 风格 */
+    .demo-pagination--default {
+      padding: 12px 0;
+    }
+    .demo-pagination--default .demo-pagination-btn {
+      min-width: 32px;
+      height: 32px;
+      padding: 0 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #6B7280;
+      background: #fff;
+      border: 1px solid #E5E7EB;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .demo-pagination--default .demo-pagination-btn:hover {
+      color: #333;
+      border-color: #333;
+    }
+    .demo-pagination--default .demo-pagination-btn.active {
+      color: #fff;
+      background: #333;
+      border-color: #333;
+    }
+    .demo-pagination--default .demo-pagination-btn:disabled {
+      color: #D1D5DB;
+      cursor: not-allowed;
+      background: #F9FAFB;
+    }
+
+    /* rounded 风格 */
+    .demo-pagination--rounded {
+      padding: 16px 0;
+    }
+    .demo-pagination--rounded .demo-pagination-btn {
+      min-width: 40px;
+      height: 40px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 500;
+      color: #6B7280;
+      background: #fff;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .demo-pagination--rounded .demo-pagination-btn:hover {
+      color: #333;
+      background: #F3F4F6;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .demo-pagination--rounded .demo-pagination-btn.active {
+      color: #fff;
+      background: linear-gradient(135deg, #333 0%, #666 100%);
+      box-shadow: 0 2px 8px rgba(51,51,51,0.3);
+    }
+    .demo-pagination--rounded .demo-pagination-btn:disabled {
+      color: #D1D5DB;
+      cursor: not-allowed;
+      background: #F3F4F6;
+      box-shadow: none;
+      transform: none;
+    }
+
+    /* modern 风格 */
+    .demo-pagination--modern {
+      padding: 8px 0;
+    }
+    .demo-pagination--modern .demo-pagination-btn {
+      min-width: 28px;
+      height: 28px;
+      padding: 0 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: #6B7280;
+      background: transparent;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .demo-pagination--modern .demo-pagination-btn:hover {
+      color: #333;
+      background: #F3F4F6;
+    }
+    .demo-pagination--modern .demo-pagination-btn.active {
+      color: #fff;
+      background: #333;
+    }
+    .demo-pagination--modern .demo-pagination-btn:disabled {
+      color: #D1D5DB;
+      cursor: not-allowed;
+      background: transparent;
+    }
+
+    .demo-pagination-ellipsis {
+      padding: 0 4px;
+      color: #9CA3AF;
+    }
+
+    /* Mobile frame for mobile templates */
+    .mobile-frame {
+      width: 260px;
+      height: 520px;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+      border: 6px solid #1a1a2e;
+      background: #fff;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .mobile-frame .preview-wrapper {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    /* PC frame for PC templates */
+    .pc-frame {
+      width: 100%;
+      min-height: 320px;
+      border-radius: 8px;
+      overflow-y: auto;
+      box-shadow: 0 6px 30px rgba(0,0,0,0.08);
+      flex-shrink: 0;
+    }
+
+    .pc-frame .preview-wrapper {
+      min-height: 320px;
+    }
+
+    /* Section labels */
+    .template-preview {
+      position: relative;
+    }
+
+    .preview-label {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      z-index: 100;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>UI Template Builder</h1>
+      <p>预置模板可视化预览 - 与生成代码完全一致</p>
+    </div>
+
+    <!-- TabBar Section -->
+    <div class="section">
+      <h2 class="section-title">底部导航 TabBar (uniapp)</h2>
+      <div class="template-grid">
+
+        <!-- TabBar 风格1 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>风格1: 简约线条</h3>
+            <p>白色背景，线性图标</p>
+          </div>
+          <div class="preview-area">
+            <div class="mobile-frame">
+              <div class="preview-wrapper">
+                <div style="padding: 60px 16px 16px; background: #fff; height: 100%;">
+                  <div style="font-size: 14px; color: #999; text-align: center; margin-bottom: 20px;">页面内容区域</div>
+                  <div style="background: #f5f5f5; border-radius: 8px; padding: 20px; text-align: center; color: #ccc;">内容占位</div>
+                </div>
+                <div class="tabbar-style1">
+                  <div class="tab-item active">
+                    <i class="ri-home-fill tab-icon"></i>
+                    <span class="tab-text">首页</span>
+                  </div>
+                  <div class="tab-item">
+                    <i class="ri-app-store-fill tab-icon"></i>
+                    <span class="tab-text">分类</span>
+                  </div>
+                  <div class="tab-item">
+                    <i class="ri-shopping-cart-fill tab-icon"></i>
+                    <span class="tab-text">购物车</span>
+                    <span class="badge">3</span>
+                  </div>
+                  <div class="tab-item">
+                    <i class="ri-user-fill tab-icon"></i>
+                    <span class="tab-text">我的</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TabBar 风格2 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>风格2: 活力炫彩</h3>
+            <p>渐变图标，圆角胶囊</p>
+          </div>
+          <div class="preview-area">
+            <div class="mobile-frame">
+              <div class="preview-wrapper">
+                <div style="padding: 60px 16px 16px; background: #fff; height: 100%;"></div>
+                <div class="tabbar-style2">
+                  <div class="tab-item active">
+                    <div class="tab-icon"><i class="ri-home-fill"></i></div>
+                    <span class="tab-text">首页</span>
+                  </div>
+                  <div class="tab-item">
+                    <div class="tab-icon"><i class="ri-app-store-fill"></i></div>
+                    <span class="tab-text">分类</span>
+                  </div>
+                  <div class="tab-item">
+                    <div class="tab-icon"><i class="ri-shopping-cart-fill"></i></div>
+                    <span class="tab-text">购物车</span>
+                  </div>
+                  <div class="tab-item">
+                    <div class="tab-icon"><i class="ri-user-fill"></i></div>
+                    <span class="tab-text">我的</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TabBar 风格3 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>风格3: 高端暗金</h3>
+            <p>深色背景，金色点缀</p>
+          </div>
+          <div class="preview-area">
+            <div class="mobile-frame" style="border-color: #1a1a2e;">
+              <div class="preview-wrapper">
+                <div style="padding: 60px 16px 16px; background: #f5f5f5; height: 100%;"></div>
+                <div class="tabbar-style3">
+                  <div class="tab-item active">
+                    <i class="ri-home-fill tab-icon"></i>
+                    <span class="tab-text">首页</span>
+                  </div>
+                  <div class="tab-item">
+                    <i class="ri-app-store-fill tab-icon"></i>
+                    <span class="tab-text">分类</span>
+                  </div>
+                  <div class="tab-item">
+                    <i class="ri-shopping-cart-fill tab-icon"></i>
+                    <span class="tab-text">购物车</span>
+                  </div>
+                  <div class="tab-item">
+                    <i class="ri-user-fill tab-icon"></i>
+                    <span class="tab-text">我的</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TabBar 风格4 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>风格4: 清新自然</h3>
+            <p>浅绿背景，圆角卡片</p>
+          </div>
+          <div class="preview-area">
+            <div class="mobile-frame">
+              <div class="preview-wrapper">
+                <div style="padding: 60px 16px 16px; background: #f5fbf8; height: 100%;"></div>
+                <div class="tabbar-style4">
+                  <div class="tab-item active">
+                    <i class="ri-home-fill tab-icon"></i>
+                    <span class="tab-text">首页</span>
+                  </div>
+                  <div class="tab-item">
+                    <i class="ri-app-store-fill tab-icon"></i>
+                    <span class="tab-text">分类</span>
+                  </div>
+                  <div class="tab-item">
+                    <i class="ri-shopping-cart-fill tab-icon"></i>
+                    <span class="tab-text">购物车</span>
+                  </div>
+                  <div class="tab-item">
+                    <i class="ri-user-fill tab-icon"></i>
+                    <span class="tab-text">我的</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Profile Section -->
+    <div class="section">
+      <h2 class="section-title">个人中心 Profile (uniapp)</h2>
+      <div class="template-grid">
+
+        <!-- Profile 风格1 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>风格1: 简约现代</h3>
+            <p>渐变头部，白色卡片</p>
+          </div>
+          <div class="preview-area">
+            <div class="mobile-frame">
+              <div class="preview-wrapper" style="overflow-y: auto;">
+                <div class="profile-style1">
+                  <div class="header-bg"></div>
+                  <div class="header-content">
+                    <div class="avatar"></div>
+                    <div class="user-info">
+                      <div class="nickname">用户昵称</div>
+                      <div class="level-tag">
+                        <img src="assets/icons/star.svg" class="level-icon" alt="">
+                        <span>黄金会员</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="stats-card">
+                    <div class="stats-item"><div class="stats-value">2</div><div class="stats-label">待付款</div></div>
+                    <div class="stats-item"><div class="stats-value">1</div><div class="stats-label">待发货</div></div>
+                    <div class="stats-item"><div class="stats-value">3</div><div class="stats-label">待收货</div></div>
+                    <div class="stats-item"><div class="stats-value">28</div><div class="stats-label">已完成</div></div>
+                  </div>
+                  <div class="menu-card">
+                    <div class="menu-item"><img src="assets/icons/credit-card.svg" class="menu-icon-svg" alt=""><span class="menu-label">优惠券</span></div>
+                    <div class="menu-item"><img src="assets/icons/heart.svg" class="menu-icon-svg" alt=""><span class="menu-label">我的收藏</span></div>
+                    <div class="menu-item"><img src="assets/icons/store.svg" class="menu-icon-svg" alt=""><span class="menu-label">收货地址</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile 风格2 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>风格2: 活力炫彩</h3>
+            <p>橙色渐变，卡片布局</p>
+          </div>
+          <div class="preview-area">
+            <div class="mobile-frame">
+              <div class="preview-wrapper" style="overflow-y: auto;">
+                <div class="profile-style2">
+                  <div class="header">
+                    <div class="user-row">
+                      <div class="avatar"></div>
+                      <div class="user-info">
+                        <div class="nickname">阳光小暖</div>
+                        <div class="level-badge">VIP会员</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="stats-row">
+                    <div class="stat-item"><div class="stat-value">128</div><div class="stat-label">关注</div></div>
+                    <div class="stat-item"><div class="stat-value">856</div><div class="stat-label">粉丝</div></div>
+                    <div class="stat-item"><div class="stat-value">2.3w</div><div class="stat-label">获赞</div></div>
+                  </div>
+                  <div class="order-card">
+                    <div class="card-header"><span class="card-title">我的订单</span><span style="color:#999;font-size:13px;">全部 ›</span></div>
+                    <div class="order-types">
+                      <div class="type-item"><img src="assets/icons/credit-card.svg" class="type-icon-svg" alt=""><span class="type-label">待付款</span></div>
+                      <div class="type-item"><img src="assets/icons/package.svg" class="type-icon-svg" alt=""><span class="type-label">待发货</span></div>
+                      <div class="type-item"><img src="assets/icons/truck.svg" class="type-icon-svg" alt=""><span class="type-label">待收货</span></div>
+                      <div class="type-item"><img src="assets/icons/star.svg" class="type-icon-svg" alt=""><span class="type-label">评价</span></div>
+                      <div class="type-item"><img src="assets/icons/refresh.svg" class="type-icon-svg" alt=""><span class="type-label">退款</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile 风格3 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>风格3: 高端商务</h3>
+            <p>深色背景，金色会员卡</p>
+          </div>
+          <div class="preview-area">
+            <div class="mobile-frame" style="border-color: #1a1a2e;">
+              <div class="preview-wrapper" style="overflow-y: auto;">
+                <div class="profile-style3">
+                  <div class="header">
+                    <div class="header-content">
+                      <div class="avatar"></div>
+                      <div class="user-info">
+                        <div class="nickname">尊贵的会员</div>
+                        <div class="vip-tag"><img src="assets/icons/star.svg" class="vip-icon" alt=""> 黑金会员</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="asset-card">
+                    <div class="asset-title">我的资产</div>
+                    <div class="asset-list">
+                      <div class="asset-item"><div class="asset-value">¥1,280</div><div class="asset-label">余额</div></div>
+                      <div class="asset-item"><div class="asset-value">28,888</div><div class="asset-label">积分</div></div>
+                      <div class="asset-item"><div class="asset-value">12张</div><div class="asset-label">优惠券</div></div>
+                    </div>
+                  </div>
+                  <div class="menu-section">
+                    <div class="menu-item">
+                      <div class="menu-left"><img src="assets/icons/star.svg" class="menu-icon-svg" alt=""><span class="menu-text">会员中心</span></div>
+                    </div>
+                    <div class="menu-item">
+                      <div class="menu-left"><img src="assets/icons/package.svg" class="menu-icon-svg" alt=""><span class="menu-text">历史订单</span></div>
+                    </div>
+                    <div class="menu-item">
+                      <div class="menu-left"><img src="assets/icons/user.svg" class="menu-icon-svg" alt=""><span class="menu-text">账号安全</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile 风格4 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>风格4: 清新自然</h3>
+            <p>浅绿背景，绿卡会员</p>
+          </div>
+          <div class="preview-area">
+            <div class="mobile-frame">
+              <div class="preview-wrapper" style="overflow-y: auto;">
+                <div class="profile-style4">
+                  <div class="header">
+                    <div class="header-content">
+                      <div class="avatar"></div>
+                      <div class="user-info">
+                        <div class="nickname">森系女孩</div>
+                        <span class="user-id">ID: 888888</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="member-card">
+                    <div class="member-bg">
+                      <div class="member-content">
+                        <div class="member-top">
+                          <span class="member-level"><img src="assets/icons/star.svg" class="level-icon" alt=""> 绿卡会员</span>
+                          <span class="member-rights">享9折优惠</span>
+                        </div>
+                        <div class="member-stats">
+                          <div class="member-stat"><span class="ms-value">1,280</span><span class="ms-label">积分</span></div>
+                          <div class="member-stat"><span class="ms-value">5</span><span class="ms-label">优惠券</span></div>
+                          <div class="member-stat"><span class="ms-value">¥128</span><span class="ms-label">余额</span></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="menu-card">
+                    <div class="menu-item"><div class="menu-left"><div class="menu-icon-box"><img src="assets/icons/credit-card.svg" class="menu-icon-svg" alt="" style="width:18px;height:18px;"></div><span class="menu-text">优惠券</span></div></div>
+                    <div class="menu-item"><div class="menu-left"><div class="menu-icon-box"><img src="assets/icons/store.svg" class="menu-icon-svg" alt="" style="width:18px;height:18px;"></div><span class="menu-text">收货地址</span></div></div>
+                    <div class="menu-item"><div class="menu-left"><div class="menu-icon-box"><img src="assets/icons/user.svg" class="menu-icon-svg" alt="" style="width:18px;height:18px;"></div><span class="menu-text">设置</span></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Login Section -->
+    <div class="section">
+      <h2 class="section-title">登录页 Login (React)</h2>
+      <div class="template-grid">
+
+        <!-- Login 风格1 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>风格1: 简约现代</h3>
+            <p>白色背景，蓝色主调</p>
+          </div>
+          <div class="preview-area">
+            <div class="pc-frame">
+              <div class="login-style1">
+                <div class="card">
+                  <div class="logo"><img src="assets/icons/home.svg" class="logo-icon-svg" alt=""><span class="logo-text">应用名称</span></div>
+                  <div class="title">欢迎回来</div>
+                  <div class="subtitle">登录您的账号</div>
+                  <input type="text" class="form-input" placeholder="请输入用户名">
+                  <input type="password" class="form-input" placeholder="请输入密码">
+                  <button class="submit-btn">登 录</button>
+                  <div class="footer">还没有账号？<a href="#">立即注册</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Login 风格2 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>风格2: 活力炫彩</h3>
+            <p>渐变背景，橙色主调</p>
+          </div>
+          <div class="preview-area">
+            <div class="pc-frame">
+              <div class="login-style2">
+                <div class="bg-pattern"></div>
+                <div class="card">
+                  <img src="assets/icons/star.svg" class="logo-icon-svg" alt="" style="display:block;margin:0 auto 20px;width:48px;height:48px;">
+                  <div class="title">欢迎回来</div>
+                  <div class="subtitle">登录后开始探索</div>
+                  <input type="text" class="form-input" placeholder="请输入手机号">
+                  <input type="password" class="form-input" placeholder="请输入密码">
+                  <button class="submit-btn">登 录</button>
+                  <div class="footer">没有账号？<a href="#">立即注册</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Login 风格3 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>风格3: 深色科技</h3>
+            <p>深蓝背景，霓虹点缀</p>
+          </div>
+          <div class="preview-area">
+            <div class="pc-frame">
+              <div class="login-style3">
+                <div class="card">
+                  <div class="logo-box"><span class="logo-icon">◈</span></div>
+                  <div class="title">Welcome Back</div>
+                  <input type="text" class="form-input" placeholder="Email / Phone">
+                  <input type="password" class="form-input" placeholder="Password">
+                  <button class="submit-btn">Sign In</button>
+                  <div class="footer"><a href="#">Don't have an account?</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div class="section">
+      <h2 class="section-title">数据大屏 Dashboard (React)</h2>
+      <div class="template-grid">
+
+        <!-- Dashboard 风格1 -->
+        <div class="template-card" style="grid-column: span 2;">
+          <div class="template-card-header">
+            <h3>风格1: 科技深蓝</h3>
+            <p>深蓝背景，青色主调，发光效果</p>
+          </div>
+          <div class="preview-area" style="height: 320px;">
+            <div class="pc-frame" style="height: 100%;">
+              <div class="dashboard-style1">
+                <div class="header">
+                  <div class="title">运营数据大屏</div>
+                  <div class="update-time">更新时间: 12:00:00</div>
+                </div>
+                <div class="stats-grid">
+                  <div class="stat-card">
+                    <div class="stat-label">今日订单</div>
+                    <div class="stat-value">1,234</div>
+                    <div class="stat-trend cyan">↑ 12.5%</div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-label">销售额</div>
+                    <div class="stat-value">¥56,789</div>
+                    <div class="stat-trend green">↑ 8.3%</div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-label">访客数</div>
+                    <div class="stat-value">8,654</div>
+                    <div class="stat-trend purple">↑ 5.2%</div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-label">转化率</div>
+                    <div class="stat-value">3.24%</div>
+                    <div class="stat-trend yellow">↑ 1.1%</div>
+                  </div>
+                </div>
+                <div class="charts-row">
+                  <div class="chart-card">
+                    <div class="chart-title">销售额趋势</div>
+                    <div class="chart-body">
+                      <div class="bar" style="height: 40%;"></div>
+                      <div class="bar" style="height: 30%;"></div>
+                      <div class="bar" style="height: 65%;"></div>
+                      <div class="bar" style="height: 80%;"></div>
+                      <div class="bar" style="height: 55%;"></div>
+                      <div class="bar" style="height: 90%;"></div>
+                      <div class="bar" style="height: 70%;"></div>
+                    </div>
+                  </div>
+                  <div class="chart-card">
+                    <div class="chart-title">流量来源</div>
+                    <div class="pie-chart"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Product Detail Section -->
+    <div class="section">
+      <h2 class="section-title">商品详情 Product Detail (uniapp)</h2>
+      <div class="template-grid">
+
+        <!-- Product 风格1 -->
+        <div class="template-card" style="grid-column: span 2;">
+          <div class="template-card-header">
+            <h3>风格1: 简约现代</h3>
+            <p>参考淘宝京东，含轮播图、券后价、规格、Tab切换、评价晒单</p>
+          </div>
+          <div class="preview-area">
+            <div class="mobile-frame" style="width:320px;height:560px;">
+              <div class="preview-wrapper" style="overflow-y:auto;">
+                <div class="product-style1">
+                  <!-- 导航栏 -->
+                  <div class="nav-bar">
+                    <div class="nav-left">
+                      <div class="nav-btn"><div class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div></div>
+                    </div>
+                    <div class="nav-tabs">
+                      <div class="nav-tab active">商品</div>
+                      <div class="nav-tab">评价</div>
+                      <div class="nav-tab">推荐</div>
+                    </div>
+                    <div class="nav-right">
+                      <div class="nav-btn"><div class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></div></div>
+                      <div class="nav-btn"><div class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></div></div>
+                    </div>
+                  </div>
+
+                  <!-- 轮播图 -->
+                  <div class="gallery" id="product-gallery">
+                    <div class="gallery-carousel" id="gallery-track">
+                      <div class="gallery-slide"><img src="assets/images/product-1.jpg" alt="product-1"></div>
+                      <div class="gallery-slide"><img src="assets/images/product-2.jpg" alt="product-2"></div>
+                      <div class="gallery-slide"><img src="assets/images/product-3.jpg" alt="product-3"></div>
+                      <div class="gallery-slide"><img src="assets/images/detail-1.jpg" alt="product-4"></div>
+                    </div>
+                    <div class="image-indicator" id="gallery-indicator">1 / 4</div>
+                    <div class="video-tag"><svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+                  </div>
+
+                  <!-- 价格信息 -->
+                  <div class="info-section">
+                    <div class="price-row">
+                      <div class="price-main">
+                        <span class="price-symbol">¥</span>
+                        <span class="price">9,999</span>
+                        <div class="price-tags"><span class="price-tag">券后价</span></div>
+                      </div>
+                      <div class="price-extra">
+                        <span class="original-price">价格 ¥10,999</span>
+                        <span class="sold-info">已售 1.2万</span>
+                      </div>
+                    </div>
+                    <div class="coupon-row">
+                      <span class="coupon-item">满8000减500</span>
+                      <span class="coupon-item">12期免息</span>
+                    </div>
+                    <div class="title-row">
+                      <div class="title-content">
+                        <div class="title">Apple/苹果 iPhone 15 Pro Max 256GB 原色钛金属 支持移动联通电信5G</div>
+                        <div class="tags"><span class="tag">官方正品</span><span class="tag">顺丰包邮</span><span class="tag">分期免息</span></div>
+                      </div>
+                      <div class="favorite-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        <span class="favorite-text">收藏</span>
+                      </div>
+                    </div>
+                    <div class="meta-row">
+                      <div class="meta-item">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                        <span class="meta">4.9 分</span>
+                      </div>
+                      <div class="meta-divider"></div>
+                      <div class="meta-item"><span class="meta">3280+ 评价</span></div>
+                      <div class="meta-divider"></div>
+                      <div class="meta-item"><span class="meta">98% 好评</span></div>
+                    </div>
+                  </div>
+
+                  <!-- 规格 -->
+                  <div class="cell-section">
+                    <div class="cell-left">
+                      <span class="cell-label">选择</span>
+                      <span class="cell-value">原色钛金属 / 256GB / 官方标配</span>
+                    </div>
+                    <div class="cell-arrow"><div class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+                  </div>
+
+                  <!-- 服务 -->
+                  <div class="service-section">
+                    <div class="service-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>正品保证</span></div>
+                    <div class="service-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>7天无理由</span></div>
+                    <div class="service-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg><span>信用卡分期</span></div>
+                    <div class="service-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg><span>运费险</span></div>
+                  </div>
+
+                  <!-- 店铺 -->
+                  <div class="shop-section">
+                    <div class="shop-info">
+                      <div class="shop-logo"><img src="assets/images/product-2.jpg" alt="shop"></div>
+                      <div class="shop-detail">
+                        <span class="shop-name">Apple官方旗舰店</span>
+                        <span class="shop-desc">856万人关注 · 好评率 99% · 126件商品</span>
+                      </div>
+                    </div>
+                    <div class="shop-actions">
+                      <div class="shop-btn shop-btn-primary">进店</div>
+                      <div class="shop-btn">关注</div>
+                    </div>
+                  </div>
+
+                  <!-- 推荐商品 -->
+                  <div class="recommend-section">
+                    <div class="section-header"><div class="section-title">看了又看</div></div>
+                    <div class="recommend-list">
+                      <div class="recommend-item"><img src="assets/images/product-2.jpg" class="recommend-image" alt=""><span class="recommend-title">iPhone 15 Pro</span><span class="recommend-price">¥7999</span></div>
+                      <div class="recommend-item"><img src="assets/images/product-3.jpg" class="recommend-image" alt=""><span class="recommend-title">AirPods Pro 2</span><span class="recommend-price">¥1899</span></div>
+                      <div class="recommend-item"><img src="assets/images/detail-1.jpg" class="recommend-image" alt=""><span class="recommend-title">MagSafe 充电器</span><span class="recommend-price">¥329</span></div>
+                      <div class="recommend-item"><img src="assets/images/detail-2.jpg" class="recommend-image" alt=""><span class="recommend-title">硅胶保护壳</span><span class="recommend-price">¥399</span></div>
+                    </div>
+                  </div>
+
+                  <!-- Tab 切换 -->
+                  <div class="tabs-section" id="product-tabs">
+                    <div class="tabs-bar">
+                      <div class="tab-item active" data-tab="detail"><span class="tab-text">商品详情</span></div>
+                      <div class="tab-item" data-tab="review"><span class="tab-text">评价晒单</span><span class="tab-count">(3280)</span></div>
+                      <div class="tab-item" data-tab="recommend"><span class="tab-text">相关推荐</span></div>
+                    </div>
+                  </div>
+
+                  <!-- 商品详情内容 -->
+                  <div class="tab-content product-tab-content" data-tab-content="detail">
+                    <div class="params-title">规格参数</div>
+                    <div class="params-list">
+                      <div class="params-item"><span class="params-label">品牌</span><span class="params-value">Apple/苹果</span></div>
+                      <div class="params-item"><span class="params-label">型号</span><span class="params-value">iPhone 15 Pro Max</span></div>
+                      <div class="params-item"><span class="params-label">机身颜色</span><span class="params-value">原色钛金属</span></div>
+                      <div class="params-item"><span class="params-label">存储容量</span><span class="params-value">256GB</span></div>
+                      <div class="params-item"><span class="params-label">网络类型</span><span class="params-value">5G全网通</span></div>
+                    </div>
+                    <div class="detail-images" style="margin-top:12px;">
+                      <img src="assets/images/detail-1.jpg" class="detail-image" alt="detail">
+                      <img src="assets/images/detail-2.jpg" class="detail-image" alt="detail">
+                    </div>
+                  </div>
+
+                  <!-- 评价内容 -->
+                  <div class="tab-content product-tab-content" data-tab-content="review" style="display:none;">
+                    <div class="review-summary">
+                      <div class="review-rate">
+                        <span class="rate-value">4.9</span>
+                        <div><div class="rate-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><span class="rate-text">98% 好评</span></div>
+                      </div>
+                      <div class="review-tags">
+                        <span class="review-tag">拍照清晰 1234</span>
+                        <span class="review-tag">运行流畅 986</span>
+                        <span class="review-tag">续航不错 756</span>
+                        <span class="review-tag">手感好 543</span>
+                      </div>
+                    </div>
+                    <div class="comment-list">
+                      <div class="comment-item">
+                        <div class="comment-user"><img src="assets/images/product-3.jpg" class="comment-avatar" alt=""><div class="comment-user-info"><span class="comment-name">用户***8</span><div class="comment-rating"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div></div></div>
+                        <div class="comment-content">手机非常好用，拍照清晰，运行流畅，钛金属质感很棒，物流也很快！</div>
+                        <div class="comment-images"><img src="assets/images/detail-1.jpg" class="comment-image" alt=""><img src="assets/images/detail-2.jpg" class="comment-image" alt=""></div>
+                        <div class="comment-meta"><span class="comment-spec">原色钛金属；256GB</span><span class="comment-date">2024-01-15</span></div>
+                      </div>
+                      <div class="comment-item">
+                        <div class="comment-user"><img src="assets/images/product-2.jpg" class="comment-avatar" alt=""><div class="comment-user-info"><span class="comment-name">用户***2</span><div class="comment-rating"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div></div></div>
+                        <div class="comment-content">是正品，包装完整，发货速度快，客服态度很好，会回购。</div>
+                        <div class="comment-meta"><span class="comment-spec">原色钛金属；256GB</span><span class="comment-date">2024-01-14</span></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 相关推荐内容 -->
+                  <div class="tab-content product-tab-content" data-tab-content="recommend" style="display:none;">
+                    <div class="recommend-grid">
+                      <div class="grid-item"><img src="assets/images/product-2.jpg" class="grid-image" alt=""><span class="grid-title">iPhone 15 Pro 保护壳</span><div class="grid-price-row"><span class="grid-price">¥399</span><span class="grid-sales">2300人付款</span></div></div>
+                      <div class="grid-item"><img src="assets/images/product-3.jpg" class="grid-image" alt=""><span class="grid-title">MagSafe 磁吸充电宝</span><div class="grid-price-row"><span class="grid-price">¥749</span><span class="grid-sales">1800人付款</span></div></div>
+                      <div class="grid-item"><img src="assets/images/detail-1.jpg" class="grid-image" alt=""><span class="grid-title">AirPods Pro 第二代</span><div class="grid-price-row"><span class="grid-price">¥1899</span><span class="grid-sales">5600人付款</span></div></div>
+                      <div class="grid-item"><img src="assets/images/detail-2.jpg" class="grid-image" alt=""><span class="grid-title">USB-C 充电线</span><div class="grid-price-row"><span class="grid-price">¥145</span><span class="grid-sales">12000人付款</span></div></div>
+                    </div>
+                  </div>
+
+                  <!-- 底部操作栏 -->
+                  <div class="bottom-bar">
+                    <div class="bar-left">
+                      <div class="action-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                        <span class="action-label">客服</span>
+                      </div>
+                      <div class="action-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        <span class="action-label">店铺</span>
+                      </div>
+                      <div class="action-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                        <span class="action-label">购物车</span>
+                        <span class="cart-badge">2</span>
+                      </div>
+                    </div>
+                    <div class="bar-right">
+                      <div class="btn-cart">加入购物车</div>
+                      <div class="btn-buy">立即购买</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Cart Section -->
+    <div class="section">
+      <h2 class="section-title">购物车 Cart (uniapp)</h2>
+      <div class="template-grid">
+
+        <!-- Cart 风格1 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>风格1: 简约现代</h3>
+            <p>店铺分组，左滑编辑，底部结算</p>
+          </div>
+          <div class="preview-area">
+            <div class="mobile-frame" style="width:320px;height:560px;">
+              <div class="preview-wrapper" style="overflow-y:auto;">
+                <div class="cart-style1">
+                  <div class="cart-header">
+                    <span class="header-title">购物车(3)</span>
+                    <span class="header-action">管理</span>
+                  </div>
+
+                  <div class="shop-group">
+                    <div class="shop-name">
+                      <span class="checkbox checked"></span>
+                      <span>Apple官方旗舰店</span>
+                    </div>
+                    <div class="cart-item">
+                      <span class="checkbox checked"></span>
+                      <img src="assets/images/product-1.jpg" class="item-image" alt="">
+                      <div class="item-info">
+                        <div class="item-title">Apple/苹果 iPhone 15 Pro Max 256GB 原色钛金属</div>
+                        <span class="item-spec">原色钛金属；256GB；官方标配</span>
+                        <div class="item-bottom">
+                          <div class="item-price"><span>¥</span>9999</div>
+                          <div class="quantity">
+                            <span class="qty-btn">-</span>
+                            <span class="qty-value">1</span>
+                            <span class="qty-btn">+</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="cart-item">
+                      <span class="checkbox checked"></span>
+                      <img src="assets/images/product-3.jpg" class="item-image" alt="">
+                      <div class="item-info">
+                        <div class="item-title">AirPods Pro 第二代 主动降噪无线蓝牙耳机</div>
+                        <span class="item-spec">白色；官方标配</span>
+                        <div class="item-bottom">
+                          <div class="item-price"><span>¥</span>1899</div>
+                          <div class="quantity">
+                            <span class="qty-btn">-</span>
+                            <span class="qty-value">1</span>
+                            <span class="qty-btn">+</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="cart-bottom">
+                    <div class="select-all">
+                      <span class="checkbox checked"></span>
+                      <span>全选</span>
+                    </div>
+                    <div class="total-section">
+                      <div class="total-price">合计：<strong>¥11898</strong></div>
+                      <div class="settlement-btn">去结算(2)</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Product List Section -->
+    <div class="section">
+      <h2 class="section-title">商品列表 Product List (uniapp)</h2>
+      <div class="template-grid">
+
+        <!-- Product List 风格1 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>风格1: 简约现代</h3>
+            <p>顶部筛选 + 双列瀑布网格</p>
+          </div>
+          <div class="preview-area">
+            <div class="mobile-frame" style="width:320px;height:560px;">
+              <div class="preview-wrapper" style="overflow-y:auto;">
+                <div class="productlist-style1">
+                  <div class="list-header">
+                    <span class="header-title">商品列表</span>
+                    <span class="header-icon">☰</span>
+                  </div>
+                  <div class="filter-bar">
+                    <span class="filter-item active">综合</span>
+                    <span class="filter-item">销量</span>
+                    <span class="filter-item">价格</span>
+                    <span class="filter-item">新品</span>
+                    <span class="filter-item">筛选 ▾</span>
+                  </div>
+                  <div class="product-grid">
+                    <div class="product-card">
+                      <img src="assets/images/product-1.jpg" class="product-image" alt="">
+                      <div class="product-info">
+                        <div class="product-name">Apple/苹果 iPhone 15 Pro Max 256GB</div>
+                        <div class="product-price-row">
+                          <span class="product-price"><span>¥</span>9999</span>
+                          <span class="product-original">¥10999</span>
+                        </div>
+                        <div class="product-sales">已售 1.2万</div>
+                      </div>
+                    </div>
+                    <div class="product-card">
+                      <img src="assets/images/product-2.jpg" class="product-image" alt="">
+                      <div class="product-info">
+                        <div class="product-name">iPhone 15 Pro 128GB 钛金属</div>
+                        <div class="product-price-row">
+                          <span class="product-price"><span>¥</span>7999</span>
+                          <span class="product-original">¥8999</span>
+                        </div>
+                        <div class="product-sales">已售 8560</div>
+                      </div>
+                    </div>
+                    <div class="product-card">
+                      <img src="assets/images/product-3.jpg" class="product-image" alt="">
+                      <div class="product-info">
+                        <div class="product-name">AirPods Pro 第二代 主动降噪耳机</div>
+                        <div class="product-price-row">
+                          <span class="product-price"><span>¥</span>1899</span>
+                          <span class="product-original">¥1999</span>
+                        </div>
+                        <div class="product-sales">已售 5.6万</div>
+                      </div>
+                    </div>
+                    <div class="product-card">
+                      <img src="assets/images/detail-1.jpg" class="product-image" alt="">
+                      <div class="product-info">
+                        <div class="product-name">MagSafe 磁吸充电器 15W快充</div>
+                        <div class="product-price-row">
+                          <span class="product-price"><span>¥</span>329</span>
+                          <span class="product-original">¥399</span>
+                        </div>
+                        <div class="product-sales">已售 2.3万</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Order List Section -->
+    <div class="section">
+      <h2 class="section-title">订单列表 Order List (uniapp)</h2>
+      <div class="template-grid">
+
+        <!-- Order List 风格1 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>风格1: 简约现代</h3>
+            <p>顶部状态筛选 + 卡片式订单</p>
+          </div>
+          <div class="preview-area">
+            <div class="mobile-frame" style="width:320px;height:560px;">
+              <div class="preview-wrapper" style="overflow-y:auto;">
+                <div class="orderlist-style1">
+                  <div class="order-header">我的订单</div>
+                  <div class="order-tabs">
+                    <span class="order-tab active">全部</span>
+                    <span class="order-tab">待付款</span>
+                    <span class="order-tab">待发货</span>
+                    <span class="order-tab">待收货</span>
+                    <span class="order-tab">已完成</span>
+                  </div>
+                  <div class="order-card">
+                    <div class="card-header">
+                      <span class="shop-name">Apple官方旗舰店</span>
+                      <span class="order-status">待收货</span>
+                    </div>
+                    <div class="order-item">
+                      <img src="assets/images/product-1.jpg" class="order-image" alt="">
+                      <div class="order-info">
+                        <div class="order-title">Apple/苹果 iPhone 15 Pro Max 256GB 原色钛金属</div>
+                        <div class="order-spec">原色钛金属；256GB；官方标配</div>
+                        <div class="order-price">¥9999 × 1</div>
+                      </div>
+                    </div>
+                    <div class="order-total">共1件 合计：<strong>¥9999</strong></div>
+                    <div class="order-actions">
+                      <span class="order-btn">查看物流</span>
+                      <span class="order-btn order-btn-primary">确认收货</span>
+                    </div>
+                  </div>
+
+                  <div class="order-card">
+                    <div class="card-header">
+                      <span class="shop-name">Apple官方旗舰店</span>
+                      <span class="order-status">待发货</span>
+                    </div>
+                    <div class="order-item">
+                      <img src="assets/images/product-3.jpg" class="order-image" alt="">
+                      <div class="order-info">
+                        <div class="order-title">AirPods Pro 第二代 主动降噪无线蓝牙耳机</div>
+                        <div class="order-spec">白色；官方标配</div>
+                        <div class="order-price">¥1899 × 1</div>
+                      </div>
+                    </div>
+                    <div class="order-total">共1件 合计：<strong>¥1899</strong></div>
+                    <div class="order-actions">
+                      <span class="order-btn">提醒发货</span>
+                      <span class="order-btn">申请退款</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Register Section -->
+    <div class="section">
+      <h2 class="section-title">注册页 Register (React)</h2>
+      <div class="template-grid">
+
+        <!-- Register 风格1 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>风格1: 简约现代</h3>
+            <p>手机号 + 验证码 + 密码 + 用户协议</p>
+          </div>
+          <div class="preview-area">
+            <div class="pc-frame">
+              <div class="register-style1">
+                <div class="card">
+                  <div class="title">创建账号</div>
+                  <div class="subtitle">填写信息完成注册</div>
+                  <input type="text" class="form-input" placeholder="请输入手机号">
+                  <div class="captcha-row">
+                    <input type="text" class="form-input" placeholder="验证码">
+                    <button class="captcha-btn">获取验证码</button>
+                  </div>
+                  <input type="password" class="form-input" placeholder="设置密码">
+                  <input type="password" class="form-input" placeholder="确认密码">
+                  <label class="agreement">
+                    <input type="checkbox">
+                    <span>我已阅读并同意<a href="#">用户协议</a>和<a href="#">隐私政策</a></span>
+                  </label>
+                  <button class="submit-btn">注 册</button>
+                  <div class="footer">已有账号？<a href="#">立即登录</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Components Section -->
+    <div class="section">
+      <h2 class="section-title">组件模板 Components（无第三方依赖，即拷即用）</h2>
+      <div class="template-grid">
+
+        <!-- Button 组件 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>Button 按钮</h3>
+            <p>主/次/幽灵/危险，多尺寸，加载态</p>
+          </div>
+          <div class="component-demo-area">
+            <div class="component-panel">
+              <h4>PC / React</h4>
+              <button class="demo-btn demo-btn-primary">主要按钮</button>
+              <button class="demo-btn demo-btn-secondary">次要按钮</button>
+              <button class="demo-btn demo-btn-ghost">幽灵按钮</button>
+              <button class="demo-btn demo-btn-danger">危险按钮</button>
+              <div style="margin-top:10px;">
+                <button class="demo-btn demo-btn-primary demo-btn-sm">小按钮</button>
+                <button class="demo-btn demo-btn-primary">中按钮</button>
+                <button class="demo-btn demo-btn-primary demo-btn-lg">大按钮</button>
+              </div>
+              <div style="margin-top:10px;">
+                <button class="demo-btn demo-btn-primary demo-btn-loading">加载中</button>
+                <button class="demo-btn demo-btn-primary" disabled style="opacity:0.5;">禁用</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal 组件 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>Modal 弹框</h3>
+            <p>确认弹框，支持遮罩关闭</p>
+          </div>
+          <div class="component-demo-area" style="position:relative;">
+            <div class="component-panel">
+              <h4>PC / React</h4>
+              <div class="demo-modal">
+                <div class="demo-modal-header">确认删除？</div>
+                <div class="demo-modal-body">删除后将无法恢复，是否继续？</div>
+                <div class="demo-modal-footer">
+                  <button class="demo-modal-btn">取消</button>
+                  <button class="demo-modal-btn primary">确认</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Toast 组件 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>Toast 轻提示</h3>
+            <p>成功/错误/加载，多位置</p>
+          </div>
+          <div class="component-demo-area">
+            <div class="component-panel">
+              <h4>uniapp / Vue3</h4>
+              <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start;">
+                <div class="demo-toast success">操作成功</div>
+                <div class="demo-toast error">网络异常</div>
+                <div class="demo-toast">加载中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Drawer 组件 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>Drawer 抽屉</h3>
+            <p>从右/左/下侧滑出</p>
+          </div>
+          <div class="component-demo-area" style="position:relative;overflow:hidden;">
+            <button class="demo-btn demo-btn-primary" id="demo-drawer-btn">打开抽屉</button>
+            <div class="demo-drawer-wrapper" id="demo-drawer-wrapper" style="display:none;">
+              <div class="demo-drawer-overlay" id="demo-drawer-overlay"></div>
+              <div class="demo-drawer" id="demo-drawer">
+                <div class="demo-drawer-header">
+                  <span class="demo-drawer-title">设置面板</span>
+                  <span class="demo-drawer-close" id="demo-drawer-close">×</span>
+                </div>
+                <div class="demo-drawer-item">账号与安全</div>
+                <div class="demo-drawer-item">消息通知</div>
+                <div class="demo-drawer-item">隐私设置</div>
+                <div class="demo-drawer-item">关于我们</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Table 组件 - 3种风格 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>Table 表格</h3>
+            <p>default / elegant / gradient 三种风格</p>
+          </div>
+          <div class="component-demo-area" style="flex-direction: column; align-items: stretch;">
+            <!-- 风格1: default -->
+            <div style="margin-bottom: 20px;">
+              <h5 style="font-size:12px;color:#999;margin-bottom:8px;">风格1: default 简约线条</h5>
+              <div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                <table class="demo-table" style="font-size:13px;">
+                  <thead style="background:#F9FAFB;border-bottom:2px solid #E5E7EB;">
+                    <tr>
+                      <th style="padding:12px 16px;font-weight:600;color:#6B7280;">姓名</th>
+                      <th style="padding:12px 16px;font-weight:600;color:#6B7280;">邮箱</th>
+                      <th style="padding:12px 16px;font-weight:600;color:#6B7280;">状态</th>
+                      <th style="padding:12px 16px;font-weight:600;color:#6B7280;">操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="border-bottom:1px solid #F3F4F6;"><td style="padding:12px 16px;">张三</td><td style="padding:12px 16px;">zhangsan@example.com</td><td style="padding:12px 16px;"><span style="color:#10B981;">正常</span></td><td style="padding:12px 16px;"><span style="color:#2563EB;cursor:pointer;">编辑</span></td></tr>
+                    <tr style="border-bottom:1px solid #F3F4F6;background:#F9FAFB;"><td style="padding:12px 16px;">李四</td><td style="padding:12px 16px;">lisi@example.com</td><td style="padding:12px 16px;"><span style="color:#F59E0B;">待审核</span></td><td style="padding:12px 16px;"><span style="color:#2563EB;cursor:pointer;">编辑</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- 风格2: elegant -->
+            <div style="margin-bottom: 20px;">
+              <h5 style="font-size:12px;color:#999;margin-bottom:8px;">风格2: elegant 优雅边框</h5>
+              <div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                <table class="demo-table" style="font-size:13px;">
+                  <thead style="background:linear-gradient(135deg, #F9FAFB, #fff);border-bottom:1px solid #E5E7EB;">
+                    <tr>
+                      <th style="padding:16px 20px;font-weight:500;color:#111827;">姓名</th>
+                      <th style="padding:16px 20px;font-weight:500;color:#111827;">邮箱</th>
+                      <th style="padding:16px 20px;font-weight:500;color:#111827;">状态</th>
+                      <th style="padding:16px 20px;font-weight:500;color:#111827;">操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="border-bottom:1px dashed #F3F4F6;position:relative;"><td style="padding:16px 20px;">张三</td><td style="padding:16px 20px;">zhangsan@example.com</td><td style="padding:16px 20px;"><span style="color:#10B981;">正常</span></td><td style="padding:16px 20px;"><span style="color:#2563EB;cursor:pointer;">编辑</span></td></tr>
+                    <tr style="border-bottom:1px dashed #F3F4F6;position:relative;"><td style="padding:16px 20px;">李四</td><td style="padding:16px 20px;">lisi@example.com</td><td style="padding:16px 20px;"><span style="color:#F59E0B;">待审核</span></td><td style="padding:16px 20px;"><span style="color:#2563EB;cursor:pointer;">编辑</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- 风格3: gradient -->
+            <div>
+              <h5 style="font-size:12px;color:#999;margin-bottom:8px;">风格3: gradient 渐变表头</h5>
+              <div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 6px rgba(0,0,0,0.1);">
+                <table class="demo-table" style="font-size:13px;">
+                  <thead style="background:linear-gradient(135deg, #333 0%, #666 100%);">
+                    <tr>
+                      <th style="padding:12px 16px;font-weight:600;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.1);">姓名</th>
+                      <th style="padding:12px 16px;font-weight:600;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.1);">邮箱</th>
+                      <th style="padding:12px 16px;font-weight:600;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.1);">状态</th>
+                      <th style="padding:12px 16px;font-weight:600;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.1);">操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="border-bottom:1px solid #F3F4F6;"><td style="padding:12px 16px;">张三</td><td style="padding:12px 16px;">zhangsan@example.com</td><td style="padding:12px 16px;"><span style="color:#10B981;">正常</span></td><td style="padding:12px 16px;"><span style="color:#333;cursor:pointer;">编辑</span></td></tr>
+                    <tr style="border-bottom:1px solid #F3F4F6;background:#F9FAFB;"><td style="padding:12px 16px;">李四</td><td style="padding:12px 16px;">lisi@example.com</td><td style="padding:12px 16px;"><span style="color:#F59E0B;">待审核</span></td><td style="padding:12px 16px;"><span style="color:#333;cursor:pointer;">编辑</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form 组件 - 3种风格 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>Form 表单</h3>
+            <p>default / filled / outline 三种风格</p>
+          </div>
+          <div class="component-demo-area" style="flex-direction: column; align-items: stretch;">
+            <!-- 风格1: default -->
+            <div style="margin-bottom: 20px;">
+              <h5 style="font-size:12px;color:#999;margin-bottom:8px;">风格1: default 默认线条</h5>
+              <div style="background:#fff;padding:20px;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.05);max-width:360px;">
+                <div class="demo-form-item" style="margin-bottom:16px;">
+                  <label class="demo-form-label" style="font-size:14px;font-weight:500;color:#374151;display:block;margin-bottom:8px;">用户名 <span style="color:#EF4444;">*</span></label>
+                  <input type="text" class="demo-form-input" style="width:100%;height:40px;padding:0 12px;border:1px solid #E5E7EB;border-radius:8px;font-size:14px;" placeholder="请输入用户名">
+                </div>
+                <div class="demo-form-item" style="margin-bottom:16px;">
+                  <label class="demo-form-label" style="font-size:14px;font-weight:500;color:#374151;display:block;margin-bottom:8px;">邮箱</label>
+                  <input type="text" class="demo-form-input" style="width:100%;height:40px;padding:0 12px;border:1px solid #E5E7EB;border-radius:8px;font-size:14px;" placeholder="请输入邮箱">
+                </div>
+                <button class="demo-btn demo-btn-primary" style="padding:10px 20px;">提交</button>
+              </div>
+            </div>
+            <!-- 风格2: filled -->
+            <div style="margin-bottom: 20px;">
+              <h5 style="font-size:12px;color:#999;margin-bottom:8px;">风格2: filled 填充背景</h5>
+              <div style="background:#fff;padding:20px;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.05);max-width:360px;">
+                <div class="demo-form-item" style="margin-bottom:12px;">
+                  <label class="demo-form-label" style="font-size:14px;font-weight:500;color:#6B7280;display:block;margin-bottom:8px;">用户名</label>
+                  <input type="text" class="demo-form-input" style="width:100%;height:40px;padding:0 12px;background:#F3F4F6;border:2px solid transparent;border-radius:12px;font-size:14px;" placeholder="请输入用户名">
+                </div>
+                <div class="demo-form-item" style="margin-bottom:12px;">
+                  <label class="demo-form-label" style="font-size:14px;font-weight:500;color:#6B7280;display:block;margin-bottom:8px;">邮箱</label>
+                  <input type="text" class="demo-form-input" style="width:100%;height:40px;padding:0 12px;background:#F3F4F6;border:2px solid transparent;border-radius:12px;font-size:14px;" placeholder="请输入邮箱">
+                </div>
+                <button class="demo-btn demo-btn-primary" style="padding:10px 20px;border-radius:12px;">提交</button>
+              </div>
+            </div>
+            <!-- 风格3: outline -->
+            <div>
+              <h5 style="font-size:12px;color:#999;margin-bottom:8px;">风格3: outline 粗边框</h5>
+              <div style="background:#fff;padding:20px;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.05);max-width:360px;">
+                <div class="demo-form-item" style="margin-bottom:20px;">
+                  <label class="demo-form-label" style="font-size:16px;font-weight:600;color:#111827;display:block;padding:8px 0;letter-spacing:0.5px;">用户名 <span style="color:#333;">*</span></label>
+                  <input type="text" class="demo-form-input" style="width:100%;height:44px;padding:0 16px;background:transparent;border:2px solid #D1D5DB;border-radius:4px;font-size:16px;" placeholder="请输入用户名">
+                </div>
+                <div class="demo-form-item" style="margin-bottom:20px;">
+                  <label class="demo-form-label" style="font-size:16px;font-weight:600;color:#111827;display:block;padding:8px 0;letter-spacing:0.5px;">邮箱</label>
+                  <input type="text" class="demo-form-input" style="width:100%;height:44px;padding:0 16px;background:transparent;border:2px solid #D1D5DB;border-radius:4px;font-size:16px;" placeholder="请输入邮箱">
+                </div>
+                <button class="demo-btn demo-btn-primary" style="padding:12px 24px;font-size:15px;border-radius:4px;">提交</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagination 组件 - 3种风格 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>Pagination 分页</h3>
+            <p>default / rounded / modern 三种风格</p>
+          </div>
+          <div class="component-demo-area" style="flex-direction: column; align-items: flex-start;">
+            <!-- 风格1: default -->
+            <div style="margin-bottom: 24px;">
+              <h5 style="font-size:12px;color:#999;margin-bottom:12px;">风格1: default 简约</h5>
+              <div class="demo-pagination demo-pagination--default">
+                <button class="demo-pagination-btn" disabled>上一页</button>
+                <button class="demo-pagination-btn active">1</button>
+                <button class="demo-pagination-btn">2</button>
+                <button class="demo-pagination-btn">3</button>
+                <span class="demo-pagination-ellipsis">...</span>
+                <button class="demo-pagination-btn">10</button>
+                <button class="demo-pagination-btn">下一页</button>
+              </div>
+            </div>
+            <!-- 风格2: rounded -->
+            <div style="margin-bottom: 24px;">
+              <h5 style="font-size:12px;color:#999;margin-bottom:12px;">风格2: rounded 圆角胶囊</h5>
+              <div class="demo-pagination demo-pagination--rounded">
+                <button class="demo-pagination-btn" disabled>上一页</button>
+                <button class="demo-pagination-btn active">1</button>
+                <button class="demo-pagination-btn">2</button>
+                <button class="demo-pagination-btn">3</button>
+                <span class="demo-pagination-ellipsis">...</span>
+                <button class="demo-pagination-btn">10</button>
+                <button class="demo-pagination-btn">下一页</button>
+              </div>
+            </div>
+            <!-- 风格3: modern -->
+            <div>
+              <h5 style="font-size:12px;color:#999;margin-bottom:12px;">风格3: modern 现代紧凑</h5>
+              <div class="demo-pagination demo-pagination--modern">
+                <button class="demo-pagination-btn" disabled>&lt;</button>
+                <button class="demo-pagination-btn active">1</button>
+                <button class="demo-pagination-btn">2</button>
+                <button class="demo-pagination-btn">3</button>
+                <span class="demo-pagination-ellipsis">...</span>
+                <button class="demo-pagination-btn">10</button>
+                <button class="demo-pagination-btn">&gt;</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 移动端模板 - 朋友圈 & 聊天列表 -->
+    <div class="section">
+      <h2 class="section-title">移动端模板 - 朋友圈 & 聊天列表</h2>
+      <div class="template-grid">
+
+        <!-- 朋友圈 - 微信风格 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>Moments 朋友圈</h3>
+            <p>风格1: 微信风格</p>
+          </div>
+          <div class="preview-area" style="padding:0;background:#ededed;">
+            <div class="mobile-frame" style="border-color:#ccc;">
+              <div class="preview-wrapper" style="overflow-y:auto;background:#ededed;">
+                <!-- 头部 -->
+                <div style="position:relative;height:140px;overflow:hidden;">
+                  <img src="https://picsum.photos/750/250" style="width:100%;height:100%;object-fit:cover;">
+                  <div style="position:absolute;bottom:-16px;left:16px;display:flex;align-items:flex-end;">
+                    <div style="width:50px;height:50px;background:#ddd;border-radius:4px;border:2px solid #fff;margin-right:10px;"></div>
+                  </div>
+                </div>
+                <!-- 列表 -->
+                <div style="padding:24px 12px 12px;">
+                  <div style="display:flex;margin-bottom:12px;">
+                    <div style="width:32px;height:32px;background:#ddd;border-radius:4px;margin-right:8px;flex-shrink:0;"></div>
+                    <div style="flex:1;">
+                      <div style="font-size:13px;font-weight:500;color:#576b95;margin-bottom:2px;">产品经理</div>
+                      <div style="font-size:13px;color:#333;line-height:1.4;">新版本终于上线了！</div>
+                      <div style="display:flex;gap:3px;margin-top:6px;">
+                        <div style="width:70px;height:70px;background:#eee;border-radius:2px;"></div>
+                      </div>
+                      <div style="display:flex;justify-content:space-between;margin-top:6px;">
+                        <div style="font-size:11px;color:#999;">3小时前</div>
+                        <div style="font-size:11px;color:#777;">👍 56 &nbsp; 💬 12</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="display:flex;margin-bottom:12px;">
+                    <div style="width:32px;height:32px;background:#ddd;border-radius:4px;margin-right:8px;flex-shrink:0;"></div>
+                    <div style="flex:1;">
+                      <div style="font-size:13px;font-weight:500;color:#576b95;margin-bottom:2px;">设计师</div>
+                      <div style="font-size:13px;color:#333;line-height:1.4;">征求意见~</div>
+                      <div style="display:flex;gap:3px;margin-top:6px;flex-wrap:wrap;">
+                        <div style="width:33%;height:50px;background:#eee;border-radius:2px;"></div>
+                        <div style="width:33%;height:50px;background:#eee;border-radius:2px;"></div>
+                        <div style="width:33%;height:50px;background:#eee;border-radius:2px;"></div>
+                      </div>
+                      <div style="display:flex;justify-content:space-between;margin-top:6px;">
+                        <div style="font-size:11px;color:#999;">5小时前</div>
+                        <div style="font-size:11px;color:#777;">👍 89 &nbsp; 💬 23</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 朋友圈 - 小红书风格 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>Moments 朋友圈</h3>
+            <p>风格2: 小红书瀑布流</p>
+          </div>
+          <div class="preview-area" style="padding:0;background:#f8f8f8;">
+            <div class="mobile-frame" style="border-color:#ccc;">
+              <div class="preview-wrapper" style="overflow-y:auto;background:#f8f8f8;">
+                <!-- 头部卡片 -->
+                <div style="position:relative;margin-bottom:20px;">
+                  <img src="https://picsum.photos/750/200" style="width:100%;height:140px;object-fit:cover;">
+                  <div style="position:absolute;bottom:-20px;left:16px;display:flex;flex-direction:column;">
+                    <div style="width:56px;height:56px;background:#ddd;border-radius:50%;border:3px solid #fff;"></div>
+                    <div style="font-size:14px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.5);margin-top:4px;">小红书</div>
+                  </div>
+                </div>
+                <!-- 瀑布流 -->
+                <div style="display:flex;gap:6px;padding:30px 8px 8px;">
+                  <div style="flex:1;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.05);">
+                    <div style="height:120px;background:#eee;"></div>
+                    <div style="padding:8px;">
+                      <div style="font-size:12px;color:#333;line-height:1.4;margin-bottom:6px;">周末野餐好去处</div>
+                      <div style="display:flex;align-items:center;gap:4px;">
+                        <div style="width:16px;height:16px;background:#ddd;border-radius:50%;"></div>
+                        <div style="font-size:10px;color:#666;">户外达人</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="flex:1;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.05);">
+                    <div style="height:100px;background:#ddd;"></div>
+                    <div style="padding:8px;">
+                      <div style="font-size:12px;color:#333;line-height:1.4;margin-bottom:6px;">今日穿搭</div>
+                      <div style="display:flex;align-items:center;gap:4px;">
+                        <div style="width:16px;height:16px;background:#ddd;border-radius:50%;"></div>
+                        <div style="font-size:10px;color:#666;">时尚博主</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 聊天列表 - 微信风格 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>Chat List 聊天列表</h3>
+            <p>风格1: 微信消息列表</p>
+          </div>
+          <div class="preview-area" style="padding:0;background:#fff;">
+            <div class="mobile-frame" style="border-color:#ccc;">
+              <div class="preview-wrapper" style="overflow-y:auto;background:#fff;">
+                <!-- 顶部 -->
+                <div style="padding:12px 16px;background:#f7f7f7;border-bottom:1px solid #e8e8e8;">
+                  <div style="font-size:16px;font-weight:600;text-align:center;color:#1a1a1a;">消息</div>
+                </div>
+                <!-- 列表 -->
+                <div>
+                  <div style="display:flex;align-items:center;padding:12px 16px;border-bottom:1px solid #e8e8e8;">
+                    <div style="width:44px;height:44px;background:#ddd;border-radius:4px;margin-right:12px;flex-shrink:0;position:relative;">
+                      <div style="position:absolute;right:-2px;bottom:-2px;width:8px;height:8px;background:#07c160;border-radius:50%;border:2px solid #fff;"></div>
+                    </div>
+                    <div style="flex:1;min-width:0;">
+                      <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+                        <div style="font-size:15px;color:#1a1a1a;">产品经理</div>
+                        <div style="font-size:12px;color:#999;">13:45</div>
+                      </div>
+                      <div style="font-size:13px;color:#888;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">好的，明白了</div>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;padding:12px 16px;border-bottom:1px solid #e8e8e8;">
+                    <div style="width:44px;height:44px;background:#ddd;border-radius:4px;margin-right:12px;flex-shrink:0;"></div>
+                    <div style="flex:1;min-width:0;">
+                      <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+                        <div style="font-size:15px;color:#1a1a1a;">UI设计组</div>
+                        <div style="font-size:12px;color:#999;">11:30</div>
+                      </div>
+                      <div style="font-size:13px;color:#888;">[图片]</div>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;padding:12px 16px;border-bottom:1px solid #e8e8e8;">
+                    <div style="width:44px;height:44px;background:#ddd;border-radius:4px;margin-right:12px;flex-shrink:0;"></div>
+                    <div style="flex:1;min-width:0;">
+                      <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+                        <div style="font-size:15px;color:#1a1a1a;">前端开发</div>
+                        <div style="font-size:12px;color:#999;">昨天</div>
+                      </div>
+                      <div style="font-size:13px;color:#888;">接口好了</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 聊天列表 - 卡片风格 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>Chat List 聊天列表</h3>
+            <p>风格2: 圆角卡片</p>
+          </div>
+          <div class="preview-area" style="padding:0;background:#f8f9fa;">
+            <div class="mobile-frame" style="border-color:#ccc;">
+              <div class="preview-wrapper" style="overflow-y:auto;background:#f8f9fa;">
+                <!-- 头部 -->
+                <div style="padding:16px 20px;background:#fff;border-bottom:1px solid #eee;">
+                  <div style="font-size:20px;font-weight:700;color:#1a1a1a;">会话</div>
+                </div>
+                <!-- 列表 -->
+                <div style="padding:8px 12px;">
+                  <div style="display:flex;align-items:center;background:#fff;border-radius:16px;padding:14px;margin-bottom:6px;box-shadow:0 1px 4px rgba(0,0,0,0.04);">
+                    <div style="width:48px;height:48px;background:#ddd;border-radius:12px;margin-right:12px;position:relative;">
+                      <div style="position:absolute;top:-2px;right:-2px;width:10px;height:10px;background:#ff4d4f;border-radius:50%;border:2px solid #fff;"></div>
+                    </div>
+                    <div style="flex:1;min-width:0;">
+                      <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+                        <div style="font-size:15px;font-weight:600;color:#1a1a1a;">工作群</div>
+                        <div style="font-size:11px;color:#999;">15:20</div>
+                      </div>
+                      <div style="font-size:13px;color:#666;">王五: 好的</div>
+                    </div>
+                    <div style="min-width:20px;height:20px;background:#ff4d4f;border-radius:10px;font-size:11px;color:#fff;text-align:center;line-height:20px;margin-left:8px;">5</div>
+                  </div>
+                  <div style="display:flex;align-items:center;background:#fff;border-radius:16px;padding:14px;margin-bottom:6px;box-shadow:0 1px 4px rgba(0,0,0,0.04);">
+                    <div style="width:48px;height:48px;background:#ddd;border-radius:12px;margin-right:12px;"></div>
+                    <div style="flex:1;min-width:0;">
+                      <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+                        <div style="font-size:15px;font-weight:600;color:#1a1a1a;">产品设计</div>
+                        <div style="font-size:11px;color:#999;">14:50</div>
+                      </div>
+                      <div style="font-size:13px;color:#666;">新配色方案已更新</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 新增 PC 页面模板 -->
+    <div class="section">
+      <h2 class="section-title">PC 页面模板（新增）</h2>
+      <div class="template-grid">
+
+        <!-- Table List 表格列表 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>Table List 表格列表</h3>
+            <p>3 套风格：默认/优雅/深色科技</p>
+          </div>
+          <div class="component-demo-area" style="flex-direction:column;align-items:stretch;">
+            <div style="background:#fff;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.05);margin-bottom:12px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:16px;font-weight:600;">用户管理</span>
+                <div style="display:flex;gap:8px;">
+                  <button style="height:32px;padding:0 14px;font-size:13px;color:#fff;background:#2563eb;border:none;border-radius:6px;cursor:pointer;">+ 新增</button>
+                </div>
+              </div>
+              <div style="padding:12px 20px;">
+                <table style="width:100%;border-collapse:collapse;">
+                  <thead><tr style="background:#f9fafb;"><th style="padding:10px 12px;font-size:12px;font-weight:600;color:#666;text-align:left;border-bottom:1px solid #e5e5e5;">姓名</th><th style="padding:10px 12px;font-size:12px;font-weight:600;color:#666;text-align:left;">邮箱</th><th style="padding:10px 12px;font-size:12px;font-weight:600;color:#666;text-align:left;">状态</th></tr></thead>
+                  <tbody><tr><td style="padding:10px 12px;font-size:13px;border-bottom:1px solid #f0f0f0;">张三</td><td style="padding:10px 12px;font-size:13px;border-bottom:1px solid #f0f0f0;">test@example.com</td><td style="padding:10px 12px;font-size:13px;"><span style="color:#10b981;">正常</span></td></tr><tr><td style="padding:10px 12px;font-size:13px;border-bottom:1px solid #f0f0f0;">李四</td><td style="padding:10px 12px;font-size:13px;border-bottom:1px solid #f0f0f0;">li@example.com</td><td style="padding:10px 12px;font-size:13px;"><span style="color:#f59e0b;">待审核</span></td></tr></tbody>
+                </table>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px;justify-content:center;">
+              <span style="font-size:11px;color:#999;padding:4px 10px;background:#f5f5f5;border-radius:4px;">default 默认</span>
+              <span style="font-size:11px;color:#667eea;padding:4px 10px;background:rgba(102,126,234,0.1);border-radius:4px;">elegant 优雅</span>
+              <span style="font-size:11px;color:#00d9ff;padding:4px 10px;background:rgba(0,217,255,0.1);border-radius:4px;">dark 深色</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Page 表单页 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>Form Page 表单页</h3>
+            <p>3 套风格：默认/填充/深色科技</p>
+          </div>
+          <div class="component-demo-area" style="flex-direction:column;align-items:center;">
+            <div style="background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.08);padding:32px;max-width:360px;">
+              <h3 style="font-size:20px;font-weight:600;text-align:center;margin:0 0 24px;">填写表单</h3>
+              <div style="margin-bottom:16px;">
+                <label style="display:block;font-size:13px;font-weight:500;margin-bottom:6px;">用户名 *</label>
+                <input type="text" style="width:100%;height:38px;padding:0 12px;border:1px solid #e5e5e5;border-radius:8px;font-size:14px;" placeholder="请输入用户名">
+              </div>
+              <div style="margin-bottom:20px;">
+                <label style="display:block;font-size:13px;font-weight:500;margin-bottom:6px;">邮箱</label>
+                <input type="text" style="width:100%;height:38px;padding:0 12px;border:1px solid #e5e5e5;border-radius:8px;font-size:14px;" placeholder="请输入邮箱">
+              </div>
+              <div style="display:flex;gap:10px;">
+                <button style="flex:1;height:40px;font-size:14px;font-weight:500;color:#fff;background:#2563eb;border:none;border-radius:8px;cursor:pointer;">提交</button>
+                <button style="flex:1;height:40px;font-size:14px;font-weight:500;color:#666;background:#f5f5f5;border:none;border-radius:8px;cursor:pointer;">取消</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Article Detail 文章详情 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>Article Detail 文章详情</h3>
+            <p>博客风格</p>
+          </div>
+          <div class="component-demo-area" style="flex-direction:column;align-items:center;">
+            <div style="background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.06);max-width:400px;overflow:hidden;">
+              <div style="padding:24px 24px 16px;">
+                <div style="display:flex;gap:12px;margin-bottom:12px;">
+                  <span style="font-size:12px;color:#2563eb;font-weight:500;">技术</span>
+                  <span style="font-size:12px;color:#999;">2024-01-15</span>
+                </div>
+                <h3 style="font-size:18px;font-weight:700;margin:0 0 12px;line-height:1.4;">Vue3 组合式 API 最佳实践</h3>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div style="width:28px;height:28px;border-radius:50%;background:#667eea;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;">编</div>
+                  <span style="font-size:13px;color:#666;">编辑者</span>
+                </div>
+              </div>
+              <div style="padding:0 24px 24px;font-size:13px;line-height:1.7;color:#666;">
+                <p style="margin:0;">本文介绍 Vue3 组合式 API 的最佳实践...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Admin Dashboard 管理后台 -->
+        <div class="template-card">
+          <div class="template-card-header">
+            <h3>Admin Dashboard 管理后台</h3>
+            <p>侧边栏 + 顶部 Header + 统计卡片</p>
+          </div>
+          <div class="component-demo-area" style="flex-direction:column;align-items:stretch;padding:0;">
+            <div style="display:flex;min-height:280px;">
+              <div style="width:60px;background:#1a1a2e;padding:12px 0;">
+                <div style="font-size:14px;font-weight:700;color:#fff;padding:0 10px 16px;border-bottom:1px solid rgba(255,255,255,0.1);margin-bottom:8px;">A</div>
+                <div style="padding:8px 10px;color:rgba(255,255,255,0.6);font-size:10px;">仪表盘</div>
+                <div style="padding:8px 10px;color:#fff;font-size:10px;background:rgba(255,255,255,0.05);border-left:2px solid #667eea;">用户</div>
+                <div style="padding:8px 10px;color:rgba(255,255,255,0.6);font-size:10px;">订单</div>
+              </div>
+              <div style="flex:1;background:#f5f7fa;padding:16px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+                  <span style="font-size:16px;font-weight:600;">仪表盘</span>
+                  <div style="width:28px;height:28px;border-radius:50%;background:#667eea;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;">A</div>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+                  <div style="background:#fff;padding:14px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                    <div style="font-size:11px;color:#999;margin-bottom:4px;">总用户</div>
+                    <div style="font-size:20px;font-weight:700;">12,856</div>
+                  </div>
+                  <div style="background:#fff;padding:14px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                    <div style="font-size:11px;color:#999;margin-bottom:4px;">总收入</div>
+                    <div style="font-size:20px;font-weight:700;color:#10b981;">¥128K</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <script>
+    // 商品详情轮播图自动切换
+    (function () {
+      var track = document.getElementById('gallery-track');
+      var indicator = document.getElementById('gallery-indicator');
+      if (!track) return;
+      var slides = track.children;
+      var current = 0;
+      var total = slides.length;
+      if (total <= 1) return;
+
+      setInterval(function () {
+        current = (current + 1) % total;
+        track.style.transform = 'translateX(-' + (current * 100) + '%)';
+        if (indicator) indicator.textContent = (current + 1) + ' / ' + total;
+      }, 3000);
+    })();
+
+    // 商品详情 Tab 切换
+    (function () {
+      var tabs = document.querySelectorAll('#product-tabs .tab-item');
+      var contents = document.querySelectorAll('.product-tab-content');
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          var target = tab.getAttribute('data-tab');
+          tabs.forEach(function (t) { t.classList.remove('active'); });
+          contents.forEach(function (c) { c.style.display = 'none'; });
+          tab.classList.add('active');
+          var content = document.querySelector('.product-tab-content[data-tab-content="' + target + '"]');
+          if (content) content.style.display = 'block';
+        });
+      });
+    })();
+
+    // Drawer 抽屉交互
+    (function () {
+      var btn = document.getElementById('demo-drawer-btn');
+      var wrapper = document.getElementById('demo-drawer-wrapper');
+      var overlay = document.getElementById('demo-drawer-overlay');
+      var close = document.getElementById('demo-drawer-close');
+      if (!btn || !wrapper) return;
+
+      function openDrawer() {
+        wrapper.style.display = 'block';
+        wrapper.classList.add('open');
+      }
+
+      function closeDrawer() {
+        wrapper.classList.remove('open');
+        setTimeout(function () {
+          wrapper.style.display = 'none';
+        }, 300);
+      }
+
+      btn.addEventListener('click', openDrawer);
+      if (overlay) overlay.addEventListener('click', closeDrawer);
+      if (close) close.addEventListener('click', closeDrawer);
+    })();
+  </script>
+</body>
+</html>

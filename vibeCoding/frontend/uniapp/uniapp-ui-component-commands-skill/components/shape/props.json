@@ -1,0 +1,15 @@
+{
+  "name": "shape",
+  "title": "图形",
+  "category": "shape",
+  "description": "图形 CSS 类",
+  "aliases": ["圆形", "半圆", "圆点", "图形", "shape", "circle", "dot"],
+  "props": [],
+  "events": [],
+  "slots": [],
+  "classes": {
+    "semi-circle": "半圆",
+    "circle": "圆形 (--small/--medium/--large)",
+    "dot": "圆点 (--small/--medium/--large)"
+  }
+}

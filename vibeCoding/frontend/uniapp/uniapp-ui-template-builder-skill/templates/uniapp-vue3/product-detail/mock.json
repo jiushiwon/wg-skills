@@ -1,0 +1,29 @@
+{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "title": "商品详情",
+    "product": {
+      "id": "p001",
+      "name": "高端降噪蓝牙耳机 Pro",
+      "price": 299,
+      "originalPrice": 599,
+      "images": [
+        "https://picsum.photos/400/400",
+        "https://picsum.photos/400/401",
+        "https://picsum.photos/400/402"
+      ],
+      "tags": ["热销", "新品", "包邮"],
+      "stock": 99,
+      "sold": 2341,
+      "rating": 4.8,
+      "description": "主动降噪，40小时续航，Hi-Res音质认证",
+      "params": [
+        { "label": "品牌", "value": "TechAudio" },
+        { "label": "型号", "value": "Pro X1" },
+        { "label": "颜色", "value": "星空黑" },
+        { "label": "续航", "value": "40小时" }
+      ]
+    }
+  }
+}

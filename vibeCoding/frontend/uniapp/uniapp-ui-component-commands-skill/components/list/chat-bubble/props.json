@@ -1,0 +1,19 @@
+{
+  "name": "chat-bubble",
+  "title": "聊天气泡",
+  "category": "list",
+  "description": "聊天气泡，支持左/右位置、文本/图片/语音类型",
+  "aliases": ["消息气泡", "对话气泡", "message-bubble", "chat"],
+  "props": [
+    { "name": "position", "type": "string", "default": "left", "desc": "位置: left/right" },
+    { "name": "type", "type": "string", "default": "text", "desc": "类型: text/image/voice" },
+    { "name": "message", "type": "string", "default": "", "desc": "消息内容" },
+    { "name": "avatar", "type": "string", "default": "", "desc": "头像" },
+    { "name": "name", "type": "string", "default": "", "desc": "用户名" },
+    { "name": "time", "type": "string", "default": "", "desc": "时间" },
+    { "name": "showAvatar", "type": "boolean", "default": true, "desc": "显示头像" },
+    { "name": "showName", "type": "boolean", "default": false, "desc": "显示用户名" }
+  ],
+  "events": [],
+  "slots": []
+}

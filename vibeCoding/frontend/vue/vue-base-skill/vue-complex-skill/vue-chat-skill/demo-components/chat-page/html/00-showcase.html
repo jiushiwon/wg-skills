@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>Vue3 Chat Skill - 6 种风格画廊</title>
+  <link rel="stylesheet" href="../../shared/demo.css" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { height: auto; overflow: auto; }
+    body { height: auto; overflow: auto; background: #0d1117; }
+
+    /* 顶部 Hero */
+    .hero {
+      background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%);
+      padding: 80px 48px 60px;
+      text-align: center;
+      color: #c9d1d9;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(rgba(63, 185, 80, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(63, 185, 80, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .hero__title {
+      font-size: 42px;
+      font-weight: 700;
+      color: #e6edf3;
+      margin-bottom: 16px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .hero__title span { color: #3fb950; }
+
+    .hero__subtitle {
+      font-size: 18px;
+      color: #8b949e;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .hero__meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      padding: 8px 16px;
+      background: rgba(63, 185, 80, 0.1);
+      border: 1px solid rgba(63, 185, 80, 0.2);
+      border-radius: 999px;
+      font-size: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      color: #3fb950;
+    }
+
+    /* 画廊网格 */
+    .gallery {
+      max-width: 1400px;
+      margin: -40px auto 0;
+      padding: 0 48px 80px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+      gap: 32px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .card {
+      background: #161b22;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      border: 1px solid #21262d;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+      border-color: #30363d;
+    }
+
+    /* 缩略图（纯 CSS 模拟聊天布局） */
+    .card__preview {
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+    }
+
+    /* 迷你侧边栏 */
+    .card__preview-sidebar {
+      width: 60px;
+      background: rgba(255, 255, 255, 0.05);
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      padding: 8px 6px;
+      gap: 4px;
+    }
+
+    .card__preview-sidebar-item {
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .card__preview-sidebar-item:first-child {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* 迷你主区域 */
+    .card__preview-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+      gap: 6px;
+    }
+
+    .card__preview-msg {
+      display: flex;
+      gap: 4px;
+      align-items: flex-start;
+    }
+
+    .card__preview-msg--user {
+      justify-content: flex-end;
+    }
+
+    .card__preview-msg-bubble {
+      height: 18px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .card__preview-msg--user .card__preview-msg-bubble {
+      width: 80px;
+      background: rgba(16, 163, 127, 0.3);
+    }
+
+    .card__preview-msg--assistant .card__preview-msg-bubble {
+      width: 120px;
+    }
+
+    .card__preview-avatar {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      flex-shrink: 0;
+    }
+
+    .card__preview-input {
+      margin-top: auto;
+      height: 18px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* 各风格缩略图 */
+    /* Codex */
+    .preview--codex { background: #0d1117; }
+    .preview--codex .card__preview-sidebar { background: #010409; border-color: #21262d; }
+    .preview--codex .card__preview-sidebar-item:first-child { background: #3fb950; width: 3px; border-radius: 0; margin-left: -2px; }
+    .preview--codex .card__preview-msg-bubble { border: 1px solid #30363d; background: transparent; }
+    .preview--codex .card__preview-msg--assistant .card__preview-msg-bubble { background: transparent; }
+    .preview--codex .card__preview-input { background: #161b22; border-color: #30363d; }
+    .preview--codex .card__preview-input::before { content: '>'; color: #3fb950; }
+    .preview--codex .card__preview-avatar { background: #3fb950; }
+
+    /* Minimal */
+    .preview--minimal { background: #fff; }
+    .preview--minimal .card__preview-sidebar { background: #f7f7f8; border-color: #e5e5e5; }
+    .preview--minimal .card__preview-sidebar-item { background: #e5e5e5; }
+    .preview--minimal .card__preview-sidebar-item:first-child { background: #d1d5db; }
+    .preview--minimal .card__preview-msg--user .card__preview-msg-bubble { background: #10a37f; border-radius: 10px 10px 2px 10px; }
+    .preview--minimal .card__preview-msg--assistant .card__preview-msg-bubble { background: #f7f7f8; border-radius: 10px 10px 10px 2px; }
+    .preview--minimal .card__preview-input { background: #fff; border-color: #d1d5db; }
+
+    /* Support */
+    .preview--support { background: #f0f2f5; }
+    .preview--support .card__preview-sidebar { background: #fff; border-color: #e8e8e8; }
+    .preview--support .card__preview-sidebar-item:first-child { background: #1890ff; width: 3px; border-radius: 0; }
+    .preview--support .card__preview-msg--user .card__preview-msg-bubble { background: #1890ff; }
+    .preview--support .card__preview-msg--assistant .card__preview-msg-bubble { background: #fff; border: 1px solid #e8e8e8; border-left: 2px solid #1890ff; }
+    .preview--support .card__preview-input { background: #fff; border-color: #d9d9d9; }
+    .preview--support .card__preview-avatar { background: #1890ff; }
+
+    /* Bubble */
+    .preview--bubble { background: #ebe9e5; }
+    .preview--bubble .card__preview-sidebar { background: #fff; border-color: #e0ddd9; }
+    .preview--bubble .card__preview-msg--user .card__preview-msg-bubble { background: #007aff; border-radius: 10px 10px 2px 10px; }
+    .preview--bubble .card__preview-msg--assistant .card__preview-msg-bubble { background: #fff; border-radius: 10px 10px 10px 2px; }
+    .preview--bubble .card__preview-avatar { background: #f0f0f0; }
+    .preview--bubble .card__preview-input { background: #fff; border-color: #e0ddd9; }
+
+    /* IDE */
+    .preview--ide { background: #1e1e1e; }
+    .preview--ide .card__preview-sidebar { background: #252526; border-color: #3c3c3c; }
+    .preview--ide .card__preview-sidebar-item:first-child { background: #007acc; width: 3px; border-radius: 0; }
+    .preview--ide .card__preview-msg--user .card__preview-msg-bubble { background: #264f78; }
+    .preview--ide .card__preview-msg--assistant .card__preview-msg-bubble { background: #252526; border: 1px solid #3c3c3c; }
+    .preview--ide .card__preview-input { background: #252526; border-color: #3c3c3c; }
+    .preview--ide .card__preview-avatar { background: #007acc; }
+
+    /* Glass Dark */
+    .preview--glass { background: #0a0a0a; }
+    .preview--glass .card__preview-sidebar { background: rgba(255, 255, 255, 0.02); border-color: rgba(255, 255, 255, 0.06); }
+    .preview--glass .card__preview-sidebar-item:first-child { background: #8b5cf6; width: 3px; border-radius: 0; }
+    .preview--glass .card__preview-msg--user .card__preview-msg-bubble { background: rgba(139, 92, 246, 0.2); border: 1px solid rgba(139, 92, 246, 0.3); }
+    .preview--glass .card__preview-msg--assistant .card__preview-msg-bubble { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); }
+    .preview--glass .card__preview-input { background: rgba(255, 255, 255, 0.03); border-color: rgba(255, 255, 255, 0.08); }
+    .preview--glass .card__preview-avatar { background: #8b5cf6; }
+
+    /* 卡片信息 */
+    .card__info {
+      padding: 20px 24px;
+    }
+
+    .card__number {
+      display: inline-block;
+      padding: 2px 8px;
+      background: rgba(63, 185, 80, 0.1);
+      color: #3fb950;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .card__title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #e6edf3;
+      margin-bottom: 6px;
+    }
+
+    .card__desc {
+      font-size: 13px;
+      color: #8b949e;
+      line-height: 1.6;
+    }
+
+    .card__arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 12px;
+      font-size: 13px;
+      color: #3fb950;
+      font-weight: 500;
+    }
+
+    .card__arrow svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      transition: transform 0.2s;
+    }
+
+    .card:hover .card__arrow svg {
+      transform: translateX(4px);
+    }
+
+    /* 代码块预览 */
+    .card__preview-code {
+      height: 24px;
+      margin-top: 2px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      padding: 0 6px;
+    }
+
+    .card__preview-code-bar {
+      width: 40px;
+      height: 3px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.15);
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部 -->
+  <header class="hero">
+    <h1 class="hero__title">Vue3 <span>Chat</span> Skill</h1>
+    <p class="hero__subtitle">6 种真正差异化的 AI 聊天视觉风格，覆盖终端 / 极简 / 客服 / 社交 / IDE / 高端场景</p>
+    <div class="hero__meta">
+      <span>vue-chat-skill</span>
+      <span>·</span>
+      <span>base-card + base-button</span>
+    </div>
+  </header>
+
+  <!-- 画廊 -->
+  <div class="gallery">
+    <!-- 1. Codex -->
+    <a href="01-codex.html" class="card">
+      <div class="card__preview preview--codex">
+        <div class="card__preview-sidebar">
+          <div class="card__preview-sidebar-item"></div>
+          <div class="card__preview-sidebar-item"></div>
+          <div class="card__preview-sidebar-item"></div>
+          <div class="card__preview-sidebar-item"></div>
+        </div>
+        <div class="card__preview-main">
+          <div class="card__preview-msg card__preview-msg--user">
+            <div class="card__preview-msg-bubble"></div>
+          </div>
+          <div class="card__preview-msg card__preview-msg--assistant">
+            <div class="card__preview-avatar"></div>
+            <div style="display:flex;flex-direction:column;gap:4px;flex:1">
+              <div class="card__preview-msg-bubble"></div>
+              <div class="card__preview-code"><div class="card__preview-code-bar"></div></div>
+            </div>
+          </div>
+          <div class="card__preview-msg card__preview-msg--user">
+            <div class="card__preview-msg-bubble"></div>
+          </div>
+          <div class="card__preview-input"></div>
+        </div>
+      </div>
+      <div class="card__info">
+        <span class="card__number">01 · 默认</span>
+        <h3 class="card__title">Codex 暗色终端</h3>
+        <p class="card__desc">暗色终端 + 等宽字体 + 绿色强调 + 流式光标，开发者向</p>
+        <span class="card__arrow">查看 Demo <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
+    <!-- 2. Minimal -->
+    <a href="02-minimal.html" class="card">
+      <div class="card__preview preview--minimal">
+        <div class="card__preview-sidebar">
+          <div class="card__preview-sidebar-item"></div>
+          <div class="card__preview-sidebar-item"></div>
+          <div class="card__preview-sidebar-item"></div>
+          <div class="card__preview-sidebar-item"></div>
+        </div>
+        <div class="card__preview-main">
+          <div class="card__preview-msg card__preview-msg--user">
+            <div class="card__preview-msg-bubble"></div>
+          </div>
+          <div class="card__preview-msg card__preview-msg--assistant">
+            <div class="card__preview-avatar"></div>
+            <div class="card__preview-msg-bubble"></div>
+          </div>
+          <div class="card__preview-msg card__preview-msg--user">
+            <div class="card__preview-msg-bubble"></div>
+          </div>
+          <div class="card__preview-input"></div>
+        </div>
+      </div>
+      <div class="card__info">
+        <span class="card__number">02 · 极简</span>
+        <h3 class="card__title">ChatGPT 极简</h3>
+        <p class="card__desc">纯白简洁 + ChatGPT 风格 + 绿色气泡 + 无衬线</p>
+        <span class="card__arrow">查看 Demo <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
+    <!-- 3. Support -->
+    <a href="03-support.html" class="card">
+      <div class="card__preview preview--support">
+        <div class="card__preview-sidebar">
+          <div class="card__preview-sidebar-item"></div>
+          <div class="card__preview-sidebar-item"></div>
+          <div class="card__preview-sidebar-item"></div>
+          <div class="card__preview-sidebar-item"></div>
+        </div>
+        <div class="card__preview-main">
+          <div class="card__preview-msg card__preview-msg--assistant">
+            <div class="card__preview-avatar"></div>
+            <div class="card__preview-msg-bubble"></div>
+          </div>
+          <div class="card__preview-msg card__preview-msg--user">
+            <div class="card__preview-msg-bubble"></div>
+          </div>
+          <div class="card__preview-msg card__preview-msg--assistant">
+            <div class="card__preview-avatar"></div>
+            <div class="card__preview-msg-bubble"></div>
+          </div>
+          <div class="card__preview-input"></div>
+        </div>
+      </div>
+      <div class="card__info">
+        <span class="card__number">03 · 工单</span>
+        <h3 class="card__title">客服工单</h3>
+        <p class="card__desc">侧边栏工单列表 + 客户信息面板 + 快捷回复</p>
+        <span class="card__arrow">查看 Demo <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
+    <!-- 4. Bubble -->
+    <a href="04-bubble.html" class="card">
+      <div class="card__preview preview--bubble">
+        <div class="card__preview-sidebar">
+          <div class="card__preview-sidebar-item"></div>
+          <div class="card__preview-sidebar-item"></div>
+          <div class="card__preview-sidebar-item"></div>
+          <div class="card__preview-sidebar-item"></div>
+        </div>
+        <div class="card__preview-main">
+          <div class="card__preview-msg card__preview-msg--user">
+            <div class="card__preview-msg-bubble"></div>
+          </div>
+          <div class="card__preview-msg card__preview-msg--assistant">
+            <div class="card__preview-avatar"></div>
+            <div class="card__preview-msg-bubble"></div>
+          </div>
+          <div class="card__preview-msg card__preview-msg--user">
+            <div class="card__preview-msg-bubble"></div>
+          </div>
+          <div class="card__preview-input"></div>
+        </div>
+      </div>
+      <div class="card__info">
+        <span class="card__number">04 · 社交</span>
+        <h3 class="card__title">消息气泡</h3>
+        <p class="card__desc">iMessage/微信气泡 + 圆润 + 消息尾巴 + 头像</p>
+        <span class="card__arrow">查看 Demo <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
+    <!-- 5. IDE -->
+    <a href="05-ide.html" class="card">
+      <div class="card__preview preview--ide">
+        <div class="card__preview-sidebar">
+          <div class="card__preview-sidebar-item"></div>
+          <div class="card__preview-sidebar-item"></div>
+          <div class="card__preview-sidebar-item"></div>
+          <div class="card__preview-sidebar-item"></div>
+        </div>
+        <div class="card__preview-main">
+          <div class="card__preview-msg card__preview-msg--user">
+            <div class="card__preview-msg-bubble"></div>
+          </div>
+          <div class="card__preview-msg card__preview-msg--assistant">
+            <div class="card__preview-avatar"></div>
+            <div style="display:flex;flex-direction:column;gap:4px;flex:1">
+              <div class="card__preview-msg-bubble"></div>
+              <div class="card__preview-code"><div class="card__preview-code-bar"></div></div>
+            </div>
+          </div>
+          <div class="card__preview-input"></div>
+        </div>
+      </div>
+      <div class="card__info">
+        <span class="card__number">05 · IDE</span>
+        <h3 class="card__title">IDE 对话</h3>
+        <p class="card__desc">VS Code 暗色主题 + 分栏布局 + 代码为主</p>
+        <span class="card__arrow">查看 Demo <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
+    <!-- 6. Glass Dark -->
+    <a href="06-glass-dark.html" class="card">
+      <div class="card__preview preview--glass">
+        <div class="card__preview-sidebar">
+          <div class="card__preview-sidebar-item"></div>
+          <div class="card__preview-sidebar-item"></div>
+          <div class="card__preview-sidebar-item"></div>
+          <div class="card__preview-sidebar-item"></div>
+        </div>
+        <div class="card__preview-main">
+          <div class="card__preview-msg card__preview-msg--user">
+            <div class="card__preview-msg-bubble"></div>
+          </div>
+          <div class="card__preview-msg card__preview-msg--assistant">
+            <div class="card__preview-avatar"></div>
+            <div class="card__preview-msg-bubble"></div>
+          </div>
+          <div class="card__preview-msg card__preview-msg--user">
+            <div class="card__preview-msg-bubble"></div>
+          </div>
+          <div class="card__preview-input"></div>
+        </div>
+      </div>
+      <div class="card__info">
+        <span class="card__number">06 · 高端</span>
+        <h3 class="card__title">深色玻璃</h3>
+        <p class="card__desc">暗色毛玻璃 + 紫色强调 + 微光晕 + 高级感</p>
+        <span class="card__arrow">查看 Demo <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+  </div>
+</body>
+</html>
