@@ -31,18 +31,25 @@
 
 ---
 
-## 149 个技能，按 6 大板块组织
+## 149 个技能 · 全部 MIT 公开 · 持续迭代中
 
-| 板块 | 数量 | 业务定位 |
-|------|------|---------|
-| **[`vibeCoding/backend`](#后端)** | 48 | 5 语言后端矩阵 + 数据库 + 元工具 |
-| **[`vibeCoding/frontend`](#前端)** | 70 | 4 套前端体系（Vue / UniApp / React / HTML）|
-| **[`vibeCoding/super-deploy-skills`](#部署套件)** | 16 | 部署全栈（Docker / 原生 / 7 个 runtime 与 DB 安装）|
-| **[`vibeCoding/vibecoding-guide-skill`](#vibecoding-工作流)** | 4 | Vibecoding 工作流（智能体协作 / 学习 / 访谈）|
-| **[`vibeCoding/video`](#视频)** | 2 | FFmpeg / Remotion 视频处理 |
-| **[`others`](#其他工具)** | 6 | AI 检测 / 人性化改写 / 技能审计 / 流程图 / 小红书写作 |
+> ⚠️ **技能以实际效果为准，149 个技能都在持续迭代中**。每个技能都在真实项目里跑过，但 API、组件形态、触发词会随实战反馈调整，不保证向后兼容。
+> 任何问题、反馈或建议，欢迎两个渠道：
+> 1. 访问 [itlifetime.com](https://itlifetime.com)（首页底部 → 加微信 **jiushiwon**）
+> 2. 在 [GitHub Issues](https://github.com/jiushiwon/wg-skills/issues) 提 issue
 
-> 📂 项目级编排技能（开箱即用的完整项目骨架）：[`vibeCodingProjectsSkills/`](vibeCodingProjectsSkills/) — 3 个：Vue3 管理后台 / SSE Agent / 万能登录桥接
+### 6 大板块总览
+
+| 板块 | 数量 | 子分类 |
+|------|------|--------|
+| **[`vibeCoding/backend`](#后端)** | **48** | Java【14】· Python【17】· Go【4】· Node.js【1】· Rust【1】· 数据库【8】· 元工具【3】 |
+| **[`vibeCoding/frontend`](#前端)** | **70** | Vue【37】· React【3】· UniApp【18】· HTML【1】· Electron【2】· 公共【9】 |
+| **[`vibeCoding/super-deploy-skills`](#部署套件)** | **16** | 部署总入口 · 数据库安装【4】· 运行时安装【4】· Docker · 原生 · Nginx · 服务器 · 环境检测 |
+| **[`vibeCoding/vibecoding-guide-skill`](#vibecoding-工作流)** | **4** | VibeCoding 总入口 · 智能体访谈 · 智能体学习 · 完整工作流 |
+| **[`vibeCoding/video`](#视频)** | **2** | FFmpeg · Remotion |
+| **[`others`](#其他工具)** | **6** | AI 风检测 · 人性改写 · Skill 审计 · 流程图 · 小红书写作 · Electron ABI 修复 |
+
+> 📂 **项目级编排技能**（开箱即用完整项目骨架）：[`vibeCodingProjectsSkills/`](vibeCodingProjectsSkills/) — 3 个：[Vue3 管理后台](https://github.com/jiushiwon/wg-skills/tree/main/vibeCodingProjectsSkills/vue-admin-skill) · [SSE Agent](https://github.com/jiushiwon/wg-skills/tree/main/vibeCodingProjectsSkills/sse-agent-skill) · [万能登录桥接](https://github.com/jiushiwon/wg-skills/tree/main/vibeCodingProjectsSkills/universal-login-bridge-skill)
 
 ---
 
