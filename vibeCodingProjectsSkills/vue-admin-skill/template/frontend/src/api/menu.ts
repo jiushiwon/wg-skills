@@ -41,17 +41,17 @@ export interface SaveMenuRequest {
 
 /** 菜单树（全量，不受当前用户角色限制） */
 export function getMenuTree(): Promise<MenuVO[]> {
-  return get('/menus');
+  return get('/api/menus');
 }
 
 export function createMenu(data: SaveMenuRequest): Promise<MenuVO> {
-  return post('/menus', data);
+  return post('/api/menus', data);
 }
 
 export function updateMenu(id: number, data: Partial<SaveMenuRequest>): Promise<MenuVO> {
-  return put(`/menus/${id}`, data);
+  return put(`/api/menus/${id}`, data);
 }
 
 export function deleteMenu(id: number): Promise<void> {
-  return del(`/menus/${id}`);
+  return del(`/api/menus/${id}`);
 }

@@ -32,21 +32,21 @@ export interface SaveProductRequest {
 }
 
 export function getProductList(query: ProductQuery): Promise<PageResponse<ProductVO>> {
-  return get('/products', query as unknown as Record<string, unknown>);
+  return get('/api/products', query as unknown as Record<string, unknown>);
 }
 
 export function getProduct(id: number): Promise<ProductVO> {
-  return get(`/products/${id}`);
+  return get(`/api/products/${id}`);
 }
 
 export function createProduct(data: SaveProductRequest): Promise<ProductVO> {
-  return post('/products', data);
+  return post('/api/products', data);
 }
 
 export function updateProduct(id: number, data: Partial<SaveProductRequest>): Promise<ProductVO> {
-  return put(`/products/${id}`, data);
+  return put(`/api/products/${id}`, data);
 }
 
 export function deleteProduct(id: number): Promise<void> {
-  return del(`/products/${id}`);
+  return del(`/api/products/${id}`);
 }

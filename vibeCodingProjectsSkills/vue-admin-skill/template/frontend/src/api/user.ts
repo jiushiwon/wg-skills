@@ -69,46 +69,46 @@ export interface UpdateUserRequest {
 }
 
 export function getUserList(query: UserQuery): Promise<PageResponse<UserVO>> {
-  return get('/users', query as unknown as Record<string, unknown>);
+  return get('/api/users', query as unknown as Record<string, unknown>);
 }
 
 export function getUser(id: number): Promise<UserVO> {
-  return get(`/users/${id}`);
+  return get(`/api/users/${id}`);
 }
 
 export function createUser(data: CreateUserRequest): Promise<UserVO> {
-  return post('/users', data);
+  return post('/api/users', data);
 }
 
 export function updateUser(id: number, data: UpdateUserRequest): Promise<UserVO> {
-  return put(`/users/${id}`, data);
+  return put(`/api/users/${id}`, data);
 }
 
 export function deleteUser(id: number): Promise<void> {
-  return del(`/users/${id}`);
+  return del(`/api/users/${id}`);
 }
 
 /** 分配角色（全量覆盖：传空数组即清空） */
 export function assignUserRoles(id: number, roleIds: number[]): Promise<void> {
-  return put(`/users/${id}/roles`, { roleIds });
+  return put(`/api/users/${id}/roles`, { roleIds });
 }
 
 /** 分配岗位（全量覆盖：传空数组即清空） */
 export function assignUserPosts(id: number, postIds: number[]): Promise<void> {
-  return put(`/users/${id}/posts`, { postIds });
+  return put(`/api/users/${id}/posts`, { postIds });
 }
 
 /** ★ 分配回填：当前已选角色 id（GET /api/users/{id}/roles → List<Long>） */
 export function getUserRoles(id: number): Promise<number[]> {
-  return get(`/users/${id}/roles`);
+  return get(`/api/users/${id}/roles`);
 }
 
 /** ★ 分配回填：当前已选岗位 id（GET /api/users/{id}/posts → List<Long>） */
 export function getUserPosts(id: number): Promise<number[]> {
-  return get(`/users/${id}/posts`);
+  return get(`/api/users/${id}/posts`);
 }
 
 /** 管理员重置用户密码 */
 export function resetUserPassword(id: number, newPassword: string): Promise<void> {
-  return put(`/users/${id}/password`, { newPassword });
+  return put(`/api/users/${id}/password`, { newPassword });
 }

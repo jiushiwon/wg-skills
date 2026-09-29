@@ -18,12 +18,15 @@ router.beforeEach(async (to, _from, next) => {
     return next(`/login?redirect=${encodeURIComponent(to.fullPath)}`);
   }
 
-  if (!userStore.userInfo) {
+  // ponytail: 只要 token 有效就保证 userInfo + menus 已加载（之前只判断 !userInfo，
+  // 但 menu 走缓存后 userInfo 也得每次刷新都拉一次，否则 userInfo 缺失会跳 /login）。
+  if (!userStore.userInfo || !permissionStore.loaded) {
     try {
-      await userStore.fetchUserInfo();
+      if (!userStore.userInfo) await userStore.fetchUserInfo();
       await permissionStore.loadMenus();
     } catch {
-      userStore.logout();
+      // fetchUserInfo 401（token 过期）由 request 拦截器统一跳 /login
+      // 这里 catch 是为了避免未捕获的 promise rejection
       return next('/login');
     }
   }

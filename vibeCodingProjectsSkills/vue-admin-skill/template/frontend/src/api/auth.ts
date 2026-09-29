@@ -52,22 +52,22 @@ export interface MenuNode {
 }
 
 export function login(data: LoginRequest): Promise<LoginResponse> {
-  return post('/auth/login', data);
+  return post('/api/auth/login', data);
 }
 
 /** 无状态 JWT：服务端不维护会话，前端清除 token 即视为登出 */
 export function logout(): Promise<void> {
-  return post('/auth/logout');
+  return post('/api/auth/logout');
 }
 
 export function getUserInfo(): Promise<UserInfoResponse> {
-  return get('/auth/me');
+  return get('/api/auth/me');
 }
 
 export function changePassword(data: { oldPassword: string; newPassword: string }): Promise<void> {
-  return put('/auth/password', data);
+  return put('/api/auth/password', data);
 }
 
 export function getMenus(): Promise<MenuNode[]> {
-  return get('/auth/menus');
+  return get('/api/auth/menus');
 }

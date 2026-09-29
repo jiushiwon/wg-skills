@@ -26,17 +26,17 @@ export interface SaveOrgRequest {
 
 /** 组织树 */
 export function getOrgTree(): Promise<OrgVO[]> {
-  return get('/orgs');
+  return get('/api/orgs');
 }
 
 export function createOrg(data: SaveOrgRequest): Promise<OrgVO> {
-  return post('/orgs', data);
+  return post('/api/orgs', data);
 }
 
 export function updateOrg(id: number, data: Partial<SaveOrgRequest>): Promise<OrgVO> {
-  return put(`/orgs/${id}`, data);
+  return put(`/api/orgs/${id}`, data);
 }
 
 export function deleteOrg(id: number): Promise<void> {
-  return del(`/orgs/${id}`);
+  return del(`/api/orgs/${id}`);
 }

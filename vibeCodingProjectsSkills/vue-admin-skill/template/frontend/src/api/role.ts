@@ -44,28 +44,28 @@ export interface UpdateRoleRequest {
 }
 
 export function getRoleList(query: RoleQuery): Promise<PageResponse<RoleVO>> {
-  return get('/roles', query as unknown as Record<string, unknown>);
+  return get('/api/roles', query as unknown as Record<string, unknown>);
 }
 
 export function getRole(id: number): Promise<RoleVO> {
-  return get(`/roles/${id}`);
+  return get(`/api/roles/${id}`);
 }
 
 export function createRole(data: CreateRoleRequest): Promise<RoleVO> {
-  return post('/roles', data);
+  return post('/api/roles', data);
 }
 
 export function updateRole(id: number, data: UpdateRoleRequest): Promise<RoleVO> {
-  return put(`/roles/${id}`, data);
+  return put(`/api/roles/${id}`, data);
 }
 
 export function deleteRole(id: number): Promise<void> {
-  return del(`/roles/${id}`);
+  return del(`/api/roles/${id}`);
 }
 
 /** 分配菜单（全量覆盖：传空数组即清空该角色全部菜单权限） */
 export function assignRoleMenus(id: number, menuIds: number[]): Promise<void> {
-  return put(`/roles/${id}/menus`, { menuIds });
+  return put(`/api/roles/${id}/menus`, { menuIds });
 }
 
 /**
@@ -74,5 +74,5 @@ export function assignRoleMenus(id: number, menuIds: number[]): Promise<void> {
  * 没有这个回填，弹窗每次都是空树，点确定会把该角色的菜单权限**全部清空**。
  */
 export function getRoleMenus(id: number): Promise<number[]> {
-  return get(`/roles/${id}/menus`);
+  return get(`/api/roles/${id}/menus`);
 }

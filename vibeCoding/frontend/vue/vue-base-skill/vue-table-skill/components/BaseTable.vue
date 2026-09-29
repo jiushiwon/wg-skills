@@ -124,6 +124,9 @@ export interface BaseTableProps<T = Record<string, unknown>> {
 }
 
 const props = withDefaults(defineProps<BaseTableProps>(), {
+  // ponytail: data 与 columns 必须给默认值；调用方传 undefined 时 props.data.length 会 crash
+  data: () => [],
+  columns: () => [],
   loading: false,
   loadingText: '加载中...',
   empty: '暂无数据',

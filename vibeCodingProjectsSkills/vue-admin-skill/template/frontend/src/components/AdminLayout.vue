@@ -13,6 +13,7 @@
 import { ref, provide, computed } from 'vue'
 import AdminSidebar from './AdminSidebar.vue'
 import BaseIcon from './icons/BaseIcon.vue'
+import { BaseDropdown, type DropdownOption } from 'vue-dropdown-skill'
 import type { AdminMenuItemData } from './AdminMenuItem.vue'
 
 interface Props {
@@ -38,6 +39,8 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{
   'menu-click': [item: AdminMenuItemData]
   'logout': []
+  /** 用户菜单项点击事件（key: 'profile' | 'password' | 'theme' | 'logout'） */
+  'user-menu': [key: string]
 }>()
 
 const collapsed = ref(false)
@@ -49,6 +52,31 @@ const actualMargin = computed(() =>
 
 function onMenuClick(item: AdminMenuItemData) {
   emit('menu-click', item)
+}
+
+/** ponytail: 头像下拉菜单项，父组件可监听 `user-menu` 事件扩展。
+ *  key 命名约定：profile / password / theme / logout —— 与父组件契约。
+ *  BaseDropdown 要求 option.value 必须存在；用 key 作 value，change 时反查 key。 */
+const userMenuValue = ref<string | null>(null)
+
+interface UserMenuOption extends DropdownOption {
+  key: string
+  icon?: string
+}
+
+const userMenuOptions: UserMenuOption[] = [
+  { key: 'profile', label: '个人中心', value: 'profile', icon: 'user' },
+  { key: 'password', label: '修改密码', value: 'password', icon: 'key' },
+  { key: 'theme', label: '切换主题', value: 'theme', icon: 'sun' },
+  { key: 'logout', label: '退出登录', value: 'logout', icon: 'log-out', danger: true },
+]
+
+function onUserMenuChange(option: UserMenuOption) {
+  // BaseDropdown 在选项点击后 v-model 会自动更新，但不会自动关闭弹层；
+  // 这里手动清空 v-model 让 BaseDropdown 不显示选中态，并触发父级动作
+  userMenuValue.value = null
+  emit('user-menu', option.key)
+  if (option.key === 'logout') emit('logout')
 }
 </script>
 
@@ -80,12 +108,40 @@ function onMenuClick(item: AdminMenuItemData) {
           </button>
         </div>
         <div class="admin-layout__header-right">
-          <div class="admin-layout__user" @click="emit('logout')">
-            <div class="admin-layout__avatar">
-              {{ username?.charAt(0)?.toUpperCase() || 'U' }}
-            </div>
-            <span class="admin-layout__username">{{ username }}</span>
-          </div>
+          <!--
+            头像 + dropdown（个人中心 / 修改密码 / 切换主题 / 退出登录）。
+            之前：@click 直接 emit('logout') —— 一点击就退出，没有任何菜单。
+            修：用 vue-dropdown-skill 的 BaseDropdown；items 由父组件传入以便扩展。
+          -->
+          <!--
+            头像 + dropdown（个人中心 / 修改密码 / 切换主题 / 退出登录）。
+            之前：@click 直接 emit('logout') —— 一点击就退出，没有任何菜单。
+            修：用 vue-dropdown-skill 的 BaseDropdown + :options；菜单项通过 #item slot
+                 自定义 icon 渲染（BaseDropdown 不支持 default slot 渲染菜单）。
+          -->
+          <BaseDropdown
+            v-model="userMenuValue"
+            :options="userMenuOptions"
+            trigger="click"
+            placement="bottom-end"
+            @change="onUserMenuChange"
+          >
+            <template #trigger>
+              <div class="admin-layout__user">
+                <div class="admin-layout__avatar">
+                  {{ username?.charAt(0)?.toUpperCase() || 'U' }}
+                </div>
+                <span class="admin-layout__username">{{ username }}</span>
+                <BaseIcon name="chevron-down" :size="12" class="admin-layout__caret" />
+              </div>
+            </template>
+            <template #item="{ option }">
+              <span class="admin-layout__dropdown-item">
+                <BaseIcon v-if="option.icon" :name="option.icon" :size="14" />
+                <span>{{ option.label }}</span>
+              </span>
+            </template>
+          </BaseDropdown>
         </div>
       </header>
 
@@ -130,6 +186,11 @@ function onMenuClick(item: AdminMenuItemData) {
   font-weight: 600;
 }
 .admin-layout__username { font-size: 14px; }
+.admin-layout__caret { color: var(--color-text-secondary); margin-left: 2px; }
+
+.admin-layout__dropdown-item {
+  display: inline-flex; align-items: center; gap: 8px;
+}
 
 .admin-layout__content {
   flex: 1; padding: var(--space-4);
