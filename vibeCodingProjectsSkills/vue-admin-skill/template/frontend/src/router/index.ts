@@ -73,6 +73,12 @@ const routes: RouteRecordRaw[] = [
         name: 'Bind',
         component: () => import('@/views/account/bind/index.vue'),
         meta: { title: '应用绑定', icon: 'link-2', permission: 'account:bind:list' }
+      },
+      {
+        path: 'api-docs',
+        name: 'ApiDocs',
+        component: () => import('@/views/api-docs/index.vue'),
+        meta: { title: '接口文档' }
       }
     ]
   },

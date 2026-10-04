@@ -184,12 +184,12 @@ import { ref, computed } from 'vue';
 import type { Ref } from 'vue';
 
 interface UseTableOptions<T> {
-  fetchApi: (params: any) => Promise<{ items: T[]; total: number }>;
+  fetchApi: (params: any) => Promise<{ list: T[]; total: number }>;
   defaultPageSize?: number;
 }
 
 export function useTable<T>(options: UseTableOptions<T>) {
-  const items = ref<T[]>([]);
+  const list = ref<T[]>([]);
   const total = ref(0);
   const loading = ref(false);
   const page = ref(1);
@@ -199,7 +199,7 @@ export function useTable<T>(options: UseTableOptions<T>) {
     loading.value = true;
     try {
       const res = await options.fetchApi({ page: page.value, pageSize: pageSize.value });
-      items.value = res.items;
+      list.value = res.list;
       total.value = res.total;
     } finally {
       loading.value = false;
@@ -212,7 +212,7 @@ export function useTable<T>(options: UseTableOptions<T>) {
   }
 
   return {
-    items: items as Ref<T[]>,
+    list: list as Ref<T[]>,
     total,
     loading,
     page,
@@ -231,7 +231,7 @@ import { useTable } from '@/composables/useTable';
 import { userApi } from '@/api/modules/user';
 import type { User } from '@/types/user';
 
-const { items, total, loading, page, pageSize, fetch, handlePageChange } = useTable<User>({
+const { list, total, loading, page, pageSize, fetch, handlePageChange } = useTable<User>({
   fetchApi: userApi.list,
 });
 </script>

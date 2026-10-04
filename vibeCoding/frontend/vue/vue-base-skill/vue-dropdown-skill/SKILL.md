@@ -126,10 +126,10 @@ remote / virtual              ←   remote / virtual
 ```vue
 <!-- ✅ 正确：必须用 div/span + base-card 容器 -->
 <base-dropdown mode="select" :options="opts" v-model="value" />
-<base-dropdown mode="dropdown" :items="items">
+<base-dropdown mode="dropdown" :options="items">
   <template #trigger>操作</template>
 </base-dropdown>
-<base-dropdown mode="dropdown" :items="items" />  <!-- 内部分组 + 分割线 + danger 全 div -->
+<base-dropdown mode="dropdown" :options="items" />  <!-- 内部分组 + 分割线 + danger 全 div -->
 ```
 
 ### 审计命令

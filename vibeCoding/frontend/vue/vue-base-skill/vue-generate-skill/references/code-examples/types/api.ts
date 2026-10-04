@@ -30,9 +30,11 @@ export interface PageParams {
   keyword?: string;
 }
 
-/** 分页响应 */
+/** 分页响应。
+ * ★ 数组字段固定为 `list`（不是 `items` / `records` / `content`），与 frontend-request-skill 规范一致。
+ * 后端 PageResponse.java 的 Jackson 序列化字段名必须同源一致。 */
 export interface PageResponse<T> {
-  items: T[];
+  list: T[];
   total: number;
   page: number;
   pageSize: number;

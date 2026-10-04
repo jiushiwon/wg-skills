@@ -33,7 +33,7 @@ async function loadData(): Promise<void> {
   loading.value = true;
   try {
     const res = await userApi.list(query);
-    tableData.value = res.data.items;
+    tableData.value = res.data.list;
     total.value = res.data.total;
   } catch (err) {
     showError(err);

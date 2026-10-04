@@ -98,7 +98,7 @@ vue-admin-skill/
     │       ├── App.vue
     │       ├── styles/               # tokens.css + global.css
     │       ├── utils/                # request.ts + auth.ts + error.ts
-    │       ├── api/                  # auth.ts + user.ts + role.ts + menu.ts + org.ts + product.ts
+    │       ├── api/                  # auth.ts + user.ts + role.ts + menu.ts + org.ts + post.ts + product.ts
     │       ├── store/                # user.ts + permission.ts + app.ts (Pinia)
     │       ├── router/               # index.ts + guards.ts
     │       ├── directives/           # permission.ts (v-permission)
@@ -110,7 +110,8 @@ vue-admin-skill/
     │           │   ├── user/index.vue
     │           │   ├── role/index.vue
     │           │   ├── menu/index.vue
-    │           │   └── org/index.vue
+    │           │   ├── org/index.vue
+    │           │   └── post/index.vue
     │           ├── example/product/index.vue
     │           └── error/{404,403}.vue
     └── backend/                      # Spring Boot 后端（单工程，复用 springboot-init + auth-module）
@@ -153,7 +154,7 @@ vue-admin-skill/
 
 ---
 
-## 6 大业务页面
+## 业务页面
 
 | # | 页面 | 路径 | 核心组件 | 说明 |
 |---|------|------|----------|------|
@@ -163,7 +164,12 @@ vue-admin-skill/
 | 4 | **角色管理** | `/system/role` | base-table + base-tree（菜单分配） | CRUD + 分配菜单树 |
 | 5 | **菜单管理** | `/system/menu` | base-tree + base-form | 树形展示 + 详情编辑 |
 | 6 | **组织管理** | `/system/org` | base-tree + base-form | 树形组织架构 + 编辑 |
-| 7 | **示例商品**（业务） | `/example/product` | base-table + base-dialog + base-form | 演示非权限场景也能用本技能 |
+| 7 | **岗位管理** | `/system/post` | base-table + base-dialog + base-form | 完整 CRUD（非分页，后端返裸数组 `PostVO[]`） |
+| 8 | **示例商品**（业务） | `/example/product` | base-table + base-dialog + base-form | 演示非权限场景也能用本技能 |
+
+> **前后端模块清单对齐（红线）**：后端 `springboot-auth-module-skill` 的 RBAC 含 用户/角色/菜单/部门/**岗位**/租户，前端生成范围必须与其一一对应。新增任一 RBAC 模块时，**后端 `PostController`/实体/seed 菜单 与 前端 `post.ts`/`views/system/post/index.vue`/路由 必须同步补齐**，禁止只生成一端导致点击 404。
+
+> **固定接口文档页（契约）**：每个生成的后台都必须自带 `views/api-docs/index.vue` + 路由 `/api-docs`（固定路由，**不加 `meta.permission`**，故不进入后端菜单、但登录即可访问）。该页列出所有真实接口（方法 + 固定路径后缀 + 入参/出参类型），顶部自适应显示 `window.location.origin` + 固定前缀 `/api`，供人与 AI 对接参考。页面为纯文档、不依赖任何 `vue-*` skill 组件。接口清单须与 `api/*.ts`、`types/api.d.ts` 及后端 DTO 保持同步——新增/调整接口时必须同步更新该页，禁止页面与代码脱节。
 
 ---
 
@@ -205,6 +211,30 @@ pnpm dev
 详细启动说明：[QUICKSTART.md](./QUICKSTART.md)
 
 ---
+
+## 生成后端到端验证（红线，必须）
+
+生成管理后台后，**必须**启动前后端并实测「登录 → 用户列表 → 新增用户 → 列表刷新可见」闭环，确认契约与代理都正确：
+
+```bash
+# 后端
+cd template/backend && ./restart.sh dev &
+# 前端
+cd template/frontend && pnpm install && pnpm dev &
+# 冒烟：登录拿 token，查用户分页，断言 list 字段
+TOKEN=$(curl -s -X POST localhost:8080/api/auth/login -H 'Content-Type: application/json' \
+  -d '{"username":"admin","password":"admin123"}' | python -c "import sys,json;print(json.load(sys.stdin)['data']['accessToken'])")
+curl -s "localhost:8080/api/users?page=1&pageSize=10" -H "Authorization: Bearer $TOKEN" \
+  | python -c "import sys,json;d=json.load(sys.stdin)['data'];assert 'list' in d,'后端分页字段必须是 list（非 items）';print('OK list=',len(d['list']))"
+# 前端代理正确性：经 5173 访问，应为 /api/users 而非 /api/api/users
+curl -s "localhost:5173/api/users?page=1&pageSize=10" -H "Authorization: Bearer $TOKEN" \
+  | python -c "import sys,json;d=json.load(sys.stdin)['data'];assert 'list' in d,'若 404/500 多为 api/*.ts 漏写 /api 前缀或 vite proxy 未配置';print('proxy OK')"
+```
+
+**红线**：
+1. 后端分页字段必须是 `list`（非 `items`）——单一事实源见 `springboot-init-skill/references/api-contract-template.md` 的「分页响应约定」。
+2. 前端 `api/*.ts` 必须以 `/api` 开头（vite `proxy` 配置**不剥离**前缀，否则请求会变成 `/api/api/...`）。
+3. 任一断言失败，**先修技能模板**（template/backend 的 `PageResponse.java`、template/frontend 的 `api/*.ts`、`types/api.d.ts`）再交付，禁止带病交付。
 
 ## 技术栈
 

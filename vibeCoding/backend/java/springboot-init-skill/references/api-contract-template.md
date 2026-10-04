@@ -47,6 +47,27 @@
 | -2001 | 数据库异常 | 500 |
 | -2002 | 第三方服务异常 | 502 |
 
+### 分页响应约定（全局硬规则）
+
+> **所有返回列表的接口（用户 / 角色 / 菜单 / 组织 / 商品 / 租户 / 绑定等）必须统一使用以下结构。**
+> 数组字段固定为 **`list`**（**不是** `items` / `records` / `content`），`page` 从 **1** 开始。
+> 本条是前后端唯一事实源：后端 `PageResponse.java` 的 Jackson 序列化字段名、前端 `types/api.d.ts` 的 `PageResponse<T>` 必须与此完全一致。
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "list": [ { } ],
+    "total": 100,
+    "page": 1,
+    "pageSize": 20
+  }
+}
+```
+
+> ⚠️ 反例（会导致前端 `res.data.list` 为 `undefined` → 表格空白）：后端写成 `items` / `records` / `content`，或 `pageSize` 写成 `size`。
+
 ## 二、Token 注入
 
 受保护接口需在 Header 注入：

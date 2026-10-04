@@ -117,7 +117,7 @@ Create `spec.md` with:
 
 ## 5. API 轮廓
 - POST /api/auth/login → { token, refreshToken, user }
-- GET /api/users → { items, total }
+- GET /api/users → { list, total }
 - ...
 
 ## 6. 设计风格
@@ -293,7 +293,7 @@ async function loadData() {
   loading.value = true;
   try {
     const res = await userApi.list(query);
-    tableData.value = res.data.items;
+    tableData.value = res.data.list;
   } catch (err: unknown) {
     if (err && typeof err === 'object' && 'code' in err) {
       showError(err);

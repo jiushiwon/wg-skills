@@ -30,8 +30,12 @@ public class BindController {
 
     private final BindService bindService;
 
-    /** 我的绑定列表。 */
-    @GetMapping("/list")
+    /**
+     * 我的绑定列表。
+     * ponytail: 之前写 @GetMapping("/list") → 路径 /api/bind/list，与前端 `get(BASE='/api/bind', ...)` 不匹配 → 500。
+     *          改成裸 @GetMapping，让前端 `GET /api/bind` 命中这里（与 user.ts / role.ts 风格一致）。
+     */
+    @GetMapping
     @PreAuthorize("hasAuthority('account:bind:list')")
     public ApiResponse<List<BindVO>> list(@CurrentUser Long userId) {
         return ApiResponse.success(bindService.listMine(userId));

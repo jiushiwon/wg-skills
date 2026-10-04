@@ -4,7 +4,7 @@
     class="base-dropdown"
     :class="[
       `base-dropdown--${size}`,
-      `base-dropdown--pos-${position}`,
+      `base-dropdown--pos-${effectivePosition}`,
       `base-dropdown--tone-${tone}`,
       {
         'is-open': isOpen,
@@ -109,6 +109,8 @@ export interface BaseDropdownProps {
   trigger?: 'click' | 'hover' | 'focus' | 'manual' | 'contextmenu'
   /** 浮层位置（12 种） */
   position?: string
+  /** 位置别名（兼容调用方使用的 placement 写法） */
+  placement?: string
   /** 尺寸 */
   size?: 'sm' | 'md' | 'lg'
   /** 色调（影响 panel 顶边） */
@@ -154,6 +156,8 @@ const activeIndex = ref(-1)
 
 // MVP 只支持 dropdown 模式；其他 mode 后续扩展
 const effectiveMode = computed(() => props.mode)
+// placement 作为 position 的兼容别名
+const effectivePosition = computed(() => props.placement ?? props.position)
 
 const triggerText = computed(() => {
   if (props.modelValue == null) return props.placeholder

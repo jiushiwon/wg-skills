@@ -144,6 +144,23 @@ description: Spring Boot 项目一键初始化技能。面向零基础小白，�
 - Swagger：`/swagger-ui.html`、`/v3/api-docs`
 - 健康检查：`GET /api/health`
 
+## 生成后验证（端到端冒烟，必须）
+
+生成骨架后，**必须**启动后端并实测至少 1 个分页接口，确认契约真正落地（而非仅文档正确）：
+
+```bash
+# 1. 启动
+./restart.sh dev &
+# 2. 登录拿 token
+TOKEN=$(curl -s -X POST localhost:8080/api/auth/login -H 'Content-Type: application/json' \
+  -d '{"username":"admin","password":"admin123"}' | python -c "import sys,json;print(json.load(sys.stdin)['data']['accessToken'])")
+# 3. 分页接口断言 list 字段存在且为数组
+curl -s "localhost:8080/api/users?page=1&pageSize=10" -H "Authorization: Bearer $TOKEN" \
+  | python -c "import sys,json;d=json.load(sys.stdin)['data'];assert 'list' in d and isinstance(d['list'],list),'分页字段必须是 list（非 items）';print('OK list=',len(d['list']))"
+```
+
+**红线**：若断言失败（如返回 `items` 而非 `list`），**先修 `common/PageResponse.java` 再交付**，禁止带病交付。本校验用于拦截「文档说 list、代码写 items」的契约漂移。
+
 ## 引用索引
 
 | 文件 | 内容 |

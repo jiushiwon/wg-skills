@@ -7,7 +7,7 @@ export interface ApiResponse<T = unknown> {
 
 /** 分页响应 */
 export interface ApiListResponse<T> {
-  items: T[];
+  list: T[];
   total: number;
   page: number;
   pageSize: number;

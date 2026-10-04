@@ -49,12 +49,12 @@ this.setData({
 ```typescript
 // ❌ 直接存储接口原始数据
 this.setData({
-  list: res.data.items  // 包含大量无用字段
+  list: res.data.list  // 包含大量无用字段
 });
 
 // ✅ 只存储视图需要的数据
 this.setData({
-  list: res.data.items.map(item => ({
+  list: res.data.list.map(item => ({
     id: item.id,
     name: item.name,
     status: item.status

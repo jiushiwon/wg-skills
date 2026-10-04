@@ -7,7 +7,7 @@ export interface ApiResponse<T = unknown> {
 }
 
 export interface ApiListResponse<T> {
-  items: T[];
+  list: T[];
   total: number;
   page: number;
   pageSize: number;

@@ -299,7 +299,7 @@ export function UserManagement() {
     setLoading(true);
     try {
       const res = await userApi.list(query);
-      setTableData(res.data.items);
+      setTableData(res.data.list);
     } catch (err: unknown) {
       if (err && typeof err === 'object' && 'code' in err) {
         showError(err);
