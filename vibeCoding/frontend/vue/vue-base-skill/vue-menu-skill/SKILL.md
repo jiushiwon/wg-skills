@@ -8,6 +8,12 @@ trigger: |
   菜单折叠 | 子菜单 | 多级菜单
 ---
 
+> **容器原则**：必须用 [vue-card-skill](../vue-card-skill/SKILL.md) 的 `<base-card>` 包裹。
+>
+> **底层依赖**：[vue-list-item-skill](../vue-list-item-skill/SKILL.md)（节点渲染基座）
+>
+> **零样式标签铁律**：实现代码仅使用 `<div>` / `<span>` + CSS3
+
 # vue-menu-skill
 
 > 菜单组件技能。横向/纵向、可折叠、多级子菜单、路由/权限集成。
@@ -134,31 +140,51 @@ function handleSelect(item: MenuItemData) {
 
 ## 样式 Token
 
-| 类别 | 命名 | 示例 |
-|------|------|------|
-| 颜色 | `--menu-bg` `--menu-hover` `--menu-active` | `--color-primary` |
-| 尺寸 | `--menu-width` `--menu-item-height` | `48px` |
-| 间距 | `--menu-padding` `--menu-item-padding` | `--space-2` |
-| 圆角 | `--menu-radius` | `--radius-md` |
+所有样式必须引用 vue-theme-skill 的 Token，禁止自定义变量：
+
+| 类别 | 命名规范 | 示例 |
+|------|----------|------|
+| 颜色 | `--color-*` | `--color-primary`, `--color-surface`, `--color-border` |
+| 间距 | `--space-{n}` | `--space-2`, `--space-3`, `--space-4` |
+| 字号 | `--font-{size}` | `--font-sm`, `--font-base` |
+| 圆角 | `--radius-{size}` | `--radius-sm`, `--radius-md` |
+| 高度 | `--height-*-*` | `--height-button-md` |
+| 阴影 | `--shadow-{size}` | `--shadow-sm` |
+
+## 容器原则（铁律）
+
+> **菜单组件必须嵌入 `<base-card>` 容器**
+
+```vue
+<!-- ✅ 正确 -->
+<base-card title="系统菜单">
+  <base-menu :data="menuData" mode="vertical" />
+</base-card>
+
+<!-- ❌ 错误：裸用 -->
+<base-menu :data="menuData" mode="vertical" />
+```
 
 ## 跨技能协同
 
 | 技能 | 用途 |
 |------|------|
 | vue-list-item-skill | 底层渲染（4 槽位 + 6 风格） |
-| vue-theme-skill | Token 样式 |
+| vue-theme-skill | Token 样式（唯一来源） |
 | vue-icon-skill | 菜单图标 |
-| vue-tag-skill | 徽标 badge |
+| vue-badge-skill | 徽标 badge |
+| vue-card-skill | 容器包裹（容器原则） |
 | vue-layout-skill | 布局集成 |
 | vue-router | 路由集成 |
 | frontend-request-skill | 权限菜单数据获取 |
 
 ## 红线
 
-- ❌ 禁止硬编码颜色/尺寸/间距
+- ❌ 禁止硬编码颜色/尺寸/间距（必须用 vue-theme-skill Token）
 - ❌ 禁止使用 emoji 作为图标
-- ❌ 禁止脱离 vue-list-item-skill 自行实现
+- ❌ 禁止脱离 vue-list-item-skill 自行实现节点渲染
 - ❌ 禁止第三方 UI 库
+- ❌ 禁止裸用 `<base-menu>`（必须 base-card 包裹）
 
 ## 文件结构
 
