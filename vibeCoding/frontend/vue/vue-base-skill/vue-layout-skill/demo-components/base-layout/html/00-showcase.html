@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>vue-layout-skill · 管理端布局演示</title>
+  <style>
+    :root {
+      --color-primary: #3b82f6;
+      --color-success: #10b981;
+      --color-warning: #f59e0b;
+      --color-danger: #ef4444;
+      --color-info: #3b82f6;
+      --color-text: #1f2937;
+      --color-text-secondary: #6b7280;
+      --color-text-tertiary: #9ca3af;
+      --color-text-inverse: #ffffff;
+      --color-bg: #f3f4f6;
+      --color-surface: #ffffff;
+      --color-border: #e5e7eb;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --font-xs: 12px;
+      --font-sm: 13px;
+      --font-base: 14px;
+      --font-lg: 16px;
+      --font-xl: 18px;
+      --font-2xl: 22px;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-full: 999px;
+      --height-button-md: 40px;
+      --height-button-lg: 48px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+      --weight-medium: 500;
+      --weight-semibold: 600;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--color-bg); color: var(--color-text); }
+
+    .page-header { background: var(--color-surface); padding: var(--space-5); border-bottom: 1px solid var(--color-border); margin-bottom: var(--space-6); }
+    .page-header__title { font-size: var(--font-2xl); font-weight: var(--weight-semibold); margin-bottom: var(--space-2); }
+    .page-header__desc { color: var(--color-text-secondary); font-size: var(--font-sm); }
+
+    .demo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-6); padding: 0 var(--space-5) var(--space-6); }
+    .demo-card { background: var(--color-surface); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); }
+    .demo-card__header { padding: var(--space-4); border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; }
+    .demo-card__title { font-weight: var(--weight-semibold); font-size: var(--font-base); }
+    .demo-card__tag { font-size: var(--font-xs); color: var(--color-primary); background: #eff6ff; padding: 2px 8px; border-radius: 4px; }
+    .demo-card__body { position: relative; height: 400px; }
+
+    /* 布局样式 */
+    .app-layout { height: 400px; position: relative; overflow: hidden; }
+    .app-layout__right { margin-left: 220px; transition: margin-left 0.28s; display: flex; flex-direction: column; height: 100%; }
+    .app-layout.is-collapsed .app-layout__right { margin-left: 64px; }
+
+    /* 侧边栏 */
+    .app-sidebar { position: absolute; top: 0; left: 0; bottom: 0; width: 220px; background: #1e293b; display: flex; flex-direction: column; transition: width 0.28s; z-index: 10; }
+    .app-layout.is-collapsed .app-sidebar { width: 64px; }
+    .app-sidebar__logo { height: 48px; display: flex; align-items: center; justify-content: center; gap: var(--space-2); border-bottom: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; }
+    .app-sidebar__logo-icon { font-size: 20px; }
+    .app-sidebar__logo-text { color: #fff; font-size: var(--font-lg); font-weight: var(--weight-semibold); white-space: nowrap; }
+    .app-layout.is-collapsed .app-sidebar__logo-text { display: none; }
+    .app-sidebar__menu { flex: 1; overflow-y: auto; padding: var(--space-2) 0; }
+    .app-sidebar__collapse-btn { height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: rgba(255,255,255,0.5); border-top: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; transition: color 0.2s; }
+    .app-sidebar__collapse-btn:hover { color: #fff; }
+
+    /* 菜单项 */
+    .menu-item { }
+    .menu-item__label { height: 40px; display: flex; align-items: center; gap: var(--space-3); padding: 0 var(--space-4); cursor: pointer; color: rgba(255,255,255,0.7); font-size: var(--font-sm); transition: all 0.2s; white-space: nowrap; }
+    .menu-item__label:hover { background: rgba(255,255,255,0.06); color: #fff; }
+    .menu-item.is-active > .menu-item__label { background: var(--color-primary); color: #fff; }
+    .menu-item.is-collapsed .menu-item__label { justify-content: center; padding: 0; }
+    .app-layout.is-collapsed .menu-item__label { justify-content: center; padding: 0; }
+    .menu-item__icon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+    .menu-item__text { flex: 1; overflow: hidden; text-overflow: ellipsis; }
+    .app-layout.is-collapsed .menu-item__text { display: none; }
+    .menu-item__arrow { font-size: 10px; transition: transform 0.2s; }
+    .menu-item.is-open > .menu-item__label .menu-item__arrow { transform: rotate(180deg); }
+    .app-layout.is-collapsed .menu-item__arrow { display: none; }
+    .menu-item__children { overflow: hidden; max-height: 0; transition: max-height 0.3s ease; }
+    .menu-item.is-open > .menu-item__children { max-height: 500px; }
+
+    /* 子菜单 */
+    .menu-item__children .menu-item__label { padding-left: 52px; }
+    .app-layout.is-collapsed .menu-item__children { display: none; }
+
+    /* 顶栏 */
+    .app-header { height: 48px; background: var(--color-surface); border-bottom: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between; padding: 0 var(--space-5); flex-shrink: 0; }
+    .app-header__left { display: flex; align-items: center; gap: var(--space-3); }
+    .app-header__collapse-btn { cursor: pointer; font-size: var(--font-lg); color: var(--color-text); padding: var(--space-1); border-radius: var(--radius-sm); transition: background 0.2s; }
+    .app-header__collapse-btn:hover { background: var(--color-bg); }
+    .app-header__breadcrumbs { display: flex; align-items: center; gap: var(--space-1); font-size: var(--font-sm); color: var(--color-text-secondary); }
+    .app-header__breadcrumb-sep { color: var(--color-border); }
+    .app-header__breadcrumb-item.is-last { color: var(--color-text); font-weight: var(--weight-medium); }
+    .app-header__right { display: flex; align-items: center; gap: var(--space-4); }
+    .app-header__user { display: flex; align-items: center; gap: var(--space-2); cursor: pointer; padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); transition: background 0.2s; }
+    .app-header__user:hover { background: var(--color-bg); }
+    .app-header__avatar { width: 28px; height: 28px; border-radius: var(--radius-full); background: var(--color-primary); color: #fff; display: flex; align-items: center; justify-content: center; font-size: var(--font-xs); font-weight: var(--weight-semibold); }
+    .app-header__username { font-size: var(--font-sm); color: var(--color-text); }
+
+    /* 内容区 */
+    .app-main { flex: 1; overflow-y: auto; padding: var(--space-5); }
+    .app-main__card { background: var(--color-surface); border-radius: var(--radius-md); padding: var(--space-5); box-shadow: var(--shadow-sm); }
+    .app-main__title { font-size: var(--font-lg); font-weight: var(--weight-semibold); margin-bottom: var(--space-3); }
+    .app-main__desc { color: var(--color-text-secondary); font-size: var(--font-sm); line-height: 1.6; }
+    .app-main__stats { display: flex; gap: var(--space-6); margin-top: var(--space-5); }
+    .stat-item { text-align: center; }
+    .stat-item__value { font-size: var(--font-2xl); font-weight: var(--weight-semibold); color: var(--color-primary); }
+    .stat-item__label { font-size: var(--font-xs); color: var(--color-text-secondary); margin-top: var(--space-1); }
+
+    /* 横向布局 */
+    .layout--horizontal .app-layout__right { margin-left: 0; }
+    .layout--horizontal .app-sidebar { width: 100%; height: 48px; flex-direction: row; align-items: center; padding: 0 var(--space-4); }
+    .layout--horizontal .app-sidebar__logo { border-bottom: none; border-right: 1px solid rgba(255,255,255,0.1); width: 180px; flex-shrink: 0; }
+    .layout--horizontal .app-sidebar__menu { display: flex; flex: 1; padding: 0; overflow: visible; }
+    .layout--horizontal .menu-item { position: relative; }
+    .layout--horizontal .menu-item__label { height: 48px; padding: 0 var(--space-4); }
+    .layout--horizontal .menu-item__children { position: absolute; top: 100%; left: 0; background: #1e293b; min-width: 180px; max-height: none; border-radius: var(--radius-md); box-shadow: var(--shadow-md); }
+    .layout--horizontal .menu-item__children .menu-item__label { padding: 0 var(--space-4); height: 36px; }
+    .layout--horizontal .app-sidebar__collapse-btn { display: none; }
+
+    /* 暗色布局 */
+    .layout--dark { --color-surface: #1e293b; --color-bg: #0f172a; --color-text: #f1f5f9; --color-text-secondary: #94a3b8; --color-border: #334155; }
+    .layout--dark .app-header { background: #1e293b; border-color: #334155; }
+    .layout--dark .app-header__user:hover { background: #334155; }
+    .layout--dark .app-main__card { background: #1e293b; }
+  </style>
+</head>
+<body>
+<div class="page">
+  <div class="page-header">
+    <div class="page-header__title">vue-layout-skill · 管理端布局演示</div>
+    <div class="page-header__desc">侧边栏/顶部导航/折叠/多级菜单/暗色主题</div>
+  </div>
+
+  <div class="demo-grid">
+    <!-- 演示 1: 纵向侧边栏 -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">形态 01 · 纵向侧边栏</span>
+        <span class="demo-card__tag">默认模式</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="app-layout">
+          <aside class="app-sidebar">
+            <div class="app-sidebar__logo">
+              <span class="app-sidebar__logo-icon">⚡</span>
+              <span class="app-sidebar__logo-text">Admin</span>
+            </div>
+            <nav class="app-sidebar__menu">
+              <div class="menu-item is-active">
+                <div class="menu-item__label">
+                  <span class="menu-item__icon">📊</span>
+                  <span class="menu-item__text">控制台</span>
+                </div>
+              </div>
+              <div class="menu-item is-open">
+                <div class="menu-item__label">
+                  <span class="menu-item__icon">⚙️</span>
+                  <span class="menu-item__text">系统管理</span>
+                  <span class="menu-item__arrow">▼</span>
+                </div>
+                <div class="menu-item__children">
+                  <div class="menu-item">
+                    <div class="menu-item__label">
+                      <span class="menu-item__text">用户管理</span>
+                    </div>
+                  </div>
+                  <div class="menu-item">
+                    <div class="menu-item__label">
+                      <span class="menu-item__text">角色管理</span>
+                    </div>
+                  </div>
+                  <div class="menu-item">
+                    <div class="menu-item__label">
+                      <span class="menu-item__text">菜单管理</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item__label">
+                  <span class="menu-item__icon">📦</span>
+                  <span class="menu-item__text">业务管理</span>
+                  <span class="menu-item__arrow">▼</span>
+                </div>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item__label">
+                  <span class="menu-item__icon">📁</span>
+                  <span class="menu-item__text">文件管理</span>
+                </div>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item__label">
+                  <span class="menu-item__icon">🔔</span>
+                  <span class="menu-item__text">消息中心</span>
+                  <span style="background: var(--color-danger); color: #fff; font-size: 10px; padding: 1px 5px; border-radius: 10px; margin-left: auto;">5</span>
+                </div>
+              </div>
+            </nav>
+            <div class="app-sidebar__collapse-btn">◀</div>
+          </aside>
+          <div class="app-layout__right">
+            <header class="app-header">
+              <div class="app-header__left">
+                <div class="app-header__collapse-btn">☰</div>
+                <div class="app-header__breadcrumbs">
+                  <span>首页</span>
+                  <span class="app-header__breadcrumb-sep">/</span>
+                  <span class="app-header__breadcrumb-item is-last">控制台</span>
+                </div>
+              </div>
+              <div class="app-header__right">
+                <div class="app-header__user">
+                  <div class="app-header__avatar">A</div>
+                  <span class="app-header__username">Admin</span>
+                </div>
+              </div>
+            </header>
+            <main class="app-main">
+              <div class="app-main__card">
+                <div class="app-main__title">欢迎回来</div>
+                <div class="app-main__desc">这是管理端布局的基础形态——纵向侧边栏。左侧是导航菜单，右侧是内容区域。菜单支持多级展开、徽标提醒、折叠收起等功能。</div>
+                <div class="app-main__stats">
+                  <div class="stat-item">
+                    <div class="stat-item__value">128</div>
+                    <div class="stat-item__label">用户数</div>
+                  </div>
+                  <div class="stat-item">
+                    <div class="stat-item__value">1,234</div>
+                    <div class="stat-item__label">订单数</div>
+                  </div>
+                  <div class="stat-item">
+                    <div class="stat-item__value">98%</div>
+                    <div class="stat-item__label">转化率</div>
+                  </div>
+                </div>
+              </div>
+            </main>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 演示 2: 折叠状态 -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">形态 02 · 折叠状态</span>
+        <span class="demo-card__tag">collapsed</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="app-layout is-collapsed">
+          <aside class="app-sidebar">
+            <div class="app-sidebar__logo">
+              <span class="app-sidebar__logo-icon">⚡</span>
+              <span class="app-sidebar__logo-text">Admin</span>
+            </div>
+            <nav class="app-sidebar__menu">
+              <div class="menu-item is-active is-collapsed">
+                <div class="menu-item__label">
+                  <span class="menu-item__icon">📊</span>
+                  <span class="menu-item__text">控制台</span>
+                </div>
+              </div>
+              <div class="menu-item is-collapsed">
+                <div class="menu-item__label">
+                  <span class="menu-item__icon">⚙️</span>
+                  <span class="menu-item__text">系统管理</span>
+                  <span class="menu-item__arrow">▼</span>
+                </div>
+              </div>
+              <div class="menu-item is-collapsed">
+                <div class="menu-item__label">
+                  <span class="menu-item__icon">📦</span>
+                  <span class="menu-item__text">业务管理</span>
+                </div>
+              </div>
+              <div class="menu-item is-collapsed">
+                <div class="menu-item__label">
+                  <span class="menu-item__icon">📁</span>
+                  <span class="menu-item__text">文件管理</span>
+                </div>
+              </div>
+            </nav>
+            <div class="app-sidebar__collapse-btn">▶</div>
+          </aside>
+          <div class="app-layout__right">
+            <header class="app-header">
+              <div class="app-header__left">
+                <div class="app-header__collapse-btn">☰</div>
+                <div class="app-header__breadcrumbs">
+                  <span>首页</span>
+                  <span class="app-header__breadcrumb-sep">/</span>
+                  <span class="app-header__breadcrumb-item is-last">控制台</span>
+                </div>
+              </div>
+              <div class="app-header__right">
+                <div class="app-header__user">
+                  <div class="app-header__avatar">A</div>
+                  <span class="app-header__username">Admin</span>
+                </div>
+              </div>
+            </header>
+            <main class="app-main">
+              <div class="app-main__card">
+                <div class="app-main__title">折叠模式</div>
+                <div class="app-main__desc">点击左侧折叠按钮，侧边栏收缩为 64px 宽度，只显示图标，节省空间。适合内容密集型后台或宽屏展示场景。</div>
+              </div>
+            </main>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 演示 3: 横向顶部导航 -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">形态 03 · 横向顶部导航</span>
+        <span class="demo-card__tag">horizontal</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="app-layout layout--horizontal">
+          <aside class="app-sidebar">
+            <div class="app-sidebar__logo">
+              <span class="app-sidebar__logo-icon">⚡</span>
+              <span class="app-sidebar__logo-text">Admin</span>
+            </div>
+            <nav class="app-sidebar__menu">
+              <div class="menu-item is-active">
+                <div class="menu-item__label">
+                  <span class="menu-item__icon">📊</span>
+                  <span class="menu-item__text">控制台</span>
+                </div>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item__label">
+                  <span class="menu-item__icon">⚙️</span>
+                  <span class="menu-item__text">系统管理</span>
+                  <span class="menu-item__arrow">▼</span>
+                </div>
+                <div class="menu-item__children">
+                  <div class="menu-item">
+                    <div class="menu-item__label">
+                      <span class="menu-item__text">用户管理</span>
+                    </div>
+                  </div>
+                  <div class="menu-item">
+                    <div class="menu-item__label">
+                      <span class="menu-item__text">角色管理</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item__label">
+                  <span class="menu-item__icon">📦</span>
+                  <span class="menu-item__text">业务管理</span>
+                </div>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item__label">
+                  <span class="menu-item__icon">📁</span>
+                  <span class="menu-item__text">文件管理</span>
+                </div>
+              </div>
+            </nav>
+          </aside>
+          <div class="app-layout__right">
+            <header class="app-header">
+              <div class="app-header__left">
+                <div></div>
+                <div class="app-header__breadcrumbs">
+                  <span>首页</span>
+                  <span class="app-header__breadcrumb-sep">/</span>
+                  <span class="app-header__breadcrumb-item is-last">控制台</span>
+                </div>
+              </div>
+              <div class="app-header__right">
+                <div class="app-header__user">
+                  <div class="app-header__avatar">A</div>
+                  <span class="app-header__username">Admin</span>
+                </div>
+              </div>
+            </header>
+            <main class="app-main">
+              <div class="app-main__card">
+                <div class="app-main__title">顶部导航模式</div>
+                <div class="app-main__desc">菜单位于顶部，适合 SaaS 产品或需要更多侧边栏空间的应用场景。子菜单通过下拉展示。</div>
+              </div>
+            </main>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 演示 4: 暗色主题 -->
+    <div class="demo-card">
+      <div class="demo-card__header">
+        <span class="demo-card__title">形态 04 · 暗色主题</span>
+        <span class="demo-card__tag">dark</span>
+      </div>
+      <div class="demo-card__body">
+        <div class="app-layout layout--dark">
+          <aside class="app-sidebar">
+            <div class="app-sidebar__logo">
+              <span class="app-sidebar__logo-icon">⚡</span>
+              <span class="app-sidebar__logo-text">Admin</span>
+            </div>
+            <nav class="app-sidebar__menu">
+              <div class="menu-item is-active">
+                <div class="menu-item__label">
+                  <span class="menu-item__icon">📊</span>
+                  <span class="menu-item__text">控制台</span>
+                </div>
+              </div>
+              <div class="menu-item is-open">
+                <div class="menu-item__label">
+                  <span class="menu-item__icon">⚙️</span>
+                  <span class="menu-item__text">系统管理</span>
+                  <span class="menu-item__arrow">▼</span>
+                </div>
+                <div class="menu-item__children">
+                  <div class="menu-item">
+                    <div class="menu-item__label">
+                      <span class="menu-item__text">用户管理</span>
+                    </div>
+                  </div>
+                  <div class="menu-item">
+                    <div class="menu-item__label">
+                      <span class="menu-item__text">角色管理</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item__label">
+                  <span class="menu-item__icon">📦</span>
+                  <span class="menu-item__text">业务管理</span>
+                </div>
+              </div>
+            </nav>
+            <div class="app-sidebar__collapse-btn">◀</div>
+          </aside>
+          <div class="app-layout__right">
+            <header class="app-header">
+              <div class="app-header__left">
+                <div class="app-header__collapse-btn">☰</div>
+                <div class="app-header__breadcrumbs">
+                  <span>首页</span>
+                  <span class="app-header__breadcrumb-sep">/</span>
+                  <span class="app-header__breadcrumb-item is-last">控制台</span>
+                </div>
+              </div>
+              <div class="app-header__right">
+                <div class="app-header__user">
+                  <div class="app-header__avatar">A</div>
+                  <span class="app-header__username">Admin</span>
+                </div>
+              </div>
+            </header>
+            <main class="app-main">
+              <div class="app-main__card">
+                <div class="app-main__title">暗色主题</div>
+                <div class="app-main__desc">深色侧边栏配浅色内容区，视觉层次分明。主题色通过 CSS 变量切换，对接 vue-theme-skill。</div>
+              </div>
+            </main>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
