@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>vue-layout-skill · 管理端布局演示</title>
   <style>
-    /* ==================== vue-theme-skill Token ==================== */
     :root {
       --color-primary: hsl(211, 100%, 56%);
       --color-primary-50: hsl(211, 100%, 96%);
@@ -46,11 +45,11 @@
     .demo-section.is-active { display: block; }
     .demo-container { height: 480px; border: 1px solid var(--color-border); border-radius: var(--radius-md); overflow: hidden; background: var(--color-bg); }
 
-    /* ==================== Layout 基础 ==================== */
+    /* Layout */
     .app-layout { display: flex; height: 100%; }
     .app-layout__right { flex: 1; display: flex; flex-direction: column; min-width: 0; }
 
-    /* ==================== Sidebar ==================== */
+    /* Sidebar */
     .app-sidebar { width: 220px; background: var(--color-surface); border-right: 1px solid var(--color-border); display: flex; flex-direction: column; flex-shrink: 0; transition: width 0.28s ease; }
     .app-layout.is-collapsed .app-sidebar { width: 64px; }
     .app-sidebar__logo { height: var(--height-button-lg); display: flex; align-items: center; justify-content: center; gap: var(--space-2); border-bottom: 1px solid var(--color-border); flex-shrink: 0; }
@@ -58,9 +57,9 @@
     .app-sidebar__logo-icon svg { width: 14px; height: 14px; fill: var(--color-text-inverse); }
     .app-sidebar__logo-text { font-size: var(--font-lg); font-weight: var(--weight-semibold); color: var(--color-text); white-space: nowrap; overflow: hidden; }
     .app-layout.is-collapsed .app-sidebar__logo-text { display: none; }
-    .app-sidebar__user { padding: var(--space-4); border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3); }
-    .app-sidebar__avatar { width: 32px; height: 32px; border-radius: var(--radius-full); background: var(--color-primary); display: flex; align-items: center; justify-content: center; color: var(--color-text-inverse); font-size: var(--font-xs); font-weight: var(--weight-semibold); flex-shrink: 0; }
-    .app-sidebar__userinfo { overflow: hidden; flex: 1; }
+    .app-sidebar__user { padding: var(--space-4); border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3); position: relative; }
+    .app-sidebar__user-avatar { width: 32px; height: 32px; border-radius: var(--radius-full); background: var(--color-primary); display: flex; align-items: center; justify-content: center; color: var(--color-text-inverse); font-size: var(--font-xs); font-weight: var(--weight-semibold); flex-shrink: 0; cursor: pointer; }
+    .app-sidebar__userinfo { overflow: hidden; flex: 1; cursor: pointer; }
     .app-sidebar__username { font-size: var(--font-sm); font-weight: var(--weight-medium); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .app-sidebar__role { font-size: var(--font-xs); color: var(--color-text-secondary); }
     .app-layout.is-collapsed .app-sidebar__userinfo { display: none; }
@@ -70,7 +69,16 @@
     .app-sidebar__toggle svg { width: 14px; height: 14px; transition: transform 0.28s; }
     .app-layout.is-collapsed .app-sidebar__toggle svg { transform: rotate(180deg); }
 
-    /* ==================== Menu ==================== */
+    /* 侧边栏用户下拉菜单 */
+    .sidebar-dropdown { position: absolute; bottom: 100%; left: var(--space-4); right: var(--space-4); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); box-shadow: var(--shadow-md); padding: var(--space-1) 0; margin-bottom: var(--space-2); display: none; z-index: 100; }
+    .sidebar-dropdown.is-open { display: block; }
+    .sidebar-dropdown__item { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2) var(--space-4); font-size: var(--font-sm); color: var(--color-text); cursor: pointer; transition: background 0.15s; }
+    .sidebar-dropdown__item:hover { background: var(--color-bg); }
+    .sidebar-dropdown__item svg { width: 14px; height: 14px; color: var(--color-text-secondary); }
+    .sidebar-dropdown__item.is-danger { color: var(--color-danger); }
+    .sidebar-dropdown__divider { height: 1px; background: var(--color-border); margin: var(--space-1) 0; }
+
+    /* Menu */
     .menu-item { position: relative; }
     .menu-item__label { height: 40px; display: flex; align-items: center; gap: var(--space-3); padding: 0 var(--space-4); cursor: pointer; color: var(--color-text-secondary); font-size: var(--font-sm); transition: all 0.2s; white-space: nowrap; }
     .menu-item__label:hover { background: var(--color-bg); color: var(--color-text); }
@@ -90,7 +98,7 @@
     .menu-item__children .menu-item__label { padding-left: 52px; }
     .app-layout.is-collapsed .menu-item__children { display: none; }
 
-    /* ==================== Header ==================== */
+    /* Header */
     .app-header { height: var(--height-button-lg); background: var(--color-surface); border-bottom: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between; padding: 0 var(--space-5); flex-shrink: 0; }
     .app-header__left { display: flex; align-items: center; gap: var(--space-3); }
     .app-header__toggle { cursor: pointer; padding: var(--space-1); border-radius: var(--radius-sm); color: var(--color-text-secondary); transition: all 0.2s; }
@@ -117,13 +125,13 @@
     .app-header__dropdown-item.is-danger { color: var(--color-danger); }
     .app-header__dropdown-divider { height: 1px; background: var(--color-border); margin: var(--space-1) 0; }
 
-    /* ==================== Main ==================== */
+    /* Main */
     .app-main { flex: 1; overflow-y: auto; padding: var(--space-5); }
     .app-main__card { background: var(--color-surface); border-radius: var(--radius-md); padding: var(--space-5); box-shadow: var(--shadow-sm); }
     .app-main__title { font-size: var(--font-lg); font-weight: var(--weight-semibold); margin-bottom: var(--space-2); }
     .app-main__desc { color: var(--color-text-secondary); font-size: var(--font-sm); line-height: 1.6; }
 
-    /* ==================== 横向顶部导航 ==================== */
+    /* 横向顶部导航 */
     .app-layout--horizontal { flex-direction: column; }
     .app-layout--horizontal .app-sidebar { width: 100%; height: var(--height-button-lg); flex-direction: row; align-items: center; border-right: none; border-bottom: 1px solid var(--color-border); padding: 0 var(--space-4); }
     .app-layout--horizontal .app-sidebar__logo { width: 180px; border-bottom: none; border-right: 1px solid var(--color-border); justify-content: flex-start; padding-left: 0; }
@@ -133,7 +141,7 @@
     .app-layout--horizontal .app-sidebar__menu > .menu-item > .menu-item__children { position: absolute; top: 100%; left: 0; min-width: 180px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); box-shadow: var(--shadow-md); }
     .app-layout--horizontal .app-sidebar__toggle, .app-layout--horizontal .app-sidebar__user { display: none; }
 
-    /* ==================== 顶部双栏 ==================== */
+    /* 顶部双栏 */
     .app-layout--top-double { flex-direction: column; }
     .app-layout--top-double .app-sidebar { width: 100%; height: 120px; flex-direction: row; flex-wrap: wrap; border-right: none; border-bottom: 1px solid var(--color-border); padding: var(--space-4); }
     .app-layout--top-double .app-sidebar__logo { width: 100%; height: auto; border-bottom: none; border-bottom: 1px solid var(--color-border); padding-bottom: var(--space-3); margin-bottom: var(--space-3); justify-content: flex-start; }
@@ -144,18 +152,16 @@
     .app-layout--top-double .menu-item__children { position: absolute; top: 100%; left: 0; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); box-shadow: var(--shadow-md); }
     .app-layout--top-double .app-sidebar__toggle, .app-layout--top-double .app-sidebar__user { display: none; }
 
-    /* ==================== 混合侧边栏 ==================== */
+    /* 混合模式 */
     .app-layout--mix .app-sidebar { width: 64px; background: var(--color-surface); border-right: 1px solid var(--color-border); }
     .app-layout--mix .app-sidebar__logo { justify-content: center; }
     .app-layout--mix .app-sidebar__logo-text { display: none; }
     .app-layout--mix .app-sidebar__user { padding: var(--space-2); justify-content: center; }
     .app-layout--mix .app-sidebar__userinfo { display: none; }
-    .app-layout--mix .app-sidebar__menu { padding: var(--space-1) 0; }
     .app-layout--mix .menu-item__label { justify-content: center; padding: 0; height: 44px; }
     .app-layout--mix .menu-item__text, .app-layout--mix .menu-item__arrow, .app-layout--mix .menu-item__badge, .app-layout--mix .menu-item__children { display: none; }
     .app-layout--mix .app-sidebar__toggle { display: none; }
 
-    /* 混合模式：顶级菜单在顶部 */
     .app-layout--mix .app-topbar { height: 48px; background: var(--color-surface); border-bottom: 1px solid var(--color-border); display: flex; align-items: center; padding: 0 var(--space-4); gap: var(--space-4); }
     .app-layout--mix .app-topbar__menu { display: flex; flex: 1; }
     .app-layout--mix .app-topbar__menu .menu-item__label { height: 48px; padding: 0 var(--space-4); }
@@ -167,18 +173,18 @@
 <div class="page">
   <div class="page-header">
     <div class="page-header__title">vue-layout-skill · 管理端布局演示</div>
-    <div class="page-header__desc">引用 vue-menu-skill + vue-dropdown-skill + vue-theme-skill</div>
+    <div class="page-header__desc">引用 vue-menu-skill + vue-dropdown-skill + vue-theme-skill | 点击用户头像查看下拉菜单</div>
   </div>
 
-  <!-- Tab 切换 -->
   <div class="page-tabs">
-    <div class="page-tab is-active" onclick="showTab(0)">1. 纵向侧边栏</div>
+    <div class="page-tab is-active" onclick="showTab(0)">1. 侧边栏用户+下拉</div>
     <div class="page-tab" onclick="showTab(1)">2. 横向顶部导航</div>
     <div class="page-tab" onclick="showTab(2)">3. 顶部双栏</div>
     <div class="page-tab" onclick="showTab(3)">4. 混合模式</div>
+    <div class="page-tab" onclick="showTab(4)">5. 侧边栏折叠</div>
   </div>
 
-  <!-- 演示 1: 纵向侧边栏 + 用户信息在侧边栏底部 -->
+  <!-- 1. 侧边栏用户+下拉 -->
   <div class="demo-section is-active">
     <div class="demo-container">
       <div class="app-layout" id="layout1">
@@ -186,6 +192,21 @@
           <div class="app-sidebar__logo">
             <div class="app-sidebar__logo-icon"><svg viewBox="0 0 24 24"><path d="M13 3L4 14h7l-2 7 9-11h-7l2-7z"/></svg></div>
             <span class="app-sidebar__logo-text">Admin</span>
+          </div>
+          <!-- 用户信息 + 下拉菜单 -->
+          <div class="app-sidebar__user">
+            <div class="app-sidebar__user-avatar" onclick="toggleSidebarDropdown(this)">A</div>
+            <div class="app-sidebar__userinfo" onclick="toggleSidebarDropdown(this)">
+              <div class="app-sidebar__username">Admin</div>
+              <div class="app-sidebar__role">超级管理员</div>
+            </div>
+            <!-- 下拉菜单 -->
+            <div class="sidebar-dropdown">
+              <div class="sidebar-dropdown__item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>个人中心</div>
+              <div class="sidebar-dropdown__item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58z"/></svg>账号设置</div>
+              <div class="sidebar-dropdown__divider"></div>
+              <div class="sidebar-dropdown__item is-danger"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>退出登录</div>
+            </div>
           </div>
           <nav class="app-sidebar__menu">
             <div class="menu-item is-active" onclick="setActive(this, 'layout1')">
@@ -220,14 +241,6 @@
               </div>
             </div>
           </nav>
-          <!-- 用户信息在侧边栏底部 -->
-          <div class="app-sidebar__user">
-            <div class="app-sidebar__avatar">A</div>
-            <div class="app-sidebar__userinfo">
-              <div class="app-sidebar__username">Admin</div>
-              <div class="app-sidebar__role">超级管理员</div>
-            </div>
-          </div>
           <div class="app-sidebar__toggle" onclick="toggleCollapse('layout1')">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
           </div>
@@ -246,7 +259,7 @@
             <div class="app-header__right">
               <div class="app-header__btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div>
               <div class="app-header__dropdown">
-                <div class="app-header__user" onclick="toggleDropdown(this)">
+                <div class="app-header__user" onclick="toggleHeaderDropdown(this)">
                   <div class="app-header__user-avatar">A</div>
                   <span class="app-header__user-name">Admin</span>
                   <span class="app-header__user-arrow">▼</span>
@@ -262,8 +275,8 @@
           </header>
           <main class="app-main">
             <div class="app-main__card">
-              <div class="app-main__title">欢迎回来</div>
-              <div class="app-main__desc">纵向侧边栏布局，用户信息在侧边栏底部。点击顶部折叠按钮可收起侧边栏。</div>
+              <div class="app-main__title">侧边栏用户+下拉</div>
+              <div class="app-main__desc">用户信息在侧边栏底部，点击头像或用户名可展开下拉菜单（个人中心/账号设置/退出登录）。</div>
             </div>
           </main>
         </div>
@@ -271,17 +284,17 @@
     </div>
   </div>
 
-  <!-- 演示 2: 横向顶部导航 -->
+  <!-- 2. 横向顶部导航 -->
   <div class="demo-section">
     <div class="demo-container">
-      <div class="app-layout app-layout--horizontal" id="layout2">
+      <div class="app-layout app-layout--horizontal">
         <aside class="app-sidebar">
           <div class="app-sidebar__logo">
             <div class="app-sidebar__logo-icon"><svg viewBox="0 0 24 24"><path d="M13 3L4 14h7l-2 7 9-11h-7l2-7z"/></svg></div>
             <span class="app-sidebar__logo-text">Admin</span>
           </div>
           <nav class="app-sidebar__menu">
-            <div class="menu-item is-active" onclick="setActive(this, 'layout2')">
+            <div class="menu-item is-active">
               <div class="menu-item__label">
                 <span class="menu-item__icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg></span>
                 <span class="menu-item__text">控制台</span>
@@ -293,19 +306,18 @@
                 <span class="menu-item__arrow">▼</span>
               </div>
               <div class="menu-item__children">
-                <div class="menu-item" onclick="setActive(this, 'layout2')"><div class="menu-item__label"><span class="menu-item__text">用户管理</span></div></div>
-                <div class="menu-item" onclick="setActive(this, 'layout2')"><div class="menu-item__label"><span class="menu-item__text">角色管理</span></div></div>
+                <div class="menu-item"><div class="menu-item__label"><span class="menu-item__text">用户管理</span></div></div>
+                <div class="menu-item"><div class="menu-item__label"><span class="menu-item__text">角色管理</span></div></div>
               </div>
             </div>
-            <div class="menu-item" onclick="setActive(this, 'layout2')">
+            <div class="menu-item">
               <div class="menu-item__label">
                 <span class="menu-item__icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg></span>
                 <span class="menu-item__text">文件管理</span>
               </div>
             </div>
-            <div class="menu-item" onclick="setActive(this, 'layout2')">
+            <div class="menu-item">
               <div class="menu-item__label">
-                <span class="menu-item__icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></span>
                 <span class="menu-item__text">消息</span>
                 <span class="menu-item__badge">3</span>
               </div>
@@ -323,7 +335,7 @@
             <div class="app-header__right">
               <div class="app-header__btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div>
               <div class="app-header__dropdown">
-                <div class="app-header__user" onclick="toggleDropdown(this)">
+                <div class="app-header__user" onclick="toggleHeaderDropdown(this)">
                   <div class="app-header__user-avatar">A</div>
                   <span class="app-header__user-name">Admin</span>
                   <span class="app-header__user-arrow">▼</span>
@@ -340,7 +352,7 @@
           <main class="app-main">
             <div class="app-main__card">
               <div class="app-main__title">横向顶部导航</div>
-              <div class="app-main__desc">菜单位于顶部，适合 SaaS 产品。子菜单通过下拉展示。</div>
+              <div class="app-main__desc">菜单位于顶部，适合 SaaS 产品。点击右上角用户头像查看下拉菜单。</div>
             </div>
           </main>
         </div>
@@ -348,7 +360,7 @@
     </div>
   </div>
 
-  <!-- 演示 3: 顶部双栏 -->
+  <!-- 3. 顶部双栏 -->
   <div class="demo-section">
     <div class="demo-container">
       <div class="app-layout app-layout--top-double">
@@ -358,24 +370,12 @@
             <span class="app-sidebar__logo-text">Admin System</span>
           </div>
           <nav class="app-sidebar__menu">
-            <div class="menu-item is-active">
-              <div class="menu-item__label"><span class="menu-item__text">控制台</span></div>
-            </div>
-            <div class="menu-item">
-              <div class="menu-item__label"><span class="menu-item__text">用户管理</span></div>
-            </div>
-            <div class="menu-item">
-              <div class="menu-item__label"><span class="menu-item__text">订单管理</span></div>
-            </div>
-            <div class="menu-item">
-              <div class="menu-item__label"><span class="menu-item__text">商品管理</span></div>
-            </div>
-            <div class="menu-item">
-              <div class="menu-item__label"><span class="menu-item__text">系统设置</span></div>
-            </div>
-            <div class="menu-item">
-              <div class="menu-item__label"><span class="menu-item__text">日志审计</span></div>
-            </div>
+            <div class="menu-item is-active"><div class="menu-item__label"><span class="menu-item__text">控制台</span></div></div>
+            <div class="menu-item"><div class="menu-item__label"><span class="menu-item__text">用户管理</span></div></div>
+            <div class="menu-item"><div class="menu-item__label"><span class="menu-item__text">订单管理</span></div></div>
+            <div class="menu-item"><div class="menu-item__label"><span class="menu-item__text">商品管理</span></div></div>
+            <div class="menu-item"><div class="menu-item__label"><span class="menu-item__text">系统设置</span></div></div>
+            <div class="menu-item"><div class="menu-item__label"><span class="menu-item__text">日志审计</span></div></div>
           </nav>
         </aside>
         <div class="app-layout__right">
@@ -388,13 +388,15 @@
             </div>
             <div class="app-header__right">
               <div class="app-header__dropdown">
-                <div class="app-header__user" onclick="toggleDropdown(this)">
+                <div class="app-header__user" onclick="toggleHeaderDropdown(this)">
                   <div class="app-header__user-avatar">A</div>
                   <span class="app-header__user-name">Admin</span>
                   <span class="app-header__user-arrow">▼</span>
                 </div>
                 <div class="app-header__dropdown-menu">
                   <div class="app-header__dropdown-item">个人中心</div>
+                  <div class="app-header__dropdown-item">账号设置</div>
+                  <div class="app-header__dropdown-divider"></div>
                   <div class="app-header__dropdown-item is-danger">退出登录</div>
                 </div>
               </div>
@@ -411,42 +413,34 @@
     </div>
   </div>
 
-  <!-- 演示 4: 混合模式 -->
+  <!-- 4. 混合模式 -->
   <div class="demo-section">
     <div class="demo-container">
       <div class="app-layout app-layout--mix">
-        <!-- 顶部导航 -->
         <div class="app-topbar">
           <div class="app-sidebar__logo" style="width:auto;border:none;">
             <div class="app-sidebar__logo-icon"><svg viewBox="0 0 24 24"><path d="M13 3L4 14h7l-2 7 9-11h-7l2-7z"/></svg></div>
           </div>
           <nav class="app-topbar__menu">
-            <div class="menu-item is-active">
-              <div class="menu-item__label"><span class="menu-item__text">控制台</span></div>
-            </div>
-            <div class="menu-item">
-              <div class="menu-item__label"><span class="menu-item__text">用户</span></div>
-            </div>
-            <div class="menu-item">
-              <div class="menu-item__label"><span class="menu-item__text">订单</span></div>
-            </div>
-            <div class="menu-item">
-              <div class="menu-item__label"><span class="menu-item__text">商品</span></div>
-            </div>
+            <div class="menu-item is-active"><div class="menu-item__label"><span class="menu-item__text">控制台</span></div></div>
+            <div class="menu-item"><div class="menu-item__label"><span class="menu-item__text">用户</span></div></div>
+            <div class="menu-item"><div class="menu-item__label"><span class="menu-item__text">订单</span></div></div>
+            <div class="menu-item"><div class="menu-item__label"><span class="menu-item__text">商品</span></div></div>
           </nav>
           <div class="app-header__right" style="margin-left:auto;">
             <div class="app-header__dropdown">
-              <div class="app-header__user" onclick="toggleDropdown(this)">
+              <div class="app-header__user" onclick="toggleHeaderDropdown(this)">
                 <div class="app-header__user-avatar">A</div>
               </div>
               <div class="app-header__dropdown-menu">
                 <div class="app-header__dropdown-item">个人中心</div>
+                <div class="app-header__dropdown-item">账号设置</div>
+                <div class="app-header__dropdown-divider"></div>
                 <div class="app-header__dropdown-item is-danger">退出登录</div>
               </div>
             </div>
           </div>
         </div>
-        <!-- 侧边栏 -->
         <aside class="app-sidebar">
           <nav class="app-sidebar__menu">
             <div class="menu-item is-active">
@@ -463,7 +457,13 @@
             </div>
           </nav>
           <div class="app-sidebar__user">
-            <div class="app-sidebar__avatar">A</div>
+            <div class="app-sidebar__user-avatar" onclick="toggleSidebarDropdown(this)">A</div>
+            <div class="sidebar-dropdown">
+              <div class="sidebar-dropdown__item">个人中心</div>
+              <div class="sidebar-dropdown__item">账号设置</div>
+              <div class="sidebar-dropdown__divider"></div>
+              <div class="sidebar-dropdown__item is-danger">退出登录</div>
+            </div>
           </div>
         </aside>
         <div class="app-layout__right">
@@ -479,7 +479,87 @@
           <main class="app-main">
             <div class="app-main__card">
               <div class="app-main__title">混合模式</div>
-              <div class="app-main__desc">顶部一级导航 + 左侧图标导航，适合功能复杂的管理系统。</div>
+              <div class="app-main__desc">顶部一级导航 + 左侧图标导航。用户下拉在顶部右侧和左侧底部都有。</div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. 侧边栏折叠 -->
+  <div class="demo-section">
+    <div class="demo-container">
+      <div class="app-layout is-collapsed" id="layout5">
+        <aside class="app-sidebar">
+          <div class="app-sidebar__logo">
+            <div class="app-sidebar__logo-icon"><svg viewBox="0 0 24 24"><path d="M13 3L4 14h7l-2 7 9-11h-7l2-7z"/></svg></div>
+            <span class="app-sidebar__logo-text">Admin</span>
+          </div>
+          <div class="app-sidebar__user">
+            <div class="app-sidebar__user-avatar" onclick="toggleSidebarDropdown(this)">A</div>
+            <div class="sidebar-dropdown">
+              <div class="sidebar-dropdown__item">个人中心</div>
+              <div class="sidebar-dropdown__item">账号设置</div>
+              <div class="sidebar-dropdown__divider"></div>
+              <div class="sidebar-dropdown__item is-danger">退出登录</div>
+            </div>
+          </div>
+          <nav class="app-sidebar__menu">
+            <div class="menu-item is-active">
+              <div class="menu-item__label">
+                <span class="menu-item__icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg></span>
+                <span class="menu-item__text">控制台</span>
+              </div>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item__label">
+                <span class="menu-item__icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58z"/></svg></span>
+                <span class="menu-item__text">系统管理</span>
+              </div>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item__label">
+                <span class="menu-item__icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg></span>
+                <span class="menu-item__text">文件管理</span>
+              </div>
+            </div>
+          </nav>
+          <div class="app-sidebar__toggle" onclick="toggleCollapse('layout5')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+          </div>
+        </aside>
+        <div class="app-layout__right">
+          <header class="app-header">
+            <div class="app-header__left">
+              <div class="app-header__toggle" onclick="toggleCollapse('layout5')">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+              </div>
+              <div class="app-header__breadcrumb">
+                <span>首页</span><span class="app-header__breadcrumb-sep">/</span>
+                <span class="app-header__breadcrumb-item is-last">控制台</span>
+              </div>
+            </div>
+            <div class="app-header__right">
+              <div class="app-header__dropdown">
+                <div class="app-header__user" onclick="toggleHeaderDropdown(this)">
+                  <div class="app-header__user-avatar">A</div>
+                  <span class="app-header__user-name">Admin</span>
+                  <span class="app-header__user-arrow">▼</span>
+                </div>
+                <div class="app-header__dropdown-menu">
+                  <div class="app-header__dropdown-item">个人中心</div>
+                  <div class="app-header__dropdown-item">账号设置</div>
+                  <div class="app-header__dropdown-divider"></div>
+                  <div class="app-header__dropdown-item is-danger">退出登录</div>
+                </div>
+              </div>
+            </div>
+          </header>
+          <main class="app-main">
+            <div class="app-main__card">
+              <div class="app-main__title">侧边栏折叠状态</div>
+              <div class="app-main__desc">侧边栏收起为 64px，只显示图标。点击底部折叠按钮可展开。</div>
             </div>
           </main>
         </div>
@@ -508,13 +588,21 @@
     el.classList.add('is-active');
   }
 
-  function toggleDropdown(btn) {
-    btn.nextElementSibling.classList.toggle('is-open');
+  function toggleSidebarDropdown(el) {
+    const dropdown = el.parentElement.querySelector('.sidebar-dropdown');
+    if (dropdown) dropdown.classList.toggle('is-open');
+  }
+
+  function toggleHeaderDropdown(el) {
+    const dropdown = el.nextElementSibling;
+    if (dropdown) dropdown.classList.toggle('is-open');
   }
 
   document.addEventListener('click', function(e) {
-    document.querySelectorAll('.app-header__dropdown-menu').forEach(menu => {
-      if (!menu.contains(e.target)) menu.classList.remove('is-open');
+    document.querySelectorAll('.sidebar-dropdown, .app-header__dropdown-menu').forEach(menu => {
+      if (!menu.contains(e.target) && !menu.previousElementSibling?.contains(e.target)) {
+        menu.classList.remove('is-open');
+      }
     });
   });
 </script>
