@@ -8,17 +8,22 @@ description: Vue 3 管理端布局技能，提供 AppLayout 骨架（侧边栏�
 > **容器原则**：布局组件是项目的最外层骨架，所有页面都在 AppMain 内渲染
 > **零 HTML5 标签**：菜单项、面包屑等全部用 `<div>` + CSS3 实现
 > **Token 驱动**：所有尺寸、颜色、间距必须使用 `var(--*)` 变量
+>
+> **联动 vue-menu-skill**：侧边栏菜单必须引用 `<base-menu>`，禁止自行实现 MenuItem
 
 管理端标准布局，对标 Element Plus 的 `el-container + el-aside + el-header + el-main`，全部原生实现。
 
 ## 引用组件
 
-| 组件技能 | 用途 |
-|----------|------|
-| vue-theme-skill | 设计 Token（颜色/尺寸/间距） |
-| vue-button-skill | 侧边栏折叠按钮 |
-| vue-dropdown-skill | 用户头像下拉菜单 |
-| vue-tree-skill | 多级菜单树（可选） |
+| 组件技能 | 用途 | 状态 |
+|----------|------|------|
+| vue-theme-skill | 设计 Token（颜色/尺寸/间距） | ✅ |
+| vue-menu-skill | 菜单组件（侧边栏/顶部菜单） | ✅ |
+| vue-card-skill | 容器包裹 | ✅ |
+| vue-icon-skill | 菜单图标 | ✅ |
+| vue-badge-skill | 菜单徽标 | ✅ |
+| vue-dropdown-skill | 用户头像下拉菜单 | ✅ |
+| vue-breadcrumb-skill | 面包屑导航 | ⏳ 待实现 |
 
 ## 布局结构
 
@@ -42,6 +47,20 @@ description: Vue 3 管理端布局技能，提供 AppLayout 骨架（侧边栏�
 └─────────────────────────────────────────────┘
 ```
 
+## 组件层级
+
+```
+AppLayout (L0 布局容器)
+├── AppSidebar (L1 侧边栏)
+│   ├── Logo 区域
+│   └── base-menu (引用 vue-menu-skill)
+├── AppHeader (L1 顶栏)
+│   ├── 折叠按钮 + 面包屑
+│   └── 用户下拉 (引用 vue-dropdown-skill)
+└── AppMain (L1 内容区)
+    └── <router-view />
+```
+
 ## 组件清单
 
 | 组件 | 文件 | 说明 |
@@ -50,7 +69,6 @@ description: Vue 3 管理端布局技能，提供 AppLayout 骨架（侧边栏�
 | AppSidebar | AppSidebar.vue | 侧边栏（Logo + 菜单 + 折叠按钮） |
 | AppHeader | AppHeader.vue | 顶栏（折叠按钮 + 面包屑 + 用户下拉） |
 | AppMain | AppMain.vue | 内容区（router-view + 过渡动画） |
-| MenuItem | MenuItem.vue | 菜单项（支持多级嵌套 + 图标 + 徽标） |
 
 ## 组件代码
 
@@ -168,8 +186,8 @@ function onLogout() {
 
 ```vue
 <script setup lang="ts">
-import { ref, computed, inject } from 'vue';
-import MenuItem from './MenuItem.vue';
+import { ref } from 'vue';
+import BaseMenu from 'vue-menu-skill/components/BaseMenu.vue';
 
 interface MenuItemData {
   key: string;
@@ -196,18 +214,9 @@ const emit = defineEmits<{
 }>();
 
 const activeKey = ref('');
-const openKeys = ref<string[]>([]);
 
-function handleClick(item: MenuItemData) {
-  if (item.children?.length) {
-    // 展开/折叠子菜单
-    const idx = openKeys.value.indexOf(item.key);
-    if (idx >= 0) openKeys.value.splice(idx, 1);
-    else openKeys.value.push(item.key);
-  } else {
-    activeKey.value = item.key;
-    emit('menu-click', item);
-  }
+function handleSelect(item: MenuItemData) {
+  emit('menu-click', item);
 }
 </script>
 
@@ -221,19 +230,17 @@ function handleClick(item: MenuItemData) {
       <span v-if="!collapsed" class="app-sidebar__logo-text">{{ logo }}</span>
     </div>
 
-    <!-- 菜单区 -->
-    <nav class="app-sidebar__menu">
-      <MenuItem
-        v-for="item in menus"
-        :key="item.key"
-        :item="item"
+    <!-- 菜单区：引用 vue-menu-skill -->
+    <div class="app-sidebar__menu">
+      <BaseMenu
+        :data="menus"
+        mode="vertical"
         :active-key="activeKey"
-        :open-keys="openKeys"
         :collapsed="collapsed"
-        :level="0"
-        @click="handleClick"
+        :collapsible="true"
+        @select="handleSelect"
       />
-    </nav>
+    </div>
 
     <!-- 折叠按钮 -->
     <div class="app-sidebar__collapse-btn" @click="emit('toggle-collapse')">
@@ -331,82 +338,15 @@ defineProps<Props>();
 </template>
 ```
 
-### MenuItem.vue
-
-```vue
-<script setup lang="ts">
-import { computed } from 'vue';
-
-interface MenuItemData {
-  key: string;
-  label: string;
-  icon?: string;
-  path?: string;
-  badge?: number | string;
-  children?: MenuItemData[];
-}
-
-interface Props {
-  item: MenuItemData;
-  activeKey: string;
-  openKeys: string[];
-  collapsed: boolean;
-  level: number;
-}
-
-const props = defineProps<Props>();
-const emit = defineEmits<{
-  click: [item: MenuItemData];
-}>();
-
-const isOpen = computed(() => props.openKeys.includes(props.item.key));
-const isActive = computed(() => props.activeKey === props.item.key);
-const hasChildren = computed(() => props.item.children && props.item.children.length > 0);
-</script>
-
-<template>
-  <div class="menu-item" :class="{
-    'is-active': isActive,
-    'is-open': isOpen,
-    'is-collapsed': collapsed && level === 0,
-  }">
-    <!-- 菜单项本体 -->
-    <div
-      class="menu-item__label"
-      :style="{ paddingLeft: collapsed && level === 0 ? '0' : (16 + level * 16) + 'px' }"
-      @click="emit('click', item)"
-      :title="collapsed && level === 0 ? item.label : ''"
-    >
-      <span v-if="item.icon" class="menu-item__icon">{{ item.icon }}</span>
-      <span v-if="!collapsed || level > 0" class="menu-item__text">{{ item.label }}</span>
-      <span v-if="item.badge && (!collapsed || level > 0)" class="menu-item__badge">{{ item.badge }}</span>
-      <span v-if="hasChildren && (!collapsed || level > 0)" class="menu-item__arrow" :class="{ 'is-open': isOpen }">▾</span>
-    </div>
-
-    <!-- 子菜单（递归） -->
-    <div v-if="hasChildren && isOpen && (!collapsed || level > 0)" class="menu-item__children">
-      <MenuItem
-        v-for="child in item.children"
-        :key="child.key"
-        :item="child"
-        :active-key="activeKey"
-        :open-keys="openKeys"
-        :collapsed="collapsed"
-        :level="level + 1"
-        @click="(item) => emit('click', item)"
-      />
-    </div>
-  </div>
-</template>
-```
-
 ## styles.css
+
+> **注意**：菜单样式由 vue-menu-skill 接管，本文件仅保留布局相关样式。
 
 ```css
 /* ==================== AppLayout ==================== */
 .app-layout {
   min-height: 100vh;
-  background: var(--color-bg, #f0f2f5);
+  background: var(--color-bg);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
@@ -423,8 +363,8 @@ const hasChildren = computed(() => props.item.children && props.item.children.le
   top: 0;
   left: 0;
   bottom: 0;
-  background: var(--color-sidebar-bg, #001529);
-  color: var(--color-sidebar-text, rgba(255, 255, 255, 0.65));
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
   transition: width 0.28s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 100;
   display: flex;
@@ -433,13 +373,13 @@ const hasChildren = computed(() => props.item.children && props.item.children.le
 }
 
 .app-sidebar__logo {
-  height: 56px;
+  height: var(--height-button-lg, 48px);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 0 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  gap: var(--space-2);
+  padding: 0 var(--space-4);
+  border-bottom: 1px solid var(--color-border);
   flex-shrink: 0;
 }
 
@@ -448,14 +388,14 @@ const hasChildren = computed(() => props.item.children && props.item.children.le
 }
 
 .app-sidebar__logo-icon {
-  font-size: 22px;
+  font-size: var(--font-xl);
   flex-shrink: 0;
 }
 
 .app-sidebar__logo-text {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--color-sidebar-text-bright, #fff);
+  font-size: var(--font-lg);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
   white-space: nowrap;
   overflow: hidden;
 }
@@ -464,7 +404,7 @@ const hasChildren = computed(() => props.item.children && props.item.children.le
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 8px 0;
+  padding: var(--space-2) 0;
 }
 
 .app-sidebar__menu::-webkit-scrollbar {
@@ -472,97 +412,29 @@ const hasChildren = computed(() => props.item.children && props.item.children.le
 }
 
 .app-sidebar__menu::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--color-border);
   border-radius: 2px;
 }
 
 .app-sidebar__collapse-btn {
-  height: 40px;
+  height: var(--height-button-md);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.45);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--color-text-secondary);
+  border-top: 1px solid var(--color-border);
   flex-shrink: 0;
   transition: color 0.2s;
 }
 
 .app-sidebar__collapse-btn:hover {
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--color-text);
 }
 
 .app-sidebar__collapse-btn span {
-  font-size: 12px;
+  font-size: var(--font-xs);
   transition: transform 0.28s;
-}
-
-/* ==================== MenuItem ==================== */
-.menu-item__label {
-  height: 40px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding-right: 16px;
-  cursor: pointer;
-  border-radius: 6px;
-  margin: 2px 8px;
-  transition: all 0.2s;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.menu-item__label:hover {
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.menu-item.is-active > .menu-item__label {
-  background: var(--color-primary, #1890ff);
-  color: #fff;
-}
-
-.menu-item.is-collapsed > .menu-item__label {
-  justify-content: center;
-  padding: 0;
-  margin: 2px 12px;
-}
-
-.menu-item__icon {
-  font-size: 16px;
-  flex-shrink: 0;
-  width: 20px;
-  text-align: center;
-}
-
-.menu-item__text {
-  flex: 1;
-  font-size: 14px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.menu-item__badge {
-  background: var(--color-danger, #f56c6c);
-  color: #fff;
-  font-size: 11px;
-  padding: 1px 6px;
-  border-radius: 10px;
-  min-width: 16px;
-  text-align: center;
-}
-
-.menu-item__arrow {
-  font-size: 10px;
-  transition: transform 0.2s;
-  color: rgba(255, 255, 255, 0.35);
-}
-
-.menu-item__arrow.is-open {
-  transform: rotate(180deg);
-}
-
-.menu-item__children {
-  overflow: hidden;
 }
 
 /* ==================== AppHeader ==================== */
@@ -571,33 +443,34 @@ const hasChildren = computed(() => props.item.children && props.item.children.le
   top: 0;
   right: 0;
   left: 0;
-  background: var(--color-surface, #fff);
-  border-bottom: 1px solid var(--color-border, #e8e8e8);
+  height: var(--height-button-lg, 48px);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 var(--space-5);
   z-index: 99;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-sm);
 }
 
 .app-header__left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-3);
 }
 
 .app-header__collapse-btn {
   cursor: pointer;
-  font-size: 18px;
-  color: var(--color-text, #333);
-  padding: 4px;
-  border-radius: 4px;
+  font-size: var(--font-lg);
+  color: var(--color-text);
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
   transition: background 0.2s;
 }
 
 .app-header__collapse-btn:hover {
-  background: var(--color-bg-muted, #f5f5f5);
+  background: var(--color-bg);
 }
 
 .app-header__collapse-btn span {
@@ -612,18 +485,18 @@ const hasChildren = computed(() => props.item.children && props.item.children.le
 .app-header__breadcrumbs {
   display: flex;
   align-items: center;
-  gap: 4px;
-  font-size: 14px;
-  color: var(--color-text-secondary, #999);
+  gap: var(--space-1);
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
 }
 
 .app-header__breadcrumb-sep {
-  color: var(--color-border, #ddd);
+  color: var(--color-border);
 }
 
 .app-header__breadcrumb-item.is-last {
-  color: var(--color-text, #333);
-  font-weight: 500;
+  color: var(--color-text);
+  font-weight: var(--weight-medium);
 }
 
 .app-header__right {
@@ -633,21 +506,21 @@ const hasChildren = computed(() => props.item.children && props.item.children.le
 .app-header__user {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
   cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 6px;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-md);
   transition: background 0.2s;
 }
 
 .app-header__user:hover {
-  background: var(--color-bg-muted, #f5f5f5);
+  background: var(--color-bg);
 }
 
 .app-header__avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+  width: var(--icon-lg);
+  height: var(--icon-lg);
+  border-radius: var(--radius-full);
   overflow: hidden;
   flex-shrink: 0;
 }
@@ -659,58 +532,58 @@ const hasChildren = computed(() => props.item.children && props.item.children.le
 }
 
 .app-header__avatar--text {
-  background: var(--color-primary, #1890ff);
-  color: #fff;
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: var(--font-sm);
+  font-weight: var(--weight-semibold);
 }
 
 .app-header__username {
-  font-size: 14px;
-  color: var(--color-text, #333);
+  font-size: var(--font-sm);
+  color: var(--color-text);
 }
 
 .app-header__arrow {
-  font-size: 10px;
-  color: var(--color-text-secondary, #999);
+  font-size: var(--font-xs);
+  color: var(--color-text-secondary);
 }
 
 .app-header__dropdown {
   position: absolute;
   top: 100%;
   right: 0;
-  margin-top: 4px;
-  background: var(--color-surface, #fff);
-  border-radius: 8px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  margin-top: var(--space-1);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
   min-width: 140px;
-  padding: 4px 0;
+  padding: var(--space-1) 0;
   z-index: 200;
 }
 
 .app-header__dropdown-item {
-  padding: 8px 16px;
-  font-size: 14px;
-  color: var(--color-text, #333);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-sm);
+  color: var(--color-text);
   cursor: pointer;
   transition: background 0.15s;
 }
 
 .app-header__dropdown-item:hover {
-  background: var(--color-bg-muted, #f5f5f5);
+  background: var(--color-bg);
 }
 
 .app-header__dropdown-item--danger {
-  color: var(--color-danger, #f56c6c);
+  color: var(--color-danger);
 }
 
 .app-header__dropdown-divider {
   height: 1px;
-  background: var(--color-border, #eee);
-  margin: 4px 0;
+  background: var(--color-border);
+  margin: var(--space-1) 0;
 }
 
 /* ==================== AppMain ==================== */
@@ -720,8 +593,8 @@ const hasChildren = computed(() => props.item.children && props.item.children.le
 }
 
 .app-main__content {
-  padding: 20px;
-  min-height: calc(100vh - 56px);
+  padding: var(--space-5);
+  min-height: calc(100vh - var(--height-button-lg, 48px));
 }
 ```
 
