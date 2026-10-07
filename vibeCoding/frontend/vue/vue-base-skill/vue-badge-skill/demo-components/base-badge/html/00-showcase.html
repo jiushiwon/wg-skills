@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>vue-badge-skill · 徽标组件 5 形态</title>
+  <style>
+    :root {
+      --color-primary: #3b82f6;
+      --color-error: #ef4444;
+      --color-warning: #f59e0b;
+      --color-success: #10b981;
+      --color-info: #3b82f6;
+      --color-text: #1f2937;
+      --color-bg: #ffffff;
+      --color-bg-hover: #f3f4f6;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8fafc; color: var(--color-text); padding: 24px; }
+    .page-header { margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid #e5e7eb; }
+    .page-header__title { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+    .page-header__desc { color: #6b7280; font-size: 14px; }
+    .section { background: #fff; border-radius: 8px; padding: 20px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .section__title { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+    .section__tag { font-size: 12px; font-weight: 500; color: var(--color-primary); background: #eff6ff; padding: 2px 8px; border-radius: 4px; margin-left: 12px; }
+    .section__body { min-height: 60px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+    /* 徽标基础 */
+    .badge { display: inline-flex; align-items: center; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+    .badge__content { position: relative; display: inline-flex; align-items: center; }
+
+    /* 圆点徽标 */
+    .badge--dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-error); }
+    .badge--dot.is-pulse { animation: pulse 1.5s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.2); } }
+
+    /* 数字徽标 */
+    .badge--count { min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--color-error); color: #fff; font-size: 11px; font-weight: 600; line-height: 18px; }
+    .badge--count.is-small { min-width: 16px; height: 16px; padding: 0 4px; font-size: 10px; line-height: 16px; }
+    .badge--count.is-large { min-width: 22px; height: 22px; padding: 0 6px; font-size: 12px; line-height: 22px; border-radius: 11px; }
+
+    /* 文字徽标 */
+    .badge--text { height: 20px; padding: 0 8px; border-radius: 4px; background: var(--color-error); color: #fff; font-size: 11px; font-weight: 600; line-height: 20px; }
+    .badge--text.is-primary { background: var(--color-primary); }
+    .badge--text.is-warning { background: var(--color-warning); }
+    .badge--text.is-success { background: var(--color-success); }
+    .badge--text.is-info { background: var(--color-info); }
+
+    /* 组合展示 */
+    .combo { display: inline-flex; align-items: center; gap: 8px; }
+    .combo__target { width: 40px; height: 40px; background: #e5e7eb; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .combo__target.is-icon { background: #3b82f6; color: #fff; }
+    .combo__target.is-circle { border-radius: 50%; }
+    .combo__target.is-button { background: #fff; border: 1px solid #d1d5db; cursor: pointer; }
+    .combo__target.is-button:hover { border-color: #3b82f6; }
+    .combo__label { font-size: 12px; color: #6b7280; }
+
+    /* 场景卡片 */
+    .scenes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .scene { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; text-align: center; }
+    .scene__title { font-size: 12px; color: #6b7280; margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+<div class="page">
+  <div class="page-header">
+    <div class="page-header__title">vue-badge-skill · 徽标组件 5 形态</div>
+    <div class="page-header__desc">消息计数、状态指示、角标 | 对接 vue-theme-skill Token</div>
+  </div>
+
+  <!-- 形态 1: 圆点徽标 -->
+  <div class="section">
+    <div class="section__title">形态 01 · 圆点徽标 <span class="section__tag">type=dot</span></div>
+    <div class="section__body">
+      <div class="combo"><span class="badge badge--dot"></span><span class="combo__label">默认</span></div>
+      <div class="combo"><span class="badge badge--dot is-pulse"></span><span class="combo__label">脉冲动画</span></div>
+      <div class="combo">
+        <div class="combo__target is-icon">
+          <span>🔔</span>
+          <span class="badge badge--dot is-pulse" style="position:absolute;top:-2px;right:-2px;"></span>
+        </div>
+        <span class="combo__label">图标组合</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 形态 2: 数字徽标 -->
+  <div class="section">
+    <div class="section__title">形态 02 · 数字徽标 <span class="section__tag">type=count</span></div>
+    <div class="section__body">
+      <div class="combo"><span class="badge badge--count">0</span><span class="combo__label">0</span></div>
+      <div class="combo"><span class="badge badge--count">5</span><span class="combo__label">5</span></div>
+      <div class="combo"><span class="badge badge--count">99</span><span class="combo__label">99</span></div>
+      <div class="combo"><span class="badge badge--count">100</span><span class="combo__label">超过 max</span></div>
+      <div class="combo"><span class="badge badge--count is-small">1</span><span class="combo__label">小尺寸</span></div>
+      <div class="combo"><span class="badge badge--count is-large">999</span><span class="combo__label">大尺寸</span></div>
+    </div>
+  </div>
+
+  <!-- 形态 3: 文字徽标 -->
+  <div class="section">
+    <div class="section__title">形态 03 · 文字徽标 <span class="section__tag">type=text</span></div>
+    <div class="section__body">
+      <div class="combo"><span class="badge badge--text">NEW</span><span class="combo__label">NEW</span></div>
+      <div class="combo"><span class="badge badge--text is-primary">推荐</span><span class="combo__label">primary</span></div>
+      <div class="combo"><span class="badge badge--text is-warning">热卖</span><span class="combo__label">warning</span></div>
+      <div class="combo"><span class="badge badge--text is-success">已完成</span><span class="combo__label">success</span></div>
+      <div class="combo"><span class="badge badge--text is-info">进行中</span><span class="combo__label">info</span></div>
+    </div>
+  </div>
+
+  <!-- 形态 4: 最大值徽标 -->
+  <div class="section">
+    <div class="section__title">形态 04 · 最大值徽标 <span class="section__tag">type=max</span></div>
+    <div class="section__body">
+      <div class="combo"><span class="badge badge--count">99+</span><span class="combo__label">默认 99+</span></div>
+      <div class="combo"><span class="badge badge--count">999+</span><span class="combo__label">max=999</span></div>
+      <div class="combo"><span class="badge badge--count">10+</span><span class="combo__label">max=10</span></div>
+    </div>
+  </div>
+
+  <!-- 形态 5: 脉冲红点 -->
+  <div class="section">
+    <div class="section__title">形态 05 · 脉冲红点 <span class="section__tag">dot + pulse</span></div>
+    <div class="section__body">
+      <div class="combo">
+        <div class="combo__target is-circle">
+          <span>💬</span>
+          <span class="badge badge--dot is-pulse" style="position:absolute;top:0;right:0;"></span>
+        </div>
+        <span class="combo__label">消息</span>
+      </div>
+      <div class="combo">
+        <div class="combo__target is-circle">
+          <span>🛒</span>
+          <span class="badge badge--dot is-pulse" style="position:absolute;top:0;right:0;"></span>
+        </div>
+        <span class="combo__label">购物车</span>
+      </div>
+      <div class="combo">
+        <div class="combo__target is-circle">
+          <span>👤</span>
+          <span class="badge badge--count is-small" style="position:absolute;top:-4px;right:-4px;">3</span>
+        </div>
+        <span class="combo__label">新粉丝</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 场景应用 -->
+  <div class="section">
+    <div class="section__title">场景应用</div>
+    <div class="section__body">
+      <div class="scenes">
+        <div class="scene">
+          <div class="scene__title">消息通知</div>
+          <div style="position:relative;display:inline-block;">
+            <span style="font-size:32px;">🔔</span>
+            <span class="badge badge--dot is-pulse" style="position:absolute;top:-2px;right:-2px;"></span>
+          </div>
+        </div>
+        <div class="scene">
+          <div class="scene__title">购物车</div>
+          <div style="position:relative;display:inline-block;">
+            <span style="font-size:32px;">🛒</span>
+            <span class="badge badge--count" style="position:absolute;top:-8px;right:-8px;">5</span>
+          </div>
+        </div>
+        <div class="scene">
+          <div class="scene__title">待办事项</div>
+          <div style="position:relative;display:inline-block;">
+            <span style="font-size:32px;">📋</span>
+            <span class="badge badge--count is-small" style="position:absolute;top:-6px;right:-6px;">12</span>
+          </div>
+        </div>
+        <div class="scene">
+          <div class="scene__title">新用户</div>
+          <div style="position:relative;display:inline-block;">
+            <span style="font-size:32px;">👥</span>
+            <span class="badge badge--dot is-pulse" style="position:absolute;top:-2px;right:-2px;width:10px;height:10px;"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

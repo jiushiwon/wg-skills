@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>vue-menu-skill · 菜单组件 16 形态</title>
+  <style>
+    :root {
+      /* 基础主题变量 - 对接 vue-theme-skill */
+      --color-primary: #3b82f6;
+      --color-primary-light: #eff6ff;
+      --color-text: #1f2937;
+      --color-text-secondary: #6b7280;
+      --color-text-muted: #9ca3af;
+      --color-bg: #ffffff;
+      --color-bg-hover: #f3f4f6;
+      --color-bg-active: #e0e7ff;
+      --color-border: #e5e7eb;
+      --color-bg-dark: #1e293b;
+      --color-text-dark: #e2e8f0;
+      --color-bg-dark-hover: rgba(255,255,255,0.1);
+      --color-bg-dark-active: rgba(59, 130, 246, 0.3);
+      --radius-md: 8px;
+      --radius-sm: 4px;
+      /* 菜单专用变量 */
+      --menu-bg: var(--color-bg);
+      --menu-text: var(--color-text);
+      --menu-hover: var(--color-bg-hover);
+      --menu-active: var(--color-bg-active);
+    }
+
+    /* 暗色主题 - 通过 class 切换 */
+    .theme-dark {
+      --menu-bg: var(--color-bg-dark);
+      --menu-text: var(--color-text-dark);
+      --menu-hover: var(--color-bg-dark-hover);
+      --menu-active: var(--color-bg-dark-active);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8fafc; color: var(--color-text); padding: 24px; }
+    .page-header { margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--color-border); }
+    .page-header__title { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+    .page-header__desc { color: var(--color-text-secondary); font-size: 14px; }
+    .section { background: var(--color-bg); border-radius: var(--radius-md); padding: 20px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .section__title { font-size: 16px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .section__tag { font-size: 12px; font-weight: 500; color: var(--color-primary); background: var(--color-primary-light); padding: 2px 8px; border-radius: 4px; }
+    .section__body { min-height: 60px; }
+    .icon { width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .icon svg { width: 100%; height: 100%; }
+
+    /* 菜单基础 */
+    .menu { list-style: none; }
+    .menu-item { position: relative; cursor: pointer; user-select: none; }
+    .menu-item__label { display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: var(--radius-sm); transition: all 0.2s ease; font-size: 14px; color: var(--color-text); }
+    .menu-item__label:hover { background: var(--color-bg-hover); }
+    .menu-item.is-active > .menu-item__label { background: var(--color-bg-active); color: var(--color-primary); font-weight: 500; }
+    .menu-item.is-disabled > .menu-item__label { opacity: 0.5; cursor: not-allowed; }
+    .menu-item.is-disabled > .menu-item__label:hover { background: transparent; }
+    .menu-item__icon { width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .menu-item__icon svg { width: 16px; height: 16px; }
+    .menu-item__text { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .menu-item__arrow { width: 16px; height: 16px; transition: transform 0.25s ease; }
+    .menu-item.is-open > .menu-item__label .menu-item__arrow { transform: rotate(90deg); }
+    .menu-item__badge { font-size: 11px; background: #ef4444; color: #fff; padding: 1px 6px; border-radius: 10px; min-width: 18px; text-align: center; }
+
+    /* 子菜单动画 */
+    .submenu { list-style: none; padding-left: 0; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, padding 0.3s ease; }
+    .menu-item.is-open > .submenu { max-height: 500px; }
+    .submenu .menu-item__label { padding-left: 32px; }
+    .submenu .submenu .menu-item__label { padding-left: 48px; }
+
+    /* 垂直菜单 */
+    .menu--vertical { width: 220px; background: var(--color-bg); border-right: 1px solid var(--color-border); padding: 8px; }
+    .menu--vertical .menu-item__label { padding: 10px 12px; }
+
+    /* 折叠菜单 */
+    .menu--collapsed { width: 64px; padding: 8px 4px; }
+    .menu--collapsed .menu-item__text, .menu--collapsed .menu-item__arrow, .menu--collapsed .submenu { display: none; }
+    .menu--collapsed .menu-item__label { justify-content: center; padding: 10px; }
+
+    /* 暗色主题 - 使用 CSS 变量，对接 vue-theme-skill */
+    .menu--dark { background: var(--menu-bg); }
+    .menu--dark .menu-item__label { color: var(--menu-text); }
+    .menu--dark .menu-item__label:hover { background: var(--menu-hover); }
+    .menu--dark .menu-item.is-active > .menu-item__label { background: var(--menu-active); color: #fff; }
+
+    /* 分割线 */
+    .menu-divider { height: 1px; background: var(--color-border); margin: 8px 0; }
+    .menu--dark .menu-divider { background: var(--menu-hover); }
+
+    /* 横向菜单 */
+    .menu--horizontal { display: flex; flex-direction: row; gap: 2px; background: var(--color-bg); padding: 4px 8px; border-radius: var(--radius-md); }
+    .menu--horizontal > .menu-item { position: relative; }
+    .menu--horizontal .menu-item__label { padding: 8px 16px; border-radius: var(--radius-sm); }
+    .menu--horizontal .submenu { position: absolute; top: 100%; left: 0; min-width: 180px; background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius-sm); box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 4px; z-index: 100; margin-top: 4px; display: none; }
+    .menu--horizontal .submenu .menu-item__label { padding: 8px 12px; }
+    .menu--horizontal .submenu .submenu { position: absolute; left: 100%; top: 0; margin-left: 4px; margin-top: 0; }
+
+    /* hover 模式显示子菜单 */
+    .menu--horizontal .menu-item:hover > .submenu { display: block; }
+    .menu--horizontal .submenu .menu-item:hover > .submenu { display: block; }
+
+    /* 弹窗式子菜单 */
+    .submenu-popup { display: none; position: absolute; left: 100%; top: 0; min-width: 160px; background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius-sm); box-shadow: 0 4px 12px rgba(0,0,0,0.15); padding: 4px; z-index: 100; }
+    .menu-item:hover > .submenu-popup { display: block; }
+
+    /* 选中动画 */
+    .menu-item.is-active::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 3px; height: 20px; background: var(--color-primary); border-radius: 0 2px 2px 0; }
+    .menu--dark .menu-item.is-active::before { background: var(--color-primary); }
+
+    /* 横向胶囊风格 */
+    .menu--pill { gap: 0; padding: 0; background: transparent; }
+    .menu--pill .menu-item__label { border-radius: 20px; padding: 8px 20px; }
+    .menu--pill .menu-item.is-active .menu-item__label { background: var(--color-primary); color: #fff; }
+
+    /* 紧凑间距 */
+    .menu--tight { gap: 0; }
+    .menu--tight .menu-item__label { padding: 6px 12px; }
+
+    /* 布局 */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+    .log-panel { position: fixed; bottom: 20px; right: 20px; background: #1f2937; color: #fff; padding: 12px 16px; border-radius: 8px; font-size: 13px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); max-width: 300px; }
+  </style>
+</head>
+<body>
+<div class="page">
+  <div class="page-header">
+    <div class="page-header__title">vue-menu-skill · 16 形态 + 展开动画</div>
+    <div class="page-header__desc">
+      垂直/横向/折叠、click/hover 展开、展开当前级/所有级、平滑动画<br>
+      依赖 vue-list-item-skill | 点击父菜单展开/收起 | hover/click 模式可选
+    </div>
+  </div>
+
+  <!-- SVG -->
+  <svg style="display:none">
+    <symbol id="icon-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
+    <symbol id="icon-dashboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></symbol>
+    <symbol id="icon-setting" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+    <symbol id="icon-team" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="icon-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></symbol>
+    <symbol id="icon-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="icon-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></symbol>
+    <symbol id="icon-shop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></symbol>
+    <symbol id="icon-order" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></symbol>
+    <symbol id="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></symbol>
+    <symbol id="icon-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="icon-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></symbol>
+    <symbol id="icon-msg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  </svg>
+
+  <!-- ===== 1. 垂直 click 展开当前级 ===== -->
+  <div class="section">
+    <div class="section__title"><span>形态 01 · 垂直菜单 click 展开当前级</span><span class="section__tag">mode=vertical + trigger=click + expandLevel=current</span></div>
+    <div class="section__body"><div id="m1"></div></div>
+  </div>
+
+  <!-- ===== 2. 垂直 click 展开所有级 ===== -->
+  <div class="section">
+    <div class="section__title"><span>形态 02 · 垂直菜单 click 展开所有级</span><span class="section__tag">mode=vertical + trigger=click + expandLevel=all</span></div>
+    <div class="section__body"><div id="m2"></div></div>
+  </div>
+
+  <!-- ===== 3. 垂直 hover 展开 ===== -->
+  <div class="section">
+    <div class="section__title"><span>形态 03 · 垂直菜单 hover 展开</span><span class="section__tag">mode=vertical + trigger=hover</span></div>
+    <div class="section__body"><div id="m3"></div></div>
+  </div>
+
+  <!-- ===== 4. 垂直暗色主题 ===== -->
+  <div class="section">
+    <div class="section__title"><span>形态 04 · 垂直暗色主题</span><span class="section__tag">dark mode</span></div>
+    <div class="section__body"><div id="m4" style="padding:8px;border-radius:8px;width:fit-content;"></div></div>
+  </div>
+
+  <!-- ===== 5-6. 折叠菜单 ===== -->
+  <div class="section">
+    <div class="section__title"><span>形态 05-06 · 折叠菜单</span><span class="section__tag">collapsed</span></div>
+    <div class="section__body">
+      <div class="two-col">
+        <div><div style="margin-bottom:8px;font-size:12px;color:#666;">默认展开</div><div id="m5a"></div></div>
+        <div><div style="margin-bottom:8px;font-size:12px;color:#666;">折叠态</div><div id="m5b"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 7. 横向 click 展开当前级 ===== -->
+  <div class="section">
+    <div class="section__title"><span>形态 07 · 横向菜单 click 展开当前级</span><span class="section__tag">mode=horizontal + trigger=click</span></div>
+    <div class="section__body"><div id="m7" style="padding:16px;background:#f1f5f9;border-radius:8px;"></div></div>
+  </div>
+
+  <!-- ===== 8. 横向 hover 展开当前级 ===== -->
+  <div class="section">
+    <div class="section__title"><span>形态 08 · 横向菜单 hover 展开当前级</span><span class="section__tag">mode=horizontal + trigger=hover</span></div>
+    <div class="section__body"><div id="m8" style="padding:16px;background:#f1f5f9;border-radius:8px;"></div></div>
+  </div>
+
+  <!-- ===== 9. 横向暗色 hover ===== -->
+  <div class="section">
+    <div class="section__title"><span>形态 09 · 横向菜单暗色 hover 展开</span><span class="section__tag">horizontal + dark + hover</span></div>
+    <div class="section__body"><div id="m9" style="padding:16px;background:#1e293b;border-radius:8px;"></div></div>
+  </div>
+
+  <!-- ===== 10. 横向弹窗式 ===== -->
+  <div class="section">
+    <div class="section__title"><span>形态 10 · 横向弹窗式子菜单</span><span class="section__tag">popup submenu</span></div>
+    <div class="section__body"><div id="m10" style="padding:16px;background:#f1f5f9;border-radius:8px;width:fit-content;"></div></div>
+  </div>
+
+  <!-- ===== 横向菜单专题 ===== -->
+  <div class="section" style="background:#f0f9ff;border:2px solid #3b82f6;">
+    <div class="section__title"><span>横向菜单专题 · 8 种形态</span><span class="section__tag">horizontal special</span></div>
+    <div class="section__body">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+        <div><div style="margin-bottom:8px;font-size:12px;color:#666;">1. 基础 hover 展开</div><div id="h1" style="background:#fff;padding:8px;border-radius:8px;"></div></div>
+        <div><div style="margin-bottom:8px;font-size:12px;color:#666;">2. 暗色 hover 展开</div><div id="h2" style="background:#1e293b;padding:8px;border-radius:8px;"></div></div>
+        <div><div style="margin-bottom:8px;font-size:12px;color:#666;">3. 带徽标</div><div id="h3" style="background:#fff;padding:8px;border-radius:8px;"></div></div>
+        <div><div style="margin-bottom:8px;font-size:12px;color:#666;">4. 紧凑间距</div><div id="h4" style="background:#fff;padding:4px;border-radius:8px;"></div></div>
+        <div><div style="margin-bottom:8px;font-size:12px;color:#666;">5. 弹窗右侧</div><div id="h5" style="background:#fff;padding:8px;border-radius:8px;"></div></div>
+        <div><div style="margin-bottom:8px;font-size:12px;color:#666;">6. 展开动画</div><div id="h6" style="background:#fff;padding:8px;border-radius:8px;"></div></div>
+        <div><div style="margin-bottom:8px;font-size:12px;color:#666;">7. 带分割线</div><div id="h7" style="background:#fff;padding:8px;border-radius:8px;"></div></div>
+        <div><div style="margin-bottom:8px;font-size:12px;color:#666;">8. 胶囊风格</div><div id="h8" style="background:#e0e7ff;padding:4px;border-radius:24px;"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 11. 三级菜单 ===== -->
+  <div class="section">
+    <div class="section__title"><span>形态 11 · 三级菜单</span><span class="section__tag">3-level</span></div>
+    <div class="section__body"><div id="m11" style="display:flex;gap:24px;"><div><div style="margin-bottom:8px;font-size:12px;color:#666;">展开所有级</div><div id="m11a" style="margin-top:8px;"></div></div></div></div>
+  </div>
+
+  <!-- ===== 12. 菜单带徽标 ===== -->
+  <div class="section">
+    <div class="section__title"><span>形态 12 · 菜单带徽标</span><span class="section__tag">badge</span></div>
+    <div class="section__body"><div id="m12" style="width:220px;"></div></div>
+  </div>
+
+  <!-- ===== 13. 菜单带分割线 ===== -->
+  <div class="section">
+    <div class="section__title"><span>形态 13 · 菜单带分割线</span><span class="section__tag">divider</span></div>
+    <div class="section__body"><div id="m13" style="width:200px;"></div></div>
+  </div>
+
+  <!-- ===== 14. 禁用状态 ===== -->
+  <div class="section">
+    <div class="section__title"><span>形态 14 · 禁用状态</span><span class="section__tag">disabled</span></div>
+    <div class="section__body"><div id="m14" style="width:200px;"></div></div>
+  </div>
+
+  <!-- ===== 15. 手风琴模式 ===== -->
+  <div class="section">
+    <div class="section__title"><span>形态 15 · 手风琴模式</span><span class="section__tag">accordion</span></div>
+    <div class="section__body"><div id="m15"></div></div>
+  </div>
+
+  <!-- ===== 16. 混合模式 ===== -->
+  <div class="section">
+    <div class="section__title"><span>形态 16 · 混合场景（admin 布局）</span><span class="section__tag">complex</span></div>
+    <div class="section__body">
+      <div class="three-col">
+        <div><div style="margin-bottom:8px;font-size:12px;color:#666;">侧边栏</div><div id="m16a" style="background:#1e293b;padding:8px;border-radius:8px;height:300px;"></div></div>
+        <div><div style="margin-bottom:8px;font-size:12px;color:#666;">顶部导航</div><div id="m16b" style="background:#fff;padding:8px;border-radius:8px;"></div></div>
+        <div><div style="margin-bottom:8px;font-size:12px;color:#666;">面包屑</div><div id="m16c" style="background:#fff;padding:12px;border-radius:8px;font-size:13px;color:#666;">首页 / 系统管理 / 用户管理</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="log-panel" id="log">- 点击/hover 菜单项查看事件 -</div>
+</div>
+
+<script>
+function iconSvg(id) { return `<svg class="icon"><use href="#icon-${id}"></use></svg>`; }
+
+const MENU_DATA = [
+  { key: 'dashboard', label: '控制台', icon: 'dashboard' },
+  { key: 'analysis', label: '数据分析', icon: 'chart' },
+  { key: 'system', label: '系统管理', icon: 'setting', children: [
+    { key: 'user', label: '用户管理', icon: 'user' },
+    { key: 'role', label: '角色管理', icon: 'team' },
+    { key: 'menu', label: '菜单管理', icon: 'folder' }
+  ]},
+  { key: 'order', label: '订单管理', icon: 'order', children: [
+    { key: 'order-list', label: '订单列表', icon: 'file' },
+    { key: 'order-refund', label: '退款售后', icon: 'bell', badge: 3 }
+  ]},
+  { key: 'product', label: '商品管理', icon: 'shop', children: [
+    { key: 'product-list', label: '商品列表', icon: 'file' },
+    { key: 'product-category', label: '商品分类', icon: 'folder' }
+  ]}
+];
+
+const THREE_LEVEL_DATA = [
+  { key: 'enterprise', label: '企业微信', icon: 'msg', children: [
+    { key: 'dept', label: '部门管理', icon: 'team', children: [
+      { key: 'dept-list', label: '部门列表', icon: 'file' },
+      { key: 'dept-add', label: '新增部门', icon: 'file' }
+    ]},
+    { key: 'user', label: '成员管理', icon: 'user', children: [
+      { key: 'user-list', label: '成员列表', icon: 'file' }
+    ]}
+  ]}
+];
+
+const BADGE_DATA = [
+  { key: 'msg', label: '消息中心', icon: 'bell', badge: 12 },
+  { key: 'task', label: '待办事项', icon: 'file', badge: '99+' },
+  { key: 'system', label: '系统', icon: 'setting', children: [
+    { key: 'user', label: '用户', icon: 'user', badge: 5 },
+    { key: 'log', label: '日志', icon: 'file' }
+  ]}
+];
+
+const DIVIDER_DATA = [
+  { key: 'dashboard', label: '控制台', icon: 'dashboard' },
+  { key: 'order', label: '订单', icon: 'order' },
+  { key: 'divider1', divider: true },
+  { key: 'product', label: '商品', icon: 'shop' },
+  { key: 'system', label: '系统', icon: 'setting', children: [{ key: 'user', label: '用户', icon: 'user' }] }
+];
+
+const DISABLED_DATA = [
+  { key: 'normal', label: '正常菜单', icon: 'home' },
+  { key: 'disabled', label: '禁用菜单', icon: 'lock', disabled: true },
+  { key: 'group', label: '禁用组', icon: 'folder', disabled: true, children: [{ key: 'child', label: '禁用子项', icon: 'file', disabled: true }] }
+];
+
+function renderMenu(data, opts = {}) {
+  const { mode = 'vertical', dark = false, collapsed = false, expandKeys = [], accordion = false, trigger = 'click', expandLevel = 'current', popup = false } = opts;
+  const cls = ['menu', `menu--${mode}`];
+  if (dark) cls.push('menu--dark');
+  if (collapsed) cls.push('menu--collapsed');
+
+  let html = `<ul class="${cls.join(' ')}" data-mode="${mode}" data-trigger="${trigger}" data-expand-level="${expandLevel}" data-accordion="${accordion}">`;
+
+  function renderItem(item, level = 0) {
+    if (item.divider) return `<li class="menu-divider"></li>`;
+    const isDisabled = item.disabled ? 'is-disabled' : '';
+    const hasChildren = item.children && item.children.length > 0;
+    const shouldExpand = expandLevel === 'all' || expandKeys.includes(item.key);
+    const isOpen = shouldExpand ? 'is-open' : '';
+    const icon = item.icon ? `<span class="menu-item__icon">${iconSvg(item.icon)}</span>` : '';
+    const badge = item.badge ? `<span class="menu-item__badge">${item.badge}</span>` : '';
+    const arrow = hasChildren ? `<span class="menu-item__arrow">${iconSvg('arrow-right')}</span>` : '';
+
+    let html = `<li class="menu-item ${isDisabled} ${isOpen}" data-key="${item.key}" data-level="${level}">
+      <div class="menu-item__label" data-key="${item.key}">
+        ${icon}
+        <span class="menu-item__text">${item.label}</span>
+        ${badge}
+        ${arrow}
+      </div>`;
+
+    if (hasChildren && !collapsed) {
+      if (mode === 'horizontal' || popup) {
+        const popupClass = popup ? 'submenu-popup' : 'submenu';
+        html += `<ul class="${popupClass}">`;
+        item.children.forEach(child => { html += renderItem(child, level + 1); });
+        html += `</ul>`;
+      } else {
+        html += `<ul class="submenu">`;
+        item.children.forEach(child => { html += renderItem(child, level + 1); });
+        html += `</ul>`;
+      }
+    }
+    html += `</li>`;
+    return html;
+  }
+
+  data.forEach(item => { html += renderItem(item); });
+  html += `</ul>`;
+  return html;
+}
+
+// 初始化
+document.getElementById('m1').innerHTML = renderMenu(MENU_DATA, { expandKeys: ['system'], trigger: 'click' });
+document.getElementById('m2').innerHTML = renderMenu(MENU_DATA, { expandLevel: 'all', trigger: 'click' });
+document.getElementById('m3').innerHTML = renderMenu(MENU_DATA, { expandKeys: ['system'], trigger: 'hover' });
+document.getElementById('m4').innerHTML = renderMenu(MENU_DATA, { dark: true, expandKeys: ['system'] });
+document.getElementById('m5a').innerHTML = renderMenu(MENU_DATA, { expandKeys: ['system'] });
+document.getElementById('m5b').innerHTML = renderMenu(MENU_DATA, { collapsed: true });
+document.getElementById('m7').innerHTML = renderMenu(MENU_DATA, { mode: 'horizontal', expandKeys: ['system'], trigger: 'click' });
+document.getElementById('m8').innerHTML = renderMenu(MENU_DATA, { mode: 'horizontal', expandKeys: ['system'], trigger: 'hover' });
+document.getElementById('m9').innerHTML = renderMenu(MENU_DATA, { mode: 'horizontal', dark: true, trigger: 'hover' });
+document.getElementById('m10').innerHTML = renderMenu(MENU_DATA, { mode: 'horizontal', popup: true });
+document.getElementById('m11a').innerHTML = renderMenu(THREE_LEVEL_DATA, { expandLevel: 'all' });
+document.getElementById('m12').innerHTML = renderMenu(BADGE_DATA, { expandKeys: ['system'] });
+document.getElementById('m13').innerHTML = renderMenu(DIVIDER_DATA, { expandKeys: ['system'] });
+document.getElementById('m14').innerHTML = renderMenu(DISABLED_DATA);
+document.getElementById('m15').innerHTML = renderMenu(MENU_DATA, { accordion: true, expandKeys: ['system'] });
+
+// 混合场景
+document.getElementById('m16a').innerHTML = renderMenu(MENU_DATA, { dark: true, expandKeys: ['system'] });
+document.getElementById('m16b').innerHTML = renderMenu(MENU_DATA, { mode: 'horizontal' });
+
+// 横向菜单专题 8 个
+document.getElementById('h1').innerHTML = renderMenu(MENU_DATA, { mode: 'horizontal', trigger: 'hover' });
+document.getElementById('h2').innerHTML = renderMenu(MENU_DATA, { mode: 'horizontal', dark: true, trigger: 'hover' });
+document.getElementById('h3').innerHTML = renderMenu(BADGE_DATA, { mode: 'horizontal', trigger: 'hover' });
+document.getElementById('h4').innerHTML = renderMenu(MENU_DATA, { mode: 'horizontal', trigger: 'hover' });
+document.getElementById('h5').innerHTML = renderMenu(MENU_DATA, { mode: 'horizontal', popup: true });
+document.getElementById('h6').innerHTML = renderMenu(MENU_DATA, { mode: 'horizontal', trigger: 'hover', expandKeys: ['system'] });
+document.getElementById('h7').innerHTML = renderMenu(DIVIDER_DATA, { mode: 'horizontal', trigger: 'hover' });
+document.getElementById('h8').innerHTML = renderMenu(MENU_DATA, { mode: 'horizontal', trigger: 'hover' });
+
+// 事件
+const log = document.getElementById('log');
+
+document.querySelectorAll('.section__body').forEach(container => {
+  container.addEventListener('click', e => {
+    const label = e.target.closest('.menu-item__label');
+    if (!label) return;
+
+    const key = label.dataset.key;
+    const item = label.closest('.menu-item');
+    const menu = item.closest('.menu');
+    const mode = menu.dataset.mode;
+    const trigger = menu.dataset.trigger;
+    const expandLevel = menu.dataset.expandLevel;
+    const accordion = menu.dataset.accordion === 'true';
+
+    if (item.classList.contains('is-disabled')) {
+      log.textContent = `✕ 禁用: ${key}`;
+      return;
+    }
+
+    const hasSubmenu = item.querySelector('.submenu, .submenu-popup');
+    if (hasSubmenu && mode !== 'horizontal') {
+      if (trigger === 'click' || expandLevel === 'current') {
+        if (accordion) {
+          menu.querySelectorAll('.menu-item.is-open').forEach(s => { if (s !== item) s.classList.remove('is-open'); });
+        }
+        item.classList.toggle('is-open');
+      }
+    }
+
+    menu.querySelectorAll('.menu-item.is-active').forEach(el => el.classList.remove('is-active'));
+    item.classList.add('is-active');
+    log.textContent = `✓ select: ${key}`;
+  });
+
+  // hover 模式
+  container.addEventListener('mouseenter', e => {
+    const label = e.target.closest('.menu-item__label');
+    if (!label) return;
+    const item = label.closest('.menu-item');
+    const menu = item.closest('.menu');
+    const trigger = menu.dataset.trigger;
+    const hasSubmenu = item.querySelector('.submenu');
+
+    if (trigger === 'hover' && hasSubmenu) {
+      item.classList.add('is-open');
+    }
+  });
+
+  container.addEventListener('mouseleave', e => {
+    const label = e.target.closest('.menu-item__label');
+    if (!label) return;
+    const item = label.closest('.menu-item');
+    const menu = item.closest('.menu');
+    const trigger = menu.dataset.trigger;
+    const hasSubmenu = item.querySelector('.submenu');
+
+    if (trigger === 'hover' && hasSubmenu) {
+      item.classList.remove('is-open');
+    }
+  });
+});
+</script>
+</body>
+</html>
