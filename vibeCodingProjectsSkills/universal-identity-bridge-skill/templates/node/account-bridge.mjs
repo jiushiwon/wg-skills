@@ -1,14 +1,14 @@
 /**
  * account-bridge.mjs —— 服务端桥接客户端（Node / 任意语言参考实现）
  *
- * 用途：非 Java 项目（Node / Python / Go）接入账户体系时的参考实现。
+ * 用途：Node.js 接入账户体系时的参考实现；Go/Python 目前仅提供契约，不复用本文件冒充 SDK。
  *       只依赖 Web 标准 fetch，Node 18+ 可直接运行。
  *
  * 两种身份（对齐 universal-login-api 2026-09-28 版设计）：
  *   - 应用身份：api_key + api_secret → 对 /api/open/** 做 HmacSHA256 签名（server-to-server）
  *   - 用户身份：宿主 accessToken → 调 /api/apps/**、/api/bind/**（必须由真人登录换取）
  *
- * 红线（见 references/ai-bridge.md）：
+ * 红线（见 references/ai-governance.md）：
  *   1. 本文件不得出现在前端构建产物里
  *   2. api_secret 不得硬编码、不得写日志、不得提交仓库
  *   3. 不得用它伪造用户身份（用户身份必须真人登录换 token）

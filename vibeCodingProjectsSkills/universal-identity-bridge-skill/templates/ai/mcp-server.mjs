@@ -9,7 +9,7 @@
  *   - 应用身份：api_key + api_secret，对 /api/open/** 做 HmacSHA256 签名
  *   - 用户身份：宿主 accessToken，调 /api/apps/** 与 /api/bind/**（必须由真人登录换取）
  *
- * 红线：见 ../references/ai-bridge.md —— 本 server 不提供"伪造用户 token"的工具。
+ * 红线：见 ../references/ai-governance.md —— 本 server 不提供"伪造用户 token"的工具。
  *
  * ── 安装 ────────────────────────────────────────────────────────────
  *   cd templates/ai

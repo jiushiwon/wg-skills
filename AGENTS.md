@@ -262,7 +262,8 @@ wg-skills/
 │   │
 │   ├── vibeCodingProjectsSkills/            # 🎯 项目级技能（开箱即用项目骨架）
 │   │   ├── vue-admin-skill/                # Vue3 管理后台项目
-│   │   └── sse-agent-skill/                # SSE Agent 项目
+│   │   ├── sse-agent-skill/                # SSE Agent 项目
+│   │   └── universal-identity-bridge-skill/ # 统一身份接入编排（Java 先行，Go/Python 预留）
 │   │
 │
 └── others/                            # 🧰 板块二：其他领域工具

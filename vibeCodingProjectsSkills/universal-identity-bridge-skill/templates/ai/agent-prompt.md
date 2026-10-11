@@ -16,7 +16,7 @@
 
 - 契约：`<PROJECT>/references/api-contract.md`
 - 表结构：`<PROJECT>/references/table-schema.md`
-- 桥接协议与红线：`<PROJECT>/references/ai-bridge.md`
+- AI 治理与红线：`<PROJECT>/references/ai-governance.md`
 
 ### 硬性规则
 
@@ -75,8 +75,9 @@
 
 2. 目标项目的技术栈
    [ ] Vue 3        → templates/frontend/
-   [ ] Spring Boot  → templates/backend/
-   [ ] 其他         → 走 HTTP，参考 templates/backend/account-bridge.mjs
+   [ ] Spring Boot  → templates/java/
+   [ ] Node.js      → 参考 templates/node/account-bridge.mjs
+   [ ] Go / Python  → 仅按 references/api-contract.md 实现，不宣称存在 SDK
 ```
 
 ---

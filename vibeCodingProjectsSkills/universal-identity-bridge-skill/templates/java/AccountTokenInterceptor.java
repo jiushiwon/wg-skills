@@ -1,4 +1,4 @@
-// Derived from: universal-login-bridge-skill/templates/backend/AccountTokenInterceptor.java
+// Derived from: universal-identity-bridge-skill/templates/java/AccountTokenInterceptor.java
 //
 // 接入侧身份校验模板 —— 对齐 universal-login-api 2026-09-28 版设计。
 //

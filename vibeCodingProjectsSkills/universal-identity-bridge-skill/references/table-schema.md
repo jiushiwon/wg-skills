@@ -207,7 +207,7 @@ WHERE code = ? AND status = 0
 |---------|-----------|
 | 多一个菜单 | `{prefix}_sys_menu` 插一行（`M` 级，填 `path` + `component`） |
 | 让某角色看到 | 「角色-菜单」关联表插一行 |
-| 按钮级权限 | `{prefix}_sys_menu` 插一行 `menu_type='B'`，`path`/`component` 为 `NULL`，填 `permission` |
+| 按钮级权限 | `{prefix}_sys_menu` 插一行 `menu_type='F'`，`path`/`component` 为 `NULL`，填 `permission` |
 | 数据可见范围 | 宿主 `{prefix}_sys_role.data_scope` |
 | 用户归属部门 | `{prefix}_sys_user.org_id` |
 
