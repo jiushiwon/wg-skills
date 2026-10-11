@@ -67,3 +67,35 @@
 | 响应信封 | `{code,message,data}` |
 | 分页字段 | `list`（不是 items） |
 | `/api/posts`、`/api/bind` | 裸数组（前端直接赋值，不取 `.list`） |
+| 前端 33 个权限码 | ⊆ 后端 `AuthPermsAll` 38 个（后端多出的是 `system:tenant:*` 与 `system:user:assign-post`） |
+| `/api/products` | **前端有、后端无** —— Java 同样没实现，属历史遗留，不要为它新建接口 |
+
+## 补充：数据权限四档端到端验证场景
+
+四档只测 super_admin(ALL) 和普通用户 403 是**不够的**，要造出能互相区分的场景：
+
+1. 建一个**独立根组织**「外部合作部」（`parentId=null`，不在总公司子树下）
+   —— 这是区分 `ALL` 与 `DEPT_AND_BELOW` 的关键，否则两者结果完全相同
+2. 建 4 个角色，各绑 `system:user:list` 菜单：`ds_all`(ALL) / `ds_below`(DEPT_AND_BELOW) /
+   `ds_only`(DEPT_ONLY) / `ds_self`(SELF_ONLY)
+3. 建 7 个用户（密码统一 admin123）：
+
+| 用户 | 组织 | 角色 | 期望 `GET /api/users?pageSize=100` 的 total |
+|------|------|------|------|
+| `u_all` | 总公司 | ds_all | **10** |
+| `u_below` | 总公司 | ds_below | **9**（排除外部合作部的 `u_out`） |
+| `u_dept` | 研发部 | ds_only | **4** |
+| `u_self` | 研发部 | ds_self | **1** |
+
+（另建 `u_dev2`(研发部)、`u_mkt1`(市场部)、`u_out`(外部合作部) 作填充，加上种子 3 个共 10 人）
+
+## 补充：树结构回归断言（必测，见 SKILL.md 契约红线 8）
+
+| 断言 | 期望 |
+|------|------|
+| `GET /api/orgs` 总公司 children | `['研发部','市场部','财务部']` |
+| `GET /api/auth/menus` 节点总数 | **37**（3 目录 + 8 页面 + 26 按钮） |
+| 系统管理 children | 6 个页面 |
+| 用户管理 children | 6 个按钮，含 `system:user:assign-post` |
+
+只断言 `code:0` 会漏掉"子树静默丢失"——按钮丢了接口依然返回 200。

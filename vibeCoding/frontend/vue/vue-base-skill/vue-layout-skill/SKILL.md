@@ -1,17 +1,15 @@
 ---
 name: vue-layout-skill
-description: Vue 3 管理端布局技能，提供 AppLayout 骨架（侧边栏菜单 + 顶栏 + 内容区）。触发词："vue 布局"、"vue-layout"、"管理端布局"、"admin 布局"、"侧边栏"、"后台框架"。
+description: Vue 3 管理端布局技能，提供 7 种布局模式。触发词："vue 布局"、"vue-layout"、"管理端布局"、"admin 布局"、"后台框架"。
 ---
 
-# Vue Layout Skill
+# vue-layout-skill
 
 > **容器原则**：布局组件是项目的最外层骨架，所有页面都在 AppMain 内渲染
 > **零 HTML5 标签**：菜单项、面包屑等全部用 `<div>` + CSS3 实现
 > **Token 驱动**：所有尺寸、颜色、间距必须使用 `var(--*)` 变量
->
-> **联动 vue-menu-skill**：侧边栏菜单必须引用 `<base-menu>`，禁止自行实现 MenuItem
 
-管理端标准布局，对标 Element Plus 的 `el-container + el-aside + el-header + el-main`，全部原生实现。
+管理端标准布局，支持 7 种布局模式，全部原生实现。
 
 ## 引用组件
 
@@ -20,32 +18,22 @@ description: Vue 3 管理端布局技能，提供 AppLayout 骨架（侧边栏�
 | vue-theme-skill | 设计 Token（颜色/尺寸/间距） | ✅ |
 | vue-menu-skill | 菜单组件（侧边栏/顶部菜单） | ✅ |
 | vue-card-skill | 容器包裹 | ✅ |
-| vue-icon-skill | 菜单图标 | ✅ |
+| vue-icon-skill | 图标渲染 | ✅ |
 | vue-badge-skill | 菜单徽标 | ✅ |
-| vue-dropdown-skill | 用户头像下拉菜单 | ✅ |
-| vue-breadcrumb-skill | 面包屑导航 | ⏳ 待实现 |
+| vue-dropdown-skill | 用户下拉菜单 | ✅ |
+| vue-breadcrumb-skill | 面包屑导航 | ✅ |
 
-## 布局结构
+## 7 种布局模式
 
-```
-┌─────────────────────────────────────────────┐
-│ AppLayout                                   │
-│ ┌──────────┬──────────────────────────────┐ │
-│ │          │ AppHeader                    │ │
-│ │ AppSidebar│ ┌──────────────────────────┐│ │
-│ │          │ │ 折叠按钮 | 面包屑 | 用户  ││ │
-│ │ ┌──────┐ │ └──────────────────────────┘│ │
-│ │ │ Logo │ │                              │ │
-│ │ ├──────┤ │ AppMain                      │ │
-│ │ │      │ │ ┌──────────────────────────┐│ │
-│ │ │ 菜单 │ │ │                          ││ │
-│ │ │      │ │ │    <router-view />       ││ │
-│ │ │      │ │ │                          ││ │
-│ │ │      │ │ │                          ││ │
-│ │ └──────┘ │ └──────────────────────────┘│ │
-│ └──────────┴──────────────────────────────┘ │
-└─────────────────────────────────────────────┘
-```
+| 模式 | 布局 | 说明 |
+|------|------|------|
+| `sidebar` | 侧边栏用户 | 左侧侧边栏，用户在侧边栏内，顶部有面包屑+用户 |
+| `horizontal` | 横向顶部 | Logo 在左，菜单在顶部横排，用户在右上 |
+| `topbar` | 顶部双栏 | 顶部两行：Logo+用户 / 导航菜单 |
+| `sidebar-user-bottom` | 用户在菜单下 | 用户在侧边栏菜单下方，顶部仅面包屑 |
+| `mix` | 混合模式 | 顶部导航 + 左侧图标侧边栏 |
+| `sidebar-right` | 侧边栏在右 | 菜单在右侧显示 |
+| `header-only` | 只有顶栏 | 无侧边栏，仅顶部导航 |
 
 ## 组件层级
 
@@ -65,7 +53,7 @@ AppLayout (L0 布局容器)
 
 | 组件 | 文件 | 说明 |
 |------|------|------|
-| AppLayout | AppLayout.vue | 最外层容器，管理 sidebar 折叠状态 |
+| AppLayout | AppLayout.vue | 最外层容器，管理折叠状态和布局模式 |
 | AppSidebar | AppSidebar.vue | 侧边栏（Logo + 菜单 + 折叠按钮） |
 | AppHeader | AppHeader.vue | 顶栏（折叠按钮 + 面包屑 + 用户下拉） |
 | AppMain | AppMain.vue | 内容区（router-view + 过渡动画） |
@@ -76,11 +64,13 @@ AppLayout (L0 布局容器)
 
 ```vue
 <script setup lang="ts">
-import { ref, provide } from 'vue';
+import { ref, provide, computed } from 'vue';
 import AppSidebar from './AppSidebar.vue';
 import AppHeader from './AppHeader.vue';
 import AppMain from './AppMain.vue';
 import './styles.css';
+
+type LayoutMode = 'sidebar' | 'horizontal' | 'topbar' | 'sidebar-user-bottom' | 'mix' | 'sidebar-right' | 'header-only';
 
 interface MenuItem {
   key: string;
@@ -92,11 +82,13 @@ interface MenuItem {
 }
 
 interface Props {
+  /** 布局模式 */
+  mode?: LayoutMode;
   /** 菜单数据 */
   menus?: MenuItem[];
   /** Logo 文字 */
   logo?: string;
-  /** Logo 图标（emoji 或文字） */
+  /** Logo 图标（使用 vue-icon-skill 生成） */
   logoIcon?: string;
   /** 默认折叠 */
   defaultCollapsed?: boolean;
@@ -115,13 +107,14 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  mode: 'sidebar',
   menus: () => [],
   logo: 'Admin',
-  logoIcon: '⚡',
+  logoIcon: 'logo',
   defaultCollapsed: false,
   sidebarWidth: 220,
   collapsedWidth: 64,
-  headerHeight: 56,
+  headerHeight: 48,
   breadcrumbs: () => [],
   username: 'Admin',
 });
@@ -134,9 +127,14 @@ const emit = defineEmits<{
 
 const collapsed = ref(props.defaultCollapsed);
 
-// 通过 provide 向子组件传递折叠状态
-provide('layoutCollapsed', collapsed);
-provide('layoutSidebarWidth', () => collapsed.value ? props.collapsedWidth : props.sidebarWidth);
+// 布局类名
+const layoutClass = computed(() => ({
+  'is-collapsed': collapsed.value,
+  [`layout-${props.mode}`]: true,
+}));
+
+// 侧边栏位置
+const sidebarPosition = computed(() => props.mode === 'sidebar-right' ? 'right' : 'left');
 
 function toggleCollapse() {
   collapsed.value = !collapsed.value;
@@ -150,31 +148,146 @@ function onMenuClick(item: MenuItem) {
 function onLogout() {
   emit('logout');
 }
+
+provide('layoutCollapsed', collapsed);
+provide('layoutSidebarWidth', () => collapsed.value ? props.collapsedWidth : props.sidebarWidth);
 </script>
 
 <template>
-  <div class="app-layout" :class="{ 'is-collapsed': collapsed }">
+  <div class="app-layout" :class="layoutClass">
+    <!-- 混合模式：顶部导航 -->
+    <div v-if="mode === 'mix'" class="app-topbar">
+      <div class="app-topbar__logo">
+        <slot name="logo-icon">
+          <div class="app-topbar__logo-icon">
+            <base-icon :name="logoIcon" />
+          </div>
+        </slot>
+        <span class="app-topbar__logo-text">{{ logo }}</span>
+      </div>
+      <div class="app-topbar__menu">
+        <base-menu :data="menus" mode="horizontal" @select="onMenuClick" />
+      </div>
+      <div class="app-topbar__right">
+        <base-dropdown :trigger="['click']">
+          <template #trigger>
+            <div class="app-header__user">
+              <div class="app-header__avatar">
+                <img v-if="avatar" :src="avatar" alt="avatar" />
+                <span v-else>{{ username.charAt(0) }}</span>
+              </div>
+              <span class="app-header__username">{{ username }}</span>
+            </div>
+          </template>
+          <div class="app-header__dropdown-menu">
+            <div class="app-header__dropdown-item">个人中心</div>
+            <div class="app-header__dropdown-item">账号设置</div>
+            <div class="app-header__dropdown-divider"></div>
+            <div class="app-header__dropdown-item is-danger" @click="onLogout">退出登录</div>
+          </div>
+        </base-dropdown>
+      </div>
+    </div>
+
+    <!-- 顶部双栏模式 -->
+    <div v-if="mode === 'topbar'" class="app-topbar app-topbar--double">
+      <div class="app-topbar__top">
+        <div class="app-topbar__logo">
+          <slot name="logo-icon">
+            <div class="app-topbar__logo-icon">
+              <base-icon :name="logoIcon" />
+            </div>
+          </slot>
+          <span class="app-topbar__logo-text">{{ logo }}</span>
+        </div>
+        <div class="app-topbar__right">
+          <base-dropdown :trigger="['click']">
+            <template #trigger>
+              <div class="app-header__user">
+                <div class="app-header__avatar">
+                  <img v-if="avatar" :src="avatar" alt="avatar" />
+                  <span v-else>{{ username.charAt(0) }}</span>
+                </div>
+                <span class="app-header__username">{{ username }}</span>
+              </div>
+            </template>
+            <div class="app-header__dropdown-menu">
+              <div class="app-header__dropdown-item">个人中心</div>
+              <div class="app-header__dropdown-item is-danger" @click="onLogout">退出登录</div>
+            </div>
+          </base-dropdown>
+        </div>
+      </div>
+      <div class="app-topbar__nav">
+        <base-menu :data="menus" mode="horizontal" @select="onMenuClick" />
+      </div>
+    </div>
+
+    <!-- 横向顶部模式 -->
+    <div v-if="mode === 'horizontal'" class="app-topbar app-topbar--single">
+      <div class="app-topbar__logo">
+        <slot name="logo-icon">
+          <div class="app-topbar__logo-icon">
+            <base-icon :name="logoIcon" />
+          </div>
+        </slot>
+        <span class="app-topbar__logo-text">{{ logo }}</span>
+      </div>
+      <div class="app-topbar__menu">
+        <base-menu :data="menus" mode="horizontal" @select="onMenuClick" />
+      </div>
+      <div class="app-topbar__right">
+        <base-dropdown :trigger="['click']">
+          <template #trigger>
+            <div class="app-header__user">
+              <div class="app-header__avatar">
+                <img v-if="avatar" :src="avatar" alt="avatar" />
+                <span v-else>{{ username.charAt(0) }}</span>
+              </div>
+              <span class="app-header__username">{{ username }}</span>
+            </div>
+          </template>
+          <div class="app-header__dropdown-menu">
+            <div class="app-header__dropdown-item">个人中心</div>
+            <div class="app-header__dropdown-item is-danger" @click="onLogout">退出登录</div>
+          </div>
+        </base-dropdown>
+      </div>
+    </div>
+
+    <!-- 侧边栏 -->
     <AppSidebar
+      v-if="mode !== 'header-only'"
       :menus="menus"
       :logo="logo"
       :logo-icon="logoIcon"
       :width="sidebarWidth"
       :collapsed-width="collapsedWidth"
       :collapsed="collapsed"
+      :position="sidebarPosition"
+      :mode="mode"
+      :username="username"
+      :avatar="avatar"
       @menu-click="onMenuClick"
       @toggle-collapse="toggleCollapse"
+      @logout="onLogout"
     />
-    <div class="app-layout__right" :style="{ marginLeft: (collapsed ? collapsedWidth : sidebarWidth) + 'px' }">
+
+    <!-- 主内容区 -->
+    <div class="app-layout__right" :class="{ 'is-sidebar-right': mode === 'sidebar-right' }">
       <AppHeader
+        v-if="mode !== 'topbar' && mode !== 'horizontal' && mode !== 'mix'"
         :height="headerHeight"
         :collapsed="collapsed"
         :breadcrumbs="breadcrumbs"
         :username="username"
         :avatar="avatar"
+        :show-toggle="mode === 'sidebar' || mode === 'sidebar-user-bottom'"
+        :show-user="mode === 'sidebar'"
         @toggle-collapse="toggleCollapse"
         @logout="onLogout"
       />
-      <AppMain :header-height="headerHeight">
+      <AppMain :header-height="mode === 'topbar' ? 110 : (mode === 'mix' ? 48 : headerHeight)">
         <slot />
       </AppMain>
     </div>
@@ -186,8 +299,10 @@ function onLogout() {
 
 ```vue
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import BaseMenu from 'vue-menu-skill/components/BaseMenu.vue';
+
+type LayoutMode = 'sidebar' | 'horizontal' | 'topbar' | 'sidebar-user-bottom' | 'mix' | 'sidebar-right' | 'header-only';
 
 interface MenuItemData {
   key: string;
@@ -205,34 +320,58 @@ interface Props {
   width: number;
   collapsedWidth: number;
   collapsed: boolean;
+  position?: 'left' | 'right';
+  mode?: LayoutMode;
+  username?: string;
+  avatar?: string;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  position: 'left',
+  mode: 'sidebar',
+  username: 'Admin',
+});
+
 const emit = defineEmits<{
   'menu-click': [item: MenuItemData];
   'toggle-collapse': [];
+  'logout': [];
 }>();
 
 const activeKey = ref('');
+const showUserDropdown = ref(false);
+
+const sidebarStyle = computed(() => ({
+  width: props.collapsed ? props.collapsedWidth + 'px' : props.width + 'px',
+  left: props.position === 'left' ? '0' : 'auto',
+  right: props.position === 'right' ? '0' : 'auto',
+}));
 
 function handleSelect(item: MenuItemData) {
   emit('menu-click', item);
 }
+
+function toggleUserDropdown() {
+  showUserDropdown.value = !showUserDropdown.value;
+}
 </script>
 
 <template>
-  <aside class="app-sidebar" :style="{
-    width: collapsed ? collapsedWidth + 'px' : width + 'px',
-  }">
+  <div class="app-sidebar" :class="{ 'is-collapsed': collapsed, 'is-right': position === 'right' }" :style="sidebarStyle">
     <!-- Logo 区 -->
     <div class="app-sidebar__logo" :class="{ 'is-collapsed': collapsed }">
-      <span class="app-sidebar__logo-icon">{{ logoIcon }}</span>
+      <slot name="logo-icon">
+        <div class="app-sidebar__logo-icon">
+          <base-icon :name="logoIcon" />
+        </div>
+      </slot>
       <span v-if="!collapsed" class="app-sidebar__logo-text">{{ logo }}</span>
     </div>
 
     <!-- 菜单区：引用 vue-menu-skill -->
     <div class="app-sidebar__menu">
       <BaseMenu
+        v-if="mode !== 'mix'"
         :data="menus"
         mode="vertical"
         :active-key="activeKey"
@@ -242,11 +381,57 @@ function handleSelect(item: MenuItemData) {
       />
     </div>
 
-    <!-- 折叠按钮 -->
-    <div class="app-sidebar__collapse-btn" @click="emit('toggle-collapse')">
-      <span :style="{ transform: collapsed ? 'rotate(180deg)' : '' }">◀</span>
+    <!-- 用户在侧边栏（sidebar 模式） -->
+    <div v-if="mode === 'sidebar'" class="app-sidebar__user" @click="toggleUserDropdown">
+      <div class="app-sidebar__user-avatar">
+        <img v-if="avatar" :src="avatar" alt="avatar" />
+        <span v-else>{{ username?.charAt(0) }}</span>
+      </div>
+      <div v-if="!collapsed" class="app-sidebar__userinfo">
+        <div class="app-sidebar__username">{{ username }}</div>
+        <div class="app-sidebar__role">超级管理员</div>
+      </div>
+      <!-- 下拉菜单 -->
+      <div v-if="showUserDropdown" class="app-sidebar__dropdown">
+        <div class="app-sidebar__dropdown-item">个人中心</div>
+        <div class="app-sidebar__dropdown-item">账号设置</div>
+        <div class="app-sidebar__dropdown-divider"></div>
+        <div class="app-sidebar__dropdown-item is-danger" @click.stop="emit('logout')">退出登录</div>
+      </div>
     </div>
-  </aside>
+
+    <!-- 用户在菜单下方（sidebar-user-bottom 模式） -->
+    <div v-if="mode === 'sidebar-user-bottom'" class="app-sidebar__user-bottom" @click="toggleUserDropdown">
+      <div class="app-sidebar__user-avatar">
+        <img v-if="avatar" :src="avatar" alt="avatar" />
+        <span v-else>{{ username?.charAt(0) }}</span>
+      </div>
+      <div class="app-sidebar__userinfo">
+        <div class="app-sidebar__username">{{ username }}</div>
+        <div class="app-sidebar__role">超级管理员</div>
+      </div>
+      <div v-if="showUserDropdown" class="app-sidebar__dropdown">
+        <div class="app-sidebar__dropdown-item">个人中心</div>
+        <div class="app-sidebar__dropdown-item is-danger" @click.stop="emit('logout')">退出登录</div>
+      </div>
+    </div>
+
+    <!-- 混合模式：图标侧边栏 -->
+    <div v-if="mode === 'mix'" class="app-sidebar__menu app-sidebar__menu--icon">
+      <BaseMenu
+        :data="menus"
+        mode="vertical"
+        :collapsed="true"
+        :collapsible="false"
+        @select="handleSelect"
+      />
+    </div>
+
+    <!-- 折叠按钮 -->
+    <div v-if="mode === 'sidebar'" class="app-sidebar__toggle" @click="emit('toggle-collapse')">
+      <base-icon :name="collapsed ? 'expand' : 'collapse'" />
+    </div>
+  </div>
 </template>
 ```
 
@@ -255,8 +440,12 @@ function handleSelect(item: MenuItemData) {
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue';
+import BaseDropdown from 'vue-dropdown-skill/components/BaseDropdown.vue';
 
-interface Breadcrumb { label: string; path?: string }
+interface Breadcrumb {
+  label: string;
+  path?: string;
+}
 
 interface Props {
   height: number;
@@ -264,9 +453,16 @@ interface Props {
   breadcrumbs: Breadcrumb[];
   username: string;
   avatar?: string;
+  showToggle?: boolean;
+  showUser?: boolean;
 }
 
-defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  breadcrumbs: () => [],
+  showToggle: true,
+  showUser: true,
+});
+
 const emit = defineEmits<{
   'toggle-collapse': [];
   'logout': [];
@@ -276,11 +472,11 @@ const showDropdown = ref(false);
 </script>
 
 <template>
-  <header class="app-header" :style="{ height: height + 'px' }">
-    <!-- 左侧：折叠按钮 + 面包屑 -->
+  <div class="app-header" :style="{ height: height + 'px' }">
+    <!-- 左侧 -->
     <div class="app-header__left">
-      <div class="app-header__collapse-btn" @click="emit('toggle-collapse')">
-        <span :class="{ 'is-collapsed': collapsed }">☰</span>
+      <div v-if="showToggle" class="app-header__toggle" @click="emit('toggle-collapse')">
+        <base-icon :name="collapsed ? 'menu-unfold' : 'menu-fold'" />
       </div>
       <div v-if="breadcrumbs.length" class="app-header__breadcrumbs">
         <template v-for="(crumb, i) in breadcrumbs" :key="crumb.label">
@@ -293,28 +489,27 @@ const showDropdown = ref(false);
     </div>
 
     <!-- 右侧：用户下拉 -->
-    <div class="app-header__right">
-      <div class="app-header__user" @click="showDropdown = !showDropdown">
-        <div v-if="avatar" class="app-header__avatar">
-          <img :src="avatar" alt="avatar" />
+    <div v-if="showUser" class="app-header__right">
+      <BaseDropdown v-model:open="showDropdown" :trigger="['click']">
+        <template #trigger>
+          <div class="app-header__user" @click="showDropdown = !showDropdown">
+            <div class="app-header__avatar">
+              <img v-if="avatar" :src="avatar" alt="avatar" />
+              <span v-else>{{ username?.charAt(0) }}</span>
+            </div>
+            <span class="app-header__username">{{ username }}</span>
+            <span class="app-header__arrow">▼</span>
+          </div>
+        </template>
+        <div class="app-header__dropdown-menu">
+          <div class="app-header__dropdown-item">个人中心</div>
+          <div class="app-header__dropdown-item">账号设置</div>
+          <div class="app-header__dropdown-divider"></div>
+          <div class="app-header__dropdown-item is-danger" @click="emit('logout')">退出登录</div>
         </div>
-        <div v-else class="app-header__avatar app-header__avatar--text">
-          {{ username.charAt(0).toUpperCase() }}
-        </div>
-        <span class="app-header__username">{{ username }}</span>
-        <span class="app-header__arrow">▾</span>
-      </div>
-      <!-- 下拉菜单 -->
-      <div v-if="showDropdown" class="app-header__dropdown">
-        <div class="app-header__dropdown-item">个人中心</div>
-        <div class="app-header__dropdown-item">设置</div>
-        <div class="app-header__dropdown-divider"></div>
-        <div class="app-header__dropdown-item app-header__dropdown-item--danger" @click="emit('logout')">
-          退出登录
-        </div>
-      </div>
+      </BaseDropdown>
     </div>
-  </header>
+  </div>
 </template>
 ```
 
@@ -326,42 +521,43 @@ interface Props {
   headerHeight: number;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 </script>
 
 <template>
-  <main class="app-main" :style="{ paddingTop: headerHeight + 'px' }">
+  <div class="app-main" :style="{ paddingTop: headerHeight + 'px' }">
     <div class="app-main__content">
       <slot />
     </div>
-  </main>
+  </div>
 </template>
 ```
 
 ## styles.css
 
-> **注意**：菜单样式由 vue-menu-skill 接管，本文件仅保留布局相关样式。
+> **所有样式必须引用 vue-theme-skill Token，禁止自定义变量**
 
 ```css
 /* ==================== AppLayout ==================== */
 .app-layout {
   min-height: 100vh;
   background: var(--color-bg);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
 }
 
-.app-layout__right {
-  transition: margin-left 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+.app-layout.is-collapsed .app-layout__right {
+  margin-left: var(--collapsed-width, 64px);
+}
+
+.app-layout.is-sidebar-right .app-layout__right {
+  margin-right: var(--sidebar-width, 220px);
+  margin-left: 0;
 }
 
 /* ==================== AppSidebar ==================== */
 .app-sidebar {
   position: fixed;
   top: 0;
-  left: 0;
   bottom: 0;
   background: var(--color-surface);
   border-right: 1px solid var(--color-border);
@@ -370,6 +566,15 @@ defineProps<Props>();
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+
+.app-sidebar.is-right {
+  border-right: none;
+  border-left: 1px solid var(--color-border);
+}
+
+.app-sidebar.is-collapsed {
+  width: var(--collapsed-width, 64px);
 }
 
 .app-sidebar__logo {
@@ -385,10 +590,17 @@ defineProps<Props>();
 
 .app-sidebar__logo.is-collapsed {
   padding: 0;
+  justify-content: center;
 }
 
 .app-sidebar__logo-icon {
-  font-size: var(--font-xl);
+  width: 24px;
+  height: 24px;
+  background: var(--color-primary);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
 }
 
@@ -403,21 +615,117 @@ defineProps<Props>();
 .app-sidebar__menu {
   flex: 1;
   overflow-y: auto;
-  overflow-x: hidden;
   padding: var(--space-2) 0;
 }
 
-.app-sidebar__menu::-webkit-scrollbar {
-  width: 4px;
+.app-sidebar__menu--icon .menu-item__label {
+  justify-content: center;
+  padding: 0;
 }
 
-.app-sidebar__menu::-webkit-scrollbar-thumb {
+.app-sidebar__menu--icon .menu-item__text,
+.app-sidebar__menu--icon .menu-item__arrow {
+  display: none;
+}
+
+.app-sidebar__user {
+  padding: var(--space-4);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+  position: relative;
+}
+
+.app-sidebar__user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-inverse);
+  font-size: var(--font-xs);
+  font-weight: var(--weight-semibold);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.app-sidebar__user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.app-sidebar__userinfo {
+  flex: 1;
+  overflow: hidden;
+}
+
+.app-sidebar__username {
+  font-size: var(--font-sm);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-sidebar__role {
+  font-size: var(--font-xs);
+  color: var(--color-text-secondary);
+}
+
+.app-sidebar__user-bottom {
+  margin-top: auto;
+  padding: var(--space-4);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+  position: relative;
+}
+
+.app-sidebar__dropdown {
+  position: absolute;
+  bottom: 100%;
+  left: var(--space-4);
+  right: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-1) 0;
+  margin-bottom: var(--space-2);
+  z-index: 100;
+}
+
+.app-sidebar__dropdown-item {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-sm);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.app-sidebar__dropdown-item:hover {
+  background: var(--color-bg);
+}
+
+.app-sidebar__dropdown-item.is-danger {
+  color: var(--color-danger);
+}
+
+.app-sidebar__dropdown-divider {
+  height: 1px;
   background: var(--color-border);
-  border-radius: 2px;
+  margin: var(--space-1) 0;
 }
 
-.app-sidebar__collapse-btn {
-  height: var(--height-button-md);
+.app-sidebar__toggle {
+  height: var(--height-button-md, 40px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -428,13 +736,76 @@ defineProps<Props>();
   transition: color 0.2s;
 }
 
-.app-sidebar__collapse-btn:hover {
+.app-sidebar__toggle:hover {
   color: var(--color-text);
 }
 
-.app-sidebar__collapse-btn span {
-  font-size: var(--font-xs);
-  transition: transform 0.28s;
+/* ==================== AppTopbar（顶部导航） ==================== */
+.app-topbar {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-4);
+  gap: var(--space-4);
+  height: var(--height-button-lg, 48px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+
+.app-topbar--double {
+  height: 110px;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.app-topbar--double .app-topbar__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.app-topbar--double .app-topbar__nav {
+  padding-top: var(--space-2);
+  display: flex;
+  gap: var(--space-2);
+}
+
+.app-topbar__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.app-topbar__logo-icon {
+  width: 24px;
+  height: 24px;
+  background: var(--color-primary);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-topbar__logo-text {
+  font-size: var(--font-lg);
+  font-weight: var(--weight-semibold);
+}
+
+.app-topbar__menu {
+  flex: 1;
+  display: flex;
+}
+
+.app-topbar__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
 }
 
 /* ==================== AppHeader ==================== */
@@ -460,26 +831,17 @@ defineProps<Props>();
   gap: var(--space-3);
 }
 
-.app-header__collapse-btn {
+.app-header__toggle {
   cursor: pointer;
-  font-size: var(--font-lg);
-  color: var(--color-text);
   padding: var(--space-1);
   border-radius: var(--radius-sm);
-  transition: background 0.2s;
+  color: var(--color-text-secondary);
+  transition: all 0.2s;
 }
 
-.app-header__collapse-btn:hover {
+.app-header__toggle:hover {
   background: var(--color-bg);
-}
-
-.app-header__collapse-btn span {
-  display: inline-block;
-  transition: transform 0.28s;
-}
-
-.app-header__collapse-btn span.is-collapsed {
-  transform: rotate(90deg);
+  color: var(--color-text);
 }
 
 .app-header__breadcrumbs {
@@ -518,11 +880,18 @@ defineProps<Props>();
 }
 
 .app-header__avatar {
-  width: var(--icon-lg);
-  height: var(--icon-lg);
+  width: 28px;
+  height: 28px;
   border-radius: var(--radius-full);
-  overflow: hidden;
+  background: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-inverse);
+  font-size: var(--font-xs);
+  font-weight: var(--weight-semibold);
   flex-shrink: 0;
+  overflow: hidden;
 }
 
 .app-header__avatar img {
@@ -531,37 +900,27 @@ defineProps<Props>();
   object-fit: cover;
 }
 
-.app-header__avatar--text {
-  background: var(--color-primary);
-  color: var(--color-text-inverse);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--font-sm);
-  font-weight: var(--weight-semibold);
-}
-
 .app-header__username {
   font-size: var(--font-sm);
   color: var(--color-text);
 }
 
 .app-header__arrow {
-  font-size: var(--font-xs);
+  font-size: 10px;
   color: var(--color-text-secondary);
 }
 
-.app-header__dropdown {
+.app-header__dropdown-menu {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 4px);
   right: 0;
-  margin-top: var(--space-1);
+  min-width: 160px;
   background: var(--color-surface);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
-  min-width: 140px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
   padding: var(--space-1) 0;
-  z-index: 200;
+  z-index: 100;
 }
 
 .app-header__dropdown-item {
@@ -576,7 +935,7 @@ defineProps<Props>();
   background: var(--color-bg);
 }
 
-.app-header__dropdown-item--danger {
+.app-header__dropdown-item.is-danger {
   color: var(--color-danger);
 }
 
@@ -605,49 +964,112 @@ defineProps<Props>();
 import { AppLayout } from './components/AppLayout';
 
 const menus = [
-  { key: 'dashboard', label: '首页', icon: '📊', path: '/dashboard' },
+  { key: 'dashboard', label: '控制台', icon: 'dashboard', path: '/dashboard' },
   {
-    key: 'system', label: '系统管理', icon: '⚙️',
+    key: 'system', label: '系统管理', icon: 'setting',
     children: [
-      { key: 'user', label: '用户管理', path: '/system/user' },
-      { key: 'role', label: '角色管理', path: '/system/role' },
-      { key: 'menu', label: '菜单管理', path: '/system/menu' },
+      { key: 'user', label: '用户管理', icon: 'user', path: '/system/user' },
+      { key: 'role', label: '角色管理', icon: 'team', path: '/system/role' },
     ],
   },
-  {
-    key: 'business', label: '业务管理', icon: '📦',
-    children: [
-      { key: 'goods', label: '商品管理', path: '/business/goods' },
-      { key: 'order', label: '订单管理', badge: '12', path: '/business/order' },
-    ],
-  },
-  { key: 'settings', label: '系统设置', icon: '🛠️', path: '/settings' },
+  { key: 'order', label: '订单管理', icon: 'order', badge: 5, path: '/order' },
 ];
 
 const breadcrumbs = [
-  { label: '首页' },
+  { label: '首页', path: '/' },
   { label: '系统管理' },
   { label: '用户管理' },
 ];
 
-function onMenuClick(item) {
+function handleMenuClick(item) {
   router.push(item.path);
 }
 
-function onLogout() {
+function handleLogout() {
   // 清除 token + 跳转登录页
 }
 </script>
 
 <template>
+  <!-- 1. 侧边栏用户（默认） -->
   <AppLayout
+    mode="sidebar"
     :menus="menus"
     :breadcrumbs="breadcrumbs"
-    logo="MyAdmin"
-    logo-icon="⚡"
+    logo="考拉搞AI"
+    logo-icon="logo"
     username="Admin"
-    @menu-click="onMenuClick"
-    @logout="onLogout"
+    @menu-click="handleMenuClick"
+    @logout="handleLogout"
+  >
+    <router-view />
+  </AppLayout>
+
+  <!-- 2. 横向顶部 -->
+  <AppLayout
+    mode="horizontal"
+    :menus="menus"
+    logo="考拉搞AI"
+    logo-icon="logo"
+    username="Admin"
+  >
+    <router-view />
+  </AppLayout>
+
+  <!-- 3. 顶部双栏 -->
+  <AppLayout
+    mode="topbar"
+    :menus="menus"
+    logo="考拉搞AI"
+    logo-icon="logo"
+    username="Admin"
+  >
+    <router-view />
+  </AppLayout>
+
+  <!-- 4. 用户在侧边栏菜单下方 -->
+  <AppLayout
+    mode="sidebar-user-bottom"
+    :menus="menus"
+    :breadcrumbs="breadcrumbs"
+    logo="考拉搞AI"
+    logo-icon="logo"
+    username="Admin"
+  >
+    <router-view />
+  </AppLayout>
+
+  <!-- 5. 混合模式 -->
+  <AppLayout
+    mode="mix"
+    :menus="menus"
+    logo="考拉搞AI"
+    logo-icon="logo"
+    username="Admin"
+  >
+    <router-view />
+  </AppLayout>
+
+  <!-- 6. 侧边栏在右 -->
+  <AppLayout
+    mode="sidebar-right"
+    :menus="menus"
+    :breadcrumbs="breadcrumbs"
+    logo="考拉搞AI"
+    logo-icon="logo"
+    username="Admin"
+  >
+    <router-view />
+  </AppLayout>
+
+  <!-- 7. 只有顶栏 -->
+  <AppLayout
+    mode="header-only"
+    :menus="menus"
+    :breadcrumbs="breadcrumbs"
+    logo="考拉搞AI"
+    logo-icon="logo"
+    username="Admin"
   >
     <router-view />
   </AppLayout>
@@ -660,13 +1082,14 @@ function onLogout() {
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
+| mode | `'sidebar' \| 'horizontal' \| 'topbar' \| 'sidebar-user-bottom' \| 'mix' \| 'sidebar-right' \| 'header-only'` | `'sidebar'` | 布局模式 |
 | menus | `MenuItem[]` | `[]` | 菜单数据 |
 | logo | `string` | `'Admin'` | Logo 文字 |
-| logoIcon | `string` | `'⚡'` | Logo 图标 |
+| logoIcon | `string` | `'logo'` | Logo 图标名（vue-icon-skill） |
 | defaultCollapsed | `boolean` | `false` | 默认折叠 |
 | sidebarWidth | `number` | `220` | 侧边栏宽度（px） |
 | collapsedWidth | `number` | `64` | 折叠后宽度（px） |
-| headerHeight | `number` | `56` | 顶栏高度（px） |
+| headerHeight | `number` | `48` | 顶栏高度（px） |
 | breadcrumbs | `Breadcrumb[]` | `[]` | 面包屑 |
 | username | `string` | `'Admin'` | 用户名 |
 | avatar | `string` | - | 头像 URL |
@@ -677,7 +1100,7 @@ function onLogout() {
 interface MenuItem {
   key: string;        // 唯一标识
   label: string;      // 显示文字
-  icon?: string;      // 图标（emoji 或文字）
+  icon?: string;      // 图标名（vue-icon-skill）
   path?: string;      // 路由路径
   badge?: number | string;  // 角标
   children?: MenuItem[];    // 子菜单
@@ -686,11 +1109,14 @@ interface MenuItem {
 
 ## 万能守则
 
--  禁止使用 `<nav>` `<header>` `<aside>` `<main>` 等 HTML5 语义标签（用 `<div>` + class）
--  禁止裸色值 / 裸 px（必须 `var(--*)` Token 变量）
--  禁止混入 Element Plus / Naive UI 的布局组件
--  禁止硬编码侧边栏宽度（必须通过 Props 控制）
--  菜单最多支持 3 级嵌套（超过 3 级说明信息架构有问题）
+- 禁止使用 `<nav>` `<header>` `<aside>` `<main>` 等 HTML5 语义标签（用 `<div>` + class）
+- 禁止裸色值 / 裸 px（必须 `var(--*)` Token 变量）
+- 禁止混入 Element Plus / Naive UI 的布局组件
+- 禁止硬编码侧边栏宽度（必须通过 Props 控制）
+- 菜单最多支持 3 级嵌套
+- **图标必须使用 vue-icon-skill**，禁止 emoji
+- **用户下拉必须使用 vue-dropdown-skill**
+- **侧边栏菜单必须使用 vue-menu-skill**
 
 ## 触发词
 
@@ -701,3 +1127,5 @@ interface MenuItem {
 - "后台框架"
 - "侧边栏"
 - "AppLayout"
+- "顶部导航"
+- "混合布局"

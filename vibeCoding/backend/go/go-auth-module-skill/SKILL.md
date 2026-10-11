@@ -83,6 +83,42 @@ description: 在 Go（Gin + GORM）Web 项目上叠加 RBAC + 组织架构 + 通
 写成 `"glebarez/sqlite"`（少了 `github.com/` 前缀）时，`go mod tidy` 会误判该依赖未被使用而**删掉它**，
 随后编译报 `package glebarez/sqlite is not in std`。
 
+### 8. ★ 树构建必须**自顶向下递归**，禁止「迭代 + 先挂子再收根」
+
+`MenuNodeVO.Children` / `OrgNodeVO.Children` 是 `[]XxxVO` **值切片**。任何形如
+
+```go
+if p != nil { p.Children = append(p.Children, *n) } else { roots = append(roots, *n) }
+```
+
+的迭代写法都会踩两类坑（Java 用对象引用天然免疫，Go 必须显式处理）：
+
+- **根节点值拷贝**：`roots = append(roots, *n)` 拷的是当时的快照；父节点先于子节点被遍历时，
+  之后挂上去的 children **不会同步进 roots 里的副本** → 整棵子树静默丢失。
+- **三层更深一层**：即使改成「先挂完子、再收根」的两阶段，也只是修好根这一层 ——
+  页面节点被拷进目录时同样是一个快照，之后挂到页面上的**按钮仍然丢失**。
+
+实测症状：`/api/orgs` 只返回总公司且 `children` 为空；`/api/auth/menus` 只返回 3 目录 + 8 页面 = **11**，
+26 个按钮全丢（正确应为 **37**）。
+
+**唯一正确写法**：先按 `parentID` 分组，再递归构建，保证子树完整后才拷进父节点：
+
+```go
+var build func([]SysMenu) []MenuNodeVO
+build = func(ms []SysMenu) []MenuNodeVO {
+    out := make([]MenuNodeVO, 0, len(ms))
+    for i := range ms {
+        n := menuToNode(&ms[i])
+        n.Children = build(byParent[ms[i].ID])   // 子树先完整，再拷
+        out = append(out, n)
+    }
+    return out
+}
+```
+
+父 ID 指向不存在记录的**孤儿节点要降级为根**（对齐 Java 的 `else roots.add(n)`），否则会整个消失。
+验证时必须断言**节点总数**（37）与**三层结构**（用户管理下有 6 个按钮），只断言 `code:0` 会漏掉这个 bug。
+
 ## 生成流程
 
 1. **确认基础骨架已存在**（`go-gin-init-skill` 产物），否则先跑它
@@ -130,6 +166,30 @@ backend/
 | 接口契约 | `api-contract.md` | 在 go-gin-init 契约上追加本模块的全部端点 |
 | 权限常量表 | `docs/perms.md` | 38 个权限码与对应菜单/按钮的映射，供前后端核对 |
 
+> ⚠️ 若叠加在 `go-gin-init-skill` 之上，该项目要求的 `docs/project-guide.md` 同样必须落地。
+
+## ★ 收尾自检清单（交付前逐项打勾，历史教训）
+
+2026-10-07 审计发现：功能层（端点/VO/权限码/种子/业务规则）可以做到全部对齐，
+但**交付物、文档、中间件、脚本会被整批漏掉** —— 根因是「手写实现」而非「套模板生成」。
+所以收尾必须走这张表，**不能凭记忆**：
+
+```
+[ ] api-contract.md          （按 go-gin-init/references/api-contract-template.md 生成）
+[ ] docs/project-guide.md    （按 go-gin-init/references/project-guide-template.md 生成）
+[ ] docs/perms.md            （本模块权限常量表）
+[ ] restart.sh / restart.bat （用户风格：set -u / log() / get_port_pids / dev·stop·status）
+[ ] README.md                （启动方式 + 默认账号 + 常见问题，不要只写两行标题）
+[ ] .env + .env.example      （二者都要；.env 必须真正被 godotenv 加载）
+[ ] 安全头中间件已装配        （go-gin-init 红线 6：强制开启）
+[ ] gofmt -w . 已执行         （手写代码必留列对齐差异，实测可差 500+ 行）
+[ ] 依赖版本为当前最新稳定版  （红线 2：禁止沿用记忆里的旧版本号）
+```
+
+**验证侧的配对本能陷阱**：比对 Java `@PreAuthorize` 时，注解顺序是
+`@Operation → @PreAuthorize → @XxxMapping`。按行线性配对会**系统性错位一格**
+（GET 拿到 create、POST 拿到 edit），必须按**方法签名切块**再提取。
+
 ## 红线（不可绕过）
 
 1. **不把 `me()` 与鉴权上下文的权限合并**：二者分属 DB 派生与常量短路两条路径（见契约红线 1）
@@ -138,6 +198,8 @@ backend/
 4. **分页字段必须是 `list`**：禁止 `items` / `records`
 5. **`apiSecret` 仅创建响应返回一次**：列表/详情永不返回，且不得把 secret 回写后再返回
    （历史缺陷：`setApiSecret(null)` 让前端永远拿不到，同时把库里 secret 写成 null）
+6. **树结构端点必须递归构建**：禁止「迭代 + 值拷贝进 roots」，否则子树静默丢失（见契约红线 8）。
+   验收要断言节点总数 37 与三层结构，不能只看 `code:0`
 6. **绑定码一次性消费**：5 分钟有效，使用后立刻失效
 7. **绑定确认只接收 `{ code }`**：身份一律取自登录态，禁止接收用户名/密码（旧版越权漏洞）
 8. **软删除用 `deleted_at`**：权限装载、菜单查询都必须带 `deleted_at IS NULL`
