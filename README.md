@@ -63,7 +63,7 @@
 | **[`vibeCoding/video`](#视频)** | **2** | FFmpeg · Remotion |
 | **[`others`](#其他工具)** | **6** | AI 风检测 · 人性改写 · Skill 审计 · 流程图 · 小红书写作 · Electron ABI 修复 |
 
-> 📂 **项目级编排技能**（开箱即用完整项目骨架）：[`vibeCodingProjectsSkills/`](vibeCodingProjectsSkills/) — 3 个：[Vue3 管理后台](https://github.com/jiushiwon/wg-skills/tree/main/vibeCodingProjectsSkills/vue-admin-skill) · [SSE Agent](https://github.com/jiushiwon/wg-skills/tree/main/vibeCodingProjectsSkills/sse-agent-skill) · [统一身份接入](https://github.com/jiushiwon/wg-skills/tree/main/vibeCodingProjectsSkills/universal-identity-bridge-skill)
+> 🔒 **项目级编排技能**（完整项目骨架、跨模块编排、部署与验收套件）已迁移至私有仓库 `wg-project-kits`；本仓库继续维护免费、通用、可组合的基础 Skills。
 
 ---
 

@@ -260,7 +260,7 @@ wg-skills/
 │   │       ├── next-generate-skill/         # Next.js 14+ App Router 全栈项目生成
 │   │       └── react-native-generate-skill/  # React Native 移动端初始化
 │   │
-│   ├── vibeCodingProjectsSkills/            # 🎯 项目级技能（开箱即用项目骨架）
+│   ├── 项目级技能（私有仓库）                # 🎯 见 git@github.com:jiushiwon/wg-project-kits.git
 │   │   ├── vue-admin-skill/                # Vue3 管理后台项目
 │   │   ├── sse-agent-skill/                # SSE Agent 项目
 │   │   └── universal-identity-bridge-skill/ # 统一身份接入编排（Java 先行，Go/Python 预留）
