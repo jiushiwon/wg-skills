@@ -7,14 +7,21 @@ import com.example.pay.wechat.dto.*;
 import com.example.pay.wechat.entity.WechatPayOrder;
 import com.example.pay.wechat.entity.WechatRefundOrder;
 import com.example.pay.wechat.enums.PayScene;
-import com.example.pay.wequest.wechatpay-java.core.Config;
+import com.wechat.pay.java.core.Config;
 import com.wechat.pay.java.core.exception.ServiceException;
 import com.wechat.pay.java.core.exception.ValidationException;
-import com.example.pay.wequest.wechatpay-java.service.payments.jsapi.JsapiService;
-import com.example.pay.wequest.wechatpay-java.service.payments.h5.H5Service;
-import com.example.pay.wequest.wechatpay-java.service.payments.nativepay.NativePayService;
-import com.example.pay.wequest.wechatpay-java.service.payments.app.AppService;
-import com.example.pay.wequest.wechatpay-java.service.refund.RefundService;
+import com.wechat.pay.java.service.payments.app.AppService;
+import com.wechat.pay.java.service.payments.h5.H5Service;
+import com.wechat.pay.java.service.payments.jsapi.JsapiService;
+import com.wechat.pay.java.service.payments.jsapi.JsapiServiceExtension;
+import com.wechat.pay.java.service.payments.jsapi.model.Amount;
+import com.wechat.pay.java.service.payments.jsapi.model.Payer;
+import com.wechat.pay.java.service.payments.jsapi.model.PrepayRequest;
+import com.wechat.pay.java.service.payments.jsapi.model.PrepayResponse;
+import com.wechat.pay.java.service.payments.jsapi.model.RequestPaymentRequest;
+import com.wechat.pay.java.service.payments.jsapi.model.RequestPaymentResponse;
+import com.wechat.pay.java.service.payments.nativepay.NativePayService;
+import com.wechat.pay.java.service.refund.RefundService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -54,67 +61,48 @@ public class WechatPayService {
             throw new BusinessException(-3004, "订单号已存在: " + req.getOrderNo());
         }
 
-        // 2. 构造下单参数
-        JSONObject body = new JSONObject()
-            .fluentPut("appid", payProperties.getAppId())
-            .fluentPut("mchid", payProperties.getMchId())
-            .fluentPut("description", req.getDescription())
-            .fluentPut("out_trade_no", req.getOrderNo())
-            .fluentPut("notify_url", payProperties.getNotifyUrl())
-            .fluentPut("amount", new JSONObject()
-                .fluentPut("total", req.getAmount())
-                .fluentPut("currency", "CNY"))
-            .fluentPut("payer", new JSONObject().fluentPut("openid", req.getOpenid()));
-
-        // 3. 调用微信接口
+        // 2. 调用微信接口（用 JsapiServiceExtension.prepayWithRequestPayment 一站式完成下单+二次签名）
         try {
-            JsapiService jsapiService = new JsapiService.Builder().config(wechatPayConfig).build();
-            com.wechat.pay.java.service.payments.jsapi.model.PrepayRequest prepayRequest =
-                new com.wechat.pay.java.service.payments.jsapi.model.PrepayRequest();
-            prepayRequest.setAppid(payProperties.getAppId());
-            prepayRequest.setMchid(payProperties.getMchId());
-            prepayRequest.setDescription(req.getDescription());
-            prepayRequest.setOutTradeNo(req.getOrderNo());
-            prepayRequest.setNotifyUrl(payProperties.getNotifyUrl());
-            prepayRequest.setAmount(new com.wechat.pay.java.service.payments.jsapi.model.Amount()
-                .setTotal(req.getAmount()).setCurrency("CNY"));
-            prepayRequest.setPayer(new com.wechat.pay.java.service.payments.jsapi.model.Payer()
-                .setOpenid(req.getOpenid()));
+            JsapiServiceExtension service = new JsapiServiceExtension.Builder().config(wechatPayConfig).build();
 
-            com.wechat.pay.java.service.payments.jsapi.model.PrepayResponse prepayResponse =
-                jsapiService.prepay(prepayRequest);
+            RequestPaymentRequest request = new RequestPaymentRequest();
+            request.setAppid(payProperties.getAppId());
+            request.setMchid(payProperties.getMchId());
+            request.setDescription(req.getDescription());
+            request.setOutTradeNo(req.getOrderNo());
+            request.setNotifyUrl(payProperties.getNotifyUrl());
+            request.setAmount(new Amount().setTotal(req.getAmount()).setCurrency("CNY"));
+            request.setPayer(new Payer().setOpenid(req.getOpenid()));
 
-            // 4. 持久化订单
+            // SDK 内部完成 prepayId 申请 + paySign 二次签名
+            RequestPaymentResponse response = service.prepayWithRequestPayment(request);
+
+            // 3. 持久化订单
             WechatPayOrder order = new WechatPayOrder();
             order.setOrderNo(req.getOrderNo());
             order.setScene(PayScene.JSAPI);
             order.setAmount(req.getAmount());
             order.setDescription(req.getDescription());
             order.setOpenid(req.getOpenid());
-            order.setPrepayId(prepayResponse.getPrepayId());
+            order.setPrepayId(response.getPackageVal());  // SDK 返回的 package 含 prepay_id=xxx
             order.setStatus(PayStatus.PENDING);
             orderRepository.save(order);
 
-            // 5. 构造前端调起参数（重要：按微信规则拼 signStr）
-            long timestamp = Instant.now().getEpochSecond();
-            String nonceStr = UUID.randomUUID().toString().replace("-", "");
-            String packageStr = "prepay_id=" + prepayResponse.getPrepayId();
-            String signStr = payProperties.getAppId() + "\n" + timestamp + "\n" + nonceStr + "\n" + packageStr + "\n";
-
-            // 用商户私钥签名（实际签名由 SDK 内部处理）
+            // 4. 返回前端调起支付所需参数（paySign 由 SDK 算好）
             return JsapiPayResponse.builder()
-                .prepayId(prepayResponse.getPrepayId())
-                .timestamp(timestamp)
-                .nonceStr(nonceStr)
-                .packageStr(packageStr)
-                .signType("RSA")
+                .appId(response.getAppId())
+                .timeStamp(response.getTimeStamp())
+                .nonceStr(response.getNonceStr())
+                .packageStr(response.getPackageVal())
+                .signType(response.getSignType())
+                .paySign(response.getPaySign())
                 .build();
 
         } catch (ValidationException e) {
-            log.error("JSAPI 统一下单参数错误: {}", body, e);
+            log.error("JSAPI 统一下单参数错误", e);
             throw new BusinessException(-3001, "参数错误: " + e.getMessage());
         } catch (ServiceException e) {
-            log.error("JSAPI 统一下单失败: {}", body, e);
+            log.error("JSAPI 统一下单失败", e);
             throw new BusinessException(-3001, "微信下单失败: " + e.getErrorMessage());
         }
     }
