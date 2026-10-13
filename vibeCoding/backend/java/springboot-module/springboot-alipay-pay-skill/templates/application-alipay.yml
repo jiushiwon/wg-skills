@@ -1,0 +1,30 @@
+# 支付宝配置（独立 yml，application.yml 中通过 spring.profiles.include 引入）
+# 使用方式：application.yml 增加 spring.profiles.include: alipay
+#
+# 必填项从开放平台 https://open.alipay.com/ 获取
+# 详细获取步骤见 references/merchant-onboarding.md
+
+alipay:
+  # ====== 必填项（生产）======
+  app-id: ${ALIPAY_APP_ID:2021000000000000}                    # 16 位 APPID
+  private-key: ${ALIPAY_PRIVATE_KEY:}                          # 应用私钥 PEM PKCS8
+  alipay-public-key: ${ALIPAY_PUBLIC_KEY:}                     # 支付宝公钥（**不是应用公钥**）
+
+  # ====== 业务地址 ======
+  gateway-url: ${ALIPAY_GATEWAY:https://openapi.alipay.com/gateway.do}
+  notify-url: ${ALIPAY_NOTIFY_URL:https://yourdomain.com/api/alipay/notify}
+  return-url: ${ALIPAY_RETURN_URL:https://yourdomain.com/pay/return}
+
+  # ====== 可选项 ======
+  sign-type: RSA2                                              # 固定 RSA2
+  charset: UTF-8
+  format: json
+  sandbox: ${ALIPAY_SANDBOX:false}                             # true=沙箱
+
+---
+# ====== 沙箱配置（dev 环境）======
+# application-dev.yml 覆盖上面：
+# alipay:
+#   app-id: 2021000000000000
+#   gateway-url: https://openapi.alipaydev.com/gateway.do
+#   sandbox: true

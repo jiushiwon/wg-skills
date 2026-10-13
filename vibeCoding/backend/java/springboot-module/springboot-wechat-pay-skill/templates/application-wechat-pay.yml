@@ -1,0 +1,59 @@
+# ========================================
+# 微信支付 V3 配置
+# 复制此文件到 src/main/resources/application.yml 中合并
+# 所有参数获取步骤见 references/merchant-onboarding.md
+# ========================================
+
+wechat:
+  pay:
+    # ====== 必填项：从商户平台获取 ======
+    # 公众号 / 小程序 / 移动应用 appId（公众平台申请）
+    app-id: ${WECHAT_APP_ID:}
+
+    # 商户号（10 位数字，如 1900000109）
+    mch-id: ${WECHAT_MCH_ID:}
+
+    # ====== V3 商户 API 证书（必需） ======
+    # 商户私钥：apiclient_key.pem 的绝对路径
+    # 私钥必须放在 /opt/secret/ 等安全目录，不要提交到 git
+    private-key-path: ${WECHAT_PRIVATE_KEY_PATH:/opt/secret/wechat/apiclient_key.pem}
+
+    # 商户证书：apiclient_cert.pem 的绝对路径
+    merchant-cert-path: ${WECHAT_MERCHANT_CERT_PATH:/opt/secret/wechat/apiclient_cert.pem}
+
+    # 商户证书序列号（32 位十六进制）
+    api-cert-serial-no: ${WECHAT_API_CERT_SERIAL_NO:}
+
+    # ====== APIv3 密钥（必需，32 位字符串） ======
+    # 用于回调通知的 AES-256-GCM 解密
+    # 在商户平台「账户中心 → API 安全 → APIv3 密钥」设置
+    # ⚠️ 不要轻易重置！重置后未解密的历史回调将无法解密
+    api-v3-key: ${WECHAT_API_V3_KEY:}
+
+    # ====== 回调地址（必需，公网 HTTPS） ======
+    # 微信支付回调（支付成功通知）
+    notify-url: ${WECHAT_NOTIFY_URL:https://yourdomain.com/api/wechat-pay/notify}
+
+    # 退款回调（默认复用 notify-url）
+    refund-notify-url: ${WECHAT_REFUND_NOTIFY_URL:}
+
+    # ====== HTTP 超时（毫秒） ======
+    connect-timeout-ms: 5000
+    read-timeout-ms: 10000
+
+# ========================================
+# 日志配置（建议单独配置微信支付日志级别）
+# ========================================
+logging:
+  level:
+    com.example.pay.wechat: DEBUG
+    com.wechat.pay.java: INFO
+  file:
+    name: /var/log/app/wechat-pay.log
+
+# ========================================
+# 配套 Redis 配置（幂等防重 + 限流用，可选）
+# ========================================
+spring:
+  redis:
+    # 已经在 springboot-redis-module-skill 中配置过，无需重复
