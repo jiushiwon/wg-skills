@@ -10,7 +10,7 @@
 | 角色 | 3 个：`super_admin`(ALL) / `user_admin`(ALL) / `common_user`(SELF_ONLY) |
 | 菜单 | 37 个：3 目录 + 8 页面 + 26 按钮 |
 | 用户 | `admin`(超级管理员) / `user_admin`(用户管理员) / `demo`(演示账号) |
-| 密码 | **三者统一 `admin123`** |
+| 密码 | **首次启动随机生成**（`randomHex(12)`），三者统一，**打印到终端/日志** |
 
 角色-菜单绑定：
 
@@ -20,13 +20,19 @@
 
 > ★ 改了 `seed.go` 的权限字符串后，旧的 `.db` **不会重播**（`Seed` 只在无用户时执行）。
 > 要验证必须删掉 `data/*.db` 让首跑重新播种——否则会看到旧数据（例如权限数 37 而非 34）。
+>
+> ★ **初始密码是随机的**（P3-18 弱口令修复，原为固定 `admin123`）：
+> `seed.go` 用 `randomHex(12)` 生成，`log.Printf` 打印一次到终端/日志。
+> 冒烟脚本必须先从日志抓到密码再登录，**不能写死 `admin123`**。
+> 没记下来就删库重播。文档里写「默认密码 admin123」是错的，会让照着做的人卡在登录。
 
 ## 冒烟清单（21 项，实测全绿）
 
 起服务后按顺序断言（`base = http://localhost:8080`）：
 
 1. `GET /api/health` → `{code:0,message:"success",data:{status:"ok"}}`
-2. `POST /api/auth/login` `{admin, admin123}` → `accessToken` + `refreshToken`
+2. `POST /api/auth/login` `{admin, <日志里的初始随机密码>}` → `accessToken` + `refreshToken`
+   （⚠️ 不是 `admin123` —— P3-18 弱口令修复后改为随机，见下）
 3. `GET /api/auth/me` → `username=admin`、`roles` 含 `super_admin`、
    `permissions.length == 34` 且**不含空串**、`keys` 里**没有** `orgName`（Java 不返回）
 4. `GET /api/auth/menus` → 树形数组，顶层 3 个且带 `children`
@@ -67,7 +73,7 @@
 | 响应信封 | `{code,message,data}` |
 | 分页字段 | `list`（不是 items） |
 | `/api/posts`、`/api/bind` | 裸数组（前端直接赋值，不取 `.list`） |
-| 前端 33 个权限码 | ⊆ 后端 `AuthPermsAll` 38 个（后端多出的是 `system:tenant:*` 与 `system:user:assign-post`） |
+| 前端 33 个权限码 | ⊆ 后端 `AuthPermsAll` 39 个（后端多出的是 `system:tenant:*`、`system:api:view`、`system:user:assign-post`） |
 | `/api/products` | **前端有、后端无** —— Java 同样没实现，属历史遗留，不要为它新建接口 |
 
 ## 补充：数据权限四档端到端验证场景

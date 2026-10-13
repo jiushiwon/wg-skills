@@ -40,7 +40,10 @@
 
 > 历史数据里可能出现旧值 `B`（语义同 `F` 按钮），读取时兼容，写入一律用 `F`。
 
-## 权限常量（38 个，唯一常量源）
+## 权限常量（39 个，唯一常量源）
+
+> 39 = 34 个有种子菜单的 + 5 个无菜单的（4 个 `system:tenant:*` + `system:api:view`）。
+> 数量会随「无菜单权限」增长；`me()` 返回的 34 只跟种子菜单走。以代码为准。
 
 ```
 用户(7)   system:user:{list,create,edit,delete,reset-pwd,assign-role,assign-post}

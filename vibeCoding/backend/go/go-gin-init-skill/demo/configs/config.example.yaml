@@ -1,0 +1,13 @@
+# Demo 配置示例
+server:
+  port: 8080
+  mode: debug   # debug / release / test
+
+jwt:
+  secret: wg-skills-secret
+  expire: 24h
+
+db:
+  driver: sqlite      # sqlite / mysql / postgres
+  path: data.db       # sqlite 路径
+  # dsn: "user:pass@tcp(127.0.0.1:3306)/db?charset=utf8mb4&parseTime=True&loc=Local"

@@ -1,6 +1,6 @@
 ---
 name: go-auth-module-skill
-description: 在 Go（Gin + GORM）Web 项目上叠加 RBAC + 组织架构 + 通用登录（universal-login）权限模块。生成用户/角色/菜单/组织/岗位/租户、四档数据权限、38 个三段式权限常量、super_admin 双路径解析、应用密钥与绑定码、开放接口 HmacSHA256 签名鉴权；契约与 Java springboot-auth-module 及 vue-admin 前端逐字对齐，可做到「前端不动、直接桥接」。触发词：Go 权限模块、Go RBAC、go auth、Go 组织架构、Go 数据权限、Go 菜单权限、通用登录、universal login、应用绑定、开放接口签名、绑定码、super_admin、权限骨架、Go 复刻 Java 后台。
+description: 在 Go（Gin + GORM）Web 项目上叠加 RBAC + 组织架构 + 通用登录（universal-login）权限模块。生成用户/角色/菜单/组织/岗位/租户、四档数据权限、39 个三段式权限常量、super_admin 双路径解析、应用密钥与绑定码、开放接口 HmacSHA256 签名鉴权；契约与 Java springboot-auth-module 及 vue-admin 前端逐字对齐，可做到「前端不动、直接桥接」。触发词：Go 权限模块、Go RBAC、go auth、Go 组织架构、Go 数据权限、Go 菜单权限、通用登录、universal login、应用绑定、开放接口签名、绑定码、super_admin、权限骨架、Go 复刻 Java 后台。
 ---
 
 # Go Auth Module Skill
@@ -23,8 +23,8 @@ description: 在 Go（Gin + GORM）Web 项目上叠加 RBAC + 组织架构 + 通
 | # | 能力 | 说明 |
 |---|------|------|
 | 1 | **RBAC** | 用户 / 角色 / 菜单（目录 M、页面 C、按钮 F）/ 组织 / 岗位 / 租户 |
-| 2 | **三段式权限码** | `模块:资源:动作`，38 个常量唯一源，DB `permission` 列与前端 `v-permission` 逐字一致 |
-| 3 | **super_admin 双路径** | 鉴权短路全量常量（38），`me()` 走 DB 派生（34）—— 见红线 1 |
+| 2 | **三段式权限码** | `模块:资源:动作`，39 个常量唯一源（34 个有菜单 + 5 个无菜单），DB `permission` 列与前端 `v-permission` 逐字一致 |
+| 3 | **super_admin 双路径** | 鉴权短路全量常量（39），`me()` 走 DB 派生（34）—— 见红线 1 |
 | 4 | **四档数据权限** | `ALL / DEPT_AND_BELOW / DEPT_ONLY / SELF_ONLY`，多角色取最宽 |
 | 5 | **菜单树** | 单表树形 `parent_id` 递归，含按钮级权限节点 |
 | 6 | **通用登录（universal-login）** | 第三方应用 App + 密钥 AppKey + 绑定 AppBinding + 绑定码 BindCode |
@@ -39,10 +39,14 @@ description: 在 Go（Gin + GORM）Web 项目上叠加 RBAC + 组织架构 + 通
 | 场景 | 数据来源 | super_admin 结果 |
 |------|---------|----------------|
 | `GET /api/auth/me`（前端权限数组） | **DB 派生**：`role_menu → menu.permission` | **34**（真实菜单权限：8 页面级 + 26 按钮级） |
-| 鉴权中间件 `RequirePerm`（等价 `@PreAuthorize`） | DB 派生 **∪** 全量常量（super_admin 短路） | **38**（34 + 4 个无菜单的 `system:tenant:*`） |
+| 鉴权中间件 `RequirePerm`（等价 `@PreAuthorize`） | DB 派生 **∪** 全量常量（super_admin 短路） | **39**（34 + 5 个无菜单的：4 个 `system:tenant:*` + `system:api:view`） |
 
 对应 Java 的 `AuthorityLoader.permissions()` 与 `JwtAuthenticationFilter` 反射短路两条路径。
-**不要**把 `me()` 也短路成 38——否则前端拿到的权限数组就和 Java 不一致了。
+**不要**把 `me()` 也短路成 39——否则前端拿到的权限数组就和 Java 不一致了。
+
+> ⚠️ **数量会变**：39 里有 5 个「无菜单权限」（4 个 `system:tenant:*` + `system:api:view`）。
+> 新增无菜单权限时常量集会增长，但 `me()` 的 34 只跟**种子菜单**走，不受影响。
+> 别把这两个数字写死在文档里不复核 —— 曾因新增 `system:api:view` 后技能仍写 38 而产生偏差。
 
 ### 2. 目录菜单的 `permission` 必须存 **NULL**，不能存 `""`
 
@@ -125,7 +129,7 @@ build = func(ms []SysMenu) []MenuNodeVO {
 2. **建模型层**：`SysUser / SysRole / SysMenu / SysOrg / SysPost / SysTenant` + 关联
    `SysUserRole / SysUserPost / SysRoleMenu`，表前缀 `wg_sys_*`
 3. **建通用登录模型**：`App / AppKey / AppBinding / BindCode`
-4. **建常量与工具**：38 个权限常量、`AuthPermsAll`、`hasPerm`（super_admin 短路）、`fmtTime`
+4. **建常量与工具**：39 个权限常量、`AuthPermsAll`、`hasPerm`（super_admin 短路）、`fmtTime`
 5. **建仓储层**：`FindRoleCodesByUser / FindPermissionsByUser / FindDataScopesByUser /
    FindMenuIDsByUser / ResolveDataScope / DescendantOrgIDs`
 6. **建中间件**：CORS → 应用签名（仅 `/api/open/**`）→ JWT 鉴权（放行 login/refresh/health）→ `RequirePerm`
@@ -164,7 +168,7 @@ backend/
 | 文档 | 位置 | 说明 |
 |------|------|------|
 | 接口契约 | `api-contract.md` | 在 go-gin-init 契约上追加本模块的全部端点 |
-| 权限常量表 | `docs/perms.md` | 38 个权限码与对应菜单/按钮的映射，供前后端核对 |
+| 权限常量表 | `docs/perms.md` | 39 个权限码与对应菜单/按钮的映射，供前后端核对（数量随无菜单权限增长，以代码为准） |
 
 > ⚠️ 若叠加在 `go-gin-init-skill` 之上，该项目要求的 `docs/project-guide.md` 同样必须落地。
 

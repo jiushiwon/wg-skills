@@ -61,13 +61,30 @@ X-Signature:   HMAC 十六进制
 签名构造：
 
 ```
-payload  = join([apiKey, timestamp, nonce, method, path], "\n")
+payload  = join([apiKey, timestamp, nonce, method, path, rawQuery, sha256Hex(body)], "\n")
 signature = hex(HmacSHA256(apiSecret, payload))
 ```
 
-- `path` **不含 query string**（如 `/api/open/userinfo`，不带 `?appUserId=...`）
+**7 段，顺序不可变**：
+
+| 段 | 取值 | 说明 |
+|----|------|------|
+| apiKey | `AppKey.apiKey` | 与 `X-App-Key` 头一致 |
+| timestamp | Unix 秒 | 与 `X-Timestamp` 一致 |
+| nonce | 随机串 | 与 `X-Nonce` 一致 |
+| method | 大写，如 `GET` | — |
+| path | `/api/open/userinfo` | **不含** query |
+| rawQuery | `appUserId=demo` | **不含**前导 `?`；无 query 时为空串 |
+| sha256Hex(body) | 请求体摘要 | 无 body 时为 `sha256Hex("")` = `e3b0c442...b855` |
+
+> ⚠️ **query 与 body 必须参与签名**（P0-4）。
+> 只签 5 段（不含 query/body）时，把 `?appUserId=X` 换成 `?appUserId=Y` 仍会验签通过，
+> POST 请求体也可被整体替换 —— **签名形同虚设**。
+> 回归断言：篡改 query 后原签名必须 401。
+
 - 时间偏差容忍 **300 秒**
 - 比较用**常量时间比较**（`subtle.ConstantTimeCompare`），十六进制解码后再比字节
+- 校验通过后**登记 nonce 防重放**（10 分钟内复用同一 nonce 直接拒绝，P0-4）
 - 校验通过后更新 `last_used_at`，并写入 `AppPrincipal{AppID, OwnerID, APIKey}` 到上下文
 
 ### 开放端点
