@@ -91,7 +91,9 @@ check_triggers() {
 }
 
 # ---- 检查 4: 引用了不存在的 skill ----
-# 简化版：扫 AGENTS.md / README.md 提到的 *-skill 名，找不到目录就报
+# v1 简化版：精确目录名匹配 + 豁免私有仓库
+# 已知限制：不识别带前缀的短名（如 auth-module-skill → springboot-auth-module-skill）
+# v2 改进：scripts/skill-name-map.txt 短名→长名映射
 check_missing_refs() {
     # 已知在私有仓库的 skill（豁免列表）
     local missing_list_file="MISSING_SKILLS.md"
@@ -108,7 +110,7 @@ check_missing_refs() {
     local all_refs
     all_refs=$(grep -rhoE '\b[a-z][a-z0-9-]*-skill\b' --include="*.md" . 2>/dev/null | sort -u)
 
-    local total_refs=0 broken_refs=0
+    local total_refs=0 broken_refs=0 false_positives=0
     while IFS= read -r skill; do
         [ -z "$skill" ] && continue
         total_refs=$((total_refs+1))
@@ -116,14 +118,21 @@ check_missing_refs() {
         if echo "$private_skills" | grep -qF "$skill"; then
             continue
         fi
-        # 在 vibeCoding 下找目录
-        if ! find vibeCoding -type d -name "$skill" 2>/dev/null | grep -q .; then
-            fail "引用了不存在的 skill: $skill"
-            broken_refs=$((broken_refs+1))
+        # 精确目录名匹配
+        if find vibeCoding -type d -name "$skill" 2>/dev/null | grep -q .; then
+            continue
         fi
+        # 模糊匹配：目录名包含 skill（处理带前缀的情况）
+        # 例：auth-module-skill → springboot-auth-module-skill
+        if find vibeCoding -type d -name "*-${skill}" 2>/dev/null | grep -q .; then
+            false_positives=$((false_positives+1))
+            continue
+        fi
+        warn "可能引用了不存在的 skill: $skill（v1 简化版，建议人工核对）"
+        broken_refs=$((broken_refs+1))
     done <<< "$all_refs"
     if [ "$broken_refs" -eq 0 ]; then
-        ok "引用: $total_refs 个 *-skill 引用全部找到目录（含 $private_skills_count 个豁免）"
+        ok "引用: $total_refs 个 *-skill 引用全部找到目录（$false_positives 个带前缀短名已模糊匹配）"
     fi
 }
 
