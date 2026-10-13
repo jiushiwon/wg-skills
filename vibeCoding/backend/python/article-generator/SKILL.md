@@ -150,3 +150,7 @@ class NewPlatformAdapter(PlatformAdapter):
 - 各平台文章风格差异大，建议先测试各平台的生成效果
 - AI 生成的内容需要人工审核后再发布
 - 注意保护个人隐私和商业机密
+
+## 触发词
+
+article-generator、Article Generator

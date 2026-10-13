@@ -51,3 +51,7 @@ description: Use when generating or reviewing any backend project that needs cro
 - 不写任何业务代码（属于 4 个后端 skill）。
 - 不替用户提交（`git commit`）。
 - 不在本 skill 锁定版本号（版本由后端 skill 现场查询官方源，写入 `versions.md`）。
+
+## 触发词
+
+backend-convention、Backend Convention Skill

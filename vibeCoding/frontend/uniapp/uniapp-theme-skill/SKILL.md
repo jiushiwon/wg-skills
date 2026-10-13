@@ -577,3 +577,6 @@ mv App.vue.bak App.vue
 - 默认使用 data-theme 属性切换主题
 - 所有 rpx 值为静态，禁止 calc()
 - 所有 CSS 变量带 fallback：`var(--x, fallback)`
+## 触发词
+
+uniapp-theme、uniapp-theme-skill

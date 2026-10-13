@@ -432,3 +432,7 @@ ui-component-commands-skill/
 ---
 
 **一句话**：做过的组件 → 沉淀为指令 → 下次直接用 ✓
+
+## 触发词
+
+uniapp-ui-component-commands、UI Component Commands

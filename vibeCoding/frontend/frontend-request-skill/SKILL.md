@@ -450,3 +450,7 @@ function handleLike() {
 - JWT 鉴权 + `code === -1` 失效标识由契约 §11 约束
 
 后端 init-skill（`fastapi-init-skill` / `springboot-init-skill` / `go-gin-init-skill` / `nodejs-init-skill`）**必须**生成与 [`references/api-contract.md`](references/api-contract.md) 兼容的 `api-contract.md`，否则前后端无法桥接。
+
+## 触发词
+
+frontend-request、前端请求层设计 Skill

@@ -56,3 +56,7 @@ description: Use when the user wants to generate a backend project from scratch 
 - 不在本 skill 写任何业务代码（属于 4 个后端 skill）。
 - 不替用户提交。
 - 不锁定版本号（后端 skill 现场查询官方源，写入 `versions.md`）。
+
+## 触发词
+
+backend-select、Backend Select Skill

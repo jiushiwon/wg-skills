@@ -62,3 +62,7 @@ Claude 应使用文件读取、搜索等工具完成审计，**不运行任何�
 - **frontend-icon-skill**：本技能「抓取」现成专业图标；抓不到合适图标时，建议转 `frontend-icon-skill` 的 icons 模式生成。
 - **frontend-icon-skill**：本技能负责找图；需要本地压缩、裁剪、格式转换、水印、合成时，转 `frontend-icon-skill`。
 - **uniapp-app-generate-skill / frontend-ui-foundry**：生成页面时若需要图标与配图，应调用本技能能力获取真实素材。
+
+## 触发词
+
+icon-image-catch、icon-image-catch-skill — 远程素材抓取总入口

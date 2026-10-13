@@ -405,3 +405,7 @@ npm run build    # 自动先跑 type-check，再 vite build
 8. ❌ 不在组件里直接调 `localStorage`
 9. ❌ 不在组件里写 401 跳转
 10. ❌ 不用 ESLint 规则覆盖 TypeScript 检查
+
+## 触发词
+
+react-generate、React Generate Skill

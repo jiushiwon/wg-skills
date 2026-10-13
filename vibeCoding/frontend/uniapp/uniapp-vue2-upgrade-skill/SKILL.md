@@ -128,3 +128,6 @@ Phase 5: 验证交付
 - 阻塞点清单完整
 - 不在用户确认前自动执行迁移
 - 风险等级标注正确
+## 触发词
+
+uniapp-vue2-upgrade、UniApp Vue2 → Vue3 Upgrade Skill

@@ -116,3 +116,7 @@ Web端                              小程序端
 2. **并发处理** - 防止同一会话被多个账号扫码，使用状态和用户 ID 条件更新
 3. **微信 access_token 缓存** - 缓存已获取的 token，提前 60 秒刷新
 4. **时区处理** - MongoDB 返回 naive datetime，统一转换为 aware datetime 比较
+
+## 触发词
+
+fastapi-qr-login、FastAPI 扫码登录技能

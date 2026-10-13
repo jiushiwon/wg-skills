@@ -130,3 +130,7 @@ const API_BASE = "http://localhost:8000";
 - 纯前端版本数据存在 localStorage，换浏览器会丢失
 - 生产环境建议对接后端 API 实现数据持久化
 - 如需登录功能，需自行扩展
+
+## 触发词
+
+html-frontend-template、HTML Frontend Template

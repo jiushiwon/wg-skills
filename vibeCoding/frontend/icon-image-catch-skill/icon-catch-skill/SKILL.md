@@ -145,3 +145,7 @@ description: Use when 用户需要按语义搜索并下载专业 SVG 图标。
 - 线性/填充风格不混用。
 - 导航 20px、卡片 32px、按钮 16px；颜色跟随文字色。
 - 图标必须贴合功能语义，禁止用 Emoji 作为功能图标。
+
+## 触发词
+
+icon-catch、icon-catch-skill — 图标抓取规范

@@ -127,3 +127,7 @@ Step 0 识别技术栈 → Step 1 接口扫描 → Step 2 技术扫描 → Step 
 
 如需深入某个模块或补充运行时验证（如启动项目核对接口），请告诉我。
 ```
+
+## 触发词
+
+backend-analysis、Backend Analysis Skill — 后端项目全景分析

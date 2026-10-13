@@ -654,3 +654,7 @@ ui-template-builder/
 ---
 
 **一句话**：选页面 → 选风格 → 确认Mock → 一键生成 ✓
+
+## 触发词
+
+uniapp-ui-template-builder、UI Template Builder

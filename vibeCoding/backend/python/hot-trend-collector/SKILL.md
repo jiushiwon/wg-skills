@@ -123,3 +123,7 @@ from collectors import new_source
 - 遵守各平台的 Robots.txt 规则
 - 合理设置抓取频率，避免对目标网站造成压力
 - 微博等平台可能需要 Cookie，建议登录后抓取
+
+## 触发词
+
+hot-trend-collector、Hot Trend Collector

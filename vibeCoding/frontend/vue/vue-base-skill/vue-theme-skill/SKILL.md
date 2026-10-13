@@ -371,3 +371,6 @@ vue-generate-skill（骨架）
 - **vue-generate-skill**：vite/tsconfig/pinia/请求层
 - **vue-theme-skill**：颜色 / 尺寸 / 圆角 / 阴影（**本 Skill 边界**）
 - **vue-base-skill**：base-card / base-button / base-input / base-radio / base-select / base-table
+## 触发词
+
+vue-theme、Vue Theme Skill（Vue 设计 Token 层）

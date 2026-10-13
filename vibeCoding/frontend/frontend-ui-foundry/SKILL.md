@@ -148,3 +148,7 @@ user-invocable: true
 - 想套用品牌风格：`brand <name>` 后跟目标
 - 想审查项目：`audit <path>`
 - 没参数：渲染上方子命令菜单，引导用户选择
+
+## 触发词
+
+frontend-ui-foundry、Frontend UI Foundry

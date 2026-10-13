@@ -179,3 +179,6 @@ FilePath: <文件路径> line <行号>
 如果发现的严重问题 >= 10 个，在末尾询问：
 
 > 发现较多严重问题（10+），是否需要我应用 Suggested fix 进行修复？
+## 触发词
+
+frontend-code-doctor、Frontend Code Doctor - uniapp + Vue3 代码审查

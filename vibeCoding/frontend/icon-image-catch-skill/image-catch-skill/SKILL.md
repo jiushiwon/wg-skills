@@ -122,3 +122,7 @@ GET https://picsum.photos/seed/{seed}/{width}/{height}
 - 按显示区域选尺寸；首屏图预加载、非首屏懒加载；支持时优先 WebP。
 - 图片必须添加 `alt` 属性描述内容。
 - 图片加载失败时要有纯色背景 fallback。
+
+## 触发词
+
+image-catch、image-catch-skill — 图片抓取规范

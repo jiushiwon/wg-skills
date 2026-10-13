@@ -225,3 +225,7 @@ grep -rnE 'eval\(|new Function\(' src/
 - `references/app-platform-checklist.md` — App 端专项检查清单（Android/iOS）
 - `references/dead-code-checklist.md` — 冗余与死代码检查清单
 - `references/self-audit-checklist.md` — 本 skill 自我审计清单
+
+## 触发词
+
+uniapp-code-audit、UniApp Code Audit Skill
