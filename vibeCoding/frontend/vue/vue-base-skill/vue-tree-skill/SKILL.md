@@ -82,7 +82,7 @@ interface TreeNode {
 - **vue-list-item-skill**：每个节点 = 一个 `base-list-item`
 - **vue-contextmenu-skill**：右键节点弹 contextmenu，传递 `TreeNode`
 - **vue-card-skill**：必须 base-card 包裹
-- **vue-icon-skill**：节点 icon 可引用 icon 组件
+- **frontend-icon-skill**：节点 icon 可引用 icon 组件
 
 ## 不做
 

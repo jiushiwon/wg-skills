@@ -35,7 +35,7 @@ description: FastAPI 支付宝模块技能（独立版）。面向已有 FastAPI
 |------|------|
 | `fastapi-init-skill` | 项目骨架（**必须**） |
 | `fastapi-auth-module-skill` | 当前用户获取（推荐） |
-| `fastapi-redis-module-skill` | 幂等防重 + 限流（推荐） |
+| `python-redis-module-skill` | 幂等防重 + 限流（推荐） |
 
 ## 核心实现
 

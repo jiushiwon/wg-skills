@@ -171,7 +171,7 @@ function handleSelect(item: MenuItemData) {
 |------|------|
 | vue-list-item-skill | 底层渲染（4 槽位 + 6 风格） |
 | vue-theme-skill | Token 样式（唯一来源） |
-| vue-icon-skill | 菜单图标 |
+| frontend-icon-skill | 菜单图标 |
 | vue-badge-skill | 徽标 badge |
 | vue-card-skill | 容器包裹（容器原则） |
 | vue-layout-skill | 布局集成 |

@@ -72,7 +72,7 @@ trigger: |
 | 技能 | 用途 |
 |------|------|
 | vue-theme-skill | Token 样式 |
-| vue-icon-skill | 图标徽标组合 |
+| frontend-icon-skill | 图标徽标组合 |
 | vue-button-skill | 按钮徽标组合 |
 | vue-menu-skill | 菜单徽标 |
 | vue-dropdown-skill | 下拉徽标 |

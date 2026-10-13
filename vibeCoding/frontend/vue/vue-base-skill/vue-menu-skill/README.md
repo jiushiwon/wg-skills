@@ -27,7 +27,7 @@ Vue 菜单组件技能。
 
 - vue-list-item-skill - 底层渲染
 - vue-theme-skill - 样式 Token
-- vue-icon-skill - 图标
+- frontend-icon-skill - 图标
 
 ## Demo
 

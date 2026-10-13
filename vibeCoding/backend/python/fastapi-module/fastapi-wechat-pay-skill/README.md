@@ -60,6 +60,6 @@ fastapi-wechat-pay-skill/
 |------|------|
 | 同时需要支付宝 | `fastapi-alipay-pay-skill` |
 | 用户体系 | `fastapi-auth-module-skill` |
-| 异步通知 + 限流 | `fastapi-redis-module-skill` |
+| 异步通知 + 限流 | `python-redis-module-skill` |
 | 退款通知 | `fastapi-notification-module-skill` |
 | 操作审计 | `fastapi-log-module-skill` |

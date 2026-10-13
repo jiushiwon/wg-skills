@@ -18,7 +18,7 @@ description: Vue 3 管理端布局技能，提供 7 种布局模式。触发词�
 | vue-theme-skill | 设计 Token（颜色/尺寸/间距） | ✅ |
 | vue-menu-skill | 菜单组件（侧边栏/顶部菜单） | ✅ |
 | vue-card-skill | 容器包裹 | ✅ |
-| vue-icon-skill | 图标渲染 | ✅ |
+| frontend-icon-skill | 图标渲染 | ✅ |
 | vue-badge-skill | 菜单徽标 | ✅ |
 | vue-dropdown-skill | 用户下拉菜单 | ✅ |
 | vue-breadcrumb-skill | 面包屑导航 | ✅ |
@@ -88,7 +88,7 @@ interface Props {
   menus?: MenuItem[];
   /** Logo 文字 */
   logo?: string;
-  /** Logo 图标（使用 vue-icon-skill 生成） */
+  /** Logo 图标（使用 frontend-icon-skill 生成） */
   logoIcon?: string;
   /** 默认折叠 */
   defaultCollapsed?: boolean;
@@ -1085,7 +1085,7 @@ function handleLogout() {
 | mode | `'sidebar' \| 'horizontal' \| 'topbar' \| 'sidebar-user-bottom' \| 'mix' \| 'sidebar-right' \| 'header-only'` | `'sidebar'` | 布局模式 |
 | menus | `MenuItem[]` | `[]` | 菜单数据 |
 | logo | `string` | `'Admin'` | Logo 文字 |
-| logoIcon | `string` | `'logo'` | Logo 图标名（vue-icon-skill） |
+| logoIcon | `string` | `'logo'` | Logo 图标名（frontend-icon-skill） |
 | defaultCollapsed | `boolean` | `false` | 默认折叠 |
 | sidebarWidth | `number` | `220` | 侧边栏宽度（px） |
 | collapsedWidth | `number` | `64` | 折叠后宽度（px） |
@@ -1100,7 +1100,7 @@ function handleLogout() {
 interface MenuItem {
   key: string;        // 唯一标识
   label: string;      // 显示文字
-  icon?: string;      // 图标名（vue-icon-skill）
+  icon?: string;      // 图标名（frontend-icon-skill）
   path?: string;      // 路由路径
   badge?: number | string;  // 角标
   children?: MenuItem[];    // 子菜单
@@ -1114,7 +1114,7 @@ interface MenuItem {
 - 禁止混入 Element Plus / Naive UI 的布局组件
 - 禁止硬编码侧边栏宽度（必须通过 Props 控制）
 - 菜单最多支持 3 级嵌套
-- **图标必须使用 vue-icon-skill**，禁止 emoji
+- **图标必须使用 frontend-icon-skill**，禁止 emoji
 - **用户下拉必须使用 vue-dropdown-skill**
 - **侧边栏菜单必须使用 vue-menu-skill**
 
