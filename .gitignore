@@ -24,11 +24,43 @@ __pycache__/
 .env.local
 .env.*.local
 
+# 证书 / 私钥 / 密钥库（支付 / 鉴权 / TLS 通用）
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.cer
+*.crt
+*.der
+apiclient_key*
+apiclient_cert*
+keystore
+truststore
+secrets/
+
+# 数据库文件
+*.db
+*.sqlite
+*.sqlite3
+*.mdb
+*.accdb
+
 # 构建输出
 dist/
 build/
 out/
 target/
+
+# Java 编译产物
+*.class
+*.jar
+*.war
+*.ear
+.gradle/
+.mvn/
+mvnw
+mvnw.cmd
 
 # IDE / 编辑器
 .idea/
