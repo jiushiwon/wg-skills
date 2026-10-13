@@ -117,7 +117,10 @@ docs/auth-module-guide.md         # 接入与扩展指南
 ## 接口契约要点
 
 - 响应信封：`{ code, message, data }`，与 `frontend-request-skill` 对齐。
-- 登录：`POST /api/auth/login` 返回 `{ access_token, refresh_token, token_type, expires_in }`。
+- 登录：`POST /api/auth/login` 返回 `{ accessToken, refreshToken, tokenType, expiresIn }`。
+- **字段命名一律 camelCase**（与 springboot-auth-module-skill 逐字对齐，前端一套可同时对接两端）。
+- **错误码一律负数业务码**（`-1001` 参数错 / `-1002` 未登录 / `-1003` 无权限 / `-1004` 资源不存在 / `-1005` 数据权限越界 / `-2000` 系统异常，HTTP 始终 200）。
+- Python 实现：所有 Pydantic 模型必须 `model_config = ConfigDict(populate_by_name=True, alias_generator=to_camel)`，兼容入参 snake_case / 出参 camelCase。
 - 当前用户：`GET /api/auth/me` 返回用户 + 角色 + 部门 + 岗位。
 - 菜单树：`GET /api/auth/menus` 返回当前用户可见的树形菜单。
 - 用户、角色、菜单、部门、岗位：标准分页 CRUD。

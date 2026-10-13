@@ -636,14 +636,19 @@ POST /api/tenants
 
 ## 错误码
 
-| 错误码 | 说明 |
-|--------|------|
-| 0 | 成功 |
-| 400 | 请求参数错误 |
-| 401 | 未登录或 token 过期 |
-| 403 | 无权限 |
-| 404 | 资源不存在 |
-| 500 | 服务器内部错误 |
+> ⚠️ **2026-10-13 v2 整改**：错误码从 HTTP 状态码（400/401/403/500）改为负数业务码，与 `springboot-auth-module-skill` 完全对齐。
+> HTTP 状态码仍为 200（业务状态由 `code` 表达，参考 [response-envelope-spec.md](../../shared/response-envelope-spec.md)）。
+> Python 实现：Pydantic 模型用 `model_config = ConfigDict(populate_by_name=True, alias_generator=to_camel)` 兼容 camelCase 序列化。
+
+| 错误码 | HTTP | 说明 |
+|--------|------|------|
+| 0 | 200 | 成功 |
+| -1001 | 200 | 参数校验失败 / 用户名密码错 |
+| -1002 | 200 | 未登录 / token 失效 |
+| -1003 | 200 | 无权限 |
+| -1004 | 200 | 资源不存在 |
+| -1005 | 200 | 数据权限越界 |
+| -2000 | 200 | 系统异常 |
 
 ---
 
@@ -658,4 +663,4 @@ POST /api/tenants
 
 ---
 
-**最后更新：2026-08-22**
+**最后更新：2026-10-13**（v2 整改：错误码对齐 springboot-auth 负数业务码体系；字段名 camelCase 见 SKILL.md §接口契约要点）
