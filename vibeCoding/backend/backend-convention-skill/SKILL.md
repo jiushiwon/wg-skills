@@ -22,7 +22,7 @@ description: Use when generating or reviewing any backend project that needs cro
 
 | 文件 | 内容 |
 |------|------|
-| `references/response-format.md` | 响应信封结构、字段约束、错误码表、列表分页格式 |
+| `references/response-format.md` | 响应信封结构（已迁移至 [../shared/response-envelope-spec.md](../shared/response-envelope-spec.md)，本文件仅保留各语言实现参考） |
 | `references/api-contract-spec.md` | 12 节契约规范（含强制红线、枚举字典、接口模板、变更规则） |
 | `references/default-api-contract.md` | 默认接口 md 模板（health/auth/users 全量写全），生成 `api-contract.md` 的起点 |
 | `references/project-guide-template.md` | 介绍 & 拓展性文档模板（技术栈/对接前端/接口范式/拦截器/出入参），生成 `docs/project-guide.md` 的依据 |

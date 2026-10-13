@@ -1,104 +1,118 @@
 # 统一响应格式规范
 
-所有后端接口必须返回统一响应结构，禁止通过 HTTP 状态码表达业务成功或失败。
-
-## 响应结构
-
-```json
-{
-  "code": 0,
-  "message": "success",
-  "data": {}
-}
-```
-
-## 字段说明
-
-| 字段 | 类型 | 说明 |
-|------|------|------|
-| code | integer | 业务状态码，`>= 0` 成功，`< 0` 失败 |
-| message | string | 人类可读描述 |
-| data | any | 业务数据，空值使用 `null` 或 `{}` |
-
-## 状态码规则
-
-### 成功
-
-- `0`：通用成功
-- `1000`：创建成功（可选）
-- `1001`：更新成功（可选）
-- `1002`：删除成功（可选）
-
-### 失败
-
-| 状态码 | 含义 | 使用场景 |
-|--------|------|----------|
-| -1 | 通用失败 | 未分类的业务错误 |
-| -1001 | 参数校验错误 | 请求参数缺失或格式不正确 |
-| -1002 | 未授权 | Token 缺失、无效或过期 |
-| -1003 | 无权限 | 已登录但无操作权限 |
-| -1004 | 资源不存在 | 查询的记录不存在 |
-| -1005 | 资源冲突 | 唯一约束冲突、重复提交 |
-| -1006 | 频率限制 | 请求过于频繁，触发限流 |
-| -2000 | 内部服务器错误 | 未捕获异常 |
-
-> 本表是错误码闭集的**唯一事实来源**。api-contract-spec、agents-md-template 与各栈实现一律引用本表，不得另列码表；新增/调整错误码必须先改本表。
-
-## HTTP 状态码
-
-- 所有业务接口统一返回 `200 OK`。
-- 仅以下情况使用非 200 HTTP 状态码：
-  - `404`：路由不存在
-  - `405`：方法不允许
-  - `500`：网关或服务完全不可用（尽量不暴露给客户端）
-
-## 示例
-
-### 成功
-
-```json
-{
-  "code": 0,
-  "message": "success",
-  "data": {
-    "id": 1,
-    "username": "alice"
-  }
-}
-```
-
-### 失败
-
-```json
-{
-  "code": -1001,
-  "message": "用户名不能为空",
-  "data": null
-}
-```
-
-### 列表分页
-
-```json
-{
-  "code": 0,
-  "message": "success",
-  "data": {
-    "page": 1,
-    "pageSize": 20,
-    "total": 100,
-    "list": []
-  }
-}
-```
-
-## 实现要求
-
-> **红线（单点包装）**：响应信封必须有且仅有一个包装点，禁止漏包、禁止重复包装。handler 只返回业务数据或抛出业务异常，不得手写 HTTP 状态码表达业务结果，不得在多处拼装信封。
+> ⚠️ **本文件已迁移**：内容已并入 [../../shared/response-envelope-spec.md](../../shared/response-envelope-spec.md)。
 >
-> 各栈唯一包装点（handler 不得绕开）：Java = `ResponseAdvice`；NestJS = `TransformInterceptor`；Express = 拦截 `res.json`；Go = `OK()/Fail()`（禁止直接 `c.JSON` 返业务数据）；Python = `EnvelopeRoute`（handler 返裸数据，`api_response` 仅作异常兜底）。
+> 迁移原因：
+> 1. **单一事实来源（SoT）**：避免本文件与 `shared/response-envelope-spec.md` 各自演进导致冲突
+> 2. **冲突修复**：本文件曾用 `1000/1001/1002` 正数表示成功，与 shared 规范"code 只能是 0 或负数"冲突
+> 3. **引用统一**：所有后端 skill 已统一引用 `shared/response-envelope-spec.md`
+>
+> **本文件保留为占位符**，仅作历史追溯。新文档请直接引用 shared。
 
-1. 框架全局异常处理器必须将所有异常转换为统一响应格式。
-2. 业务异常类必须包含 `code` 和 `message`。
-3. 控制器层只返回数据对象（或抛业务异常），由各栈唯一包装点统一加信封。
-4. 禁止在业务代码中手动构造 HTTP 状态码返回，禁止在唯一包装点之外手写信封。
+---
+
+## 迁移对照表
+
+| 本文件原章节 | 现地址 |
+|-------------|--------|
+| 响应结构 `{ code, message, data }` | [shared/response-envelope-spec.md §响应格式](../../shared/response-envelope-spec.md) |
+| 字段说明 | 同上 |
+| 状态码规则 | [shared/error-code-spec.md](../../shared/error-code-spec.md) |
+| 分页格式 `{ list, total, page, pageSize }` | [shared/pagination-spec.md](../../shared/pagination-spec.md) |
+| 各语言实现参考 | 保留在本文件下方（不变） |
+
+---
+
+## 各语言实现参考（保留本节，不重复 shared）
+
+> 本节是 shared 中"各语言实现参考"的**超集**，包含更多语言实现细节。仅 convention-skill 内部使用。
+
+### Java / Spring Boot
+
+```java
+@Data
+public class ApiResponse<T> {
+    private Integer code;
+    private String message;
+    private T data;
+
+    public static <T> ApiResponse<T> ok(T data) {
+        return new ApiResponse<>(0, "success", data);
+    }
+
+    public static <T> ApiResponse<T> fail(int code, String message) {
+        return new ApiResponse<>(code, message, null);
+    }
+}
+```
+
+### Python / FastAPI
+
+```python
+from typing import Generic, TypeVar
+from pydantic import BaseModel
+
+T = TypeVar("T")
+
+class ApiResponse(BaseModel, Generic[T]):
+    code: int = 0
+    message: str = "success"
+    data: T | None = None
+
+    @classmethod
+    def ok(cls, data: T) -> "ApiResponse[T]":
+        return cls(code=0, message="success", data=data)
+
+    @classmethod
+    def fail(cls, code: int, message: str) -> "ApiResponse[None]":
+        return cls(code=code, message=message, data=None)
+```
+
+### Go / Gin
+
+```go
+type ApiResponse struct {
+    Code    int         `json:"code"`
+    Message string      `json:"message"`
+    Data    interface{} `json:"data"`
+}
+
+func OK(data interface{}) ApiResponse {
+    return ApiResponse{Code: 0, Message: "success", Data: data}
+}
+
+func Fail(code int, message string) ApiResponse {
+    return ApiResponse{Code: code, Message: message, Data: nil}
+}
+```
+
+### Node.js / Express
+
+```typescript
+export interface ApiResponse<T = unknown> {
+  code: number;
+  message: string;
+  data: T | null;
+}
+
+export const ok = <T>(data: T): ApiResponse<T> => ({ code: 0, message: 'success', data });
+export const fail = (code: number, message: string): ApiResponse<null> => ({ code, message, data: null });
+```
+
+### Rust / Actix-web
+
+```rust
+use serde::Serialize;
+
+#[derive(Serialize)]
+pub struct ApiResponse<T: Serialize> {
+    pub code: i32,
+    pub message: String,
+    pub data: Option<T>,
+}
+
+impl<T: Serialize> ApiResponse<T> {
+    pub fn ok(data: T) -> Self { Self { code: 0, message: "success".into(), data: Some(data) } }
+    pub fn fail(code: i32, message: impl Into<String>) -> Self { Self { code, message: message.into(), data: None } }
+}
+```
