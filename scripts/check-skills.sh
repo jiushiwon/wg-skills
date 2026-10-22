@@ -131,12 +131,12 @@ check_missing_refs() {
             continue
         fi
         # 精确目录名匹配
-        if find vibeCoding -type d -name "$skill" 2>/dev/null | grep -q .; then
+        if find vibeCoding others -type d -name "$skill" 2>/dev/null | grep -q .; then
             continue
         fi
         # 模糊匹配：目录名包含 skill（处理带前缀的情况）
         # 例：auth-module-skill → springboot-auth-module-skill
-        if find vibeCoding -type d -name "*-${skill}" 2>/dev/null | grep -q .; then
+        if find vibeCoding others -type d -name "*-${skill}" 2>/dev/null | grep -q .; then
             false_positives=$((false_positives+1))
             continue
         fi

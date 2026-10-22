@@ -273,11 +273,14 @@ wg-skills/
 │
 └── others/                            # 🧰 板块二：其他领域工具
     ├── ai-speech-detector/                   # AI 风检测
+    ├── electron-native-abi-fix/              # Electron 原生 ABI 修复
     ├── humanizer/                            # 去除AI写作模式（35个模式）
-    ├── article-illustrator-skill/            # 文章配图生成
     ├── skill-auditor/                        # Skill 安全审计
     ├── workflow-diagram-skill/               # 一句话生成流程图
-    └── xhs-style-writer-skill/                # 小红书个人风格写作
+    ├── xhs-style-writer-skill/               # 小红书个人风格写作
+    └── video/                                # 视频处理
+        ├── ffmpeg-skill/                     # FFmpeg 命令与脚本
+        └── remotion-skill/                   # Remotion React 视频
 ```
 
 ### 3.1 板块说明

@@ -47,23 +47,22 @@
 
 ---
 
-## 158 个技能 · 全部 MIT 公开 · 持续迭代中
+## 157 个技能 · 全部 MIT 公开 · 持续迭代中
 
-> ⚠️ **技能以实际效果为准，158 个技能都在持续迭代中**。每个技能都在真实项目里跑过，但 API、组件形态、触发词会随实战反馈调整，不保证向后兼容。
+> ⚠️ **技能以实际效果为准，157 个技能都在持续迭代中**。每个技能都在真实项目里跑过，但 API、组件形态、触发词会随实战反馈调整，不保证向后兼容。
 > 任何问题、反馈或建议，欢迎两个渠道：
 > 1. 访问 [itlifetime.com](https://itlifetime.com)（首页底部 → 加微信 **jiushiwon**）
 > 2. 在 [GitHub Issues](https://github.com/jiushiwon/wg-skills/issues) 提 issue
 
-### 6 大板块总览
+### 5 大板块总览
 
 | 板块 | 数量 | 子分类 |
 |------|------|--------|
 | **[`vibeCoding/backend`](#后端)** | **55** | Java / Python / Go / Node.js / Rust / 数据库 / 公共规范；具体清单见下文 |
-| **[`vibeCoding/frontend`](#前端)** | **78** | Vue / UniApp / React / HTML / Electron / 公共能力；具体清单见下文 |
+| **[`vibeCoding/frontend`](#前端)** | **74** | Vue / UniApp / React / HTML / Electron / 公共能力；具体清单见下文 |
 | **[`vibeCoding/super-deploy-skills`](#部署套件)** | **16** | 部署总入口 · 数据库安装【4】· 运行时安装【4】· Docker · 原生 · Nginx · 服务器 · 环境检测 |
 | **[`vibeCoding/vibecoding-guide-skill`](#vibecoding-工作流)** | **4** | VibeCoding 总入口 · 智能体访谈 · 智能体学习 · 完整工作流 |
-| **[`vibeCoding/video`](#视频)** | **2** | FFmpeg · Remotion |
-| **[`others`](#其他工具)** | **6** | AI 风检测 · 人性改写 · Skill 审计 · 流程图 · 小红书写作 · Electron ABI 修复 |
+| **[`others`](#其他工具)** | **8** | AI 风检测 · 人性改写 · Skill 审计 · 流程图 · 小红书写作 · Electron ABI 修复 · FFmpeg · Remotion |
 
 > 🔒 **项目级编排技能**（完整项目骨架、跨模块编排、部署与验收套件）已迁移至私有仓库 `wg-project-kits`；本仓库继续维护免费、通用、可组合的基础 Skills。
 
@@ -262,20 +261,9 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 ---
 
-### 视频
-
-**2 个**，跨平台视频处理。
-
-| 技能 | 说明 |
-|------|------|
-| `ffmpeg-skill` | FFmpeg 命令与脚本 |
-| `remotion-skill` | Remotion React 视频 |
-
----
-
 ### 其他工具
 
-**6 个**，覆盖写作、检测、流程图等领域。
+**8 个**，覆盖写作、检测、流程图、视频处理等领域。
 
 | 技能 | 说明 |
 |------|------|
@@ -285,6 +273,8 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 | `workflow-diagram-skill` | 一句话生成流程图 |
 | `xhs-style-writer-skill` | 小红书个人风格写作 |
 | `electron-native-abi-fix` | Electron 原生 ABI 修复 |
+| `ffmpeg-skill` | FFmpeg 命令与脚本 |
+| `remotion-skill` | Remotion React 视频 |
 
 ---
 
@@ -393,7 +383,7 @@ api-contract.md  ← 前后端唯一事实来源
 
 ---
 
-## 为什么开放 + 为什么 155 个
+## 为什么开放 + 为什么 157 个
 
 之前这个仓库是分层结构（精选 23 个公开 + 全量私有）。经过两轮迭代决定：
 
