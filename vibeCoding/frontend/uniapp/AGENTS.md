@@ -53,7 +53,7 @@ uniapp 目录下的技能**不是并列的**，而是分层的。任何新增技
 | 头像外壳 | `uniapp-base-skill/containers/base-avatar/` | 同上 |
 | 顶部导航 / 底部菜单外壳 | `uniapp-base-skill/containers/base-navbar/`、`base-tabbar/` | 同上 |
 | 全局关键帧（`@keyframes`） | `uniapp-base-skill/styles/animation.scss` | 组件用 `.ui-spin` / `.ui-fade-in` / `.ui-slide-up` 等类，**禁止**组件内自带 `@keyframes` |
-| 组件清单 / 别名 / 匹配规则 | `uniapp-ui-component-commands-skill`（索引层） | 其他 skill 引用组件时按别名检索，不各自维护一份清单 |
+| 组件清单 / 别名 / 匹配规则 | `uniapp-base-skill/commands/` + `components/_registry.json` + `references/matching-rules.md` | 其他 skill 引用组件时按别名检索，不各自维护一份清单 |
 | 组件**实现** | `uniapp-base-skill/components/` | 专项层**依赖**，不复制源码 |
 
 **判定规则**：如果你要写的东西"在别处已经有一份"，就是复制，不是复用。
@@ -265,7 +265,7 @@ components/<category>/<component-name>/
 1. 改组件实现 → 同步 `props.json`、`usage.md`、对应 `*.md` 契约文档。
 2. 改触发词 → 同步 `README.md` 示例、`STANDARD.md`。
 3. 改目录结构 → 同步 `SKILL.md` 目录树、`README.md` 目录说明、仓库根 `AGENTS.md` 第三节、根 `README.md`。
-4. 跨 skill 移动组件 → 必须更新：注册表路径、索引层（`uniapp-ui-component-commands-skill`）的 `commands/*.md` 与 `references/matching-rules.md`、所有引用该组件路径的文档。
+4. 跨 skill 移动组件 → 必须更新：注册表路径、`uniapp-base-skill` 的 `commands/*.md` 与 `references/matching-rules.md`、所有引用该组件路径的文档。
 5. 破坏性变更必须在 `README.md` 标注迁移方式。
 
 ---

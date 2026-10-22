@@ -1,6 +1,6 @@
 # 表单类组件（form）
 
-> 实现真源：`vibeCoding/frontend/uniapp/uniapp-base-skill/`
+> 实现真源：`vibeCoding/frontend/uniapp/uniapp-base-skill/`（本模块即实现层）
 > 本文件由 `components/_registry.json` + 各组件 `props.json` 同步生成，**改实现必须重新生成本文件**。
 > 重新生成：`node scripts/gen-commands.js`
 
@@ -50,7 +50,7 @@
 |------|------|
 | `default` | 按钮内容，优先于 text |
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/form/button/usage.md)
+**用法**：见 [usage.md](../components/form/button/usage.md)
 
 ---
 
@@ -76,7 +76,7 @@
 - `update:modelValue`
 - `change`
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/form/checkbox-group/usage.md)
+**用法**：见 [usage.md](../components/form/checkbox-group/usage.md)
 
 ---
 
@@ -117,7 +117,7 @@
 |------|------|
 | `header-right` | 标题栏右侧自定义区域 |
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/form/date-picker/usage.md)
+**用法**：见 [usage.md](../components/form/date-picker/usage.md)
 
 ---
 
@@ -152,7 +152,7 @@
 - `focus`
 - `clear`
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/form/input-field/usage.md)
+**用法**：见 [usage.md](../components/form/input-field/usage.md)
 
 ---
 
@@ -192,7 +192,7 @@
 |------|------|
 | `header-right` | 标题栏右侧自定义区域 |
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/form/picker/usage.md)
+**用法**：见 [usage.md](../components/form/picker/usage.md)
 
 ---
 
@@ -218,7 +218,7 @@
 - `update:modelValue`
 - `change`
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/form/radio-group/usage.md)
+**用法**：见 [usage.md](../components/form/radio-group/usage.md)
 
 ---
 
@@ -248,7 +248,7 @@
 - `clear`
 - `cancel`
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/form/search-bar/usage.md)
+**用法**：见 [usage.md](../components/form/search-bar/usage.md)
 
 ---
 
@@ -275,4 +275,4 @@
 - `update:modelValue`
 - `change`
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/form/switch/usage.md)
+**用法**：见 [usage.md](../components/form/switch/usage.md)

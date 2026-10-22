@@ -1,6 +1,6 @@
 # 列表类组件（list）
 
-> 实现真源：`vibeCoding/frontend/uniapp/uniapp-base-skill/`
+> 实现真源：`vibeCoding/frontend/uniapp/uniapp-base-skill/`（本模块即实现层）
 > 本文件由 `components/_registry.json` + 各组件 `props.json` 同步生成，**改实现必须重新生成本文件**。
 > 重新生成：`node scripts/gen-commands.js`
 
@@ -40,7 +40,7 @@
 
 - `click`
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/list/article-card/usage.md)
+**用法**：见 [usage.md](../components/list/article-card/usage.md)
 
 ---
 
@@ -65,7 +65,7 @@
 | `showAvatar` | `boolean` | `true` | 显示头像 |
 | `showName` | `boolean` | `false` | 显示用户名 |
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/list/chat-bubble/usage.md)
+**用法**：见 [usage.md](../components/list/chat-bubble/usage.md)
 
 ---
 
@@ -100,7 +100,7 @@
 | `icon` | 左侧自定义图标 |
 | `right` | 右侧自定义内容 |
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/list/list-item/usage.md)
+**用法**：见 [usage.md](../components/list/list-item/usage.md)
 
 ---
 
@@ -128,7 +128,7 @@
 
 - `click`
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/list/product-card/usage.md)
+**用法**：见 [usage.md](../components/list/product-card/usage.md)
 
 ---
 
@@ -152,4 +152,4 @@
 |------|------|
 | `default` | 节点内容扩展，作用域参数为 { item, index } |
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/list/timeline/usage.md)
+**用法**：见 [usage.md](../components/list/timeline/usage.md)

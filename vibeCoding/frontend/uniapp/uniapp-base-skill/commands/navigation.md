@@ -1,6 +1,6 @@
 # 导航类组件（navigation）
 
-> 实现真源：`vibeCoding/frontend/uniapp/uniapp-base-skill/`
+> 实现真源：`vibeCoding/frontend/uniapp/uniapp-base-skill/`（本模块即实现层）
 > 本文件由 `components/_registry.json` + 各组件 `props.json` 同步生成，**改实现必须重新生成本文件**。
 > 重新生成：`node scripts/gen-commands.js`
 
@@ -33,7 +33,7 @@
 
 - `click`
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/navigation/breadcrumb/usage.md)
+**用法**：见 [usage.md](../components/navigation/breadcrumb/usage.md)
 
 ---
 
@@ -72,7 +72,7 @@
 | `default` | 菜单内容，默认渲染 items |
 | `header` | 自定义抽屉头部 |
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/navigation/side-menu/usage.md)
+**用法**：见 [usage.md](../components/navigation/side-menu/usage.md)
 
 ---
 
@@ -99,4 +99,4 @@
 - `update:modelValue`
 - `change`
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/navigation/top-tab/usage.md)
+**用法**：见 [usage.md](../components/navigation/top-tab/usage.md)

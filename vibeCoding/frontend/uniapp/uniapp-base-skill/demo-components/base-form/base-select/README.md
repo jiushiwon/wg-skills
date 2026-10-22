@@ -50,4 +50,4 @@
 
 - [base-input](../base-input/) — 输入框
 - [base-radio](../base-radio/) — 单选框（13 种形态对照）
-- [base-checkbox](../base-checkbox/) — 复选框（待补）
+- 复选框 demo 待补（组件实现见 `components/form/checkbox-group/`）

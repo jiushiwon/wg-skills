@@ -11,6 +11,7 @@
 | 根容器 | `containers/` | base-card / base-popup / base-form-item / base-avatar / base-navbar / base-tabbar |
 | 内置组件 | `components/` | form 8 个、feedback 5 个、list 5 个、navigation 3 个、business 5 个 |
 | 样式类 | `styles/` | button / line / shape / combo / card + 全局关键帧 `animation.scss` |
+| 组件索引 | `commands/` + `components/_registry.json` + `references/matching-rules.md` | 需求词 → 组件 → 路径 → 属性契约 |
 | 场景 demo | `demo-components/` | 卡片布局 / 表单输入 / 页面模板的 Markdown 规范 + HTML 参考图 |
 
 ## 二、容器与组件的关系
@@ -70,23 +71,43 @@ price-tag / progress-bar / count-down）不强制套容器。
 每个组件目录固定三件套：`index.vue`（Vue 3 `<script setup lang="ts">`）、
 `props.json`（契约）、`usage.md`（示例）。
 
-## 五、依赖
+逐条属性 / 事件 / 插槽 / CSS 类见分类索引：
+
+- [container.md](commands/container.md) —— 6 个根容器
+- [form.md](commands/form.md) / [feedback.md](commands/feedback.md) / [list.md](commands/list.md)
+- [navigation.md](commands/navigation.md) / [business.md](commands/business.md) / [style.md](commands/style.md)
+
+> `commands/*.md` 是**生成物**，改完组件必须重跑 `node scripts/gen-commands.js`，禁止手改。
+
+## 五、怎么找组件
+
+需求描述 → 组件的判定规则见 [references/matching-rules.md](references/matching-rules.md)：
+
+1. **点名命中**：组件名或别名（如 `base-card` / `滚轮选择器`）直接命中；
+2. **容器优先**：出现"卡片 / 弹窗 / 表单行 / 头像 / 顶部导航 / 底部菜单"等**外壳**词，
+   先给根容器，再给内容组件（"做商品卡片" → `product-card`，外壳由 `base-card` 提供）；
+3. **分类匹配**：查匹配规则分类表；
+4. **冲突裁决**：按匹配规则第四章裁决表（如"弹窗" vs "底部菜单"）；
+5. **未命中** → 按 [SKILL.md 6.4 固化流程](./SKILL.md) 新增组件。
+
+命中后输出：组件名 + 说明 → 组件路径 → 属性/事件/插槽表 → 用法示例 → 依赖哪个容器。
+
+## 六、依赖
 
 | Skill | 关系 | 说明 |
 |-------|------|------|
 | `uniapp-theme-skill` | **变量真源** | `var(--xxx, 兜底)` 的变量名与兜底值以 `templates/src/static/css/base.css` 为准 |
-| `uniapp-ui-component-commands-skill` | 被依赖 | 索引层，注册表 `path` 指向本模块，实现不在它那里 |
 
-## 六、主题变量
+## 七、主题变量
 
-命名空间与取值见 [SKILL.md 第六节](./SKILL.md)。要点：
+命名空间与取值见 [SKILL.md 第七节](./SKILL.md)。要点：
 
 - 一律 `var(--token, 兜底)`，兜底值必须等于 `base.css` 真值；
 - 尺寸一律 rpx；
 - 组件内不定义变量、不写 `@keyframes`（关键帧真源是 `styles/animation.scss`）；
 - 主题切换通过根节点 `data-theme`，组件无需改动。
 
-## 七、Demo
+## 八、Demo
 
 | 分类 | 入口 |
 |------|------|
@@ -100,7 +121,7 @@ price-tag / progress-bar / count-down）不强制套容器。
 
 子技能 demo 位于各 `uniapp-*-skill/demo-components/`。
 
-## 八、使用方式
+## 九、使用方式
 
 ```markdown
 /uniapp-base-skill 做一个弹窗
@@ -109,11 +130,16 @@ price-tag / progress-bar / count-down）不强制套容器。
 /uniapp-base-skill 做一个商品详情页
 ```
 
-## 九、版本
+## 十、版本
+
+### v4.0.0
+
+- 吸收原「UI 组件指令」模块（已删除）：注册表、分类索引、匹配规则、索引生成器全部并入本模块，该 skill 删除。
+- 组件实现与索引同源，`commands/*.md` 改由 `scripts/gen-commands.js` 生成。
 
 ### v3.0.0
 
-- 组件实现全部迁入本模块，`uniapp-ui-component-commands-skill` 退化为索引层。
+- 组件实现全部迁入本模块，原「UI 组件指令」模块退化为索引层。
 - 新增 `containers/` 根容器层，移除 `templates/` 目录。
 - 全部内置组件重写为 Vue 3 `<script setup lang="ts">`。
 - 新增 `styles/animation.scss` 作为全局关键帧唯一真源。

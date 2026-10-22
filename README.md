@@ -1,6 +1,6 @@
 # wg-skills — 把古法全栈开发经验装进 AI
 
-> **158 个**面向 Claude Code / Cursor / Codex 等智能体的公开 Skills，MIT 协议。
+> **157 个**面向 Claude Code / Cursor / Codex 等智能体的公开 Skills，MIT 协议。
 > 不是提示词合集，而是一套让 AI 按统一工程规范完成“项目骨架 → 模块 → 前后端契约 → 部署 → 迭代”的基础能力体系。
 
 ---
@@ -202,7 +202,7 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 - 组件类：`uniapp-page-components-skill`
 - 场景页：`uniapp-member-center-skill`（会员中心 / 积分任务 / 积分商城）
 - 诊断类：`uniapp-diagnostic-skill` / `uniapp-code-audit-skill` / `uniapp-crossplatform-audit-skill` / `uniapp-vue2-upgrade-skill`
-- UI 类：`uniapp-ui-replica-skill` / `uniapp-ui-component-commands-skill` / `uniapp-ui-template-builder-skill`
+- UI 类：`uniapp-ui-replica-skill` / `uniapp-ui-template-builder-skill`
 
 #### React 体系（3 个）
 

@@ -1,6 +1,6 @@
 # 样式类组件（style）
 
-> 实现真源：`vibeCoding/frontend/uniapp/uniapp-base-skill/`
+> 实现真源：`vibeCoding/frontend/uniapp/uniapp-base-skill/`（本模块即实现层）
 > 本文件由 `components/_registry.json` + 各组件 `props.json` 同步生成，**改实现必须重新生成本文件**。
 > 重新生成：`node scripts/gen-commands.js`
 
@@ -36,7 +36,7 @@
 | `btn--large` | 大号按钮 |
 | `btn--block` | 块级按钮 - 宽度100% |
 
-**用法**：见 [usage.md](../../uniapp-base-skill/styles/button/usage.md)
+**用法**：见 [usage.md](../styles/button/usage.md)
 
 ---
 
@@ -56,7 +56,7 @@
 | `card-elevated` | 高海拔卡片 - 明显阴影 |
 | `card-glass` | 玻璃拟态卡片 - 半透明模糊效果 |
 
-**用法**：见 [usage.md](../../uniapp-base-skill/styles/card/usage.md)
+**用法**：见 [usage.md](../styles/card/usage.md)
 
 ---
 
@@ -75,7 +75,7 @@
 | `icon-tag` | 图标标签 - 图标+文字组合 |
 | `badge` | 徽章 - 右上角标记 (--dot 红点模式) |
 
-**用法**：见 [usage.md](../../uniapp-base-skill/styles/combo/usage.md)
+**用法**：见 [usage.md](../styles/combo/usage.md)
 
 ---
 
@@ -97,7 +97,7 @@
 | `space-line` | 间隔线 |
 | `v-solid-line` | 竖线 |
 
-**用法**：见 [usage.md](../../uniapp-base-skill/styles/line/usage.md)
+**用法**：见 [usage.md](../styles/line/usage.md)
 
 ---
 
@@ -117,4 +117,4 @@
 | `circle` | 圆形 (--small/--medium/--large) |
 | `dot` | 圆点 (--small/--medium/--large) |
 
-**用法**：见 [usage.md](../../uniapp-base-skill/styles/shape/usage.md)
+**用法**：见 [usage.md](../styles/shape/usage.md)

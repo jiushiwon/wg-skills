@@ -1,6 +1,6 @@
 # 根容器组件（container）
 
-> 实现真源：`vibeCoding/frontend/uniapp/uniapp-base-skill/`
+> 实现真源：`vibeCoding/frontend/uniapp/uniapp-base-skill/`（本模块即实现层）
 > 本文件由 `components/_registry.json` + 各组件 `props.json` 同步生成，**改实现必须重新生成本文件**。
 > 重新生成：`node scripts/gen-commands.js`
 

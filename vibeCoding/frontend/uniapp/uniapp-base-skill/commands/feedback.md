@@ -1,6 +1,6 @@
 # 反馈类组件（feedback）
 
-> 实现真源：`vibeCoding/frontend/uniapp/uniapp-base-skill/`
+> 实现真源：`vibeCoding/frontend/uniapp/uniapp-base-skill/`（本模块即实现层）
 > 本文件由 `components/_registry.json` + 各组件 `props.json` 同步生成，**改实现必须重新生成本文件**。
 > 重新生成：`node scripts/gen-commands.js`
 
@@ -40,7 +40,7 @@
 - `close`
 - `select`
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/feedback/action-sheet/usage.md)
+**用法**：见 [usage.md](../components/feedback/action-sheet/usage.md)
 
 ---
 
@@ -73,7 +73,7 @@
 | `icon` | 自定义图标 / 插图区域 |
 | `action` | 自定义操作区，优先于内置按钮 |
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/feedback/empty-state/usage.md)
+**用法**：见 [usage.md](../components/feedback/empty-state/usage.md)
 
 ---
 
@@ -93,7 +93,7 @@
 | `text` | `string` |  | 加载文字 |
 | `size` | `'small' | 'medium' | 'large'` | `medium` | 尺寸 |
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/feedback/loading/usage.md)
+**用法**：见 [usage.md](../components/feedback/loading/usage.md)
 
 ---
 
@@ -132,7 +132,7 @@
 |------|------|
 | `default` | 内容区域，未传时显示 message |
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/feedback/modal/usage.md)
+**用法**：见 [usage.md](../components/feedback/modal/usage.md)
 
 ---
 
@@ -157,4 +157,4 @@
 
 - `close`
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/feedback/toast/usage.md)
+**用法**：见 [usage.md](../components/feedback/toast/usage.md)

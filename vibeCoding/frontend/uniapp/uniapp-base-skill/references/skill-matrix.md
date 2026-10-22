@@ -14,7 +14,6 @@
 
 | 技能 | 关系 | 说明 |
 |------|------|------|
-| `uniapp-ui-component-commands-skill` | 被依赖 | 索引层，"用哪个、去哪拿"；组件实现不在它那里 |
 | `uniapp-page-components-skill` | 依赖本模块 | 页面级组件（聊天页 / 首页 / 详情页等） |
 | `uniapp-style-skill` / `uniapp-theme-skill` | 依赖本模块 | 设计系统与主题变量真源 |
 

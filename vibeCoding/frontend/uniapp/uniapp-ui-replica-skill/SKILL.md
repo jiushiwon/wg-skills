@@ -24,7 +24,7 @@ triggers:
 
 **把 UI 原型图/截图高还原地复刻成可运行代码。**
 
-核心原则：**先看到像原图的页面，再谈规范和收敛**。第一稿目标是把可见部分还原到 80% 以上；样式收敛、组件沉淀、设计系统治理交给 `frontend-style-harmonizer-skill` 或 `ui-component-commands-skill` 后续处理。
+核心原则：**先看到像原图的页面，再谈规范和收敛**。第一稿目标是把可见部分还原到 80% 以上；样式收敛、组件沉淀、设计系统治理交给 `frontend-style-harmonizer-skill` 或 `uniapp-base-skill` 后续处理。
 
 ## 适用场景
 
@@ -36,7 +36,7 @@ triggers:
 
 - 用户只有文字需求，没有图片 —— 用 `frontend-ui-foundry`
 - 用户想从零设计一个新页面 —— 用 `frontend-ui-foundry` 或 `ui-ux-pro-max`
-- 用户只想改某个已有组件 —— 用 `ui-component-commands-skill`
+- 用户只想改某个已有组件 —— 用 `uniapp-base-skill`
 
 ## 两种执行模式
 
@@ -142,7 +142,7 @@ triggers:
 ## 与其他 skill 的关系
 
 - 复刻完成后，如需收敛样式、提取公共变量 → `frontend-style-harmonizer-skill`
-- 复刻完成后，如需沉淀可复用组件 → `ui-component-commands-skill`
+- 复刻完成后，如需沉淀可复用组件 → `uniapp-base-skill`
 - 无图纯文字需求 → `frontend-ui-foundry`
 
 本 skill 默认独立运行，专注复刻，不中途调用其他 skill。

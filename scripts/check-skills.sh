@@ -109,8 +109,18 @@ check_missing_refs() {
     private_skills=$(grep -oE '\*\*`[a-z-]+-skill`\*\*' "$missing_list_file" | sed 's/\*\*`//;s/`\*\*//' | sort -u)
 
     # 从所有 .md 提取所有 *-skill 名
+    # 排除非版本控制目录：docs/（本地沉淀）、graphify-out/（产物）、各工具目录
     local all_refs
-    all_refs=$(grep -rhoE '\b[a-z][a-z0-9-]*-skill\b' --include="*.md" . 2>/dev/null | sort -u)
+    all_refs=$(grep -rhoE '\b[a-z][a-z0-9-]*-skill\b' --include="*.md" \
+        --exclude-dir=docs \
+        --exclude-dir=graphify-out \
+        --exclude-dir=.git \
+        --exclude-dir=.claude \
+        --exclude-dir=.superpowers \
+        --exclude-dir=.worktrees \
+        --exclude-dir=node_modules \
+        --exclude-dir=unpackage \
+        . 2>/dev/null | sort -u)
 
     local total_refs=0 broken_refs=0 false_positives=0
     while IFS= read -r skill; do

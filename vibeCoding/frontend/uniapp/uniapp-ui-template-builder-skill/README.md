@@ -297,7 +297,7 @@ uniapp-ui-template-builder/
 | 技能 | 协作方式 |
 |------|----------|
 | frontend-ui-foundry | 场景/品牌风格由此提供，本技能使用其风格系统 |
-| ui-component-commands-skill | 组件级沉淀，页面由组件组合而成 |
+| uniapp-base-skill | 组件级沉淀，页面由组件组合而成 |
 | icon-image-catch-skill | 素材抓取，页面缺图标/图片时自动补 |
 | impeccable | 生成后可通过 impeccable 优化代码 |
 

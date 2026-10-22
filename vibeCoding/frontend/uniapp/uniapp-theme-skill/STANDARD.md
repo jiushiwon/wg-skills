@@ -12,7 +12,7 @@
 ```
 uniapp-theme-skill/templates/src/static/css/base.css    唯一真源
                            引用
-        base-skill / style-skill / ui-component-commands / page-components …
+        base-skill / style-skill / page-components …
 ```
 
 ## 二、依赖

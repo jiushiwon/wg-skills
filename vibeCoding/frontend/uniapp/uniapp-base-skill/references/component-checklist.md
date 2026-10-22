@@ -69,9 +69,9 @@
 
 ## 七、索引与文档同步
 
-- [ ] `uniapp-ui-component-commands-skill/components/_registry.json` 有且仅有一条记录，`path` 真实存在
-- [ ] `uniapp-ui-component-commands-skill/commands/<category>.md` 有对应条目
-- [ ] `uniapp-ui-component-commands-skill/references/matching-rules.md` 的别名表已同步
+- [ ] `uniapp-base-skill/components/_registry.json` 有且仅有一条记录，`path` 真实存在
+- [ ] `uniapp-base-skill/commands/<category>.md` 有对应条目
+- [ ] `uniapp-base-skill/references/matching-rules.md` 的别名表已同步
 - [ ] 本模块 `SKILL.md` 的组件清单已同步
 - [ ] 根 `README.md` / 根 `AGENTS.md` 的目录树已同步（结构有变化时）
 - [ ] `docs/` 下的内容**未**提交（本地沉淀专用）

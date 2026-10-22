@@ -9,7 +9,7 @@
 
 本模块负责把给定截图 / 设计稿 / 线上页面**复刻**成 uni-app 代码，并保证视觉对齐。
 
-> **边界**：复刻产出的是**业务项目内的页面**，不是技能库组件。复刻过程中若发现可复用的通用件，走 `uniapp-ui-component-commands-skill` 的固化流程沉淀到 `uniapp-base-skill`。
+> **边界**：复刻产出的是**业务项目内的页面**，不是技能库组件。复刻过程中若发现可复用的通用件，走 `uniapp-base-skill` 的固化流程沉淀。
 
 ## 二、依赖
 
@@ -18,7 +18,7 @@
 | `uniapp-theme-skill` | 依赖（变量真源） | 复刻出的颜色/间距落成变量 |
 | `uniapp-base-skill` | 依赖（容器与零件） | 优先复用已有容器与组件 |
 | `uniapp-style-skill` | 依赖（样式规范） | 排版、间距、动效规范 |
-| `uniapp-ui-component-commands-skill` | 依赖（检索与固化） | 查已有组件、沉淀新组件 |
+| `uniapp-base-skill` | 依赖（检索与固化） | 查已有组件、沉淀新组件 |
 
 ## 三、目录约定
 
@@ -48,7 +48,7 @@ uniapp-ui-replica-skill/
 
 ## 五、内置约束
 
-**R01** 复刻前先查 `uniapp-ui-component-commands-skill` 的注册表。**已有组件禁止重写**，只做 props 配置。
+**R01** 复刻前先查 `uniapp-base-skill` 的注册表。**已有组件禁止重写**，只做 props 配置。
 
 **R02** 复刻出的页面级内容块必须用容器承载（`base-card` / `base-popup`），不手写外壳。
 
@@ -69,7 +69,7 @@ uniapp-ui-replica-skill/
 ## 六、变更纪律
 
 - 改复刻流程 → 同步 `SKILL.md` 与 `README.md`。
-- 改沉淀步骤 → 同步 `references/integration-guide.md` 与 `uniapp-ui-component-commands-skill` 的固化流程（两处必须一致）。
+- 改沉淀步骤 → 同步 `references/integration-guide.md` 与 `uniapp-base-skill` 的固化流程（两处必须一致）。
 
 ## 七、自检
 

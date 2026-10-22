@@ -1,6 +1,6 @@
 # 业务类组件（business）
 
-> 实现真源：`vibeCoding/frontend/uniapp/uniapp-base-skill/`
+> 实现真源：`vibeCoding/frontend/uniapp/uniapp-base-skill/`（本模块即实现层）
 > 本文件由 `components/_registry.json` + 各组件 `props.json` 同步生成，**改实现必须重新生成本文件**。
 > 重新生成：`node scripts/gen-commands.js`
 
@@ -49,7 +49,7 @@
 | `default` | 自定义倒计时内容，作用域含 day/hour/minute/second 与 formatted |
 | `end` | 倒计时结束时的内容 |
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/business/count-down/usage.md)
+**用法**：见 [usage.md](../components/business/count-down/usage.md)
 
 ---
 
@@ -81,7 +81,7 @@
 
 - `click`
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/business/coupon/usage.md)
+**用法**：见 [usage.md](../components/business/coupon/usage.md)
 
 ---
 
@@ -104,7 +104,7 @@
 | `symbol` | `boolean` | `true` | 是否显示货币符号 |
 | `decimal` | `boolean` | `true` | 数字价格是否保留两位小数 |
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/business/price-tag/usage.md)
+**用法**：见 [usage.md](../components/business/price-tag/usage.md)
 
 ---
 
@@ -128,7 +128,7 @@
 | `strokeWidth` | `number` | `6` | 进度条高度(px 值，按 1px=2rpx 换算) |
 | `round` | `boolean` | `true` | 是否圆角 |
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/business/progress-bar/usage.md)
+**用法**：见 [usage.md](../components/business/progress-bar/usage.md)
 
 ---
 
@@ -156,4 +156,4 @@
 - `update:modelValue`
 - `change`
 
-**用法**：见 [usage.md](../../uniapp-base-skill/components/business/stepper/usage.md)
+**用法**：见 [usage.md](../components/business/stepper/usage.md)

@@ -1,20 +1,19 @@
 /**
  * 由 components/_registry.json + 各组件 props.json 生成 commands/*.md
- * 保证索引层与实现层永远同步（STANDARD C09）。
+ * 保证索引与实现永远同步（STANDARD C09）。
  *
  * 用法：node scripts/gen-commands.js
  *
  * 组件契约真源：
- *   - 容器   → uniapp-base-skill/containers/<name>/props.json
- *   - 组件   → uniapp-base-skill/components/<category>/<name>/props.json
- *   - 样式类 → uniapp-base-skill/styles/<dir>/props.json（dir 取注册表 path 的末段）
+ *   - 容器   → containers/<name>/props.json
+ *   - 组件   → components/<category>/<name>/props.json
+ *   - 样式类 → styles/<dir>/props.json（dir 取注册表 path 的末段）
  */
 const fs = require('fs');
 const path = require('path');
 
 const SKILL = path.join(__dirname, '..');
-const ROOT = path.join(SKILL, '..');
-const BASE = path.join(ROOT, 'uniapp-base-skill');
+const BASE = SKILL;
 
 const registry = JSON.parse(fs.readFileSync(path.join(SKILL, 'components/_registry.json'), 'utf8'));
 
@@ -88,7 +87,7 @@ for (const cat of Object.keys(CAT_TITLE)) {
   const lines = [];
   lines.push(`# ${CAT_TITLE[cat]}组件（${cat}）`);
   lines.push('');
-  lines.push('> 实现真源：`vibeCoding/frontend/uniapp/uniapp-base-skill/`');
+  lines.push('> 实现真源：`vibeCoding/frontend/uniapp/uniapp-base-skill/`（本模块即实现层）');
   lines.push('> 本文件由 `components/_registry.json` + 各组件 `props.json` 同步生成，**改实现必须重新生成本文件**。');
   lines.push('> 重新生成：`node scripts/gen-commands.js`');
   lines.push('');

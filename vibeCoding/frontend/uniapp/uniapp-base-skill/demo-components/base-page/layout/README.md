@@ -64,7 +64,7 @@ demo-components/layout/
     │   └── login-float.html
 ```
 
-> 综合页面模板（商城风格、个性化风格）已迁移至 [docs/uniapp-base-skill-demo/page-template](../../docs/uniapp-base-skill-demo/page-template/)，作为后续专题迭代素材。
+> 综合页面模板（商城风格、个性化风格）已移出本目录，作为后续专题迭代素材。
 
 ---
 

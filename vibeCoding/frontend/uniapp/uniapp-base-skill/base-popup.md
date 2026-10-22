@@ -296,4 +296,4 @@ import BaseCard from '../base-card/index.vue'
 
 - [base-card.md](base-card.md) — 卡片容器（base-popup 内置）
 - [input-field.md](input-field.md) — 表单类组件（input-field / search-bar）
-- [../uniapp-ui-component-commands-skill/commands/feedback.md](../uniapp-ui-component-commands-skill/commands/feedback.md) — 弹层类组件索引
+- [commands/feedback.md](commands/feedback.md) — 弹层类组件索引

@@ -590,7 +590,7 @@ export default function Page() {
 | 技能 | 协作方式 |
 |------|----------|
 | frontend-ui-foundry | 场景/品牌风格由此提供，本技能使用其风格系统 |
-| ui-component-commands-skill | 组件级沉淀，页面由组件组合而成 |
+| uniapp-base-skill | 组件级沉淀，页面由组件组合而成 |
 | impeccable | 生成后可通过impeccable优化 |
 
 ## 目录结构

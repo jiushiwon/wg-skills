@@ -68,7 +68,7 @@ AI 时代的编程不是"取代程序员"，而是把传统工程中**重复、�
 - 🟢 **一天学会 Node.js 体系** → 触发 `nodejs-init-skill`
 - 🎨 **一天学会 Vue 体系** → 触发 `vue-base-skill` / `vue-generate-skill`（SPA）/ `nuxt-generate-skill`（SSR）
 - 📱 **一天学会 React 体系** → 触发 `react-generate-skill` / `next-generate-skill`
-- 📱 **一天学会 uni-app 体系** → 触发 `uniapp-base-skill`（基础组件与容器真源）及 15 个独立 uniapp 技能
+- 📱 **一天学会 uni-app 体系** → 触发 `uniapp-base-skill`（基础组件与容器真源）及 14 个独立 uniapp 技能
 
 > 一句"帮我用 Java 搭一个商城"，智能体会按"选型 → 骨架 → 业务模块"的顺序串起多个技能，**小白也能跟着提示词完成一个完整项目**。
 
@@ -207,10 +207,11 @@ wg-skills/
 │   │   │   ├── icon-catch-skill/             # 图标抓取
 │   │   │   └── image-catch-skill/            # 图片抓取
 │   │   ├── frontend-icon-skill/              # SVG 模板生成 + SVG→PNG 导出 + 图片处理（合并自 image-forge-skill）
-│   │   ├── uniapp/                           # uni-app 技能矩阵（16 skill）
-│   │   │   ├── uniapp-base-skill/            # 基础组件与容器唯一真源（6 容器 + 26 组件）
+│   │   ├── uniapp/                           # uni-app 技能矩阵（15 skill）
+│   │   │   ├── uniapp-base-skill/            # 基础组件与容器唯一真源（6 容器 + 26 组件 + 组件索引）
 │   │   │   │   ├── containers/               # 根容器层
-│   │   │   │   ├── components/               # 内置组件层（form/feedback/list/navigation/business）
+│   │   │   │   ├── components/               # 内置组件层（form/feedback/list/navigation/business）+ 注册表
+│   │   │   │   ├── commands/                 # 分类组件索引（生成物）
 │   │   │   │   └── styles/                   # 样式类组件 + 全局关键帧真源
 │   │   │   ├── uniapp-app-generate-skill/    # uni-app 项目生成
 │   │   │   ├── uniapp-standard-skill/        # 开发通用规范
@@ -225,7 +226,6 @@ wg-skills/
 │   │   │   ├── uniapp-crossplatform-audit-skill/ # 跨平台兼容审计
 │   │   │   ├── uniapp-vue2-upgrade-skill/    # Vue2 → Vue3
 │   │   │   ├── uniapp-ui-replica-skill/      # UI 原型图复刻
-│   │   │   ├── uniapp-ui-component-commands-skill/ # UI 组件指令
 │   │   │   └── uniapp-ui-template-builder-skill/   # UI 页面模板
 │   │   └── vue/                              # Vue 通用技能矩阵
 │   │       ├── vue-base-skill/               # Vue 基础（父技能，含 21 个子技能）
@@ -298,9 +298,7 @@ wg-skills/
 
 ### 3.3 顶层遗留目录
 
-| 目录 | 状态 | 说明 |
-|------|------|------|
-| `uniapp-base-skill/`（顶层） | ⚠️ **历史遗留副本** | 完整版已在 `vibeCoding/frontend/uniapp/uniapp-base-skill/`，顶层这份仅含部分 demo，建议删除 |
+当前仓库根**无**遗留副本目录，全部技能均位于 `vibeCoding/` 之下。
 
 ---
 

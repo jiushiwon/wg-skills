@@ -100,4 +100,4 @@ uniapp-ui-replica-skill/
 
 **不是“看图写代码”，而是“看图 → 结构化 → Token 化 → 代码化”。**
 
-本 skill 专注第一稿还原度，目标 80% 以上即可交付。后续如需收敛样式、沉淀组件，再调用 `frontend-style-harmonizer-skill` 或 `ui-component-commands-skill`。
+本 skill 专注第一稿还原度，目标 80% 以上即可交付。后续如需收敛样式、沉淀组件，再调用 `frontend-style-harmonizer-skill` 或 `uniapp-base-skill`。
