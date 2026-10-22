@@ -7,6 +7,7 @@
 #   3. 触发词缺失检测（description 无任何触发词标记）
 #   4. 引用了不存在目录的 skill 名
 #   5. README.md 顶部数字与实际 SKILL.md 数量一致
+#   6. *-skill 目录必须位于 vibeCoding/ 或 others/ 下（防误建副本）
 #
 # 用法：
 #   bash scripts/check-skills.sh           # 全量检查
@@ -14,6 +15,7 @@
 #   bash scripts/check-skills.sh front     # 只查 frontmatter
 #   bash scripts/check-skills.sh missing   # 只查缺失引用
 #   bash scripts/check-skills.sh readme    # 只查 README 数字
+#   bash scripts/check-skills.sh layout    # 只查技能目录位置
 #
 # 退出码：0=通过；1=有错误；2=有警告
 
@@ -149,6 +151,33 @@ check_readme() {
     fi
 }
 
+# ---- 检查 6: 技能目录位置 ----
+# 所有 *-skill 目录必须位于 vibeCoding/ 或 others/ 之下。
+# 防止在仓库根（或其它层）误建技能目录副本（曾出现 vue-base-skill/vue-empty-skill/）。
+check_layout() {
+    local bad
+    bad=$(find . -type d -name "*-skill" \
+        -not -path "./vibeCoding/*" \
+        -not -path "./others/*" \
+        -not -path "./.git/*" \
+        -not -path "./docs/*" \
+        -not -path "./graphify-out/*" \
+        -not -path "./.claude/*" \
+        -not -path "./.superpowers/*" \
+        -not -path "./.worktrees/*" \
+        -not -path "*/node_modules/*" \
+        -not -path "*/unpackage/*" 2>/dev/null)
+
+    if [ -n "$bad" ]; then
+        while IFS= read -r d; do
+            [ -z "$d" ] && continue
+            fail "技能目录位置错误（应在 vibeCoding/ 或 others/ 下）: $d"
+        done <<< "$bad"
+    else
+        ok "所有 *-skill 目录均在 vibeCoding/ 或 others/ 下"
+    fi
+}
+
 # ---- 主入口 ----
 MODE="${1:-all}"
 
@@ -158,6 +187,7 @@ case "$MODE" in
     triggers) check_triggers ;;
     missing)  check_missing_refs ;;
     readme)   check_readme ;;
+    layout)   check_layout ;;
     all)
         echo "=== wg-skills 健康检查 ==="
         check_count
@@ -165,9 +195,10 @@ case "$MODE" in
         check_triggers
         check_missing_refs
         check_readme
+        check_layout
         ;;
     *)
-        echo "用法: $0 {all|count|front|triggers|missing|readme}"
+        echo "用法: $0 {all|count|front|triggers|missing|readme|layout}"
         exit 2
         ;;
 esac
