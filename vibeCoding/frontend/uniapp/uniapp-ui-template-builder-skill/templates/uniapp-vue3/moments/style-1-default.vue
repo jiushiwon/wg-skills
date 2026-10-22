@@ -30,11 +30,11 @@
           <!-- 点赞评论 -->
           <view class="moment-actions">
             <view class="action-item">
-              <text class="action-icon">👍</text>
+              <text class="action-icon">赞</text>
               <text class="action-count">{{ item.likes }}</text>
             </view>
             <view class="action-item">
-              <text class="action-icon">💬</text>
+              <text class="action-icon">留言</text>
               <text class="action-count">{{ item.comments }}</text>
             </view>
           </view>
@@ -73,7 +73,7 @@ const props = defineProps({
         name: '李四',
         avatar: 'https://picsum.photos/80/81',
         time: '5小时前',
-        content: '新买的手机到了，开心！🎉',
+        content: '新买的手机到了，开心！',
         images: [
           'https://picsum.photos/200/200',
           'https://picsum.photos/200/201',

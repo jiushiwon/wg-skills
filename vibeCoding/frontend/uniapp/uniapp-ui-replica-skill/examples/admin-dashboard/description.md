@@ -12,7 +12,7 @@
 ## Token 表
 
 ```css
---primary: #2563EB;
+----color-primary: #2563EB;
 --bg-page: #F3F4F6;
 --bg-card: #FFFFFF;
 --text-main: #111827;

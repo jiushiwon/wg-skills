@@ -16,7 +16,7 @@
           @click="onSelect(item.value)"
         >
           <text class="picker-item-text">{{ item.label }}</text>
-          <text v-if="selectedValue === item.value" class="picker-item-check">✓</text>
+          <text v-if="selectedValue === item.value" class="picker-item-check"></text>
         </view>
       </scroll-view>
     </view>

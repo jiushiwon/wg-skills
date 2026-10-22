@@ -10,8 +10,8 @@
 
 page {
   --color-primary: #{prim.$color-primary};
-  --color-primary-light: #{prim.$color-primary-light};
-  --color-primary-dark: #{prim.$color-primary-dark};
+  --primary-400: #{prim.$color-primary-light};
+  --primary-600: #{prim.$color-primary-dark};
 
   --color-secondary: #{if(prim.$color-secondary, prim.$color-secondary, 'inherit')};
   --color-tertiary: #{if(prim.$color-tertiary, prim.$color-tertiary, 'inherit')};
@@ -21,17 +21,17 @@ page {
   --color-error: #{prim.$color-error};
   --color-info: #{prim.$color-info};
 
-  --color-text-primary: #{prim.$color-text-primary};
-  --color-text-secondary: #{prim.$color-text-secondary};
-  --color-text-tertiary: #{prim.$color-text-tertiary};
-  --color-text-inverse: #{prim.$color-text-inverse};
+  --text-primary: #{prim.$color-text-primary};
+  --text-secondary: #{prim.$color-text-secondary};
+  --text-tertiary: #{prim.$color-text-tertiary};
+  --text-inverse: #{prim.$color-text-inverse};
 
-  --color-bg-page: #{prim.$color-bg-page};
+  --bg-page: #{prim.$color-bg-page};
   --color-bg-card: #{prim.$color-bg-card};
   --color-bg-light: #{prim.$color-bg-secondary};
 
-  --color-border: #{prim.$color-border};
-  --color-border-light: #{prim.$color-border-light};
+  --border: #{prim.$color-border};
+  --border-light: #{prim.$color-border-light};
 
   --font-2xs: #{prim.$font-2xs};
   --font-xs: #{prim.$font-xs};

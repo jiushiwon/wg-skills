@@ -327,18 +327,18 @@ interface ClickParams {
 ### 6.1 隐私合规
 
 ```typescript
-// ✅ 正确：脱敏处理
+//  正确：脱敏处理
 analytics.click('login_success', {
   user_id: userId,  // 业务需要可保留
 });
 
-// ❌ 错误：上报敏感信息
+//  错误：上报敏感信息
 analytics.click('login_success', {
   password: '123456',  // 禁止
   id_card: '110101...',  // 禁止
 });
 
-// ✅ 正确：用户授权后埋点
+//  正确：用户授权后埋点
 function trackWithConsent(event: string, params?: Record<string, any>) {
   const consent = uni.getStorageSync('analytics_consent');
   if (consent) {

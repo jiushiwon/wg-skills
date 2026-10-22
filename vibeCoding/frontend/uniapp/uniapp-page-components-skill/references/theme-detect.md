@@ -21,7 +21,7 @@
 用 grep 在以上文件里搜索，判断项目用的是哪种变量体系：
 
 ```bash
-rg -n -- "--color-primary|--primary-[0-9]|--brand-" App.vue src/styles static/css
+rgrg -n -- "--color-primary|--primary-[0-9]|--brand-" App.vue src/styles static/css
 rg -n -- "\$color-primary|\$primary" src/uni.scss src/styles
 rg -n -- "@color-primary|@primary" src/styles
 ```
@@ -43,7 +43,7 @@ rg -n -- "@color-primary|@primary" src/styles
 ### 1.4 记录检测结果（输出给用户确认）
 
 ```
-目标项目主题系统检测结果：
+目标目标项目主题系统检测结果：
 ├─ 变量文件：src/styles/theme.css
 ├─ 命名风格：CSS 变量（--primary-500 / --color-*）
 ├─ 主色值：  #2E6BE6（--primary-500）
@@ -57,32 +57,32 @@ rg -n -- "@color-primary|@primary" src/styles
 
 ### 场景 A：命名风格一致（直接用）
 
-项目变量名与组件使用的语义变量（`--color-primary` / `--spacing-md` / `--radius-card` 等）**一致** → 组件原样复制，零改动。
+项目变量名与组件使用的语义变量（`--color-primary` / `--space-6` / `--radius-card` 等）**一致** → 组件原样复制，零改动。
 
 ### 场景 B：命名风格不同（生成桥接层，不改组件）
 
 项目用的是别的命名（`--primary-500`、`$primary`、`@brand`）→ **不要改组件内部**，在项目全局加一个"桥接"文件，把项目变量映射到组件语义变量：
 
 ```css
-/* src/styles/bridge.css（追加到全局引入，或 App.vue 里） */
+/*/* src/styles/bridge.css（追加到全局引入，或 App.vue 里） */
 :root {
   /* 主色：从项目变量映射 */
   --color-primary: var(--primary-500);      /* 或 $primary 编译进来的值 */
   /* 背景 / 文字语义色 */
-  --color-bg-page: var(--bg-page, #F5F6F8);
-  --color-bg-surface: #FFFFFF;
+  --bg-page: var(--bg-page, #fafafa);
+  --bg-card: #FFFFFF;
   /* color-mix() 需较新内核（微信 XWeb/Chrome 111+/现代 Safari），低版本不可用时改成预计算浅色（如 #EAF0FD） */
-  --color-bg-tinted: color-mix(in srgb, var(--primary-500, var(--color-primary, #2563EB)) 8%, #fff);
-  --color-text-primary: var(--text-primary, #171717);
-  --color-text-secondary: var(--text-secondary, #737373);
-  --color-text-tertiary: var(--text-tertiary, #A3A3A3);
-  --color-border: #E5E7EB;
-  --color-border-light: #F0F0F0;
+  --bg-light: color-mix(in srgb, var(--primary-500, var(--color-primary, #14b8a6)) 8%, #fff);
+  --text-primary: var(--text-primary, #171717);
+  --text-secondary: var(--text-secondary, #525252);
+  --text-tertiary: var(--text-tertiary, #a3a3a3);
+  --border: #E5E7EB;
+  --border-light: #F0F0F0;
   --color-error: #EF4444;
-  --white: #FFFFFF;
+  --text-inverse: #FFFFFF;
   /* 尺寸：项目有间距/圆角体系则映射，无则用标准阶梯 */
-  --spacing-xs: 8rpx;  --spacing-sm: 16rpx;  --spacing-md: 24rpx;
-  --spacing-lg: 32rpx; --spacing-xl: 48rpx;  --spacing-2xl: 64rpx; --spacing-3xl: 96rpx;
+  --space-2: 8rpx;  --space-4: 16rpx;  --space-6: 24rpx;
+  --space-8: 32rpx; --space-12: 48rpx;  --space-16: 64rpx; --space-24: 96rpx;
   --font-xs: 22rpx;  --font-sm: 24rpx;  --font-md: 28rpx;
   --font-lg: 32rpx;  --font-xl: 36rpx;  --font-2xl: 44rpx;
   --height-btn-sm: 56rpx; --height-btn-md: 72rpx; --height-btn-lg: 88rpx; --height-btn-xl: 96rpx;
@@ -103,7 +103,7 @@ rg -n -- "@color-primary|@primary" src/styles
 1. **提取品牌色**：扫描项目源码中**出现频率最高**的 hex 颜色作为 `--color-primary` 候选：
 
 ```bash
-rg -o "#[0-9a-fA-F]{6}" src --no-filename | sort | uniq -c | sort -rn | head -10
+rgrg -o "#[0-9a-fA-F]{6}" src --no-filename | sort | uniq -c | sort -rn | head -10
 ```
 
 取第一名（通常是品牌主色）与用户确认；取失败时默认 `#2563EB`。

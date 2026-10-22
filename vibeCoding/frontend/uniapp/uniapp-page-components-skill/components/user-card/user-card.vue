@@ -63,10 +63,10 @@ const props = withDefaults(defineProps<Props>(), {
   actionType: 'ghost',
   actionLoading: false,
   clickable: false,
-  radius: 'var(--radius-card)',
-  padding: 'var(--spacing-md)',
-  background: 'var(--color-bg-surface)',
-  margin: '0 0 var(--spacing-md)',
+  radius: 'var(--radius-card, 24rpx)',
+  padding: 'var(--space-6, 24rpx)',
+  background: 'var(--bg-card, #ffffff)',
+  margin: '0 0 var(--space-6, 24rpx)',
   border: false,
   shadow: false,
 })
@@ -88,31 +88,31 @@ const emit = defineEmits<{ click: []; avatarClick: []; actionClick: [] }>()
 .uc-main {
   flex: 1;
   min-width: 0;
-  margin: 0 var(--spacing-md);
+  margin: 0 var(--space-6, 24rpx);
 }
 
 .uc-nickname {
   display: block;
-  font-size: var(--font-md);
+  font-size: var(--font-md, 28rpx);
   font-weight: 600;
-  color: var(--color-text-primary);
+  color: var(--text-primary, #171717);
 }
 
 .uc-subtitle {
   display: block;
   margin-top: 2rpx;
-  font-size: var(--font-xs);
-  color: var(--color-text-tertiary);
+  font-size: var(--font-xs, 24rpx);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .uc-desc {
-  margin-top: var(--spacing-xs);
+  margin-top: var(--space-2, 8rpx);
 }
 
 .uc-desc-text {
-  font-size: var(--font-sm);
+  font-size: var(--font-sm, 26rpx);
   line-height: 1.6;
-  color: var(--color-text-secondary);
+  color: var(--text-secondary, #525252);
 }
 
 .uc-action {

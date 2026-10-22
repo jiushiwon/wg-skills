@@ -52,7 +52,7 @@ uniapp 项目**跨平台兼容性专项深度审计**技能。识别项目在微
 对 Claude 说任意一种：
 
 ```
-跨平台审计
+跨平跨平台审计
 小程序 App 兼容
 多端兼容检查
 三端表现差异
@@ -62,24 +62,24 @@ uniapp 项目**跨平台兼容性专项深度审计**技能。识别项目在微
 
 ```
 Phase 1: 审计范围确认
-  → 目标平台（小程序 / H5 / App）
-  → 端数（2 端 / 3 端 / N 端）
-  → 重点维度（模板 / 样式 / API / 条件编译 / 平台配置 / 端间差异）
+   目标平台（小程序 / H5 / App）
+   端数（2 端 / 3 端 / N 端）
+   重点维度（模板 / 样式 / API / 条件编译 / 平台配置 / 端间差异）
 
 Phase 2: 多维度扫描
-  → 模板标签：H5 标签在小程序端的失效
-  → 样式兼容：CSS 变量、calc、vw/vh、rpx/px 混用
-  → API 兼容：fetch / window / document / localStorage
-  → 条件编译：#ifdef 使用完整性
-  → 平台配置：manifest.json 三端字段
-  → 端间差异：键盘、滚动、安全区、支付回调
+   模板标签：H5 标签在小程序端的失效
+   样式兼容：CSS 变量、calc、vw/vh、rpx/px 混用
+   API 兼容：fetch / window / document / localStorage
+   条件编译：#ifdef 使用完整性
+   平台配置：manifest.json 三端字段
+   端间差异：键盘、滚动、安全区、支付回调
 
 Phase 3: 问题汇总
-  → 按 P0/P1/P2/P3 风险等级归类
-  → 列出"端间表现差异"专项问题
+   按 P0/P1/P2/P3 风险等级归类
+   列出"端间表现差异"专项问题
 
 Phase 4: 输出报告
-  → 生成 uniapp-crossplatform-audit-report.md
+   生成 uniapp-crossplatform-audit-report.md
 ```
 
 ---

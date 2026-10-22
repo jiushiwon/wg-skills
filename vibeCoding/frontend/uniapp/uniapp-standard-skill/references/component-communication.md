@@ -353,27 +353,27 @@ const { showModal } = storeToRefs(uiStore);
 ## 7. 选择决策树
 
 ```
-需要组件通信？
+需要需要组件通信？
     │
     ├─ 父子组件？
     │   │
-    │   ├─ 父→子：props ✓
+    │   ├─ 父子：props 
     │   │
-    │   └─ 子→父：emit ✓
+    │   └─ 子父：emit 
     │
     ├─ 祖孙组件？
     │   │
-    │   └─ provide/inject ✓
+    │   └─ provide/inject 
     │
     ├─ 兄弟组件？
     │   │
-    │   ├─ 简单：props → 父组件 → props ✓
+    │   ├─ 简单：props  父组件  props 
     │   │
-    │   └─ 复杂：EventBus 或 Store ✓
+    │   └─ 复杂：EventBus 或 Store 
     │
     └─ 全局状态？
         │
-        └─ Store (Pinia) ✓
+        └─ Store (Pinia) 
 ```
 
 ## 8. 最佳实践
@@ -381,16 +381,16 @@ const { showModal } = storeToRefs(uiStore);
 ### 8.1 禁止事项
 
 ```typescript
-// ❌ 禁止：直接修改 props
+//  禁止：直接修改 props
 props.name = '新名字'; // 错误
 
-// ✅ 正确：emit 给父组件修改
+//  正确：emit 给父组件修改
 emit('update:name', '新名字');
 
-// ❌ 禁止：EventBus 滥用
+//  禁止：EventBus 滥用
 // 满屏 eventBus.on/off，难以追踪
 
-// ✅ 正确：优先使用 props/emit
+//  正确：优先使用 props/emit
 // 简单场景不要用 Store
 ```
 

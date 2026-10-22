@@ -2,9 +2,9 @@
  * 主题生成器 - HSL 色阶 & 尺寸阶梯生成
  *
  * 用于 uniapp-theme-skill：
- * - 输入任意 HEX 颜色 → 自动生成 50-950 色阶（HSL 算法）
+ * - 输入任意 HEX 颜色  自动生成 50-950 色阶（HSL 算法）
  * - 支持多主题色阶（primary/secondary/tertiary/quaternary/quinary）
- * - 输入基准尺寸 → 自动生成尺寸/圆角阶梯（静态 rpx，无 calc）
+ * - 输入基准尺寸  自动生成尺寸/圆角阶梯（静态 rpx，无 calc）
  * - 输出 uni-app 兼容的 CSS 变量（带 fallback）
  */
 
@@ -340,22 +340,22 @@ function generateCSSVariables(config = {}) {
   if (tokens.tertiary) {
     css += `  --color-tertiary: var(--tertiary-500, ${tokens.tertiary[500]});\n`
   }
-  css += `  --color-success: var(--success-500, ${tokens.success[500]});\n`
-  css += `  --color-warning: var(--warning-500, ${tokens.warning[500]});\n`
-  css += `  --color-error: var(--error-500, ${tokens.error[500]});\n`
-  css += `  --color-info: var(--info-500, ${tokens.info[500]});\n`
+  css += `  --color-success: var(--color-success, ${tokens.success[500]});\n`
+  css += `  --color-warning: var(--color-warning, ${tokens.warning[500]});\n`
+  css += `  --color-error: var(--color-error, ${tokens.error[500]});\n`
+  css += `  --color-info: var(--color-info, ${tokens.info[500]});\n`
 
-  css += `  --color-bg-page: var(--gray-50, ${tokens.gray[50]});\n`
-  css += `  --color-bg-surface: #ffffff;\n`
-  css += `  --color-bg-tinted: var(--primary-50, ${tokens.primary[50]});\n`
+  css += `  --bg-page: var(--gray-50, ${tokens.gray[50]});\n`
+  css += `  --bg-card: #ffffff;\n`
+  css += `  --bg-light: var(--primary-50, ${tokens.primary[50]});\n`
 
-  css += `  --color-text-primary: var(--gray-900, ${tokens.gray[900]});\n`
-  css += `  --color-text-secondary: var(--gray-600, ${tokens.gray[600]});\n`
-  css += `  --color-text-tertiary: var(--gray-400, ${tokens.gray[400]});\n`
-  css += `  --color-text-inverse: #ffffff;\n`
+  css += `  --text-primary: var(--gray-900, ${tokens.gray[900]});\n`
+  css += `  --text-secondary: var(--gray-600, ${tokens.gray[600]});\n`
+  css += `  --text-tertiary: var(--gray-400, ${tokens.gray[400]});\n`
+  css += `  --text-inverse: #ffffff;\n`
 
-  css += `  --color-border: var(--gray-200, ${tokens.gray[200]});\n`
-  css += `  --color-border-light: var(--gray-100, ${tokens.gray[100]});\n`
+  css += `  --border: var(--gray-200, ${tokens.gray[200]});\n`
+  css += `  --border-light: var(--gray-100, ${tokens.gray[100]});\n`
 
   // 字号变量
   css += `\n  /* === 字号 === */\n`

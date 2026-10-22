@@ -29,6 +29,7 @@
 ### 示例
 
 ```vue
+<template>
 <!-- 正确 -->
 <view class="card">
   <image class="card__cover" src="/static/images/banner.png" mode="aspectFill" />
@@ -46,6 +47,9 @@
     <p class="card__desc">描述文字</p>
   </div>
 </div>
+</template>
+
+
 ```
 
 ## CSS 规范
@@ -75,8 +79,10 @@
 ### 图片展示正确做法
 
 ```vue
+<template>
 <!-- 正确：用 image 组件 -->
 <image class="banner" src="/static/images/banner.png" mode="aspectFill" />
+</template>
 
 <style lang="scss" scoped>
 .banner {
@@ -88,8 +94,10 @@
 ```
 
 ```vue
+<template>
 <!-- 错误：用背景图 -->
 <view class="banner"></view>
+</template>
 
 <style lang="scss" scoped>
 .banner {
@@ -156,7 +164,7 @@ console.log('App');
 ## 安全区与刘海屏
 
 ```scss
-.safe-area-top {
+.s.safe-area-top {
   padding-top: constant(safe-area-inset-top);
   padding-top: env(safe-area-inset-top);
 }
@@ -176,10 +184,14 @@ console.log('App');
 直接写一个固定高度的标题栏，或把标题与胶囊放在同一行、靠右侧 padding 躲胶囊（长标题仍可能顶进胶囊区）：
 
 ```vue
+<template>
 <!-- 错误：高度写死，标题与胶囊同一行，可能被遮挡 -->
 <view class="custom-nav" style="height: 88rpx;">
   <text class="title">标题</text>
 </view>
+</template>
+
+
 ```
 
 ### 正确做法
@@ -202,7 +214,7 @@ import { AppNavbar } from '@/components/AppNavbar';
 
 <style lang="scss" scoped>
 .page {
-  padding-top: var(--navbar-height, 0px);
+  padding-top: var(--height-navbar, 88rpx);
 }
 </style>
 ```
@@ -210,6 +222,7 @@ import { AppNavbar } from '@/components/AppNavbar';
 对应的 `pages.json`：
 
 ```json
+{
 {
   "path": "pages/demo/index",
   "style": {
@@ -223,7 +236,7 @@ import { AppNavbar } from '@/components/AppNavbar';
 1. 通过 `uni.getMenuButtonBoundingClientRect()` 获取胶囊按钮位置，通过 `uni.getSystemInfoSync()` 获取状态栏高度；
 2. **胶囊带独占一行**：该带内仅放左侧返回图标，右侧留给系统胶囊，标题/菜单/操作一律不得进入；
 3. 标题放在胶囊带**下方**独立一行（高度 `$comp-navbar-title-height`）；
-4. 导航栏总高 = 状态栏 + 胶囊带 + 标题行，页面用 `padding-top: var(--navbar-height)` 下移内容，确保不覆盖胶囊。
+4. 导航栏总高 = 状态栏 + 胶囊带 + 标题行，页面用 `padding-top: var(--height-navbar)` 下移内容，确保不覆盖胶囊。
 
 ### 源码位置
 

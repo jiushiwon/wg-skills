@@ -14,7 +14,7 @@ export default function TableList({ title = '数据列表', columns, data, rowKe
       <div className="table-list-dark__header">
         <h2 className="table-list-dark__title">{title}</h2>
         <div className="table-list-dark__actions">
-          <button className="table-list-dark__btn">↻</button>
+          <button className="table-list-dark__btn"></button>
           <button className="table-list-dark__btn table-list-dark__btn--primary">+ 新增</button>
         </div>
       </div>

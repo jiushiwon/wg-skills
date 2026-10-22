@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+package streaming;
+
+option go_package = "github.com/your-org/streaming-service/proto/streaming";
+
+import "google/protobuf/timestamp.proto";
+
+// ============== 4 种流模式演示 ==============
+
+// 1. Server Streaming: 服务端流
+// 场景：服务端持续推送数据（行情、通知、日志）
+
+message ServerStreamRequest {
+  string symbol = 1;           // 股票代码
+  int32 interval = 2;         // 推送间隔（秒）
+}
+
+message StockQuote {
+  string symbol = 1;
+  float price = 2;
+  float change = 3;
+  google.protobuf.Timestamp timestamp = 4;
+}
+
+// 2. Client Streaming: 客户端流
+// 场景：客户端批量上传数据（文件、指标、日志）
+
+message ClientStreamRequest {
+  string file_name = 1;
+  bytes chunk = 2;            // 数据块
+  int32 chunk_index = 3;      // 块序号
+  bool is_final = 4;           // 是否最后一块
+}
+
+message ClientStreamResponse {
+  int64 total_bytes = 1;
+  string file_id = 2;
+  string message = 3;
+}
+
+// 3. Bidirectional Streaming: 双向流
+// 场景：实时聊天、实时控制
+
+message ChatMessage {
+  string session_id = 1;
+  string sender = 2;
+  string content = 3;
+  google.protobuf.Timestamp timestamp = 4;
+}
+
+message ChatAck {
+  string message_id = 1;
+  bool delivered = 2;
+}
+
+// 4. 物联网场景：设备上报 + 服务端控制
+
+message IoTDataPoint {
+  string device_id = 1;
+  float temperature = 2;
+  float humidity = 3;
+  google.protobuf.Timestamp timestamp = 4;
+}
+
+message IoTControlCommand {
+  string command = 1;         // "restart", "update_config", "alert"
+  map<string, string> params = 2;
+}
+
+// ============== 服务定义 ==============
+
+service StockService {
+  // Server Streaming: 实时行情推送
+  rpc SubscribeQuote(ServerStreamRequest) returns (stream StockQuote);
+}
+
+service FileService {
+  // Client Streaming: 文件上传
+  rpc Upload(stream ClientStreamRequest) returns (ClientStreamResponse);
+}
+
+service ChatService {
+  // Bidirectional Streaming: 实时聊天
+  rpc Chat(stream ChatMessage) returns (stream ChatMessage);
+
+  // 服务端推送通知
+  rpc SubscribeNotifications(google.protobuf.Empty) returns (stream ChatMessage);
+}
+
+service IoTService {
+  // Bidirectional: 设备上报 + 服务端控制
+  rpc DeviceStream(stream IoTDataPoint) returns (stream IoTControlCommand);
+}
+
+// ============== 公共类型 ==============
+
+message google.protobuf.Empty {}

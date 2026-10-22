@@ -47,7 +47,7 @@ function handleClick(event: MouseEvent) {
     display: none;
   }
 
-  &--primary {
+  &--color-primary {
     background: $color-primary;
     color: $color-bg-primary;
   }

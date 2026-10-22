@@ -149,22 +149,30 @@ async function handleSubmit() {
 ### 带图标的输入框
 
 ```vue
+<template>
 <t-input
   v-model="username"
   placeholder="请输入用户名"
-  prefix-icon="👤"
+  prefix-icon="用户"
   clearable
 />
+</template>
+
+
 ```
 
 ### 标签在上方
 
 ```vue
+<template>
 <t-form :model="formData" label-position="top">
   <t-form-item label="用户名" prop="username">
     <t-input v-model="formData.username" />
   </t-form-item>
 </t-form>
+</template>
+
+
 ```
 
 ## 样式变量
@@ -172,17 +180,17 @@ async function handleSubmit() {
 组件使用以下 CSS 变量：
 
 ```css
-:root {
-  --color-bg-surface: #ffffff;
-  --color-border: #e5e7eb;
-  --color-text-primary: #111827;
-  --color-text-secondary: #6b7280;
-  --color-text-placeholder: #9ca3af;
-  --color-text-tertiary: #9ca3af;
+:r:root {
+  --bg-card: #ffffff;
+  --border: #e5e7eb;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-placeholder: #9ca3af;
+  --text-tertiary: #9ca3af;
   --color-primary: #333333;
   --color-error: #ef4444;
   --primary-50: #f9fafb;
   --radius-input: 8px;
-  --shadow-popup: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 ```

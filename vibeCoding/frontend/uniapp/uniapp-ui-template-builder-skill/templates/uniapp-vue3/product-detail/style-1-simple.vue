@@ -106,7 +106,7 @@
       <view class="meta-row">
         <view class="meta-item">
           <view class="rating-stars">
-            <text v-for="n in 5" :key="n" class="star" :class="{ active: n <= Math.round(product.rating) }">★</text>
+            <text v-for="n in 5" :key="n" class="star" :class="{ active: n <= Math.round(product.rating) }"></text>
           </view>
           <text class="meta-text">{{ product.rating }}</text>
         </view>
@@ -230,7 +230,7 @@
         <view class="review-rate">
           <text class="rate-value">{{ product.rating }}</text>
           <view class="rate-stars">
-            <text v-for="n in 5" :key="n" class="star" :class="{ active: n <= Math.round(product.rating) }">★</text>
+            <text v-for="n in 5" :key="n" class="star" :class="{ active: n <= Math.round(product.rating) }"></text>
           </view>
           <text class="rate-text">{{ product.goodRate }}% 好评</text>
         </view>
@@ -245,7 +245,7 @@
             <view class="comment-user-info">
               <text class="comment-name">{{ item.userName }}</text>
               <view class="comment-rating">
-                <text v-for="n in 5" :key="n" class="star" :class="{ active: n <= item.score }">★</text>
+                <text v-for="n in 5" :key="n" class="star" :class="{ active: n <= item.score }"></text>
               </view>
             </view>
           </view>

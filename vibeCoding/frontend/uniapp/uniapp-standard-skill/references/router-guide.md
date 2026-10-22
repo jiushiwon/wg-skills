@@ -6,6 +6,7 @@
 
 ```json
 {
+{
   "pages": [
     {
       "path": "pages/index/index",
@@ -51,6 +52,7 @@
 ### 1.2 自定义导航栏
 
 ```json
+{
 {
   "path": "pages/index/index",
   "style": {
@@ -270,6 +272,7 @@ pages-sub/              # 分包
 
 ```json
 {
+{
   "pages": [
     {
       "path": "pages/index/index",
@@ -318,29 +321,29 @@ router.push('/detail/index', { id: 1 });
 ### 6.1 路径规范
 
 ```typescript
-// ✅ 正确：使用简写
+//  正确：使用简写
 router.push('/pages/index/index');
 
-// ❌ 错误：使用完整路径
+//  错误：使用完整路径
 router.push('/pages/index/index');
 
-// ✅ 正确：统一使用 router 封装
+//  正确：统一使用 router 封装
 import { router } from '@/utils/router';
 
-// ❌ 错误：直接使用 uni.navigateTo
+//  错误：直接使用 uni.navigateTo
 uni.navigateTo({ url: '/pages/index/index' });
 ```
 
 ### 6.2 参数规范
 
 ```typescript
-// ✅ 正确：参数命名清晰
+//  正确：参数命名清晰
 router.push('/pages/detail', { goodsId: '123', from: 'home' });
 
-// ❌ 错误：参数无意义
+//  错误：参数无意义
 router.push('/pages/detail', { a: '1', b: '2' });
 
-// ✅ 正确：使用类型定义
+//  正确：使用类型定义
 interface DetailParams {
   goodsId: string;
   from?: string;

@@ -1,0 +1,21 @@
+{
+  "name": "side-menu",
+  "title": "侧边栏菜单",
+  "category": "navigation",
+  "description": "抽屉式侧边栏菜单，支持二级子项展开收起",
+  "aliases": ["侧边菜单", "侧边栏", "抽屉菜单", "side-menu", "drawer"],
+  "props": [
+    { "name": "show", "type": "boolean", "default": false, "desc": "抽屉显示状态" },
+    { "name": "title", "type": "string", "default": "菜单", "desc": "抽屉标题" },
+    { "name": "width", "type": "string", "default": "80%", "desc": "抽屉宽度" },
+    { "name": "background", "type": "string", "default": "var(--bg-card, #ffffff)", "desc": "抽屉背景色" },
+    { "name": "items", "type": "array", "default": [], "desc": "菜单项列表 [{key, text, children}]" },
+    { "name": "modelValue", "type": "string[]", "default": [], "desc": "已展开的菜单项 key 集合" },
+    { "name": "collapsible", "type": "boolean", "default": true, "desc": "是否允许折叠子项" }
+  ],
+  "events": ["close", "update:show", "update:modelValue", "change", "select"],
+  "slots": [
+    { "name": "default", "desc": "菜单内容，默认渲染 items" },
+    { "name": "header", "desc": "自定义抽屉头部" }
+  ]
+}

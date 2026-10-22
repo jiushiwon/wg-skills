@@ -83,31 +83,31 @@ const imgError = ref(false)
 .empty-img-ph {
   width: 200rpx;
   height: 200rpx;
-  border-radius: var(--radius-full);
-  background: var(--color-bg-tinted);
+  border-radius: var(--radius-full, 9999rpx);
+  background: var(--bg-light, #f5f5f5);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .empty-img-ph-text {
-  font-size: var(--font-2xl);
-  color: var(--color-text-tertiary);
+  font-size: var(--font-2xl, 40rpx);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .empty-text {
-  margin-top: var(--spacing-md);
-  font-size: var(--font-md);
-  color: var(--color-text-secondary);
+  margin-top: var(--space-6, 24rpx);
+  font-size: var(--font-md, 28rpx);
+  color: var(--text-secondary, #525252);
 }
 
 .empty-desc {
-  margin-top: var(--spacing-xs);
-  font-size: var(--font-sm);
-  color: var(--color-text-tertiary);
+  margin-top: var(--space-2, 8rpx);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .empty-action {
-  margin-top: var(--spacing-lg);
+  margin-top: var(--space-8, 32rpx);
 }
 </style>

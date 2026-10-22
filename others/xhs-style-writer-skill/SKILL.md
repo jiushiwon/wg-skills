@@ -1,6 +1,6 @@
 ---
 name: xhs-style-writer-skill
-description: Use when 用户需要写小红书笔记/文案、建立可复用的个人风格档案、生成爆款标题、给种草文案去 AI 味，或按已有风格改写降重。
+description: Use when 用户需要写小红书笔记/文案、建立可复用的个人风格档案、生成爆款标题、给种草文案去 AI 味，或按已有风格改写降重。触发词：写小红书、小红书文案、爆款标题、种草文案、去 AI 味、风格档案、改写降重
 ---
 
 # xhs-style-writer-skill - 小红书个人风格写作

@@ -27,13 +27,13 @@
 |------|------|--------|------|
 | `title` | `string` | `''` | 卡片标题（也可用 `#header` slot 自定义） |
 | `radius` | `string` | `var(--radius-card)` | 圆角 |
-| `padding` | `string` | `var(--spacing-lg)` | 内边距 |
-| `background` | `string` | `var(--color-bg-surface)` | 背景色 |
-| `margin` | `string` | `0 0 var(--spacing-md)` | 外边距 |
+| `padding` | `string` | `var(--space-8)` | 内边距 |
+| `background` | `string` | `var(--bg-card)` | 背景色 |
+| `margin` | `string` | `0 0 var(--space-6)` | 外边距 |
 | `border` | `boolean` | `false` | 是否描边 |
 | `shadow` | `boolean` | `false` | 是否阴影 |
 | `clickable` | `boolean` | `false` | 可点击（触发 click + 按压反馈） |
-| `gap` | `string` | `var(--spacing-sm)` | header/body/footer 垂直间距 |
+| `gap` | `string` | `var(--space-4)` | header/body/footer 垂直间距 |
 
 ### Slots
 
@@ -49,7 +49,7 @@
 
 ```vue
 <template>
-  <base-card :radius="'var(--radius-lg)'" :padding="'var(--spacing-md)'" :shadow="true" :clickable="true" @click="onTap">
+  <base-card :radius="'var(--radius-lg)'" :padding="'var(--space-6)'" :shadow="true" :clickable="true" @click="onTap">
     <text class="text-h3">订单标题</text>
     <text class="text-body">订单描述...</text>
     <template #footer>
@@ -73,7 +73,7 @@
 |------|------|--------|------|
 | `image` | `string` | `''` | 图片地址 |
 | `imageMode` | `string` | `aspectFill` | 图片裁剪模式 |
-| `imageHeight` | `string` | `calc(var(--spacing-2xl) * 6)` | 图片高度（约 384rpx） |
+| `imageHeight` | `string` | `calc(var(--space-16) * 6)` | 图片高度（约 384rpx） |
 | `lazyLoad` | `boolean` | `true` | 懒加载 |
 | `title` | `string` | `''` | 标题 |
 | `description` | `string` | `''` | 描述 |
@@ -151,7 +151,7 @@
       :list="filteredOrders"
       :loading="loading"
       :finished="finished"
-      :card-props="{ padding: 'var(--spacing-md)' }"
+      :card-props="{ padding: 'var(--space-6)' }"
       @change="onTabChange"
       @load-more="loadMore"
       @item-click="onOrderClick"
@@ -211,8 +211,8 @@ function onOrderClick(item: any) {
 
 <style scoped lang="scss">
 .order-head { display: flex; justify-content: space-between; }
-.order-goods { display: flex; margin-top: var(--spacing-sm); }
-.order-img { width: 120rpx; height: 120rpx; border-radius: var(--radius-image); margin-right: var(--spacing-md); }
+.order-goods { display: flex; margin-top: var(--space-4); }
+.order-img { width: 120rpx; height: 120rpx; border-radius: var(--radius-image); margin-right: var(--space-6); }
 .order-status { color: var(--color-primary); }
 </style>
 ```
@@ -557,7 +557,7 @@ const groups = [
   {
     id: 'g1',
     items: [
-      { id: 'order', label: '我的订单', iconText: '订', value: '3', iconColor: 'var(--color-bg-tinted)' },
+      { id: 'order', label: '我的订单', iconText: '订', value: '3', iconColor: 'var(--bg-light)' },
       { id: 'address', label: '收货地址', iconText: '址' },
       { id: 'favorites', label: '我的收藏', iconText: '藏' },
     ],
@@ -643,6 +643,7 @@ function goLogin() {
 ### 使用示例
 
 ```vue
+<template>
 <base-navbar
   title="设置"
   :fixed="true"
@@ -654,6 +655,9 @@ function goLogin() {
     <text class="nav-more" @click="onMore">⋯</text>
   </template>
 </base-navbar>
+</template>
+
+
 ```
 
 > 小程序胶囊对齐属 app-generate `AppNavbar` 强约束场景，本组件为简易通用版（标题与返回/右侧同排）；需要胶囊对齐请用 AppNavbar 或用 `#title` slot 自处理。
@@ -716,6 +720,7 @@ const tabs = [
 ### 使用示例
 
 ```vue
+<template>
 <base-form-item label="昵称" required :error="errors.nickname">
   <input class="form-input" v-model="form.nickname" placeholder="请输入昵称" />
 </base-form-item>
@@ -724,6 +729,9 @@ const tabs = [
     <text class="form-value">{{ form.gender || '请选择' }}</text>
   </picker>
 </base-form-item>
+</template>
+
+
 ```
 
 ---
@@ -757,6 +765,7 @@ const tabs = [
 ### 完整示例
 
 ```vue
+<template>
 <view style="height:100vh">
   <search-page
     :history-list="history"
@@ -775,6 +784,7 @@ const tabs = [
     </template>
   </search-page>
 </view>
+</template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
@@ -783,7 +793,7 @@ const history = ref<string[]>(['保温杯'])
 const results = ref<any[]>([])
 function onSearch(kw: string) {
   if (kw) history.value = [kw, ...history.value.filter((h) => h !== kw)].slice(0, 10)
-  // 调 request 封装查结果 → results.value = res.data.list
+  // 调 request 封装查结果  results.value = res.data.list
 }
 function onInput(kw: string) {
   // 实时联想（可选）
@@ -845,7 +855,7 @@ const saving = ref(false)
 const errs = reactive<Record<string, string>>({})
 const form = reactive({ nickname: '', bio: '', gender: '' })
 function onSubmit() {
-  // 校验 → 调 request 封装提交 → saving 控制 loading
+  // 校验  调 request 封装提交  saving 控制 loading
 }
 </script>
 ```
@@ -940,6 +950,7 @@ function sendCode(phone: string) {
 ### 完整示例
 
 ```vue
+<template>
 <view style="height:100vh">
   <home-page
     navbar-title="商城"
@@ -953,7 +964,7 @@ function sendCode(phone: string) {
     @tab-change="onTabChange"
   >
     <template #search>
-      <view class="hp-search" @click="goSearch">🔍 搜索商品</view>
+      <view class="hp-search" @click="goSearch">⌕ 搜索商品</view>
     </template>
 
     <template #banner>
@@ -979,6 +990,9 @@ function sendCode(phone: string) {
     </template>
   </home-page>
 </view>
+</template>
+
+
 ```
 
 ---
@@ -1006,7 +1020,11 @@ function sendCode(phone: string) {
 ### 使用示例
 
 ```vue
+<template>
 <user-card avatar="/static/avatar/1.jpg" nickname="小李" subtitle="iOS 开发" desc="热爱技术" action-text="关注" @action-click="onFollow" @avatar-click="goProfile" />
+</template>
+
+
 ```
 
 ---
@@ -1034,7 +1052,11 @@ function sendCode(phone: string) {
 ### 使用示例
 
 ```vue
+<template>
 <comment-item avatar="/static/avatar/2.jpg" nickname="小美" time="10 分钟前" content="好美！" reply-to="阿伟" :like-count="5" @like-click="onLike" @reply-click="onReply" />
+</template>
+
+
 ```
 
 ---
@@ -1051,7 +1073,7 @@ function sendCode(phone: string) {
 | `icon` | `string` | `''` | 左侧图标 |
 | `closable` | `boolean` | `true` | 可关闭 |
 | `scrollable` | `boolean` | `false` | 跑马灯滚动 |
-| `bg` | `string` | `''` | 背景色（默认 `--color-bg-tinted`） |
+| `bg` | `string` | `''` | 背景色（默认 `--bg-light`） |
 
 ### Slots / Emits
 
@@ -1061,8 +1083,12 @@ function sendCode(phone: string) {
 ### 使用示例
 
 ```vue
+<template>
 <notice-bar text="本周新品已上线，快去看看吧！" :closable="true" @click="goActive" @close="showBar=false" />
-<notice-bar icon="⚠" text="网络连接失败，请检查网络" :closable="false" :bg="'#FEF2F2'" />
+<notice-bar icon="" text="网络连接失败，请检查网络" :closable="false" :bg="'#FEF2F2'" />
+</template>
+
+
 ```
 
 ---
@@ -1091,9 +1117,13 @@ function sendCode(phone: string) {
 ### 使用示例
 
 ```vue
+<template>
 <setting-item icon-text="设" label="设置" arrow @click="goSetting" />
 <setting-item icon-text="通" label="消息通知" :show-switch="true" v-model="notify" @switch-change="onSwitch" />
 <setting-item label="版本号" value="1.2.0" :arrow="false" :clickable="false" />
+</template>
+
+
 ```
 
 ---
@@ -1120,8 +1150,12 @@ function sendCode(phone: string) {
 ### 使用示例
 
 ```vue
+<template>
 <empty text="购物车是空的" description="去挑选心仪的商品吧" action-text="去逛逛" @action-click="goShop" />
-<empty text="暂无收藏" icon="★" />
+<empty text="暂无收藏" icon="" />
+</template>
+
+
 ```
 
 ---
@@ -1149,8 +1183,12 @@ function sendCode(phone: string) {
 ### 使用示例
 
 ```vue
+<template>
 <result-page status="success" title="支付成功" description="订单号 A20260804" primary-text="查看订单" secondary-text="返回首页" @primary-click="goOrder" @secondary-click="goHome" />
 <result-page status="error" title="支付失败" description="余额不足，请更换支付方式" primary-text="重新支付" />
+</template>
+
+
 ```
 
 ---

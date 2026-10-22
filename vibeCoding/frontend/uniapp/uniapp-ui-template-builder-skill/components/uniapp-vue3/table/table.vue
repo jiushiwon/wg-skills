@@ -17,12 +17,12 @@
               :class="{
                 't-table__sort-active': sortKey === col.key && sortOrder === 'asc'
               }"
-            >↑</text>
+            ></text>
             <text
               :class="{
                 't-table__sort-active': sortKey === col.key && sortOrder === 'desc'
               }"
-            >↓</text>
+            ></text>
           </view>
         </view>
       </view>
@@ -270,24 +270,24 @@ defineExpose({
 <style lang="scss" scoped>
 .t-table {
   width: 100%;
-  background: var(--color-bg-surface, #fff);
-  border-radius: var(--radius-card, 12px);
+  background: var(--bg-card, #ffffff);
+  border-radius: var(--radius-card, 24rpx);
   overflow: hidden;
 }
 
 .t-table--border {
-  border: 1px solid var(--color-border, #e5e7eb);
+  border: 1px solid var(--border, #e5e5e5);
 }
 
 .t-table__header {
-  background: var(--primary-50, #f9fafb);
-  border-bottom: 1px solid var(--color-border, #e5e7eb);
+  background: var(--primary-50, #f0fdfa);
+  border-bottom: 1px solid var(--border, #e5e5e5);
 }
 
 .t-table__row {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid var(--color-border-light, #f3f4f6);
+  border-bottom: 1px solid var(--border-light, #f5f5f5);
 }
 
 .t-table__row:last-child {
@@ -295,23 +295,23 @@ defineExpose({
 }
 
 .t-table__row--hover:hover {
-  background: var(--color-bg-surface-hover, #f9fafb);
+  background: var(--bg-light, #f5f5f5);
 }
 
 .t-table__row--selected {
-  background: var(--primary-50, #f0f9ff);
+  background: var(--primary-50, #f0fdfa);
 }
 
 .t-table__cell {
   flex: 1;
-  padding: var(--card-padding-sm, 16px) var(--space-3, 12px);
-  font-size: var(--text-sm, 14px);
-  color: var(--color-text-primary, #111827);
+  padding: var(--space-3, 12rpx) var(--space-3, 12rpx);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-primary, #171717);
 }
 
 .t-table__cell--header {
   font-weight: 600;
-  color: var(--color-text-secondary, #6b7280);
+  color: var(--text-secondary, #525252);
   background: transparent;
 }
 
@@ -321,16 +321,16 @@ defineExpose({
 }
 
 .t-table__cell--sortable:active {
-  background: var(--primary-100, #f3f4f6);
+  background: var(--primary-100, #ccfbf1);
 }
 
 .t-table__sort-icon {
   display: inline-flex;
   flex-direction: column;
-  margin-left: var(--space-1, 4px);
+  margin-left: var(--space-1, 4rpx);
   font-size: 10px;
   line-height: 1.2;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .t-table__sort-icon text {
@@ -338,61 +338,61 @@ defineExpose({
 }
 
 .t-table__sort-active {
-  color: var(--color-primary, #333);
+  color: var(--color-primary, #14b8a6);
 }
 
 .t-table__empty {
-  padding: var(--space-10, 40px);
+  padding: var(--space-10, 40rpx);
   text-align: center;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .t-table__pagination {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-3, 12px) var(--space-4, 16px);
-  border-top: 1px solid var(--color-border-light, #f3f4f6);
-  background: var(--color-bg-surface-hover, #f9fafb);
+  padding: var(--space-3, 12rpx) var(--space-4, 16rpx);
+  border-top: 1px solid var(--border-light, #f5f5f5);
+  background: var(--bg-light, #f5f5f5);
 }
 
 .t-table__pagination-info {
-  font-size: var(--text-sm, 14px);
-  color: var(--color-text-secondary, #6b7280);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-secondary, #525252);
 }
 
 .t-table__pagination-btns {
   display: flex;
-  gap: var(--space-2, 8px);
+  gap: var(--space-2, 8rpx);
 }
 
 .t-table__pagination-btn {
-  padding: var(--space-1, 4px) var(--space-3, 12px);
-  font-size: var(--text-sm, 14px);
-  color: var(--color-primary, #333);
-  background: var(--color-bg-surface, #fff);
-  border: 1px solid var(--color-border, #e5e7eb);
-  border-radius: var(--radius-sm, 4px);
+  padding: var(--space-1, 4rpx) var(--space-3, 12rpx);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--color-primary, #14b8a6);
+  background: var(--bg-card, #ffffff);
+  border: 1px solid var(--border, #e5e5e5);
+  border-radius: var(--radius-sm, 8rpx);
   cursor: pointer;
 }
 
 .t-table__pagination-btn:active {
-  background: var(--color-bg-surface-active, #f3f4f6);
+  background: var(--bg-tertiary, #e5e5e5);
 }
 
 .t-table__pagination-btn--disabled {
-  color: var(--color-text-disabled, #d1d5db);
+  color: var(--text-disabled, #d4d4d4);
   cursor: not-allowed;
-  background: var(--color-bg-surface-hover, #f9fafb);
+  background: var(--bg-light, #f5f5f5);
 }
 
 /* 斑马纹 */
 .t-table--stripe .t-table__row:nth-child(even) {
-  background: var(--color-bg-surface-hover, #f9fafb);
+  background: var(--bg-light, #f5f5f5);
 }
 
 .t-table--stripe .t-table__row:nth-child(even):hover {
-  background: var(--color-bg-surface-active, #f3f4f6);
+  background: var(--bg-tertiary, #e5e5e5);
 }
 </style>
 

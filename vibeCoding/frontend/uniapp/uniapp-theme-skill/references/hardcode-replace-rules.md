@@ -37,17 +37,17 @@
 | 原始值 | 替换为 |
 |--------|--------|
 | `0rpx`, `0` | `var(--space-0, 0rpx)` |
-| `2rpx` | `var(--space-1, 2rpx)` |
+| `2rpx` | `var(--space-1, 4rpx)` |
 | `4rpx` | `var(--space-1, 4rpx)` |
-| `6rpx` | `var(--space-2, 6rpx)` |
+| `6rpx` | `var(--space-2, 8rpx)` |
 | `8rpx` | `var(--space-2, 8rpx)` |
-| `10rpx` | `var(--space-3, 10rpx)` |
+| `10rpx` | `var(--space-3, 12rpx)` |
 | `12rpx` | `var(--space-3, 12rpx)` |
-| `14rpx` | `var(--space-4, 14rpx)` |
+| `14rpx` | `var(--space-4, 16rpx)` |
 | `16rpx` | `var(--space-4, 16rpx)` |
-| `18rpx` | `var(--space-5, 18rpx)` |
+| `18rpx` | `var(--space-5, 20rpx)` |
 | `20rpx` | `var(--space-5, 20rpx)` |
-| `22rpx` | `var(--space-6, 22rpx)` |
+| `22rpx` | `var(--space-6, 24rpx)` |
 | `24rpx` | `var(--space-6, 24rpx)` |
 | `28rpx` | `var(--space-7, 28rpx)` |
 | `32rpx` | `var(--space-8, 32rpx)` |
@@ -62,11 +62,11 @@
 
 | 原始值 | 替换为 |
 |--------|--------|
-| `44rpx` | `var(--height-btn-sm, 44rpx)` |
+| `44rpx` | `var(--height-btn-sm, 56rpx)` |
 | `56rpx` | `var(--height-btn-sm, 56rpx)` |
-| `60rpx` | `var(--height-btn-md, 60rpx)` |
+| `60rpx` | `var(--height-btn-md, 72rpx)` |
 | `72rpx` | `var(--height-btn-md, 72rpx)` |
-| `80rpx` | `var(--height-btn-lg, 80rpx)` |
+| `80rpx` | `var(--height-btn-lg, 88rpx)` |
 | `88rpx` | `var(--height-btn-lg, 88rpx)` |
 
 ### 图标尺寸
@@ -81,31 +81,36 @@
 
 ### 通用宽度/高度
 
+> fallback 必须等于 `base.css` 的真实值，否则会出现"变量已加载但值不同"的隐性漂移。
+> 就近取阶会让尺寸发生变化，替换后需人工比对视觉效果。
+
 | 原始值 | 替换为 | 说明 |
 |--------|--------|------|
-| `40rpx` | `var(--icon-xs, 40rpx)` | 小图标 |
-| `60rpx` | `var(--icon-sm, 60rpx)` | 中图标 |
-| `80rpx` | `var(--icon-md, 80rpx)` | 大图标 |
-| `100rpx` | `var(--size-md, 100rpx)` | 通用尺寸 |
-| `120rpx` | `var(--size-img-sm, 120rpx)` | 图片小 |
-| `200rpx` | `var(--size-img-md, 200rpx)` | 图片中 |
-| `300rpx` | `var(--size-img-lg, 300rpx)` | 图片大 |
+| `40rpx` | `var(--icon-xs, 24rpx)` | 小图标 |
+| `60rpx` | `var(--icon-sm, 36rpx)` | 中图标 |
+| `80rpx` | `var(--icon-md, 48rpx)` | 大图标 |
+| `100rpx` | `var(--icon-lg, 72rpx)` | 通用尺寸 |
+| `120rpx` | `var(--height-avatar-md, 80rpx)` | 图片小 |
+| `200rpx` | `var(--icon-xl, 96rpx)` | 图片中 |
+| `300rpx` | `var(--height-avatar-lg, 120rpx)` | 图片大 |
+
+图片尺寸若因设计稿不能改动，走 `uniapp-page-components-skill` P04 例外：保留原始 rpx 值并加注释说明原因。
 
 ## D 类：border-radius 上下文
 
 | 原始值 | 替换为 |
 |--------|--------|
 | `0`, `0rpx` | `var(--radius-none, 0rpx)` |
-| `4rpx` | `var(--radius-sm, 4rpx)` |
-| `6rpx` | `var(--radius-sm, 6rpx)` |
+| `4rpx` | `var(--radius-sm, 8rpx)` |
+| `6rpx` | `var(--radius-sm, 8rpx)` |
 | `8rpx` | `var(--radius-sm, 8rpx)` |
-| `10rpx` | `var(--radius-md, 10rpx)` |
-| `12rpx` | `var(--radius-md, 12rpx)` |
-| `14rpx` | `var(--radius-md, 14rpx)` |
+| `10rpx` | `var(--radius-md, 16rpx)` |
+| `12rpx` | `var(--radius-md, 16rpx)` |
+| `14rpx` | `var(--radius-md, 16rpx)` |
 | `16rpx` | `var(--radius-md, 16rpx)` |
-| `20rpx` | `var(--radius-lg, 20rpx)` |
+| `20rpx` | `var(--radius-lg, 24rpx)` |
 | `24rpx` | `var(--radius-lg, 24rpx)` |
-| `28rpx` | `var(--radius-xl, 28rpx)` |
+| `28rpx` | `var(--radius-xl, 32rpx)` |
 | `32rpx` | `var(--radius-xl, 32rpx)` |
 | `999rpx`, `9999rpx` | `var(--radius-full, 9999rpx)` |
 
@@ -155,7 +160,7 @@
 
 | 原始值 | 替换为 |
 |--------|--------|
-| `red`, `#f00` | `var(--error, #EF4444)` |
+| `red`, `#f00` | `var(--color-error, #EF4444)` |
 | `blue`, `#00f` | `var(--info, #3B82F6)` |
 | `green` | `var(--success, #10B981)` |
 | `yellow` | `var(--warning, #F59E0B)` |

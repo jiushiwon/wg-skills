@@ -73,6 +73,7 @@ product-detail/
 
 **布局**：
 ```vue
+<template>
 <view class="price-row">
   <text class="price">¥99</text>
   <text class="original-price">¥199</text>
@@ -81,6 +82,9 @@ product-detail/
 <view class="tags">
   <text class="tag">新品</text>
 </view>
+</template>
+
+
 ```
 
 ### 3. Specs 规格选择
@@ -145,7 +149,7 @@ product-detail/
 ### 风格1：简约现代
 
 ```scss
---primary: #333333;
+----color-primary: #333333;
 --price-color: #FF4400;
 --bg-card: #FFFFFF;
 --bg-page: #F5F5F5;
@@ -157,7 +161,7 @@ product-detail/
 ### 风格2：活力炫彩
 
 ```scss
---primary: #FF6B6B;
+----color-primary: #FF6B6B;
 --price-color: #FF4400;
 --gradient: linear-gradient(90deg, #FF6B6B, #FF8E53);
 --bg-card: #FFFFFF;
@@ -169,7 +173,7 @@ product-detail/
 ### 风格3：高端商务
 
 ```scss
---primary: #1A1A2E;
+----color-primary: #1A1A2E;
 --price-color: #D4AF37;
 --bg-card: #FFFFFF;
 --border: #E5E5E5;
@@ -181,7 +185,7 @@ product-detail/
 ### 风格4：清新自然
 
 ```scss
---primary: #2ECC71;
+----color-primary: #2ECC71;
 --price-color: #27AE60;
 --bg-page: #F0F9F6;
 --radius: 20px;
@@ -212,6 +216,7 @@ product-detail/
 ## Mock数据示例
 
 ```json
+{
 {
   "product": {
     "id": "p001",

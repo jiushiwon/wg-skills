@@ -27,18 +27,24 @@
 同一组件在不同页面必须呈现一致，差异只能通过组件 **props** 表达，不得通过页面级 scoped 样式覆盖尺寸/颜色：
 
 ```vue
+<template>
 <!-- 正确：A、B、C 页面都用同一组件，差异靠 type/size -->
 <AppButton type="primary" size="medium" @tap="submit">提交</AppButton>
 <AppButton type="ghost" size="small" @tap="cancel">取消</AppButton>
 <AppTab v-model="tab" :items="tabs" />
 <AppPopup v-model="show" position="bottom" title="选择">...</AppPopup>
+</template>
+
+
 ```
 
 ```vue
+<template>
 <!-- 错误：页面内手写按钮/标签/弹窗，导致三端样式漂移 -->
 <button class="my-btn">提交</button>
 <view class="my-tab">...</view>
 <view class="my-popup-mask">...</view>
+</template>
 
 <style scoped>
 .my-btn { background: #10b981; border-radius: 12rpx; } /* 双违规：裸色 + 绕开 AppButton */
@@ -57,7 +63,7 @@
 交付前人工/AI 自检，结果应为空：
 
 ```bash
-# 页面内不应出现原生 button（按钮统一走 AppButton）
+# # 页面内不应出现原生 button（按钮统一走 AppButton）
 grep -rn "<button" src/pages
 
 # 页面内不应出现自造弹窗遮罩类名

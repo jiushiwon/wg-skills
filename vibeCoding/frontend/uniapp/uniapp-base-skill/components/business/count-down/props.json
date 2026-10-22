@@ -1,0 +1,22 @@
+{
+  "name": "count-down",
+  "title": "倒计时",
+  "category": "business",
+  "description": "倒计时组件，支持结束时间戳、相对秒数、格式模板与自定义分段",
+  "aliases": ["倒计时", "限时", "countdown", "timer"],
+  "props": [
+    { "name": "target", "type": "number", "default": 0, "desc": "结束时间戳(ms)，与 seconds 二选一" },
+    { "name": "timestamp", "type": "number", "default": 0, "desc": "结束时间戳(ms)，兼容旧属性名" },
+    { "name": "seconds", "type": "number", "default": 0, "desc": "相对秒数，从现在起倒计时" },
+    { "name": "format", "type": "string", "default": "", "desc": "展示格式模板，支持 DD/HH/mm/ss 占位符" },
+    { "name": "showDay", "type": "boolean", "default": false, "desc": "是否显示天数" },
+    { "name": "showUnit", "type": "boolean", "default": true, "desc": "是否显示单位分隔" },
+    { "name": "endText", "type": "string", "default": "已结束", "desc": "倒计时结束文案" },
+    { "name": "autostart", "type": "boolean", "default": true, "desc": "是否自动开始" }
+  ],
+  "events": ["finish", "end"],
+  "slots": [
+    { "name": "default", "desc": "自定义倒计时内容，作用域含 day/hour/minute/second 与 formatted" },
+    { "name": "end", "desc": "倒计时结束时的内容" }
+  ]
+}

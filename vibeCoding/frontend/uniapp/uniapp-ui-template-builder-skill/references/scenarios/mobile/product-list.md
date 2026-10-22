@@ -30,7 +30,7 @@ product-list/
 ### 变体1：瀑布流
 
 ```
-┌────┐ ┌────┐
+┌─┌────┐ ┌────┐
 │    │ │    │
 │ 商 │ │ 商 │
 │ 品  │ │ 品  │
@@ -53,7 +53,7 @@ product-list/
 ### 变体2：网格布局
 
 ```
-┌────┐ ┌────┐ ┌────┐
+┌─┌────┐ ┌────┐ ┌────┐
 │    │ │    │ │    │
 │ 商 │ │ 商 │ │ 商 │
 │ 品  │ │ 品  │ │ 品  │
@@ -70,7 +70,7 @@ product-list/
 ### 变体3：列表布局
 
 ```
-┌─────────────────────┐
+┌─┌─────────────────────┐
 │ ┌────┐ 商品名称      │
 │ │图片│ ¥99.00      │
 │ └────┘ 已售1000件   │
@@ -90,8 +90,8 @@ product-list/
 ### 变体4：横向滑动
 
 ```
-┌──────────┐
-│  分类1    │ → → →
+┌─┌──────────┐
+│  分类1    │   
 ├──────────┤
 │ ┌──┐ ┌──┐ ┌──┐ │
 │ │商│ │商│ │商│ │
@@ -133,6 +133,7 @@ product-list/
 ### 布局
 
 ```vue
+<template>
 <view class="product-item">
   <image class="product-image" :src="item.image" mode="aspectFill" />
   <view class="product-info">
@@ -144,6 +145,9 @@ product-list/
     <text class="sales">已售{{ item.sales }}件</text>
   </view>
 </view>
+</template>
+
+
 ```
 
 ## 风格变体
@@ -151,7 +155,7 @@ product-list/
 ### 风格1：简约现代
 
 ```scss
---bg-page: #F5F5F5;
+----bg-page: #F5F5F5;
 --bg-card: #FFFFFF;
 --text-primary: #333333;
 --text-secondary: #999999;
@@ -162,7 +166,7 @@ product-list/
 ### 风格2：活力炫彩
 
 ```scss
---bg-page: #FFFFFF;
+----bg-page: #FFFFFF;
 --card-shadow: 0 4px 12px rgba(255, 107, 107, 0.1);
 --price-color: #FF6B6B;
 --radius: 12px;
@@ -172,7 +176,7 @@ product-list/
 ### 风格3：高端商务
 
 ```scss
---bg-page: #F5F5F5;
+----bg-page: #F5F5F5;
 --bg-card: #FFFFFF;
 --text-primary: #1A1A1A;
 --price-color: #D4AF37;
@@ -182,7 +186,7 @@ product-list/
 ### 风格4：清新自然
 
 ```scss
---bg-page: #F0F9F6;
+----bg-page: #F0F9F6;
 --bg-card: #FFFFFF;
 --price-color: #2ECC71;
 --radius: 16px;
@@ -200,6 +204,7 @@ product-list/
 ## Mock数据
 
 ```json
+{
 {
   "products": [
     {

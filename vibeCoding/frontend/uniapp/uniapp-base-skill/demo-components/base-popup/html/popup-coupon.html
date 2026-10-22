@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-popup 实战 - 优惠券选择</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px; --radius-md: 8px;
+      --space-2: 8px; --space-3: 12px; --space-4: 16px;
+      --color-primary: #4a90e2; --color-error: #f5222d;
+      --text-primary: #333; --text-secondary: #666; --text-tertiary: #999;
+      --bg-page: #f5f5f5; --bg-card: #fff; --border: #e8e8e8;
+    }
+    body { background: var(--bg-page); font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; padding: 20px; }
+    .page { max-width: 414px; margin: 0 auto; }
+    .phone { background: var(--bg-card); border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); position: relative; }
+    .phone-header { height: 44px; display: flex; align-items: center; padding: 0 var(--space-4); border-bottom: 1px solid var(--border); }
+    .phone-title { font-size: 16px; font-weight: 500; }
+    .phone-body { min-height: 600px; padding: var(--space-4); }
+    .btn { display: block; width: 100%; padding: 13px; background: var(--color-primary); color: #fff; border: none; border-radius: var(--radius-md); font-size: 15px; cursor: pointer; }
+    .result { padding: var(--space-3) var(--space-4); background: var(--bg-page); border-radius: var(--radius-md); margin-top: var(--space-3); font-size: 13px; }
+
+    .popup-mask { position: absolute; inset: 0; background: rgba(0,0,0,0.5); opacity: 0; visibility: hidden; transition: opacity .3s,visibility .3s; z-index: 10; }
+    .popup-mask.show { opacity: 1; visibility: visible; }
+    .popup { position: absolute; background: var(--bg-card); transition: transform .3s; z-index: 20; }
+    .popup-bottom { bottom: 0; left: 0; right: 0; transform: translateY(100%); border-radius: var(--radius-lg) var(--radius-lg) 0 0; max-height: 80%; display: flex; flex-direction: column; }
+    .popup-bottom.show { transform: translateY(0); }
+    .popup-header { padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+    .popup-title { font-size: 16px; font-weight: 500; }
+    .popup-close { font-size: 22px; color: var(--text-tertiary); cursor: pointer; line-height: 1; }
+    .popup-body { flex: 1; overflow-y: auto; padding: var(--space-3) var(--space-4); }
+
+    .group-title { font-size: 13px; color: var(--text-secondary); margin: var(--space-3) 0 var(--space-2); }
+    .coupon { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); margin-bottom: var(--space-2); border: 1px solid var(--color-error); border-radius: var(--radius-md); background: #fff7f7; cursor: pointer; }
+    .coupon.disabled { border-color: var(--border); background: #fafafa; opacity: .6; cursor: not-allowed; }
+    .coupon.active { border-width: 2px; padding: calc(var(--space-3) - 1px); }
+    .coupon-amount { width: 84px; text-align: center; color: var(--color-error); flex-shrink: 0; }
+    .coupon-amount b { font-size: 24px; }
+    .coupon-amount span { font-size: 12px; }
+    .coupon.disabled .coupon-amount { color: #bbb; }
+    .coupon-info { flex: 1; border-left: 1px dashed var(--border); padding-left: var(--space-3); }
+    .coupon-name { font-size: 14px; }
+    .coupon-scope { font-size: 12px; color: var(--text-tertiary); margin-top: 4px; }
+    .coupon-time { font-size: 11px; color: var(--text-tertiary); margin-top: 2px; }
+    .radio { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .radio.active { border-color: var(--color-error); }
+    .radio.active::after { content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--color-error); }
+
+    .popup-footer { padding: var(--space-3) var(--space-4); border-top: 1px solid var(--border); display: flex; align-items: center; gap: var(--space-3); flex-shrink: 0; }
+    .footer-tip { flex: 1; font-size: 13px; color: var(--text-secondary); }
+    .footer-tip b { color: var(--color-error); }
+    .popup-footer .btn { margin: 0; width: auto; flex: 0 0 120px; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="phone">
+      <div class="phone-header"><span class="phone-title">确认订单</span></div>
+      <div class="phone-body">
+        <div class="result">应付：<b>¥ 259.00</b></div>
+        <button class="btn" onclick="openCoupon()" style="margin-top:var(--space-3);">选择优惠券</button>
+        <div class="result">已选：<b id="resultText">不使用优惠券</b></div>
+      </div>
+
+      <div class="popup-mask" id="mask" onclick="closeCoupon()"></div>
+      <div class="popup popup-bottom" id="popup">
+        <div class="popup-header">
+          <span class="popup-title">选择优惠券</span>
+          <span class="popup-close" onclick="closeCoupon()">×</span>
+        </div>
+        <div class="popup-body" id="couponList"></div>
+        <div class="popup-footer">
+          <span class="footer-tip" id="footerTip">共 0 元</span>
+          <button class="btn" id="confirmBtn" onclick="confirmCoupon()">确认使用</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const COUPONS = [
+      { id: 'c1', amount: 30, name: '满200减30', scope: '全场通用', time: '2026-10-01 至 2026-10-31', usable: true },
+      { id: 'c2', amount: 15, name: '满150减15', scope: '仅限数码类目', time: '2026-10-10 至 2026-10-20', usable: true },
+      { id: 'c3', amount: 50, name: '满300减50', scope: '全场通用', time: '2026-09-01 至 2026-09-30', usable: false, reason: '已过期' },
+      { id: 'c4', amount: 20, name: '满100减20', scope: '仅限生鲜类目', time: '2026-10-01 至 2026-10-31', usable: false, reason: '不满足使用条件' },
+    ];
+
+    let selected = '';
+
+    function openCoupon() {
+      const usable = COUPONS.filter(c => c.usable);
+      const unusable = COUPONS.filter(c => !c.usable);
+
+      document.getElementById('couponList').innerHTML =
+        (usable.length ? '<div class="group-title">可使用（' + usable.length + '）</div>' : '') +
+        usable.map(c => couponHtml(c)).join('') +
+        (unusable.length ? '<div class="group-title">不可使用（' + unusable.length + '）</div>' : '') +
+        unusable.map(c => couponHtml(c)).join('');
+
+      document.getElementById('mask').classList.add('show');
+      document.getElementById('popup').classList.add('show');
+    }
+
+    function couponHtml(c) {
+      const cls = ['coupon', c.id === selected ? 'active' : '', c.usable ? '' : 'disabled'].filter(Boolean).join(' ');
+      const radio = c.usable
+        ? `<div class="radio ${c.id === selected ? 'active' : ''}"></div>`
+        : `<div style="font-size:12px;color:#999;flex-shrink:0;">${c.reason}</div>`;
+      return `<div class="${cls}" ${c.usable ? `onclick="selectCoupon('${c.id}')"` : ''}>
+        <div class="coupon-amount"><b>${c.amount}</b><span>元</span></div>
+        <div class="coupon-info">
+          <div class="coupon-name">${c.name}</div>
+          <div class="coupon-scope">${c.scope}</div>
+          <div class="coupon-time">${c.time}</div>
+        </div>
+        ${radio}
+      </div>`;
+    }
+
+    function closeCoupon() {
+      document.getElementById('mask').classList.remove('show');
+      document.getElementById('popup').classList.remove('show');
+    }
+
+    function selectCoupon(id) {
+      selected = id;
+      const c = COUPONS.find(x => x.id === id);
+      document.getElementById('footerTip').innerHTML = `已优惠 <b>¥${c.amount}.00</b>`;
+      document.getElementById('resultText').textContent = c.name;
+      openCoupon();  // 重绘高亮
+    }
+
+    function confirmCoupon() {
+      closeCoupon();
+    }
+  </script>
+</body>
+</html>

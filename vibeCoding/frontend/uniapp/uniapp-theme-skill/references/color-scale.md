@@ -18,7 +18,7 @@
 每个主题的主色包含 50-950 共 11 个色阶：
 
 ```css
-:root {
+:r:root {
   --primary-50: #f0fdfa;
   --primary-100: #ccfbf1;
   --primary-200: #99f6e4;
@@ -36,7 +36,7 @@
 ### 第二主题色阶（Secondary Scale 50-950）
 
 ```css
-:root {
+:r:root {
   --secondary-50: #eef2ff;
   --secondary-100: #e0e7ff;
   --secondary-200: #c7d2fe;
@@ -54,7 +54,7 @@
 ### 第三主题色阶（Tertiary Scale 50-950）
 
 ```css
-:root {
+:r:root {
   --tertiary-50: #fffbeb;
   --tertiary-100: #fef3c7;
   --tertiary-200: #fde68a;
@@ -72,7 +72,7 @@
 ### 灰色阶（Gray Scale 50-950）
 
 ```css
-:root {
+:r:root {
   --gray-50: #fafafa;
   --gray-100: #f5f5f5;
   --gray-200: #e5e5e5;
@@ -90,32 +90,32 @@
 ### 语义化变量
 
 ```css
-:root {
+:r:root {
   /* 基础语义 */
   --color-primary: var(--primary-500, #14b8a6);
   --color-secondary: var(--secondary-500, #6366f1);
   --color-tertiary: var(--tertiary-500, #f59e0b);
 
   /* 背景语义 */
-  --color-bg-page: var(--gray-50, #fafafa);
-  --color-bg-surface: #ffffff;
-  --color-bg-tinted: var(--primary-50, #f0fdfa);
+  --bg-page: var(--gray-50, #fafafa);
+  --bg-card: #ffffff;
+  --bg-light: var(--primary-50, #f0fdfa);
 
   /* 文字语义 */
-  --color-text-primary: var(--gray-900, #171717);
-  --color-text-secondary: var(--gray-600, #525252);
-  --color-text-tertiary: var(--gray-400, #a3a3a3);
-  --color-text-inverse: #ffffff;
+  --text-primary: var(--gray-900, #171717);
+  --text-secondary: var(--gray-600, #525252);
+  --text-tertiary: var(--gray-400, #a3a3a3);
+  --text-inverse: #ffffff;
 
   /* 状态语义 */
-  --color-success: var(--success-500, #10B981);
-  --color-warning: var(--warning-500, #F59E0B);
-  --color-error: var(--error-500, #EF4444);
-  --color-info: var(--info-500, #3B82F6);
+  --color-success: var(--color-success, #10B981);
+  --color-warning: var(--color-warning, #F59E0B);
+  --color-error: var(--color-error, #EF4444);
+  --color-info: var(--color-info, #3B82F6);
 
   /* 边框语义 */
-  --color-border: var(--gray-200, #e5e5e5);
-  --color-border-light: var(--gray-100, #f5f5f5);
+  --border: var(--gray-200, #e5e5e5);
+  --border-light: var(--gray-100, #f5f5f5);
 }
 ```
 
@@ -144,7 +144,7 @@
 ### cute 可爱风
 
 ```css
-[data-theme="cute"] {
+[d[data-theme="cute"] {
   --primary-50: #FFF5F8;
   --primary-100: #FFEDF3;
   --primary-200: #FFD6E4;
@@ -162,7 +162,7 @@
 ### business 商务风
 
 ```css
-[data-theme="business"] {
+[d[data-theme="business"] {
   --primary-50: #EFF6FF;
   --primary-100: #DBEAFE;
   --primary-200: #BFDBFE;
@@ -180,7 +180,7 @@
 ### fresh 清新风
 
 ```css
-[data-theme="fresh"] {
+[d[data-theme="fresh"] {
   --primary-50: #ECFDF5;
   --primary-100: #D1FAE5;
   --primary-200: #A7F3D0;
@@ -198,7 +198,7 @@
 ### cyber 硬核风
 
 ```css
-[data-theme="cyber"] {
+[d[data-theme="cyber"] {
   --primary-50: #E6FEFF;
   --primary-100: #B3FAFF;
   --primary-200: #80F5FF;
@@ -216,7 +216,7 @@
 ### retro 复古风
 
 ```css
-[data-theme="retro"] {
+[d[data-theme="retro"] {
   --primary-50: #FFFBEB;
   --primary-100: #FEF3C7;
   --primary-200: #FDE68A;
@@ -234,7 +234,7 @@
 ### glass 玻璃风
 
 ```css
-[data-theme="glass"] {
+[d[data-theme="glass"] {
   --primary-50: #F5F3FF;
   --primary-100: #EDE9FE;
   --primary-200: #DDD6FE;
@@ -252,7 +252,7 @@
 ### minimal 极简风
 
 ```css
-[data-theme="minimal"] {
+[d[data-theme="minimal"] {
   --primary-50: #FAFAFA;
   --primary-100: #F5F5F5;
   --primary-200: #E5E5E5;
@@ -270,7 +270,7 @@
 ### warm 暖风
 
 ```css
-[data-theme="warm"] {
+[d[data-theme="warm"] {
   --primary-50: #FFF7ED;
   --primary-100: #FFEDD5;
   --primary-200: #FED7AA;
@@ -295,7 +295,7 @@
 <style>
 .btn {
   background-color: var(--color-primary, #14b8a6);
-  color: var(--color-text-inverse, #ffffff);
+  color: var(--text-inverse, #ffffff);
   border-radius: var(--radius-btn, 9999rpx);
 }
 </style>

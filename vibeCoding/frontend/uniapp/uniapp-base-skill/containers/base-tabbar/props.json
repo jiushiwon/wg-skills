@@ -1,0 +1,17 @@
+{
+  "name": "base-tabbar",
+  "title": "底部菜单容器",
+  "category": "container",
+  "description": "根容器：2~5 个菜单项（图标 + 文字 + 角标），激活项主题色高亮",
+  "aliases": ["底部菜单", "tabbar", "base-tabbar", "底部导航", "标签栏"],
+  "props": [
+    { "name": "items", "type": "TabbarItem[]", "default": "[]", "desc": "菜单项（2~5 个）" },
+    { "name": "modelValue", "type": "string | number", "default": "", "desc": "当前激活 key（v-model）" },
+    { "name": "fixed", "type": "boolean", "default": true, "desc": "是否底部固定" },
+    { "name": "safeArea", "type": "boolean", "default": true, "desc": "是否适配安全区" }
+  ],
+  "events": ["update:modelValue", "change"],
+  "slots": [
+    { "name": "item", "desc": "自定义菜单项内容" }
+  ]
+}

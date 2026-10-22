@@ -77,22 +77,22 @@ const props = defineProps({
   orderTypes: {
     type: Array,
     default: () => [
-      { icon: '💰', label: '待付款', badge: 2 },
-      { icon: '📦', label: '待发货', badge: 1 },
-      { icon: '🚚', label: '待收货', badge: 0 },
-      { icon: '⭐', label: '评价', badge: 0 },
-      { icon: '🔄', label: '退款', badge: 0 }
+      { icon: '金额', label: '待付款', badge: 2 },
+      { icon: '包裹', label: '待发货', badge: 1 },
+      { icon: '物流', label: '待收货', badge: 0 },
+      { icon: '', label: '评价', badge: 0 },
+      { icon: '', label: '退款', badge: 0 }
     ]
   },
   menuItems: {
     type: Array,
     default: () => [
-      { icon: '🎫', label: '优惠券' },
-      { icon: '⭐', label: '我的收藏' },
-      { icon: '📍', label: '收货地址' },
-      { icon: '💳', label: '银行卡' },
-      { icon: '🚚', label: '物流查询' },
-      { icon: '🎧', label: '客服中心' }
+      { icon: '券', label: '优惠券' },
+      { icon: '', label: '我的收藏' },
+      { icon: '位置', label: '收货地址' },
+      { icon: '支付', label: '银行卡' },
+      { icon: '物流', label: '物流查询' },
+      { icon: '音乐', label: '客服中心' }
     ]
   }
 })

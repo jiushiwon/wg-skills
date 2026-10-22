@@ -6,7 +6,7 @@
 
 /* ========== 风格1: default 默认线条 ========== */
 .t-form--default .t-form-item {
-  margin-bottom: var(--space-4, 16px);
+  margin-bottom: var(--space-4, 16rpx);
 }
 
 .t-form--default .t-form-item--top {
@@ -24,15 +24,15 @@
 }
 
 .t-form--default .t-form-item__label-text {
-  font-size: var(--text-sm, 14px);
-  color: var(--color-text-primary, #374151);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-primary, #171717);
   font-weight: 500;
 }
 
 .t-form--default .t-form-item__label--required::before {
   content: '*';
-  color: var(--color-error, #ef4444);
-  margin-right: var(--space-1, 4px);
+  color: var(--color-error, #EF4444);
+  margin-right: var(--space-1, 4rpx);
 }
 
 .t-form--default .t-form-item__content {
@@ -41,14 +41,14 @@
 }
 
 .t-form--default .t-form-item__error {
-  margin-top: var(--space-1, 4px);
-  font-size: var(--text-xs, 12px);
-  color: var(--color-error, #ef4444);
+  margin-top: var(--space-1, 4rpx);
+  font-size: var(--font-xs, 24rpx);
+  color: var(--color-error, #EF4444);
 }
 
 /* ========== 风格2: filled 填充背景 ========== */
 .t-form--filled .t-form-item {
-  margin-bottom: var(--space-3, 12px);
+  margin-bottom: var(--space-3, 12rpx);
 }
 
 .t-form--filled .t-form-item--top {
@@ -66,15 +66,15 @@
 }
 
 .t-form--filled .t-form-item__label-text {
-  font-size: var(--text-sm, 14px);
-  color: var(--color-text-secondary, #6b7280);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-secondary, #525252);
   font-weight: 500;
 }
 
 .t-form--filled .t-form-item__label--required::before {
   content: '*';
-  color: var(--color-primary, #333);
-  margin-right: var(--space-1, 4px);
+  color: var(--color-primary, #14b8a6);
+  margin-right: var(--space-1, 4rpx);
 }
 
 .t-form--filled .t-form-item__content {
@@ -83,14 +83,14 @@
 }
 
 .t-form--filled .t-form-item__error {
-  margin-top: var(--space-1, 4px);
-  font-size: var(--text-xs, 12px);
-  color: var(--color-error, #ef4444);
+  margin-top: var(--space-1, 4rpx);
+  font-size: var(--font-xs, 24rpx);
+  color: var(--color-error, #EF4444);
 }
 
 /* ========== 风格3: outline 粗边框 ========== */
 .t-form--outline .t-form-item {
-  margin-bottom: var(--space-5, 20px);
+  margin-bottom: var(--space-5, 20rpx);
 }
 
 .t-form--outline .t-form-item--top {
@@ -105,20 +105,20 @@
 
 .t-form--outline .t-form-item__label {
   flex-shrink: 0;
-  padding: var(--space-2, 8px) 0;
+  padding: var(--space-2, 8rpx) 0;
 }
 
 .t-form--outline .t-form-item__label-text {
-  font-size: var(--text-base, 16px);
-  color: var(--color-text-primary, #111827);
+  font-size: var(--font-md, 28rpx);
+  color: var(--text-primary, #171717);
   font-weight: 600;
   letter-spacing: 0.5px;
 }
 
 .t-form--outline .t-form-item__label--required::before {
   content: '*';
-  color: var(--color-primary, #333);
-  margin-right: var(--space-1, 4px);
+  color: var(--color-primary, #14b8a6);
+  margin-right: var(--space-1, 4rpx);
 }
 
 .t-form--outline .t-form-item__content {
@@ -127,9 +127,9 @@
 }
 
 .t-form--outline .t-form-item__error {
-  margin-top: var(--space-2, 8px);
-  font-size: var(--text-sm, 14px);
-  color: var(--color-error, #ef4444);
+  margin-top: var(--space-2, 8rpx);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--color-error, #EF4444);
   font-weight: 500;
 }
 
@@ -141,23 +141,23 @@
   display: flex;
   align-items: center;
   width: 100%;
-  background: var(--color-bg-surface, #fff);
-  border: 1px solid var(--color-border, #e5e7eb);
-  border-radius: var(--radius-md, 8px);
+  background: var(--bg-card, #ffffff);
+  border: 1px solid var(--border, #e5e5e5);
+  border-radius: var(--radius-md, 16rpx);
   transition: all 0.2s ease;
 }
 
 .t-input--default:hover {
-  border-color: var(--color-primary-light, #666);
+  border-color: var(--primary-400, #2dd4bf);
 }
 
 .t-input--default.t-input--focus {
-  border-color: var(--color-primary, #333);
+  border-color: var(--color-primary, #14b8a6);
   box-shadow: 0 0 0 3px rgba(51, 51, 51, 0.08);
 }
 
 .t-input--default.t-input--error {
-  border-color: var(--color-error, #ef4444);
+  border-color: var(--color-error, #EF4444);
 }
 
 .t-input--default.t-input--error.t-input--focus {
@@ -170,24 +170,24 @@
   display: flex;
   align-items: center;
   width: 100%;
-  background: var(--color-gray-100, #f3f4f6);
+  background: var(--gray-100, #f5f5f5);
   border: 2px solid transparent;
-  border-radius: var(--radius-lg, 12px);
+  border-radius: var(--radius-lg, 24rpx);
   transition: all 0.2s ease;
 }
 
 .t-input--filled:hover {
-  background: var(--color-gray-200, #e5e7eb);
+  background: var(--gray-200, #e5e5e5);
 }
 
 .t-input--filled.t-input--focus {
-  background: var(--color-bg-surface, #fff);
-  border-color: var(--color-primary, #333);
+  background: var(--bg-card, #ffffff);
+  border-color: var(--color-primary, #14b8a6);
 }
 
 .t-input--filled.t-input--error {
   background: #fef2f2;
-  border-color: var(--color-error, #ef4444);
+  border-color: var(--color-error, #EF4444);
 }
 
 .t-input--filled.t-input--error.t-input--focus {
@@ -201,22 +201,22 @@
   align-items: center;
   width: 100%;
   background: transparent;
-  border: 2px solid var(--color-gray-300, #d1d5db);
-  border-radius: var(--radius-sm, 4px);
+  border: 2px solid var(--gray-300, #d4d4d4);
+  border-radius: var(--radius-sm, 8rpx);
   transition: all 0.2s ease;
 }
 
 .t-input--outline:hover {
-  border-color: var(--color-primary-light, #666);
+  border-color: var(--primary-400, #2dd4bf);
 }
 
 .t-input--outline.t-input--focus {
-  border-color: var(--color-primary, #333);
+  border-color: var(--color-primary, #14b8a6);
   box-shadow: 0 4px 12px rgba(51, 51, 51, 0.1);
 }
 
 .t-input--outline.t-input--error {
-  border-color: var(--color-error, #ef4444);
+  border-color: var(--color-error, #EF4444);
 }
 
 .t-input--outline.t-input--error.t-input--focus {
@@ -232,8 +232,8 @@
 .t-input__inner {
   flex: 1;
   padding: 10px 14px;
-  font-size: var(--text-base, 16px);
-  color: var(--color-text-primary, #111827);
+  font-size: var(--font-md, 28rpx);
+  color: var(--text-primary, #171717);
   background: transparent;
   border: none;
   outline: none;
@@ -248,7 +248,7 @@
 }
 
 .t-input__inner::placeholder {
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .t-input__inner:disabled {
@@ -262,18 +262,18 @@
   justify-content: center;
   width: 20px;
   height: 20px;
-  margin-right: var(--space-2, 8px);
+  margin-right: var(--space-2, 8rpx);
   font-size: 14px;
-  color: var(--color-text-tertiary, #9ca3af);
-  background: var(--color-gray-200, #e5e7eb);
+  color: var(--text-tertiary, #a3a3a3);
+  background: var(--gray-200, #e5e5e5);
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .t-input__clear:hover {
-  background: var(--color-gray-300, #d1d5db);
-  color: var(--color-text-secondary, #6b7280);
+  background: var(--gray-300, #d4d4d4);
+  color: var(--text-secondary, #525252);
 }
 
 /* Select 下拉选择 */
@@ -287,41 +287,41 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 14px;
-  background: var(--color-bg-surface, #fff);
-  border: 1px solid var(--color-border, #e5e7eb);
-  border-radius: var(--radius-md, 8px);
+  background: var(--bg-card, #ffffff);
+  border: 1px solid var(--border, #e5e5e5);
+  border-radius: var(--radius-md, 16rpx);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .t-select--filled .t-select__trigger {
-  background: var(--color-gray-100, #f3f4f6);
+  background: var(--gray-100, #f5f5f5);
   border: 2px solid transparent;
 }
 
 .t-select--outline .t-select__trigger {
-  border: 2px solid var(--color-gray-300, #d1d5db);
+  border: 2px solid var(--gray-300, #d4d4d4);
 }
 
 .t-select__trigger:hover {
-  border-color: var(--color-primary-light, #666);
+  border-color: var(--primary-400, #2dd4bf);
 }
 
 .t-select--filled .t-select__trigger:hover {
-  background: var(--color-gray-200, #e5e7eb);
+  background: var(--gray-200, #e5e5e5);
 }
 
 .t-select--outline .t-select__trigger:hover {
-  border-color: var(--color-primary-light, #666);
+  border-color: var(--primary-400, #2dd4bf);
 }
 
 .t-select__trigger--focus {
-  border-color: var(--color-primary, #333);
+  border-color: var(--color-primary, #14b8a6);
   box-shadow: 0 0 0 3px rgba(51, 51, 51, 0.08);
 }
 
 .t-select--filled .t-select__trigger--focus {
-  background: var(--color-bg-surface, #fff);
+  background: var(--bg-card, #ffffff);
 }
 
 .t-select--disabled .t-select__trigger {
@@ -337,13 +337,13 @@
 }
 
 .t-select__placeholder {
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .t-select__arrow {
-  margin-left: var(--space-2, 8px);
+  margin-left: var(--space-2, 8rpx);
   font-size: 10px;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--text-tertiary, #a3a3a3);
   transition: transform 0.2s ease;
 }
 
@@ -359,15 +359,15 @@
   right: 0;
   z-index: 100;
   max-height: 240px;
-  background: var(--color-bg-surface, #fff);
-  border: 1px solid var(--color-border, #e5e7eb);
-  border-radius: var(--radius-md, 8px);
+  background: var(--bg-card, #ffffff);
+  border: 1px solid var(--border, #e5e5e5);
+  border-radius: var(--radius-md, 16rpx);
   box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
   overflow: auto;
 }
 
 .t-select--outline .t-select__dropdown {
-  border-radius: var(--radius-sm, 4px);
+  border-radius: var(--radius-sm, 8rpx);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
@@ -376,20 +376,20 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 14px;
-  font-size: var(--text-base, 16px);
-  color: var(--color-text-primary, #111827);
+  font-size: var(--font-md, 28rpx);
+  color: var(--text-primary, #171717);
   cursor: pointer;
   transition: background 0.15s ease;
 }
 
 .t-select__option:hover {
-  background: var(--color-gray-50, #f9fafb);
+  background: var(--gray-50, #fafafa);
 }
 
 .t-select__option--selected {
-  color: var(--color-primary, #333);
+  color: var(--color-primary, #14b8a6);
   font-weight: 500;
-  background: var(--color-primary-50, #f9fafb);
+  background: var(--primary-50, #f0fdfa);
 }
 
 .t-select__option--disabled {
@@ -398,13 +398,13 @@
 }
 
 .t-select__check {
-  font-size: var(--text-sm, 14px);
-  color: var(--color-primary, #333);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--color-primary, #14b8a6);
 }
 
 .t-select__empty {
-  padding: var(--space-4, 16px);
+  padding: var(--space-4, 16rpx);
   text-align: center;
-  color: var(--color-text-tertiary, #9ca3af);
-  font-size: var(--text-sm, 14px);
+  color: var(--text-tertiary, #a3a3a3);
+  font-size: var(--font-sm, 26rpx);
 }

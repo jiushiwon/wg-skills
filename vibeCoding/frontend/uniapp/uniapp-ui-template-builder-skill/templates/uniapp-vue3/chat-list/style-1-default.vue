@@ -3,7 +3,7 @@
     <!-- 搜索栏 -->
     <view class="search-bar">
       <view class="search-input">
-        <text class="search-icon">🔍</text>
+        <text class="search-icon">⌕</text>
         <input type="text" placeholder="搜索" />
       </view>
     </view>

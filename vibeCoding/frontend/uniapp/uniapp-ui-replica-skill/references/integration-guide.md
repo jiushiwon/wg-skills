@@ -61,11 +61,11 @@ src/
 ### 3.1 标签替换
 
 ```
-div → view
-span → text
-img → image
-button → button（uniapp 支持）
-input → input
+div  view
+span  text
+img  image
+button  button（uniapp 支持）
+input  input
 ```
 
 ### 3.2 样式注意
@@ -141,6 +141,7 @@ onMounted(async () => {
 
 ```js
 {
+{
   path: '/meetings/:id/qrcode',
   name: 'MeetingQrCode',
   component: () => import('@/views/MeetingQrCode.vue')
@@ -150,6 +151,7 @@ onMounted(async () => {
 ### uniapp
 
 ```json
+{
 {
   "pages": [
     {
@@ -162,11 +164,12 @@ onMounted(async () => {
 
 ## 7. 沉淀公共组件（可选）
 
-如果复刻中产生了可复用组件，且后续需要长期维护，可考虑沉淀到 `ui-component-commands-skill`：
+如果复刻中产生了可复用组件，且后续需要长期维护，可考虑沉淀到 `uniapp-base-skill`
+（组件实现的唯一真源），再由 `uniapp-ui-component-commands-skill` 登记索引：
 
-1. 在 `ui-component-commands-skill/components/` 创建组件目录
+1. 在 `uniapp-base-skill/components/<category>/<name>/` 创建组件目录
 2. 编写 `index.vue`、`props.json`、`usage.md`
-3. 更新 `ui-component-commands-skill/components/_registry.json`
+3. 更新 `uniapp-ui-component-commands-skill/components/_registry.json`，并重新生成 `commands/<category>.md`
 4. 在后续项目中直接调用
 
 **注意**：沉淀组件是后续收敛阶段的工作，不是复刻第一稿的必做项。

@@ -16,7 +16,7 @@
 ## 快速开始
 
 ```
-# 生成个人中心页面（简约现代风格，带Mock数据）
+# # 生成个人中心页面（简约现代风格，带Mock数据）
 生成一个个人中心页面
 
 # 生成商品详情页（活力炫彩风格）
@@ -89,7 +89,7 @@
 提供 `references/theme-generator.js`，输入任意颜色自动生成完整色阶：
 
 ```bash
-# 使用预设主题
+# # 使用预设主题
 node references/theme-generator.js modern
 node references/theme-generator.js vibrant
 node references/theme-generator.js premium
@@ -103,10 +103,10 @@ node references/theme-generator.js custom #FF6B6B
 自动生成 50-900 色阶的 CSS 变量：
 
 ```css
-:root {
-  --color-primary-50: #fff5f5;
-  --color-primary-100: #ffe4e4;
-  --color-primary-500: #FF6B6B;
+:r:root {
+  --primary-50: #fff5f5;
+  --primary-100: #ffe4e4;
+  --primary-500: #FF6B6B;
   --color-primary-900: #450a0a;
   /* ... */
 }
@@ -138,6 +138,7 @@ templates/uniapp-vue3/profile/
 统一为接口标准格式：
 
 ```json
+{
 {
   "code": 200,
   "message": "success",
@@ -237,9 +238,9 @@ import mock from './table-list/mock.json'
 ### 使用方式
 
 ```css
-/* 切换尺寸 */
-:root { --font-size-base: 12px; }  /* 小号 */
-:root { --font-size-base: 16px; }  /* 大号 */
+/*/* 切换尺寸 */
+:root { --font-md: 12px; }  /* 小号 */
+:root { --font-md: 16px; }  /* 大号 */
 ```
 
 ---
@@ -260,7 +261,7 @@ import mock from './table-list/mock.json'
 ## 八、目录结构
 
 ```
-ui-template-builder/
+uniapp-ui-template-builder/
 ├── SKILL.md                    # 技能定义
 ├── README.md                   # 本文件
 ├── references/

@@ -272,15 +272,15 @@ description: uniapp 常用「组件化页面」技能。内置 22 个组件（6 
 | 用途 | 优先使用变量 |
 |------|--------------|
 | 主色 | `var(--color-primary)`（按钮/高亮/自己气泡/菜单激活/链接） |
-| 页面背景 | `var(--color-bg-page)` |
-| 卡片/输入/气泡/导航底 | `var(--color-bg-surface)` |
-| 浅色强调底 | `var(--color-bg-tinted)`（标签底/点赞评论底/ghost 按钮/logo 底） |
-| 文字主/次/弱 | `var(--color-text-primary)` / `--color-text-secondary` / `--color-text-tertiary` |
-| 边框 | `var(--color-border)` / `--color-border-light` |
-| 反白文字 | `var(--white)` |
+| 页面背景 | `var(--bg-page)` |
+| 卡片/输入/气泡/导航底 | `var(--bg-card)` |
+| 浅色强调底 | `var(--bg-light)`（标签底/点赞评论底/ghost 按钮/logo 底） |
+| 文字主/次/弱 | `var(--text-primary)` / `--text-secondary` / `--text-tertiary` |
+| 边框 | `var(--border)` / `--border-light` |
+| 反白文字 | `var(--text-inverse)` |
 | 错误/必填星号/角标/价格 | `var(--color-error)` |
 | 圆角 | `--radius-card` / `--radius-btn` / `--radius-tag` / `--radius-avatar` / `--radius-image` / `--radius-full` |
-| 间距 | `var(--spacing-xs/sm/md/lg/xl/2xl/3xl)` |
+| 间距 | `var(--space-2/sm/md/lg/xl/2xl/3xl)` |
 | 字号 | `var(--font-xs/sm/md/lg/xl/2xl)` |
 | 控件高 | `var(--height-btn-sm/md/lg/xl)`、`var(--height-avatar-sm/md/lg)` |
 | 图标尺寸 | `var(--icon-xs/sm/md/lg)` |
@@ -294,7 +294,7 @@ description: uniapp 常用「组件化页面」技能。内置 22 个组件（6 
 2. **状态栏适配**：`base-navbar` 使用小程序自定义导航时，需在 `App.vue` 定义 `--status-bar-height`（如 `44px`）或传入 `status-bar-height` prop；胶囊对齐属 app-generate `AppNavbar` 强约束场景，本技能导航栏为简易通用版。**APP 端**（Android/iOS）必须运行时动态获取状态栏高度（`uni.getSystemInfoSync().statusBarHeight`），详见 `references/platform-app.md`。`login-page` 无导航栏，无需处理。`product-detail-page` / `chat-page` 内置简化导航栏同理。
 3. **容器高度**：`tab-list-page` / `chat-page` / `product-detail-page` / `search-page` / `form-page` / `home-page` 根容器为 `height: 100%`，使用页面需给确定高度（如页面根 `view` 设 `height: 100vh`）。
 4. **内部依赖**：`form-page` / `home-page` / `login-page` / `tab-list-page` / `profile-page` / `image-card` 依赖基础组件，复制时连带复制（见 Step 2 表）。
-5. **页面背景**：各页面组件自带页面级背景（`--color-bg-page`），外层无需再包容器。
+5. **页面背景**：各页面组件自带页面级背景（`--bg-page`），外层无需再包容器。
 
 ## 红线规则
 

@@ -48,7 +48,7 @@
 
 ### 1. 可视化预览
 ```bash
-# 直接在浏览器打开
+# # 直接在浏览器打开
 open templates/preview.html
 # 或
 start templates/preview.html

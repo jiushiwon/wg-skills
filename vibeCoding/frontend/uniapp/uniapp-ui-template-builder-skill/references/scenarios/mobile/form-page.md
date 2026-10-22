@@ -29,7 +29,7 @@ form-page/
 ### 变体1：简洁输入
 
 ```
-┌─────────────────────────────┐
+┌─┌─────────────────────────────┐
 │  编辑资料                   │
 ├─────────────────────────────┤
 │  头像                       │
@@ -62,7 +62,7 @@ form-page/
 ### 变体2：卡片分组
 
 ```
-┌─────────────────────────────┐
+┌─┌─────────────────────────────┐
 │  完善信息                   │
 ├─────────────────────────────┤
 │  ┌─────────────────────┐   │
@@ -93,7 +93,7 @@ form-page/
 ### 变体3：步骤表单
 
 ```
-┌─────────────────────────────┐
+┌─┌─────────────────────────────┐
 │  步骤1: 填写基本信息        │
 │  ━━━━━━━○━━━━━━━          │
 ├─────────────────────────────┤
@@ -118,15 +118,20 @@ form-page/
 ### 1. 文本输入
 
 ```vue
+<template>
 <view class="form-item">
   <text class="label">昵称</text>
   <input class="input" v-model="form.nickname" placeholder="请输入昵称" />
 </view>
+</template>
+
+
 ```
 
 ### 2. 单选/多选
 
 ```vue
+<template>
 <view class="form-item">
   <text class="label">性别</text>
   <radio-group @change="onGenderChange">
@@ -134,21 +139,29 @@ form-page/
     <label><radio value="2" />女</label>
   </radio-group>
 </view>
+</template>
+
+
 ```
 
 ### 3. 选择器
 
 ```vue
+<template>
 <view class="form-item" @click="showPicker">
   <text class="label">生日</text>
   <text class="value">{{ form.birthday }}</text>
   <text class="arrow">></text>
 </view>
+</template>
+
+
 ```
 
 ### 4. 上传图片
 
 ```vue
+<template>
 <view class="form-item">
   <text class="label">头像</text>
   <view class="upload-box">
@@ -156,6 +169,9 @@ form-page/
     <view class="upload-icon">+</view>
   </view>
 </view>
+</template>
+
+
 ```
 
 ### 5. 开关
@@ -170,10 +186,14 @@ form-page/
 ### 6. 文本域
 
 ```vue
+<template>
 <view class="form-item">
   <text class="label">简介</text>
   <textarea class="textarea" v-model="form.bio" placeholder="请输入简介" />
 </view>
+</template>
+
+
 ```
 
 ## 验证规则
@@ -199,7 +219,7 @@ form-page/
 ### 风格1：简约现代
 
 ```scss
---bg-page: #F5F5F5;
+----bg-page: #F5F5F5;
 --bg-card: #FFFFFF;
 --text-primary: #333333;
 --text-secondary: #999999;
@@ -211,8 +231,8 @@ form-page/
 ### 风格2：活力炫彩
 
 ```scss
---bg-page: #FFFFFF;
---primary: #FF6B6B;
+----bg-page: #FFFFFF;
+--color-primary: #FF6B6B;
 --focus-color: #FF6B6B;
 --radius: 12px;
 --shadow: 0 2px 12px rgba(255, 107, 107, 0.15);
@@ -221,7 +241,7 @@ form-page/
 ### 风格3：高端商务
 
 ```scss
---bg-page: #0F0F1A;
+----bg-page: #0F0F1A;
 --bg-card: #1A1A2E;
 --text-primary: #FFFFFF;
 --border: #2D2D44;
@@ -232,9 +252,9 @@ form-page/
 ### 风格4：清新自然
 
 ```scss
---bg-page: #F0F9F6;
+----bg-page: #F0F9F6;
 --bg-card: #FFFFFF;
---primary: #2ECC71;
+--color-primary: #2ECC71;
 --focus-color: #2ECC71;
 --radius: 16px;
 ```
@@ -249,6 +269,7 @@ form-page/
 ## Mock数据
 
 ```json
+{
 {
   "formConfig": {
     "groups": [

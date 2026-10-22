@@ -1,0 +1,21 @@
+{
+  "name": "list-item",
+  "title": "列表项",
+  "category": "list",
+  "description": "列表项，卡片外壳由 BaseCard 提供，支持图标、标题、描述、值、箭头",
+  "aliases": ["单元格", "cell", "listcell"],
+  "props": [
+    { "name": "icon", "type": "string", "default": "", "desc": "左侧图标地址" },
+    { "name": "title", "type": "string", "default": "", "desc": "标题" },
+    { "name": "label", "type": "string", "default": "", "desc": "描述文字" },
+    { "name": "value", "type": "string", "default": "", "desc": "右侧值" },
+    { "name": "arrow", "type": "boolean", "default": false, "desc": "显示右侧箭头" },
+    { "name": "disabled", "type": "boolean", "default": false, "desc": "禁用，置灰且不触发 click" }
+  ],
+  "events": ["click"],
+  "slots": [
+    { "name": "default", "desc": "内容区自定义内容" },
+    { "name": "icon", "desc": "左侧自定义图标" },
+    { "name": "right", "desc": "右侧自定义内容" }
+  ]
+}

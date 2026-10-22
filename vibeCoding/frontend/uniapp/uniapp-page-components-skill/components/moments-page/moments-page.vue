@@ -180,7 +180,7 @@ const imageStyle = computed(() => {
   const cols = Math.max(1, Math.min(3, props.imageColumns))
   const gapTimes = cols - 1
   return {
-    width: `calc((100% - ${gapTimes} * var(--spacing-xs)) / ${cols})`,
+    width: `calc((100% - ${gapTimes} * var(--space-2, 8rpx)) / ${cols})`,
     aspectRatio: '1',
   }
 })
@@ -230,7 +230,7 @@ function likeNames(feed: MomentsFeed) {
 <style lang="scss" scoped>
 .moments {
   min-height: 100%;
-  background: var(--color-bg-page);
+  background: var(--bg-page, #fafafa);
 }
 
 /* ---- 封面头图 ---- */
@@ -238,7 +238,7 @@ function likeNames(feed: MomentsFeed) {
   position: relative;
   width: 100%;
   height: 480rpx;
-  background: var(--color-bg-surface);
+  background: var(--bg-card, #ffffff);
 }
 
 .moments-cover-img {
@@ -249,45 +249,45 @@ function likeNames(feed: MomentsFeed) {
 .moments-cover-ph {
   width: 100%;
   height: 100%;
-  background: var(--color-bg-tinted);
+  background: var(--bg-light, #f5f5f5);
 }
 
 .moments-me {
   position: absolute;
-  right: var(--spacing-lg);
-  bottom: var(--spacing-md);
+  right: var(--space-8, 32rpx);
+  bottom: var(--space-6, 24rpx);
   display: flex;
   align-items: center;
 }
 
 .moments-me-name {
-  margin-right: var(--spacing-md);
-  font-size: var(--font-xl);
+  margin-right: var(--space-6, 24rpx);
+  font-size: var(--font-xl, 32rpx);
   font-weight: 600;
-  color: var(--white);
+  color: var(--text-inverse, #ffffff);
   text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.4);
 }
 
 .moments-me-avatar {
-  border: 4rpx solid var(--white);
-  border-radius: var(--radius-avatar);
+  border: 4rpx solid var(--text-inverse, #ffffff);
+  border-radius: var(--radius-avatar, 9999rpx);
   overflow: hidden;
 }
 
 /* ---- 动态列表 ---- */
 .moments-list {
-  padding: var(--spacing-md) 0 var(--spacing-2xl);
+  padding: var(--space-6, 24rpx) 0 var(--space-16, 64rpx);
 }
 
 .moments-feed {
   display: flex;
   align-items: flex-start;
-  padding: var(--spacing-md) var(--spacing-lg);
+  padding: var(--space-6, 24rpx) var(--space-8, 32rpx);
 }
 
 .feed-avatar {
   flex-shrink: 0;
-  margin-right: var(--spacing-md);
+  margin-right: var(--space-6, 24rpx);
 }
 
 .feed-main {
@@ -296,69 +296,69 @@ function likeNames(feed: MomentsFeed) {
 }
 
 .feed-name {
-  font-size: var(--font-md);
+  font-size: var(--font-md, 28rpx);
   font-weight: 600;
-  color: var(--color-primary);
+  color: var(--color-primary, #14b8a6);
 }
 
 .feed-content {
-  margin-top: var(--spacing-xs);
+  margin-top: var(--space-2, 8rpx);
 }
 
 .feed-content-text {
-  font-size: var(--font-md);
+  font-size: var(--font-md, 28rpx);
   line-height: 1.6;
-  color: var(--color-text-primary);
+  color: var(--text-primary, #171717);
   word-break: break-all;
 }
 
 .feed-expand {
-  margin-left: var(--spacing-xs);
-  font-size: var(--font-md);
-  color: var(--color-primary);
+  margin-left: var(--space-2, 8rpx);
+  font-size: var(--font-md, 28rpx);
+  color: var(--color-primary, #14b8a6);
 }
 
 .feed-images {
   display: flex;
   flex-wrap: wrap;
-  margin-top: var(--spacing-sm);
+  margin-top: var(--space-4, 16rpx);
 }
 
 .feed-image {
-  margin-right: var(--spacing-xs);
-  margin-bottom: var(--spacing-xs);
-  border-radius: var(--radius-image);
-  background: var(--color-bg-surface);
+  margin-right: var(--space-2, 8rpx);
+  margin-bottom: var(--space-2, 8rpx);
+  border-radius: var(--radius-image, 16rpx);
+  background: var(--bg-card, #ffffff);
 }
 
 .feed-image-ph {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-image);
-  background: var(--color-bg-tinted);
+  border-radius: var(--radius-image, 16rpx);
+  background: var(--bg-light, #f5f5f5);
 }
 
 .feed-image-ph-text {
-  font-size: var(--font-xs);
-  color: var(--color-text-tertiary);
+  font-size: var(--font-xs, 24rpx);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .feed-meta {
   display: flex;
   align-items: center;
-  margin-top: var(--spacing-sm);
+  margin-top: var(--space-4, 16rpx);
 }
 
 .feed-time {
-  font-size: var(--font-xs);
-  color: var(--color-text-tertiary);
+  font-size: var(--font-xs, 24rpx);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .feed-location {
-  margin-left: var(--spacing-md);
-  font-size: var(--font-xs);
-  color: var(--color-primary);
+  margin-left: var(--space-6, 24rpx);
+  font-size: var(--font-xs, 24rpx);
+  color: var(--color-primary, #14b8a6);
 }
 
 .feed-more {
@@ -367,70 +367,70 @@ function likeNames(feed: MomentsFeed) {
   justify-content: flex-start;
   min-width: 88rpx;
   min-height: 88rpx;
-  margin: calc(-1 * var(--spacing-md)) 0;
+  margin: calc(-1 * var(--space-6, 24rpx)) 0;
 }
 
 .feed-more-icon {
-  font-size: var(--font-xl);
-  color: var(--color-text-secondary);
+  font-size: var(--font-xl, 32rpx);
+  color: var(--text-secondary, #525252);
   line-height: 1;
 }
 
 /* ---- 点赞 + 评论 ---- */
 .feed-social {
-  margin-top: var(--spacing-sm);
-  border-radius: var(--radius-sm);
-  background: var(--color-bg-tinted);
+  margin-top: var(--space-4, 16rpx);
+  border-radius: var(--radius-sm, 8rpx);
+  background: var(--bg-light, #f5f5f5);
   overflow: hidden;
 }
 
 .feed-like {
   display: flex;
   align-items: flex-start;
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: var(--space-4, 16rpx) var(--space-6, 24rpx);
 }
 
 .feed-like-thumb {
   flex-shrink: 0;
-  margin-right: var(--spacing-sm);
-  font-size: var(--font-md);
-  color: var(--color-text-primary);
+  margin-right: var(--space-4, 16rpx);
+  font-size: var(--font-md, 28rpx);
+  color: var(--text-primary, #171717);
 }
 
 .feed-like-names {
   flex: 1;
-  font-size: var(--font-md);
+  font-size: var(--font-md, 28rpx);
   line-height: 1.5;
-  color: var(--color-primary);
+  color: var(--color-primary, #14b8a6);
 }
 
 .feed-comments {
-  padding: 0 var(--spacing-md) var(--spacing-sm);
+  padding: 0 var(--space-6, 24rpx) var(--space-4, 16rpx);
 }
 
 .feed-comment {
   display: flex;
   flex-wrap: wrap;
-  margin-top: var(--spacing-sm);
+  margin-top: var(--space-4, 16rpx);
 }
 
 .feed-comment-name {
-  font-size: var(--font-md);
+  font-size: var(--font-md, 28rpx);
   line-height: 1.5;
-  color: var(--color-primary);
+  color: var(--color-primary, #14b8a6);
 }
 
 .feed-comment-sep {
-  font-size: var(--font-md);
-  color: var(--color-text-tertiary);
-  margin: 0 var(--spacing-xs);
+  font-size: var(--font-md, 28rpx);
+  color: var(--text-tertiary, #a3a3a3);
+  margin: 0 var(--space-2, 8rpx);
 }
 
 .feed-comment-content {
   flex: 1;
-  font-size: var(--font-md);
+  font-size: var(--font-md, 28rpx);
   line-height: 1.5;
-  color: var(--color-text-primary);
+  color: var(--text-primary, #171717);
   word-break: break-all;
 }
 
@@ -438,11 +438,11 @@ function likeNames(feed: MomentsFeed) {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-3xl) 0;
+  padding: var(--space-24, 96rpx) 0;
 }
 
 .moments-empty-text {
-  font-size: var(--font-md);
-  color: var(--color-text-tertiary);
+  font-size: var(--font-md, 28rpx);
+  color: var(--text-tertiary, #a3a3a3);
 }
 </style>

@@ -37,7 +37,7 @@
 对 Claude 说任意一种：
 
 ```
-帮我做一个 uniapp 小程序
+帮我帮我做一个 uniapp 小程序
 初始化一个微信小程序项目
 用 uniapp 搭建一个商城小程序
 ```
@@ -46,30 +46,30 @@
 
 ```
 Phase 1: 需求澄清
-  → Claude 会问 3~5 个核心问题
-  → 输出 spec.md，你确认后进入下一步
+   Claude 会问 3~5 个核心问题
+   输出 spec.md，你确认后进入下一步
 
 Phase 2: 项目初始化
-  → 复制 assets/boilerplate/ 到你的项目目录
-  → 替换 {{PROJECT_NAME}} 等占位符
-  → 生成 CLAUDE.md、AGENTS.md、.env
+   复制 assets/boilerplate/ 到你的项目目录
+   替换 {{PROJECT_NAME}} 等占位符
+   生成 CLAUDE.md、AGENTS.md、.env
 
 Phase 3: 开发实现
-  → 同步 theme.json 主题
-  → 生成图标（调用 frontend-icon-skill）
-  → 实现 TabBar、页面、组件
-  → 复杂页面可先调用 frontend-design 出方案
+   同步 theme.json 主题
+   生成图标（调用 frontend-icon-skill）
+   实现 TabBar、页面、组件
+   复杂页面可先调用 frontend-design 出方案
 
 Phase 4: 验证交付
-  → npm run lint
-  → npm run verify
-  → 输出交付总结
+   npm run lint
+   npm run verify
+   输出交付总结
 ```
 
 ### 生成后如何运行
 
 ```bash
-cd your-project
+cdcd your-project
 npm install
 npm run dev:mp-weixin    # 微信小程序
 npm run dev:h5           # H5
@@ -112,26 +112,26 @@ npm run dev:app          # App
 
 ```
 Phase 1: Pre-development
-  → 问 3~5 个聚焦问题（目标用户、核心功能、风格、TabBar、登录需求）
-  → 输出 spec.md 并经用户确认
+   问 3~5 个聚焦问题（目标用户、核心功能、风格、TabBar、登录需求）
+   输出 spec.md 并经用户确认
 
 Phase 2: Project Initialization
-  → 复制 assets/boilerplate/ 到目标目录
-  → 替换占位符（package.json、manifest.json、pages.json、index.vue、index.html、README.md）
-  → 生成 CLAUDE.md、AGENTS.md、.claudeignore、.env
+   复制 assets/boilerplate/ 到目标目录
+   替换占位符（package.json、manifest.json、pages.json、index.vue、index.html、README.md）
+   生成 CLAUDE.md、AGENTS.md、.claudeignore、.env
 
 Phase 3: Development
-  → 确认 theme.json 主题配置并同步
-  → 可选调用 frontend-design / ui-ux-pro-max 出设计方案
-  → 可选调用 ponytail 精简实现
-  → 生成/替换图标与图片
-  → 实现 TabBar、页面、公共组件
+   确认 theme.json 主题配置并同步
+   可选调用 frontend-design / ui-ux-pro-max 出设计方案
+   可选调用 ponytail 精简实现
+   生成/替换图标与图片
+   实现 TabBar、页面、公共组件
 
 Phase 4: Post-development
-  → npm run lint
-  → npm run verify（主题同步 → 色阶校验 → lint → build:h5 → 产物检查）
-  → 对照 mini-program-checklist.md 自查
-  → 交付并总结
+   npm run lint
+   npm run verify（主题同步  色阶校验  lint  build:h5  产物检查）
+   对照 mini-program-checklist.md 自查
+   交付并总结
 ```
 
 ---
@@ -148,7 +148,7 @@ uniapp-app-generate-skill/
 │       ├── scripts/
 │       │   ├── sync-theme.js # 生成 SCSS/TS 主题文件 + 色阶白名单
 │       │   ├── check-colors.js # 色阶外颜色硬卡
-│       │   ├── verify.js     # sync → check → lint → build 一键自检
+│       │   ├── verify.js     # sync  check  lint  build 一键自检
 │       │   ├── .theme-scale.json # (生成) 色阶白名单，禁止手改
 │       │   └── color-allowlist.json # (可选) 受审阅的例外白名单
 │       ├── src/
@@ -188,10 +188,10 @@ uniapp-app-generate-skill/
 进入样板工程：
 
 ```bash
-cd assets/boilerplate
+cdcd assets/boilerplate
 rm -rf node_modules package-lock.json dist
 npm install
-npm run verify      # theme:sync → theme:check → lint → build:h5 → 产物检查
+npm run verify      # theme:sync  theme:check  lint  build:h5  产物检查
 npm run build:mp-weixin
 ```
 
@@ -276,7 +276,7 @@ import { AppNavbar } from '@/components/AppNavbar';
 <style lang="scss" scoped>
 .page {
   // 内容整体下移，避开状态栏 + 胶囊带 + 标题行，绝不覆盖胶囊
-  padding-top: var(--navbar-height, 0px);
+  padding-top: var(--height-navbar, 88rpx);
 }
 </style>
 ```
@@ -285,6 +285,7 @@ import { AppNavbar } from '@/components/AppNavbar';
 
 ```json
 {
+{
   "path": "pages/demo/index",
   "style": {
     "navigationStyle": "custom"
@@ -292,7 +293,7 @@ import { AppNavbar } from '@/components/AppNavbar';
 }
 ```
 
-组件会根据 `uni.getMenuButtonBoundingClientRect()` 自动计算高度：**胶囊按钮独占一行**，仅左侧返回图标与胶囊同排对齐；标题位于胶囊带下方独立一行；页面内容用 `padding-top: var(--navbar-height)` 下移，绝不覆盖胶囊。使用默认导航栏（非 `custom`）的页面无需处理。
+组件会根据 `uni.getMenuButtonBoundingClientRect()` 自动计算高度：**胶囊按钮独占一行**，仅左侧返回图标与胶囊同排对齐；标题位于胶囊带下方独立一行；页面内容用 `padding-top: var(--height-navbar)` 下移，绝不覆盖胶囊。使用默认导航栏（非 `custom`）的页面无需处理。
 
 ---
 
@@ -301,6 +302,7 @@ import { AppNavbar } from '@/components/AppNavbar';
 `theme.json` 是唯一人工源头，**只含 `colors/spacing/font/radius`**（语义色由色阶自动派生，不再手写）：
 
 ```json
+{
 {
   "colors": {
     "primary": "#10b981",
@@ -342,7 +344,7 @@ npm run theme:check  # 硬卡：业务代码不得出现色阶之外的颜色
 `npm run theme:check` 扫描 `src/pages/`、`src/components/` 等业务代码（豁免 `src/styles/` 与生成的 `colors.ts`），凡不在白名单内的 `#hex`、`rgb()/rgba()/hsl()/hsla()` 一律失败：
 
 ```text
-[check-colors] 发现 1 处色阶外颜色：
+[c[check-colors] 发现 1 处色阶外颜色：
   src/pages/index/index.vue:75: #123456
 ```
 

@@ -25,7 +25,7 @@
 ### frontend-icon-skill 调用示例
 
 ```text
-/ frontend-icon-skill
+/ / frontend-icon-skill
 生成一组清新健康风的 tabBar 图标：首页、数据、发现、我的。每个图标包含激活态（主色填充）和未激活态（灰色线性）。尺寸 81x81px，PNG 格式，输出到 static/tab-bar/。
 ```
 
@@ -72,7 +72,11 @@ static/
 ## 使用规范
 
 ```vue
+<template>
 <image src="/static/icons/setting.png" mode="aspectFit" class="icon" />
+</template>
+
+
 ```
 
 注意：

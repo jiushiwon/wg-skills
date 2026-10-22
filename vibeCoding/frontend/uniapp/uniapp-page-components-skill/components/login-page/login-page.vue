@@ -55,7 +55,7 @@
       <slot name="agreement">
         <view v-if="showAgreement" class="lp-agreement">
           <view class="lp-checkbox" :class="{ 'is-checked': agreed }" @click="onToggleAgreement">
-            <text v-if="agreed" class="lp-checkbox-mark">✓</text>
+            <text v-if="agreed" class="lp-checkbox-mark"></text>
           </view>
           <text class="lp-agreement-text">{{ agreementText }}</text>
         </view>
@@ -149,9 +149,9 @@ function onSubmit() {
   display: flex;
   flex-direction: column;
   min-height: 100%;
-  padding: var(--spacing-3xl) var(--spacing-xl) var(--spacing-2xl);
+  padding: var(--space-24, 96rpx) var(--space-12, 48rpx) var(--space-16, 64rpx);
   box-sizing: border-box;
-  background: var(--color-bg-page);
+  background: var(--bg-page, #fafafa);
 }
 
 /* ---- 顶部 ---- */
@@ -165,59 +165,59 @@ function onSubmit() {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--height-avatar-lg);
-  height: var(--height-avatar-lg);
-  border-radius: var(--radius-lg);
-  background: var(--color-bg-tinted);
+  width: var(--height-avatar-lg, 120rpx);
+  height: var(--height-avatar-lg, 120rpx);
+  border-radius: var(--radius-lg, 24rpx);
+  background: var(--bg-light, #f5f5f5);
 }
 
 .lp-logo-ph {
-  font-size: var(--font-sm);
-  color: var(--color-primary);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--color-primary, #14b8a6);
 }
 
 .lp-title {
-  margin-top: var(--spacing-lg);
-  font-size: var(--font-2xl);
+  margin-top: var(--space-8, 32rpx);
+  font-size: var(--font-2xl, 40rpx);
   font-weight: 700;
-  color: var(--color-text-primary);
+  color: var(--text-primary, #171717);
 }
 
 .lp-subtitle {
-  margin-top: var(--spacing-sm);
-  font-size: var(--font-sm);
-  color: var(--color-text-tertiary);
+  margin-top: var(--space-4, 16rpx);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 /* ---- 表单 ---- */
 .lp-form {
-  margin-top: var(--spacing-2xl);
+  margin-top: var(--space-16, 64rpx);
 }
 
 .lp-field {
   display: flex;
   align-items: center;
-  min-height: var(--height-btn-xl);
-  border-bottom: 1rpx solid var(--color-border-light);
+  min-height: var(--height-btn-xl, 96rpx);
+  border-bottom: 1rpx solid var(--border-light, #f5f5f5);
 }
 
 .lp-field-label {
   flex-shrink: 0;
   width: 160rpx;
-  font-size: var(--font-md);
-  color: var(--color-text-primary);
+  font-size: var(--font-md, 28rpx);
+  color: var(--text-primary, #171717);
 }
 
 .lp-input {
   flex: 1;
   min-width: 0;
-  height: var(--height-btn-xl);
-  font-size: var(--font-md);
-  color: var(--color-text-primary);
+  height: var(--height-btn-xl, 96rpx);
+  font-size: var(--font-md, 28rpx);
+  color: var(--text-primary, #171717);
 }
 
 .lp-input-ph {
-  color: var(--color-text-tertiary);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .lp-code-btn {
@@ -227,69 +227,69 @@ function onSubmit() {
   justify-content: center;
   min-width: 88rpx;
   min-height: 88rpx;
-  margin-right: calc(-1 * var(--spacing-sm));
+  margin-right: calc(-1 * var(--space-4, 16rpx));
 }
 
 .lp-code-btn-text {
-  font-size: var(--font-sm);
-  color: var(--color-primary);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--color-primary, #14b8a6);
 
   .is-counting & {
-    color: var(--color-text-tertiary);
+    color: var(--text-tertiary, #a3a3a3);
   }
 }
 
 /* ---- 底部 ---- */
 .lp-footer {
   margin-top: auto;
-  padding-top: var(--spacing-2xl);
+  padding-top: var(--space-16, 64rpx);
 }
 
 .lp-agreement {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--space-8, 32rpx);
 }
 
 .lp-checkbox {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--icon-sm);
-  height: var(--icon-sm);
-  margin-right: var(--spacing-sm);
-  border: 1rpx solid var(--color-border);
-  border-radius: var(--radius-sm);
+  width: var(--icon-sm, 36rpx);
+  height: var(--icon-sm, 36rpx);
+  margin-right: var(--space-4, 16rpx);
+  border: 1rpx solid var(--border, #e5e5e5);
+  border-radius: var(--radius-sm, 8rpx);
   box-sizing: border-box;
 
   &.is-checked {
-    background: var(--color-primary);
-    border-color: var(--color-primary);
+    background: var(--color-primary, #14b8a6);
+    border-color: var(--color-primary, #14b8a6);
   }
 }
 
 .lp-checkbox-mark {
-  font-size: var(--font-xs);
-  color: var(--white);
+  font-size: var(--font-xs, 24rpx);
+  color: var(--text-inverse, #ffffff);
   line-height: 1;
 }
 
 .lp-agreement-text {
-  font-size: var(--font-xs);
-  color: var(--color-text-tertiary);
+  font-size: var(--font-xs, 24rpx);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .lp-wechat {
   display: flex;
   align-items: center;
-  margin-top: var(--spacing-xl);
+  margin-top: var(--space-12, 48rpx);
 }
 
 .lp-wechat-divider {
   flex: 1;
   height: 1rpx;
-  background: var(--color-border-light);
+  background: var(--border-light, #f5f5f5);
 }
 
 .lp-wechat-btn {
@@ -301,7 +301,7 @@ function onSubmit() {
 }
 
 .lp-wechat-btn-text {
-  font-size: var(--font-sm);
-  color: var(--color-text-secondary);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-secondary, #525252);
 }
 </style>

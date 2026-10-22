@@ -1,0 +1,17 @@
+{
+  "name": "stepper",
+  "title": "步进器",
+  "category": "business",
+  "description": "数量加减控件，支持范围限制、步长与直接输入",
+  "aliases": ["步进器", "数量加减", "stepper", "counter"],
+  "props": [
+    { "name": "modelValue", "type": "number", "default": 0, "desc": "绑定值" },
+    { "name": "min", "type": "number", "default": 0, "desc": "最小值" },
+    { "name": "max", "type": "number", "default": 999, "desc": "最大值" },
+    { "name": "step", "type": "number", "default": 1, "desc": "步长" },
+    { "name": "disabled", "type": "boolean", "default": false, "desc": "是否禁用整个控件" },
+    { "name": "editable", "type": "boolean", "default": true, "desc": "是否允许直接输入" }
+  ],
+  "events": ["update:modelValue", "change"],
+  "slots": []
+}

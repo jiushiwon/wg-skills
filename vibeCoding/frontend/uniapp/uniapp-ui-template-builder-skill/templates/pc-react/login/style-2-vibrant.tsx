@@ -13,7 +13,7 @@ export default function LoginPage() {
         <div className="login-card">
           <div className="login-header">
             <div className="logo">
-              <span className="logo-icon">✨</span>
+              <span className="logo-icon"></span>
             </div>
             <h1 className="login-title">{isLogin ? '欢迎回来' : '加入我们'}</h1>
             <p className="login-subtitle">{isLogin ? '登录后开始探索' : '创建账号开启旅程'}</p>
@@ -53,7 +53,7 @@ export default function LoginPage() {
 
             <div className="social-login">
               <button type="button" className="social-btn wechat">
-                <span>💬</span> 微信登录
+                <span>留言</span> 微信登录
               </button>
             </div>
           </form>

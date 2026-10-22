@@ -16,30 +16,30 @@
     :root {
       /* 颜色 - 现代风格 */
       --color-primary: #333333;
-      --color-primary-light: #666666;
-      --color-bg: #ffffff;
-      --color-bg-secondary: #f5f7fa;
-      --color-text: #333333;
-      --color-text-secondary: #666666;
-      --color-border: #e5e5e5;
+      --primary-400: #666666;
+      --bg-page: #ffffff;
+      --bg-light: #f5f7fa;
+      --text-primary: #333333;
+      --text-secondary: #666666;
+      --border: #e5e5e5;
       --color-success: #10b981;
       --color-warning: #f59e0b;
       --color-error: #ef4444;
 
       /* 尺寸 */
-      --font-size-base: 14px;
-      --font-size-sm: 12px;
-      --font-size-lg: 16px;
-      --space-base: 16px;
-      --space-sm: 8px;
-      --space-lg: 24px;
-      --radius-base: 8px;
+      --font-md: 14px;
+      --font-sm: 12px;
+      --font-lg: 16px;
+      --space-4: 16px;
+      --space-2: 8px;
+      --space-8: 24px;
+      --radius-md: 8px;
     }
 
     /* 主题2: 活力炫彩 */
     [data-theme="vibrant"] {
       --color-primary: #FF6B6B;
-      --color-primary-light: #FF8E53;
+      --primary-400: #FF8E53;
       --color-success: #10B981;
       --color-error: #EF4444;
     }
@@ -47,30 +47,30 @@
     /* 主题3: 高端暗金 */
     [data-theme="premium"] {
       --color-primary: #D4AF37;
-      --color-primary-light: #E5C76B;
-      --color-bg: #0F0F1A;
-      --color-bg-secondary: #16162A;
-      --color-text: #E5E5F0;
-      --color-text-secondary: #8888A0;
-      --color-border: #2A2A40;
+      --primary-400: #E5C76B;
+      --bg-page: #0F0F1A;
+      --bg-light: #16162A;
+      --text-primary: #E5E5F0;
+      --text-secondary: #8888A0;
+      --border: #2A2A40;
     }
 
     /* 主题4: 清新自然 */
     [data-theme="nature"] {
       --color-primary: #2ECC71;
-      --color-primary-light: #27AE60;
+      --primary-400: #27AE60;
       --color-success: #2ECC71;
     }
 
     /* 主题5: 暗黑科技 */
     [data-theme="dark-tech"] {
       --color-primary: #00D9FF;
-      --color-primary-light: #7C4DFF;
-      --color-bg: #0A0E27;
-      --color-bg-secondary: #0D1238;
-      --color-text: #E5E5F0;
-      --color-text-secondary: #8892B0;
-      --color-border: #1A237E;
+      --primary-400: #7C4DFF;
+      --bg-page: #0A0E27;
+      --bg-light: #0D1238;
+      --text-primary: #E5E5F0;
+      --text-secondary: #8892B0;
+      --border: #1A237E;
     }
 
     /* ========================================
@@ -78,33 +78,33 @@
        ======================================== */
     /* 小号 */
     [data-size="sm"] {
-      --font-size-base: 12px;
-      --font-size-sm: 10px;
-      --font-size-lg: 14px;
-      --space-base: 12px;
-      --space-sm: 6px;
-      --space-lg: 18px;
-      --radius-base: 6px;
+      --font-md: 12px;
+      --font-sm: 10px;
+      --font-lg: 14px;
+      --space-4: 12px;
+      --space-2: 6px;
+      --space-8: 18px;
+      --radius-md: 6px;
     }
 
     /* 大号 */
     [data-size="lg"] {
-      --font-size-base: 16px;
-      --font-size-sm: 14px;
-      --font-size-lg: 18px;
-      --space-base: 20px;
-      --space-sm: 12px;
-      --space-lg: 32px;
-      --radius-base: 10px;
+      --font-md: 16px;
+      --font-sm: 14px;
+      --font-lg: 18px;
+      --space-4: 20px;
+      --space-2: 12px;
+      --space-8: 32px;
+      --radius-md: 10px;
     }
 
     /* ========================================
        页面样式
        ======================================== */
-    .theme-demo { background: var(--color-bg-secondary); min-height: 100vh; padding: 40px 20px; }
+    .theme-demo { background: var(--bg-light); min-height: 100vh; padding: 40px 20px; }
     .container { max-width: 900px; margin: 0 auto; }
-    h1 { text-align: center; margin-bottom: 8px; color: var(--color-text); }
-    .subtitle { text-align: center; color: var(--color-text-secondary); margin-bottom: 32px; }
+    h1 { text-align: center; margin-bottom: 8px; color: var(--text-primary); }
+    .subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 32px; }
 
     /* 控制面板 */
     .controls {
@@ -114,15 +114,15 @@
       flex-wrap: wrap;
     }
     .control-group { flex: 1; min-width: 200px; }
-    .control-label { display: block; font-size: 13px; font-weight: 600; color: var(--color-text); margin-bottom: 10px; }
+    .control-label { display: block; font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 10px; }
     .control-btns { display: flex; gap: 8px; flex-wrap: wrap; }
     .control-btn {
       padding: 8px 16px;
       font-size: 13px;
-      border: 1px solid var(--color-border);
+      border: 1px solid var(--border);
       border-radius: 6px;
-      background: var(--color-bg);
-      color: var(--color-text-secondary);
+      background: var(--bg-page);
+      color: var(--text-secondary);
       cursor: pointer;
       transition: all 0.2s;
     }
@@ -131,46 +131,46 @@
 
     /* 预览卡片 */
     .preview-card {
-      background: var(--color-bg);
-      border-radius: var(--radius-base);
-      padding: var(--space-lg);
+      background: var(--bg-page);
+      border-radius: var(--radius-md);
+      padding: var(--space-8);
       box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-      margin-bottom: var(--space-lg);
+      margin-bottom: var(--space-8);
     }
-    .preview-title { font-size: var(--font-size-lg); font-weight: 600; color: var(--color-text); margin-bottom: var(--space-base); }
+    .preview-title { font-size: var(--font-lg); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-4); }
 
     /* 按钮预览 */
-    .btn-group { display: flex; gap: var(--space-sm); flex-wrap: wrap; margin-bottom: var(--space-base); }
+    .btn-group { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-4); }
     .demo-btn {
       padding: 10px 20px;
-      font-size: var(--font-size-base);
-      border-radius: var(--radius-base);
+      font-size: var(--font-md);
+      border-radius: var(--radius-md);
       border: none;
       cursor: pointer;
       transition: all 0.2s;
     }
     .demo-btn-primary { background: var(--color-primary); color: #fff; }
     .demo-btn-primary:hover { opacity: 0.9; }
-    .demo-btn-secondary { background: var(--color-bg-secondary); color: var(--color-text); border: 1px solid var(--color-border); }
+    .demo-btn-secondary { background: var(--bg-light); color: var(--text-primary); border: 1px solid var(--border); }
 
     /* 输入框预览 */
-    .input-group { display: flex; gap: var(--space-sm); flex-wrap: wrap; margin-bottom: var(--space-base); }
+    .input-group { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-4); }
     .demo-input {
       padding: 10px 14px;
-      font-size: var(--font-size-base);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-base);
-      background: var(--color-bg);
-      color: var(--color-text);
+      font-size: var(--font-md);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--bg-page);
+      color: var(--text-primary);
       min-width: 160px;
     }
     .demo-input:focus { outline: none; border-color: var(--color-primary); }
 
     /* 标签预览 */
-    .tag-group { display: flex; gap: var(--space-sm); flex-wrap: wrap; }
+    .tag-group { display: flex; gap: var(--space-2); flex-wrap: wrap; }
     .demo-tag {
       padding: 4px 10px;
-      font-size: var(--font-size-sm);
+      font-size: var(--font-sm);
       border-radius: 4px;
     }
     .demo-tag-success { background: rgba(16, 185, 129, 0.1); color: var(--color-success); }
@@ -182,7 +182,7 @@
       background: #1e1e1e;
       border-radius: 8px;
       padding: 16px;
-      margin-top: var(--space-base);
+      margin-top: var(--space-4);
       overflow-x: auto;
     }
     .code-block pre { margin: 0; color: #d4d4d4; font-size: 12px; font-family: 'Consolas', monospace; }
@@ -191,21 +191,21 @@
     .code-block .string { color: #ce9178; }
 
     /* 尺寸对比 */
-    .size-compare { display: flex; gap: var(--space-lg); }
-    .size-item { flex: 1; text-align: center; padding: var(--space-base); background: var(--color-bg-secondary); border-radius: var(--radius-base); }
-    .size-label { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 8px; }
+    .size-compare { display: flex; gap: var(--space-8); }
+    .size-item { flex: 1; text-align: center; padding: var(--space-4); background: var(--bg-light); border-radius: var(--radius-md); }
+    .size-label { font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; }
   </style>
 </head>
 <body>
   <div class="theme-demo" id="app">
     <div class="container">
-      <h1>🎨 主题换肤 & 尺寸切换演示</h1>
+      <h1>配色 主题换肤 & 尺寸切换演示</h1>
       <p class="subtitle">选择主题色和尺寸档位，实时预览效果</p>
 
       <!-- 控制面板 -->
       <div class="controls">
         <div class="control-group">
-          <span class="control-label">🎨 选择主题色</span>
+          <span class="control-label">配色 选择主题色</span>
           <div class="control-btns">
             <button class="control-btn active" data-theme-btn="modern">现代灰</button>
             <button class="control-btn" data-theme-btn="vibrant">活力橙</button>
@@ -215,7 +215,7 @@
           </div>
         </div>
         <div class="control-group">
-          <span class="control-label">📏 选择尺寸</span>
+          <span class="control-label">尺寸 选择尺寸</span>
           <div class="control-btns">
             <button class="control-btn" data-size-btn="sm">小号</button>
             <button class="control-btn active" data-size-btn="md">中号</button>
@@ -250,7 +250,7 @@
 
       <!-- 尺寸对比 -->
       <div class="preview-card">
-        <h3 class="preview-title">📏 尺寸档位对比</h3>
+        <h3 class="preview-title">尺寸 尺寸档位对比</h3>
         <div class="size-compare">
           <div class="size-item" data-size="sm" style="display:none;">
             <div class="size-label">小号 (sm)</div>
@@ -272,7 +272,7 @@
 
       <!-- 使用代码 -->
       <div class="preview-card">
-        <h3 class="preview-title">💻 一键换肤代码</h3>
+        <h3 class="preview-title">PC 一键换肤代码</h3>
         <div class="code-block">
           <pre><span class="comment">// 1. 引入主题生成器</span>
 <span class="keyword">import</span> { generateTokens, generateCSSVariables } <span class="keyword">from</span> <span class="string">'./references/theme-generator'</span>

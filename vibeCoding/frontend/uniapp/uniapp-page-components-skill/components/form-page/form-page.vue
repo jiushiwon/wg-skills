@@ -67,7 +67,7 @@ const emit = defineEmits<{ back: []; submit: [] }>()
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: var(--color-bg-page);
+  background: var(--bg-page, #fafafa);
 }
 
 .fp-body {
@@ -76,26 +76,26 @@ const emit = defineEmits<{ back: []; submit: [] }>()
 }
 
 .fp-body-inner {
-  padding: var(--spacing-md) var(--spacing-lg) var(--spacing-2xl);
+  padding: var(--space-6, 24rpx) var(--space-8, 32rpx) var(--space-16, 64rpx);
 }
 
 .fp-placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-3xl) 0;
+  padding: var(--space-24, 96rpx) 0;
 }
 
 .fp-placeholder-text {
-  font-size: var(--font-sm);
-  color: var(--color-text-tertiary);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .fp-footer {
   flex-shrink: 0;
-  background: var(--color-bg-surface);
-  border-top: 1rpx solid var(--color-border-light);
-  padding: var(--spacing-md) var(--spacing-lg);
-  padding-bottom: calc(var(--spacing-md) + env(safe-area-inset-bottom));
+  background: var(--bg-card, #ffffff);
+  border-top: 1rpx solid var(--border-light, #f5f5f5);
+  padding: var(--space-6, 24rpx) var(--space-8, 32rpx);
+  padding-bottom: calc(var(--space-6, 24rpx) + env(safe-area-inset-bottom));
 }
 </style>

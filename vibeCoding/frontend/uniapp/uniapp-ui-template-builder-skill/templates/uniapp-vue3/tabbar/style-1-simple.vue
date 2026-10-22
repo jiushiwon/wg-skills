@@ -38,10 +38,10 @@ const props = defineProps({
   tabList: {
     type: Array,
     default: () => [
-      { pagePath: '/pages/index/index', text: '首页', iconText: '🏠', icon: 'icon-home-line', activeIcon: 'icon-home-fill', badge: 0 },
-      { pagePath: '/pages/category/index', text: '分类', iconText: '☰', icon: 'icon-category-line', activeIcon: 'icon-category-fill', badge: 0 },
-      { pagePath: '/pages/cart/index', text: '购物车', iconText: '🛒', icon: 'icon-cart-line', activeIcon: 'icon-cart-fill', badge: 3 },
-      { pagePath: '/pages/profile/index', text: '我的', iconText: '👤', icon: 'icon-user-line', activeIcon: 'icon-user-fill', badge: 0 }
+      { pagePath: '/pages/index/index', text: '首页', iconText: '首页', icon: 'icon-home-line', activeIcon: 'icon-home-fill', badge: 0 },
+      { pagePath: '/pages/category/index', text: '分类', iconText: '≡', icon: 'icon-category-line', activeIcon: 'icon-category-fill', badge: 0 },
+      { pagePath: '/pages/cart/index', text: '购物车', iconText: '购物车', icon: 'icon-cart-line', activeIcon: 'icon-cart-fill', badge: 3 },
+      { pagePath: '/pages/profile/index', text: '我的', iconText: '用户', icon: 'icon-user-line', activeIcon: 'icon-user-fill', badge: 0 }
     ]
   }
 })

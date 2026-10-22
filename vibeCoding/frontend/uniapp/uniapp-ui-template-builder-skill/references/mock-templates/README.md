@@ -4,6 +4,7 @@
 
 ```json
 {
+{
   "code": 200,
   "message": "success",
   "data": { }
@@ -30,6 +31,7 @@
 示例：
 
 ```json
+{
 {
   "code": 200,
   "message": "success",
@@ -60,12 +62,16 @@
 页面模板组件通过 props 接收 `mock.data` 中的字段：
 
 ```vue
+<template>
 <product-list
   :title="mock.data.title"
   :product-list="mock.data.products"
   :loading="loading"
   @retry="fetchData"
 />
+</template>
+
+
 ```
 
 这样 `mock.json` 可直接替换为后端 API 返回数据。

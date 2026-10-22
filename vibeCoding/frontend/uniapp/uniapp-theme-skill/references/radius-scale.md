@@ -13,7 +13,7 @@
 ### 基础圆角
 
 ```css
-:root {
+:r:root {
   /* 基础圆角值 */
   --radius-none: 0rpx;
   --radius-sm: 8rpx;
@@ -27,7 +27,7 @@
 ### 组件圆角（语义化）
 
 ```css
-:root {
+:r:root {
   /* 按钮圆角 */
   --radius-btn: var(--radius-md);
 
@@ -53,7 +53,7 @@
 ### 有圆角状态
 
 ```css
-[data-radius="on"] {
+[d[data-radius="on"] {
   --radius-btn: var(--radius-full);
   --radius-card: var(--radius-lg);
   --radius-input: var(--radius-md);
@@ -65,7 +65,7 @@
 ### 无圆角状态
 
 ```css
-[data-radius="off"] {
+[d[data-radius="off"] {
   --radius-btn: var(--radius-none);
   --radius-card: var(--radius-none);
   --radius-input: var(--radius-none);
@@ -79,7 +79,7 @@
 ### cute 可爱风（胶囊）
 
 ```css
-[data-theme="cute"] {
+[d[data-theme="cute"] {
   --radius-btn: 9999rpx;
   --radius-card: 32rpx;
   --radius-input: 20rpx;
@@ -91,7 +91,7 @@
 ### minimal 极简风（小圆角）
 
 ```css
-[data-theme="minimal"] {
+[d[data-theme="minimal"] {
   --radius-btn: 8rpx;
   --radius-card: 8rpx;
   --radius-input: 8rpx;
@@ -103,7 +103,7 @@
 ### cyber 硬核风（直角）
 
 ```css
-[data-theme="cyber"] {
+[d[data-theme="cyber"] {
   --radius-btn: 4rpx;
   --radius-card: 4rpx;
   --radius-input: 2rpx;
@@ -115,7 +115,7 @@
 ### business 商务风（小圆角）
 
 ```css
-[data-theme="business"] {
+[d[data-theme="business"] {
   --radius-btn: 8rpx;
   --radius-card: 12rpx;
   --radius-input: 8rpx;
@@ -127,7 +127,7 @@
 ### fresh 清新风（中圆角）
 
 ```css
-[data-theme="fresh"] {
+[d[data-theme="fresh"] {
   --radius-btn: 9999rpx;
   --radius-card: 32rpx;
   --radius-input: 20rpx;
@@ -139,7 +139,7 @@
 ### retro 复古风（小圆角）
 
 ```css
-[data-theme="retro"] {
+[d[data-theme="retro"] {
   --radius-btn: 4rpx;
   --radius-card: 4rpx;
   --radius-input: 4rpx;
@@ -151,7 +151,7 @@
 ### glass 玻璃风（中圆角）
 
 ```css
-[data-theme="glass"] {
+[d[data-theme="glass"] {
   --radius-btn: 9999rpx;
   --radius-card: 24rpx;
   --radius-input: 16rpx;
@@ -189,6 +189,7 @@
 ### 方式1：通过主题切换
 
 ```vue
+<template>
 <!-- 切换主题时圆角自动变化 -->
 <view data-theme="cute">
   <!-- 按钮是胶囊形状 -->
@@ -197,11 +198,15 @@
 <view data-theme="cyber">
   <!-- 按钮是直角 -->
 </view>
+</template>
+
+
 ```
 
 ### 方式2：通过 radius 属性切换
 
 ```vue
+<template>
 <!-- 强制有圆角 -->
 <view data-radius="on">
   <button>圆角按钮</button>
@@ -211,6 +216,9 @@
 <view data-radius="off">
   <button>直角按钮</button>
 </view>
+</template>
+
+
 ```
 
 ## 验证清单

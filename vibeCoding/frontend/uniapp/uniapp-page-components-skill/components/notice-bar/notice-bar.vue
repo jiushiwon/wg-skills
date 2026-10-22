@@ -14,7 +14,7 @@
   >
     <slot name="icon">
       <text v-if="icon" class="nb-icon">{{ icon }}</text>
-      <text v-else class="nb-icon">🔔</text>
+      <text v-else class="nb-icon">通知</text>
     </slot>
 
     <view class="nb-body">
@@ -58,17 +58,17 @@ const emit = defineEmits<{ click: []; close: [] }>()
 .notice-bar {
   display: flex;
   align-items: center;
-  min-height: var(--height-btn-md);
-  padding: var(--spacing-xs) var(--spacing-md);
-  border-radius: var(--radius-tag);
-  background: var(--color-bg-tinted);
+  min-height: var(--height-btn-md, 72rpx);
+  padding: var(--space-2, 8rpx) var(--space-6, 24rpx);
+  border-radius: var(--radius-tag, 8rpx);
+  background: var(--bg-light, #f5f5f5);
   overflow: hidden;
 }
 
 .nb-icon {
   flex-shrink: 0;
-  margin-right: var(--spacing-sm);
-  font-size: var(--font-md);
+  margin-right: var(--space-4, 16rpx);
+  font-size: var(--font-md, 28rpx);
 }
 
 .nb-body {
@@ -79,8 +79,8 @@ const emit = defineEmits<{ click: []; close: [] }>()
 
 .nb-text {
   display: inline-block;
-  font-size: var(--font-sm);
-  color: var(--color-text-primary);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-primary, #171717);
   white-space: nowrap;
 
   .is-marquee & {
@@ -105,13 +105,13 @@ const emit = defineEmits<{ click: []; close: [] }>()
   justify-content: center;
   min-width: 88rpx;
   min-height: 88rpx;
-  margin: calc(-1 * var(--spacing-sm)) 0;
-  margin-right: calc(-1 * var(--spacing-sm));
+  margin: calc(-1 * var(--space-4, 16rpx)) 0;
+  margin-right: calc(-1 * var(--space-4, 16rpx));
 }
 
 .nb-close-icon {
-  font-size: var(--font-md);
-  color: var(--color-text-tertiary);
+  font-size: var(--font-md, 28rpx);
+  color: var(--text-tertiary, #a3a3a3);
   line-height: 1;
 }
 </style>

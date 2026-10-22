@@ -65,7 +65,7 @@ const goodsForm = ref<Record<string, unknown>>({})
 
 所有组件统一引用 [vue-theme-skill](../../vue-theme-skill/)：
 - `--color-*` / `--space-*` / `--font-*` / `--height-*` / `--radius-*` / `--weight-*` / `--leading-*`
-- 命名严格对齐 uniapp-theme-skill / uniapp-form-skill
+- 命名严格对齐 uniapp-theme-skill / uniapp-base-skill/components/form
 
 **禁止**：硬编码任何颜色、间距、字号、行高、圆角值。
 

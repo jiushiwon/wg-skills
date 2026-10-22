@@ -28,12 +28,12 @@ PEXELS_API_KEY=your_pexels_api_key_here
 如果项目需要提交到版本库，应创建 `.env.example` 并忽略真实 `.env`：
 
 ```bash
-# .env.example
+# # .env.example
 PEXELS_API_KEY=your_pexels_api_key_here
 ```
 
 ```gitignore
-# .gitignore
+# # .gitignore
 .env
 ```
 

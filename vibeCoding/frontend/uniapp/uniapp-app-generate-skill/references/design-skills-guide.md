@@ -24,7 +24,7 @@
 ### 使用方式
 
 ```text
-/ponytail full
+/p/ponytail full
 帮我以最小代码实现一个 uni-app 的倒计时按钮，要求点击后开始 60 秒倒计时，期间禁用。
 ```
 
@@ -50,7 +50,7 @@
 ### 使用方式
 
 ```text
-/ ui-ux-pro-max
+/ / ui-ux-pro-max
 为一款饮水打卡小程序设计首页，要求：清新健康风，主色 #10b981，包含今日饮水进度、快捷记录按钮、历史记录入口。输出 uni-app 页面结构建议和 SCSS Token 使用方式。
 ```
 
@@ -74,7 +74,7 @@
 ### 使用方式
 
 ```text
-/ frontend-design
+/ / frontend-design
 为一款运动打卡小程序设计首页，要求：现代、有活力、避免模板感。输出 uni-app 模板代码，使用 SCSS 变量，不使用 emoji。
 ```
 
@@ -87,13 +87,13 @@
 ## 推荐组合工作流
 
 ```
-拿到页面需求
-  → 调用 ui-ux-pro-max 确定信息架构与风格
-  → 调用 frontend-design 生成页面模板
-  → 调用 ponytail 审查并精简代码
-  → 用 frontend-icon-skill 生成图标
-  → 用 Pexels 工具获取真实图片
-  → 写入项目并跑 lint
+拿到拿到页面需求
+   调用 ui-ux-pro-max 确定信息架构与风格
+   调用 frontend-design 生成页面模板
+   调用 ponytail 审查并精简代码
+   用 frontend-icon-skill 生成图标
+   用 Pexels 工具获取真实图片
+   写入项目并跑 lint
 ```
 
 ## 注意事项

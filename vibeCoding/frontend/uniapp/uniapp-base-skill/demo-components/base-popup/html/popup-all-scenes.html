@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-popup 全场景实战</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-primary: #4a90e2;
+      --color-success: #52c41a;
+      --color-warning: #faad14;
+      --color-error: #f5222d;
+      --text-primary: #333;
+      --text-secondary: #666;
+      --text-tertiary: #999;
+      --bg-page: #f5f5f5;
+      --bg-card: #fff;
+      --border: #e8e8e8;
+    }
+    body { background: var(--bg-page); font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; padding: 20px; }
+
+    .page { max-width: 1200px; margin: 0 auto; }
+    h1 { font-size: 24px; margin-bottom: 8px; }
+    .subtitle { color: var(--text-secondary); margin-bottom: 24px; }
+
+    .demos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+    .scene-index { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 24px; }
+    .scene-index__label { font-size: 13px; color: var(--text-secondary); }
+    .scene-index__item {
+      font-size: 13px; text-decoration: none; color: var(--color-primary);
+      padding: 4px 10px; border: 1px solid var(--border); border-radius: 999px; background: #fff;
+    }
+    .scene-index__item:hover { border-color: var(--color-primary); }
+
+    .demo-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .demo-header {
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--border);
+      font-weight: 500;
+    }
+    .demo-body { padding: var(--space-4); min-height: 400px; position: relative; background: #fafafa; }
+
+    /* 按钮 */
+    .btn-row { display: flex; flex-direction: column; gap: var(--space-2); }
+    .btn {
+      padding: 10px 16px;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .btn-primary { background: var(--color-primary); color: #fff; }
+    .btn-success { background: var(--color-success); color: #fff; }
+    .btn-warning { background: var(--color-warning); color: #fff; }
+    .btn-danger { background: var(--color-error); color: #fff; }
+    .btn-outline { background: #fff; color: var(--text-primary); border: 1px solid var(--border); }
+
+    /* Popup 基础样式 */
+    .popup-mask {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.5);
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+      z-index: 10;
+    }
+    .popup-mask.show { opacity: 1; visibility: visible; }
+
+    .popup {
+      position: absolute;
+      background: var(--bg-card);
+      transition: transform 0.3s;
+      z-index: 20;
+    }
+    .popup.show { transform: translate(0, 0) !important; }
+
+    /* 底部弹窗 */
+    .popup-bottom {
+      bottom: 0; left: 0; right: 0;
+      transform: translateY(100%);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      max-height: 70%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 顶部弹窗 */
+    .popup-top {
+      top: 0; left: 0; right: 0;
+      transform: translateY(-100%);
+      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    }
+
+    /* 左侧弹窗 */
+    .popup-left {
+      top: 0; left: 0; bottom: 0;
+      transform: translateX(-100%);
+      width: 280px;
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    }
+
+    /* 右侧弹窗 */
+    .popup-right {
+      top: 0; right: 0; bottom: 0;
+      transform: translateX(100%);
+      width: 320px;
+      border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+    }
+
+    /* 弹窗内容 */
+    .popup-header {
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 500;
+    }
+    .popup-close { font-size: 20px; color: var(--text-tertiary); cursor: pointer; }
+
+    .popup-body { flex: 1; overflow-y: auto; padding: var(--space-4); }
+
+    .popup-footer {
+      padding: var(--space-3) var(--space-4);
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: var(--space-3);
+    }
+    .popup-footer .btn { flex: 1; }
+
+    /* 表单筛选内容 */
+    .filter-group { margin-bottom: var(--space-4); }
+    .filter-label { font-size: 14px; color: var(--text-secondary); margin-bottom: var(--space-2); }
+    .filter-options { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+    .filter-option {
+      padding: 8px 14px;
+      background: var(--bg-page);
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .filter-option.active { background: var(--color-primary); color: #fff; }
+
+    /* 抽屉内容 */
+    .drawer-menu { display: flex; flex-direction: column; }
+    .drawer-item {
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 15px;
+    }
+
+    /* 通知内容 */
+    .notify-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .notify-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .notify-content { flex: 1; }
+    .notify-title { font-size: 14px; font-weight: 500; }
+    .notify-desc { font-size: 12px; color: var(--text-secondary); }
+
+    /* 分享菜单 */
+    .share-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); }
+    .share-item { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); }
+    .share-icon { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+    .share-name { font-size: 12px; color: var(--text-secondary); }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>base-popup 全场景实战</h1>
+    <p class="subtitle">底部弹窗 / 顶部通知 / 左侧抽屉 / 右侧筛选 / 居中确认</p>
+
+    <div class="scene-index">
+      <span class="scene-index__label">全部场景：</span>
+      <a class="scene-index__item" href="popup-all-scenes.html">分享面板</a>
+      <a class="scene-index__item" href="popup-right.html">右侧筛选</a>
+      <a class="scene-index__item" href="popup-left.html">左侧抽屉</a>
+      <a class="scene-index__item" href="popup-top.html">顶部通知</a>
+      <a class="scene-index__item" href="popup-form-filter.html">表单筛选</a>
+      <a class="scene-index__item" href="popup-list-check.html">列表勾选</a>
+      <a class="scene-index__item" href="popup-card-select.html">卡片选择</a>
+      <a class="scene-index__item" href="popup-pay-method.html">支付方式选择</a>
+      <a class="scene-index__item" href="popup-cart-spec.html">加入购物车（多维规格）</a>
+      <a class="scene-index__item" href="popup-coupon.html">优惠券选择</a>
+      <a class="scene-index__item" href="popup-search-panel.html">搜索面板</a>
+      <a class="scene-index__item" href="popup-dialog.html">居中确认弹窗</a>
+    </div>
+
+    <div class="demos">
+      <!-- Demo 1: 底部弹窗 - 分享 -->
+      <div class="demo-card">
+        <div class="demo-header">底部弹窗 - 分享</div>
+        <div class="demo-body">
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="openPopup('share')">分享到</button>
+          </div>
+
+          <div class="popup-mask" id="mask-share" onclick="closePopup('share')"></div>
+          <div class="popup popup-bottom" id="popup-share">
+            <div class="popup-header">
+              <span>分享到</span>
+              <span class="popup-close" onclick="closePopup('share')">×</span>
+            </div>
+            <div class="popup-body">
+              <div class="share-grid">
+                <div class="share-item">
+                  <div class="share-icon" style="background:#07c160;">留言</div>
+                  <span class="share-name">微信</span>
+                </div>
+                <div class="share-item">
+                  <div class="share-icon" style="background:#07c160;">微信好友</div>
+                  <span class="share-name">朋友圈</span>
+                </div>
+                <div class="share-item">
+                  <div class="share-icon" style="background:#1890ff;">♥</div>
+                  <span class="share-name">QQ</span>
+                </div>
+                <div class="share-item">
+                  <div class="share-icon" style="background:#ff6b6b;">♥</div>
+                  <span class="share-name">微博</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Demo 2: 右侧弹窗 - 筛选 -->
+      <div class="demo-card">
+        <div class="demo-header">右侧弹窗 - 筛选</div>
+        <div class="demo-body">
+          <div class="btn-row">
+            <button class="btn btn-success" onclick="openPopup('filter')">筛选</button>
+          </div>
+
+          <div class="popup-mask" id="mask-filter" onclick="closePopup('filter')"></div>
+          <div class="popup popup-right" id="popup-filter">
+            <div class="popup-header">
+              <span>商品筛选</span>
+              <span class="popup-close" onclick="closePopup('filter')">×</span>
+            </div>
+            <div class="popup-body">
+              <div class="filter-group">
+                <div class="filter-label">品牌</div>
+                <div class="filter-options">
+                  <span class="filter-option" onclick="toggleFilter(this)">Apple</span>
+                  <span class="filter-option" onclick="toggleFilter(this)">华为</span>
+                  <span class="filter-option" onclick="toggleFilter(this)">小米</span>
+                </div>
+              </div>
+              <div class="filter-group">
+                <div class="filter-label">价格</div>
+                <div class="filter-options">
+                  <span class="filter-option" onclick="toggleFilter(this)">0-1000</span>
+                  <span class="filter-option" onclick="toggleFilter(this)">1000-3000</span>
+                  <span class="filter-option" onclick="toggleFilter(this)">3000-5000</span>
+                  <span class="filter-option" onclick="toggleFilter(this)">5000+</span>
+                </div>
+              </div>
+              <div class="filter-group">
+                <div class="filter-label">内存</div>
+                <div class="filter-options">
+                  <span class="filter-option" onclick="toggleFilter(this)">8GB</span>
+                  <span class="filter-option" onclick="toggleFilter(this)">12GB</span>
+                  <span class="filter-option" onclick="toggleFilter(this)">16GB</span>
+                </div>
+              </div>
+            </div>
+            <div class="popup-footer">
+              <button class="btn btn-outline" onclick="resetFilter()">重置</button>
+              <button class="btn btn-primary" onclick="closePopup('filter')">确定</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Demo 3: 左侧弹窗 - 抽屉菜单 -->
+      <div class="demo-card">
+        <div class="demo-header">左侧弹窗 - 抽屉菜单</div>
+        <div class="demo-body">
+          <div class="btn-row">
+            <button class="btn btn-warning" onclick="openPopup('drawer')">个人中心</button>
+          </div>
+
+          <div class="popup-mask" id="mask-drawer" onclick="closePopup('drawer')"></div>
+          <div class="popup popup-left" id="popup-drawer">
+            <div class="popup-header">
+              <span>个人中心</span>
+              <span class="popup-close" onclick="closePopup('drawer')">×</span>
+            </div>
+            <div class="popup-body">
+              <div class="drawer-menu">
+                <div class="drawer-item">用户 个人资料</div>
+                <div class="drawer-item">�订单 我的订单</div>
+                <div class="drawer-item">♥ 我的收藏</div>
+                <div class="drawer-item"> 设置</div>
+                <div class="drawer-item">? 帮助中心</div>
+                <div class="drawer-item">电话 联系我们</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Demo 4: 顶部弹窗 - 通知 -->
+      <div class="demo-card">
+        <div class="demo-header">顶部弹窗 - 消息通知</div>
+        <div class="demo-body">
+          <div class="btn-row">
+            <button class="btn btn-danger" onclick="openPopup('notify')">消息通知</button>
+          </div>
+
+          <div class="popup-mask" id="mask-notify" onclick="closePopup('notify')"></div>
+          <div class="popup popup-top" id="popup-notify">
+            <div class="popup-header">
+              <span>最新消息</span>
+              <span class="popup-close" onclick="closePopup('notify')">×</span>
+            </div>
+            <div class="popup-body">
+              <div class="notify-item">
+                <div class="notify-icon" style="background:#ff6b6b;">通知</div>
+                <div class="notify-content">
+                  <div class="notify-title">系统升级通知</div>
+                  <div class="notify-desc">系统将于今晚22:00-23:00进行升级</div>
+                </div>
+              </div>
+              <div class="notify-item">
+                <div class="notify-icon" style="background:#4ecdc4;">礼物</div>
+                <div class="notify-content">
+                  <div class="notify-title">新用户福利</div>
+                  <div class="notify-desc">首单立减50元，快去下单吧！</div>
+                </div>
+              </div>
+              <div class="notify-item">
+                <div class="notify-icon" style="background:#45b7d1;">包裹</div>
+                <div class="notify-content">
+                  <div class="notify-title">订单已发货</div>
+                  <div class="notify-desc">您的订单已发货，预计明天送达</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Demo 5: 底部弹窗 - 表单 -->
+      <div class="demo-card">
+        <div class="demo-header">底部弹窗 - 反馈表单</div>
+        <div class="demo-body">
+          <div class="btn-row">
+            <button class="btn btn-outline" onclick="openPopup('form')">意见反馈</button>
+          </div>
+
+          <div class="popup-mask" id="mask-form" onclick="closePopup('form')"></div>
+          <div class="popup popup-bottom" id="popup-form">
+            <div class="popup-header">
+              <span>意见反馈</span>
+              <span class="popup-close" onclick="closePopup('form')">×</span>
+            </div>
+            <div class="popup-body">
+              <div style="margin-bottom:var(--space-4);">
+                <div class="filter-label">反馈类型</div>
+                <div class="filter-options">
+                  <span class="filter-option" onclick="toggleFilter(this)">功能建议</span>
+                  <span class="filter-option" onclick="toggleFilter(this)">BUG反馈</span>
+                  <span class="filter-option" onclick="toggleFilter(this)">体验问题</span>
+                </div>
+              </div>
+              <div>
+                <div class="filter-label">详细描述</div>
+                <textarea style="width:100%;height:100px;padding:10px;border:1px solid var(--border);border-radius:var(--radius-md);resize:none;font-size:14px;" placeholder="请详细描述您的问题或建议..."></textarea>
+              </div>
+            </div>
+            <div class="popup-footer">
+              <button class="btn btn-outline" onclick="closePopup('form')">取消</button>
+              <button class="btn btn-primary" onclick="closePopup('form')">提交</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Demo 6: 底部弹窗 - 操作菜单 -->
+      <div class="demo-card">
+        <div class="demo-header">底部弹窗 - 操作菜单</div>
+        <div class="demo-body">
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="openPopup('action')">更多操作</button>
+          </div>
+
+          <div class="popup-mask" id="mask-action" onclick="closePopup('action')"></div>
+          <div class="popup popup-bottom" id="popup-action">
+            <div class="popup-body" style="padding:0;">
+              <div style="padding:16px;text-align:center;border-bottom:1px solid var(--border);">文件 文件名称.pdf</div>
+              <div class="drawer-menu">
+                <div class="drawer-item"> 预览</div>
+                <div class="drawer-item">↓ 下载</div>
+                <div class="drawer-item">导出 分享</div>
+                <div class="drawer-item">✎ 重命名</div>
+                <div class="drawer-item" style="color:var(--color-error);">清 删除</div>
+              </div>
+            </div>
+            <div class="popup-footer" style="border-top:none;padding-top:0;">
+              <button class="btn btn-outline" style="width:100%;" onclick="closePopup('action')">取消</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openPopup(name) {
+      document.getElementById('mask-' + name).classList.add('show');
+      document.getElementById('popup-' + name).classList.add('show');
+    }
+
+    function closePopup(name) {
+      document.getElementById('mask-' + name).classList.remove('show');
+      document.getElementById('popup-' + name).classList.remove('show');
+    }
+
+    function toggleFilter(el) {
+      el.classList.toggle('active');
+    }
+
+    function resetFilter() {
+      document.querySelectorAll('#popup-filter .filter-option').forEach(el => {
+        el.classList.remove('active');
+      });
+    }
+  </script>
+</body>
+</html>

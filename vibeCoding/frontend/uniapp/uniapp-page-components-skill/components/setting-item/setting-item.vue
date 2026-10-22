@@ -17,7 +17,7 @@
     <view
       v-else-if="iconText"
       class="si-icon-text"
-      :style="{ background: iconColor || 'var(--color-bg-tinted)', color: iconTextColor || 'var(--color-primary)' }"
+      :style="{ background: iconColor || 'var(--bg-light, #f5f5f5)', color: iconTextColor || 'var(--color-primary, #14b8a6)' }"
     >
       <text class="si-icon-text-char">{{ iconText.slice(0, 1) }}</text>
     </view>
@@ -34,7 +34,7 @@
         v-if="showSwitch"
         class="si-switch"
         :checked="modelValue"
-        color="var(--color-primary)"
+        color="var(--color-primary, #14b8a6)"
         @change="onSwitchChange"
       />
       <text v-if="arrow && !showSwitch" class="si-arrow">›</text>
@@ -95,9 +95,9 @@ function onSwitchChange(e: any) {
 .si {
   display: flex;
   align-items: center;
-  min-height: var(--height-btn-xl);
-  padding: var(--spacing-sm) 0;
-  border-bottom: 1rpx solid var(--color-border-light);
+  min-height: var(--height-btn-xl, 96rpx);
+  padding: var(--space-4, 16rpx) 0;
+  border-bottom: 1rpx solid var(--border-light, #f5f5f5);
 
   &:last-child {
     border-bottom: none;
@@ -110,10 +110,10 @@ function onSwitchChange(e: any) {
 
 .si-icon {
   flex-shrink: 0;
-  width: var(--icon-lg);
-  height: var(--icon-lg);
-  border-radius: var(--radius-sm);
-  margin-right: var(--spacing-md);
+  width: var(--icon-lg, 72rpx);
+  height: var(--icon-lg, 72rpx);
+  border-radius: var(--radius-sm, 8rpx);
+  margin-right: var(--space-6, 24rpx);
 }
 
 .si-icon-text {
@@ -121,14 +121,14 @@ function onSwitchChange(e: any) {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--icon-lg);
-  height: var(--icon-lg);
-  border-radius: var(--radius-sm);
-  margin-right: var(--spacing-md);
+  width: var(--icon-lg, 72rpx);
+  height: var(--icon-lg, 72rpx);
+  border-radius: var(--radius-sm, 8rpx);
+  margin-right: var(--space-6, 24rpx);
 }
 
 .si-icon-text-char {
-  font-size: var(--font-md);
+  font-size: var(--font-md, 28rpx);
   font-weight: 600;
   color: inherit;
 }
@@ -140,15 +140,15 @@ function onSwitchChange(e: any) {
 
 .si-label {
   display: block;
-  font-size: var(--font-md);
-  color: var(--color-text-primary);
+  font-size: var(--font-md, 28rpx);
+  color: var(--text-primary, #171717);
 }
 
 .si-desc {
   display: block;
   margin-top: 2rpx;
-  font-size: var(--font-xs);
-  color: var(--color-text-tertiary);
+  font-size: var(--font-xs, 24rpx);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .si-right {
@@ -158,33 +158,33 @@ function onSwitchChange(e: any) {
 }
 
 .si-value {
-  font-size: var(--font-sm);
-  color: var(--color-text-tertiary);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .si-badge {
-  min-width: var(--icon-sm);
-  height: var(--icon-sm);
-  padding: 0 var(--spacing-xs);
+  min-width: var(--icon-sm, 36rpx);
+  height: var(--icon-sm, 36rpx);
+  padding: 0 var(--space-2, 8rpx);
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-full);
-  background: var(--color-error);
-  margin-left: var(--spacing-sm);
+  border-radius: var(--radius-full, 9999rpx);
+  background: var(--color-error, #EF4444);
+  margin-left: var(--space-4, 16rpx);
 }
 
 .si-badge-text {
-  font-size: var(--font-xs);
-  color: var(--white);
+  font-size: var(--font-xs, 24rpx);
+  color: var(--text-inverse, #ffffff);
   line-height: 1;
 }
 
 .si-arrow {
-  margin-left: var(--spacing-sm);
-  font-size: var(--font-lg);
-  color: var(--color-text-tertiary);
+  margin-left: var(--space-4, 16rpx);
+  font-size: var(--font-lg, 30rpx);
+  color: var(--text-tertiary, #a3a3a3);
   line-height: 1;
 }
 

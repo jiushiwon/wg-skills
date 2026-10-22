@@ -14,28 +14,28 @@
   --color-primary: #4a90e2;
   --color-success: #52c41a;
   --color-warning: #fa8c16;
-  --color-text: #333;
-  --color-text-secondary: #666;
-  --color-text-tertiary: #999;
-  --color-bg: #f5f5f5;
-  --color-bg-surface: #fff;
-  --color-border: #e8e8e8;
+  --text-primary: #333;
+  --text-secondary: #666;
+  --text-tertiary: #999;
+  --bg-page: #f5f5f5;
+  --bg-card: #fff;
+  --border: #e8e8e8;
 }
 
 body {
-  background: var(--color-bg);
+  background: var(--bg-page, #fafafa);
   padding: 20px;
   font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
-  color: var(--color-text);
+  color: var(--text-primary, #171717);
   line-height: 1.5;
 }
 
-/* 🔥 容器原则：preview 就是 base-card 容器 */
+/* 热 容器原则：preview 就是 base-card 容器 */
 .preview {
   max-width: 375px;
   margin: 0 auto;
-  background: var(--color-bg-surface);
-  border-radius: var(--radius-lg);
+  background: var(--bg-card, #ffffff);
+  border-radius: var(--radius-lg, 24rpx);
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   position: relative;
@@ -46,14 +46,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--space-4);
-  border-bottom: 1px solid var(--color-border);
+  padding: 0 var(--space-4, 16rpx);
+  border-bottom: 1px solid var(--border, #e5e5e5);
   font-size: 16px;
   font-weight: 500;
 }
 
 .preview-body {
-  padding: var(--space-4);
+  padding: var(--space-4, 16rpx);
   min-height: 480px;
 }
 
@@ -69,7 +69,7 @@ body {
 }
 .param-title { font-size: 12px; color: #999; margin-bottom: 8px; }
 .param-row { display: flex; font-size: 12px; margin-bottom: 4px; }
-.param-key { color: var(--color-primary); width: 100px; }
+.param-key { color: var(--color-primary, #14b8a6); width: 100px; }
 .param-val { color: #666; }
 
 /* base-popup 共享样式（被 select-popup / select-cascade 复用） */
@@ -86,7 +86,7 @@ body {
 
 .popup {
   position: absolute;
-  background: var(--color-bg-surface);
+  background: var(--bg-card, #ffffff);
   transition: transform 0.3s ease;
   z-index: 11;
   display: flex;
@@ -96,14 +96,14 @@ body {
 .popup-bottom {
   left: 0; right: 0; bottom: 0;
   max-height: 80%;
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  border-radius: var(--radius-lg, 24rpx) var(--radius-lg, 24rpx) 0 0;
   transform: translateY(100%);
 }
 .popup-bottom.show { transform: translateY(0); }
 
 .popup-top {
   top: 0; left: 0; right: 0;
-  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  border-radius: 0 0 var(--radius-lg, 24rpx) var(--radius-lg, 24rpx);
   transform: translateY(-100%);
 }
 .popup-top.show { transform: translateY(0); }
@@ -111,7 +111,7 @@ body {
 .popup-left {
   top: 0; left: 0; bottom: 0;
   width: 280px;
-  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  border-radius: 0 var(--radius-lg, 24rpx) var(--radius-lg, 24rpx) 0;
   transform: translateX(-100%);
 }
 .popup-left.show { transform: translateX(0); }
@@ -119,7 +119,7 @@ body {
 .popup-right {
   top: 0; right: 0; bottom: 0;
   width: 280px;
-  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+  border-radius: var(--radius-lg, 24rpx) 0 0 var(--radius-lg, 24rpx);
   transform: translateX(100%);
 }
 .popup-right.show { transform: translateX(0); }
@@ -128,7 +128,7 @@ body {
 .popup-content { flex: 1; display: flex; flex-direction: column; }
 .popup-content > .card-header,
 .popup-content > .card-body,
-.popup-content > .card-footer { padding-left: var(--space-4); padding-right: var(--space-4); }
+.popup-content > .card-footer { padding-left: var(--space-4, 16rpx); padding-right: var(--space-4, 16rpx); }
 
 /* ============================================
  * 图标系统（Lucide 风格，统一 currentColor）
@@ -159,9 +159,9 @@ body {
 .icon-24 { font-size: 24px; }
 .icon-32 { font-size: 32px; }
 /* 颜色 */
-.icon-primary { color: var(--color-primary); }
-.icon-success { color: var(--color-success); }
-.icon-warning { color: var(--color-warning); }
-.icon-secondary { color: var(--color-text-secondary); }
-.icon-tertiary { color: var(--color-text-tertiary); }
+.icon-primary { color: var(--color-primary, #14b8a6); }
+.icon-success { color: var(--color-success, #10B981); }
+.icon-warning { color: var(--color-warning, #F59E0B); }
+.icon-secondary { color: var(--text-secondary, #525252); }
+.icon-tertiary { color: var(--text-tertiary, #a3a3a3); }
 .icon-white { color: #fff; }

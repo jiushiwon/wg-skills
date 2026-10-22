@@ -21,8 +21,8 @@
             <text class="user-name">{{ item.user }}</text>
           </view>
           <view class="item-stats">
-            <span>❤️ {{ item.like }}</span>
-            <span>💬 {{ item.comment }}</span>
+            <span>♥ {{ item.like }}</span>
+            <span>留言 {{ item.comment }}</span>
           </view>
         </view>
       </view>

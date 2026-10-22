@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-popup 实战 - 支付方式选择</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-primary: #4a90e2;
+      --color-success: #52c41a;
+      --color-warning: #faad14;
+      --color-error: #f5222d;
+      --text-primary: #333;
+      --text-secondary: #666;
+      --text-tertiary: #999;
+      --bg-page: #f5f5f5;
+      --bg-card: #fff;
+      --border: #e8e8e8;
+    }
+    body { background: var(--bg-page); font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; padding: 20px; }
+    .page { max-width: 414px; margin: 0 auto; }
+
+    .phone {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    .phone-header {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-4);
+      border-bottom: 1px solid var(--border);
+    }
+    .phone-title { font-size: 16px; font-weight: 500; }
+    .phone-body { min-height: 600px; padding: var(--space-4); }
+
+    .amount-card {
+      background: linear-gradient(135deg, #4a90e2, #357abd);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      color: #fff;
+      margin-bottom: var(--space-4);
+    }
+    .amount-label { font-size: 13px; opacity: 0.85; }
+    .amount-value { font-size: 30px; font-weight: 600; margin-top: 4px; }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .btn:disabled { background: #ccc; cursor: not-allowed; }
+
+    /* Popup */
+    .popup-mask {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.5);
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+      z-index: 10;
+    }
+    .popup-mask.show { opacity: 1; visibility: visible; }
+
+    .popup {
+      position: absolute;
+      background: var(--bg-card);
+      transition: transform 0.3s;
+      z-index: 20;
+    }
+    .popup-bottom {
+      bottom: 0; left: 0; right: 0;
+      transform: translateY(100%);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      max-height: 80%;
+      display: flex;
+      flex-direction: column;
+    }
+    .popup-bottom.show { transform: translateY(0); }
+
+    .popup-header {
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .popup-title { font-size: 16px; font-weight: 500; }
+    .popup-close { font-size: 22px; color: var(--text-tertiary); cursor: pointer; line-height: 1; }
+
+    .popup-body { flex: 1; overflow-y: auto; padding: var(--space-2) 0; }
+
+    /* 支付方式列表（radio 风格） */
+    .pay-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      cursor: pointer;
+      position: relative;
+    }
+    .pay-item:active { background: var(--bg-page); }
+    .pay-item.disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .pay-icon {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .pay-icon.wechat { background: #07c160; }
+    .pay-icon.alipay { background: #1677ff; }
+    .pay-icon.balance { background: var(--color-warning); }
+    .pay-icon.card { background: #722ed1; }
+
+    .pay-info { flex: 1; }
+    .pay-name { font-size: 15px; display: flex; align-items: center; gap: 6px; }
+    .pay-tag {
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 8px;
+      background: var(--color-error);
+      color: #fff;
+    }
+    .pay-desc { font-size: 12px; color: var(--text-tertiary); margin-top: 2px; }
+
+    /* radio 圆圈 */
+    .radio {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s;
+    }
+    .radio.active { border-color: var(--color-primary); }
+    .radio.active::after {
+      content: '';
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--color-primary);
+    }
+
+    .popup-footer {
+      padding: var(--space-3) var(--space-4);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      flex-shrink: 0;
+    }
+    .popup-footer .btn { margin: 0; }
+    .footer-amount { flex: 1; font-size: 13px; color: var(--text-secondary); }
+    .footer-amount b { color: var(--color-error); font-size: 17px; }
+
+    .result {
+      padding: var(--space-3) var(--space-4);
+      background: var(--bg-page);
+      border-radius: var(--radius-md);
+      margin-top: var(--space-4);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="phone">
+      <div class="phone-header">
+        <span class="phone-title">订单结算</span>
+        <span style="font-size:13px;color:var(--text-secondary);">3 件商品</span>
+      </div>
+      <div class="phone-body">
+        <div class="amount-card">
+          <div class="amount-label">待支付金额</div>
+          <div class="amount-value">¥ 1,299.00</div>
+        </div>
+
+        <button class="btn" id="payBtn" onclick="openPay()">选择支付方式</button>
+
+        <div class="result" id="resultBox">
+          已选：<b id="resultText">未选择</b>
+        </div>
+      </div>
+
+      <!-- 遮罩 -->
+      <div class="popup-mask" id="mask" onclick="closePay()"></div>
+
+      <!-- 支付方式弹窗 -->
+      <div class="popup popup-bottom" id="popup">
+        <div class="popup-header">
+          <span class="popup-title">选择支付方式</span>
+          <span class="popup-close" onclick="closePay()">×</span>
+        </div>
+
+        <div class="popup-body">
+          <div class="pay-item" data-id="wechat" onclick="selectPay('wechat')">
+            <div class="pay-icon wechat">微</div>
+            <div class="pay-info">
+              <div class="pay-name">微信支付</div>
+              <div class="pay-desc">推荐使用，支持免密支付</div>
+            </div>
+            <div class="radio" id="radio-wechat"></div>
+          </div>
+
+          <div class="pay-item" data-id="alipay" onclick="selectPay('alipay')">
+            <div class="pay-icon alipay">支</div>
+            <div class="pay-info">
+              <div class="pay-name">支付宝</div>
+              <div class="pay-desc">可用花呗分期</div>
+            </div>
+            <div class="radio" id="radio-alipay"></div>
+          </div>
+
+          <div class="pay-item" data-id="balance" onclick="selectPay('balance')">
+            <div class="pay-icon balance">余</div>
+            <div class="pay-info">
+              <div class="pay-name">余额支付</div>
+              <div class="pay-desc">当前余额 ¥ 500.00</div>
+            </div>
+            <div class="radio" id="radio-balance"></div>
+          </div>
+
+          <div class="pay-item" data-id="card" onclick="selectPay('card')">
+            <div class="pay-icon card">卡</div>
+            <div class="pay-info">
+              <div class="pay-name">银行卡</div>
+              <div class="pay-desc">招商银行 (6688)</div>
+            </div>
+            <div class="radio" id="radio-card"></div>
+          </div>
+
+          <!-- 不可用项 -->
+          <div class="pay-item disabled">
+            <div class="pay-icon" style="background:#bbb;">券</div>
+            <div class="pay-info">
+              <div class="pay-name">余额不足 <span class="pay-tag" style="background:var(--color-warning);">不可用</span></div>
+              <div class="pay-desc">需充值 ¥ 799.00 后使用</div>
+            </div>
+            <div class="radio"></div>
+          </div>
+        </div>
+
+        <div class="popup-footer">
+          <span class="footer-amount">合计 <b>¥1,299.00</b></span>
+          <button class="btn" id="confirmBtn" style="flex:0 0 120px;" disabled onclick="confirmPay()">确认支付</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const payMethods = {
+      wechat: { name: '微信支付', icon: '微' },
+      alipay: { name: '支付宝', icon: '支' },
+      balance: { name: '余额支付', icon: '余' },
+      card: { name: '银行卡', icon: '卡' },
+    };
+
+    let selected = '';
+
+    function openPay() {
+      document.getElementById('mask').classList.add('show');
+      document.getElementById('popup').classList.add('show');
+    }
+
+    function closePay() {
+      document.getElementById('mask').classList.remove('show');
+      document.getElementById('popup').classList.remove('show');
+    }
+
+    function selectPay(id) {
+      selected = id;
+
+      // 更新 radio 状态
+      Object.keys(payMethods).forEach(key => {
+        document.getElementById('radio-' + key).classList.toggle('active', key === id);
+      });
+
+      // 启用确认按钮
+      document.getElementById('confirmBtn').disabled = false;
+      document.getElementById('resultText').textContent = payMethods[id].name;
+    }
+
+    function confirmPay() {
+      if (!selected) return;
+      closePay();
+      document.getElementById('resultText').textContent = payMethods[selected].name + '（已提交）';
+    }
+  </script>
+</body>
+</html>

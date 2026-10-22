@@ -129,8 +129,8 @@ export default function Table({
               <span>{column.title}</span>
               {column.sortable && (
                 <span className="t-table__sort-icons">
-                  <span className={sortKey === column.key && sortOrder === 'asc' ? 't-table__sort-active' : ''}>↑</span>
-                  <span className={sortKey === column.key && sortOrder === 'desc' ? 't-table__sort-active' : ''}>↓</span>
+                  <span className={sortKey === column.key && sortOrder === 'asc' ? 't-table__sort-active' : ''}></span>
+                  <span className={sortKey === column.key && sortOrder === 'desc' ? 't-table__sort-active' : ''}></span>
                 </span>
               )}
             </div>

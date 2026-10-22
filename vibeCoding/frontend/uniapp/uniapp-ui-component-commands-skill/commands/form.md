@@ -1,158 +1,278 @@
-# 表单类组件
+# 表单类组件（form）
 
-## search-bar 搜索栏
+> 实现真源：`vibeCoding/frontend/uniapp/uniapp-base-skill/`
+> 本文件由 `components/_registry.json` + 各组件 `props.json` 同步生成，**改实现必须重新生成本文件**。
+> 重新生成：`node scripts/gen-commands.js`
 
-**说明**：搜索输入框
+## 总览
 
-**别名**：搜索框、搜索输入
-
-**属性**：
-| 名称 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| value | string | '' | 输入值 |
-| placeholder | string | '搜索' | 占位符 |
-| clearable | boolean | true | 显示清除按钮 |
-| focus | boolean | false | 自动聚焦 |
-
-**事件**：
-- search：回车搜索
-- clear：清除内容
-- input：输入变化
-
-**用法**：
-```vue
-<search-bar v-model="keyword" placeholder="请输入搜索内容" @search="onSearch" />
-```
+| 组件 | 说明 | 别名 | 类型 |
+|------|------|------|------|
+| `button` | 统一按钮样式：primary / ghost / text / danger × sm / md / lg，支持 loading / disabled / block / round | 按钮 / button / 提交按钮 / 主按钮 / 次按钮 | 组件 |
+| `checkbox-group` | 多选框组，支持 options 驱动的多值选择 | 多选框 / checkbox-group / 复选框 / 多选 | 组件 |
+| `date-picker` | 底部弹出的年/月/日三列滑轮选择器，基于 BasePopup 容器 | 日期选择 / date-picker / 年月日选择 / 日期滚轮 | 组件 |
+| `input-field` | 表单项，基于 BaseFormItem 容器，支持标签、清除与错误提示 | 输入框 / input-field / 表单输入 / 文本输入 | 组件 |
+| `picker` | 底部弹出的多列滚轮选择器，基于 BasePopup 容器 | 选择器 / picker / 下拉选择 / 滚轮选择 | 组件 |
+| `radio-group` | 单选框组，支持 options 驱动的单值选择 | 单选框 / radio-group / 单选按钮 / radio | 组件 |
+| `search-bar` | 搜索栏，支持输入、清除、确认搜索与取消 | 搜索框 / search-bar / 查询栏 / 搜索输入 | 组件 |
+| `switch` | 开关选择器，支持主题色与自定义轨道色 | 开关 / switch / 切换开关 / toggle | 组件 |
 
 ---
 
-## input-field 表单项
+## button 按钮
 
-**说明**：带标签的输入框
+**说明**：统一按钮样式：primary / ghost / text / danger × sm / md / lg，支持 loading / disabled / block / round
 
-**别名**：输入框、表单项
+**别名**：按钮、button、提交按钮、主按钮、次按钮
+
+**路径**：`vibeCoding/frontend/uniapp/uniapp-base-skill/components/form/button/`
 
 **属性**：
+
 | 名称 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| label | string | '' | 标签 |
-| value | string | '' | 值 |
-| type | string | 'text' | 类型(text/password/number) |
-| placeholder | string | '' | 占位符 |
-| error | string | '' | 错误信息 |
-| required | boolean | false | 必填标记 |
+| `type` | `'primary' | 'ghost' | 'text' | 'danger'` | `primary` | 按钮类型 |
+| `size` | `'sm' | 'md' | 'lg'` | `md` | 尺寸 |
+| `disabled` | `boolean` | `false` | 禁用 |
+| `loading` | `boolean` | `false` | 加载中（内置转圈并禁用点击） |
+| `block` | `boolean` | `false` | 块级，宽度 100% |
+| `shape` | `'radius' | 'round'` | `radius` | 圆角风格 |
+| `icon` | `string` |  | 左侧图标地址 |
+| `text` | `string` | `按钮` | 按钮文字，默认插槽优先 |
 
-**用法**：
-```vue
-<input-field label="用户名" v-model="form.username" placeholder="请输入用户名" required />
-<input-field label="密码" type="password" v-model="form.password" error="密码错误" />
-```
+**事件**：
+
+- `click`
+
+**插槽**：
+
+| 名称 | 说明 |
+|------|------|
+| `default` | 按钮内容，优先于 text |
+
+**用法**：见 [usage.md](../../uniapp-base-skill/components/form/button/usage.md)
 
 ---
 
-## picker 选择器
+## checkbox-group 复选框组
 
-**说明**：下拉选择器
+**说明**：多选框组，支持 options 驱动的多值选择
 
-**别名**：下拉选择
+**别名**：多选框、checkbox-group、复选框、多选
+
+**路径**：`vibeCoding/frontend/uniapp/uniapp-base-skill/components/form/checkbox-group/`
 
 **属性**：
+
 | 名称 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| value | string/number | '' | 选中值 |
-| options | array | [] | 选项 [{label, value}] |
-| placeholder | string | '请选择' | 占位符 |
+| `modelValue` | `array` | `[]` | 绑定值数组，元素为选中的 option.value（string \| number） |
+| `label` | `string` |  | 分组标题，为空时不渲染 |
+| `options` | `array` | `[]` | 选项列表 [{ label: string, value: string \| number }] |
+| `disabled` | `boolean` | `false` | 整组禁用，禁用时点击不触发变更 |
 
 **事件**：
-- change：选择变化
 
-**用法**：
-```vue
-<picker
-  v-model="selected"
-  :options="[{label: '选项1', value: 1}, {label: '选项2', value: 2}]"
-  @change="onChange"
-/>
-```
+- `update:modelValue`
+- `change`
+
+**用法**：见 [usage.md](../../uniapp-base-skill/components/form/checkbox-group/usage.md)
 
 ---
 
 ## date-picker 日期选择器
 
-**说明**：日期选择
+**说明**：底部弹出的年/月/日三列滑轮选择器，基于 BasePopup 容器
 
-**别名**：日期选择
+**别名**：日期选择、date-picker、年月日选择、日期滚轮
+
+**路径**：`vibeCoding/frontend/uniapp/uniapp-base-skill/components/form/date-picker/`
 
 **属性**：
+
 | 名称 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| value | string | '' | 日期值 |
-| mode | string | 'date' | 模式(date/time/datetime) |
-| start | string | '' | 开始日期 |
-| end | string | '' | 结束日期 |
+| `modelValue` | `string` |  | 选中日期，格式 YYYY-MM-DD，v-model 双向绑定 |
+| `show` | `boolean` | `false` | 弹层是否显示 |
+| `min` | `number` | `1970` | 最小年份 |
+| `max` | `number` | `2100` | 最大年份 |
+| `format` | `string` | `YYYY-MM-DD` | 展示与确认载荷格式，支持 YYYY / MM / DD 占位 |
+| `title` | `string` | `选择日期` | 弹窗标题 |
+| `confirmText` | `string` | `确认` | 确认按钮文案 |
+| `cancelText` | `string` | `取消` | 取消按钮文案 |
+| `maskClosable` | `boolean` | `true` | 点击遮罩是否关闭 |
+| `safeArea` | `boolean` | `true` | 底部是否适配安全区 |
 
-**用法**：
-```vue
-<date-picker v-model="date" mode="date" start="2020-01-01" end="2030-12-31" />
-```
+**事件**：
+
+- `update:modelValue`
+- `update:show`
+- `change`
+- `confirm`
+- `cancel`
+
+**插槽**：
+
+| 名称 | 说明 |
+|------|------|
+| `header-right` | 标题栏右侧自定义区域 |
+
+**用法**：见 [usage.md](../../uniapp-base-skill/components/form/date-picker/usage.md)
+
+---
+
+## input-field 输入框
+
+**说明**：表单项，基于 BaseFormItem 容器，支持标签、清除与错误提示
+
+**别名**：输入框、input-field、表单输入、文本输入
+
+**路径**：`vibeCoding/frontend/uniapp/uniapp-base-skill/components/form/input-field/`
+
+**属性**：
+
+| 名称 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `modelValue` | `'string' | 'number'` |  | 绑定值 |
+| `label` | `string` |  | 标签文案，为空时隐藏标签列 |
+| `type` | `string` | `text` | 输入类型，text / number / idcard / digit 等 |
+| `placeholder` | `string` |  | 占位文案 |
+| `disabled` | `boolean` | `false` | 禁用输入 |
+| `maxlength` | `number` | `-1` | 最大长度，-1 表示不限制 |
+| `clearable` | `boolean` | `false` | 有内容时显示清除按钮 |
+| `error` | `boolean` | `false` | 错误状态，输入框描边转红 |
+| `errorMessage` | `string` |  | 错误提示文案，error 为 true 时显示在控件下方 |
+| `labelWidth` | `string` | `160rpx` | 标签列宽 |
+
+**事件**：
+
+- `update:modelValue`
+- `input`
+- `blur`
+- `focus`
+- `clear`
+
+**用法**：见 [usage.md](../../uniapp-base-skill/components/form/input-field/usage.md)
+
+---
+
+## picker 滚轮选择器
+
+**说明**：底部弹出的多列滚轮选择器，基于 BasePopup 容器
+
+**别名**：选择器、picker、下拉选择、滚轮选择
+
+**路径**：`vibeCoding/frontend/uniapp/uniapp-base-skill/components/form/picker/`
+
+**属性**：
+
+| 名称 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `modelValue` | `array` | `[]` | 各列选中值数组，v-model 双向绑定 |
+| `show` | `boolean` | `false` | 弹层是否显示 |
+| `columns` | `array` | `[]` | 列数据，多列传二维数组，单列传一维数组 |
+| `columnTypes` | `string[]` | `[]` | 每列类型：string / number / date |
+| `title` | `string` | `请选择` | 弹窗标题 |
+| `confirmText` | `string` | `确认` | 确认按钮文案 |
+| `cancelText` | `string` | `取消` | 取消按钮文案 |
+| `maskClosable` | `boolean` | `true` | 点击遮罩是否关闭 |
+| `safeArea` | `boolean` | `true` | 底部是否适配安全区 |
+
+**事件**：
+
+- `update:modelValue`
+- `update:show`
+- `change`
+- `confirm`
+- `cancel`
+
+**插槽**：
+
+| 名称 | 说明 |
+|------|------|
+| `header-right` | 标题栏右侧自定义区域 |
+
+**用法**：见 [usage.md](../../uniapp-base-skill/components/form/picker/usage.md)
+
+---
+
+## radio-group 单选框组
+
+**说明**：单选框组，支持 options 驱动的单值选择
+
+**别名**：单选框、radio-group、单选按钮、radio
+
+**路径**：`vibeCoding/frontend/uniapp/uniapp-base-skill/components/form/radio-group/`
+
+**属性**：
+
+| 名称 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `modelValue` | `'string' | 'number'` |  | 绑定值，等于选中的 option.value |
+| `label` | `string` |  | 分组标题，为空时不渲染 |
+| `options` | `array` | `[]` | 选项列表 [{ label: string, value: string \| number }] |
+| `disabled` | `boolean` | `false` | 整组禁用，禁用时点击不触发变更 |
+
+**事件**：
+
+- `update:modelValue`
+- `change`
+
+**用法**：见 [usage.md](../../uniapp-base-skill/components/form/radio-group/usage.md)
+
+---
+
+## search-bar 搜索栏
+
+**说明**：搜索栏，支持输入、清除、确认搜索与取消
+
+**别名**：搜索框、search-bar、查询栏、搜索输入
+
+**路径**：`vibeCoding/frontend/uniapp/uniapp-base-skill/components/form/search-bar/`
+
+**属性**：
+
+| 名称 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `modelValue` | `string` |  | 绑定值 |
+| `placeholder` | `string` | `搜索` | 占位文案 |
+| `clearable` | `boolean` | `true` | 有内容时显示清除按钮 |
+| `showCancel` | `boolean` | `false` | 显示取消按钮 |
+| `disabled` | `boolean` | `false` | 禁用输入 |
+
+**事件**：
+
+- `update:modelValue`
+- `input`
+- `search`
+- `clear`
+- `cancel`
+
+**用法**：见 [usage.md](../../uniapp-base-skill/components/form/search-bar/usage.md)
 
 ---
 
 ## switch 开关
 
-**说明**：切换开关
+**说明**：开关选择器，支持主题色与自定义轨道色
 
-**别名**：切换开关
+**别名**：开关、switch、切换开关、toggle
+
+**路径**：`vibeCoding/frontend/uniapp/uniapp-base-skill/components/form/switch/`
 
 **属性**：
+
 | 名称 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| value | boolean | false | 开关状态 |
-| disabled | boolean | false | 禁用 |
-| color | string | primary | 开启颜色 |
+| `modelValue` | `boolean` | `false` | 绑定值，是否开启 |
+| `label` | `string` |  | 左侧标签文案，为空时不渲染 |
+| `activeColor` | `string` |  | 开启态轨道颜色，留空则用主题主色 --color-primary |
+| `inactiveColor` | `string` |  | 关闭态轨道颜色，留空则用主题灰 --text-tertiary |
+| `disabled` | `boolean` | `false` | 禁用，点击不触发变更 |
 
 **事件**：
-- change：状态变化
 
-**用法**：
-```vue
-<switch v-model="enabled" @change="onChange" />
-```
+- `update:modelValue`
+- `change`
 
----
-
-## checkbox-group 多选组
-
-**说明**：多选框组
-
-**别名**：多选框
-
-**属性**：
-| 名称 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| value | array | [] | 选中值数组 |
-| options | array | [] | 选项配置 |
-
-**用法**：
-```vue
-<checkbox-group v-model="checked" :options="['选项1', '选项2', '选项3']" />
-```
-
----
-
-## radio-group 单选组
-
-**说明**：单选框组
-
-**别名**：单选框
-
-**属性**：
-| 名称 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| value | string/number | '' | 选中值 |
-| options | array | [] | 选项配置 |
-
-**用法**：
-```vue
-<radio-group v-model="selected" :options="[{label: '男', value: 1}, {label: '女', value: 2}]" />
-```
+**用法**：见 [usage.md](../../uniapp-base-skill/components/form/switch/usage.md)

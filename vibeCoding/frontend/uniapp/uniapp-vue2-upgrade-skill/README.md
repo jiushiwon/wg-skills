@@ -43,28 +43,28 @@ uniapp **Vue2 + Options API 项目升级到 Vue3 + Composition API + TypeScript 
 
 ```
 Phase 1: 现状评估
-  → 扫描项目结构、技术栈、Options API 使用情况
-  → 输出 "vue2-to-vue3-readiness-report.md"
+   扫描项目结构、技术栈、Options API 使用情况
+   输出 "vue2-to-vue3-readiness-report.md"
 
 Phase 2: 方案设计
-  → 选择升级策略（全量 / 渐进 / 双轨）
-  → 输出 "vue2-to-vue3-migration-plan.md"
+   选择升级策略（全量 / 渐进 / 双轨）
+   输出 "vue2-to-vue3-migration-plan.md"
 
 Phase 3: 用户确认
-  → 用户 review 方案
-  → 确认后才执行迁移
+   用户 review 方案
+   确认后才执行迁移
 
 Phase 4: 迁移执行
-  → Options API → Composition API
-  → Vuex → Pinia
-  → mixins → composables
-  → JS → TS（可选）
+   Options API  Composition API
+   Vuex  Pinia
+   mixins  composables
+   JS  TS（可选）
 
 Phase 5: 验证交付
-  → npm run lint
-  → npm run type-check
-  → npm run build:mp-weixin
-  → 三端真机回归测试
+   npm run lint
+   npm run type-check
+   npm run build:mp-weixin
+   三端真机回归测试
 ```
 
 ---

@@ -28,7 +28,7 @@
 ### 1. 触发技能
 
 ```
-/uniapp-standard
+/u/uniapp-standard
 ```
 
 或描述以下场景：
@@ -41,7 +41,7 @@
 ### 2. 使用模板快速创建项目
 
 ```bash
-# 复制模板文件到新项目目录
+# # 复制模板文件到新项目目录
 cp -r uniapp-standard-skill/templates/* /your-project/src/
 
 # 或手动复制需要的文件

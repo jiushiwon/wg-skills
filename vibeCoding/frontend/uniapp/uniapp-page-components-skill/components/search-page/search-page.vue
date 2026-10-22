@@ -2,7 +2,7 @@
   SearchPage 搜索组件化页面
   ============================================================
   结构：顶部搜索栏（input + 搜索/取消）+ 历史搜索（可删）+ 热门搜索 + 结果列表
-  状态机：有关键字/结果 → 结果态；无 → 历史/热门态
+  状态机：有关键字/结果  结果态；无  历史/热门态
   特性：
     - input 实时防抖 emit input（600ms）；
     - 历史搜索标签可逐个删除，也支持一键清空；
@@ -63,7 +63,7 @@
           <view class="sp-section-head">
             <text class="sp-section-title">历史搜索</text>
             <view class="sp-section-clear" @click="$emit('clearHistory')">
-              <text class="sp-section-clear-icon">🗑</text>
+              <text class="sp-section-clear-icon">清</text>
             </view>
           </view>
           <slot name="history">
@@ -188,7 +188,7 @@ function itemText(item: any) {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: var(--color-bg-page);
+  background: var(--bg-page, #fafafa);
 }
 
 /* ---- 搜索栏 ---- */
@@ -196,55 +196,55 @@ function itemText(item: any) {
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  padding: var(--spacing-sm) var(--spacing-md);
-  background: var(--color-bg-surface);
-  border-bottom: 1rpx solid var(--color-border-light);
+  padding: var(--space-4, 16rpx) var(--space-6, 24rpx);
+  background: var(--bg-card, #ffffff);
+  border-bottom: 1rpx solid var(--border-light, #f5f5f5);
 }
 
 .sp-search {
   flex: 1;
   display: flex;
   align-items: center;
-  height: var(--height-btn-md);
-  padding: 0 var(--spacing-md);
-  border-radius: var(--radius-btn);
-  background: var(--color-bg-page);
+  height: var(--height-btn-md, 72rpx);
+  padding: 0 var(--space-6, 24rpx);
+  border-radius: var(--radius-btn, 9999rpx);
+  background: var(--bg-page, #fafafa);
 }
 
 .sp-search-icon {
-  margin-right: var(--spacing-xs);
-  font-size: var(--font-lg);
-  color: var(--color-text-tertiary);
+  margin-right: var(--space-2, 8rpx);
+  font-size: var(--font-lg, 30rpx);
+  color: var(--text-tertiary, #a3a3a3);
   line-height: 1;
 }
 
 .sp-input {
   flex: 1;
   min-width: 0;
-  font-size: var(--font-md);
-  color: var(--color-text-primary);
+  font-size: var(--font-md, 28rpx);
+  color: var(--text-primary, #171717);
 }
 
 .sp-input-ph {
-  color: var(--color-text-tertiary);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .sp-clear {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--height-btn-sm);
-  height: var(--height-btn-sm);
+  width: var(--height-btn-sm, 56rpx);
+  height: var(--height-btn-sm, 56rpx);
 }
 
 .sp-clear-icon {
-  font-size: var(--font-lg);
-  color: var(--color-text-tertiary);
+  font-size: var(--font-lg, 30rpx);
+  color: var(--text-tertiary, #a3a3a3);
   line-height: 1;
 }
 
 .sp-action {
-  margin-left: var(--spacing-sm);
+  margin-left: var(--space-4, 16rpx);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -253,8 +253,8 @@ function itemText(item: any) {
 }
 
 .sp-action-text {
-  font-size: var(--font-md);
-  color: var(--color-primary);
+  font-size: var(--font-md, 28rpx);
+  color: var(--color-primary, #14b8a6);
 }
 
 /* ---- 内容区 ---- */
@@ -264,7 +264,7 @@ function itemText(item: any) {
 }
 
 .sp-section {
-  padding: var(--spacing-lg) var(--spacing-lg) 0;
+  padding: var(--space-8, 32rpx) var(--space-8, 32rpx) 0;
 }
 
 .sp-section-head {
@@ -274,9 +274,9 @@ function itemText(item: any) {
 }
 
 .sp-section-title {
-  font-size: var(--font-md);
+  font-size: var(--font-md, 28rpx);
   font-weight: 600;
-  color: var(--color-text-primary);
+  color: var(--text-primary, #171717);
 }
 
 .sp-section-clear {
@@ -285,55 +285,55 @@ function itemText(item: any) {
   justify-content: center;
   min-width: 88rpx;
   min-height: 88rpx;
-  margin: calc(-1 * var(--spacing-sm)) 0;
+  margin: calc(-1 * var(--space-4, 16rpx)) 0;
 }
 
 .sp-section-clear-icon {
-  font-size: var(--font-md);
-  color: var(--color-text-tertiary);
+  font-size: var(--font-md, 28rpx);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .sp-tags {
   display: flex;
   flex-wrap: wrap;
-  margin-top: var(--spacing-md);
+  margin-top: var(--space-6, 24rpx);
 }
 
 .sp-tag {
-  margin-right: var(--spacing-sm);
-  margin-bottom: var(--spacing-sm);
+  margin-right: var(--space-4, 16rpx);
+  margin-bottom: var(--space-4, 16rpx);
   display: flex;
   align-items: center;
-  height: var(--height-btn-sm);
-  padding: 0 var(--spacing-md);
-  border-radius: var(--radius-tag);
-  background: var(--color-bg-surface);
+  height: var(--height-btn-sm, 56rpx);
+  padding: 0 var(--space-6, 24rpx);
+  border-radius: var(--radius-tag, 8rpx);
+  background: var(--bg-card, #ffffff);
 
   &.is-hot {
-    background: var(--color-bg-tinted);
+    background: var(--bg-light, #f5f5f5);
   }
 }
 
 .sp-tag-text {
-  font-size: var(--font-sm);
-  color: var(--color-text-secondary);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-secondary, #525252);
 }
 
 .sp-tag-del {
-  margin-left: var(--spacing-xs);
-  font-size: var(--font-sm);
-  color: var(--color-text-tertiary);
+  margin-left: var(--space-2, 8rpx);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-tertiary, #a3a3a3);
   line-height: 1;
 }
 
 /* ---- 结果 ---- */
 .sp-results {
-  padding: var(--spacing-md) var(--spacing-lg) var(--spacing-2xl);
+  padding: var(--space-6, 24rpx) var(--space-8, 32rpx) var(--space-16, 64rpx);
 }
 
 .sp-result-item {
-  padding: var(--spacing-md) 0;
-  border-bottom: 1rpx solid var(--color-border-light);
+  padding: var(--space-6, 24rpx) 0;
+  border-bottom: 1rpx solid var(--border-light, #f5f5f5);
 
   &:active {
     opacity: 0.7;
@@ -341,31 +341,31 @@ function itemText(item: any) {
 }
 
 .sp-result-text {
-  font-size: var(--font-md);
-  color: var(--color-text-primary);
+  font-size: var(--font-md, 28rpx);
+  color: var(--text-primary, #171717);
 }
 
 .sp-empty {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-3xl) 0;
+  padding: var(--space-24, 96rpx) 0;
 }
 
 .sp-empty-text {
-  font-size: var(--font-md);
-  color: var(--color-text-tertiary);
+  font-size: var(--font-md, 28rpx);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .sp-finished {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-md) 0;
+  padding: var(--space-6, 24rpx) 0;
 }
 
 .sp-finished-text {
-  font-size: var(--font-sm);
-  color: var(--color-text-tertiary);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-tertiary, #a3a3a3);
 }
 </style>

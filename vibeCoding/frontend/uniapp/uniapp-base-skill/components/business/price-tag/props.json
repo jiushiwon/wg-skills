@@ -1,0 +1,17 @@
+{
+  "name": "price-tag",
+  "title": "价格标签",
+  "category": "business",
+  "description": "价格展示组件，支持货币符号、划线原价与三档字号",
+  "aliases": ["价格", "金额", "price", "money"],
+  "props": [
+    { "name": "price", "type": "string | number", "default": "0.00", "desc": "价格" },
+    { "name": "originalPrice", "type": "string | number", "default": "", "desc": "原价，划线显示" },
+    { "name": "size", "type": "'small' | 'medium' | 'large'", "default": "medium", "desc": "尺寸" },
+    { "name": "currency", "type": "string", "default": "¥", "desc": "货币符号" },
+    { "name": "symbol", "type": "boolean", "default": true, "desc": "是否显示货币符号" },
+    { "name": "decimal", "type": "boolean", "default": true, "desc": "数字价格是否保留两位小数" }
+  ],
+  "events": [],
+  "slots": []
+}

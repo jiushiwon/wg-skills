@@ -27,7 +27,7 @@ admin/
 ## 布局结构
 
 ```
-┌──────────────────────────────────────────┐
+┌─┌──────────────────────────────────────────┐
 │ Logo │  系统名称        │ 用户 │ 设置    │
 ├────────┬─────────────────────────────────┤
 │        │  面包屑：首页 / 用户管理 / 列表  │
@@ -63,7 +63,7 @@ admin/
 ### 变体3：顶部导航
 
 ```
-┌──────────────────────────────────────────┐
+┌─┌──────────────────────────────────────────┐
 │ Logo │  菜单1 │ 菜单2 │ 菜单3  │ 用户  │
 ├──────────────────────────────────────────┤
 │ 面包屑                                      │
@@ -140,7 +140,7 @@ const menuList = [
 ### 样式
 
 ```
-首页 / 用户管理 / 用户列表
+首页首页 / 用户管理 / 用户列表
 ```
 
 ## 内容区域
@@ -162,12 +162,12 @@ const menuList = [
 ### 风格1：浅色商务
 
 ```scss
---bg-page: #F5F7FA;
+----bg-page: #F5F7FA;
 --bg-sidebar: #FFFFFF;
 --bg-header: #FFFFFF;
 --text-primary: #303133;
 --text-secondary: #909399;
---primary: #409EFF;
+--color-primary: #409EFF;
 --border: #E4E7ED;
 --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 ```
@@ -175,22 +175,22 @@ const menuList = [
 ### 风格2：深色商务
 
 ```scss
---bg-page: #1A1A2E;
+----bg-page: #1A1A2E;
 --bg-sidebar: #16162A;
 --bg-header: #1A1A2E;
 --text-primary: #E5EAF3;
 --text-secondary: #8F9BB3;
---primary: #3B82F6;
+--color-primary: #3B82F6;
 --border: #2D3A4F;
 ```
 
 ### 风格3：绿色清新
 
 ```scss
---bg-page: #F0F9F6;
+----bg-page: #F0F9F6;
 --bg-sidebar: #FFFFFF;
 --bg-header: #FFFFFF;
---primary: #2ECC71;
+--color-primary: #2ECC71;
 --border: #D1FAE5;
 ```
 
@@ -211,6 +211,7 @@ const menuList = [
 ## Mock数据
 
 ```json
+{
 {
   "menu": [
     {

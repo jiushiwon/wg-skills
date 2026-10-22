@@ -38,6 +38,9 @@
 | [vue-contextmenu-skill](vue-contextmenu-skill/SKILL.md) | 右键菜单（嵌套/图标/动态/键盘导航） | ✅ |
 | [vue-collapse-skill](vue-collapse-skill/SKILL.md) | 折叠面板（手风琴/嵌套/动画） | ✅ |
 | [vue-upload-skill](vue-upload-skill/SKILL.md) | 文件上传（拖拽/分片/预览/多文件） | ✅ |
+| [vue-cascader-skill](vue-cascader-skill/SKILL.md) | 级联选择器（单选/多选/搜索/懒加载） | ✅ |
+| [vue-loading-skill](vue-loading-skill/SKILL.md) | 加载状态（骨架屏/动画/遮罩） | ✅ |
+| [vue-empty-skill](vue-empty-skill/SKILL.md) | 空状态（无数据/无结果） | ✅ |
 | [vue-generate-skill](vue-generate-skill/SKILL.md) | 代码生成器（表单/表格/CURD） | ✅ |
 | [vue-login-skill](vue-login-skill/SKILL.md) | 高端登录页（8 种差异化风格） | ✅ |
 | [vue-crud-skill](vue-crud-skill/SKILL.md) | 增删改查页面（搜索+表格+弹窗表单+分页） | ✅ |
@@ -94,6 +97,9 @@ vue-base-skill/
 ├── vue-contextmenu-skill/  # 右键菜单
 ├── vue-collapse-skill/     # 折叠面板
 ├── vue-upload-skill/       # 文件上传
+├── vue-cascader-skill/     # 级联选择器
+├── vue-loading-skill/      # 加载状态
+├── vue-empty-skill/       # 空状态
 ├── vue-generate-skill/     # 代码生成器
 ├── vue-login-skill/        # 高端登录页
 └── vue-crud-skill/         # 增删改查页面

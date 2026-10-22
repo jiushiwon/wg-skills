@@ -59,7 +59,7 @@ export const tabList = [
 ### 风格1：简约线条
 
 ```scss
---bg-color: #FFFFFF;
+----bg-color: #FFFFFF;
 --text-color: #999999;
 --text-active: #333333;
 --border-color: #E5E5E5;
@@ -76,16 +76,20 @@ export const tabList = [
 
 **图标示例**：
 ```vue
+<template>
 <view class="tab-icon">
   <!-- 未选中：线性图标 -->
   <text class="iconfont icon-home-line"></text>
 </view>
+</template>
+
+
 ```
 
 ### 风格2：活力填充
 
 ```scss
---bg-color: #FFFFFF;
+----bg-color: #FFFFFF;
 --text-color: #666666;
 --text-active: #FF6B6B;
 --active-bg: #FFF0F0;
@@ -103,16 +107,20 @@ export const tabList = [
 
 **图标示例**：
 ```vue
+<template>
 <view class="tab-icon" :class="{ active: active }">
   <!-- 选中：填充图标 -->
   <text class="iconfont icon-home-fill"></text>
 </view>
+</template>
+
+
 ```
 
 ### 风格3：高端暗金
 
 ```scss
---bg-color: #1A1A2E;
+----bg-color: #1A1A2E;
 --text-color: #666666;
 --text-active: #D4AF37;
 --icon-active: #D4AF37;
@@ -129,7 +137,7 @@ export const tabList = [
 ### 风格4：清新圆角
 
 ```scss
---bg-color: #F0F9F6;
+----bg-color: #F0F9F6;
 --text-color: #666666;
 --text-active: #2ECC71;
 --bg-card: #FFFFFF;
@@ -147,7 +155,7 @@ export const tabList = [
 ### 风格5：暗黑科技
 
 ```scss
---bg-color: #0D0D0D;
+----bg-color: #0D0D0D;
 --text-color: #666666;
 --text-active: #00FFFF;
 --icon-active: #00FFFF;
@@ -307,6 +315,7 @@ uni.getSystemInfo({
 ## Mock数据
 
 ```json
+{
 {
   "tabList": [
     {

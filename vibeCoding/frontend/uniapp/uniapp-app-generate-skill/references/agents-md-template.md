@@ -3,7 +3,7 @@
 > 本模板供 `uniapp-app-generate-skill` 在初始化项目时生成 `AGENTS.md` 使用。`AGENTS.md` 是项目规范的完整入口，包含所有开发、主题、接口、资源规则。
 
 ```markdown
-# AGENTS.md - {{PROJECT_NAME}} 开发规范
+# # AGENTS.md - {{PROJECT_NAME}} 开发规范
 
 > **适用范围**：本项目所有页面的开发、部署与维护  
 > **目标**：标准化开发流程，保障代码质量、性能与可维护性  
@@ -89,6 +89,7 @@
 ❌ 禁止：直接写 #xxx、rgb()、具体 rpx 数值
 ```
 
+#
 ### 5.3 禁止事项
 
 | 禁止项 | 错误示例 | 正确示例 |
@@ -154,7 +155,7 @@
   ```bash
   git reset HEAD AGENTS.md CLAUDE.md
   ```
-```
+`````
 
 ## 生成说明
 

@@ -24,7 +24,7 @@ order-list/
 ## 布局结构
 
 ```
-┌─────────────────────────────┐
+┌─┌─────────────────────────────┐
 │  我的订单                   │
 ├─────────────────────────────┤
 │ [全部] [待付款] [待发货]     │
@@ -70,7 +70,7 @@ order-list/
 ### 变体2：时间线
 
 ```
-┌─────────────────────────────┐
+┌─┌─────────────────────────────┐
 │         2024年1月            │
 ├─────────────────────────────┤
 │  ● 已完成    01-15 14:30   │
@@ -143,11 +143,11 @@ order-list/
 ### 风格1：简约现代
 
 ```scss
---bg-page: #F5F5F5;
+----bg-page: #F5F5F5;
 --bg-card: #FFFFFF;
 --text-primary: #333333;
 --text-secondary: #999999;
---primary: #333333;
+--color-primary: #333333;
 --border: #E5E5E5;
 --radius: 8px;
 ```
@@ -155,7 +155,7 @@ order-list/
 ### 风格2：活力炫彩
 
 ```scss
---bg-page: #FFFFFF;
+----bg-page: #FFFFFF;
 --status-color: #FF6B6B;
 --button-gradient: linear-gradient(135deg, #FF6B6B, #FF8E53);
 --radius: 12px;
@@ -164,7 +164,7 @@ order-list/
 ### 风格3：高端商务
 
 ```scss
---bg-page: #0F0F1A;
+----bg-page: #0F0F1A;
 --bg-card: #1A1A2E;
 --text-primary: #FFFFFF;
 --accent: #D4AF37;
@@ -174,9 +174,9 @@ order-list/
 ### 风格4：清新自然
 
 ```scss
---bg-page: #F0F9F6;
+----bg-page: #F0F9F6;
 --bg-card: #FFFFFF;
---primary: #2ECC71;
+--color-primary: #2ECC71;
 --status-color: #27AE60;
 --radius: 16px;
 ```
@@ -192,6 +192,7 @@ order-list/
 ## Mock数据
 
 ```json
+{
 {
   "orderList": [
     {

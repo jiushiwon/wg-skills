@@ -205,7 +205,7 @@ $theme-dark-enabled: true;
 ### 4.1 字号阶梯
 
 ```scss
-$font-size-xs: $theme-font-size-base * 10;   // 20rpx — 辅助文字
+$f$font-size-xs: $theme-font-size-base * 10;   // 20rpx — 辅助文字
 $font-size-sm: $theme-font-size-base * 12;   // 24rpx — 标签、说明
 $font-size-md: $theme-font-size-base * 14;   // 28rpx — 正文、列表
 $font-size-lg: $theme-font-size-base * 16;   // 32rpx — 标题、按钮
@@ -217,7 +217,7 @@ $font-size-xxxl: $theme-font-size-base * 24; // 48rpx — 特殊场景（营销�
 ### 4.2 行高
 
 ```scss
-$line-height-tight: 1.2;    // 标题
+$l$line-height-tight: 1.2;    // 标题
 $line-height-normal: 1.5;   // 正文
 $line-height-relaxed: 1.8;  // 长文本、说明
 ```
@@ -225,7 +225,7 @@ $line-height-relaxed: 1.8;  // 长文本、说明
 ### 4.3 字重
 
 ```scss
-$font-weight-normal: 400;
+$f$font-weight-normal: 400;
 $font-weight-medium: 500;
 $font-weight-semibold: 600;
 $font-weight-bold: 700;
@@ -234,7 +234,7 @@ $font-weight-bold: 700;
 ### 4.4 字体家族
 
 ```scss
-$font-family-base: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+$f$font-family-base: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
                    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
                    "Segoe UI", Roboto, sans-serif;
 $font-family-number: "DIN Alternate", "Helvetica Neue", Arial, sans-serif;
@@ -306,10 +306,14 @@ $font-family-number: "DIN Alternate", "Helvetica Neue", Arial, sans-serif;
 
 使用示例：
 ```vue
+<template>
 <text class="text-h1">页面标题</text>
 <text class="text-h2">区块标题</text>
 <text class="text-body">正文内容正文内容...</text>
 <text class="text-caption">2024-01-01</text>
+</template>
+
+
 ```
 
 ---
@@ -319,7 +323,7 @@ $font-family-number: "DIN Alternate", "Helvetica Neue", Arial, sans-serif;
 基于 `$theme-spacing-base: 4rpx` 的间距阶梯：
 
 ```scss
-$spacing-0: 0;
+$s$spacing-0: 0;
 $spacing-1: $theme-spacing-base * 1;    // 4rpx  — 极小间距
 $spacing-2: $theme-spacing-base * 2;    // 8rpx  — 紧凑间距
 $spacing-3: $theme-spacing-base * 3;    // 12rpx — 常规内边距
@@ -388,7 +392,7 @@ $page-gutter: $spacing-8;  // 页面左右外边距，全局唯一
 #### 使用方式
 
 ```vue
-<!-- ✅ 正确：全页面统一 -->
+<!--  正确：全页面统一 -->
 <template>
   <view class="page">
     <!-- 顶部区域：左右统一边距 -->
@@ -418,7 +422,7 @@ $page-gutter: $spacing-8;  // 页面左右外边距，全局唯一
 ```
 
 ```vue
-<!-- ❌ 错误：各自为政 -->
+<!--  错误：各自为政 -->
 <template>
   <view class="page">
     <view style="padding: 0 32rpx">...</view>
@@ -431,15 +435,15 @@ $page-gutter: $spacing-8;  // 页面左右外边距，全局唯一
 #### 视觉对比
 
 ```
-❌ 各模块边距不一致                     ✅ 统一 Page Gutter
+❌  各模块边距不一致                      统一 Page Gutter
 ┌──────────────────────────┐           ┌──────────────────────────┐
-│  ← 32rpx  [标题]  32rpx →│           │  ← 32rpx  [标题]  32rpx →│
+│   32rpx  [标题]  32rpx │           │   32rpx  [标题]  32rpx │
 ├──────────────────────────┤           ├──────────────────────────┤
-│← 24rpx [卡片A] 24rpx    →│           │  ← 32rpx  [卡片A] 32rpx →│
+│ 24rpx [卡片A] 24rpx    │           │   32rpx  [卡片A] 32rpx │
 ├──────────────────────────┤           ├──────────────────────────┤
-│←40rpx→ [Banner]  ←40rpx→│           │  ← 32rpx [Banner] 32rpx →│
+│40rpx [Banner]  40rpx│           │   32rpx [Banner] 32rpx │
 ├──────────────────────────┤           ├──────────────────────────┤
-│   ← 32rpx [列表]  32rpx →│           │  ← 32rpx  [列表]  32rpx →│
+│    32rpx [列表]  32rpx │           │   32rpx  [列表]  32rpx │
 └──────────────────────────┘           └──────────────────────────┘
 ```
 
@@ -497,7 +501,7 @@ $section-margin: $spacing-4;    // 模块间距，全局唯一
 #### 使用方式
 
 ```vue
-<!-- ✅ 正确：所有模块统一用 .section -->
+<!--  正确：所有模块统一用 .section -->
 <template>
   <view class="page">
     <CustomNavbar title="页面标题" />
@@ -533,7 +537,7 @@ $section-margin: $spacing-4;    // 模块间距，全局唯一
 ```
 
 ```vue
-<!-- ❌ 错误：各模块各自为政 -->
+<!--  错误：各模块各自为政 -->
 <template>
   <view class="page">
     <view style="margin: 24rpx 32rpx; padding: 24rpx">...</view>
@@ -566,29 +570,29 @@ $section-margin: $spacing-4;    // 模块间距，全局唯一
 以下是从深到浅的完整色阶一览：
 
 ```
-深度          文字色（前层）           背景色（底层）          边框/分割
+深度深度          文字色（前层）           背景色（底层）          边框/分割
 
-最重   $color-text-primary    #2b2e31  ← 正文标题
-         ↓ 混入 30% 白色
-       $color-text-secondary  #5b6167  ← 副标题说明
-         ↓ 混入 50% 白色
-       $color-text-tertiary   #737a82  ← 时间戳辅助信息
-         ↓ 混入 70% 白色
-最轻   $color-text-disabled   #b5b9bf  ← 禁用占位符
+最重   $color-text-primary    #2b2e31   正文标题
+          混入 30% 白色
+       $color-text-secondary  #5b6167   副标题说明
+          混入 50% 白色
+       $color-text-tertiary   #737a82   时间戳辅助信息
+          混入 70% 白色
+最轻   $color-text-disabled   #b5b9bf   禁用占位符
 
-       $color-text-inverse    #ffffff  ← 深色底反白（不参与派生）
-       $color-text-link       #3498db  ← 链接色（不参与派生）
-
-
-最亮   $color-bg-primary      #ffffff  ← 卡片/弹窗/列表项
-         ↓
-       $color-bg-secondary    #fafafa  ← 页面底色
-         ↓
-最暗   $color-bg-tertiary     #f5f5f5  ← 输入框/skeleton/未激活
+       $color-text-inverse    #ffffff   深色底反白（不参与派生）
+       $color-text-link       #3498db   链接色（不参与派生）
 
 
-       $color-border          #e5e7eb  ← 分割线/卡片边框
-       $color-border-light    #f0f0f0  ← 弱分割（列表项间）
+最亮   $color-bg-primary      #ffffff   卡片/弹窗/列表项
+         
+       $color-bg-secondary    #fafafa   页面底色
+         
+最暗   $color-bg-tertiary     #f5f5f5   输入框/skeleton/未激活
+
+
+       $color-border          #e5e7eb   分割线/卡片边框
+       $color-border-light    #f0f0f0   弱分割（列表项间）
 ```
 
 **核心理念**：
@@ -632,7 +636,7 @@ $color-text-link: #3498db;                               // 链接色
 ### 6.2 背景颜色
 
 ```scss
-$color-bg-primary: #ffffff;
+$c$color-bg-primary: #ffffff;
 $color-bg-secondary: #fafafa;
 $color-bg-tertiary: #f5f5f5;
 $color-bg-warm: #fff8e1;
@@ -644,7 +648,7 @@ $color-bg-mask: rgba(0, 0, 0, 0.6);
 ### 6.3 功能色
 
 ```scss
-$color-success: $theme-success;
+$c$color-success: $theme-success;
 $color-warning: $theme-warning;
 $color-error: $theme-error;
 $color-info: $theme-info;
@@ -653,7 +657,7 @@ $color-info: $theme-info;
 ### 6.4 边框
 
 ```scss
-$color-border: #e5e7eb;
+$c$color-border: #e5e7eb;
 $color-border-light: #f0f0f0;
 $border-width-base: 2rpx;
 ```
@@ -661,7 +665,7 @@ $border-width-base: 2rpx;
 ### 6.5 圆角
 
 ```scss
-$radius-none: 0;
+$r$radius-none: 0;
 $radius-small: $theme-radius-base;        // 8rpx  — 标签、小按钮
 $radius-medium: $theme-radius-base * 2;   // 16rpx — 卡片、弹窗
 $radius-large: $theme-radius-base * 3;    // 24rpx — 大卡片
@@ -682,7 +686,7 @@ $radius-circle: 50%;                      // 圆形（头像）
 ### 6.6 阴影
 
 ```scss
-$shadow-sm: 0 2rpx 4rpx rgba(0, 0, 0, 0.06);
+$s$shadow-sm: 0 2rpx 4rpx rgba(0, 0, 0, 0.06);
 $shadow-md: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
 $shadow-lg: 0 8rpx 24rpx rgba(0, 0, 0, 0.12);
 $shadow-none: none;
@@ -691,7 +695,7 @@ $shadow-none: none;
 ### 6.7 Z 层级
 
 ```scss
-$z-base: 0;         // 默认内容层
+$z$z-base: 0;         // 默认内容层
 $z-dropdown: 100;   // 下拉菜单
 $z-sticky: 200;     // 吸顶元素
 $z-overlay: 300;    // 蒙层
@@ -704,7 +708,7 @@ $z-max: 999;        // 最高层（loading 全屏遮罩）
 ### 6.8 使用方式
 
 ```scss
-.my-component {
+.m.my-component {
   background: $color-bg-primary;
   color: $color-text-primary;
   font-size: $font-size-md;
@@ -745,7 +749,7 @@ $btn-padding-small: 0 $spacing-6;
 #### 卡片 Card
 
 ```scss
-$card-padding: $spacing-6;
+$c$card-padding: $spacing-6;
 $card-radius: $radius-medium;
 $card-header-padding: $spacing-6 $spacing-6 0;
 $card-footer-padding: 0 $spacing-6 $spacing-6;
@@ -754,7 +758,7 @@ $card-footer-padding: 0 $spacing-6 $spacing-6;
 #### 弹窗 Modal
 
 ```scss
-$modal-radius: $radius-medium;
+$m$modal-radius: $radius-medium;
 $modal-width-ratio: 0.8;
 $modal-max-height: 70%;
 $modal-header-padding: $spacing-6 $spacing-8 0;
@@ -766,7 +770,7 @@ $modal-close-size: 48rpx;
 #### 输入框 Input
 
 ```scss
-$input-height: 96rpx;
+$i$input-height: 96rpx;
 $input-padding: 0 $spacing-6;
 $input-font-size: $font-size-md;
 $input-icon-size: 40rpx;
@@ -776,7 +780,7 @@ $input-clear-size: 36rpx;
 #### 导航栏 NavBar
 
 ```scss
-$navbar-back-icon-size: 48rpx;
+$n$navbar-back-icon-size: 48rpx;
 $navbar-back-hit-area: 60rpx;
 $navbar-title-font-size: $font-size-lg;
 $navbar-title-font-weight: $font-weight-semibold;
@@ -785,7 +789,7 @@ $navbar-title-font-weight: $font-weight-semibold;
 #### 弹出层 Popup
 
 ```scss
-$popup-content-padding: $spacing-6 $spacing-8;
+$p$popup-content-padding: $spacing-6 $spacing-8;
 $popup-header-padding: $spacing-6 $spacing-8;
 $popup-footer-padding: $spacing-4 $spacing-8;
 $popup-right-width: 80%;
@@ -795,7 +799,7 @@ $popup-close-size: 48rpx;
 #### 底部固定按钮 Fixed Bottom Button
 
 ```scss
-$btn-fixed-height: 96rpx;
+$b$btn-fixed-height: 96rpx;
 $btn-fixed-bottom-offset: $spacing-8;
 $btn-fixed-radius: $radius-round;
 $btn-fixed-font-size: $font-size-lg;
@@ -804,7 +808,7 @@ $btn-fixed-font-size: $font-size-lg;
 #### 头像 Avatar
 
 ```scss
-$avatar-size-sm: 64rpx;
+$a$avatar-size-sm: 64rpx;
 $avatar-size-md: 96rpx;
 $avatar-size-lg: 128rpx;
 ```
@@ -812,14 +816,14 @@ $avatar-size-lg: 128rpx;
 #### 空状态/错误态 Empty / ErrorState
 
 ```scss
-$empty-icon-size: 240rpx;
+$e$empty-icon-size: 240rpx;
 $empty-text-margin-top: $spacing-6;
 ```
 
 #### 加载指示器 Loading
 
 ```scss
-$loading-spinner-size: 64rpx;
+$l$loading-spinner-size: 64rpx;
 $loading-spinner-border: 4rpx;
 $loading-content-padding: $spacing-8 $spacing-10;
 ```
@@ -827,7 +831,7 @@ $loading-content-padding: $spacing-8 $spacing-10;
 #### 骨架屏 Skeleton
 
 ```scss
-$skeleton-row-height: 32rpx;
+$s$skeleton-row-height: 32rpx;
 $skeleton-row-radius: $radius-small;
 $skeleton-row-gap: $spacing-4;
 $skeleton-padding: $spacing-6;
@@ -839,7 +843,7 @@ $skeleton-avatar-size-md: 96rpx;
 #### 表单控件 Checkbox / Radio / Switch
 
 ```scss
-$control-size: 40rpx;
+$c$control-size: 40rpx;
 $control-hit-min: 88rpx;
 $control-gap: $spacing-4;
 ```
@@ -847,7 +851,7 @@ $control-gap: $spacing-4;
 #### 分割线 Divider
 
 ```scss
-$divider-color: $color-border-light;
+$d$divider-color: $color-border-light;
 $divider-height: 1px;
 $divider-margin: $section-margin 0;
 ```
@@ -855,7 +859,7 @@ $divider-margin: $section-margin 0;
 #### 徽标 Badge / Tag
 
 ```scss
-$badge-dot-size: 16rpx;
+$b$badge-dot-size: 16rpx;
 $badge-number-min-width: 32rpx;
 $tag-padding: 2rpx $spacing-2;
 $tag-font-size: $font-size-xs;
@@ -864,7 +868,7 @@ $tag-font-size: $font-size-xs;
 #### 列表项 ListItem
 
 ```scss
-$list-item-min-height: 96rpx;
+$l$list-item-min-height: 96rpx;
 $list-item-padding: $spacing-5 $page-gutter;
 $list-item-icon-size: 48rpx;
 ```
@@ -872,13 +876,13 @@ $list-item-icon-size: 48rpx;
 #### 使用对比
 
 ```scss
-// ❌ 组件内写死值 — 25 个页面可能写出 25 种按钮高度
+//  组件内写死值 — 25 个页面可能写出 25 种按钮高度
 .btn {
   height: 96rpx;
   border-radius: 48rpx;
 }
 
-// ✅ 引用组件级 Token — 全局一致，改一处全部联动
+//  引用组件级 Token — 全局一致，改一处全部联动
 .btn {
   height: $btn-height-normal;
   border-radius: $btn-radius-normal;
@@ -935,7 +939,7 @@ $color-primary-900: shade($theme-primary, 60%);
 ### 7.3 布局混入
 
 ```scss
-@mixin flex-center {
+@m@mixin flex-center {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -962,7 +966,7 @@ $color-primary-900: shade($theme-primary, 60%);
 ### 7.4 文本混入
 
 ```scss
-@mixin text-ellipsis {
+@m@mixin text-ellipsis {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -979,7 +983,7 @@ $color-primary-900: shade($theme-primary, 60%);
 ### 7.5 卡片混入
 
 ```scss
-@mixin card-container {
+@m@mixin card-container {
   margin: $spacing-4 $spacing-8;
   background-color: $color-bg-primary;
   border-radius: $radius-medium;
@@ -991,7 +995,7 @@ $color-primary-900: shade($theme-primary, 60%);
 ### 7.6 安全区混入
 
 ```scss
-@mixin safe-area-bottom {
+@m@mixin safe-area-bottom {
   padding-bottom: constant(safe-area-inset-bottom);
   padding-bottom: env(safe-area-inset-bottom);
 }
@@ -1005,7 +1009,7 @@ $color-primary-900: shade($theme-primary, 60%);
 ### 7.7 1px 细线边框
 
 ```scss
-@mixin hairline($color: $color-border, $direction: all) {
+@m@mixin hairline($color: $color-border, $direction: all) {
   position: relative;
 
   &::after {
@@ -1057,7 +1061,7 @@ $color-primary-900: shade($theme-primary, 60%);
 ### 8.1 时长 Token
 
 ```scss
-$transition-duration-fast: 150ms;    // 微交互（hover、active）
+$t$transition-duration-fast: 150ms;    // 微交互（hover、active）
 $transition-duration-normal: 250ms;  // 常规过渡（展开、收起）
 $transition-duration-slow: 400ms;    // 大型动画（弹窗出入、页面切换）
 ```
@@ -1065,7 +1069,7 @@ $transition-duration-slow: 400ms;    // 大型动画（弹窗出入、页面切�
 ### 8.2 缓动曲线
 
 ```scss
-$ease-in: cubic-bezier(0.4, 0, 1, 1);
+$e$ease-in: cubic-bezier(0.4, 0, 1, 1);
 $ease-out: cubic-bezier(0, 0, 0.2, 1);
 $ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
 $ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -1074,7 +1078,7 @@ $ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 ### 8.3 使用示例
 
 ```scss
-.card {
+.c.card {
   transition: transform $transition-duration-normal $ease-out,
               box-shadow $transition-duration-normal $ease-out;
 
@@ -1180,6 +1184,7 @@ $ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 #### 使用示例
 
 ```vue
+<template>
 <!-- 列表项逐项飞入 -->
 <view
   v-for="(item, index) in list"
@@ -1194,6 +1199,9 @@ $ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 <view class="animate-scale-in" style="animation-delay: 100ms">
   <text class="text-h2">操作成功</text>
 </view>
+</template>
+
+
 ```
 
 ### 8.4.1 导入与触发方式
@@ -1208,7 +1216,7 @@ $ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 @import './tokens/semantic';
 @import './functions';
 @import './mixins';
-@import './animations';  // ← 最后一行
+@import './animations';  //  最后一行
 ```
 
 > 如果 `vite.config.ts` 已配 `additionalData: '@use "@/styles/variables.scss" as *;'`，则无需额外操作，所有组件和页面自动可用。
@@ -1640,7 +1648,7 @@ function onClick() {
       <view v-if="title || showClose" class="modal-header">
         <text class="modal-title">{{ title }}</text>
         <view v-if="showClose" class="modal-close" @click="onClose">
-          <text class="icon-close">✕</text>
+          <text class="icon-close"></text>
         </view>
       </view>
       <scroll-view v-if="scrollable" scroll-y class="modal-scroll">
@@ -1856,8 +1864,8 @@ const leaving = ref(false)
 let timer: ReturnType<typeof setTimeout> | null = null
 
 const iconMap: Record<string, string> = {
-  success: '✓',
-  error: '✕',
+  success: '',
+  error: '',
   warning: '!',
   info: 'i',
 }
@@ -2004,7 +2012,7 @@ function onSave() {
       @confirm="onConfirm"
     />
     <view v-if="clearable && modelValue && !disabled" class="input-clear" @click="onClear">
-      <text class="clear-icon">✕</text>
+      <text class="clear-icon"></text>
     </view>
     <image v-if="suffixIcon" :src="suffixIcon" class="input-suffix" mode="aspectFit" @click="$emit('suffixClick')" />
   </view>
@@ -2544,6 +2552,7 @@ withDefaults(defineProps<Props>(), {
 除基础文本行外，骨架屏支持以下变体，覆盖常见占位场景：
 
 ```vue
+<template>
 <!-- 圆形占位（头像） -->
 <view
   class="skeleton-circle animate-shimmer"
@@ -2580,6 +2589,9 @@ withDefaults(defineProps<Props>(), {
     <view class="skeleton-row animate-shimmer" :style="{ width: '90%' }" />
   </view>
 </view>
+</template>
+
+
 ```
 
 ##### 使用示例
@@ -2593,7 +2605,7 @@ withDefaults(defineProps<Props>(), {
     </view>
   </Skeleton>
 
-  <!-- 用户卡片骨架屏 → 真实内容 -->
+  <!-- 用户卡片骨架屏  真实内容 -->
   <template v-if="isLoading">
     <view class="skeleton-card flex gap-4 p-6">
       <view class="skeleton-circle animate-shimmer"
@@ -2782,7 +2794,7 @@ function onRetry() {
         <slot name="header">
           <text class="popup-title">{{ title }}</text>
           <view v-if="showClose" class="popup-close" @click="onClose">
-            <text class="icon-close">✕</text>
+            <text class="icon-close"></text>
           </view>
         </slot>
       </view>
@@ -3119,7 +3131,7 @@ function onAnimationEnd() {
 ```
 
 ```scss
-.list-item {
+.l.list-item {
   display: flex;
   align-items: center;
   padding: $spacing-5 $page-gutter;
@@ -3140,7 +3152,7 @@ function onAnimationEnd() {
 ### 10.12 Avatar 头像
 
 ```scss
-.avatar {
+.a.avatar {
   flex-shrink: 0;
   border-radius: $radius-circle;
   overflow: hidden;
@@ -3188,7 +3200,7 @@ $control-border: $color-border;
 ### 10.14 Grid 宫格
 
 ```scss
-.grid {
+.g.grid {
   display: flex;
   flex-wrap: wrap;
 
@@ -3244,7 +3256,7 @@ function onLoad() { /* loaded */ }
 ```
 
 ```scss
-.img {
+.i.img {
   background: $color-bg-tertiary;
   &-cover { width: 100%; height: 100%; object-fit: cover; }
   &-contain { width: 100%; height: 100%; object-fit: contain; }
@@ -3392,7 +3404,7 @@ export function useNavBarHeight() {
 ### 13.2 底部安全区
 
 ```scss
-@mixin safe-area-bottom {
+@m@mixin safe-area-bottom {
   padding-bottom: constant(safe-area-inset-bottom);
   padding-bottom: env(safe-area-inset-bottom);
 }
@@ -3433,10 +3445,10 @@ export const pxToRpx = (px: number) => (px * 750) / screenWidth
 **局部滚动** — 必须用 `<scroll-view>` 时，padding/margin 永远加在直系子元素上，否则右侧会被滚动条吃掉：
 
 ```vue
-<!-- ❌ -->
+<!--  -->
 <scroll-view scroll-y style="padding: 0 32rpx">
 
-<!-- ✅ -->
+<!--  -->
 <scroll-view scroll-y>
   <view class="scroll-inner">
     ...
@@ -3611,6 +3623,7 @@ export function useCapsuleLayout(): CapsuleLayout {
 #### 不同内容类型的对齐
 
 ```vue
+<template>
 <!-- 纯标题 -->
 <view class="navbar-center">
   <text class="navbar-title">页面标题</text>
@@ -3633,6 +3646,9 @@ export function useCapsuleLayout(): CapsuleLayout {
   <text class="navbar-title">主标题</text>
   <text class="navbar-subtitle">副标题</text>
 </view>
+</template>
+
+
 ```
 
 #### 常见错误
@@ -3650,6 +3666,7 @@ export function useCapsuleLayout(): CapsuleLayout {
 
 **`pages.json`**：
 ```json
+{
 {
   "globalStyle": {
     "navigationStyle": "custom"
@@ -3688,6 +3705,7 @@ export function useCapsuleLayout(): CapsuleLayout {
 
 **`pages.json`**：
 ```json
+{
 {
   "tabBar": {
     "custom": true,
@@ -3769,18 +3787,18 @@ page {
   -webkit-font-smoothing: antialiased;
 
   // CSS 变量桥接（供深色模式覆盖）
-  --color-bg-primary: #{$color-bg-primary};
-  --color-bg-secondary: #{$color-bg-secondary};
-  --color-text-primary: #{$color-text-primary};
-  --color-text-secondary: #{$color-text-secondary};
+  --bg-page: #{$color-bg-primary};
+  --bg-light: #{$color-bg-secondary};
+  --text-primary: #{$color-text-primary};
+  --text-secondary: #{$color-text-secondary};
 }
 
 @media (prefers-color-scheme: dark) {
   page {
-    --color-bg-primary: #1a1a2e;
-    --color-bg-secondary: #16213e;
-    --color-text-primary: #e4e6eb;
-    --color-text-secondary: #b0b3b8;
+    --bg-page: #1a1a2e;
+    --bg-light: #16213e;
+    --text-primary: #e4e6eb;
+    --text-secondary: #b0b3b8;
   }
 }
 ```
@@ -3800,9 +3818,9 @@ page {
 ### 14.3 组件中适配
 
 ```scss
-.my-page {
-  background: var(--color-bg-primary, $color-bg-primary);
-  color: var(--color-text-primary, $color-text-primary);
+.m.my-page {
+  background: var(--bg-page, #fafafa);
+  color: var(--text-primary, #171717);
 }
 ```
 
@@ -3828,20 +3846,20 @@ page {
 
 ```
 Phase 1: 扫描范围确认
-  → 全量项目 or 仅指定目录/页面
-  → 排除 node_modules / uni_modules / .git
+   全量项目 or 仅指定目录/页面
+   排除 node_modules / uni_modules / .git
 
 Phase 2: 逐条扫描 D01-D34
-  → 对每个文件逐条检查，记录违规位置、当前值、建议替换值
-  → 自动扫描 21 条（✅/⚡/🔧），人工审查 13 条（👁️）
+   对每个文件逐条检查，记录违规位置、当前值、建议替换值
+   自动扫描 21 条（//工具），人工审查 13 条（）
 
 Phase 3: 输出审计报告
-  → 按 P0/P1/P2 分级，统计各维度违规数量
-  → 输出 design-audit-report.md
+   按 P0/P1/P2 分级，统计各维度违规数量
+   输出 design-audit-report.md
 
 Phase 4（可选）: 自动修复
-  → 用户逐条确认 or 一键全部修复
-  → 仅替换 SCSS/CSS 中的硬编码值为 Token 变量
+   用户逐条确认 or 一键全部修复
+   仅替换 SCSS/CSS 中的硬编码值为 Token 变量
 ```
 
 ### 15.3 扫描规则与修复映射
@@ -3851,7 +3869,7 @@ Phase 4（可选）: 自动修复
 **扫描**：匹配 `#` 开头的十六进制颜色值或 `rgb()/rgba()`。
 
 ```bash
-rg "#[0-9a-fA-F]{3,8}\b|rgba?\s*\(" --glob "*.{vue,scss,css}" -n
+rgrg "#[0-9a-fA-F]{3,8}\b|rgba?\s*\(" --glob "*.{vue,scss,css}" -n
 ```
 
 **修复映射**（自动替换为语义变量）：
@@ -3880,7 +3898,7 @@ rg "#[0-9a-fA-F]{3,8}\b|rgba?\s*\(" --glob "*.{vue,scss,css}" -n
 **扫描**：匹配 CSS 中的 `font-size: Xrpx`。
 
 ```bash
-rg "font-size:\s*\d+rpx" --glob "*.{vue,scss,css}" -n
+rgrg "font-size:\s*\d+rpx" --glob "*.{vue,scss,css}" -n
 ```
 
 **修复映射**：
@@ -3901,7 +3919,7 @@ rg "font-size:\s*\d+rpx" --glob "*.{vue,scss,css}" -n
 **扫描**：匹配 `padding` / `margin` / `gap` 中的 rpx 值（排除 0 和 auto）。
 
 ```bash
-rg "(padding|margin|gap):\s*[^;]*\d+rpx" --glob "*.{vue,scss,css}" -n
+rgrg "(padding|margin|gap):\s*[^;]*\d+rpx" --glob "*.{vue,scss,css}" -n
 ```
 
 **修复映射**：
@@ -3925,7 +3943,7 @@ rg "(padding|margin|gap):\s*[^;]*\d+rpx" --glob "*.{vue,scss,css}" -n
 **扫描**：匹配 `border-radius` 后的 rpx 值。
 
 ```bash
-rg "border-radius:\s*\d+rpx" --glob "*.{vue,scss,css}" -n
+rgrg "border-radius:\s*\d+rpx" --glob "*.{vue,scss,css}" -n
 ```
 
 **修复映射**：
@@ -3944,7 +3962,7 @@ rg "border-radius:\s*\d+rpx" --glob "*.{vue,scss,css}" -n
 **扫描**：匹配 `z-index: 数字`。
 
 ```bash
-rg "z-index:\s*\d+" --glob "*.{vue,scss,css}" -n
+rgrg "z-index:\s*\d+" --glob "*.{vue,scss,css}" -n
 ```
 
 **修复映射**：
@@ -3965,7 +3983,7 @@ rg "z-index:\s*\d+" --glob "*.{vue,scss,css}" -n
 **扫描**：匹配 `<style lang="scss">` 没有 `scoped` 属性。
 
 ```bash
-rg "<style\s+lang=\"scss\"\s*>" --glob "components/**/*.vue" -n
+rgrg "<style\s+lang=\"scss\"\s*>" --glob "components/**/*.vue" -n
 ```
 
 **修复**：自动追加 `scoped` → `<style lang="scss" scoped>`
@@ -3975,7 +3993,7 @@ rg "<style\s+lang=\"scss\"\s*>" --glob "components/**/*.vue" -n
 **扫描**：在同一 `.vue` 或 `.scss` 文件中检测缩进深度 ≥ 4 层（每层缩进 2 空格）。
 
 ```bash
-rg "^\s{8,}[&.]" --glob "*.{vue,scss}" -n
+rgrg "^\s{8,}[&.]" --glob "*.{vue,scss}" -n
 ```
 
 **修复**：无法自动修复，仅输出警告，建议人工改造。
@@ -3985,7 +4003,7 @@ rg "^\s{8,}[&.]" --glob "*.{vue,scss}" -n
 **扫描**：匹配 `transition-property` 或 `transition:` 中包含 `width`/`height`/`left`/`top`/`margin`/`padding`/`background` 等触发重排的属性。
 
 ```bash
-rg "transition(?:-property)?:\s*[^;]*\b(width|height|left|top|margin|padding|background-color)\b" --glob "*.{vue,scss,css}" -n
+rgrg "transition(?:-property)?:\s*[^;]*\b(width|height|left|top|margin|padding|background-color)\b" --glob "*.{vue,scss,css}" -n
 ```
 
 **修复**：仅输出警告，建议替换为 `transform` + `opacity`。
@@ -3995,17 +4013,17 @@ rg "transition(?:-property)?:\s*[^;]*\b(width|height|left|top|margin|padding|bac
 **扫描**：检测页面级组件中直接使用 `$color-bg-primary: #ffffff` 等 SCSS 变量，但未用 `var(--*)` 包装。
 
 ```bash
-rg "background:\s*\$color-bg-" --glob "pages/**/*.vue" -n
+rgrg "background:\s*\$color-bg-" --glob "pages/**/*.vue" -n
 ```
 
-**修复**：`background: $color-bg-primary` → `background: var(--color-bg-primary, $color-bg-primary)`
+**修复**：`background: $color-bg-primary` → `background: var(--bg-page, #fafafa)`
 
 #### D11 — 全页滚动禁止 scroll-view
 
 **扫描**：检测 `pages/` 目录下的 `.vue` 文件中是否在页面级使用了 `<scroll-view scroll-y>`。
 
 ```bash
-rg "<scroll-view\s+scroll-y" --glob "pages/**/*.vue" -n
+rgrg "<scroll-view\s+scroll-y" --glob "pages/**/*.vue" -n
 ```
 
 **修复**：页面级滚动删除 `<scroll-view>` 包裹，走 page 原生流；仅局部滚动场景保留。
@@ -4017,7 +4035,7 @@ rg "<scroll-view\s+scroll-y" --glob "pages/**/*.vue" -n
 **扫描**：检测 Popup 组件中是否缺少 `@keyframes` 或 `animation` 声明，或显式设为 `animation: none`。
 
 ```bash
-rg "@keyframes" --glob "components/**/Popup/**/*.vue" -n
+rgrg "@keyframes" --glob "components/**/Popup/**/*.vue" -n
 rg "animation:\s*none\b" --glob "components/**/Popup/**/*.vue" -n
 ```
 
@@ -4030,7 +4048,7 @@ rg "animation:\s*none\b" --glob "components/**/Popup/**/*.vue" -n
 **扫描**：检测页面中 `position: fixed` + `bottom` 的元素是否未使用 `.btn-fixed-bottom` 类。
 
 ```bash
-rg "position:\s*fixed" --glob "pages/**/*.vue" -n
+rgrg "position:\s*fixed" --glob "pages/**/*.vue" -n
 ```
 
 **修复**：替换为 `.btn-fixed-bottom` 或 `.btn-fixed-bottom-double` 公共类。
@@ -4042,7 +4060,7 @@ rg "position:\s*fixed" --glob "pages/**/*.vue" -n
 **扫描**：检测裸写 `font-size: Xrpx` 且未使用 `.text-h1`~`.text-h4`、`.text-body`、`.text-caption` 预设类。
 
 ```bash
-rg "font-size:\s*\d+rpx" --glob "*.{vue,scss}" -n
+rgrg "font-size:\s*\d+rpx" --glob "*.{vue,scss}" -n
 ```
 
 **修复**：替换为对应预设类。映射关系：
@@ -4060,7 +4078,7 @@ rg "font-size:\s*\d+rpx" --glob "*.{vue,scss}" -n
 **扫描**：检测交互元素（按钮、图标、列表项）中 `width`/`height` < 88rpx 的声明。
 
 ```bash
-rg "(width|height):\s*([1-9]|[1-7]\d|8[0-7])rpx" --glob "*.{vue,scss}" -n
+rgrg "(width|height):\s*([1-9]|[1-7]\d|8[0-7])rpx" --glob "*.{vue,scss}" -n
 ```
 
 **修复**：撑大到 ≥ 88rpx 或通过 padding 扩大点击区。
@@ -4072,7 +4090,7 @@ rg "(width|height):\s*([1-9]|[1-7]\d|8[0-7])rpx" --glob "*.{vue,scss}" -n
 **扫描**：检测 `<image>` 标签缺少 `mode` 属性或 `@error` 处理器。
 
 ```bash
-rg "<image\s" --glob "*.vue" -n
+rgrg "<image\s" --glob "*.vue" -n
 ```
 
 **修复**：添加 `mode="aspectFill"` + `@error="onError"` + 占位图。
@@ -4084,7 +4102,7 @@ rg "<image\s" --glob "*.vue" -n
 **扫描**：检测 `package.json` 中是否有 uView / Vant / ColorUI / iView 等依赖。
 
 ```bash
-rg "uview-ui|vant|colorui|iview" --glob "package.json" -n
+rgrg "uview-ui|vant|colorui|iview" --glob "package.json" -n
 rg "@import.*uview|import.*vant|import.*colorui" --glob "*.{vue,ts,scss}" -n
 ```
 
@@ -4097,7 +4115,7 @@ rg "@import.*uview|import.*vant|import.*colorui" --glob "*.{vue,ts,scss}" -n
 **扫描**：检测页面中是否存在裸写的 "暂无数据" / "无数据" / "没有数据" 文字或 `v-if="list.length === 0"` 内未使用 `<Empty>`。
 
 ```bash
-rg "暂无数据|无数据|没有数据|暂无内容|无记录" --glob "pages/**/*.vue" -n
+rgrg "暂无数据|无数据|没有数据|暂无内容|无记录" --glob "pages/**/*.vue" -n
 ```
 
 **修复**：替换为 `<Empty />` 组件，支持自定义 `text` 和 `image` 属性。
@@ -4109,7 +4127,7 @@ rg "暂无数据|无数据|没有数据|暂无内容|无记录" --glob "pages/**
 **扫描**：检测组件 `<style scoped>` 中直接写死的组件级尺寸（高度/宽度/圆角/内边距），应改为引用 6.9 组件级 Token。
 
 ```bash
-rg "(height|width):\s*\d+rpx" --glob "components/**/*.vue" -n
+rgrg "(height|width):\s*\d+rpx" --glob "components/**/*.vue" -n
 rg "border-radius:\s*\d+rpx" --glob "components/**/*.vue" -n
 ```
 
@@ -4156,7 +4174,7 @@ rg "border-radius:\s*\d+rpx" --glob "components/**/*.vue" -n
 ### 15.4 审计报告格式
 
 ```markdown
-# 设计合规审计报告
+# # 设计合规审计报告
 
 **审计范围**：<范围描述>
 **审计时间**：<时间戳>
@@ -4212,16 +4230,16 @@ rg "border-radius:\s*\d+rpx" --glob "components/**/*.vue" -n
 ```
 用户: 帮我审计一下 src/pages/ 下面的设计合规性
 
-→ Phase 1: 确认扫描范围 src/pages/
-→ Phase 2: 逐条扫描 D01-D10
-→ Phase 3: 输出报告，发现 12 处违规：
+ Phase 1: 确认扫描范围 src/pages/
+ Phase 2: 逐条扫描 D01-D10
+ Phase 3: 输出报告，发现 12 处违规：
    P0: 5 处颜色硬编码，3 处字号硬编码，2 处 z-index 硬编码
-→ 询问: "是否自动修复 P0 问题？[全部修复 / 逐条确认 / 仅出报告]"
+ 询问: "是否自动修复 P0 问题？[全部修复 / 逐条确认 / 仅出报告]"
 
 用户: 全部修复
 
-→ Phase 4: 替换 10 处 P0 违规 → 执行 lint → 通过
-→ 输出修复摘要
+ Phase 4: 替换 10 处 P0 违规  执行 lint  通过
+ 输出修复摘要
 ```
 
 ---
@@ -4258,7 +4276,7 @@ rg "border-radius:\s*\d+rpx" --glob "components/**/*.vue" -n
 ### 16.2 间距 Gap
 
 ```scss
-.gap-1 { gap: $spacing-1; }
+.g.gap-1 { gap: $spacing-1; }
 .gap-2 { gap: $spacing-2; }
 .gap-3 { gap: $spacing-3; }
 .gap-4 { gap: $spacing-4; }
@@ -4269,7 +4287,7 @@ rg "border-radius:\s*\d+rpx" --glob "components/**/*.vue" -n
 ### 16.3 文字对齐 + 溢出
 
 ```scss
-.text-center { text-align: center; }
+.t.text-center { text-align: center; }
 .text-left { text-align: left; }
 .text-right { text-align: right; }
 
@@ -4281,7 +4299,7 @@ rg "border-radius:\s*\d+rpx" --glob "components/**/*.vue" -n
 ### 16.4 文字颜色
 
 ```scss
-.text-primary { color: $color-text-primary; }
+.t.text-primary { color: $color-text-primary; }
 .text-secondary { color: $color-text-secondary; }
 .text-tertiary { color: $color-text-tertiary; }
 .text-disabled { color: $color-text-disabled; }
@@ -4292,7 +4310,7 @@ rg "border-radius:\s*\d+rpx" --glob "components/**/*.vue" -n
 ### 16.5 字号
 
 ```scss
-.text-xs { font-size: $font-size-xs; }
+.t.text-xs { font-size: $font-size-xs; }
 .text-sm { font-size: $font-size-sm; }
 .text-md { font-size: $font-size-md; }
 .text-lg { font-size: $font-size-lg; }
@@ -4303,7 +4321,7 @@ rg "border-radius:\s*\d+rpx" --glob "components/**/*.vue" -n
 ### 16.6 字重
 
 ```scss
-.font-normal { font-weight: $font-weight-normal; }
+.f.font-normal { font-weight: $font-weight-normal; }
 .font-medium { font-weight: $font-weight-medium; }
 .font-semibold { font-weight: $font-weight-semibold; }
 .font-bold { font-weight: $font-weight-bold; }
@@ -4312,7 +4330,7 @@ rg "border-radius:\s*\d+rpx" --glob "components/**/*.vue" -n
 ### 16.7 背景 + 圆角 + 阴影
 
 ```scss
-.bg-white { background: $color-bg-primary; }
+.b.bg-white { background: $color-bg-primary; }
 .bg-gray { background: $color-bg-secondary; }
 .bg-mask { background: $color-bg-mask; }
 
@@ -4328,7 +4346,7 @@ rg "border-radius:\s*\d+rpx" --glob "components/**/*.vue" -n
 ### 16.8 内边距 Padding
 
 ```scss
-.p-3 { padding: $spacing-3; }
+.p.p-3 { padding: $spacing-3; }
 .p-4 { padding: $spacing-4; }
 .p-6 { padding: $spacing-6; }
 .px-3 { padding-left: $spacing-3; padding-right: $spacing-3; }
@@ -4341,7 +4359,7 @@ rg "border-radius:\s*\d+rpx" --glob "components/**/*.vue" -n
 ### 16.9 外间距 Margin
 
 ```scss
-.mt-2 { margin-top: $spacing-2; }
+.m.mt-2 { margin-top: $spacing-2; }
 .mt-4 { margin-top: $spacing-4; }
 .mt-6 { margin-top: $spacing-6; }
 .mb-2 { margin-bottom: $spacing-2; }
@@ -4354,7 +4372,7 @@ rg "border-radius:\s*\d+rpx" --glob "components/**/*.vue" -n
 ### 16.10 显示 + 溢出
 
 ```scss
-.hidden { display: none; }
+.h.hidden { display: none; }
 .block { display: block; }
 .inline { display: inline; }
 .overflow-hidden { overflow: hidden; }
@@ -4369,6 +4387,7 @@ rg "border-radius:\s*\d+rpx" --glob "components/**/*.vue" -n
 ### 16.11 使用示例
 
 ```vue
+<template>
 <!-- 卡片：flex 左右分布，标题+副标题，统一用 utility -->
 <view class="bg-white rounded-md p-4 shadow-sm">
   <view class="flex-between">
@@ -4380,7 +4399,7 @@ rg "border-radius:\s*\d+rpx" --glob "components/**/*.vue" -n
   </view>
 </view>
 
-<!-- ❌ 等价于 -->
+<!--  等价于 -->
 <view style="background: #fff; border-radius: 16rpx; padding: 16rpx; box-shadow: 0 2rpx 4rpx rgba(0,0,0,0.06)">
   <view style="display: flex; align-items: center; justify-content: space-between">
     <view style="display: flex; flex-direction: column; flex: 1">
@@ -4390,6 +4409,9 @@ rg "border-radius:\s*\d+rpx" --glob "components/**/*.vue" -n
     <text style="color: #737a82; font-size: 20rpx; margin-left: 8rpx">2024-01-01</text>
   </view>
 </view>
+</template>
+
+
 ```
 
 ---
@@ -4412,15 +4434,15 @@ rg "border-radius:\s*\d+rpx" --glob "components/**/*.vue" -n
 基于本 skill 定义的语义色，以下组合**已验证通过** WCAG AA：
 
 ```scss
-// ✅ 正文对比度 ≥ 4.5:1
-$color-text-primary (#2b2e31)  on  $color-bg-primary (#ffffff)  →  12.3:1  ✓
-$color-text-primary (#2b2e31)  on  $color-bg-secondary (#fafafa) →  11.5:1  ✓
-$color-text-secondary (#5b6167) on $color-bg-primary (#ffffff)  →  5.6:1   ✓
-$color-text-secondary (#5b6167) on $color-bg-secondary (#fafafa) →  5.2:1   ✓
-$color-primary (#1CC8C4)       on  $color-bg-primary (#ffffff)   →  2.7:1   ✗ 仅大字可用
-$color-error (#ef4444)          on  $color-bg-primary (#ffffff)   →  4.5:1   ✓
-$color-text-inverse (#ffffff)   on  $color-primary (#1CC8C4)      →  2.7:1   ✗ 仅大字可用
-$color-text-inverse (#ffffff)   on  $color-error (#ef4444)        →  4.5:1   ✓
+//  正文对比度 ≥ 4.5:1
+$color-text-primary (#2b2e31)  on  $color-bg-primary (#ffffff)    12.3:1  
+$color-text-primary (#2b2e31)  on  $color-bg-secondary (#fafafa)   11.5:1  
+$color-text-secondary (#5b6167) on $color-bg-primary (#ffffff)    5.6:1   
+$color-text-secondary (#5b6167) on $color-bg-secondary (#fafafa)   5.2:1   
+$color-primary (#1CC8C4)       on  $color-bg-primary (#ffffff)     2.7:1   × 仅大字可用
+$color-error (#ef4444)          on  $color-bg-primary (#ffffff)     4.5:1   
+$color-text-inverse (#ffffff)   on  $color-primary (#1CC8C4)        2.7:1   × 仅大字可用
+$color-text-inverse (#ffffff)   on  $color-error (#ef4444)          4.5:1   
 ```
 
 ### 17.3 问题色修复策略
@@ -4437,8 +4459,8 @@ $color-text-inverse (#ffffff)   on  $color-error (#ef4444)        →  4.5:1   �
 ### 17.4 对比度快速检测
 
 ```bash
-# Chrome DevTools 自带对比度检测
-# DevTools → Rendering → 勾选 "Show rendering" 中的对比度线
+# # Chrome DevTools 自带对比度检测
+# DevTools  Rendering  勾选 "Show rendering" 中的对比度线
 
 # 或使用在线工具
 # https://webaim.org/resources/contrastchecker/
@@ -4561,7 +4583,7 @@ D34 在 §十五设计合规审计中为**自动扫描**（✅）：
 ### 18.2 列表页（List）
 
 ```
-┌──────────────────────────────┐
+┌─┌──────────────────────────────┐
 │  NavBar（胶囊对齐）             │
 ├──────────────────────────────┤
 │  .lyt-header                  │
@@ -4604,7 +4626,7 @@ D34 在 §十五设计合规审计中为**自动扫描**（✅）：
 ### 18.3 详情页（Detail）
 
 ```
-┌──────────────────────────────┐
+┌─┌──────────────────────────────┐
 │  NavBar + 右侧操作图标         │
 ├──────────────────────────────┤
 │  .lyt-hero                    │
@@ -4663,7 +4685,7 @@ D34 在 §十五设计合规审计中为**自动扫描**（✅）：
 ### 18.4 表单页（Form）
 
 ```
-┌──────────────────────────────┐
+┌─┌──────────────────────────────┐
 │  NavBar                      │
 ├──────────────────────────────┤
 │  .lyt-body                    │
@@ -4703,7 +4725,7 @@ D34 在 §十五设计合规审计中为**自动扫描**（✅）：
 ### 18.5 设置页（Settings）
 
 ```
-┌──────────────────────────────┐
+┌─┌──────────────────────────────┐
 │  NavBar                      │
 ├──────────────────────────────┤
 │  .lyt-body                    │
@@ -4769,7 +4791,7 @@ D34 在 §十五设计合规审计中为**自动扫描**（✅）：
 ### 18.6 首页（Home）
 
 ```
-┌──────────────────────────────┐
+┌─┌──────────────────────────────┐
 │  状态栏 + 胶囊                │
 ├──────────────────────────────┤
 │  .lyt-hero                    │

@@ -27,8 +27,8 @@ docs/
 ## 布局结构
 
 ```
-┌────────────────────────────────────────────────────────┐
-│  Logo │  文档标题              │ 🔍 搜索 │ GitHub    │
+┌─┌────────────────────────────────────────────────────────┐
+│  Logo │  文档标题              │ ⌕ 搜索 │ GitHub    │
 ├──────────┬───────────────────────────────┬─────────────┤
 │          │                               │             │
 │  目录    │      文档内容                  │  页面目录   │
@@ -45,6 +45,7 @@ docs/
 └────────────────────────────────────────────────────────┘
 ```
 
+#
 ## 区域详解
 
 ### 1. 顶部Header
@@ -91,6 +92,7 @@ Host: api.example.com
 Authorization: Bearer <token>
 ```
 
+#
 ### 响应示例
 
 ```json
@@ -103,6 +105,7 @@ Authorization: Bearer <token>
 }
 ```
 
+#
 ### 参数说明
 
 | 参数 | 类型 | 必填 | 说明 |
@@ -123,6 +126,7 @@ Authorization: Bearer <token>
 --border: #E1E4E8;
 ```
 
+#
 ### 风格2：深色文档
 
 ```scss
@@ -134,15 +138,17 @@ Authorization: Bearer <token>
 --border: #30363D;
 ```
 
+#
 ### 风格3：Mintlify风格
 
 ```scss
---primary: #1A73E8;
+--color-primary: #1A73E8;
 --bg-page: #FFFFFF;
 --bg-sidebar: #FFFFFF;
 --shadow: 0 0 2px rgba(0,0,0,0.1);
 ```
 
+#
 ## Mock数据
 
 ```json

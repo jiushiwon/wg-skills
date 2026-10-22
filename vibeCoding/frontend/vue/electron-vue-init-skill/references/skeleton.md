@@ -755,7 +755,7 @@ a:hover {
 ### 19. src/renderer/env.d.ts（Vite 类型声明）
 
 ```typescript
-/// <reference types="vite/client" />
+// <reference types="vite/client" />
 
 declare module '*.vue' {
   import type { DefineComponent } from 'vue'

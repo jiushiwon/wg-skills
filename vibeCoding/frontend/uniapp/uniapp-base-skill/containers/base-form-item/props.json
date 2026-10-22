@@ -1,0 +1,19 @@
+{
+  "name": "base-form-item",
+  "title": "表单项容器",
+  "category": "container",
+  "description": "根容器：表单行外壳（标签列 + 必填星号 + 控件插槽 + 错误提示）",
+  "aliases": ["表单项", "form-item", "base-form-item", "表单行", "输入行"],
+  "props": [
+    { "name": "label", "type": "string", "default": "", "desc": "标签文案" },
+    { "name": "required", "type": "boolean", "default": false, "desc": "必填（左侧红色星号）" },
+    { "name": "error", "type": "string", "default": "", "desc": "错误提示，非空即显示并把行标红" },
+    { "name": "labelWidth", "type": "string", "default": "160rpx", "desc": "标签列宽" }
+  ],
+  "events": [],
+  "slots": [
+    { "name": "default", "desc": "控件内容" },
+    { "name": "label", "desc": "标签内容，优先级高于 label" },
+    { "name": "error", "desc": "错误提示内容，优先级高于 error" }
+  ]
+}

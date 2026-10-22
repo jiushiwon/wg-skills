@@ -4,8 +4,8 @@
     <view class="header">
       <text class="title">{{ title }}</text>
       <view class="header-actions">
-        <text class="action-icon">🔍</text>
-        <text class="action-icon">➕</text>
+        <text class="action-icon">⌕</text>
+        <text class="action-icon">+</text>
       </view>
     </view>
 

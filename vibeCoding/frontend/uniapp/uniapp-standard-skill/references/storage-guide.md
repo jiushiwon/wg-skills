@@ -95,11 +95,11 @@ export const storage = {
 import { storage } from '@/utils/storage';
 import { STORAGE_KEYS } from '@/constants/storage';
 
-// ✅ 正确 - 使用常量
+//  正确 - 使用常量
 storage.setToken('xxx');
 const userInfo = storage.get(STORAGE_KEYS.USER_INFO);
 
-// ❌ 错误 - 硬编码
+//  错误 - 硬编码
 uni.setStorageSync('token', 'xxx');
 ```
 

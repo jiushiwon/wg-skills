@@ -75,7 +75,7 @@ $theme-radius-base: 4rpx;
 由 `$theme-primary` 生成 50 / 100 / 200 / 300 / 400 / 500 / 600 / 700 / 800 / 900：
 
 ```scss
-@function primary-palette($level) {
+@f@function primary-palette($level) {
   $mix-white: (50, 100, 200, 300, 400);
   $mix-black: (600, 700, 800, 900);
 
@@ -109,7 +109,7 @@ $theme-radius-base: 4rpx;
 由 `$theme-gray-base` 同样生成 50 ~ 950，用于文字、边框、背景：
 
 ```scss
-$gray-50: gray-palette(50);   // 近白背景
+$g$gray-50: gray-palette(50);   // 近白背景
 $gray-100: gray-palette(100); // 页面背景
 $gray-300: gray-palette(300); // 边框
 $gray-500: gray-palette(500); // 次要文字
@@ -120,7 +120,7 @@ $gray-900: gray-palette(900); // 标题
 #### 语义颜色 Token
 
 ```scss
-$color-primary: $primary-500;
+$c$color-primary: $primary-500;
 $color-primary-light: $primary-100;
 $color-primary-dark: $primary-700;
 
@@ -147,7 +147,7 @@ $color-info: $theme-info;
 基数 `$theme-spacing-base: 4rpx`，生成 8 级：
 
 ```scss
-$space-1: $theme-spacing-base * 1;   // 4rpx
+$s$space-1: $theme-spacing-base * 1;   // 4rpx
 $space-2: $theme-spacing-base * 2;   // 8rpx
 $space-3: $theme-spacing-base * 3;   // 12rpx
 $space-4: $theme-spacing-base * 4;   // 16rpx
@@ -160,7 +160,7 @@ $space-8: $theme-spacing-base * 12;  // 48rpx
 语义 Token：
 
 ```scss
-$spacing-xs: $space-1;
+$s$spacing-xs: $space-1;
 $spacing-sm: $space-2;
 $spacing-default: $space-3;
 $spacing-md: $space-4;
@@ -174,7 +174,7 @@ $spacing-xxl: $space-8;
 基数 `$theme-font-base: 12rpx`，生成 6 级：
 
 ```scss
-$font-xs: $theme-font-base * 1;      // 12rpx
+$f$font-xs: $theme-font-base * 1;      // 12rpx
 $font-sm: $theme-font-base * 1.1667; // 14rpx
 $font-md: $theme-font-base * 1.3333; // 16rpx
 $font-lg: $theme-font-base * 1.5;    // 18rpx
@@ -185,7 +185,7 @@ $font-xxl: $theme-font-base * 2.5;   // 30rpx
 语义 Token：
 
 ```scss
-$font-caption: $font-xs;
+$f$font-caption: $font-xs;
 $font-body: $font-sm;
 $font-subtitle: $font-md;
 $font-title: $font-lg;
@@ -198,7 +198,7 @@ $font-display: $font-xxl;
 基数 `$theme-radius-base: 4rpx`：
 
 ```scss
-$radius-sm: $theme-radius-base * 1;  // 4rpx
+$r$radius-sm: $theme-radius-base * 1;  // 4rpx
 $radius-md: $theme-radius-base * 2;  // 8rpx
 $radius-lg: $theme-radius-base * 3;  // 12rpx
 $radius-xl: $theme-radius-base * 4;  // 16rpx
@@ -210,7 +210,7 @@ $radius-full: 9999rpx;
 由主色/灰色派生，保持低饱和度：
 
 ```scss
-$shadow-1: 0 2rpx 8rpx rgba-with-alpha($gray-900, 0.04);
+$s$shadow-1: 0 2rpx 8rpx rgba-with-alpha($gray-900, 0.04);
 $shadow-2: 0 4rpx 12rpx rgba-with-alpha($gray-900, 0.08);
 $shadow-3: 0 8rpx 24rpx rgba-with-alpha($gray-900, 0.12);
 ```
@@ -218,7 +218,7 @@ $shadow-3: 0 8rpx 24rpx rgba-with-alpha($gray-900, 0.12);
 ## SCSS 工具函数
 
 ```scss
-@use 'sass:color';
+@u@use 'sass:color';
 
 // 为任意颜色附加透明度
 @function rgba-with-alpha($base-color, $alpha) {
@@ -262,7 +262,7 @@ export const COLOR_BORDER = GRAY_200;
 ### 流程
 
 ```bash
-# 1) 改 theme.json 的 colors.primary（或 success/warning/error/info/grayBase）
+# # 1) 改 theme.json 的 colors.primary（或 success/warning/error/info/grayBase）
 # 2) 同步：重生成 _theme-config.scss、colors.ts、.theme-scale.json
 npm run theme:sync
 # 3) 校验：扫描业务代码，凡色阶外颜色一律失败

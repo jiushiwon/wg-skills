@@ -2,35 +2,35 @@
 
 .t-table {
   width: 100%;
-  background: var(--color-bg-surface, #fff);
-  border-radius: var(--radius-lg, 12px);
+  background: var(--bg-card, #ffffff);
+  border-radius: var(--radius-lg, 24rpx);
   overflow: hidden;
   transition: box-shadow 0.2s ease;
 }
 
 /* ========== 风格1: default 简约线条 ========== */
 .t-table--default {
-  border: 1px solid var(--color-border-light, #f3f4f6);
+  border: 1px solid var(--border-light, #f5f5f5);
 }
 
 .t-table--default .t-table__header {
-  background: var(--color-gray-50, #f9fafb);
-  border-bottom: 2px solid var(--color-border, #e5e7eb);
+  background: var(--gray-50, #fafafa);
+  border-bottom: 2px solid var(--border, #e5e5e5);
 }
 
 .t-table--default .t-table__header-cell {
   font-weight: 600;
-  font-size: var(--text-sm, 14px);
-  color: var(--color-text-secondary, #6b7280);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-secondary, #525252);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .t-table--default .t-table__cell {
-  padding: var(--space-3, 12px) var(--space-4, 16px);
-  font-size: var(--text-sm, 14px);
-  color: var(--color-text-primary, #111827);
-  border-bottom: 1px solid var(--color-border-light, #f3f4f6);
+  padding: var(--space-3, 12rpx) var(--space-4, 16rpx);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-primary, #171717);
+  border-bottom: 1px solid var(--border-light, #f5f5f5);
 }
 
 /* ========== 风格2: elegant 优雅边框 ========== */
@@ -40,21 +40,21 @@
 }
 
 .t-table--elegant .t-table__header {
-  background: linear-gradient(135deg, var(--color-primary-50, #f9fafb) 0%, var(--color-gray-50, #f9fafb) 100%);
-  border-bottom: 1px solid var(--color-border, #e5e7eb);
+  background: linear-gradient(135deg, var(--primary-50, #f0fdfa) 0%, var(--gray-50, #fafafa) 100%);
+  border-bottom: 1px solid var(--border, #e5e5e5);
 }
 
 .t-table--elegant .t-table__header-cell {
   font-weight: 500;
-  font-size: var(--text-sm, 14px);
-  color: var(--color-text-primary, #111827);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-primary, #171717);
 }
 
 .t-table--elegant .t-table__cell {
-  padding: var(--space-4, 16px) var(--space-5, 20px);
-  font-size: var(--text-sm, 14px);
-  color: var(--color-text-primary, #111827);
-  border-bottom: 1px dashed var(--color-border-light, #f3f4f6);
+  padding: var(--space-4, 16rpx) var(--space-5, 20rpx);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-primary, #171717);
+  border-bottom: 1px dashed var(--border-light, #f5f5f5);
   transition: background 0.15s ease;
 }
 
@@ -74,7 +74,7 @@
 }
 
 .t-table--elegant .t-table__row--hoverable:hover::before {
-  background: var(--color-primary, #333);
+  background: var(--color-primary, #14b8a6);
 }
 
 /* ========== 风格3: gradient 渐变表头 ========== */
@@ -84,22 +84,22 @@
 }
 
 .t-table--gradient .t-table__header {
-  background: linear-gradient(135deg, var(--color-primary-600, #333) 0%, var(--color-primary-400, #666) 100%);
+  background: linear-gradient(135deg, var(--primary-600, #0d9488) 0%, var(--primary-400, #2dd4bf) 100%);
   border-bottom: none;
 }
 
 .t-table--gradient .t-table__header-cell {
   font-weight: 600;
-  font-size: var(--text-sm, 14px);
+  font-size: var(--font-sm, 26rpx);
   color: #fff;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .t-table--gradient .t-table__cell {
-  padding: var(--space-3, 12px) var(--space-4, 16px);
-  font-size: var(--text-sm, 14px);
-  color: var(--color-text-primary, #111827);
-  border-bottom: 1px solid var(--color-border-light, #f3f4f6);
+  padding: var(--space-3, 12rpx) var(--space-4, 16rpx);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-primary, #171717);
+  border-bottom: 1px solid var(--border-light, #f5f5f5);
 }
 
 .t-table--gradient .t-table__sort-icons span {
@@ -114,7 +114,7 @@
 
 /* 边框 */
 .t-table--border {
-  border: 1px solid var(--color-border, #e5e7eb);
+  border: 1px solid var(--border, #e5e5e5);
 }
 
 /* 表头 */
@@ -150,7 +150,7 @@
 .t-table--default .t-table__cell--sortable:hover,
 .t-table--elegant .t-table__cell--sortable:hover,
 .t-table--gradient .t-table__cell--sortable:hover {
-  background: var(--color-primary-50, #f9fafb);
+  background: var(--primary-50, #f0fdfa);
 }
 
 .t-table--gradient .t-table__cell--sortable:hover {
@@ -161,10 +161,10 @@
 .t-table__sort-icons {
   display: inline-flex;
   flex-direction: column;
-  margin-left: var(--space-1, 4px);
+  margin-left: var(--space-1, 4rpx);
   font-size: 10px;
   line-height: 1.2;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--text-tertiary, #a3a3a3);
   vertical-align: middle;
 }
 
@@ -173,12 +173,12 @@
 }
 
 .t-table__sort-active {
-  color: var(--color-primary, #333);
+  color: var(--color-primary, #14b8a6);
 }
 
 /* 悬停效果 */
 .t-table__row--hoverable:hover {
-  background: var(--color-bg-surface-hover, #f9fafb);
+  background: var(--bg-light, #f5f5f5);
   cursor: pointer;
 }
 
@@ -188,19 +188,19 @@
 
 /* 斑马纹 */
 .t-table--stripe .t-table__row:nth-child(even) {
-  background: var(--color-bg-surface-hover, #f9fafb);
+  background: var(--bg-light, #f5f5f5);
 }
 
 .t-table--stripe .t-table__row:nth-child(even):hover {
-  background: var(--color-bg-surface-active, #f3f4f6);
+  background: var(--bg-tertiary, #e5e5e5);
 }
 
 /* 空状态 */
 .t-table__empty {
-  padding: var(--space-10, 40px);
+  padding: var(--space-10, 40rpx);
   text-align: center;
-  color: var(--color-text-tertiary, #9ca3af);
-  font-size: var(--text-sm, 14px);
+  color: var(--text-tertiary, #a3a3a3);
+  font-size: var(--font-sm, 26rpx);
 }
 
 /* 分页 */
@@ -208,57 +208,57 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-3, 12px) var(--space-4, 16px);
-  border-top: 1px solid var(--color-border-light, #f3f4f6);
-  background: var(--color-bg-surface-hover, #f9fafb);
+  padding: var(--space-3, 12rpx) var(--space-4, 16rpx);
+  border-top: 1px solid var(--border-light, #f5f5f5);
+  background: var(--bg-light, #f5f5f5);
 }
 
 .t-table--gradient .t-table__pagination {
-  background: linear-gradient(135deg, var(--color-primary-50, #f9fafb) 0%, var(--color-gray-50, #f9fafb) 100%);
+  background: linear-gradient(135deg, var(--primary-50, #f0fdfa) 0%, var(--gray-50, #fafafa) 100%);
 }
 
 .t-table__pagination-info {
-  font-size: var(--text-sm, 14px);
-  color: var(--color-text-secondary, #6b7280);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-secondary, #525252);
 }
 
 .t-table__pagination-btns {
   display: flex;
-  gap: var(--space-2, 8px);
+  gap: var(--space-2, 8rpx);
 }
 
 .t-table__pagination-btn {
-  padding: var(--space-1, 4px) var(--space-3, 12px);
-  font-size: var(--text-sm, 14px);
-  color: var(--color-primary, #333);
-  background: var(--color-bg-surface, #fff);
-  border: 1px solid var(--color-border, #e5e7eb);
-  border-radius: var(--radius-sm, 4px);
+  padding: var(--space-1, 4rpx) var(--space-3, 12rpx);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--color-primary, #14b8a6);
+  background: var(--bg-card, #ffffff);
+  border: 1px solid var(--border, #e5e5e5);
+  border-radius: var(--radius-sm, 8rpx);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .t-table__pagination-btn:hover:not(:disabled) {
-  background: var(--color-bg-surface-active, #f3f4f6);
-  border-color: var(--color-primary, #333);
+  background: var(--bg-tertiary, #e5e5e5);
+  border-color: var(--color-primary, #14b8a6);
 }
 
 .t-table--gradient .t-table__pagination-btn {
-  background: var(--color-primary-600, #333);
-  border-color: var(--color-primary-600, #333);
+  background: var(--primary-600, #0d9488);
+  border-color: var(--primary-600, #0d9488);
   color: #fff;
 }
 
 .t-table--gradient .t-table__pagination-btn:hover:not(:disabled) {
-  background: var(--color-primary-700, #222);
+  background: var(--primary-700, #0f766e);
 }
 
 .t-table__pagination-btn--disabled {
-  color: var(--color-text-disabled, #d1d5db);
+  color: var(--text-disabled, #d4d4d4);
   cursor: not-allowed;
-  background: var(--color-bg-surface-hover, #f9fafb);
+  background: var(--bg-light, #f5f5f5);
 }
 
 .t-table__pagination-btn--disabled:hover {
-  border-color: var(--color-border, #e5e7eb);
+  border-color: var(--border, #e5e5e5);
 }

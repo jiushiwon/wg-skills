@@ -40,7 +40,7 @@
 
 ### 步骤 1：选型（30 秒）
 
-看 [README.md §6 大板块总览](README.md#6-大板块总览)，选你的"语言 × 框架"组合。
+看 [README.md 的 6 大板块总览](README.md#6-大板块总览)，选你的"语言 × 框架"组合。
 
 ### 步骤 2：读规范（3 分钟）
 
@@ -81,7 +81,7 @@ cd vibeCoding/backend/java/springboot-init-skill
 | **把证书/私钥提交到 git** | 已在 `.gitignore` 兜底，**不要再 `git add -f`** |
 | **直接用 init-skill 的默认密钥/JWT** | 部署前必改，否则裸奔 |
 | **跨语言契约不查表** | springboot-auth / fastapi-auth / go-auth 的契约是**对齐的**（camelCase + 负数错误码），但要按表对照 |
-| **README 数字对不齐** | README §6 板块加总可能与实际 SKILL.md 数量有几条误差，以 `find . -name SKILL.md \| wc -l` 为准 |
+| **README 数字对不齐** | 以仓库内实际 `SKILL.md` 数量为准；维护者更新 skill 时必须同步首页统计 |
 
 ---
 
@@ -100,7 +100,7 @@ wg-skills/
 │   ├── plans/             ← 本地沉淀
 │   ├── adr/               ← 待补（关键决策记录）
 │   └── skill-graph.yaml   ← 待补（机器可读关联图）
-└── vibeCoding/            ← 150 个 skill 都在这里
+└── vibeCoding/            ← 155 个 skill 都在这里（连同 others/ 共 161 个）
     ├── backend/           ← Java/Python/Go/Node.js/Rust + 数据库
     ├── frontend/          ← Vue/UniApp/React/HTML
     ├── super-deploy-skills/

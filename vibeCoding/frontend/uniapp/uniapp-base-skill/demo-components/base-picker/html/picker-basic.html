@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-picker 基础用法</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-primary: #4a90e2;
+      --color-success: #52c41a;
+      --text-primary: #333;
+      --text-secondary: #666;
+      --text-tertiary: #999;
+      --bg-page: #f5f5f5;
+      --bg-card: #fff;
+      --border: #e8e8e8;
+    }
+    body { background: var(--bg-page); font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; padding: 20px; }
+    .page { max-width: 414px; margin: 0 auto; }
+
+    .phone {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .phone-header {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      padding: 0 var(--space-4);
+      border-bottom: 1px solid var(--border);
+    }
+    .phone-title { font-size: 16px; font-weight: 500; }
+    .phone-body { min-height: 600px; padding: var(--space-4); }
+
+    /* Picker 触发器 */
+    .picker {
+      display: flex;
+      align-items: center;
+      padding: 14px var(--space-4);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-3);
+      cursor: pointer;
+    }
+    .picker__label {
+      font-size: 14px;
+      color: var(--text-secondary);
+      width: 60px;
+    }
+    .picker__value {
+      flex: 1;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+    .picker__value--placeholder {
+      color: var(--text-tertiary);
+    }
+    .picker__arrow {
+      font-size: 18px;
+      color: #ccc;
+    }
+
+    /* 禁用状态 */
+    .picker.disabled {
+      opacity: 0.5;
+    }
+
+    /* 结果展示 */
+    .result {
+      padding: var(--space-4);
+      background: var(--bg-page);
+      border-radius: var(--radius-md);
+      margin-top: var(--space-4);
+    }
+    .result-title { font-size: 14px; color: var(--text-secondary); margin-bottom: var(--space-2); }
+    .result-value { font-size: 16px; color: var(--text-primary); font-weight: 500; }
+
+    /* 模拟 picker 弹窗 */
+    .picker-popup {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      transform: translateY(100%);
+      transition: transform 0.3s;
+      z-index: 100;
+    }
+    .picker-popup.show { transform: translateY(0); }
+    .picker-popup-mask {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s;
+      z-index: 99;
+    }
+    .picker-popup-mask.show { opacity: 1; visibility: visible; }
+
+    .picker-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--border);
+    }
+    .picker-header__btn {
+      font-size: 15px;
+      padding: 6px 12px;
+    }
+    .picker-header__btn.cancel { color: var(--text-secondary); }
+    .picker-header__btn.confirm { color: var(--color-primary); font-weight: 500; }
+    .picker-header__title { font-size: 16px; font-weight: 500; }
+
+    .picker-content {
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
+    .picker-wheel {
+      height: 100%;
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
+    }
+    .picker-item {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: var(--text-primary);
+    }
+    .picker-item.selected {
+      color: var(--color-primary);
+      font-weight: 500;
+    }
+
+    /* 选中高亮条 */
+    .picker-highlight {
+      position: absolute;
+      top: 50%;
+      left: var(--space-4);
+      right: var(--space-4);
+      height: 40px;
+      transform: translateY(-50%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="phone">
+      <div class="phone-header">
+        <span class="phone-title">选择器</span>
+      </div>
+      <div class="phone-body">
+        <!-- 基础选择器 -->
+        <div class="picker" onclick="openPicker('single')">
+          <span class="picker__label">单选</span>
+          <span class="picker__value" id="singleValue">请选择</span>
+          <span class="picker__arrow">›</span>
+        </div>
+
+        <!-- 带默认值 -->
+        <div class="picker" onclick="openPicker('default')">
+          <span class="picker__label">默认选中</span>
+          <span class="picker__value" id="defaultValue">上海</span>
+          <span class="picker__arrow">›</span>
+        </div>
+
+        <!-- 禁用状态 -->
+        <div class="picker disabled">
+          <span class="picker__label">禁用</span>
+          <span class="picker__value picker__value--placeholder">不可选择</span>
+          <span class="picker__arrow">›</span>
+        </div>
+
+        <!-- 带标签 -->
+        <div class="picker" onclick="openPicker('city')">
+          <span class="picker__label">城市</span>
+          <span class="picker__value" id="cityValue">请选择城市</span>
+          <span class="picker__arrow">›</span>
+        </div>
+
+        <div class="result" id="resultBox">
+          <div class="result-title">已选值：</div>
+          <div class="result-value" id="resultValue">-</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Picker 弹窗 -->
+  <div class="picker-popup-mask" id="mask" onclick="closePicker()"></div>
+  <div class="picker-popup" id="pickerPopup">
+    <div class="picker-header">
+      <span class="picker-header__btn cancel" onclick="closePicker()">取消</span>
+      <span class="picker-header__title" id="pickerTitle">请选择</span>
+      <span class="picker-header__btn confirm" onclick="confirmPicker()">确定</span>
+    </div>
+    <div class="picker-content">
+      <div class="picker-highlight"></div>
+      <div class="picker-wheel" id="pickerWheel"></div>
+    </div>
+  </div>
+
+  <script>
+    // 数据源
+    const dataSource = {
+      single: ['北京', '上海', '广州', '深圳', '杭州', '成都', '武汉', '西安'],
+      default: ['北京', '上海', '广州', '深圳'],
+      city: [
+        { name: '北京', cities: ['东城区', '西城区', '朝阳区', '海淀区'] },
+        { name: '上海', cities: ['黄浦区', '徐汇区', '长宁区', '静安区'] },
+        { name: '广州', cities: ['天河区', '越秀区', '海珠区', '荔湾区'] }
+      ]
+    };
+
+    let currentPicker = '';
+    let selectedIndex = 0;
+
+    // 打开 picker
+    function openPicker(type) {
+      currentPicker = type;
+      const wheel = document.getElementById('pickerWheel');
+      const title = document.getElementById('pickerTitle');
+
+      let items = [];
+      if (type === 'single' || type === 'default') {
+        items = dataSource[type];
+        title.textContent = '请选择';
+      } else if (type === 'city') {
+        items = dataSource.city.map(c => c.name);
+        title.textContent = '选择城市';
+      }
+
+      // 渲染选项
+      wheel.innerHTML = items.map((item, index) =>
+        `<div class="picker-item" data-index="${index}" onclick="selectItem(${index})">${typeof item === 'object' ? item.name : item}</div>`
+      ).join('');
+
+      // 设置默认选中
+      if (type === 'default') {
+        selectedIndex = 1;
+        updateSelected();
+      }
+
+      // 显示弹窗
+      document.getElementById('mask').classList.add('show');
+      document.getElementById('pickerPopup').classList.add('show');
+    }
+
+    // 选中项
+    function selectItem(index) {
+      selectedIndex = index;
+      updateSelected();
+    }
+
+    // 更新选中状态
+    function updateSelected() {
+      document.querySelectorAll('.picker-item').forEach((item, index) => {
+        item.classList.toggle('selected', index === selectedIndex);
+      });
+    }
+
+    // 确认选择
+    function confirmPicker() {
+      let value = '';
+      let displayValue = '';
+
+      if (currentPicker === 'single') {
+        value = dataSource.single[selectedIndex];
+        displayValue = value;
+        document.getElementById('singleValue').textContent = displayValue;
+        document.getElementById('singleValue').classList.remove('picker__value--placeholder');
+      } else if (currentPicker === 'default') {
+        value = dataSource.default[selectedIndex];
+        displayValue = value;
+        document.getElementById('defaultValue').textContent = displayValue;
+      } else if (currentPicker === 'city') {
+        const city = dataSource.city[selectedIndex];
+        value = city.name;
+        displayValue = city.name;
+        document.getElementById('cityValue').textContent = displayValue;
+        document.getElementById('cityValue').classList.remove('picker__value--placeholder');
+      }
+
+      // 显示结果
+      document.getElementById('resultValue').textContent = value;
+      closePicker();
+    }
+
+    // 关闭 picker
+    function closePicker() {
+      document.getElementById('mask').classList.remove('show');
+      document.getElementById('pickerPopup').classList.remove('show');
+    }
+  </script>
+</body>
+</html>

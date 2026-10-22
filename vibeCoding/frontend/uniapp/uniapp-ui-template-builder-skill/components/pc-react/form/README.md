@@ -193,18 +193,18 @@ const rules = {
 组件使用以下 CSS 变量：
 
 ```css
-:root {
-  --color-bg-surface: #ffffff;
-  --color-border: #e5e7eb;
-  --color-text-primary: #111827;
-  --color-text-secondary: #6b7280;
-  --color-text-placeholder: #9ca3af;
-  --color-text-tertiary: #9ca3af;
+:r:root {
+  --bg-card: #ffffff;
+  --border: #e5e7eb;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-placeholder: #9ca3af;
+  --text-tertiary: #9ca3af;
   --color-primary: #333333;
-  --color-primary-light: #666666;
+  --primary-400: #666666;
   --color-error: #ef4444;
   --primary-50: #f9fafb;
   --radius-input: 8px;
-  --shadow-popup: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 ```

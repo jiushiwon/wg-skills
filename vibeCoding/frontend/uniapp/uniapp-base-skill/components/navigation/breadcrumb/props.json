@@ -1,0 +1,13 @@
+{
+  "name": "breadcrumb",
+  "title": "面包屑",
+  "category": "navigation",
+  "description": "路径导航面包屑，最后一级为当前页不可点击",
+  "aliases": ["面包屑", "路径导航", "导航路径", "breadcrumb", "crumbs"],
+  "props": [
+    { "name": "items", "type": "array", "default": [], "desc": "路径项列表 [{text, icon, url}]，最后一项为当前页" },
+    { "name": "separator", "type": "string", "default": "›", "desc": "分隔符" }
+  ],
+  "events": ["click"],
+  "slots": []
+}

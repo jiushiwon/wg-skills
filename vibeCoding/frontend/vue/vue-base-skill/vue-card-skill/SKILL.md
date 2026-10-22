@@ -17,7 +17,7 @@ trigger: |
 
 > 基于「一切皆容器」思想的 Vue 卡片组件技能。**双层架构**：`base-card`（L0 根容器）+ `base-wg-card`（L1 业务卡片），二者严格分层、互不替代。
 >
-> **本技能严格镜像 [uniapp-card-skill](../../uniapp/uniapp-base-skill/uniapp-card-skill/)**，命名 100% 对齐。
+> **本技能严格镜像 [uniapp-base-skill/containers/base-card](../../uniapp/uniapp-base-skill/containers/base-card/)**，命名 100% 对齐。
 >
 > **零样式标签铁律**：实现代码仅使用 `<div>` / `<span>` + CSS3，禁止 `<p>` `<h1~h6>` `<header>` `<footer>` `<section>` `<article>` `<aside>` `<nav>` `<main>` `<button>` `<table>` `<input>` `<select>` `<form>` `<label>` `<fieldset>` `<option>` `<img>` `<strong>` `<em>` 等带默认样式的标签。图片用 `<div>` + `background-image` 实现，图标用 `<div>` + CSS mask data URI。
 
@@ -49,10 +49,10 @@ trigger: |
 | 10 | `notify` | 图标 + 标题 + 描述 + 时间 + 徽标 | "做一个通知卡片" |
 | 11 | `comment` | 头像 + 昵称 + 时间 + 内容 + 点赞（支持嵌套回复） | "做一个评论卡片" |
 
-## 命名对齐矩阵（与 uniapp-card-skill 完全对齐）
+## 命名对齐矩阵（与 uniapp-base-skill/containers/base-card 完全对齐）
 
 ```
-vue-card-skill          ←   uniapp-card-skill
+vue-card-skill          ←   uniapp-base-skill/containers/base-card
 base-card               ←   base-card
 base-wg-card            ←   base-wg-card
 variant=basic           ←   variant=basic

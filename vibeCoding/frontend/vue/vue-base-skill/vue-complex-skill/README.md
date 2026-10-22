@@ -11,6 +11,7 @@
 | 页面类型 | 引用的组件技能 |
 |----------|----------------|
 | 登录页 | vue-login-skill（8 种风格） |
+| AI 创作工作台 | vue-ai-creative-workspace-skill + vue-layout-skill + vue-input-skill + vue-button-skill + vue-dropdown-skill |
 | 列表页 | vue-table-skill + vue-input-skill + vue-select-skill + vue-datepicker-skill |
 | 表单页 | vue-form-skill + vue-input-skill + vue-select-skill + vue-datepicker-skill |
 | 详情页 | vue-card-skill + vue-input-skill |

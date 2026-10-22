@@ -27,20 +27,20 @@ description: 当用户要求检查 uniapp 项目在多端（微信小程序 / H5
 
 ```
 Phase 1: 审计范围确认
-  → 目标平台：微信小程序 / H5 / App / 其他小程序
-  → 端数：2 端 / 3 端 / N 端
-  → 重点维度：模板标签 / 样式兼容 / API 兼容 / 条件编译 / 平台配置
+   目标平台：微信小程序 / H5 / App / 其他小程序
+   端数：2 端 / 3 端 / N 端
+   重点维度：模板标签 / 样式兼容 / API 兼容 / 条件编译 / 平台配置
 
 Phase 2: 多维度扫描
-  → 按下列 6 个维度逐项扫描
-  → 记录问题位置、风险等级、判定依据
+   按下列 6 个维度逐项扫描
+   记录问题位置、风险等级、判定依据
 
 Phase 3: 问题汇总
-  → 按 P0/P1/P2/P3 风险等级归类
-  → 列出"端间表现差异"专项问题
+   按 P0/P1/P2/P3 风险等级归类
+   列出"端间表现差异"专项问题
 
 Phase 4: 输出报告
-  → 生成 uniapp-crossplatform-audit-report.md
+   生成 uniapp-crossplatform-audit-report.md
 ```
 
 ## 审计维度
@@ -96,7 +96,7 @@ Phase 4: 输出报告
 优先使用 Grep 等只读工具扫描。允许使用的命令示例：
 
 ```bash
-# H5 标签扫描
+# # H5 标签扫描
 grep -rnE '<div|<span|<p|<h[1-6]|<img|<section|<article|<main' src/
 
 # 小程序端不可用 API

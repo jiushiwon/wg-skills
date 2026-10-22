@@ -1,6 +1,6 @@
 ---
 name: skill-auditor
-description: Skill 安全审计技能(基础版)。对任意 Claude Code / Agent Skill 做投毒与恶意行为审查,识别 6 大维度:数据外泄链、隐藏脚本/供应链投毒、破坏性命令、Prompt 注入话术、权限放大、货不对板,产出结构化风险报告。零依赖,LLM 语义判断为主、静态信号为辅。无差别审核本地目录、粘贴文本、外部仓库等任意形态的 Skill。当用户要求"审查这个 skill"、"检测 skill 有没有毒"、"skill 安全审计"、"这个 skill 安全吗"、"检查恶意 skill"、"audit skill"、"skill security" 时调用。
+description: Skill 安全审计技能(基础版)。对任意 Claude Code / Agent Skill 做投毒与恶意行为审查,识别 6 大维度:数据外泄链、隐藏脚本/供应链投毒、破坏性命令、Prompt 注入话术、权限放大、货不对板,产出结构化风险报告。零依赖,LLM 语义判断为主、静态信号为辅。无差别审核本地目录、粘贴文本、外部仓库等任意形态的 Skill。触发词：审查这个 skill、检测 skill 有没有毒、skill 安全审计、这个 skill 安全吗、检查恶意 skill、audit skill、skill security
 ---
 
 # Skill Auditor — Skill 安全审计(基础版)

@@ -388,7 +388,7 @@ templates/
 ### 6.2 使用方式
 
 ```bash
-# 复制模板到新项目
+# # 复制模板到新项目
 cp -r templates/* /path/to/new-project/
 ```
 

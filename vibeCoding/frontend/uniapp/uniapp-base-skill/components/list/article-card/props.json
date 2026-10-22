@@ -1,0 +1,18 @@
+{
+  "name": "article-card",
+  "title": "文章卡片",
+  "category": "list",
+  "description": "文章卡片，卡片外壳由 BaseCard 提供，支持封面图、标题、描述、作者、日期、阅读量",
+  "aliases": ["文章", "文章块", "article", "news-card"],
+  "props": [
+    { "name": "mode", "type": "'thumb' | 'cover'", "default": "thumb", "desc": "模式：thumb 左侧缩略图 / cover 顶部封面" },
+    { "name": "image", "type": "string", "default": "", "desc": "封面图地址" },
+    { "name": "title", "type": "string", "default": "", "desc": "标题" },
+    { "name": "desc", "type": "string", "default": "", "desc": "描述" },
+    { "name": "author", "type": "string", "default": "", "desc": "作者" },
+    { "name": "date", "type": "string", "default": "", "desc": "日期" },
+    { "name": "views", "type": "string|number", "default": "", "desc": "阅读量" }
+  ],
+  "events": ["click"],
+  "slots": []
+}

@@ -8,12 +8,12 @@
         <view class="user-info">
           <text class="nickname">{{ userInfo.nickname }}</text>
           <view class="level-tag" v-if="userInfo.level">
-            <text class="level-icon">⭐</text>
+            <text class="level-icon"></text>
             <text class="level-text">{{ userInfo.level }}</text>
           </view>
         </view>
         <view class="edit-btn" @click="goEdit">
-          <text class="edit-icon">✏️</text>
+          <text class="edit-icon">✎</text>
         </view>
       </view>
     </view>
@@ -83,21 +83,21 @@ const props = defineProps({
   orderTypes: {
     type: Array,
     default: () => [
-      { icon: '💰', label: '待付款', status: 0, badge: 2 },
-      { icon: '📦', label: '待发货', status: 1, badge: 1 },
-      { icon: '🚚', label: '待收货', status: 2, badge: 3 },
-      { icon: '✅', label: '已完成', status: 3, badge: 0 }
+      { icon: '金额', label: '待付款', status: 0, badge: 2 },
+      { icon: '包裹', label: '待发货', status: 1, badge: 1 },
+      { icon: '物流', label: '待收货', status: 2, badge: 3 },
+      { icon: '', label: '已完成', status: 3, badge: 0 }
     ]
   },
   menuItems: {
     type: Array,
     default: () => [
-      { icon: '🎫', label: '优惠券', path: '/pages/coupon/list' },
-      { icon: '⭐', label: '我的收藏', path: '/pages/favorite/list' },
-      { icon: '📍', label: '收货地址', path: '/pages/address/list' },
-      { icon: '💳', label: '银行卡', path: '/pages/bankcard/list' },
-      { icon: '🚚', label: '物流查询', path: '/pages/logistics/list' },
-      { icon: '🎧', label: '客服中心', path: '/pages/service/index' }
+      { icon: '券', label: '优惠券', path: '/pages/coupon/list' },
+      { icon: '', label: '我的收藏', path: '/pages/favorite/list' },
+      { icon: '位置', label: '收货地址', path: '/pages/address/list' },
+      { icon: '支付', label: '银行卡', path: '/pages/bankcard/list' },
+      { icon: '物流', label: '物流查询', path: '/pages/logistics/list' },
+      { icon: '音乐', label: '客服中心', path: '/pages/service/index' }
     ]
   }
 })

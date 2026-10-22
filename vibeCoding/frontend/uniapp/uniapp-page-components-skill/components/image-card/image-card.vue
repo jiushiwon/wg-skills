@@ -64,7 +64,7 @@ interface Props {
   image?: string
   /** 图片裁剪模式 */
   imageMode?: 'aspectFill' | 'aspectFit' | 'widthFix' | 'scaleToFill'
-  /** 图片高度（rpx / 主题变量），默认 calc(var(--spacing-2xl) * 6) ≈ 384rpx */
+  /** 图片高度（rpx / 主题变量），默认 calc(var(--space-16, 64rpx) * 6) ≈ 384rpx */
   imageHeight?: string
   /** 是否懒加载 */
   lazyLoad?: boolean
@@ -90,16 +90,16 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   image: '',
   imageMode: 'aspectFill',
-  imageHeight: 'calc(var(--spacing-2xl) * 6)',
+  imageHeight: 'calc(var(--space-16, 64rpx) * 6)',
   lazyLoad: true,
   title: '',
   description: '',
   tags: () => [],
   showTags: true,
-  radius: 'var(--radius-card)',
-  padding: '0 0 var(--spacing-md)',
-  background: 'var(--color-bg-surface)',
-  margin: '0 0 var(--spacing-md)',
+  radius: 'var(--radius-card, 24rpx)',
+  padding: '0 0 var(--space-6, 24rpx)',
+  background: 'var(--bg-card, #ffffff)',
+  margin: '0 0 var(--space-6, 24rpx)',
   border: false,
   shadow: false,
   clickable: false,
@@ -126,7 +126,7 @@ watch(
 .ic-image {
   display: block;
   width: 100%;
-  border-radius: var(--radius-image);
+  border-radius: var(--radius-image, 16rpx);
 }
 
 .ic-image-ph {
@@ -134,49 +134,49 @@ watch(
   align-items: center;
   justify-content: center;
   width: 100%;
-  background: var(--color-bg-tinted);
-  border-radius: var(--radius-image);
+  background: var(--bg-light, #f5f5f5);
+  border-radius: var(--radius-image, 16rpx);
 }
 
 .ic-image-ph-text {
-  font-size: var(--font-sm);
-  color: var(--color-text-tertiary);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .ic-content {
-  padding: var(--spacing-md) var(--spacing-lg) 0;
+  padding: var(--space-6, 24rpx) var(--space-8, 32rpx) 0;
 }
 
 .ic-title {
   display: block;
-  font-size: var(--font-lg);
+  font-size: var(--font-lg, 30rpx);
   font-weight: 600;
   line-height: 1.4;
-  color: var(--color-text-primary);
+  color: var(--text-primary, #171717);
 }
 
 .ic-desc {
   display: block;
-  margin-top: var(--spacing-xs);
-  font-size: var(--font-sm);
+  margin-top: var(--space-2, 8rpx);
+  font-size: var(--font-sm, 26rpx);
   line-height: 1.6;
-  color: var(--color-text-secondary);
+  color: var(--text-secondary, #525252);
 }
 
 .ic-tags {
   display: flex;
   flex-wrap: wrap;
-  margin-top: var(--spacing-sm);
+  margin-top: var(--space-4, 16rpx);
 }
 
 .ic-tag {
-  margin-right: var(--spacing-xs);
-  margin-bottom: var(--spacing-xs);
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--radius-tag);
-  font-size: var(--font-xs);
+  margin-right: var(--space-2, 8rpx);
+  margin-bottom: var(--space-2, 8rpx);
+  padding: var(--space-2, 8rpx) var(--space-4, 16rpx);
+  border-radius: var(--radius-tag, 8rpx);
+  font-size: var(--font-xs, 24rpx);
   line-height: 1.4;
-  color: var(--color-primary);
-  background: var(--color-bg-tinted);
+  color: var(--color-primary, #14b8a6);
+  background: var(--bg-light, #f5f5f5);
 }
 </style>

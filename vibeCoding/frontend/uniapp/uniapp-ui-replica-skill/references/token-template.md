@@ -5,9 +5,9 @@
 ## 颜色
 
 ```scss
-:root {
+:r:root {
   /* 品牌色 */
-  --primary: #2563EB;
+  --color-primary: #2563EB;
   --primary-hover: #1D4ED8;
   --primary-active: #1E40AF;
   --primary-light: #EFF6FF;
@@ -50,11 +50,11 @@
 ## 间距
 
 ```scss
-:root {
+:r:root {
   --space-xs: 4px;
-  --space-sm: 8px;
-  --space-md: 12px;
-  --space-lg: 16px;
+  --space-2: 8px;
+  --space-6: 12px;
+  --space-8: 16px;
   --space-xl: 20px;
   --space-2xl: 24px;
   --space-3xl: 32px;
@@ -65,7 +65,7 @@
 ## 圆角
 
 ```scss
-:root {
+:r:root {
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
@@ -77,9 +77,9 @@
 ## 阴影
 
 ```scss
-:root {
+:r:root {
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
 }
@@ -88,14 +88,14 @@
 ## 字号
 
 ```scss
-:root {
-  --text-xs: 12px;
-  --text-sm: 13px;
-  --text-base: 14px;
-  --text-lg: 16px;
-  --text-xl: 18px;
-  --text-2xl: 20px;
-  --text-3xl: 24px;
+:r:root {
+  --font-xs: 12px;
+  --font-sm: 13px;
+  --font-md: 14px;
+  --font-lg: 16px;
+  --font-xl: 18px;
+  --font-2xl: 20px;
+  --font-3xl: 24px;
 }
 ```
 
@@ -108,7 +108,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: 'var(--primary)',
+        primary: 'var(--color-primary)',
         'text-main': 'var(--text-main)',
         'bg-page': 'var(--bg-page)',
       }

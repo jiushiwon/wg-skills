@@ -115,6 +115,7 @@ onShareTimeline(() => ({
 
 ```json
 {
+{
   "pages": [
     { "path": "pages/index/index" },
     { "path": "pages/profile/index" }
@@ -258,7 +259,7 @@ export function uploadFile(filePath: string, url: string): Promise<string> {
 在 `App.vue` 或全局样式中处理：
 
 ```scss
-/* 顶部安全区 */
+/*/* 顶部安全区 */
 .safe-area-top {
   padding-top: constant(safe-area-inset-top);
   padding-top: env(safe-area-inset-top);

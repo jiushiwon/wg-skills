@@ -1,0 +1,21 @@
+{
+  "name": "input-field",
+  "title": "表单项",
+  "category": "form",
+  "description": "表单项，基于 BaseFormItem 容器，支持标签、清除与错误提示",
+  "aliases": ["输入框", "表单项", "input", "textfield", "文本输入"],
+  "props": [
+    { "name": "modelValue", "type": "'string' | 'number'", "default": "", "desc": "绑定值" },
+    { "name": "label", "type": "string", "default": "", "desc": "标签文案，为空时隐藏标签列" },
+    { "name": "type", "type": "string", "default": "text", "desc": "输入类型，text / number / idcard / digit 等" },
+    { "name": "placeholder", "type": "string", "default": "", "desc": "占位文案" },
+    { "name": "disabled", "type": "boolean", "default": false, "desc": "禁用输入" },
+    { "name": "maxlength", "type": "number", "default": -1, "desc": "最大长度，-1 表示不限制" },
+    { "name": "clearable", "type": "boolean", "default": false, "desc": "有内容时显示清除按钮" },
+    { "name": "error", "type": "boolean", "default": false, "desc": "错误状态，输入框描边转红" },
+    { "name": "errorMessage", "type": "string", "default": "", "desc": "错误提示文案，error 为 true 时显示在控件下方" },
+    { "name": "labelWidth", "type": "string", "default": "160rpx", "desc": "标签列宽" }
+  ],
+  "events": ["update:modelValue", "input", "blur", "focus", "clear"],
+  "slots": []
+}

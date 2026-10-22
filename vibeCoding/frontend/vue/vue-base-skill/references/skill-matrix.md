@@ -138,7 +138,7 @@ vue-base-skill（父技能层，强依赖 vue-theme-skill）
 |----------|----------|------|
 | vue-theme-skill | uniapp-theme-skill | 命名 + token 体系完全对齐 |
 | vue-base-skill | uniapp-base-skill | 父技能 + 嵌套子技能子三层结构 |
-| vue-card-skill | uniapp-card-skill | 业务卡片 + demo-components |
+| vue-card-skill | uniapp-base-skill/containers/base-card | 根容器 + 业务卡片 + demo-components |
 | vue-button-skill | (扩展，未来独立) | — |
 | vue-tag-skill | (扩展，未来独立) | — |
 | vue-table-skill | (扩展，未来独立) | — |

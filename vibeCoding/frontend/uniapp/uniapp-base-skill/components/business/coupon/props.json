@@ -1,0 +1,22 @@
+{
+  "name": "coupon",
+  "title": "优惠券",
+  "category": "business",
+  "description": "优惠券卡面组件，外壳基于 BaseCard 根容器",
+  "aliases": ["优惠券", "券", "coupon", "ticket"],
+  "props": [
+    { "name": "type", "type": "'money' | 'discount'", "default": "money", "desc": "券类型：money 金额券 / discount 折扣券" },
+    { "name": "value", "type": "string | number", "default": 0, "desc": "优惠值" },
+    { "name": "condition", "type": "string", "default": "", "desc": "使用条件" },
+    { "name": "title", "type": "string", "default": "", "desc": "标题" },
+    { "name": "desc", "type": "string", "default": "", "desc": "描述" },
+    { "name": "date", "type": "string", "default": "", "desc": "有效期" },
+    { "name": "status", "type": "'unused' | 'used' | 'expired'", "default": "unused", "desc": "状态：未使用 / 已使用 / 已过期" },
+    { "name": "disabled", "type": "boolean", "default": false, "desc": "是否禁用" },
+    { "name": "showReceive", "type": "boolean", "default": false, "desc": "是否显示领取文案" },
+    { "name": "received", "type": "boolean", "default": false, "desc": "是否已领取" },
+    { "name": "currency", "type": "string", "default": "¥", "desc": "货币符号" }
+  ],
+  "events": ["click"],
+  "slots": []
+}

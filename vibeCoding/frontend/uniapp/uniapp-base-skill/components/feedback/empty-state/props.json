@@ -1,0 +1,19 @@
+{
+  "name": "empty-state",
+  "title": "空状态",
+  "category": "feedback",
+  "description": "无数据时的占位展示",
+  "aliases": ["无数据", "空列表", "empty state", "no data"],
+  "props": [
+    { "name": "image", "type": "string", "default": "", "desc": "插图 / 图标图片地址，为空时用 CSS 形状占位" },
+    { "name": "title", "type": "string", "default": "", "desc": "标题" },
+    { "name": "desc", "type": "string", "default": "", "desc": "描述文字" },
+    { "name": "buttonText", "type": "string", "default": "", "desc": "操作按钮文字" },
+    { "name": "showButton", "type": "boolean", "default": false, "desc": "是否显示操作按钮（需配合 buttonText）" }
+  ],
+  "events": ["click"],
+  "slots": [
+    { "name": "icon", "desc": "自定义图标 / 插图区域" },
+    { "name": "action", "desc": "自定义操作区，优先于内置按钮" }
+  ]
+}

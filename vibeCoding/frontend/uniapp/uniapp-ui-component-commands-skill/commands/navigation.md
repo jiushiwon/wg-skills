@@ -1,129 +1,102 @@
-# 导航类组件
+# 导航类组件（navigation）
 
-## nav-bar 自定义导航栏
+> 实现真源：`vibeCoding/frontend/uniapp/uniapp-base-skill/`
+> 本文件由 `components/_registry.json` + 各组件 `props.json` 同步生成，**改实现必须重新生成本文件**。
+> 重新生成：`node scripts/gen-commands.js`
 
-**说明**：自定义顶部导航栏，支持返回按钮、标题、右侧操作、胶囊按钮
+## 总览
 
-**别名**：导航栏、header、头部、顶部菜单
-
-**属性**：
-| 名称 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| title | string | '' | 标题文字 |
-| showBack | boolean | true | 显示返回按钮 |
-| fixed | boolean | false | 固定顶部 |
-| background | string | #fff | 背景色 |
-| titleColor | string | #1C1C1E | 标题颜色 |
-| capsuleRight | array | [] | 右侧胶囊按钮配置 |
-
-**事件**：
-- back：点击返回按钮
-- rightClick：点击右侧区域
-
-**插槽**：
-- default：默认内容（标题）
-- left：左侧区域
-- right：右侧区域
-
-**用法**：
-```vue
-<nav-bar title="首页" :show-back="false" fixed />
-<nav-bar title="详情">
-  <template #right>
-    <view class="share-btn">分享</view>
-  </template>
-</nav-bar>
-```
-
----
-
-## tab-bar 底部Tab栏
-
-**说明**：底部Tab切换，支持图标+文字、选中态
-
-**别名**：底部导航、tab切换、底部菜单
-
-**属性**：
-| 名称 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| tabs | array | [] | Tab配置 [{name, icon, activeIcon}] |
-| current | number | 0 | 当前选中索引 |
-| fixed | boolean | false | 固定底部 |
-| background | string | #fff | 背景色 |
-
-**事件**：
-- change：切换Tab时触发
-
-**用法**：
-```vue
-<tab-bar :tabs="[
-  { name: '首页', icon: 'home', activeIcon: 'home-fill' },
-  { name: '我的', icon: 'user', activeIcon: 'user-fill' }
-]" @change="onTabChange" />
-```
-
----
-
-## top-tab 顶部Tab切换
-
-**说明**：顶部Tab横向滚动切换
-
-**别名**：顶部tab、分类切换
-
-**属性**：
-| 名称 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| tabs | array | [] | Tab配置 [{name, id}] |
-| current | number | 0 | 当前选中 |
-| scroll | boolean | true | 超出滚动 |
-
-**用法**：
-```vue
-<top-tab :tabs="['推荐', '热门', '最新']" v-model="current" />
-```
-
----
-
-## side-menu 侧边栏菜单
-
-**说明**：侧边栏抽屉菜单
-
-**别名**：侧边导航、抽屉
-
-**属性**：
-| 名称 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| show | boolean | false | 显示状态 |
-| width | string | 80% | 抽屉宽度 |
-
-**事件**：
-- close：关闭时触发
-
-**用法**：
-```vue
-<side-menu :show.sync="showDrawer">
-  <view class="menu-list">菜单内容</view>
-</side-menu>
-```
+| 组件 | 说明 | 别名 | 类型 |
+|------|------|------|------|
+| `breadcrumb` | 路径导航面包屑，最后一级为当前页不可点击 | 面包屑导航 / breadcrumb / 路径导航 / 层级路径 | 组件 |
+| `side-menu` | 抽屉式侧边栏菜单，支持二级子项展开收起 | 侧边栏 / side-menu / 折叠菜单 / 抽屉菜单 | 组件 |
+| `top-tab` | 顶部横向页签切换，指示条使用 transform 动画 | 顶部标签 / top-tab / 选项卡 / 页签导航 | 组件 |
 
 ---
 
 ## breadcrumb 面包屑
 
-**说明**：路径导航
+**说明**：路径导航面包屑，最后一级为当前页不可点击
 
-**别名**：路径导航
+**别名**：面包屑导航、breadcrumb、路径导航、层级路径
+
+**路径**：`vibeCoding/frontend/uniapp/uniapp-base-skill/components/navigation/breadcrumb/`
 
 **属性**：
+
 | 名称 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| items | array | [] | 路径项 [{name, path}] |
+| `items` | `array` | `[]` | 路径项列表 [{text, icon, url}]，最后一项为当前页 |
+| `separator` | `string` | `›` | 分隔符 |
 
-**用法**：
-```vue
-<breadcrumb :items="[
-  { name: '首页', path: '/' },
-  { name: '分类', path: '/category' },
-  { name: '详情' }
-]" />
-```
+**事件**：
+
+- `click`
+
+**用法**：见 [usage.md](../../uniapp-base-skill/components/navigation/breadcrumb/usage.md)
+
+---
+
+## side-menu 侧边菜单
+
+**说明**：抽屉式侧边栏菜单，支持二级子项展开收起
+
+**别名**：侧边栏、side-menu、折叠菜单、抽屉菜单
+
+**路径**：`vibeCoding/frontend/uniapp/uniapp-base-skill/components/navigation/side-menu/`
+
+**属性**：
+
+| 名称 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `show` | `boolean` | `false` | 抽屉显示状态 |
+| `title` | `string` | `菜单` | 抽屉标题 |
+| `width` | `string` | `80%` | 抽屉宽度 |
+| `background` | `string` | `var(--bg-card, #ffffff)` | 抽屉背景色 |
+| `items` | `array` | `[]` | 菜单项列表 [{key, text, children}] |
+| `modelValue` | `string[]` | `[]` | 已展开的菜单项 key 集合 |
+| `collapsible` | `boolean` | `true` | 是否允许折叠子项 |
+
+**事件**：
+
+- `close`
+- `update:show`
+- `update:modelValue`
+- `change`
+- `select`
+
+**插槽**：
+
+| 名称 | 说明 |
+|------|------|
+| `default` | 菜单内容，默认渲染 items |
+| `header` | 自定义抽屉头部 |
+
+**用法**：见 [usage.md](../../uniapp-base-skill/components/navigation/side-menu/usage.md)
+
+---
+
+## top-tab 顶部页签
+
+**说明**：顶部横向页签切换，指示条使用 transform 动画
+
+**别名**：顶部标签、top-tab、选项卡、页签导航
+
+**路径**：`vibeCoding/frontend/uniapp/uniapp-base-skill/components/navigation/top-tab/`
+
+**属性**：
+
+| 名称 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `items` | `array` | `[]` | 页签列表 [{key, text, badge}] |
+| `modelValue` | `string` |  | 当前选中项的 key |
+| `activeColor` | `string` | `var(--color-primary, #14b8a6)` | 选中态颜色 |
+| `inactiveColor` | `string` | `var(--text-secondary, #525252)` | 未选中态颜色 |
+| `scroll` | `boolean` | `true` | 超出宽度时是否横向滚动 |
+
+**事件**：
+
+- `update:modelValue`
+- `change`
+
+**用法**：见 [usage.md](../../uniapp-base-skill/components/navigation/top-tab/usage.md)

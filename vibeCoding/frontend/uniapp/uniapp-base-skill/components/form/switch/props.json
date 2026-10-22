@@ -1,0 +1,16 @@
+{
+  "name": "switch",
+  "title": "开关",
+  "category": "form",
+  "description": "开关选择器，支持主题色与自定义轨道色",
+  "aliases": ["切换开关", "toggle", "switch", "开关控件", "启用关闭"],
+  "props": [
+    { "name": "modelValue", "type": "boolean", "default": false, "desc": "绑定值，是否开启" },
+    { "name": "label", "type": "string", "default": "", "desc": "左侧标签文案，为空时不渲染" },
+    { "name": "activeColor", "type": "string", "default": "", "desc": "开启态轨道颜色，留空则用主题主色 --color-primary" },
+    { "name": "inactiveColor", "type": "string", "default": "", "desc": "关闭态轨道颜色，留空则用主题灰 --text-tertiary" },
+    { "name": "disabled", "type": "boolean", "default": false, "desc": "禁用，点击不触发变更" }
+  ],
+  "events": ["update:modelValue", "change"],
+  "slots": []
+}

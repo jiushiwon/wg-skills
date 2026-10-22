@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-popup 实战 - 表单筛选</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-primary: #4a90e2;
+      --color-success: #52c41a;
+      --text-primary: #333;
+      --text-secondary: #666;
+      --text-tertiary: #999;
+      --bg-page: #f5f5f5;
+      --bg-card: #fff;
+      --border: #e8e8e8;
+    }
+    body { background: var(--bg-page); font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; padding: 20px; }
+
+    .page { max-width: 414px; margin: 0 auto; }
+
+    /* 手机模拟器 */
+    .phone {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    .phone-header {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-4);
+      border-bottom: 1px solid var(--border);
+    }
+    .phone-title { font-size: 16px; font-weight: 500; }
+    .phone-body { min-height: 600px; padding: var(--space-4); }
+
+    /* 触发按钮 */
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      text-align: center;
+      cursor: pointer;
+      margin-bottom: var(--space-3);
+    }
+    .btn-secondary { background: #fff; color: var(--text-primary); border: 1px solid var(--border); }
+
+    /* 列表项 */
+    .list-item {
+      padding: var(--space-3);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .list-item:last-child { border-bottom: none; }
+
+    /* Popup 样式 */
+    .popup-mask {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.5);
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+      z-index: 10;
+    }
+    .popup-mask.show { opacity: 1; visibility: visible; }
+
+    .popup {
+      position: absolute;
+      background: var(--bg-card);
+      transition: transform 0.3s;
+      z-index: 20;
+    }
+    .popup-bottom {
+      bottom: 0; left: 0; right: 0;
+      transform: translateY(100%);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      max-height: 70%;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .popup-bottom.show { transform: translateY(0); }
+
+    /* 筛选面板 */
+    .filter-header {
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .filter-title { font-size: 16px; font-weight: 500; }
+    .filter-close { font-size: 24px; color: var(--text-tertiary); cursor: pointer; }
+
+    .filter-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-4);
+    }
+
+    .filter-group { margin-bottom: var(--space-4); }
+    .filter-label { font-size: 14px; color: var(--text-secondary); margin-bottom: var(--space-2); }
+
+    .filter-options { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+    .filter-option {
+      padding: 8px 16px;
+      background: var(--bg-page);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .filter-option.active {
+      background: var(--color-primary);
+      color: #fff;
+    }
+
+    .filter-range {
+      display: flex;
+      gap: var(--space-2);
+      align-items: center;
+    }
+    .filter-range input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+    }
+
+    .filter-footer {
+      padding: var(--space-3) var(--space-4);
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: var(--space-3);
+    }
+    .filter-footer .btn { margin: 0; }
+
+    /* 结果展示 */
+    .result {
+      padding: var(--space-4);
+      background: var(--bg-page);
+      border-radius: var(--radius-md);
+      margin-top: var(--space-4);
+    }
+    .result-title { font-size: 14px; color: var(--text-secondary); margin-bottom: var(--space-2); }
+    .result-tags { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+    .result-tag {
+      padding: 4px 10px;
+      background: var(--color-primary);
+      color: #fff;
+      border-radius: var(--radius-md);
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="phone">
+      <div class="phone-header">
+        <span class="phone-title">商品列表</span>
+      </div>
+      <div class="phone-body">
+        <button class="btn" onclick="openFilter()">筛选</button>
+
+        <div class="list-item">
+          <span>iPhone 15 Pro</span>
+          <span style="color:var(--color-primary);">¥8999</span>
+        </div>
+        <div class="list-item">
+          <span>MacBook Pro</span>
+          <span style="color:var(--color-primary);">¥14999</span>
+        </div>
+        <div class="list-item">
+          <span>AirPods Pro</span>
+          <span style="color:var(--color-primary);">¥1899</span>
+        </div>
+
+        <div class="result" id="resultBox" style="display:none;">
+          <div class="result-title">已选条件：</div>
+          <div class="result-tags" id="resultTags"></div>
+        </div>
+      </div>
+
+      <!-- 遮罩 -->
+      <div class="popup-mask" id="mask" onclick="closeFilter()"></div>
+
+      <!-- 底部筛选弹窗 -->
+      <div class="popup popup-bottom" id="popup">
+        <div class="filter-header">
+          <span class="filter-title">筛选</span>
+          <span class="filter-close" onclick="closeFilter()">×</span>
+        </div>
+
+        <div class="filter-body">
+          <!-- 品牌 -->
+          <div class="filter-group">
+            <div class="filter-label">品牌</div>
+            <div class="filter-options">
+              <span class="filter-option" data-type="brand" onclick="toggleOption(this)">Apple</span>
+              <span class="filter-option" data-type="brand" onclick="toggleOption(this)">华为</span>
+              <span class="filter-option" data-type="brand" onclick="toggleOption(this)">小米</span>
+              <span class="filter-option" data-type="brand" onclick="toggleOption(this)">OPPO</span>
+            </div>
+          </div>
+
+          <!-- 价格 -->
+          <div class="filter-group">
+            <div class="filter-label">价格区间</div>
+            <div class="filter-range">
+              <input type="number" placeholder="最低价" id="priceMin">
+              <span>-</span>
+              <input type="number" placeholder="最高价" id="priceMax">
+            </div>
+          </div>
+
+          <!-- 内存 -->
+          <div class="filter-group">
+            <div class="filter-label">内存</div>
+            <div class="filter-options">
+              <span class="filter-option" data-type="ram" onclick="toggleOption(this)">8GB</span>
+              <span class="filter-option" data-type="ram" onclick="toggleOption(this)">12GB</span>
+              <span class="filter-option" data-type="ram" onclick="toggleOption(this)">16GB</span>
+            </div>
+          </div>
+
+          <!-- 存储 -->
+          <div class="filter-group">
+            <div class="filter-label">存储</div>
+            <div class="filter-options">
+              <span class="filter-option" data-type="storage" onclick="toggleOption(this)">128GB</span>
+              <span class="filter-option" data-type="storage" onclick="toggleOption(this)">256GB</span>
+              <span class="filter-option" data-type="storage" onclick="toggleOption(this)">512GB</span>
+              <span class="filter-option" data-type="storage" onclick="toggleOption(this)">1TB</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-footer">
+          <button class="btn btn-secondary" onclick="resetFilter()">重置</button>
+          <button class="btn" onclick="applyFilter()">确定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const popup = document.getElementById('popup');
+    const mask = document.getElementById('mask');
+
+    function openFilter() {
+      mask.classList.add('show');
+      popup.classList.add('show');
+    }
+
+    function closeFilter() {
+      mask.classList.remove('show');
+      popup.classList.remove('show');
+    }
+
+    function toggleOption(el) {
+      el.classList.toggle('active');
+    }
+
+    function resetFilter() {
+      document.querySelectorAll('.filter-option').forEach(el => el.classList.remove('active'));
+      document.getElementById('priceMin').value = '';
+      document.getElementById('priceMax').value = '';
+    }
+
+    function applyFilter() {
+      const tags = [];
+
+      // 品牌
+      document.querySelectorAll('.filter-option.active[data-type="brand"]').forEach(el => {
+        tags.push(el.textContent);
+      });
+
+      // 价格
+      const min = document.getElementById('priceMin').value;
+      const max = document.getElementById('priceMax').value;
+      if (min || max) {
+        tags.push(`${min || '0'} - ${max || '∞'}`);
+      }
+
+      // 内存
+      document.querySelectorAll('.filter-option.active[data-type="ram"]').forEach(el => {
+        tags.push(el.textContent);
+      });
+
+      // 存储
+      document.querySelectorAll('.filter-option.active[data-type="storage"]').forEach(el => {
+        tags.push(el.textContent);
+      });
+
+      // 显示结果
+      const resultBox = document.getElementById('resultBox');
+      const resultTags = document.getElementById('resultTags');
+
+      if (tags.length > 0) {
+        resultBox.style.display = 'block';
+        resultTags.innerHTML = tags.map(t => `<span class="result-tag">${t}</span>`).join('');
+      } else {
+        resultBox.style.display = 'none';
+      }
+
+      closeFilter();
+    }
+  </script>
+</body>
+</html>

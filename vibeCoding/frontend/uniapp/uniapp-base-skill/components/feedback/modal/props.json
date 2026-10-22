@@ -1,0 +1,20 @@
+{
+  "name": "modal",
+  "title": "模态框",
+  "category": "feedback",
+  "description": "基于 BasePopup 的居中模态对话框",
+  "aliases": ["弹窗", "对话框", "modal", "dialog"],
+  "props": [
+    { "name": "show", "type": "boolean", "default": false, "desc": "显示状态（v-model:show）" },
+    { "name": "title", "type": "string", "default": "", "desc": "标题" },
+    { "name": "message", "type": "string", "default": "", "desc": "内容文本，默认插槽优先级更高" },
+    { "name": "showCancel", "type": "boolean", "default": true, "desc": "是否显示取消按钮" },
+    { "name": "showConfirm", "type": "boolean", "default": true, "desc": "是否显示确认按钮" },
+    { "name": "cancelText", "type": "string", "default": "取消", "desc": "取消按钮文字" },
+    { "name": "confirmText", "type": "string", "default": "确定", "desc": "确认按钮文字" },
+    { "name": "closeOnMask", "type": "boolean", "default": true, "desc": "点击遮罩是否关闭" },
+    { "name": "danger", "type": "boolean", "default": false, "desc": "危险态：确认按钮使用错误色" }
+  ],
+  "events": ["update:show", "close", "cancel", "confirm"],
+  "slots": [{ "name": "default", "desc": "内容区域，未传时显示 message" }]
+}

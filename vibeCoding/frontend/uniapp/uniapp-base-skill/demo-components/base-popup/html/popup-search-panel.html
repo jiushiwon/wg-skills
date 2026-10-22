@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-popup 实战 - 搜索面板（顶部下拉）</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px; --radius-md: 8px;
+      --space-2: 8px; --space-3: 12px; --space-4: 16px;
+      --color-primary: #4a90e2; --text-primary: #333;
+      --text-secondary: #666; --text-tertiary: #999;
+      --bg-page: #f5f5f5; --bg-card: #fff; --border: #e8e8e8;
+    }
+    body { background: var(--bg-page); font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; padding: 20px; }
+    .page { max-width: 414px; margin: 0 auto; }
+    .phone { background: var(--bg-card); border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); position: relative; min-height: 600px; }
+    .phone-header { height: 44px; display: flex; align-items: center; padding: 0 var(--space-4); border-bottom: 1px solid var(--border); }
+    .phone-title { font-size: 16px; font-weight: 500; }
+
+    .search-bar { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-3) var(--space-4); }
+    .search-input { flex: 1; display: flex; align-items: center; gap: 6px; background: var(--bg-page); border-radius: 999px; padding: 8px 14px; font-size: 14px; color: var(--text-tertiary); cursor: pointer; }
+
+    .popup-mask { position: absolute; inset: 0; background: rgba(0,0,0,0.45); opacity: 0; visibility: hidden; transition: opacity .3s,visibility .3s; z-index: 10; }
+    .popup-mask.show { opacity: 1; visibility: visible; }
+    .popup { position: absolute; background: var(--bg-card); transition: transform .3s; z-index: 20; }
+    .popup-top { top: 0; left: 0; right: 0; transform: translateY(-100%); border-radius: 0 0 var(--radius-lg) var(--radius-lg); max-height: 80%; display: flex; flex-direction: column; }
+    .popup-top.show { transform: translateY(0); }
+
+    .panel-search { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--border); flex-shrink: 0; }
+    .panel-input { flex: 1; display: flex; align-items: center; gap: 6px; background: var(--bg-page); border-radius: 999px; padding: 8px 14px; }
+    .panel-input input { border: none; background: transparent; outline: none; flex: 1; font-size: 14px; }
+    .panel-cancel { font-size: 14px; color: var(--text-secondary); cursor: pointer; white-space: nowrap; }
+
+    .panel-body { flex: 1; overflow-y: auto; padding: var(--space-4); }
+    .panel-section { margin-bottom: var(--space-4); }
+    .panel-title { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-secondary); margin-bottom: var(--space-3); }
+    .panel-title .clear { color: var(--text-tertiary); font-size: 12px; cursor: pointer; }
+    .chips { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+    .chip { padding: 7px 14px; background: var(--bg-page); border-radius: 999px; font-size: 13px; cursor: pointer; }
+    .chip:hover { color: var(--color-primary); }
+    .chip.hot { color: var(--color-error); }
+    .chip .x { margin-left: 6px; color: var(--text-tertiary); }
+
+    .result { padding: var(--space-3) var(--space-4); background: var(--bg-page); border-radius: var(--radius-md); margin-top: var(--space-3); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="phone">
+      <div class="phone-header"><span class="phone-title">商城</span></div>
+      <div class="search-bar">
+        <div class="search-input" onclick="openSearch()">
+          <span>⌕</span><span>搜索商品、品牌</span>
+        </div>
+      </div>
+      <div style="padding:0 var(--space-4);"><div class="result">最近搜索：<b id="resultText">无</b></div></div>
+
+      <div class="popup-mask" id="mask" onclick="closeSearch()"></div>
+      <div class="popup popup-top" id="popup">
+        <div class="panel-search">
+          <div class="panel-input">
+            <span>⌕</span>
+            <input id="panelInput" placeholder="搜索商品、品牌" onkeydown="if(event.key==='Enter')doSearch()">
+          </div>
+          <span class="panel-cancel" onclick="closeSearch()">取消</span>
+        </div>
+        <div class="panel-body">
+          <div class="panel-section">
+            <div class="panel-title"><span>历史搜索</span><span class="clear" onclick="clearHistory()">清空</span></div>
+            <div class="chips" id="historyChips"></div>
+          </div>
+          <div class="panel-section">
+            <div class="panel-title"><span>热门搜索</span></div>
+            <div class="chips" id="hotChips"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const HOT_WORDS = ['手机壳', '运动鞋', '咖啡', '蓝牙耳机', '连衣裙', '零食', '充电宝'];
+
+    let history = ['耳机', '跑鞋', '咖啡豆'];
+
+    function openSearch() {
+      renderHistory();
+      renderHot();
+      document.getElementById('mask').classList.add('show');
+      document.getElementById('popup').classList.add('show');
+      document.getElementById('panelInput').focus();
+    }
+
+    function closeSearch() {
+      document.getElementById('mask').classList.remove('show');
+      document.getElementById('popup').classList.remove('show');
+    }
+
+    function renderHistory() {
+      const box = document.getElementById('historyChips');
+      box.innerHTML = history.length
+        ? history.map(w => `<span class="chip" onclick="doSearch('${w}')">${w}<span class="x" onclick="event.stopPropagation();removeHistory('${w}')">×</span></span>`).join('')
+        : '<span style="font-size:13px;color:#999;">暂无搜索历史</span>';
+    }
+
+    function renderHot() {
+      document.getElementById('hotChips').innerHTML =
+        HOT_WORDS.map(w => `<span class="chip hot" onclick="doSearch('${w}')">${w}</span>`).join('');
+    }
+
+    function removeHistory(w) {
+      history = history.filter(x => x !== w);
+      renderHistory();
+    }
+
+    function clearHistory() {
+      history = [];
+      renderHistory();
+    }
+
+    function doSearch(word) {
+      const w = (word !== undefined ? word : document.getElementById('panelInput').value).trim();
+      if (!w) return;
+      history = [w, ...history.filter(x => x !== w)].slice(0, 8);
+      document.getElementById('resultText').textContent = w;
+      closeSearch();
+    }
+  </script>
+</body>
+</html>

@@ -23,24 +23,24 @@ description: 诊断 uniapp 项目与标准骨架的差距，出具规范化方�
 
 ```
 Phase 1: 项目结构扫描
-  → 检测当前目录结构
-  → 对比标准骨架（api/stores/components/pages/styles 等）
-  → 识别缺失的目录和文件
+   检测当前目录结构
+   对比标准骨架（api/stores/components/pages/styles 等）
+   识别缺失的目录和文件
 
 Phase 2: 代码规范检测
-  → API 层：是否统一封装、是否有重复请求逻辑
-  → 状态管理：是否使用 Pinia/Vuex，store 是否规范
-  → 组件：是否有统一的组件规范，重复组件是否抽离
-  → 样式：是否有全局变量、样式是否分散
+   API 层：是否统一封装、是否有重复请求逻辑
+   状态管理：是否使用 Pinia/Vuex，store 是否规范
+   组件：是否有统一的组件规范，重复组件是否抽离
+   样式：是否有全局变量、样式是否分散
 
 Phase 3: 生成诊断报告
-  → 结构层面：缺失目录/文件清单
-  → 代码层面：规范违背项及修复优先级
-  → 行动建议：按优先级排序的调整清单
+   结构层面：缺失目录/文件清单
+   代码层面：规范违背项及修复优先级
+   行动建议：按优先级排序的调整清单
 
 Phase 4: 执行规范化（可选）
-  → 按报告逐步调整
-  → 每次调整后生成新的 CLAUDE.md
+   按报告逐步调整
+   每次调整后生成新的 CLAUDE.md
 ```
 
 ## Phase Details
@@ -50,7 +50,7 @@ Phase 4: 执行规范化（可选）
 #### 检测当前目录结构
 
 ```bash
-# 查看项目根目录结构
+# # 查看项目根目录结构
 ls -la
 
 # 查看 src 目录结构
@@ -146,7 +146,7 @@ uniapp-vue3-project/
 - 请求是否统一处理错误
 
 ```bash
-# 搜索直接使用 uni.request 的地方
+# # 搜索直接使用 uni.request 的地方
 grep -rnE 'uni\.request\(' src/pages/
 ```
 
@@ -159,7 +159,7 @@ grep -rnE 'uni\.request\(' src/pages/
 - 页面间传值是否规范
 
 ```bash
-# 搜索 store 相关
+# # 搜索 store 相关
 ls src/stores/
 ```
 
@@ -184,7 +184,7 @@ ls src/stores/
 生成 `standardization-report.md`：
 
 ```markdown
-# 项目规范化诊断报告
+# # 项目规范化诊断报告
 
 ## 项目概况
 - 项目路径：xxx

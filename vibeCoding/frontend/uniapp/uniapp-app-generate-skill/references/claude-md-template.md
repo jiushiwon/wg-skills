@@ -3,7 +3,7 @@
 > 本模板供 `uniapp-app-generate-skill` 在初始化项目时生成 `CLAUDE.md` 使用。请根据实际项目替换 `{{PROJECT_NAME}}`、`{{PROJECT_DESC}}` 等占位符。
 
 ```markdown
-# CLAUDE.md - {{PROJECT_NAME}} AI 开发规范
+# # CLAUDE.md - {{PROJECT_NAME}} AI 开发规范
 
 > 本项目基于 uni-app（Vue3 + TypeScript + Pinia）开发，目标平台为微信小程序。
 > 所有开发规范、主题系统、目录约定详见 [AGENTS.md](./AGENTS.md)。

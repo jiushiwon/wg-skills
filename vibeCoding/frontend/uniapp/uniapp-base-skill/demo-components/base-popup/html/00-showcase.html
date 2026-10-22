@@ -13,21 +13,21 @@
       --space-3: 12px;
       --space-4: 16px;
       --color-primary: #4a90e2;
-      --color-text: #333;
-      --color-text-secondary: #666;
-      --color-text-tertiary: #999;
-      --color-bg: #f5f5f5;
-      --color-bg-surface: #fff;
-      --color-border: #e8e8e8;
+      --text-primary: #333;
+      --text-secondary: #666;
+      --text-tertiary: #999;
+      --bg-page: #f5f5f5;
+      --bg-card: #fff;
+      --border: #e8e8e8;
     }
     body {
-      background: var(--color-bg);
+      background: var(--bg-page);
       padding: 20px;
       font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
-      color: var(--color-text);
+      color: var(--text-primary);
     }
     h1 { font-size: 20px; margin-bottom: 8px; }
-    .desc { color: var(--color-text-secondary); font-size: 13px; margin-bottom: 20px; }
+    .desc { color: var(--text-secondary); font-size: 13px; margin-bottom: 20px; }
 
     .grid {
       display: grid;
@@ -36,7 +36,7 @@
     }
     /* 卡片外层统一用 base-card 类 */
     .card {
-      background: var(--color-bg-surface);
+      background: var(--bg-card);
       border-radius: var(--radius-lg);
       overflow: hidden;
       box-shadow: 0 1px 3px rgba(0,0,0,0.06);
@@ -45,7 +45,7 @@
     .card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     .card-header {
       padding: var(--space-3) var(--space-4);
-      border-bottom: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -69,7 +69,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--color-text-secondary);
+      color: var(--text-secondary);
       font-size: 13px;
       text-align: center;
       background: linear-gradient(180deg, #fafafa 0%, #fff 100%);
@@ -83,18 +83,18 @@
       color: var(--color-primary);
       font-size: 13px;
       text-decoration: none;
-      border-top: 1px solid var(--color-border);
+      border-top: 1px solid var(--border);
     }
     .card-link:hover { background: #f8f8f8; }
 
     .container-note {
       margin-top: 24px;
       padding: var(--space-4);
-      background: var(--color-bg-surface);
+      background: var(--bg-card);
       border-radius: var(--radius-lg);
       border-left: 4px solid var(--color-primary);
       font-size: 13px;
-      color: var(--color-text-secondary);
+      color: var(--text-secondary);
       line-height: 1.7;
     }
     .container-note strong { color: var(--color-primary); }
@@ -116,8 +116,8 @@
     .icon-20 { font-size: 20px; }
     .icon-24 { font-size: 24px; }
     .icon-primary { color: var(--color-primary); }
-    .icon-secondary { color: var(--color-text-secondary); }
-    .icon-tertiary { color: var(--color-text-tertiary); }
+    .icon-secondary { color: var(--text-secondary); }
+    .icon-tertiary { color: var(--text-tertiary); }
   </style>
 </head>
 <body>

@@ -26,6 +26,7 @@
 > base-popup 是**根目录容器**，内部封装 base-card。
 
 ```vue
+<template>
 <base-popup v-model:show="show" direction="bottom" title="分享">
   <!-- 默认 slot：弹窗主体 -->
   <view class="menu-item">微信好友</view>
@@ -36,6 +37,9 @@
     <button type="primary">分享</button>
   </template>
 </base-popup>
+</template>
+
+
 ```
 
 ## 组合使用
@@ -43,6 +47,7 @@
 `base-popup` + 其他组件的常见组合：
 
 ```vue
+<template>
 <!-- base-popup + base-select（选择器面板） -->
 <base-popup v-model:show="show" direction="bottom">
   <base-select v-model="city" :options="cities" type="cascade" />
@@ -52,6 +57,9 @@
 <base-popup v-model:show="show" direction="center" title="选择支付方式">
   <base-radio v-model="pay" :options="pays" />
 </base-popup>
+</template>
+
+
 ```
 
 ## 规格文档
@@ -61,5 +69,5 @@
 ## 相关组件
 
 - [base-card.md](../../base-card.md) — 卡片容器（base-popup 内置）
-- [uniapp-form-skill](../../../uniapp-form-skill/) — base-select / base-radio 等表单组件
-- [uniapp-page-skill](../../../uniapp-page-skill/) — 业务页面层
+- [base-form/](../base-form/) — base-select / base-radio 等表单形态参考
+- [base-page/](../base-page/) — 业务页面层形态参考

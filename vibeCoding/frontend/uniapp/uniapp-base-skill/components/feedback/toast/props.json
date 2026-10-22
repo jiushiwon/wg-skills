@@ -1,0 +1,15 @@
+{
+  "name": "toast",
+  "title": "轻提示",
+  "category": "feedback",
+  "description": "短暂显示后自动消失的轻提示",
+  "aliases": ["提示", "轻反馈", "toast", "tips"],
+  "props": [
+    { "name": "show", "type": "boolean", "default": false, "desc": "是否显示" },
+    { "name": "text", "type": "string", "default": "", "desc": "提示文案" },
+    { "name": "type", "type": "'text' | 'success' | 'error' | 'warning' | 'loading'", "default": "text", "desc": "提示类型" },
+    { "name": "duration", "type": "number", "default": 2000, "desc": "自动关闭时长(ms)，0 表示不自动关闭" }
+  ],
+  "events": ["close"],
+  "slots": []
+}

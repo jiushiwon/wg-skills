@@ -1,0 +1,16 @@
+{
+  "name": "action-sheet",
+  "title": "操作菜单",
+  "category": "feedback",
+  "description": "基于 BasePopup 的底部操作菜单",
+  "aliases": ["操作表", "底部菜单", "action sheet", "bottom menu"],
+  "props": [
+    { "name": "show", "type": "boolean", "default": false, "desc": "显示状态（v-model:show）" },
+    { "name": "title", "type": "string", "default": "", "desc": "标题" },
+    { "name": "actions", "type": "array", "default": [], "desc": "操作项列表，每项 { text, value, danger, disabled }" },
+    { "name": "showCancel", "type": "boolean", "default": true, "desc": "是否显示取消按钮" },
+    { "name": "cancelText", "type": "string", "default": "取消", "desc": "取消按钮文字" }
+  ],
+  "events": ["update:show", "close", "select"],
+  "slots": []
+}

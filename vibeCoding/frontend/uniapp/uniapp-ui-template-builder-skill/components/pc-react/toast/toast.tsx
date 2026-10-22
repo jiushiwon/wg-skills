@@ -5,8 +5,8 @@ export type ToastType = 'success' | 'error' | 'info' | 'warning'
 export type ToastPosition = 'top-right' | 'top-center' | 'bottom-right'
 
 const ICON = {
-  success: '✓',
-  error: '✕',
+  success: '',
+  error: '',
   info: 'i',
   warning: '!'
 } as const

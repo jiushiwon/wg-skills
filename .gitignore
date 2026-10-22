@@ -77,3 +77,7 @@ mvnw.cmd
 
 # 本地文档沉淀（按 AGENTS.md 第十一节）
 docs/
+
+# graphify 知识图谱产物
+graphify-out/
+

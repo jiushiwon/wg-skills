@@ -7,7 +7,7 @@
         <view class="user-info">
           <text class="nickname">{{ userInfo.nickname }}</text>
           <view class="vip-tag">
-            <text class="vip-icon">👑</text>
+            <text class="vip-icon">会员</text>
             <text class="vip-text">{{ userInfo.level }}</text>
           </view>
         </view>
@@ -75,22 +75,22 @@ const props = defineProps({
   orderTypes: {
     type: Array,
     default: () => [
-      { icon: '💳', label: '待付款' },
-      { icon: '📦', label: '待发货' },
-      { icon: '🚚', label: '待收货' },
-      { icon: '⭐', label: '待评价' },
-      { icon: '🔄', label: '退款/售后' }
+      { icon: '支付', label: '待付款' },
+      { icon: '包裹', label: '待发货' },
+      { icon: '物流', label: '待收货' },
+      { icon: '', label: '待评价' },
+      { icon: '', label: '退款/售后' }
     ]
   },
   menuItems: {
     type: Array,
     default: () => [
-      { icon: '🎫', label: '优惠券' },
-      { icon: '⭐', label: '我的收藏' },
-      { icon: '📍', label: '收货地址' },
-      { icon: '💳', label: '银行卡' },
-      { icon: '🚚', label: '物流查询' },
-      { icon: '🎧', label: '客服中心' }
+      { icon: '券', label: '优惠券' },
+      { icon: '', label: '我的收藏' },
+      { icon: '位置', label: '收货地址' },
+      { icon: '支付', label: '银行卡' },
+      { icon: '物流', label: '物流查询' },
+      { icon: '音乐', label: '客服中心' }
     ]
   }
 })

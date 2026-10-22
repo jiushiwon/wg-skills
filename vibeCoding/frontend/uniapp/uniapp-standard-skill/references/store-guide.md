@@ -311,13 +311,13 @@ pinia.use(piniaPluginStorage);
 ### 6.1 禁止事项
 
 ```typescript
-// ❌ 禁止：在 Store 外部直接修改 state
+//  禁止：在 Store 外部直接修改 state
 userStore.userInfo.name = '张三';
 
-// ✅ 正确：通过 action 修改
+//  正确：通过 action 修改
 userStore.updateUserInfo({ name: '张三' });
 
-// ❌ 禁止：直接在页面中操作其他 Store 的 state
+//  禁止：直接在页面中操作其他 Store 的 state
 const cartStore = useCartStore();
 cartStore.items = [];  // 不要这样做
 ```
@@ -325,13 +325,13 @@ cartStore.items = [];  // 不要这样做
 ### 6.2 异步操作
 
 ```typescript
-// ❌ 禁止：直接在 action 中修改其他 Store
+//  禁止：直接在 action 中修改其他 Store
 function login(credentials) {
   const userStore = useUserStore();
   userStore.token = 'xxx';  // 跨 Store 操作
 }
 
-// ✅ 正确：只在同一个 Store 中操作
+//  正确：只在同一个 Store 中操作
 function login(credentials) {
   this.token = 'xxx';
 }
@@ -340,7 +340,7 @@ function login(credentials) {
 ### 6.3 初始化时机
 
 ```typescript
-// ✅ 正确：在 App.vue 中初始化全局状态
+//  正确：在 App.vue 中初始化全局状态
 // src/App.vue
 <script setup>
 import { useAppStore } from '@/stores/app';

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-date-picker 日期选择</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-primary: #4a90e2;
+      --color-success: #52c41a;
+      --text-primary: #333;
+      --text-secondary: #666;
+      --text-tertiary: #999;
+      --bg-page: #f5f5f5;
+      --bg-card: #fff;
+      --border: #e8e8e8;
+    }
+    body { background: var(--bg-page); font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; padding: 20px; }
+    .page { max-width: 414px; margin: 0 auto; }
+
+    .phone {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .phone-header {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      padding: 0 var(--space-4);
+      border-bottom: 1px solid var(--border);
+    }
+    .phone-title { font-size: 16px; font-weight: 500; }
+    .phone-body { min-height: 600px; padding: var(--space-4); }
+
+    .date-picker {
+      display: flex;
+      align-items: center;
+      padding: 14px var(--space-4);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-3);
+      cursor: pointer;
+    }
+    .date-picker__label { font-size: 14px; color: var(--text-secondary); width: 70px; }
+    .date-picker__value { flex: 1; font-size: 15px; color: var(--text-primary); }
+    .date-picker__value--placeholder { color: var(--text-tertiary); }
+    .date-picker__arrow { font-size: 18px; color: #ccc; }
+    .date-picker.disabled { opacity: 0.5; }
+
+    .result {
+      padding: var(--space-4);
+      background: var(--bg-page);
+      border-radius: var(--radius-md);
+      margin-top: var(--space-4);
+    }
+    .result-title { font-size: 14px; color: var(--text-secondary); margin-bottom: var(--space-2); }
+    .result-value { font-size: 16px; color: var(--text-primary); font-weight: 500; }
+
+    /* Date Picker 弹窗 */
+    .picker-popup {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      transform: translateY(100%);
+      transition: transform 0.3s;
+      z-index: 100;
+      max-height: 60vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .picker-popup.show { transform: translateY(0); }
+    .picker-popup-mask {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s;
+      z-index: 99;
+    }
+    .picker-popup-mask.show { opacity: 1; visibility: visible; }
+
+    .picker-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--border);
+    }
+    .picker-header__btn { font-size: 15px; padding: 6px 12px; }
+    .picker-header__btn.cancel { color: var(--text-secondary); }
+    .picker-header__btn.confirm { color: var(--color-primary); font-weight: 500; }
+    .picker-header__title { font-size: 16px; font-weight: 500; }
+
+    .picker-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+    }
+    .picker-tab {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+    .picker-tab.active {
+      color: var(--color-primary);
+      border-bottom: 2px solid var(--color-primary);
+    }
+
+    .picker-calendar {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-3);
+    }
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-3);
+    }
+    .calendar-title { font-size: 16px; font-weight: 500; }
+    .calendar-nav { font-size: 20px; color: var(--color-primary); cursor: pointer; padding: 4px 12px; }
+
+    .calendar-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      margin-bottom: var(--space-2);
+    }
+    .calendar-weekday {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-tertiary);
+      padding: 4px;
+    }
+
+    .calendar-days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+    .calendar-day {
+      text-align: center;
+      padding: 8px 4px;
+      font-size: 14px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+    }
+    .calendar-day:hover { background: var(--bg-page); }
+    .calendar-day.empty { cursor: default; }
+    .calendar-day.empty:hover { background: transparent; }
+    .calendar-day.selected {
+      background: var(--color-primary);
+      color: #fff;
+    }
+    .calendar-day.disabled { color: var(--text-tertiary); opacity: 0.5; }
+    .calendar-day.today { border: 1px solid var(--color-primary); }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="phone">
+      <div class="phone-header">
+        <span class="phone-title">日期选择</span>
+      </div>
+      <div class="phone-body">
+        <!-- 日期选择 -->
+        <div class="date-picker" onclick="openPicker('date')">
+          <span class="date-picker__label">日期</span>
+          <span class="date-picker__value" id="dateValue">请选择日期</span>
+          <span class="date-picker__arrow">›</span>
+        </div>
+
+        <!-- 时间选择 -->
+        <div class="date-picker" onclick="openPicker('time')">
+          <span class="date-picker__label">时间</span>
+          <span class="date-picker__value" id="timeValue">请选择时间</span>
+          <span class="date-picker__arrow">›</span>
+        </div>
+
+        <!-- 日期时间 -->
+        <div class="date-picker" onclick="openPicker('datetime')">
+          <span class="date-picker__label">日期时间</span>
+          <span class="date-picker__value" id="datetimeValue">请选择</span>
+          <span class="date-picker__arrow">›</span>
+        </div>
+
+        <!-- 禁用 -->
+        <div class="date-picker disabled">
+          <span class="date-picker__label">禁用</span>
+          <span class="date-picker__value date-picker__value--placeholder">不可选择</span>
+          <span class="date-picker__arrow">›</span>
+        </div>
+
+        <div class="result" id="resultBox">
+          <div class="result-title">已选值：</div>
+          <div class="result-value" id="resultValue">-</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Date Picker 弹窗 -->
+  <div class="picker-popup-mask" id="mask" onclick="closePicker()"></div>
+  <div class="picker-popup" id="pickerPopup">
+    <div class="picker-header">
+      <span class="picker-header__btn cancel" onclick="closePicker()">取消</span>
+      <span class="picker-header__title" id="pickerTitle">选择日期</span>
+      <span class="picker-header__btn confirm" onclick="confirmPicker()">确定</span>
+    </div>
+
+    <div class="picker-tabs" id="pickerTabs" style="display:none;">
+      <div class="picker-tab active" data-mode="date" onclick="switchTab('date')">日期</div>
+      <div class="picker-tab" data-mode="time" onclick="switchTab('time')">时间</div>
+    </div>
+
+    <!-- 日历 -->
+    <div class="picker-calendar" id="calendarView">
+      <div class="calendar-header">
+        <span class="calendar-nav" onclick="prevMonth()">‹</span>
+        <span class="calendar-title" id="calendarTitle">2024年1月</span>
+        <span class="calendar-nav" onclick="nextMonth()">›</span>
+      </div>
+      <div class="calendar-weekdays">
+        <div class="calendar-weekday">日</div>
+        <div class="calendar-weekday">一</div>
+        <div class="calendar-weekday">二</div>
+        <div class="calendar-weekday">三</div>
+        <div class="calendar-weekday">四</div>
+        <div class="calendar-weekday">五</div>
+        <div class="calendar-weekday">六</div>
+      </div>
+      <div class="calendar-days" id="calendarDays"></div>
+    </div>
+
+    <!-- 时间选择 -->
+    <div class="picker-calendar" id="timeView" style="display:none;">
+      <div style="padding: 20px; text-align: center;">
+        <div style="font-size: 48px; font-weight: 300; color: var(--text-primary);" id="timeDisplay">12:00</div>
+        <div style="margin-top: 20px;">
+          <button onclick="setTime('hour', -1)" style="padding: 10px 20px; font-size: 20px;">-</button>
+          <button onclick="setTime('hour', 1)" style="padding: 10px 20px; font-size: 20px; margin-left: 10px;">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentMode = 'date';
+    let currentYear = 2024;
+    let currentMonth = 0;
+    let selectedDate = null;
+    let selectedTime = { hour: 12, minute: 0 };
+
+    const weekDays = ['日', '一', '二', '三', '四', '五', '六'];
+
+    function initCalendar() {
+      const now = new Date();
+      currentYear = now.getFullYear();
+      currentMonth = now.getMonth();
+      renderCalendar();
+    }
+
+    function renderCalendar() {
+      const title = document.getElementById('calendarTitle');
+      title.textContent = `${currentYear}年${currentMonth + 1}月`;
+
+      const daysContainer = document.getElementById('calendarDays');
+      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+      const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+      const today = new Date();
+
+      let html = '';
+
+      // 空白填充
+      for (let i = 0; i < firstDay; i++) {
+        html += '<div class="calendar-day empty"></div>';
+      }
+
+      // 日期
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const isSelected = selectedDate === dateStr;
+        const isToday = today.getFullYear() === currentYear && today.getMonth() === currentMonth && today.getDate() === day;
+
+        html += `<div class="calendar-day ${isSelected ? 'selected' : ''} ${isToday ? 'today' : ''}" onclick="selectDate('${dateStr}', ${day})">${day}</div>`;
+      }
+
+      daysContainer.innerHTML = html;
+    }
+
+    function selectDate(dateStr, day) {
+      selectedDate = dateStr;
+      renderCalendar();
+    }
+
+    function prevMonth() {
+      currentMonth--;
+      if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+      }
+      renderCalendar();
+    }
+
+    function nextMonth() {
+      currentMonth++;
+      if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+      }
+      renderCalendar();
+    }
+
+    function openPicker(mode) {
+      currentMode = mode;
+      initCalendar();
+
+      if (mode === 'date') {
+        document.getElementById('pickerTitle').textContent = '选择日期';
+        document.getElementById('pickerTabs').style.display = 'none';
+        document.getElementById('calendarView').style.display = 'block';
+        document.getElementById('timeView').style.display = 'none';
+      } else if (mode === 'time') {
+        document.getElementById('pickerTitle').textContent = '选择时间';
+        document.getElementById('pickerTabs').style.display = 'none';
+        document.getElementById('calendarView').style.display = 'none';
+        document.getElementById('timeView').style.display = 'block';
+        updateTimeDisplay();
+      } else if (mode === 'datetime') {
+        document.getElementById('pickerTitle').textContent = '选择日期和时间';
+        document.getElementById('pickerTabs').style.display = 'flex';
+        switchTab('date');
+      }
+
+      document.getElementById('mask').classList.add('show');
+      document.getElementById('pickerPopup').classList.add('show');
+    }
+
+    function switchTab(tab) {
+      document.querySelectorAll('.picker-tab').forEach(t => t.classList.remove('active'));
+      document.querySelector(`.picker-tab[data-mode="${tab}"]`).classList.add('active');
+
+      if (tab === 'date') {
+        document.getElementById('calendarView').style.display = 'block';
+        document.getElementById('timeView').style.display = 'none';
+      } else {
+        document.getElementById('calendarView').style.display = 'none';
+        document.getElementById('timeView').style.display = 'block';
+        updateTimeDisplay();
+      }
+    }
+
+    function setTime(type, delta) {
+      if (type === 'hour') {
+        selectedTime.hour = (selectedTime.hour + delta + 24) % 24;
+      } else {
+        selectedTime.minute = (selectedTime.minute + delta + 60) % 60;
+      }
+      updateTimeDisplay();
+    }
+
+    function updateTimeDisplay() {
+      document.getElementById('timeDisplay').textContent =
+        `${String(selectedTime.hour).padStart(2, '0')}:${String(selectedTime.minute).padStart(2, '0')}`;
+    }
+
+    function confirmPicker() {
+      if (currentMode === 'date' && selectedDate) {
+        document.getElementById('dateValue').textContent = selectedDate;
+        document.getElementById('dateValue').classList.remove('date-picker__value--placeholder');
+        document.getElementById('resultValue').textContent = selectedDate;
+      } else if (currentMode === 'time') {
+        const timeStr = `${String(selectedTime.hour).padStart(2, '0')}:${String(selectedTime.minute).padStart(2, '0')}`;
+        document.getElementById('timeValue').textContent = timeStr;
+        document.getElementById('timeValue').classList.remove('date-picker__value--placeholder');
+        document.getElementById('resultValue').textContent = timeStr;
+      } else if (currentMode === 'datetime' && selectedDate) {
+        const datetimeStr = `${selectedDate} ${String(selectedTime.hour).padStart(2, '0')}:${String(selectedTime.minute).padStart(2, '0')}`;
+        document.getElementById('datetimeValue').textContent = datetimeStr;
+        document.getElementById('datetimeValue').classList.remove('date-picker__value--placeholder');
+        document.getElementById('resultValue').textContent = datetimeStr;
+      }
+      closePicker();
+    }
+
+    function closePicker() {
+      document.getElementById('mask').classList.remove('show');
+      document.getElementById('pickerPopup').classList.remove('show');
+    }
+
+    // 初始化
+    initCalendar();
+  </script>
+</body>
+</html>

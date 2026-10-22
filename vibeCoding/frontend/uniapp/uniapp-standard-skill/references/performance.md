@@ -27,18 +27,18 @@
 ### 2.2 优化方案
 
 ```typescript
-// ❌ 每次传递整个数组
+//  每次传递整个数组
 this.setData({
   list: newList
 });
 
-// ✅ 只更新变化的部分
+//  只更新变化的部分
 this.setData({
   'list[0].name': newName,
   'list[0].status': newStatus
 });
 
-// ✅ 使用对象路径更新
+//  使用对象路径更新
 this.setData({
   'item[0]': { ...this.data.item[0], name: newName }
 });
@@ -47,12 +47,12 @@ this.setData({
 ### 2.3 数据精简
 
 ```typescript
-// ❌ 直接存储接口原始数据
+//  直接存储接口原始数据
 this.setData({
   list: res.data.list  // 包含大量无用字段
 });
 
-// ✅ 只存储视图需要的数据
+//  只存储视图需要的数据
 this.setData({
   list: res.data.list.map(item => ({
     id: item.id,
@@ -111,10 +111,14 @@ async function onLoadMore() {
 数量 > 1000 时使用虚拟列表：
 
 ```vue
+<template>
 <virtual-list
   :items="list"
   :item-height="100"
 />
+</template>
+
+
 ```
 
 ## 4. 图片优化
@@ -122,11 +126,15 @@ async function onLoadMore() {
 ### 4.1 懒加载
 
 ```vue
+<template>
 <image
   :src="src"
   mode="aspectFill"
   lazy-load
 />
+</template>
+
+
 ```
 
 ### 4.2 合理尺寸
@@ -141,11 +149,15 @@ const getThumbnail = (url: string, width: number) => {
 ### 4.3 懒加载组件
 
 ```vue
+<template>
 <lazy-image
   :src="imageSrc"
   :default-src="placeholder"
   mode="aspectFill"
 />
+</template>
+
+
 ```
 
 ## 5. 事件优化
@@ -252,11 +264,15 @@ const src = getCachedImage(url);
 ### 7.2 骨架屏
 
 ```vue
+<template>
 <view class="skeleton">
   <view class="skeleton-avatar"></view>
   <view class="skeleton-title"></view>
   <view class="skeleton-content"></view>
 </view>
+</template>
+
+
 ```
 
 ## 8. 渲染优化
@@ -264,7 +280,7 @@ const src = getCachedImage(url);
 ### 8.1 避免频繁更新
 
 ```typescript
-// ❌ 频繁 setData
+//  频繁 setData
 watch: {
   formData: {
     handler() {
@@ -274,7 +290,7 @@ watch: {
   }
 }
 
-// ✅ 使用防抖
+//  使用防抖
 watch: {
   formData: debounce(function() {
     this.setData({ formData: this.formData });

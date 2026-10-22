@@ -112,28 +112,28 @@ defineExpose({
 
 <style lang="scss" scoped>
 .t-form-item {
-  margin-bottom: var(--space-4, 16px);
+  margin-bottom: var(--space-4, 16rpx);
 }
 
 .t-form-item__label {
   display: flex;
   align-items: center;
-  padding-right: var(--space-2, 8px);
+  padding-right: var(--space-2, 8rpx);
 }
 
 .t-form-item--top .t-form-item__label {
-  margin-bottom: var(--space-1, 4px);
+  margin-bottom: var(--space-1, 4rpx);
 }
 
 .t-form-item__label-text {
-  font-size: var(--text-sm, 14px);
-  color: var(--color-text-primary, #374151);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-primary, #171717);
 }
 
 .t-form-item--required .t-form-item__label-text::before {
   content: '*';
-  color: var(--color-error, #ef4444);
-  margin-right: var(--space-1, 4px);
+  color: var(--color-error, #EF4444);
+  margin-right: var(--space-1, 4rpx);
 }
 
 .t-form-item__content {
@@ -142,8 +142,8 @@ defineExpose({
 }
 
 .t-form-item__error {
-  margin-top: var(--space-1, 4px);
-  font-size: var(--text-xs, 12px);
-  color: var(--color-error, #ef4444);
+  margin-top: var(--space-1, 4rpx);
+  font-size: var(--font-xs, 24rpx);
+  color: var(--color-error, #EF4444);
 }
 </style>

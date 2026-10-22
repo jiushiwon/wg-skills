@@ -162,8 +162,8 @@
 从图中提取所有颜色，归类收敛：
 
 ```scss
-:root {
-  --primary: #2563EB;
+:r:root {
+  --color-primary: #2563EB;
   --primary-hover: #1D4ED8;
   --primary-light: #EFF6FF;
 
@@ -184,10 +184,10 @@
 按 4px 基准收敛：
 
 ```scss
---space-xs: 4px;
---space-sm: 8px;
---space-md: 12px;
---space-lg: 16px;
+----space-xs: 4px;
+--space-2: 8px;
+--space-6: 12px;
+--space-8: 16px;
 --space-xl: 20px;
 --space-2xl: 24px;
 --space-3xl: 32px;
@@ -196,12 +196,12 @@
 ### 3.3 圆角与阴影
 
 ```scss
---radius-sm: 6px;
+----radius-sm: 6px;
 --radius-md: 8px;
 --radius-lg: 12px;
 --radius-xl: 16px;
 
---shadow-card: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
+--shadow-md: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
 ```
 
 ## 阶段 4：组件抽象
@@ -228,7 +228,7 @@
 
 ### 4.2 与已有组件对齐（仅完整模式）
 
-若检测到项目已有组件库或 `ui-component-commands-skill/components/` 有类似组件，可作为参考，但不强制复用。
+若检测到项目已有组件库，或 `uniapp-base-skill/components/` 有类似组件，可作为参考，但不强制复用。
 
 **当前任务优先保证还原度**，组件沉淀放到后续收敛阶段。
 

@@ -5,7 +5,7 @@
 ## 快速开始
 
 ```bash
-# 安装依赖
+# # 安装依赖
 npm install
 
 # 微信小程序开发
@@ -37,6 +37,7 @@ npm run dev:app
 编辑项目根目录的 `theme.json`：
 
 ```json
+{
 {
   "colors": {
     "primary": "#10b981"
@@ -89,7 +90,7 @@ src/
 ## 代码规范
 
 ```bash
-# ESLint 检查
+# # ESLint 检查
 npm run lint
 
 # 一键自检：lint + build:h5 + 产物检查

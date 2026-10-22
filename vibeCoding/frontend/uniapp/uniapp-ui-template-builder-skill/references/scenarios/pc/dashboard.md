@@ -34,7 +34,7 @@ dashboard/
 ### 变体1：标准三栏
 
 ```
-┌──────────────────────────────────────────┐
+┌─┌──────────────────────────────────────────┐
 │              顶部标题区                    │
 ├────────┬─────────────┬───────────────────┤
 │        │             │                   │
@@ -49,7 +49,7 @@ dashboard/
 ### 变体2：左中右+底部
 
 ```
-┌──────────────────────────────────────────┐
+┌─┌──────────────────────────────────────────┐
 │              顶部标题区                    │
 ├────────┬─────────────┬───────────────────┤
 │        │             │                   │
@@ -64,7 +64,7 @@ dashboard/
 ### 变体3：单屏卡片
 
 ```
-┌──────────────────────────────────────────┐
+┌─┌──────────────────────────────────────────┐
 │              顶部标题区                    │
 ├──────────────────────────────────────────┤
 │  ┌────┐ ┌────┐ ┌────┐ ┌────┐            │
@@ -86,10 +86,10 @@ dashboard/
 ### 风格1：科技深蓝
 
 ```scss
---bg-page: #0A0E27;
+----bg-page: #0A0E27;
 --bg-card: #0D1238;
 --border: #1A237E;
---primary: #00D9FF;
+--color-primary: #00D9FF;
 --secondary: #7C4DFF;
 --success: #00E676;
 --warning: #FFAB00;
@@ -110,10 +110,10 @@ dashboard/
 ### 风格2：商务蓝
 
 ```scss
---bg-page: #0F172A;
+----bg-page: #0F172A;
 --bg-card: #1E293B;
 --border: #334155;
---primary: #3B82F6;
+--color-primary: #3B82F6;
 --secondary: #8B5CF6;
 --text-primary: #F1F5F9;
 --text-secondary: #94A3B8;
@@ -129,10 +129,10 @@ dashboard/
 ### 风格3：赛博朋克
 
 ```scss
---bg-page: #000000;
+----bg-page: #000000;
 --bg-card: #0D0D0D;
 --border: #1A1A1A;
---primary: #FF00FF;
+--color-primary: #FF00FF;
 --secondary: #00FFFF;
 --accent: #FFFF00;
 --glow-pink: 0 0 20px rgba(255, 0, 255, 0.6);
@@ -150,10 +150,10 @@ dashboard/
 ### 风格4：山水国风
 
 ```scss
---bg-page: #0C1222;
+----bg-page: #0C1222;
 --bg-card: #151E32;
 --border: #2D3A4F;
---primary: #4ADE80;
+--color-primary: #4ADE80;
 --secondary: #22D3EE;
 --text-primary: #E2E8F0;
 --text-secondary: #94A3B8;
@@ -185,7 +185,7 @@ dashboard/
       <span class="unit">{{ unit }}</span>
     </div>
     <div class="stat-trend" :class="trend > 0 ? 'up' : 'down'">
-      <span>{{ trend > 0 ? '↑' : '↓' }}</span>
+      <span>{{ trend > 0 ? '' : '' }}</span>
       <span>{{ Math.abs(trend) }}%</span>
       <span class="period">较{{ period }}</span>
     </div>
@@ -335,7 +335,7 @@ function animateNumber(el, start, end, duration) {
 ### 2. 进场动画
 
 ```scss
-@keyframes fadeInUp {
+@k@keyframes fadeInUp {
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -348,7 +348,7 @@ function animateNumber(el, start, end, duration) {
 
 .card {
   animation: fadeInUp 0.5s ease-out forwards;
-  animation-delay: var(--delay, 0s);
+  animation-delay: 0.2s;
 }
 ```
 
@@ -367,6 +367,7 @@ setInterval(() => {
 ## Mock数据
 
 ```json
+{
 {
   "header": {
     "title": "运营数据大屏",

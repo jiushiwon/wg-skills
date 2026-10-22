@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-popup 实战 - 加入购物车（多维规格）</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px; --radius-md: 8px; --radius-sm: 4px;
+      --space-2: 8px; --space-3: 12px; --space-4: 16px;
+      --color-primary: #4a90e2; --color-error: #f5222d; --text-primary: #333;
+      --text-secondary: #666; --text-tertiary: #999;
+      --bg-page: #f5f5f5; --bg-card: #fff; --border: #e8e8e8;
+    }
+    body { background: var(--bg-page); font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; padding: 20px; }
+    .page { max-width: 414px; margin: 0 auto; }
+    .phone { background: var(--bg-card); border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); position: relative; }
+    .phone-header { height: 44px; display: flex; align-items: center; padding: 0 var(--space-4); border-bottom: 1px solid var(--border); }
+    .phone-title { font-size: 16px; font-weight: 500; }
+    .phone-body { min-height: 600px; padding: var(--space-4); }
+
+    .goods { display: flex; gap: var(--space-3); margin-bottom: var(--space-4); }
+    .goods-img { width: 88px; height: 88px; border-radius: var(--radius-md); background: linear-gradient(135deg,#dfe9f3,#c5d8ea); flex-shrink: 0; }
+    .goods-info { flex: 1; }
+    .goods-name { font-size: 15px; margin-bottom: 4px; }
+    .goods-price { color: var(--color-error); font-weight: 600; font-size: 18px; }
+    .goods-spec { font-size: 13px; color: var(--text-secondary); margin-top: 6px; }
+
+    .btn { display: block; width: 100%; padding: 14px; background: var(--color-primary); color: #fff; border: none; border-radius: var(--radius-md); font-size: 15px; cursor: pointer; }
+    .btn:disabled { background: #ccc; cursor: not-allowed; }
+
+    .popup-mask { position: absolute; inset: 0; background: rgba(0,0,0,0.5); opacity: 0; visibility: hidden; transition: opacity .3s,visibility .3s; z-index: 10; }
+    .popup-mask.show { opacity: 1; visibility: visible; }
+    .popup { position: absolute; background: var(--bg-card); transition: transform .3s; z-index: 20; }
+    .popup-bottom { bottom: 0; left: 0; right: 0; transform: translateY(100%); border-radius: var(--radius-lg) var(--radius-lg) 0 0; max-height: 85%; display: flex; flex-direction: column; }
+    .popup-bottom.show { transform: translateY(0); }
+
+    .popup-header { padding: var(--space-4); border-bottom: 1px solid var(--border); display: flex; gap: var(--space-3); flex-shrink: 0; }
+    .popup-thumb { width: 72px; height: 72px; border-radius: var(--radius-md); background: linear-gradient(135deg,#dfe9f3,#c5d8ea); flex-shrink: 0; }
+    .popup-meta { flex: 1; }
+    .popup-price { color: var(--color-error); font-size: 20px; font-weight: 600; }
+    .popup-stock { font-size: 12px; color: var(--text-tertiary); margin-top: 4px; }
+    .popup-selected { font-size: 13px; color: var(--text-secondary); margin-top: 8px; }
+    .popup-close { font-size: 22px; color: var(--text-tertiary); cursor: pointer; line-height: 1; align-self: flex-start; }
+
+    .popup-body { flex: 1; overflow-y: auto; padding: var(--space-4); }
+    .spec-group { margin-bottom: var(--space-4); }
+    .spec-label { font-size: 13px; color: var(--text-secondary); margin-bottom: var(--space-2); }
+    .spec-label b { color: var(--text-primary); }
+    .spec-options { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+    .spec-option { padding: 7px 14px; border: 1px solid var(--border); border-radius: var(--radius-md); font-size: 13px; cursor: pointer; background: #fff; }
+    .spec-option.active { border-color: var(--color-primary); color: var(--color-primary); background: rgba(74,144,226,.06); }
+    .spec-option.disabled { color: #bbb; background: #f7f7f7; cursor: not-allowed; text-decoration: line-through; }
+
+    .popup-footer { padding: var(--space-3) var(--space-4); border-top: 1px solid var(--border); display: flex; align-items: center; gap: var(--space-3); flex-shrink: 0; }
+    .stepper { display: flex; align-items: center; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
+    .stepper button { width: 32px; height: 30px; border: none; background: #f7f7f7; font-size: 16px; cursor: pointer; }
+    .stepper button:disabled { color: #ccc; cursor: not-allowed; }
+    .stepper input { width: 42px; height: 30px; border: none; border-left: 1px solid var(--border); border-right: 1px solid var(--border); text-align: center; font-size: 14px; }
+    .footer-tip { flex: 1; font-size: 12px; color: var(--text-tertiary); }
+    .popup-footer .btn { margin: 0; width: auto; flex: 0 0 110px; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="phone">
+      <div class="phone-header"><span class="phone-title">商品详情</span></div>
+      <div class="phone-body">
+        <div class="goods">
+          <div class="goods-img"></div>
+          <div class="goods-info">
+            <div class="goods-name">纯棉宽松短袖T恤 春夏新款</div>
+            <div class="goods-price">¥ 129.00</div>
+            <div class="goods-spec" id="goodsSpec">规格：未选择</div>
+          </div>
+        </div>
+        <button class="btn" onclick="openCart()">加入购物车</button>
+      </div>
+
+      <div class="popup-mask" id="mask" onclick="closeCart()"></div>
+      <div class="popup popup-bottom" id="popup">
+        <div class="popup-header">
+          <div class="popup-thumb"></div>
+          <div class="popup-meta">
+            <div class="popup-price">¥ 129.00</div>
+            <div class="popup-stock">库存 38 件</div>
+            <div class="popup-selected" id="popupSelected">请选择商品规格</div>
+          </div>
+          <span class="popup-close" onclick="closeCart()">×</span>
+        </div>
+
+        <div class="popup-body">
+          <div class="spec-group">
+            <div class="spec-label">颜色：<b id="colorText">-</b></div>
+            <div class="spec-options" id="colorOptions"></div>
+          </div>
+          <div class="spec-group">
+            <div class="spec-label">尺码：<b id="sizeText">-</b></div>
+            <div class="spec-options" id="sizeOptions"></div>
+          </div>
+          <div class="spec-group">
+            <div class="spec-label">数量</div>
+            <div class="stepper">
+              <button onclick="changeQty(-1)" id="minusBtn">-</button>
+              <input type="text" id="qtyInput" value="1" oninput="onQtyInput(this.value)">
+              <button onclick="changeQty(1)" id="plusBtn">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="popup-footer">
+          <span class="footer-tip" id="footerTip">共 0 件</span>
+          <button class="btn" id="addBtn" disabled onclick="confirmCart()">加入购物车</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // SKU 库存表：颜色 + 尺码 -> 库存
+    const SKU = {
+      '白':   { 'S': 5,  'M': 12, 'L': 8,  'XL': 0 },
+      '黑':   { 'S': 3,  'M': 0,  'L': 6,  'XL': 9 },
+      '藏青': { 'S': 0,  'M': 4,  'L': 4,  'XL': 2 },
+    };
+    const COLORS = Object.keys(SKU);
+    const SIZES = ['S', 'M', 'L', 'XL'];
+
+    let selected = { color: '', size: '' };
+    let qty = 1;
+
+    function openCart() {
+      renderOptions();
+      document.getElementById('mask').classList.add('show');
+      document.getElementById('popup').classList.add('show');
+    }
+
+    function closeCart() {
+      document.getElementById('mask').classList.remove('show');
+      document.getElementById('popup').classList.remove('show');
+    }
+
+    function renderOptions() {
+      // 颜色：受已选尺码联动（该尺码下库存为 0 则禁用）
+      document.getElementById('colorOptions').innerHTML = COLORS.map(c => {
+        const soldOut = selected.size ? (SKU[c][selected.size] || 0) === 0 : false;
+        const cls = [c === selected.color ? 'active' : '', soldOut ? 'disabled' : ''].filter(Boolean).join(' ');
+        return `<div class="spec-option ${cls}" ${soldOut ? '' : `onclick="selectColor('${c}')"`}>${c}</div>`;
+      }).join('');
+
+      // 尺码：受已选颜色联动
+      document.getElementById('sizeOptions').innerHTML = SIZES.map(s => {
+        const stock = selected.color ? (SKU[selected.color][s] ?? 0) : 0;
+        const soldOut = selected.color ? stock === 0 : false;
+        const cls = [s === selected.size ? 'active' : '', soldOut ? 'disabled' : ''].filter(Boolean).join(' ');
+        return `<div class="spec-option ${cls}" ${soldOut ? '' : `onclick="selectSize('${s}')"`}>${s}</div>`;
+      }).join('');
+
+      document.getElementById('colorText').textContent = selected.color || '-';
+      document.getElementById('sizeText').textContent = selected.size || '-';
+      updateFooter();
+    }
+
+    function selectColor(c) {
+      selected.color = c;
+      // 颜色变了，原尺码可能在该颜色下缺货
+      if (selected.size && (SKU[c][selected.size] || 0) === 0) selected.size = '';
+      renderOptions();
+    }
+
+    function selectSize(s) {
+      selected.size = s;
+      if (selected.color && (SKU[selected.color][s] || 0) === 0) selected.color = '';
+      renderOptions();
+    }
+
+    function changeQty(delta) {
+      const max = currentStock() || 99;
+      qty = Math.min(Math.max(1, qty + delta), max);
+      document.getElementById('qtyInput').value = qty;
+      updateFooter();
+    }
+
+    function onQtyInput(val) {
+      const n = parseInt(val, 10);
+      qty = isNaN(n) ? 1 : Math.max(1, n);
+      document.getElementById('qtyInput').value = qty;
+      updateFooter();
+    }
+
+    function currentStock() {
+      if (!selected.color || !selected.size) return 0;
+      return SKU[selected.color][selected.size] || 0;
+    }
+
+    function updateFooter() {
+      const ready = !!(selected.color && selected.size && currentStock() > 0);
+      document.getElementById('addBtn').disabled = !ready;
+      document.getElementById('footerTip').textContent = ready ? `共 ${qty} 件，合计 ¥${(129 * qty).toFixed(2)}` : '共 0 件';
+      const text = selected.color && selected.size ? `${selected.color} / ${selected.size}` : '请选择商品规格';
+      document.getElementById('popupSelected').textContent = text;
+    }
+
+    function confirmCart() {
+      if (!selected.color || !selected.size) return;
+      document.getElementById('goodsSpec').textContent = `规格：${selected.color} / ${selected.size} × ${qty}`;
+      closeCart();
+    }
+  </script>
+</body>
+</html>

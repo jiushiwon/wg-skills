@@ -1,0 +1,26 @@
+{
+  "name": "base-popup",
+  "title": "弹窗容器",
+  "category": "container",
+  "description": "根容器：5 方向弹窗 / 抽屉（top / bottom / left / right / center）+ 遮罩 + 安全区，内容内置 base-card",
+  "aliases": ["弹窗", "popup", "base-popup", "弹层", "抽屉外壳"],
+  "props": [
+    { "name": "show", "type": "boolean", "default": false, "desc": "是否显示（配合 update:show 做 v-model）" },
+    { "name": "direction", "type": "'top' | 'bottom' | 'left' | 'right' | 'center'", "default": "bottom", "desc": "弹出方向" },
+    { "name": "radius", "type": "string", "default": "var(--radius-lg, 24rpx)", "desc": "圆角，方向决定圆角位置" },
+    { "name": "height", "type": "string", "default": "auto", "desc": "高度，仅上下方向生效" },
+    { "name": "width", "type": "string", "default": "560rpx", "desc": "宽度，左右 / 居中方向生效" },
+    { "name": "padding", "type": "'default' | 'sm' | 'none'", "default": "default", "desc": "内边距档位，转发给内部 base-card" },
+    { "name": "title", "type": "string", "default": "", "desc": "标题，转发给内部 base-card" },
+    { "name": "mask", "type": "boolean", "default": true, "desc": "是否显示遮罩" },
+    { "name": "maskClosable", "type": "boolean", "default": true, "desc": "点击遮罩是否关闭" },
+    { "name": "duration", "type": "number", "default": 300, "desc": "动画时长（毫秒）" },
+    { "name": "safeArea", "type": "boolean", "default": true, "desc": "底部弹窗是否适配安全区" }
+  ],
+  "events": ["update:show", "close"],
+  "slots": [
+    { "name": "default", "desc": "弹窗内容" },
+    { "name": "header-right", "desc": "头部右侧操作区" },
+    { "name": "footer", "desc": "底部操作区" }
+  ]
+}

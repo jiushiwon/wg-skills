@@ -83,7 +83,7 @@ uni-app 项目主题系统引擎。
 支持 **primary / secondary / tertiary / quaternary / quinary** 五级主题色阶，逻辑完全一致，命名统一。
 
 ```css
-:root {
+:r:root {
   --primary-50: #f0fdfa;
   --primary-500: #14b8a6;
   --secondary-500: #6366f1;
@@ -128,7 +128,7 @@ uni-app 项目主题系统引擎。
 | 圆角 | `--radius-{size}` | `--radius-sm` (8rpx), `--radius-full` (9999rpx) |
 | 图标 | `--icon-{size}` | `--icon-xs` (24rpx), `--icon-md` (48rpx) |
 | 颜色 | `--{color}-{step}` | `--primary-500`, `--gray-900` |
-| 语义颜色 | `--color-{semantic}` | `--color-primary`, `--color-bg` |
+| 语义颜色 | `--color-{semantic}` | `--color-primary`, `--bg-page` |
 | 文字颜色 | `--text-{level}` | `--text-primary`, `--text-secondary` |
 | 背景颜色 | `--bg-{level}` | `--bg-page`, `--bg-card` |
 | 边框颜色 | `--border-{level}` | `--border`, `--border-light` |
@@ -138,7 +138,7 @@ uni-app 项目主题系统引擎。
 ### 完整架构（推荐 SCSS 项目）
 
 ```
-项目/
+项目项目/
 └── src/
     └── styles/
         ├── config/
@@ -154,7 +154,7 @@ uni-app 项目主题系统引擎。
 ### 轻量架构（Less/纯 CSS 项目）
 
 ```
-项目/
+项目项目/
 └── src/
     └── static/
         └── css/
@@ -164,7 +164,7 @@ uni-app 项目主题系统引擎。
 或使用生成脚本：
 
 ```
-项目/
+项目项目/
 └── scripts/
     └── generate-tokens.js           # Node 脚本动态生成
 ```
@@ -210,7 +210,7 @@ AI：
 
 AI：
   1. 检测到项目有主题系统但不符合本 skill 规范
-  2. 备份现有文件 → *.bak
+  2. 备份现有文件  *.bak
   3. 强制替换为 skill 定义的 CSS 变量系统
   4. 输出 docs/theme-system-report.md（含强制改造说明）
 ```
@@ -224,12 +224,12 @@ AI：
   1. 动态生成主题系统（色阶/尺寸/圆角）
   2. 扫描项目中所有 .vue/.scss/.less/.css 文件
   3. 识别硬编码并替换为 CSS 变量（按上下文分类）：
-     - A 类（font-size/line-height）：20rpx → var(--font-2xs, 20rpx)
-     - B 类（padding/margin/gap）：16rpx → var(--space-4, 16rpx)
-     - C 类（width/height）：72rpx → var(--height-btn-md, 72rpx)
-     - D 类（border-radius）：8rpx → var(--radius-sm, 8rpx)
-     - E 类（px 遗留）：8px → var(--space-2, 8rpx)
-  4. 备份原文件 → *.bak
+     - A 类（font-size/line-height）：20rpx  var(--font-2xs, 20rpx)
+     - B 类（padding/margin/gap）：16rpx  var(--space-4, 16rpx)
+     - C 类（width/height）：72rpx  var(--height-btn-md, 72rpx)
+     - D 类（border-radius）：8rpx  var(--radius-sm, 8rpx)
+     - E 类（px 遗留）：8px  var(--space-2, 8rpx)
+  4. 备份原文件  *.bak
   5. 输出 docs/theme-system-report.md（含替换统计）
 ```
 
@@ -269,17 +269,17 @@ AI：
 | 原始值 | 替换为 |
 |--------|--------|
 | `0rpx`, `0` | `var(--space-0, 0rpx)` |
-| `2rpx` | `var(--space-1, 2rpx)` |
+| `2rpx` | `var(--space-1, 4rpx)` |
 | `4rpx` | `var(--space-1, 4rpx)` |
-| `6rpx` | `var(--space-2, 6rpx)` |
+| `6rpx` | `var(--space-2, 8rpx)` |
 | `8rpx` | `var(--space-2, 8rpx)` |
-| `10rpx` | `var(--space-3, 10rpx)` |
+| `10rpx` | `var(--space-3, 12rpx)` |
 | `12rpx` | `var(--space-3, 12rpx)` |
-| `14rpx` | `var(--space-4, 14rpx)` |
+| `14rpx` | `var(--space-4, 16rpx)` |
 | `16rpx` | `var(--space-4, 16rpx)` |
-| `18rpx` | `var(--space-5, 18rpx)` |
+| `18rpx` | `var(--space-5, 20rpx)` |
 | `20rpx` | `var(--space-5, 20rpx)` |
-| `22rpx` | `var(--space-6, 22rpx)` |
+| `22rpx` | `var(--space-6, 24rpx)` |
 | `24rpx` | `var(--space-6, 24rpx)` |
 | `28rpx` | `var(--space-7, 28rpx)` |
 | `32rpx` | `var(--space-8, 32rpx)` |
@@ -292,16 +292,16 @@ AI：
 
 | 原始值 | 替换为 | 说明 |
 |--------|--------|------|
-| `44rpx` | `var(--height-btn-sm, 44rpx)` | 按钮小 |
+| `44rpx` | `var(--height-btn-sm, 56rpx)` | 按钮小 |
 | `56rpx` | `var(--height-btn-sm, 56rpx)` | 按钮小 |
-| `60rpx` | `var(--height-btn-md, 60rpx)` | 按钮中 |
+| `60rpx` | `var(--height-btn-md, 72rpx)` | 按钮中 |
 | `72rpx` | `var(--height-btn-md, 72rpx)` | 按钮中 |
-| `80rpx` | `var(--height-btn-lg, 80rpx)` | 按钮大 |
+| `80rpx` | `var(--height-btn-lg, 88rpx)` | 按钮大 |
 | `88rpx` | `var(--height-btn-lg, 88rpx)` | 按钮大 |
-| `40rpx` | `var(--icon-xs, 40rpx)` | 图标 |
+| `40rpx` | `var(--icon-xs, 24rpx)` | 图标 |
 | `48rpx` | `var(--icon-md, 48rpx)` | 图标 |
-| `56rpx` | `var(--icon-lg, 56rpx)` | 图标 |
-| `64rpx` | `var(--icon-lg, 64rpx)` | 图标 |
+| `56rpx` | `var(--icon-lg, 72rpx)` | 图标 |
+| `64rpx` | `var(--icon-lg, 72rpx)` | 图标 |
 | `72rpx` | `var(--icon-lg, 72rpx)` | 图标 |
 | `96rpx` | `var(--icon-xl, 96rpx)` | 图标 |
 
@@ -310,16 +310,16 @@ AI：
 | 原始值 | 替换为 |
 |--------|--------|
 | `0`, `0rpx` | `var(--radius-none, 0rpx)` |
-| `4rpx` | `var(--radius-sm, 4rpx)` |
-| `6rpx` | `var(--radius-sm, 6rpx)` |
+| `4rpx` | `var(--radius-sm, 8rpx)` |
+| `6rpx` | `var(--radius-sm, 8rpx)` |
 | `8rpx` | `var(--radius-sm, 8rpx)` |
-| `10rpx` | `var(--radius-md, 10rpx)` |
-| `12rpx` | `var(--radius-md, 12rpx)` |
-| `14rpx` | `var(--radius-md, 14rpx)` |
+| `10rpx` | `var(--radius-md, 16rpx)` |
+| `12rpx` | `var(--radius-md, 16rpx)` |
+| `14rpx` | `var(--radius-md, 16rpx)` |
 | `16rpx` | `var(--radius-md, 16rpx)` |
-| `20rpx` | `var(--radius-lg, 20rpx)` |
+| `20rpx` | `var(--radius-lg, 24rpx)` |
 | `24rpx` | `var(--radius-lg, 24rpx)` |
-| `28rpx` | `var(--radius-xl, 28rpx)` |
+| `28rpx` | `var(--radius-xl, 32rpx)` |
 | `32rpx` | `var(--radius-xl, 32rpx)` |
 | `999rpx`, `9999rpx` | `var(--radius-full, 9999rpx)` |
 
@@ -336,7 +336,7 @@ AI：
 ### 色阶变量
 
 ```css
-:root {
+:r:root {
   /* 主色阶 50-950 */
   --primary-50: #f0fdfa;
   --primary-100: #ccfbf1;
@@ -367,16 +367,16 @@ AI：
   --color-primary: var(--primary-500);
   --color-secondary: var(--secondary-500);
   --color-tertiary: var(--tertiary-500);
-  --color-bg: var(--gray-50);
-  --color-text: var(--gray-900);
-  --color-text-inverse: var(--gray-50);
+  --bg-page: var(--gray-50);
+  --text-primary: var(--gray-900);
+  --text-inverse: var(--gray-50);
 }
 ```
 
 ### 尺寸变量
 
 ```css
-:root {
+:r:root {
   /* 字号 */
   --font-2xs: 20rpx;
   --font-xs: 24rpx;
@@ -462,9 +462,11 @@ export default {
 ### 方式2：class 切换
 
 ```vue
+<template>
 <view class="theme-cute">
   <!-- 内容 -->
 </view>
+</template>
 
 <style>
 .theme-cute {
@@ -489,7 +491,7 @@ export default {
 ## 触发示例
 
 ```
-# 动态生成主题（输入任意颜色）
+# # 动态生成主题（输入任意颜色）
 给项目添加主题系统，主色 #6366F1
 动态生成色阶 #FF6B6B
 生成主题色阶 #34D399
@@ -550,7 +552,7 @@ export default {
 ## 回滚方式
 
 ```bash
-# 回滚主题系统
+# # 回滚主题系统
 mv src/styles/theme/tokens/_colors.css.bak src/styles/theme/tokens/_colors.css
 # ... 其他 bak 文件
 

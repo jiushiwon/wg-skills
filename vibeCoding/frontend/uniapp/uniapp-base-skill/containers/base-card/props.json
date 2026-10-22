@@ -1,0 +1,31 @@
+{
+  "name": "base-card",
+  "title": "卡片容器",
+  "category": "container",
+  "description": "根容器：统一卡片外壳（圆角 / 背景 / 描边 / 阴影 / 头尾插槽 / 左侧图片）。所有内容型组件都必须基于它扩展",
+  "aliases": ["卡片", "card", "base-card", "卡片容器", "面板外壳"],
+  "props": [
+    { "name": "title", "type": "string", "default": "", "desc": "卡片标题（也可用 header 插槽完全自定义）" },
+    { "name": "radius", "type": "string", "default": "var(--radius-card, 24rpx)", "desc": "圆角" },
+    { "name": "padding", "type": "string", "default": "var(--space-4, 16rpx)", "desc": "内边距" },
+    { "name": "background", "type": "string", "default": "var(--bg-card, #ffffff)", "desc": "背景色" },
+    { "name": "margin", "type": "string", "default": "0", "desc": "外边距" },
+    { "name": "width", "type": "string", "default": "100%", "desc": "宽度" },
+    { "name": "height", "type": "string", "default": "auto", "desc": "高度" },
+    { "name": "minHeight", "type": "string", "default": "", "desc": "最小高度，为空不生效" },
+    { "name": "border", "type": "boolean | string", "default": false, "desc": "描边：true 用主题 --border，也可直接传 CSS 边框值" },
+    { "name": "shadow", "type": "boolean | string", "default": false, "desc": "阴影：true 用主题 --shadow-sm，也可直接传 CSS 阴影值" },
+    { "name": "clickable", "type": "boolean", "default": false, "desc": "是否可点击（触发 click 并带按压反馈）" },
+    { "name": "gap", "type": "string", "default": "var(--space-3, 12rpx)", "desc": "header / body / footer 之间的垂直间距" },
+    { "name": "image", "type": "string", "default": "", "desc": "左侧图片地址" },
+    { "name": "imageSize", "type": "string", "default": "var(--height-avatar-md, 80rpx)", "desc": "左侧图片尺寸" },
+    { "name": "imageRadius", "type": "string", "default": "var(--radius-image, 16rpx)", "desc": "左侧图片圆角" }
+  ],
+  "events": ["click"],
+  "slots": [
+    { "name": "default", "desc": "卡片主体内容" },
+    { "name": "header", "desc": "头部内容，优先级高于 title" },
+    { "name": "header-right", "desc": "头部右侧操作区" },
+    { "name": "footer", "desc": "底部内容" }
+  ]
+}

@@ -1,0 +1,92 @@
+// 按钮基础样式
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 24px;
+  font-size: 16px;
+  border-radius: var(--radius-md, 16rpx);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:active {
+    opacity: 0.8;
+    transform: scale(0.98);
+  }
+
+  &[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  // 尺寸
+  &--small {
+    height: 32px;
+    padding: 0 16px;
+    font-size: 14px;
+  }
+
+  &--large {
+    height: 50px;
+    padding: 0 32px;
+    font-size: 18px;
+  }
+
+  // 块级
+  &--block {
+    display: flex;
+    width: 100%;
+  }
+
+  // 主按钮
+  &-primary {
+    @extend .btn;
+    background: var(--color-primary, #14b8a6);
+    color: #fff;
+  }
+
+  // 次按钮
+  &-secondary {
+    @extend .btn;
+    background: var(--bg-light, #f5f5f5);
+    color: var(--text-primary, #171717);
+  }
+
+  // 幽灵按钮
+  &-ghost {
+    @extend .btn;
+    background: transparent;
+    border: 1px solid var(--color-primary, #14b8a6);
+    color: var(--color-primary, #14b8a6);
+  }
+
+  // 图标按钮
+  &-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: var(--radius-md, 16rpx);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    &:active {
+      background: var(--bg-light, #f5f5f5);
+    }
+
+    &--small {
+      width: 32px;
+      height: 32px;
+    }
+
+    &--large {
+      width: 48px;
+      height: 48px;
+    }
+  }
+}

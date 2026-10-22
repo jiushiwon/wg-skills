@@ -30,7 +30,7 @@
 
         <view class="ci-foot">
           <view v-if="likeable" class="ci-like" :class="{ 'is-liked': liked }" @click="$emit('likeClick')">
-            <text class="ci-like-icon">👍</text>
+            <text class="ci-like-icon">赞</text>
             <text v-if="likeCount" class="ci-like-count">{{ likeCount }}</text>
           </view>
           <view v-if="replyable" class="ci-reply" @click="$emit('replyClick')">
@@ -75,10 +75,10 @@ const props = withDefaults(defineProps<Props>(), {
   likeable: true,
   replyable: true,
   clickable: false,
-  radius: 'var(--radius-card)',
-  padding: 'var(--spacing-md)',
-  background: 'var(--color-bg-surface)',
-  margin: '0 0 var(--spacing-sm)',
+  radius: 'var(--radius-card, 24rpx)',
+  padding: 'var(--space-6, 24rpx)',
+  background: 'var(--bg-card, #ffffff)',
+  margin: '0 0 var(--space-4, 16rpx)',
   border: false,
   shadow: false,
 })
@@ -106,7 +106,7 @@ const emit = defineEmits<{
 .ci-main {
   flex: 1;
   min-width: 0;
-  margin-left: var(--spacing-md);
+  margin-left: var(--space-6, 24rpx);
 }
 
 .ci-head {
@@ -116,36 +116,36 @@ const emit = defineEmits<{
 }
 
 .ci-nickname {
-  font-size: var(--font-sm);
+  font-size: var(--font-sm, 26rpx);
   font-weight: 600;
-  color: var(--color-primary);
+  color: var(--color-primary, #14b8a6);
 }
 
 .ci-time {
-  font-size: var(--font-xs);
-  color: var(--color-text-tertiary);
+  font-size: var(--font-xs, 24rpx);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .ci-content {
-  margin-top: var(--spacing-xs);
-  font-size: var(--font-md);
+  margin-top: var(--space-2, 8rpx);
+  font-size: var(--font-md, 28rpx);
   line-height: 1.6;
-  color: var(--color-text-primary);
+  color: var(--text-primary, #171717);
   word-break: break-all;
 }
 
 .ci-reply-name {
-  color: var(--color-primary);
+  color: var(--color-primary, #14b8a6);
 }
 
 .ci-reply-sep {
-  color: var(--color-text-tertiary);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .ci-foot {
   display: flex;
   align-items: center;
-  margin-top: var(--spacing-sm);
+  margin-top: var(--space-4, 16rpx);
 }
 
 .ci-like {
@@ -153,34 +153,34 @@ const emit = defineEmits<{
   align-items: center;
   min-width: 88rpx;
   min-height: 88rpx;
-  margin: calc(-1 * var(--spacing-md)) 0;
+  margin: calc(-1 * var(--space-6, 24rpx)) 0;
 
   &.is-liked .ci-like-icon {
-    color: var(--color-primary);
+    color: var(--color-primary, #14b8a6);
   }
 }
 
 .ci-like-icon {
-  font-size: var(--font-sm);
-  color: var(--color-text-tertiary);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .ci-like-count {
-  margin-left: var(--spacing-xs);
-  font-size: var(--font-xs);
-  color: var(--color-text-tertiary);
+  margin-left: var(--space-2, 8rpx);
+  font-size: var(--font-xs, 24rpx);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .ci-reply {
   min-width: 88rpx;
   min-height: 88rpx;
-  margin: calc(-1 * var(--spacing-md)) 0;
+  margin: calc(-1 * var(--space-6, 24rpx)) 0;
   display: flex;
   align-items: center;
 }
 
 .ci-reply-btn {
-  font-size: var(--font-xs);
-  color: var(--color-text-secondary);
+  font-size: var(--font-xs, 24rpx);
+  color: var(--text-secondary, #525252);
 }
 </style>

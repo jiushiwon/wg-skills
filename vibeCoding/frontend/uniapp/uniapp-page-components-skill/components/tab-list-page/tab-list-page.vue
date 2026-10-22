@@ -144,12 +144,12 @@ function onLoadMore() {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: var(--color-bg-page);
+  background: var(--bg-page, #fafafa);
 }
 
 .tlp-tabs {
   flex-shrink: 0;
-  background: var(--color-bg-surface);
+  background: var(--bg-card, #ffffff);
 
   &.is-sticky {
     position: sticky;
@@ -160,14 +160,14 @@ function onLoadMore() {
 
 .tlp-tabs-inner {
   display: flex;
-  height: var(--height-btn-lg);
+  height: var(--height-btn-lg, 88rpx);
   align-items: center;
-  padding: 0 var(--spacing-lg);
-  border-bottom: 1rpx solid var(--color-border-light);
+  padding: 0 var(--space-8, 32rpx);
+  border-bottom: 1rpx solid var(--border-light, #f5f5f5);
 }
 
 .tlp-tab {
-  margin-right: var(--spacing-lg);
+  margin-right: var(--space-8, 32rpx);
   position: relative;
   display: flex;
   align-items: center;
@@ -177,12 +177,12 @@ function onLoadMore() {
 }
 
 .tlp-tab-label {
-  font-size: var(--font-lg);
-  color: var(--color-text-secondary);
+  font-size: var(--font-lg, 30rpx);
+  color: var(--text-secondary, #525252);
 }
 
 .tlp-tab.is-active .tlp-tab-label {
-  color: var(--color-primary);
+  color: var(--color-primary, #14b8a6);
   font-weight: 600;
 }
 
@@ -194,7 +194,7 @@ function onLoadMore() {
   width: 48rpx;
   height: 6rpx;
   border-radius: 3rpx;
-  background: var(--color-primary);
+  background: var(--color-primary, #14b8a6);
   transform: translateX(-50%);
 }
 
@@ -210,12 +210,12 @@ function onLoadMore() {
   align-items: center;
   justify-content: center;
   border-radius: 14rpx;
-  background: var(--color-error);
+  background: var(--color-error, #EF4444);
 }
 
 .tlp-tab-badge-text {
-  font-size: var(--font-xs);
-  color: var(--white);
+  font-size: var(--font-xs, 24rpx);
+  color: var(--text-inverse, #ffffff);
   line-height: 1;
 }
 
@@ -225,36 +225,36 @@ function onLoadMore() {
 }
 
 .tlp-list-inner {
-  padding: var(--spacing-md) var(--spacing-lg) var(--spacing-2xl);
+  padding: var(--space-6, 24rpx) var(--space-8, 32rpx) var(--space-16, 64rpx);
   box-sizing: border-box;
 }
 
 .tlp-item {
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--space-6, 24rpx);
 }
 
 .tlp-tip {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-md) 0;
+  padding: var(--space-6, 24rpx) 0;
 }
 
 .tlp-tip-text {
-  font-size: var(--font-sm);
-  color: var(--color-text-tertiary);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .tlp-empty {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-3xl) 0;
+  padding: var(--space-24, 96rpx) 0;
 }
 
 .tlp-empty-text {
-  font-size: var(--font-md);
-  color: var(--color-text-tertiary);
+  font-size: var(--font-md, 28rpx);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .tlp-tab:last-child {

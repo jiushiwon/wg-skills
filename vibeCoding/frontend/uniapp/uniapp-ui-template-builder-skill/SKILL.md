@@ -71,21 +71,21 @@ AI：请选择要生成的页面类型：
 
 【移动端 - uniapp/Taro】
 ┌─────────────────────────────────────┐
-│ 📱 个人中心      │ 商品详情页        │
-│ 🛒 商品列表页    │ 分类页面          │
-│ 🏠 首页          │ 购物车页面        │
-│ 💬 聊天列表页    │ 订单列表页        │
-│ 📋 表单页面      │ 设置页面          │
-│ 🎁 活动页面      │ 搜索结果页        │
+│ 手机 个人中心      │ 商品详情页        │
+│ 购物车 商品列表页    │ 分类页面          │
+│ 首页 首页          │ 购物车页面        │
+│ 留言 聊天列表页    │ 订单列表页        │
+│ 清单 表单页面      │ 设置页面          │
+│ 礼物 活动页面      │ 搜索结果页        │
 └─────────────────────────────────────┘
 
 【PC 端】
 ┌─────────────────────────────────────┐
-│ 🔐 登录页        │ 注册页            │
-│ 📊 数据大屏      │ 管理后台首页      │
-│ 📋 表格列表页    │ 表单填写页        │
-│ 📰 文章详情页    │ 门户网站首页      │
-│ 💼 企业官网      │ 文档页面          │
+│ 安全 登录页        │ 注册页            │
+│ 数据 数据大屏      │ 管理后台首页      │
+│ 清单 表格列表页    │ 表单填写页        │
+│ 资讯 文章详情页    │ 门户网站首页      │
+│ 案例 企业官网      │ 文档页面          │
 └─────────────────────────────────────┘
 
 输入页面名称或序号，或直接描述（如"做一个个人中心"）
@@ -113,8 +113,8 @@ AI：请选择风格（共 X 套可选）：
 
 ```
 AI：是否需要生成Mock数据？
-- ✅ 是，生成配套的mock数据文件（推荐）
-- ❌ 否，只需要页面模板
+-  是，生成配套的mock数据文件（推荐）
+-  否，只需要页面模板
 
 默认值：是
 ```
@@ -140,7 +140,7 @@ AI：是否需要生成Mock数据？
 
 **模板结构**：
 ```
-个人中心/
+个人个人中心/
 ├── header.vue          # 头部区域（头像/昵称/背景）
 ├── stats.vue           # 统计数据（订单/积分/优惠券）
 ├── menu-grid.vue       # 功能菜单（网格布局）
@@ -160,7 +160,7 @@ AI：是否需要生成Mock数据？
 
 **模板结构**：
 ```
-商品详情/
+商品商品详情/
 ├── gallery.vue         # 图片轮播
 ├── info.vue           # 基本信息（标题/价格/评分）
 ├── specs.vue          # 规格选择
@@ -331,7 +331,7 @@ import MyModal from '@/components/uniapp-vue3/modal/modal.vue'
 ### 文件位置
 
 ```
-项目根目录/
+项目项目根目录/
 ├── mock/
 │   ├── index.js          # Mock Server 入口
 │   ├── user.json         # 用户相关
@@ -344,6 +344,7 @@ import MyModal from '@/components/uniapp-vue3/modal/modal.vue'
 ### 数据规范
 
 ```json
+{
 {
   "products": [
     {
@@ -384,6 +385,7 @@ templates/uniapp-vue3/profile/
 **数据格式统一为**：
 ```json
 {
+{
   "code": 200,
   "message": "success",
   "data": {
@@ -421,6 +423,7 @@ function Page() {
 
 ```json
 {
+{
   "styles": {
     "简约现代": {
       "primary": "#333333",
@@ -450,7 +453,7 @@ function Page() {
 ### 组件映射
 
 ```
-风格选择 → 加载对应 tokens.json → 渲染时替换变量
+风格风格选择  加载对应 tokens.json  渲染时替换变量
 ```
 
 ### 动态主题生成器
@@ -458,7 +461,7 @@ function Page() {
 提供 `references/theme-generator.js` 脚本，支持**自定义主题色**一键生成完整色阶：
 
 ```bash
-# 生成主题色阶（默认 modern 风格）
+# # 生成主题色阶（默认 modern 风格）
 node references/theme-generator.js modern
 
 # 指定自定义颜色
@@ -471,7 +474,7 @@ node references/theme-generator.js nature
 node references/theme-generator.js dark-tech
 ```
 
-**输出**：自动生成 50-900 色阶的 CSS 变量，替换 `--color-primary-500` 等变量即可全局换肤。
+**输出**：自动生成 50-900 色阶的 CSS 变量，替换 `--primary-500` 等变量即可全局换肤。
 
 ### 一键换肤 & 换尺寸
 
@@ -496,11 +499,11 @@ document.head.insertAdjacentHTML('beforeend', `<style>${css}</style>`)
 
 **换尺寸同理**：
 ```css
-/* 小号 */
-:root { --font-size-base: 12px; --space-base: 12px; }
+/*/* 小号 */
+:root { --font-md: 12px; --space-4: 12px; }
 
 /* 大号 */
-:root { --font-size-base: 16px; --space-base: 20px; }
+:root { --font-md: 16px; --space-4: 20px; }
 ```
 
 ## 技术栈适配
@@ -564,7 +567,7 @@ export default function Page() {
 生成的文件结构：
 
 ```
-项目/
+项目项目/
 ├── pages/
 │   ├── profile/           # 个人中心
 │   │   ├── index.vue
@@ -593,7 +596,7 @@ export default function Page() {
 ## 目录结构
 
 ```
-ui-template-builder/
+uniapp-ui-template-builder/
 ├── SKILL.md                    # 本文件
 ├── README.md                   # 使用文档
 ├── references/
@@ -632,7 +635,7 @@ ui-template-builder/
 实际仓库结构还包含：
 
 ```
-ui-template-builder/
+uniapp-ui-template-builder/
 ├── components/                 # 组件模板（与页面模板独立，可被引用）
 │   ├── uniapp-vue3/           # uniapp 组件：button/modal/drawer/toast/picker/calendar/moments
 │   └── pc-react/              # PC React 组件：button/modal/drawer/toast

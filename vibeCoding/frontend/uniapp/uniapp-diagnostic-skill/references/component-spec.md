@@ -126,6 +126,7 @@ export * from './AppInput'
 ### 按钮
 
 ```vue
+<template>
 <AppButton type="primary" @click="handleSubmit">
   提交
 </AppButton>
@@ -133,24 +134,35 @@ export * from './AppInput'
 <AppButton type="primary" :loading="submitting">
   提交中...
 </AppButton>
+</template>
+
+
 ```
 
 ### 空状态
 
 ```vue
+<template>
 <AppEmpty
   description="暂无数据"
   :image="EmptyImage"
   v-if="list.length === 0"
 />
+</template>
+
+
 ```
 
 ### 卡片
 
 ```vue
+<template>
 <AppCard>
   <view>卡片内容</view>
 </AppCard>
+</template>
+
+
 ```
 
 ## 组件命名规范

@@ -33,6 +33,9 @@ trigger: |
 | **vue-tag-skill** | base-tag 标签组件 | [SKILL.md](vue-tag-skill/SKILL.md) |
 | **vue-table-skill** | base-table 表格组件（23 形态） | [SKILL.md](vue-table-skill/SKILL.md) |
 | **vue-form-skill** | base-form 表单体系（8 组件：form / form-item / input / select / checkbox / radio / switch / datepicker） | [SKILL.md](vue-form-skill/SKILL.md) |
+| **vue-cascader-skill** | base-cascader 级联选择器 | [SKILL.md](vue-cascader-skill/SKILL.md) |
+| **vue-loading-skill** | base-loading / base-skeleton / base-loading-mask | [SKILL.md](vue-loading-skill/SKILL.md) |
+| **vue-empty-skill** | base-empty 空状态 | [SKILL.md](vue-empty-skill/SKILL.md) |
 
 ## 设计 Token
 
@@ -176,7 +179,7 @@ grep -E '<(button|input|select|table|tr|td|th|textarea|form|option)' base-*.md
 ```
 vue-theme-skill      ←  uniapp-theme-skill
 vue-base-skill       ←  uniapp-base-skill
-vue-card-skill       ←  uniapp-card-skill
+vue-card-skill       ←  uniapp-base-skill/containers/base-card
 vue-button-skill     ←  (扩展，未来可独立)
 vue-tag-skill        ←  (扩展，未来可独立)
 vue-table-skill      ←  (扩展，未来可独立)

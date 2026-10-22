@@ -15,7 +15,7 @@
 ### 间距（Spacing）
 
 ```css
-:root {
+:r:root {
   --space-0: 0rpx;
   --space-1: 4rpx;
   --space-2: 8rpx;
@@ -37,7 +37,7 @@
 ### 字号（Font Size）
 
 ```css
-:root {
+:r:root {
   --font-2xs: 20rpx;
   --font-xs: 24rpx;
   --font-sm: 26rpx;
@@ -52,7 +52,7 @@
 ### 高度（Height）
 
 ```css
-:root {
+:r:root {
   /* 按钮高度 */
   --height-btn-sm: 56rpx;
   --height-btn-md: 72rpx;
@@ -73,7 +73,7 @@
 ### 图标（Icon）
 
 ```css
-:root {
+:r:root {
   --icon-xs: 24rpx;
   --icon-sm: 36rpx;
   --icon-md: 48rpx;
@@ -85,7 +85,7 @@
 ### 圆角（Radius）
 
 ```css
-:root {
+:r:root {
   --radius-none: 0rpx;
   --radius-sm: 8rpx;
   --radius-md: 16rpx;
@@ -100,9 +100,9 @@
 ### cute 可爱风（宽松）
 
 ```css
-[data-theme="cute"] {
-  --space-md: 24rpx;
-  --space-lg: 32rpx;
+[d[data-theme="cute"] {
+  --space-6: 24rpx;
+  --space-8: 32rpx;
   --font-md: 28rpx;
   --font-lg: 32rpx;
   --height-btn-md: 80rpx;
@@ -112,9 +112,9 @@
 ### minimal 极简风（紧凑）
 
 ```css
-[data-theme="minimal"] {
-  --space-md: 16rpx;
-  --space-lg: 24rpx;
+[d[data-theme="minimal"] {
+  --space-6: 16rpx;
+  --space-8: 24rpx;
   --font-md: 26rpx;
   --font-lg: 30rpx;
   --height-btn-md: 72rpx;
@@ -124,9 +124,9 @@
 ### cyber 硬核风（极限紧凑）
 
 ```css
-[data-theme="cyber"] {
-  --space-md: 16rpx;
-  --space-lg: 20rpx;
+[d[data-theme="cyber"] {
+  --space-6: 16rpx;
+  --space-8: 20rpx;
   --font-md: 26rpx;
   --font-lg: 28rpx;
   --height-btn-md: 72rpx;
@@ -136,9 +136,9 @@
 ### business 商务风（标准）
 
 ```css
-[data-theme="business"] {
-  --space-md: 24rpx;
-  --space-lg: 32rpx;
+[d[data-theme="business"] {
+  --space-6: 24rpx;
+  --space-8: 32rpx;
   --font-md: 28rpx;
   --font-lg: 32rpx;
   --height-btn-md: 72rpx;
@@ -148,9 +148,9 @@
 ### fresh 清新风（自然）
 
 ```css
-[data-theme="fresh"] {
-  --space-md: 24rpx;
-  --space-lg: 32rpx;
+[d[data-theme="fresh"] {
+  --space-6: 24rpx;
+  --space-8: 32rpx;
   --font-md: 28rpx;
   --font-lg: 32rpx;
   --height-btn-md: 80rpx;
@@ -160,9 +160,9 @@
 ### retro 复古风（紧凑）
 
 ```css
-[data-theme="retro"] {
-  --space-md: 16rpx;
-  --space-lg: 24rpx;
+[d[data-theme="retro"] {
+  --space-6: 16rpx;
+  --space-8: 24rpx;
   --font-md: 26rpx;
   --font-lg: 30rpx;
   --height-btn-md: 72rpx;
@@ -172,9 +172,9 @@
 ### glass 玻璃风（适中）
 
 ```css
-[data-theme="glass"] {
-  --space-md: 20rpx;
-  --space-lg: 28rpx;
+[d[data-theme="glass"] {
+  --space-6: 20rpx;
+  --space-8: 28rpx;
   --font-md: 28rpx;
   --font-lg: 32rpx;
   --height-btn-md: 80rpx;
@@ -184,9 +184,9 @@
 ### warm 暖风（适中）
 
 ```css
-[data-theme="warm"] {
-  --space-md: 20rpx;
-  --space-lg: 28rpx;
+[d[data-theme="warm"] {
+  --space-6: 20rpx;
+  --space-8: 28rpx;
   --font-md: 28rpx;
   --font-lg: 32rpx;
   --height-btn-md: 76rpx;
@@ -205,17 +205,17 @@
 
 <style>
 .container {
-  padding: var(--space-lg, 32rpx);
+  padding: var(--space-8, 32rpx);
 }
 
 .title {
   font-size: var(--font-lg, 30rpx);
-  margin-bottom: var(--space-md, 24rpx);
+  margin-bottom: var(--space-6, 24rpx);
 }
 
 .btn {
   height: var(--height-btn-md, 72rpx);
-  padding: 0 var(--space-lg, 32rpx);
+  padding: 0 var(--space-8, 32rpx);
   font-size: var(--font-md, 28rpx);
 }
 </style>

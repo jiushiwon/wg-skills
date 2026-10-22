@@ -76,9 +76,9 @@ profile/
 --bg-card: #FFFFFF;
 --text-primary: #333333;
 --text-secondary: #999999;
---primary: #333333;
+--color-primary: #333333;
 --radius-card: 12px;
---space-md: 16px;
+--space-6: 16px;
 ```
 
 **特点**：
@@ -90,9 +90,9 @@ profile/
 ### 风格2：活力炫彩
 
 ```scss
---bg-header: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+----bg-header: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
 --bg-card: #FFFFFF;
---primary: #667EEA;
+--color-primary: #667EEA;
 --accent: #FF6B6B;
 --radius-card: 16px;
 ```
@@ -106,7 +106,7 @@ profile/
 ### 风格3：高端商务
 
 ```scss
---bg-header: #1A1A2E;
+----bg-header: #1A1A2E;
 --bg-card: #16162A;
 --text-primary: #FFFFFF;
 --accent: #D4AF37;
@@ -122,9 +122,9 @@ profile/
 ### 风格4：清新自然
 
 ```scss
---bg-page: #F0F9F6;
+----bg-page: #F0F9F6;
 --bg-card: #FFFFFF;
---primary: #2ECC71;
+--color-primary: #2ECC71;
 --accent: #27AE60;
 --radius-card: 20px;
 ```
@@ -151,6 +151,7 @@ profile/
 ## Mock数据示例
 
 ```json
+{
 {
   "user": {
     "id": "u001",

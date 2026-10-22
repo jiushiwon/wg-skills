@@ -6,7 +6,7 @@
         <view class="avatar-wrap">
           <image class="avatar" :src="userInfo.avatar" mode="aspectFill" />
           <view class="avatar-edit">
-            <text>✏️</text>
+            <text>✎</text>
           </view>
         </view>
         <view class="user-info">
@@ -21,7 +21,7 @@
       <view class="member-bg">
         <view class="member-content">
           <view class="member-top">
-            <text class="member-level">🌿 {{ memberCard.level }}</text>
+            <text class="member-level">自然 {{ memberCard.level }}</text>
             <text class="member-rights">{{ memberCard.rights }}</text>
           </view>
           <view class="member-stats">
@@ -97,21 +97,21 @@ const props = defineProps({
   orderTypes: {
     type: Array,
     default: () => [
-      { icon: '💰', label: '待付款' },
-      { icon: '📦', label: '待发货' },
-      { icon: '🚚', label: '待收货' },
-      { icon: '✅', label: '已完成' },
-      { icon: '💳', label: '退款售后' }
+      { icon: '金额', label: '待付款' },
+      { icon: '包裹', label: '待发货' },
+      { icon: '物流', label: '待收货' },
+      { icon: '', label: '已完成' },
+      { icon: '支付', label: '退款售后' }
     ]
   },
   menuItems: {
     type: Array,
     default: () => [
-      { icon: '🎫', label: '优惠券' },
-      { icon: '📍', label: '收货地址' },
-      { icon: '🔔', label: '消息通知' },
-      { icon: '⚙️', label: '设置' },
-      { icon: '❓', label: '帮助中心' }
+      { icon: '券', label: '优惠券' },
+      { icon: '位置', label: '收货地址' },
+      { icon: '通知', label: '消息通知' },
+      { icon: '', label: '设置' },
+      { icon: '?', label: '帮助中心' }
     ]
   }
 })

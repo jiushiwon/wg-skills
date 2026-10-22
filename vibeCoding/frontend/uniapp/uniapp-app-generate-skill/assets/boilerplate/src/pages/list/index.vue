@@ -84,7 +84,7 @@ onPullDownRefresh(() => loadList(true));
 <style lang="scss" scoped>
 .list-page {
   min-height: 100vh;
-  padding-top: var(--navbar-height, 0px);
+  padding-top: var(--height-navbar, 88rpx);
   background: $color-bg-secondary;
 
   &__header {

@@ -80,7 +80,7 @@
 ## 审计记录模板
 
 ```markdown
-## 自我审计结果
+#### 自我审计结果
 
 - 审计对象：uniapp-code-audit-skill
 - 审计时间：YYYY-MM-DD

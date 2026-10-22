@@ -1,0 +1,18 @@
+{
+  "name": "progress-bar",
+  "title": "进度条",
+  "category": "business",
+  "description": "进度条组件，按状态取主题填充色",
+  "aliases": ["进度", "进度条", "progress", "bar"],
+  "props": [
+    { "name": "percent", "type": "number", "default": 0, "desc": "进度百分比(0-100)，超出自动截断" },
+    { "name": "status", "type": "'primary' | 'success' | 'warning' | 'error'", "default": "", "desc": "状态，决定填充色；为空时取 type" },
+    { "name": "type", "type": "'primary' | 'success' | 'warning' | 'error'", "default": "primary", "desc": "状态，兼容旧属性名" },
+    { "name": "showText", "type": "boolean", "default": true, "desc": "是否显示文字" },
+    { "name": "text", "type": "string", "default": "", "desc": "自定义文字，为空时显示百分比" },
+    { "name": "strokeWidth", "type": "number", "default": 6, "desc": "进度条高度(px 值，按 1px=2rpx 换算)" },
+    { "name": "round", "type": "boolean", "default": true, "desc": "是否圆角" }
+  ],
+  "events": [],
+  "slots": []
+}

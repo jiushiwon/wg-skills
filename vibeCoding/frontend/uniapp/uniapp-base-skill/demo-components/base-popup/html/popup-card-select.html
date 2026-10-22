@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-popup 实战 - 卡片选择</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-primary: #4a90e2;
+      --color-success: #52c41a;
+      --text-primary: #333;
+      --text-secondary: #666;
+      --text-tertiary: #999;
+      --bg-page: #f5f5f5;
+      --bg-card: #fff;
+      --border: #e8e8e8;
+    }
+    body { background: var(--bg-page); font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; padding: 20px; }
+
+    .page { max-width: 414px; margin: 0 auto; }
+
+    .phone {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    .phone-header {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-4);
+      border-bottom: 1px solid var(--border);
+    }
+    .phone-title { font-size: 16px; font-weight: 500; }
+    .phone-body { min-height: 600px; padding: var(--space-4); }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      text-align: center;
+      cursor: pointer;
+      margin-bottom: var(--space-4);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-3);
+    }
+    .product-card {
+      background: var(--bg-page);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .product-img {
+      height: 100px;
+      background: #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-tertiary);
+    }
+    .product-info { padding: var(--space-2); }
+    .product-name { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+    .product-price { font-size: 14px; color: var(--color-primary); }
+
+    /* Popup */
+    .popup-mask {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.5);
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+      z-index: 10;
+    }
+    .popup-mask.show { opacity: 1; visibility: visible; }
+
+    .popup {
+      position: absolute;
+      background: var(--bg-card);
+      transition: transform 0.3s;
+      z-index: 20;
+    }
+    .popup-bottom {
+      bottom: 0; left: 0; right: 0;
+      transform: translateY(100%);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      max-height: 85%;
+      display: flex;
+      flex-direction: column;
+    }
+    .popup-bottom.show { transform: translateY(0); }
+
+    .popup-header {
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .popup-title { font-size: 16px; font-weight: 500; }
+    .popup-close { font-size: 24px; color: var(--text-tertiary); cursor: pointer; }
+
+    .popup-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-4);
+    }
+
+    .card-select-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-3);
+    }
+
+    .select-card {
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .select-card.active {
+      border-color: var(--color-primary);
+      background: rgba(74, 144, 226, 0.05);
+    }
+
+    .select-card-img {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .select-card-info { padding: var(--space-2); }
+    .select-card-name { font-size: 12px; font-weight: 500; text-align: center; }
+    .select-card-price { font-size: 11px; color: var(--color-primary); text-align: center; }
+
+    .popup-footer {
+      padding: var(--space-3) var(--space-4);
+      border-top: 1px solid var(--border);
+    }
+    .popup-footer .btn { margin: 0; }
+
+    .cart-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-3) var(--space-4);
+      background: var(--bg-page);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-3);
+    }
+    .cart-total { font-size: 16px; font-weight: 500; }
+    .cart-total span { color: var(--color-primary); }
+
+    /* Tags */
+    .selected-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-bottom: var(--space-3);
+    }
+    .selected-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      background: var(--color-primary);
+      color: #fff;
+      border-radius: var(--radius-md);
+      font-size: 12px;
+    }
+    .selected-tag-close { cursor: pointer; opacity: 0.8; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="phone">
+      <div class="phone-header">
+        <span class="phone-title">选择商品</span>
+      </div>
+      <div class="phone-body">
+        <button class="btn" onclick="openCardSelect()">加入购物车</button>
+
+        <div class="card-grid">
+          <div class="product-card">
+            <div class="product-img">手机</div>
+            <div class="product-info">
+              <div class="product-name">iPhone 15</div>
+              <div class="product-price">¥5999</div>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-img">PC</div>
+            <div class="product-info">
+              <div class="product-name">MacBook</div>
+              <div class="product-price">¥9999</div>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-img">音乐</div>
+            <div class="product-info">
+              <div class="product-name">AirPods</div>
+              <div class="product-price">¥1499</div>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-img">⌚</div>
+            <div class="product-info">
+              <div class="product-name">Watch</div>
+              <div class="product-price">¥2999</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="popup-mask" id="mask" onclick="closeCardSelect()"></div>
+
+      <!-- 卡片选择弹窗 -->
+      <div class="popup popup-bottom" id="popup">
+        <div class="popup-header">
+          <span class="popup-title">选择规格</span>
+          <span class="popup-close" onclick="closeCardSelect()">×</span>
+        </div>
+
+        <div class="popup-body">
+          <!-- 已选标签 -->
+          <div class="selected-tags" id="selectedTags"></div>
+
+          <!-- 颜色选择 -->
+          <div style="margin-bottom: var(--space-4);">
+            <div style="font-size:14px;font-weight:500;margin-bottom:var(--space-2);">颜色</div>
+            <div class="card-select-grid">
+              <div class="select-card" data-value="黑色" data-price="5999" onclick="toggleCard(this)">
+                <div class="select-card-img" style="background:#2c3e50;"></div>
+                <div class="select-card-info">
+                  <div class="select-card-name">黑色</div>
+                  <div class="select-card-price">¥5999</div>
+                </div>
+              </div>
+              <div class="select-card" data-value="白色" data-price="5999" onclick="toggleCard(this)">
+                <div class="select-card-img" style="background:#ecf0f1;"></div>
+                <div class="select-card-info">
+                  <div class="select-card-name">白色</div>
+                  <div class="select-card-price">¥5999</div>
+                </div>
+              </div>
+              <div class="select-card" data-value="蓝色" data-price="6199" onclick="toggleCard(this)">
+                <div class="select-card-img" style="background:#3498db;"></div>
+                <div class="select-card-info">
+                  <div class="select-card-name">蓝色</div>
+                  <div class="select-card-price">¥6199</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 存储选择 -->
+          <div style="margin-bottom: var(--space-4);">
+            <div style="font-size:14px;font-weight:500;margin-bottom:var(--space-2);">存储</div>
+            <div class="card-select-grid">
+              <div class="select-card" data-value="128GB" data-price="0" onclick="toggleCard(this)">
+                <div class="select-card-img" style="background:#f5f5f5;font-size:12px;">128</div>
+                <div class="select-card-info">
+                  <div class="select-card-name">128GB</div>
+                  <div class="select-card-price">标准价</div>
+                </div>
+              </div>
+              <div class="select-card" data-value="256GB" data-price="500" onclick="toggleCard(this)">
+                <div class="select-card-img" style="background:#f5f5f5;font-size:12px;">256</div>
+                <div class="select-card-info">
+                  <div class="select-card-name">256GB</div>
+                  <div class="select-card-price">+¥500</div>
+                </div>
+              </div>
+              <div class="select-card" data-value="512GB" data-price="1000" onclick="toggleCard(this)">
+                <div class="select-card-img" style="background:#f5f5f5;font-size:12px;">512</div>
+                <div class="select-card-info">
+                  <div class="select-card-name">512GB</div>
+                  <div class="select-card-price">+¥1000</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="popup-footer">
+          <div class="cart-summary">
+            <span>合计：</span>
+            <span class="cart-total">¥<span id="totalPrice">5999</span></span>
+          </div>
+          <button class="btn" onclick="confirmCardSelect()">加入购物车</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const popup = document.getElementById('popup');
+    const mask = document.getElementById('mask');
+    const selectedTags = document.getElementById('selectedTags');
+    const totalPriceEl = document.getElementById('totalPrice');
+
+    let basePrice = 5999;
+    let selectedItems = [];
+
+    function openCardSelect() {
+      mask.classList.add('show');
+      popup.classList.add('show');
+    }
+
+    function closeCardSelect() {
+      mask.classList.remove('show');
+      popup.classList.remove('show');
+    }
+
+    function toggleCard(el) {
+      el.classList.toggle('active');
+      updateSelected();
+    }
+
+    function updateSelected() {
+      selectedItems = [];
+      let extraPrice = 0;
+
+      document.querySelectorAll('.select-card.active').forEach(el => {
+        selectedItems.push(el.dataset.value);
+        extraPrice += parseInt(el.dataset.price || 0);
+      });
+
+      const total = basePrice + extraPrice;
+      totalPriceEl.textContent = total;
+
+      selectedTags.innerHTML = selectedItems.map(item =>
+        `<span class="selected-tag">${item}<span class="selected-tag-close" onclick="removeTag('${item}')">×</span></span>`
+      ).join('');
+    }
+
+    function removeTag(value) {
+      document.querySelectorAll('.select-card.active').forEach(el => {
+        if (el.dataset.value === value) {
+          el.classList.remove('active');
+        }
+      });
+      updateSelected();
+    }
+
+    function confirmCardSelect() {
+      if (selectedItems.length === 0) {
+        alert('请至少选择一个选项');
+        return;
+      }
+      alert(`已加入购物车：${selectedItems.join(' + ')}，合计 ¥${totalPriceEl.textContent}`);
+      closeCardSelect();
+    }
+  </script>
+</body>
+</html>

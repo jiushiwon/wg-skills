@@ -46,6 +46,8 @@ import BaseFormItem from './BaseFormItem.vue'
 import BaseInput from './BaseInput.vue'
 import BaseSelect from './BaseSelect.vue'
 import BaseTextarea from './BaseTextarea.vue'
+import { BaseUpload } from '../../vue-upload-skill/templates'
+import { BaseCascader } from '../../vue-cascader-skill/templates'
 import type { BaseFormField, BaseFormRenderProps, FormRule } from '../types'
 
 const props = withDefaults(defineProps<BaseFormRenderProps>(), {
@@ -100,11 +102,14 @@ function resolveComponent(type: BaseFormField['type']): unknown {
       return BaseTextarea
     case 'select':
       return BaseSelect
+    case 'cascader':
+      return BaseCascader
+    case 'upload':
+      return BaseUpload
     case 'switch':
     case 'checkbox':
     case 'radio':
     case 'datepicker':
-    case 'upload':
     case 'custom':
     case 'input':
     default:
@@ -121,6 +126,28 @@ function resolveFieldProps(field: BaseFormField): Record<string, unknown> {
   }
   if (field.type === 'select') {
     return { ...base, options: field.options ?? [] }
+  }
+  // upload 类型：根据 subType 自动设置 mode 和 accept
+  if (field.type === 'upload') {
+    const subType = field.subType || (field.props?.subType as string | undefined)
+    return {
+      ...base,
+      mode: 'image',
+      maxCount: 1,
+      accept: 'image/*',
+      ...(subType === 'images' ? { maxCount: 9 } : {}),
+      ...(subType === 'video' ? { accept: 'video/*', mode: 'file' } : {}),
+      ...(subType === 'audio' ? { accept: 'audio/*', mode: 'file' } : {}),
+      ...(subType === 'file' ? { accept: '.pdf,.doc,.docx,.xls,.xlsx', mode: 'file' } : {}),
+    }
+  }
+  // cascader 类型
+  if (field.type === 'cascader') {
+    return {
+      ...base,
+      placeholder: field.placeholder ?? `请选择${field.label}`,
+      options: field.options ?? [],
+    }
   }
   return base
 }

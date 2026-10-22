@@ -5,10 +5,10 @@
 ### 1.1 Token 管理
 
 ```typescript
-// ✅ 正确：Token 存储在 Storage
+//  正确：Token 存储在 Storage
 uni.setStorageSync('token', response.token);
 
-// ❌ 错误：敏感信息存 Storage
+//  错误：敏感信息存 Storage
 uni.setStorageSync('password', '123456');
 uni.setStorageSync('idCard', '110101199001011234');
 ```
@@ -39,14 +39,14 @@ interface SensitiveOptions extends RequestOptions {
 ### 2.1 存储安全
 
 ```typescript
-// ❌ 禁止：明文存储敏感信息
+//  禁止：明文存储敏感信息
 uni.setStorageSync('userInfo', {
   password: '123456',
   idCard: '110101199001011234',
   bankCard: '6222021234567890'
 });
 
-// ✅ 正确：只存储非敏感信息
+//  正确：只存储非敏感信息
 uni.setStorageSync('userInfo', {
   id: 1,
   nickname: '用户昵称',
@@ -57,10 +57,10 @@ uni.setStorageSync('userInfo', {
 ### 2.2 日志脱敏
 
 ```typescript
-// ❌ 错误：日志输出敏感信息
+//  错误：日志输出敏感信息
 console.log('用户登录', { phone: '13800138000', password: '123456' });
 
-// ✅ 正确：脱敏处理
+//  正确：脱敏处理
 console.log('用户登录', {
   phone: phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2'),
   hasPassword: !!password
@@ -70,10 +70,10 @@ console.log('用户登录', {
 ### 2.3 数据传输
 
 ```typescript
-// ✅ 敏感数据使用 HTTPS
+//  敏感数据使用 HTTPS
 const BASE_URL = 'https://api.example.com';
 
-// ✅ 敏感数据加密传输
+//  敏感数据加密传输
 import { encrypt } from '@/utils/crypto';
 
 const encryptedData = encrypt(JSON.stringify(sensitiveData));
@@ -84,13 +84,13 @@ const encryptedData = encrypt(JSON.stringify(sensitiveData));
 ### 3.1 危险方法
 
 ```typescript
-// ❌ 禁止使用
+//  禁止使用
 eval('...');
 new Function('...');
 setTimeout('...', 0);
 setInterval('...', 0);
 
-// ✅ 必须使用
+//  必须使用
 JSON.parse('...');
 uni.setStorageSync('key', 'value');
 ```
@@ -98,7 +98,7 @@ uni.setStorageSync('key', 'value');
 ### 3.2 用户输入
 
 ```typescript
-// ✅ 用户输入转义
+//  用户输入转义
 function escapeHtml(str: string): string {
   const map: Record<string, string> = {
     '&': '&amp;',
@@ -115,7 +115,7 @@ function escapeHtml(str: string): string {
 ### 3.3 URL 校验
 
 ```typescript
-// ✅ URL 安全校验
+//  URL 安全校验
 function isSafeUrl(url: string): boolean {
   try {
     const parsed = new URL(url);
@@ -260,7 +260,7 @@ if (process.env.NODE_ENV === 'development') {
   console.log('debug info');
 }
 
-// ✅ 生产环境自动移除
+//  生产环境自动移除
 // 构建时自动去除 console.log
 ```
 

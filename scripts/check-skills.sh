@@ -41,7 +41,7 @@ WARNINGS=0
 # ---- 检查 1: SKILL.md 数量 ----
 check_count() {
     local count
-    count=$(find vibeCoding -name "SKILL.md" -type f 2>/dev/null | wc -l | tr -d ' ')
+    count=$(find vibeCoding others -name "SKILL.md" -type f 2>/dev/null | wc -l | tr -d ' ')
     # 从 README 提取数字
     local readme_count
     readme_count=$(grep -oE '\*\*[0-9]+ 个\*\*' README.md 2>/dev/null | head -1 | grep -oE '[0-9]+' || echo "0")
@@ -66,7 +66,7 @@ check_frontmatter() {
             fail "frontmatter 缺 description: $f"
             missing_desc=$((missing_desc+1))
         fi
-    done < <(find vibeCoding -name "SKILL.md" -type f 2>/dev/null)
+    done < <(find vibeCoding others -name "SKILL.md" -type f 2>/dev/null)
     if [ "$missing_name" -eq 0 ] && [ "$missing_desc" -eq 0 ]; then
         ok "frontmatter: $total 个 SKILL.md 全部含 name+description"
     fi
@@ -82,7 +82,7 @@ check_triggers() {
             warn "触发词缺失: $f"
             missing=$((missing+1))
         fi
-    done < <(find vibeCoding -name "SKILL.md" -type f 2>/dev/null)
+    done < <(find vibeCoding others -name "SKILL.md" -type f 2>/dev/null)
     if [ "$missing" -eq 0 ]; then
         ok "触发词: $total 个 SKILL.md 全部含触发词"
     else
@@ -139,7 +139,7 @@ check_missing_refs() {
 # ---- 检查 5: README 数字 ----
 check_readme() {
     local count
-    count=$(find vibeCoding -name "SKILL.md" -type f 2>/dev/null | wc -l | tr -d ' ')
+    count=$(find vibeCoding others -name "SKILL.md" -type f 2>/dev/null | wc -l | tr -d ' ')
     local declared
     declared=$(grep -oE '\*\*[0-9]+ 个\*\*' README.md 2>/dev/null | head -1 | grep -oE '[0-9]+' || echo "0")
     if [ "$count" = "$declared" ]; then

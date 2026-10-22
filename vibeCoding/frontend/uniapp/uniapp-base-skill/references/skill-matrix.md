@@ -4,18 +4,19 @@
 
 ## 核心定位
 
-`uniapp-base-skill` 是 **uni-app 页面组件技能套件**，包含三个子技能：
-- uniapp-card-skill - 卡片组件
-- uniapp-form-skill - 表单组件
-- uniapp-page-skill - 页面模板
+`uniapp-base-skill` 是 **uni-app 基础组件与容器的唯一真源**（原三个子技能已扁平化并入本模块）：
 
-## 子技能
+- 根容器层 `containers/` —— base-card / base-popup / base-form-item / base-avatar / base-navbar / base-tabbar
+- 内置组件层 `components/` —— form / feedback / list / navigation / business 五类
+- 场景 demo `demo-components/` —— 卡片布局 / 表单输入 / 页面模板的规范与 HTML 参考图
 
-| 子技能 | 说明 | 入口 |
-|--------|------|------|
-| uniapp-card-skill | 卡片组件（base-card、按钮、卡片布局） | [SKILL.md](../uniapp-card-skill/) |
-| uniapp-form-skill | 表单组件（input/switch/radio/select/popup） | [SKILL.md](../uniapp-form-skill/) |
-| uniapp-page-skill | 页面模板（列表页、详情页、登录页、TabBar） | [SKILL.md](../uniapp-page-skill/) |
+## 与其它 uniapp 技能的分工
+
+| 技能 | 关系 | 说明 |
+|------|------|------|
+| `uniapp-ui-component-commands-skill` | 被依赖 | 索引层，"用哪个、去哪拿"；组件实现不在它那里 |
+| `uniapp-page-components-skill` | 依赖本模块 | 页面级组件（聊天页 / 首页 / 详情页等） |
+| `uniapp-style-skill` / `uniapp-theme-skill` | 依赖本模块 | 设计系统与主题变量真源 |
 
 ## 配套技能
 

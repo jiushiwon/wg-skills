@@ -106,7 +106,7 @@
       <view class="meta-row">
         <view class="meta-item">
           <view class="rating-stars">
-            <text v-for="n in 5" :key="n" class="star" :class="{ active: n <= Math.round(product.rating) }">★</text>
+            <text v-for="n in 5" :key="n" class="star" :class="{ active: n <= Math.round(product.rating) }"></text>
           </view>
           <text class="meta-text">{{ product.rating }}</text>
         </view>
@@ -230,7 +230,7 @@
         <view class="review-rate">
           <text class="rate-value">{{ product.rating }}</text>
           <view class="rate-stars">
-            <text v-for="n in 5" :key="n" class="star" :class="{ active: n <= Math.round(product.rating) }">★</text>
+            <text v-for="n in 5" :key="n" class="star" :class="{ active: n <= Math.round(product.rating) }"></text>
           </view>
           <text class="rate-text">{{ product.goodRate }}% 好评</text>
         </view>
@@ -245,7 +245,7 @@
             <view class="comment-user-info">
               <text class="comment-name">{{ item.userName }}</text>
               <view class="comment-rating">
-                <text v-for="n in 5" :key="n" class="star" :class="{ active: n <= item.score }">★</text>
+                <text v-for="n in 5" :key="n" class="star" :class="{ active: n <= item.score }"></text>
               </view>
             </view>
           </view>
@@ -512,13 +512,13 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .page-container {
-  --primary: #D4AF37;
+  --color-primary: #D4AF37;
   --primaryLight: #E5C76B;
   --gradientEnd: #E5C76B;
   --tagBg: #232340;
   --couponStart: #16162A;
-  --bg: #0F0F1A;
-  --surface: #1A1A2E;
+  --bg-page: #0F0F1A;
+  --bg-card: #1A1A2E;
   --surfaceSecondary: #232340;
   --border: #2D2D44;
   --textPrimary: #FFFFFF;
@@ -530,7 +530,7 @@ onMounted(() => {
   --cardRadius: 12px;
   --shadowMd: 0 4px 16px rgba(0, 0, 0, 0.4);
   min-height: 100vh;
-  background: var(--bg);
+  background: var(--bg-page);
   padding-bottom: 90px;
 }
 
@@ -639,7 +639,7 @@ onMounted(() => {
       transform: translateX(-50%);
       width: 20px;
       height: 3px;
-      background: var(--primary);
+      background: var(--color-primary);
       border-radius: 2px;
     }
   }
@@ -649,7 +649,7 @@ onMounted(() => {
 .gallery-section {
   position: relative;
   padding-top: 0;
-  background: var(--surface);
+  background: var(--bg-card);
 }
 
 .gallery-swiper {
@@ -688,7 +688,7 @@ onMounted(() => {
 
 /* 信息区 */
 .info-section {
-  background: var(--surface);
+  background: var(--bg-card);
   padding: 12px 16px 16px;
   margin-bottom: 10px;
 }
@@ -709,13 +709,13 @@ onMounted(() => {
 .price-symbol {
   font-size: 16px;
   font-weight: 600;
-  color: var(--primary);
+  color: var(--color-primary);
 }
 
 .price-value {
   font-size: 32px;
   font-weight: 700;
-  color: var(--primary);
+  color: var(--color-primary);
 }
 
 .price-tags {
@@ -728,7 +728,7 @@ onMounted(() => {
   background: var(--tagBg);
   border-radius: 4px;
   font-size: 11px;
-  color: var(--primary);
+  color: var(--color-primary);
 }
 
 .price-extra {
@@ -761,7 +761,7 @@ onMounted(() => {
   border: 1px solid var(--border);
   border-radius: 4px;
   font-size: 11px;
-  color: var(--primary);
+  color: var(--color-primary);
 }
 
 .title-row {
@@ -792,7 +792,7 @@ onMounted(() => {
 
 .tag {
   padding: 2px 6px;
-  background: var(--bg);
+  background: var(--bg-page);
   border-radius: 3px;
   font-size: 10px;
   color: var(--textSecondary);
@@ -804,12 +804,12 @@ onMounted(() => {
   align-items: center;
   padding: 4px 8px;
   border-radius: 8px;
-  background: var(--bg);
+  background: var(--bg-page);
   min-width: 44px;
 
   &.active {
     background: var(--tagBg);
-    color: var(--primary);
+    color: var(--color-primary);
   }
 }
 
@@ -861,7 +861,7 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: var(--surface);
+  background: var(--bg-card);
   padding: 14px 16px;
   margin-bottom: 10px;
 }
@@ -893,7 +893,7 @@ onMounted(() => {
   align-items: center;
   flex-wrap: wrap;
   gap: 12px 16px;
-  background: var(--surface);
+  background: var(--bg-card);
   padding: 12px 16px;
   margin-bottom: 10px;
 }
@@ -914,7 +914,7 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: var(--surface);
+  background: var(--bg-card);
   padding: 14px 16px;
   margin-bottom: 10px;
 }
@@ -929,7 +929,7 @@ onMounted(() => {
   width: 44px;
   height: 44px;
   border-radius: 22px;
-  background: var(--bg);
+  background: var(--bg-page);
   overflow: hidden;
 }
 
@@ -969,13 +969,13 @@ onMounted(() => {
 }
 
 .shop-btn-primary {
-  border-color: var(--primary);
-  color: var(--primary);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 /* 推荐商品横向滚动 */
 .recommend-section {
-  background: var(--surface);
+  background: var(--bg-card);
   padding: 14px 0;
   margin-bottom: 10px;
 }
@@ -1013,7 +1013,7 @@ onMounted(() => {
   width: 100px;
   height: 100px;
   border-radius: 8px;
-  background: var(--bg);
+  background: var(--bg-page);
 }
 
 .recommend-title {
@@ -1031,12 +1031,12 @@ onMounted(() => {
   margin-top: 4px;
   font-size: 13px;
   font-weight: 600;
-  color: var(--primary);
+  color: var(--color-primary);
 }
 
 /* Tabs */
 .tabs-section {
-  background: var(--surface);
+  background: var(--bg-card);
   position: sticky;
   top: 44px;
   z-index: 50;
@@ -1082,14 +1082,14 @@ onMounted(() => {
     transform: translateX(-50%);
     width: 24px;
     height: 3px;
-    background: var(--primary);
+    background: var(--color-primary);
     border-radius: 2px;
   }
 }
 
 /* Tab 内容 */
 .tab-content {
-  background: var(--surface);
+  background: var(--bg-card);
   margin-bottom: 10px;
 }
 
@@ -1173,7 +1173,7 @@ onMounted(() => {
 
 .review-tag {
   padding: 4px 10px;
-  background: var(--bg);
+  background: var(--bg-page);
   border-radius: 12px;
   font-size: 12px;
   color: var(--textSecondary);
@@ -1204,7 +1204,7 @@ onMounted(() => {
   width: 32px;
   height: 32px;
   border-radius: 16px;
-  background: var(--bg);
+  background: var(--bg-page);
 }
 
 .comment-user-info {
@@ -1239,7 +1239,7 @@ onMounted(() => {
   width: 80px;
   height: 80px;
   border-radius: 4px;
-  background: var(--bg);
+  background: var(--bg-page);
 }
 
 .comment-meta {
@@ -1266,7 +1266,7 @@ onMounted(() => {
 }
 
 .grid-item {
-  background: var(--surface);
+  background: var(--bg-card);
   padding: 10px;
 }
 
@@ -1274,7 +1274,7 @@ onMounted(() => {
   width: 100%;
   aspect-ratio: 1;
   border-radius: 6px;
-  background: var(--bg);
+  background: var(--bg-page);
 }
 
 .grid-title {
@@ -1297,7 +1297,7 @@ onMounted(() => {
 .grid-price {
   font-size: 14px;
   font-weight: 600;
-  color: var(--primary);
+  color: var(--color-primary);
 }
 
 .grid-sales {
@@ -1317,7 +1317,7 @@ onMounted(() => {
   right: 0;
   display: flex;
   align-items: center;
-  background: var(--surface);
+  background: var(--bg-card);
   border-top: 1px solid var(--border);
   padding: 8px 12px;
   z-index: 999;
@@ -1352,7 +1352,7 @@ onMounted(() => {
   min-width: 16px;
   height: 16px;
   padding: 0 4px;
-  background: var(--primary);
+  background: var(--color-primary);
   border-radius: 8px;
   font-size: 10px;
   color: var(--textInverse);

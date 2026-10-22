@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-popup 实战 - 居中确认弹窗</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px; --radius-md: 8px;
+      --space-2: 8px; --space-3: 12px; --space-4: 16px;
+      --color-primary: #4a90e2; --color-error: #f5222d;
+      --text-primary: #333; --text-secondary: #666; --text-tertiary: #999;
+      --bg-page: #f5f5f5; --bg-card: #fff; --border: #e8e8e8;
+    }
+    body { background: var(--bg-page); font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; padding: 20px; }
+    .page { max-width: 414px; margin: 0 auto; }
+    .phone { background: var(--bg-card); border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); position: relative; }
+    .phone-header { height: 44px; display: flex; align-items: center; padding: 0 var(--space-4); border-bottom: 1px solid var(--border); }
+    .phone-title { font-size: 16px; font-weight: 500; }
+    .phone-body { min-height: 600px; padding: var(--space-4); }
+
+    .list-item { display: flex; justify-content: space-between; align-items: center; padding: 14px var(--space-4); border-bottom: 1px solid var(--border); font-size: 14px; }
+    .btn-danger { display: block; width: 100%; padding: 12px; background: #fff; color: var(--color-error); border: 1px solid var(--color-error); border-radius: var(--radius-md); font-size: 14px; cursor: pointer; margin-top: var(--space-4); }
+    .btn { display: block; width: 100%; padding: 12px; background: var(--color-primary); color: #fff; border: none; border-radius: var(--radius-md); font-size: 15px; cursor: pointer; }
+
+    .popup-mask { position: absolute; inset: 0; background: rgba(0,0,0,0.5); opacity: 0; visibility: hidden; transition: opacity .3s,visibility .3s; z-index: 10; }
+    .popup-mask.show { opacity: 1; visibility: visible; }
+    .popup { position: absolute; background: var(--bg-card); transition: transform .3s,opacity .3s; z-index: 20; }
+    .popup-center { top: 50%; left: 50%; transform: translate(-50%,-50%) scale(.9); opacity: 0; border-radius: var(--radius-lg); width: 80%; max-width: 320px; overflow: hidden; }
+    .popup-center.show { transform: translate(-50%,-50%) scale(1); opacity: 1; }
+
+    .dialog-body { padding: var(--space-4); text-align: center; }
+    .dialog-icon { width: 52px; height: 52px; border-radius: 50%; margin: 0 auto var(--space-3); display: flex; align-items: center; justify-content: center; font-size: 26px; }
+    .dialog-icon.danger { background: #fff1f0; color: var(--color-error); }
+    .dialog-icon.warning { background: #fff7e6; color: #fa8c16; }
+    .dialog-icon.info { background: #e6f4ff; color: var(--color-primary); }
+    .dialog-title { font-size: 17px; font-weight: 600; margin-bottom: var(--space-2); }
+    .dialog-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+    .dialog-actions { display: flex; border-top: 1px solid var(--border); }
+    .dialog-btn { flex: 1; padding: 13px; text-align: center; font-size: 15px; cursor: pointer; }
+    .dialog-btn.cancel { color: var(--text-secondary); border-right: 1px solid var(--border); }
+    .dialog-btn.confirm { color: var(--color-primary); font-weight: 500; }
+    .dialog-btn.danger { color: var(--color-error); font-weight: 500; }
+
+    .result { padding: var(--space-3) var(--space-4); background: var(--bg-page); border-radius: var(--radius-md); margin-top: var(--space-4); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="phone">
+      <div class="phone-header"><span class="phone-title">设置</span></div>
+      <div class="phone-body">
+        <div class="list-item"><span>消息通知</span><span style="color:#999;">›</span></div>
+        <div class="list-item"><span>隐私设置</span><span style="color:#999;">›</span></div>
+
+        <button class="btn-danger" onclick="openDialog('danger')">删除账号（危险操作）</button>
+        <button class="btn" onclick="openDialog('warning')" style="margin-top:var(--space-3);">退出登录确认</button>
+
+        <div class="result">操作结果：<b id="resultText">无</b></div>
+      </div>
+
+      <div class="popup-mask" id="mask" onclick="closeDialog()"></div>
+      <div class="popup popup-center" id="popup">
+        <div class="dialog-body">
+          <div class="dialog-icon" id="dialogIcon"></div>
+          <div class="dialog-title" id="dialogTitle"></div>
+          <div class="dialog-desc" id="dialogDesc"></div>
+        </div>
+        <div class="dialog-actions">
+          <div class="dialog-btn cancel" onclick="closeDialog()">取消</div>
+          <div class="dialog-btn" id="confirmBtn" onclick="confirmDialog()">确定</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const DIALOGS = {
+      danger: {
+        icon: '清', iconClass: 'danger',
+        title: '确认删除账号？',
+        desc: '删除后账号内的订单、收藏、积分将全部清空，且无法恢复。',
+        confirmText: '删除', confirmClass: 'danger',
+      },
+      warning: {
+        icon: '', iconClass: 'warning',
+        title: '退出登录？',
+        desc: '退出后需要重新输入密码才能登录。',
+        confirmText: '退出', confirmClass: '',
+      },
+    };
+
+    let current = '';
+
+    function openDialog(type) {
+      current = type;
+      const d = DIALOGS[type];
+      const icon = document.getElementById('dialogIcon');
+      icon.textContent = d.icon;
+      icon.className = 'dialog-icon ' + d.iconClass;
+      document.getElementById('dialogTitle').textContent = d.title;
+      document.getElementById('dialogDesc').textContent = d.desc;
+
+      const btn = document.getElementById('confirmBtn');
+      btn.textContent = d.confirmText;
+      btn.className = 'dialog-btn ' + d.confirmClass;
+
+      document.getElementById('mask').classList.add('show');
+      document.getElementById('popup').classList.add('show');
+    }
+
+    function closeDialog() {
+      document.getElementById('mask').classList.remove('show');
+      document.getElementById('popup').classList.remove('show');
+    }
+
+    function confirmDialog() {
+      const d = DIALOGS[current];
+      document.getElementById('resultText').textContent = d.title + '  已' + d.confirmText;
+      closeDialog();
+    }
+  </script>
+</body>
+</html>

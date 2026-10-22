@@ -103,7 +103,7 @@ export default function Dashboard() {
             </div>
             <div className="stat-value">{stat.value}</div>
             <div className="stat-trend" style={{ color: stat.color }}>
-              <span>↑</span> {stat.trend}
+              <span></span> {stat.trend}
             </div>
           </div>
         ))}

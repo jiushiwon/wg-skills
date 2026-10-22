@@ -1,0 +1,25 @@
+{
+  "name": "base-navbar",
+  "title": "顶部导航容器",
+  "category": "container",
+  "description": "根容器：状态栏占位 + 单行导航（返回 + 居中标题 + 右侧插槽 / 胶囊）",
+  "aliases": ["顶部导航", "navbar", "base-navbar", "导航栏", "标题栏"],
+  "props": [
+    { "name": "title", "type": "string", "default": "", "desc": "标题" },
+    { "name": "showBack", "type": "boolean", "default": true, "desc": "是否显示返回按钮" },
+    { "name": "transparent", "type": "boolean", "default": false, "desc": "透明背景（沉浸式）" },
+    { "name": "fixed", "type": "boolean", "default": false, "desc": "是否吸顶" },
+    { "name": "placeholder", "type": "boolean", "default": true, "desc": "吸顶时是否占位（避免遮挡内容）" },
+    { "name": "statusBarHeight", "type": "string", "default": "'0'", "desc": "状态栏高度，小程序端建议传 var(--status-bar-height)" },
+    { "name": "showStatusBar", "type": "boolean", "default": true, "desc": "是否渲染状态栏占位行" },
+    { "name": "rightText", "type": "string", "default": "", "desc": "右侧文字按钮" },
+    { "name": "capsuleRight", "type": "CapsuleItem[]", "default": "[]", "desc": "右侧胶囊按钮组" }
+  ],
+  "events": ["back", "rightClick", "capsuleClick"],
+  "slots": [
+    { "name": "status-bar", "desc": "状态栏占位内容" },
+    { "name": "left", "desc": "左侧区域，优先级高于返回按钮" },
+    { "name": "title", "desc": "标题内容，优先级高于 title" },
+    { "name": "right", "desc": "右侧区域" }
+  ]
+}

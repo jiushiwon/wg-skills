@@ -15,7 +15,7 @@
 ### 触发词
 
 ```
-复刻这张图
+复刻复刻这张图
 复刻这个页面
 把这张原型图转成代码
 把这张设计稿写成页面
@@ -75,7 +75,7 @@ AI：
 ## 目录结构
 
 ```
-ui-replica-skill/
+uniapp-ui-replica-skill/
 ├── SKILL.md                          # 技能入口与核心流程
 ├── README.md                         # 使用说明与示例
 ├── examples/                         # 复刻样例

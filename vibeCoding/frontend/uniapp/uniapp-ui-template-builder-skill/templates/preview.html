@@ -9,7 +9,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --primary: #333333;
+      --color-primary: #333333;
       --primary-light: #666666;
       --secondary: #999999;
       --bg-page: #F5F5F5;
@@ -1619,7 +1619,7 @@
     }
 
     .demo-toast.success::before {
-      content: '✓';
+      content: '';
       width: 18px;
       height: 18px;
       display: flex;
@@ -1631,7 +1631,7 @@
     }
 
     .demo-toast.error::before {
-      content: '✕';
+      content: '';
       width: 18px;
       height: 18px;
       display: flex;
@@ -2523,22 +2523,22 @@
                   <div class="stat-card">
                     <div class="stat-label">今日订单</div>
                     <div class="stat-value">1,234</div>
-                    <div class="stat-trend cyan">↑ 12.5%</div>
+                    <div class="stat-trend cyan"> 12.5%</div>
                   </div>
                   <div class="stat-card">
                     <div class="stat-label">销售额</div>
                     <div class="stat-value">¥56,789</div>
-                    <div class="stat-trend green">↑ 8.3%</div>
+                    <div class="stat-trend green"> 8.3%</div>
                   </div>
                   <div class="stat-card">
                     <div class="stat-label">访客数</div>
                     <div class="stat-value">8,654</div>
-                    <div class="stat-trend purple">↑ 5.2%</div>
+                    <div class="stat-trend purple"> 5.2%</div>
                   </div>
                   <div class="stat-card">
                     <div class="stat-label">转化率</div>
                     <div class="stat-value">3.24%</div>
-                    <div class="stat-trend yellow">↑ 1.1%</div>
+                    <div class="stat-trend yellow"> 1.1%</div>
                   </div>
                 </div>
                 <div class="charts-row">
@@ -2639,7 +2639,7 @@
                     </div>
                     <div class="meta-row">
                       <div class="meta-item">
-                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                        <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
                         <span class="meta">4.9 分</span>
                       </div>
                       <div class="meta-divider"></div>
@@ -2722,7 +2722,7 @@
                     <div class="review-summary">
                       <div class="review-rate">
                         <span class="rate-value">4.9</span>
-                        <div><div class="rate-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><span class="rate-text">98% 好评</span></div>
+                        <div><div class="rate-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div><span class="rate-text">98% 好评</span></div>
                       </div>
                       <div class="review-tags">
                         <span class="review-tag">拍照清晰 1234</span>
@@ -2733,13 +2733,13 @@
                     </div>
                     <div class="comment-list">
                       <div class="comment-item">
-                        <div class="comment-user"><img src="assets/images/product-3.jpg" class="comment-avatar" alt=""><div class="comment-user-info"><span class="comment-name">用户***8</span><div class="comment-rating"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div></div></div>
+                        <div class="comment-user"><img src="assets/images/product-3.jpg" class="comment-avatar" alt=""><div class="comment-user-info"><span class="comment-name">用户***8</span><div class="comment-rating"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div></div></div>
                         <div class="comment-content">手机非常好用，拍照清晰，运行流畅，钛金属质感很棒，物流也很快！</div>
                         <div class="comment-images"><img src="assets/images/detail-1.jpg" class="comment-image" alt=""><img src="assets/images/detail-2.jpg" class="comment-image" alt=""></div>
                         <div class="comment-meta"><span class="comment-spec">原色钛金属；256GB</span><span class="comment-date">2024-01-15</span></div>
                       </div>
                       <div class="comment-item">
-                        <div class="comment-user"><img src="assets/images/product-2.jpg" class="comment-avatar" alt=""><div class="comment-user-info"><span class="comment-name">用户***2</span><div class="comment-rating"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div></div></div>
+                        <div class="comment-user"><img src="assets/images/product-2.jpg" class="comment-avatar" alt=""><div class="comment-user-info"><span class="comment-name">用户***2</span><div class="comment-rating"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div></div></div>
                         <div class="comment-content">是正品，包装完整，发货速度快，客服态度很好，会回购。</div>
                         <div class="comment-meta"><span class="comment-spec">原色钛金属；256GB</span><span class="comment-date">2024-01-14</span></div>
                       </div>
@@ -2883,7 +2883,7 @@
                 <div class="productlist-style1">
                   <div class="list-header">
                     <span class="header-title">商品列表</span>
-                    <span class="header-icon">☰</span>
+                    <span class="header-icon">≡</span>
                   </div>
                   <div class="filter-bar">
                     <span class="filter-item active">综合</span>
@@ -3361,7 +3361,7 @@
                       </div>
                       <div style="display:flex;justify-content:space-between;margin-top:6px;">
                         <div style="font-size:11px;color:#999;">3小时前</div>
-                        <div style="font-size:11px;color:#777;">👍 56 &nbsp; 💬 12</div>
+                        <div style="font-size:11px;color:#777;">赞 56 &nbsp; 留言 12</div>
                       </div>
                     </div>
                   </div>
@@ -3377,7 +3377,7 @@
                       </div>
                       <div style="display:flex;justify-content:space-between;margin-top:6px;">
                         <div style="font-size:11px;color:#999;">5小时前</div>
-                        <div style="font-size:11px;color:#777;">👍 89 &nbsp; 💬 23</div>
+                        <div style="font-size:11px;color:#777;">赞 89 &nbsp; 留言 23</div>
                       </div>
                     </div>
                   </div>

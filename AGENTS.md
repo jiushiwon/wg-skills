@@ -18,6 +18,8 @@
 
 **核心设计理念**：前后端一体化。前端 4 套体系（Vue / UniApp / React / HTML）与后端 5 语言矩阵（Java / Python / Go / Node.js / Rust）通过 `api-contract.md` 契约连接，前端请求层自动适配后端响应信封和错误码，Design Token 命名体系跨框架对齐。
 
+**对外定位**：本仓库是“古法全栈开发经验 × AI”的公开基础能力层。它提供项目骨架、通用模块、前后端契约、主题与部署规范；不承诺覆盖每个行业业务规则、品牌视觉或个性化产品决策。项目级编排、模板与验收链路由私有仓库 `wg-project-kits` 持续沉淀。
+
 ### 1.1 核心理念
 
 > **将"古法编程"容纳到 AI 体系之中。**
@@ -66,7 +68,7 @@ AI 时代的编程不是"取代程序员"，而是把传统工程中**重复、�
 - 🟢 **一天学会 Node.js 体系** → 触发 `nodejs-init-skill`
 - 🎨 **一天学会 Vue 体系** → 触发 `vue-base-skill` / `vue-generate-skill`（SPA）/ `nuxt-generate-skill`（SSR）
 - 📱 **一天学会 React 体系** → 触发 `react-generate-skill` / `next-generate-skill`
-- 📱 **一天学会 uni-app 体系** → 触发 `uniapp-base-skill` 及其 21 个子技能
+- 📱 **一天学会 uni-app 体系** → 触发 `uniapp-base-skill`（基础组件与容器真源）及 15 个独立 uniapp 技能
 
 > 一句"帮我用 Java 搭一个商城"，智能体会按"选型 → 骨架 → 业务模块"的顺序串起多个技能，**小白也能跟着提示词完成一个完整项目**。
 
@@ -169,6 +171,7 @@ wg-skills/
 │   │   ├── go/                              # Go 语言矩阵
 │   │   │   ├── go-gin-init-skill/           # Go + Gin 一键初始化
 │   │   │   ├── go-frame-init-skill/         # Go 多框架初始化（Hertz/Fiber/Chi）
+│   │   │   ├── go-grpc-init-skill/          # Go gRPC 服务初始化（4 种流模式）
 │   │   │   ├── go-ws-module-skill/          # Go WebSocket 模块
 │   │   │   └── go-module/                   # Go 模块矩阵
 │   │   │       └── go-storage-module-skill/ # 文件存储模块
@@ -204,17 +207,18 @@ wg-skills/
 │   │   │   ├── icon-catch-skill/             # 图标抓取
 │   │   │   └── image-catch-skill/            # 图片抓取
 │   │   ├── frontend-icon-skill/              # SVG 模板生成 + SVG→PNG 导出 + 图片处理（合并自 image-forge-skill）
-│   │   ├── uniapp/                           # uni-app 技能矩阵（15+ skill）
-│   │   │   ├── uniapp-base-skill/            # uni-app 基础组件（父技能，内含 21 组件）
-│   │   │   │   ├── uniapp-form-skill/        # 表单组件
-│   │   │   │   ├── uniapp-card-skill/        # 卡片组件
-│   │   │   │   └── uniapp-page-skill/        # 页面模板
+│   │   ├── uniapp/                           # uni-app 技能矩阵（16 skill）
+│   │   │   ├── uniapp-base-skill/            # 基础组件与容器唯一真源（6 容器 + 26 组件）
+│   │   │   │   ├── containers/               # 根容器层
+│   │   │   │   ├── components/               # 内置组件层（form/feedback/list/navigation/business）
+│   │   │   │   └── styles/                   # 样式类组件 + 全局关键帧真源
 │   │   │   ├── uniapp-app-generate-skill/    # uni-app 项目生成
 │   │   │   ├── uniapp-standard-skill/        # 开发通用规范
 │   │   │   ├── uniapp-style-skill/           # 设计系统
 │   │   │   ├── uniapp-theme-skill/           # 主题系统
 │   │   │   ├── uniapp-auth-skill/      # 登录鉴权与安全
 │   │   │   ├── uniapp-page-components-skill/ # 组件化页面
+│   │   │   ├── uniapp-member-center-skill/    # 会员中心与积分商城场景页
 │   │   │   ├── uniapp-request-skill/         # 请求层设计
 │   │   │   ├── uniapp-diagnostic-skill/ # 项目规范化
 │   │   │   ├── uniapp-code-audit-skill/      # 代码审计
@@ -248,7 +252,8 @@ wg-skills/
 │   │       │   ├── vue-generate-skill/       # Vue 项目生成
 │   │       │   └── vue-complex-skill/        # 综合页面
 │   │       │       ├── vue-crud-skill/       # 增删改查页面
-│   │       │       └── vue-login-skill/      # 登录页
+│   │       │       ├── vue-login-skill/      # 登录页
+│   │       │       └── vue-ai-creative-workspace-skill/ # AI 创作工作台（页面编排）
 │   │       ├── universal-login-page/        # 万能登录页（嵌入式登录组件）
 │   │       ├── vue-theme-skill/              # Vue 主题系统（设计 Token 层）
 │   │       ├── vue-style-skill/              # Vue 样式规范（动画/工具类/布局）
@@ -289,7 +294,6 @@ wg-skills/
 | 父技能 | 嵌套子技能数 | 子技能定位 |
 |--------|------------|-----------|
 | `vibeCoding/frontend/icon-image-catch-skill` | 2 | 图标抓取 / 图片抓取 |
-| `vibeCoding/frontend/uniapp/uniapp-base-skill` | 3 | uniapp 表单/卡片/页面 |
 | `vibeCoding/frontend/vue/vue-base-skill` | 20+ | Vue 组件体系（按钮/卡片/表格/表单/树等） |
 
 ### 3.3 顶层遗留目录
@@ -395,7 +399,7 @@ wg-skills/
    │                     │
    │   frontend (4 套)   │
    │   ├ vue (85%)       │ 20+ 组件 + theme + request + nuxt
-   │   ├ uniapp (90%)    │ 21 组件 + theme + style + request
+   │   ├ uniapp (90%)    │ 26 组件 + 6 容器 + theme + style + request
    │   ├ react (30%)     │ generate + next.js fullstack
    │   └ html (10%)      │ template only ← 下一个重点
    │                     │
@@ -433,6 +437,7 @@ wg-skills/
 | 会议纪要（meeting） | ✅ 是 | 协作沟通结果 |
 | Skill 文档（SKILL.md / README.md） | ❌ 否 | 跟随 skill 目录 |
 | 仓库主控（AGENTS.md / CLAUDE.md / README.md） | ❌ 否 | 在仓库根目录 |
+| 公开入口文档（ONBOARDING.md / MISSING_SKILLS.md） | ❌ 否 | 在仓库根目录，随仓库公开发布并由 README 链接 |
 | 公众号文章 | ❌ 否 | 在 `docs/<对应分类>/公众号文章.md` |
 
 ### 11.2 命名规范
@@ -449,6 +454,7 @@ wg-skills/
 - ❌ **禁止写入全局默认 `~/.claude/plans/`** —— 本仓库所有 plan **必须**沉淀到 `docs/plans/`
 - ❌ 禁止把 plan 文件放到 skill 目录里（污染 skill 自包含性）
 - ❌ 禁止把 plan / design 内容混入 SKILL.md（SKILL.md 只承载技能定义）
+- ❌ 禁止把面向外部使用者的入口说明移入 `docs/`；`ONBOARDING.md` 与 `MISSING_SKILLS.md` 是公开仓库导航的一部分。
 
 ### 11.4 版本控制
 
@@ -624,7 +630,7 @@ grep -rnE '<button' ./vibeCoding/frontend/vue/vue-table-skill/demo-components
 | 体系 | 完成度 | 组件库 | 主题系统 | 样式规范 | 请求层 | 项目生成 | 定位 |
 |------|--------|--------|---------|---------|--------|---------|------|
 | **Vue** | 85% | vue-base-skill (20+) | vue-theme-skill | vue-style-skill | frontend-request-skill | vue-generate-skill（SPA）/ **nuxt-generate-skill**（SSR） | Web 管理后台、H5、SSR 全栈 |
-| **UniApp** | 90% | uniapp-base-skill (21) | uniapp-theme-skill | uniapp-style-skill | uniapp-request-skill | uniapp-app-generate-skill | 小程序、App、跨端 |
+| **UniApp** | 90% | uniapp-base-skill (26 组件 + 6 容器) | uniapp-theme-skill | uniapp-style-skill | uniapp-request-skill | uniapp-app-generate-skill | 小程序、App、跨端 |
 | **React** | 30% | 待建设 | 待建设 | 待建设 | 可复用 frontend-request-skill | react-generate-skill / next-generate-skill | Web SPA / 全栈 SSR |
 | **HTML** | 10% | 待建设 | 待建设 | 待建设 | api.js（不标准） | html-frontend-template | 轻量后台、原型 |
 

@@ -36,6 +36,7 @@ export type FieldType =
   | 'password'     // 密码
   | 'number'       // 数字
   | 'select'       // 下拉选择（可多选）
+  | 'cascader'     // 级联选择
   | 'radio'        // 单选组
   | 'checkbox'     // 复选组
   | 'switch'       // 开关
@@ -72,6 +73,7 @@ export type FieldType =
 | `password` | — | `base-input`（type=password） | `string` | `''` | required / strongPassword |
 | `number` | — | `base-input`（type=text + number） | `number \| string` | `''` | required / number |
 | `select` | — | `base-select` | `unknown \| unknown[]` | `undefined / []` | required |
+| `cascader` | — | `base-cascader` | `string \| string[]` | `'' / []` | — |
 | `radio` | — | `base-radio-group` | `unknown` | `undefined` | required |
 | `checkbox` | — | `base-checkbox-group` | `unknown[]` | `[]` | required（至少选一项） |
 | `switch` | — | `base-switch` | `boolean` | `false` | — |
@@ -930,8 +932,8 @@ export const allTypesSchema: FormSchema = {
 { prop: 'email', type: 'input', subType: 'email' }
 ```
 
-`FieldType` 的合法取值**只有** §二 列出的 10 个：
-`input | textarea | password | number | select | radio | checkbox | switch | datepicker | upload`。
+`FieldType` 的合法取值**只有** §二 列出的 11 个：
+`input | textarea | password | number | select | cascader | radio | checkbox | switch | datepicker | upload`。
 
 ### R5 校验用 `rules`，`minlength` / `maxlength` 只是推导输入
 

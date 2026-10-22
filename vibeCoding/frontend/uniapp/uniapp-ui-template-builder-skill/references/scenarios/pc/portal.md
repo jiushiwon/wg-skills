@@ -29,7 +29,7 @@ portal/
 ## 布局结构
 
 ```
-┌────────────────────────────────────────────┐
+┌─┌────────────────────────────────────────────┐
 │  Logo │ 产品 │ 解决方案 │ 案例 │ 关于 │ [联系]│
 ├────────────────────────────────────────────┤
 │                                            │
@@ -126,7 +126,7 @@ portal/
 ### 风格1：科技蓝
 
 ```scss
---primary: #0066FF;
+----color-primary: #0066FF;
 --bg-hero: linear-gradient(135deg, #0066FF, #00CCFF);
 --text-light: #FFFFFF;
 ```
@@ -134,21 +134,22 @@ portal/
 ### 风格2：深色科技
 
 ```scss
---bg-page: #0A0A0A;
---primary: #00FF88;
+----bg-page: #0A0A0A;
+--color-primary: #00FF88;
 --text-light: #FFFFFF;
 ```
 
 ### 风格3：清新自然
 
 ```scss
---primary: #00C853;
+----color-primary: #00C853;
 --bg-page: #F5FBF5;
 ```
 
 ## Mock数据
 
 ```json
+{
 {
   "company": {
     "name": "公司名称",

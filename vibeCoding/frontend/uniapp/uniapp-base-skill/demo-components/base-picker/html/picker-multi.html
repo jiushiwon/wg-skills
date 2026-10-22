@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-picker 多列选择</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-primary: #4a90e2;
+      --color-success: #52c41a;
+      --text-primary: #333;
+      --text-secondary: #666;
+      --text-tertiary: #999;
+      --bg-page: #f5f5f5;
+      --bg-card: #fff;
+      --border: #e8e8e8;
+    }
+    body { background: var(--bg-page); font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; padding: 20px; }
+    .page { max-width: 414px; margin: 0 auto; }
+
+    .phone {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .phone-header {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      padding: 0 var(--space-4);
+      border-bottom: 1px solid var(--border);
+    }
+    .phone-title { font-size: 16px; font-weight: 500; }
+    .phone-body { min-height: 600px; padding: var(--space-4); }
+
+    .picker {
+      display: flex;
+      align-items: center;
+      padding: 14px var(--space-4);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-3);
+      cursor: pointer;
+    }
+    .picker__label { font-size: 14px; color: var(--text-secondary); width: 60px; }
+    .picker__value { flex: 1; font-size: 15px; color: var(--text-primary); }
+    .picker__value--placeholder { color: var(--text-tertiary); }
+    .picker__arrow { font-size: 18px; color: #ccc; }
+
+    .result {
+      padding: var(--space-4);
+      background: var(--bg-page);
+      border-radius: var(--radius-md);
+      margin-top: var(--space-4);
+    }
+    .result-title { font-size: 14px; color: var(--text-secondary); margin-bottom: var(--space-2); }
+    .result-value { font-size: 16px; color: var(--text-primary); font-weight: 500; }
+
+    /* 多列 picker */
+    .picker-popup {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      transform: translateY(100%);
+      transition: transform 0.3s;
+      z-index: 100;
+    }
+    .picker-popup.show { transform: translateY(0); }
+    .picker-popup-mask {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s;
+      z-index: 99;
+    }
+    .picker-popup-mask.show { opacity: 1; visibility: visible; }
+
+    .picker-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--border);
+    }
+    .picker-header__btn { font-size: 15px; padding: 6px 12px; }
+    .picker-header__btn.cancel { color: var(--text-secondary); }
+    .picker-header__btn.confirm { color: var(--color-primary); font-weight: 500; }
+    .picker-header__title { font-size: 16px; font-weight: 500; }
+
+    .picker-columns {
+      display: flex;
+      height: 200px;
+    }
+    .picker-column {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+    .picker-wheel {
+      height: 100%;
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
+    }
+    .picker-item {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+    .picker-item.selected {
+      color: var(--color-primary);
+      font-weight: 500;
+    }
+
+    .picker-highlight {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 40px;
+      transform: translateY(-50%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="phone">
+      <div class="phone-header">
+        <span class="phone-title">多列选择</span>
+      </div>
+      <div class="phone-body">
+        <!-- 城市级联 -->
+        <div class="picker" onclick="openCityPicker()">
+          <span class="picker__label">城市</span>
+          <span class="picker__value" id="cityValue">请选择</span>
+          <span class="picker__arrow">›</span>
+        </div>
+
+        <!-- 日期时间 -->
+        <div class="picker" onclick="openDateTimePicker()">
+          <span class="picker__label">日期时间</span>
+          <span class="picker__value" id="datetimeValue">请选择</span>
+          <span class="picker__arrow">›</span>
+        </div>
+
+        <div class="result" id="resultBox">
+          <div class="result-title">已选值：</div>
+          <div class="result-value" id="resultValue">-</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 多列 Picker 弹窗 -->
+  <div class="picker-popup-mask" id="mask" onclick="closePicker()"></div>
+  <div class="picker-popup" id="pickerPopup">
+    <div class="picker-header">
+      <span class="picker-header__btn cancel" onclick="closePicker()">取消</span>
+      <span class="picker-header__title" id="pickerTitle">请选择</span>
+      <span class="picker-header__btn confirm" onclick="confirmPicker()">确定</span>
+    </div>
+    <div class="picker-columns" id="pickerColumns"></div>
+  </div>
+
+  <script>
+    // 数据源
+    const dataSource = {
+      city: {
+        provinces: [
+          { name: '北京', cities: ['东城区', '西城区', '朝阳区', '海淀区'] },
+          { name: '上海', cities: ['黄浦区', '徐汇区', '长宁区', '静安区'] },
+          { name: '广东', cities: ['广州', '深圳', '东莞', '佛山'] }
+        ]
+      },
+      datetime: {
+        years: Array.from({length: 10}, (_, i) => new Date().getFullYear() - 2 + i),
+        months: Array.from({length: 12}, (_, i) => i + 1),
+        days: Array.from({length: 31}, (_, i) => i + 1),
+        hours: Array.from({length: 24}, (_, i) => i),
+        minutes: Array.from({length: 60}, (_, i) => i)
+      }
+    };
+
+    let currentPicker = '';
+    let selectedIndices = [];
+
+    function openCityPicker() {
+      currentPicker = 'city';
+      selectedIndices = [0, 0];
+      const columns = document.getElementById('pickerColumns');
+      document.getElementById('pickerTitle').textContent = '选择城市';
+
+      const provinces = dataSource.city.provinces;
+      const cities = provinces[0].cities;
+
+      columns.innerHTML = `
+        <div class="picker-column">
+          <div class="picker-wheel" data-col="0">
+            ${provinces.map((p, i) => `<div class="picker-item ${i===0?'selected':''}" data-col="0" data-index="${i}" onclick="selectItem(0, ${i})">${p.name}</div>`).join('')}
+          </div>
+        </div>
+        <div class="picker-column">
+          <div class="picker-wheel" data-col="1">
+            ${cities.map((c, i) => `<div class="picker-item ${i===0?'selected':''}" data-col="1" data-index="${i}" onclick="selectItem(1, ${i})">${c}</div>`).join('')}
+          </div>
+        </div>
+      `;
+
+      // 绑定滚动事件
+      columns.querySelectorAll('.picker-wheel').forEach((wheel, colIndex) => {
+        wheel.onscroll = () => handleScroll(colIndex);
+      });
+
+      showPicker();
+    }
+
+    // 点击选中某列某项
+    function selectItem(colIndex, index) {
+      selectedIndices[colIndex] = index;
+
+      // 更新该列高亮
+      document.querySelectorAll(`.picker-item[data-col="${colIndex}"]`).forEach((item, i) => {
+        item.classList.toggle('selected', i === index);
+      });
+
+      // 城市联动：省变化时，市列表跟着刷新
+      if (currentPicker === 'city' && colIndex === 0) {
+        const provinces = dataSource.city.provinces;
+        const cities = provinces[index].cities;
+        const cityWheel = document.querySelector('.picker-wheel[data-col="1"]');
+        cityWheel.innerHTML = cities.map((c, i) =>
+          `<div class="picker-item ${i===0?'selected':''}" data-col="1" data-index="${i}" onclick="selectItem(1, ${i})">${c}</div>`
+        ).join('');
+        selectedIndices[1] = 0;
+      }
+    }
+
+    function openDateTimePicker() {
+      currentPicker = 'datetime';
+      const now = new Date();
+      const columns = document.getElementById('pickerColumns');
+      document.getElementById('pickerTitle').textContent = '选择日期时间';
+
+      const { years, months, days, hours, minutes } = dataSource.datetime;
+
+      // 默认定位到今天
+      selectedIndices = [
+        Math.max(0, years.indexOf(now.getFullYear())),
+        now.getMonth(),
+        now.getDate() - 1,
+        now.getHours(),
+        now.getMinutes(),
+      ];
+
+      columns.innerHTML = `
+        <div class="picker-column"><div class="picker-wheel" data-col="0">${years.map((y, i) => `<div class="picker-item ${i===selectedIndices[0]?'selected':''}" data-col="0" data-index="${i}" onclick="selectItem(0, ${i})">${y}年</div>`).join('')}</div></div>
+        <div class="picker-column"><div class="picker-wheel" data-col="1">${months.map((m, i) => `<div class="picker-item ${i===selectedIndices[1]?'selected':''}" data-col="1" data-index="${i}" onclick="selectItem(1, ${i})">${m}月</div>`).join('')}</div></div>
+        <div class="picker-column"><div class="picker-wheel" data-col="2">${days.map((d, i) => `<div class="picker-item ${i===selectedIndices[2]?'selected':''}" data-col="2" data-index="${i}" onclick="selectItem(2, ${i})">${d}日</div>`).join('')}</div></div>
+        <div class="picker-column"><div class="picker-wheel" data-col="3">${hours.map((h, i) => `<div class="picker-item ${i===selectedIndices[3]?'selected':''}" data-col="3" data-index="${i}" onclick="selectItem(3, ${i})">${String(h).padStart(2,'0')}时</div>`).join('')}</div></div>
+        <div class="picker-column"><div class="picker-wheel" data-col="4">${minutes.map((m, i) => `<div class="picker-item ${i===selectedIndices[4]?'selected':''}" data-col="4" data-index="${i}" onclick="selectItem(4, ${i})">${String(m).padStart(2,'0')}分</div>`).join('')}</div></div>
+      `;
+
+      columns.querySelectorAll('.picker-wheel').forEach((wheel, colIndex) => {
+        wheel.onscroll = () => handleScroll(colIndex);
+        // 滚动到默认选中项
+        const item = wheel.querySelector('.picker-item.selected');
+        if (item) wheel.scrollTop = item.offsetTop;
+      });
+
+      showPicker();
+    }
+
+    function handleScroll(colIndex) {
+      const wheel = document.querySelector(`.picker-wheel[data-col="${colIndex}"]`);
+      const items = wheel.querySelectorAll('.picker-item');
+      const scrollTop = wheel.scrollTop;
+      const itemHeight = 40;
+      const index = Math.round(scrollTop / itemHeight);
+
+      items.forEach((item, i) => item.classList.toggle('selected', i === index));
+      selectedIndices[colIndex] = index;
+
+      // 城市联动：省变化时，市跟着变
+      if (currentPicker === 'city' && colIndex === 0) {
+        const provinces = dataSource.city.provinces;
+        const cities = provinces[index].cities;
+        const cityWheel = document.querySelector('.picker-wheel[data-col="1"]');
+        cityWheel.innerHTML = cities.map((c, i) => `<div class="picker-item ${i===0?'selected':''}" data-col="1" data-index="${i}" onclick="selectItem(1, ${i})">${c}</div>`).join('');
+        selectedIndices[1] = 0;
+      }
+    }
+
+    function showPicker() {
+      document.getElementById('mask').classList.add('show');
+      document.getElementById('pickerPopup').classList.add('show');
+    }
+
+    function closePicker() {
+      document.getElementById('mask').classList.remove('show');
+      document.getElementById('pickerPopup').classList.remove('show');
+    }
+
+    function confirmPicker() {
+      let value = '';
+      let displayValue = '';
+
+      if (currentPicker === 'city') {
+        const province = dataSource.city.provinces[selectedIndices[0]];
+        const city = province.cities[selectedIndices[1]];
+        value = `${province.name}-${city}`;
+        displayValue = value;
+        document.getElementById('cityValue').textContent = displayValue;
+        document.getElementById('cityValue').classList.remove('picker__value--placeholder');
+      } else if (currentPicker === 'datetime') {
+        const { years, months, days, hours, minutes } = dataSource.datetime;
+        value = `${years[selectedIndices[0]]}-${String(months[selectedIndices[1]]).padStart(2,'0')}-${String(days[selectedIndices[2]]).padStart(2,'0')} ${String(hours[selectedIndices[3]]).padStart(2,'0')}:${String(minutes[selectedIndices[4]]).padStart(2,'0')}`;
+        displayValue = value;
+        document.getElementById('datetimeValue').textContent = displayValue;
+        document.getElementById('datetimeValue').classList.remove('picker__value--placeholder');
+      }
+
+      document.getElementById('resultValue').textContent = value;
+      closePicker();
+    }
+  </script>
+</body>
+</html>

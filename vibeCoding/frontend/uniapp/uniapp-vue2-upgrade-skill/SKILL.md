@@ -32,33 +32,33 @@ description: 当用户要求把 uniapp Vue2 + Options API 项目升级到 Vue3 +
 
 ```
 Phase 1: 现状评估
-  → 扫描项目结构、技术栈、Options API 使用情况
-  → 评估升级阻塞点（依赖兼容性、第三方库、自研组件库）
-  → 输出"升级就绪度报告"
+   扫描项目结构、技术栈、Options API 使用情况
+   评估升级阻塞点（依赖兼容性、第三方库、自研组件库）
+   输出"升级就绪度报告"
 
 Phase 2: 方案设计
-  → 选择升级策略：
+   选择升级策略：
      A. 全量升级（一键全替换）
      B. 渐进式升级（先 Vue2.7 过渡，再升级 Vue3）
      C. 双轨并行（新功能 Vue3，老代码逐步迁移）
-  → 输出"升级方案 + 风险清单 + 工时估算"
+   输出"升级方案 + 风险清单 + 工时估算"
 
 Phase 3: 用户确认
-  → 用户 review 方案
-  → 确认后才执行迁移
+   用户 review 方案
+   确认后才执行迁移
 
 Phase 4: 迁移执行
-  → 按方案逐步替换
-  → Options API → Composition API
-  → Vuex → Pinia
-  → mixins → composables
-  → JS → TS（可选）
+   按方案逐步替换
+   Options API  Composition API
+   Vuex  Pinia
+   mixins  composables
+   JS  TS（可选）
 
 Phase 5: 验证交付
-  → npm run lint
-  → npm run type-check
-  → npm run build:mp-weixin
-  → 三端真机/模拟器回归测试
+   npm run lint
+   npm run type-check
+   npm run build:mp-weixin
+   三端真机/模拟器回归测试
 ```
 
 ## 升级范围（典型 Vue2 → Vue3 差异）

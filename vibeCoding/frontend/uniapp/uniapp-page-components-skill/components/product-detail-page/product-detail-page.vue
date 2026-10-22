@@ -25,7 +25,7 @@
     <scroll-view class="pdp-body" scroll-y @scrolltolower="$emit('reachBottom')">
       <view class="pdp-body-inner">
         <slot name="gallery">
-          <base-card :radius="'0'" :padding="'0'" :margin="'0 0 var(--spacing-md)'">
+          <base-card :radius="'0'" :padding="'0'" :margin="'0 0 var(--space-6, 24rpx)'">
             <view class="pdp-gallery-ph">
               <text class="pdp-gallery-ph-text">商品头图区（可放轮播，用 gallery slot 替换）</text>
             </view>
@@ -115,7 +115,7 @@ const emit = defineEmits<{ back: []; action: [act: BottomAction]; reachBottom: [
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: var(--color-bg-page);
+  background: var(--bg-page, #fafafa);
 }
 
 /* ---- 导航栏 ---- */
@@ -128,10 +128,10 @@ const emit = defineEmits<{ back: []; action: [act: BottomAction]; reachBottom: [
 .pdp-navbar-inner {
   display: flex;
   align-items: center;
-  height: var(--height-btn-xl);
-  padding: 0 var(--spacing-md);
-  background: var(--color-bg-surface);
-  border-bottom: 1rpx solid var(--color-border-light);
+  height: var(--height-btn-xl, 96rpx);
+  padding: 0 var(--space-6, 24rpx);
+  background: var(--bg-card, #ffffff);
+  border-bottom: 1rpx solid var(--border-light, #f5f5f5);
 
   &.is-transparent {
     background: transparent;
@@ -148,17 +148,17 @@ const emit = defineEmits<{ back: []; action: [act: BottomAction]; reachBottom: [
 }
 
 .pdp-navbar-back-icon {
-  font-size: var(--font-2xl);
-  color: var(--color-text-primary);
+  font-size: var(--font-2xl, 40rpx);
+  color: var(--text-primary, #171717);
   line-height: 1;
 }
 
 .pdp-navbar-title {
   flex: 1;
   text-align: center;
-  font-size: var(--font-lg);
+  font-size: var(--font-lg, 30rpx);
   font-weight: 600;
-  color: var(--color-text-primary);
+  color: var(--text-primary, #171717);
 }
 
 .pdp-navbar-right {
@@ -175,7 +175,7 @@ const emit = defineEmits<{ back: []; action: [act: BottomAction]; reachBottom: [
 }
 
 .pdp-body-inner {
-  padding-bottom: var(--spacing-2xl);
+  padding-bottom: var(--space-16, 64rpx);
 }
 
 .pdp-gallery-ph {
@@ -183,44 +183,44 @@ const emit = defineEmits<{ back: []; action: [act: BottomAction]; reachBottom: [
   align-items: center;
   justify-content: center;
   height: 480rpx;
-  background: var(--color-bg-tinted);
+  background: var(--bg-light, #f5f5f5);
 }
 
 .pdp-gallery-ph-text {
-  font-size: var(--font-sm);
-  color: var(--color-text-tertiary);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .pdp-info-price {
-  font-size: var(--font-2xl);
+  font-size: var(--font-2xl, 40rpx);
   font-weight: 700;
-  color: var(--color-error);
+  color: var(--color-error, #EF4444);
 }
 
 .pdp-info-title {
   display: block;
-  margin-top: var(--spacing-xs);
-  font-size: var(--font-xl);
+  margin-top: var(--space-2, 8rpx);
+  font-size: var(--font-xl, 32rpx);
   font-weight: 600;
   line-height: 1.4;
-  color: var(--color-text-primary);
+  color: var(--text-primary, #171717);
 }
 
 .pdp-info-desc {
   display: block;
-  margin-top: var(--spacing-xs);
-  font-size: var(--font-sm);
+  margin-top: var(--space-2, 8rpx);
+  font-size: var(--font-sm, 26rpx);
   line-height: 1.6;
-  color: var(--color-text-secondary);
+  color: var(--text-secondary, #525252);
 }
 
 /* ---- 底部操作栏 ---- */
 .pdp-footer {
   flex-shrink: 0;
-  background: var(--color-bg-surface);
-  border-top: 1rpx solid var(--color-border-light);
-  padding: var(--spacing-sm) var(--spacing-lg);
-  padding-bottom: calc(var(--spacing-sm) + env(safe-area-inset-bottom));
+  background: var(--bg-card, #ffffff);
+  border-top: 1rpx solid var(--border-light, #f5f5f5);
+  padding: var(--space-4, 16rpx) var(--space-8, 32rpx);
+  padding-bottom: calc(var(--space-4, 16rpx) + env(safe-area-inset-bottom));
 }
 
 .pdp-actions {
@@ -229,57 +229,57 @@ const emit = defineEmits<{ back: []; action: [act: BottomAction]; reachBottom: [
 }
 
 .pdp-action {
-  margin-right: var(--spacing-md);
+  margin-right: var(--space-6, 24rpx);
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: var(--height-btn-md);
-  border-radius: var(--radius-btn);
+  min-height: var(--height-btn-md, 72rpx);
+  border-radius: var(--radius-btn, 9999rpx);
 
   &.pdp-action:last-child {
   margin-right: 0;
 }
 .is-primary {
     flex: 1.6;
-    height: var(--height-btn-lg);
-    background: var(--color-primary);
+    height: var(--height-btn-lg, 88rpx);
+    background: var(--color-primary, #14b8a6);
   }
 
   &.is-ghost {
     flex: 1.2;
-    height: var(--height-btn-lg);
-    background: var(--color-bg-tinted);
+    height: var(--height-btn-lg, 88rpx);
+    background: var(--bg-light, #f5f5f5);
   }
 
   &.is-text {
-    color: var(--color-text-secondary);
+    color: var(--text-secondary, #525252);
   }
 }
 
 .pdp-action-icon {
-  width: var(--icon-md);
-  height: var(--icon-md);
+  width: var(--icon-md, 48rpx);
+  height: var(--icon-md, 48rpx);
   margin-bottom: 2rpx;
 }
 
 .pdp-action-text {
-  font-size: var(--font-sm);
+  font-size: var(--font-sm, 26rpx);
   color: inherit;
 
   .is-primary &,
   .is-ghost & {
-    font-size: var(--font-md);
+    font-size: var(--font-md, 28rpx);
     font-weight: 600;
   }
 }
 
 .is-primary .pdp-action-text {
-  color: var(--white);
+  color: var(--text-inverse, #ffffff);
 }
 
 .is-ghost .pdp-action-text {
-  color: var(--color-primary);
+  color: var(--color-primary, #14b8a6);
 }
 </style>

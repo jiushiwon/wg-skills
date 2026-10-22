@@ -106,11 +106,20 @@ page {
   --radius-md: 16rpx;
   --radius-lg: 24rpx;
   --radius-xl: 32rpx;
+  --radius-2xl: 56rpx;
   --radius-full: 9999rpx;
 
   --height-btn-sm: 56rpx;
   --height-btn-md: 72rpx;
   --height-btn-lg: 88rpx;
+  --height-btn-xl: 96rpx;
+
+  --height-navbar: 88rpx;
+
+  --height-avatar-sm: 56rpx;
+  --height-avatar-md: 80rpx;
+  --height-avatar-lg: 120rpx;
+  --height-avatar-xl: 160rpx;
 
   --icon-xs: 24rpx;
   --icon-sm: 36rpx;
@@ -129,10 +138,37 @@ page {
   --radius-btn: var(--radius-full, 9999rpx);
   --radius-input: var(--radius-md, 16rpx);
   --radius-card: var(--radius-lg, 24rpx);
+  --radius-tag: var(--radius-sm, 8rpx);
+  --radius-image: var(--radius-md, 16rpx);
+  --radius-avatar: var(--radius-full, 9999rpx);
 
   --shadow-sm: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
   --shadow-md: 0 6rpx 20rpx rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 12rpx 32rpx rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 20rpx 48rpx rgba(0, 0, 0, 0.10);
+
+  /* ===== 组件库通用补充变量（ui-component-commands 依赖） ===== */
+  --text-disabled: var(--gray-300, #d4d4d4);
+  --text-placeholder: var(--gray-300, #d4d4d4);
+  --bg-tertiary: var(--gray-200, #e5e5e5);
+  --bg-overlay: rgba(0, 0, 0, 0.5);
+  --primary-alpha: color-mix(in srgb, var(--color-primary, #14b8a6) 10%, transparent);
+  --secondary-alpha: color-mix(in srgb, var(--color-secondary, #6366f1) 10%, transparent);
+
+  --transition-fast: 150ms ease;
+  --transition-normal: 200ms ease;
+  --transition-slow: 300ms ease;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --z-index-base: 1;
+  --z-index-dropdown: 100;
+  --z-index-sticky: 200;
+  --z-index-fixed: 300;
+  --z-index-modal-backdrop: 400;
+  --z-index-modal: 500;
+  --z-index-toast: 600;
 }
 
 [data-theme="cute"] {

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-picker 出生日期选择</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-primary: #4a90e2;
+      --color-success: #52c41a;
+      --color-warning: #fa8c16;
+      --text-primary: #333;
+      --text-secondary: #666;
+      --text-tertiary: #999;
+      --bg-page: #f5f5f5;
+      --bg-card: #fff;
+      --border: #e8e8e8;
+    }
+    body { background: var(--bg-page); font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; padding: 20px; }
+    .page { max-width: 414px; margin: 0 auto; }
+
+    .phone {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .phone-header {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      padding: 0 var(--space-4);
+      border-bottom: 1px solid var(--border);
+    }
+    .phone-title { font-size: 16px; font-weight: 500; }
+    .phone-body { min-height: 620px; padding: var(--space-4); }
+
+    /* 触发器 */
+    .date-picker {
+      display: flex;
+      align-items: center;
+      padding: 14px var(--space-4);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-3);
+      cursor: pointer;
+    }
+    .date-picker__label { font-size: 14px; color: var(--text-secondary); width: 70px; }
+    .date-picker__value { flex: 1; font-size: 15px; color: var(--text-primary); }
+    .date-picker__value--placeholder { color: var(--text-tertiary); }
+    .date-picker__arrow { font-size: 18px; color: #ccc; }
+    .date-picker.disabled { opacity: 0.5; }
+
+    /* 结果卡片 */
+    .profile-card {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-4);
+      background: linear-gradient(135deg, #f0f7ff, #e8f4ff);
+      border-radius: var(--radius-lg);
+      margin-top: var(--space-4);
+    }
+    .avatar {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 600;
+    }
+    .profile-info { flex: 1; }
+    .profile-name { font-size: 16px; font-weight: 500; margin-bottom: 4px; }
+    .profile-meta { font-size: 13px; color: var(--text-secondary); }
+    .profile-age {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 2px 10px;
+      background: var(--color-warning);
+      color: #fff;
+      border-radius: 10px;
+      font-size: 12px;
+    }
+
+    /* 弹窗 */
+    .picker-popup {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      transform: translateY(100%);
+      transition: transform 0.3s;
+      z-index: 100;
+    }
+    .picker-popup.show { transform: translateY(0); }
+    .picker-popup-mask {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.5);
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.3s;
+      z-index: 99;
+    }
+    .picker-popup-mask.show { opacity: 1; visibility: visible; }
+
+    .picker-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--border);
+    }
+    .picker-header__btn { font-size: 15px; padding: 6px 12px; }
+    .picker-header__btn.cancel { color: var(--text-secondary); }
+    .picker-header__btn.confirm { color: var(--color-primary); font-weight: 500; }
+    .picker-header__title { font-size: 16px; font-weight: 500; }
+
+    .picker-columns {
+      display: flex;
+      height: 220px;
+      position: relative;
+    }
+    .picker-column { flex: 1; overflow: hidden; position: relative; }
+    .picker-wheel {
+      height: 100%;
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+    .picker-item {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+    .picker-item.selected { color: var(--color-primary); font-weight: 600; }
+    .picker-item.disabled { color: var(--text-tertiary); opacity: 0.35; cursor: not-allowed; }
+
+    /* 选中高亮条 */
+    .picker-highlight {
+      position: absolute;
+      top: 50%;
+      left: 8px; right: 8px;
+      height: 44px;
+      transform: translateY(-50%);
+      background: rgba(74, 144, 226, 0.08);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      pointer-events: none;
+      border-radius: var(--radius-md);
+    }
+
+    .picker-footer {
+      padding: var(--space-3) var(--space-4);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="phone">
+      <div class="phone-header">
+        <span class="phone-title">出生日期</span>
+      </div>
+      <div class="phone-body">
+        <div class="date-picker" onclick="openPicker()">
+          <span class="date-picker__label">出生日期</span>
+          <span class="date-picker__value" id="birthValue">请选择出生日期</span>
+          <span class="date-picker__arrow">›</span>
+        </div>
+
+        <div class="date-picker disabled">
+          <span class="date-picker__label">证件有效期</span>
+          <span class="date-picker__value date-picker__value--placeholder">暂不可选</span>
+          <span class="date-picker__arrow">›</span>
+        </div>
+
+        <div class="profile-card" id="profileCard" style="display:none;">
+          <div class="avatar" id="avatar">K</div>
+          <div class="profile-info">
+            <div class="profile-name" id="profileName">用户</div>
+            <div class="profile-meta" id="profileMeta">-</div>
+            <span class="profile-age" id="profileAge">-</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 列滚轮弹窗 -->
+  <div class="picker-popup-mask" id="mask" onclick="closePicker()"></div>
+  <div class="picker-popup" id="pickerPopup">
+    <div class="picker-header">
+      <span class="picker-header__btn cancel" onclick="closePicker()">取消</span>
+      <span class="picker-header__title">选择出生日期</span>
+      <span class="picker-header__btn confirm" onclick="confirmPicker()">确定</span>
+    </div>
+
+    <div class="picker-columns" id="pickerColumns">
+      <div class="picker-highlight"></div>
+      <div class="picker-column"><div class="picker-wheel" data-col="0" id="yearWheel"></div></div>
+      <div class="picker-column"><div class="picker-wheel" data-col="1" id="monthWheel"></div></div>
+      <div class="picker-column"><div class="picker-wheel" data-col="2" id="dayWheel"></div></div>
+    </div>
+
+    <div class="picker-footer" id="pickerFooter">滚动选择年月日</div>
+  </div>
+
+  <script>
+    const MIN_YEAR = 1900;
+    const MAX_YEAR = new Date().getFullYear();
+
+    let selected = { year: MAX_YEAR - 20, month: 0, day: 0 };
+    let pending = { ...selected };
+
+    // 该年月的天数（闰年处理）
+    function daysInMonth(year, month) {
+      return new Date(year, month + 1, 0).getDate();
+    }
+
+    // 计算年龄
+    function calcAge(year, month, day) {
+      const now = new Date();
+      let age = now.getFullYear() - year;
+      if (now.getMonth() < month || (now.getMonth() === month && now.getDate() < day)) age--;
+      return age;
+    }
+
+    // 渲染三列
+    function render() {
+      // 年
+      const yearWheel = document.getElementById('yearWheel');
+      yearWheel.innerHTML = Array.from({length: MAX_YEAR - MIN_YEAR + 1}, (_, i) => {
+        const y = MIN_YEAR + i;
+        return `<div class="picker-item ${y===pending.year?'selected':''}" data-col="0" data-value="${y}" onclick="pick(0, ${y})">${y}年</div>`;
+      }).join('');
+
+      // 月
+      const monthWheel = document.getElementById('monthWheel');
+      monthWheel.innerHTML = Array.from({length: 12}, (_, i) =>
+        `<div class="picker-item ${i===pending.month?'selected':''}" data-col="1" data-value="${i}" onclick="pick(1, ${i})">${i+1}月</div>`
+      ).join('');
+
+      // 日（按当前年月联动）
+      renderDays();
+    }
+
+    // 渲染日期列（考虑闰年 + 未来日期禁用）
+    function renderDays() {
+      const max = daysInMonth(pending.year, pending.month);
+      const now = new Date();
+
+      // 选中的日超出新月份范围时自动收敛
+      if (pending.day >= max) pending.day = max - 1;
+
+      const dayWheel = document.getElementById('dayWheel');
+      dayWheel.innerHTML = Array.from({length: max}, (_, i) => {
+        const d = i + 1;
+        // 未来日期禁用
+        const isFuture = pending.year > now.getFullYear()
+          || (pending.year === now.getFullYear() && pending.month > now.getMonth())
+          || (pending.year === now.getFullYear() && pending.month === now.getMonth() && d > now.getDate());
+        const cls = [isFuture ? 'disabled' : '', d === pending.day + 1 ? 'selected' : ''].filter(Boolean).join(' ');
+        return `<div class="picker-item ${cls}" data-col="2" data-value="${d}" onclick="pick(2, ${d})">${d}日</div>`;
+      }).join('');
+
+      // 滚动到选中项
+      const selectedItem = dayWheel.querySelector('.picker-item.selected');
+      if (selectedItem) dayWheel.scrollTop = selectedItem.offsetTop;
+    }
+
+    // 点击选择
+    function pick(col, value) {
+      if (col === 0) {
+        pending.year = value;
+        renderYears();
+      } else if (col === 1) {
+        pending.month = value;
+        renderMonths();
+      } else {
+        pending.day = value - 1;
+      }
+      renderDays();
+      updateFooter();
+    }
+
+    // 单独刷新年/月列的高亮（避免整列重绘导致滚动位置丢失）
+    function renderYears() {
+      document.querySelectorAll('.picker-item[data-col="0"]').forEach(el => {
+        el.classList.toggle('selected', Number(el.dataset.value) === pending.year);
+      });
+      const item = document.querySelector('.picker-item[data-col="0"].selected');
+      if (item) document.getElementById('yearWheel').scrollTop = item.offsetTop;
+    }
+
+    function renderMonths() {
+      document.querySelectorAll('.picker-item[data-col="1"]').forEach(el => {
+        el.classList.toggle('selected', Number(el.dataset.value) === pending.month);
+      });
+      const item = document.querySelector('.picker-item[data-col="1"].selected');
+      if (item) document.getElementById('monthWheel').scrollTop = item.offsetTop;
+    }
+
+    // 打开弹窗
+    function openPicker() {
+      render();
+      updateFooter();
+      document.getElementById('mask').classList.add('show');
+      document.getElementById('pickerPopup').classList.add('show');
+
+      // 滚动定位到当前选中
+      setTimeout(() => {
+        document.querySelectorAll('.picker-wheel').forEach(wheel => {
+          const item = wheel.querySelector('.picker-item.selected');
+          if (item) wheel.scrollTop = item.offsetTop;
+        });
+      }, 50);
+    }
+
+    // 底部提示
+    function updateFooter() {
+      const age = calcAge(pending.year, pending.month, pending.day);
+      document.getElementById('pickerFooter').textContent = `${pending.year}年${pending.month+1}月${pending.day+1}日 · ${age}岁`;
+    }
+
+    // 确认
+    function confirmPicker() {
+      selected = { ...pending };
+      const text = `${selected.year}年${String(selected.month+1).padStart(2,'0')}月${String(selected.day+1).padStart(2,'0')}日`;
+      document.getElementById('birthValue').textContent = text;
+      document.getElementById('birthValue').classList.remove('date-picker__value--placeholder');
+
+      const age = calcAge(selected.year, selected.month, selected.day);
+      document.getElementById('profileCard').style.display = 'flex';
+      document.getElementById('profileMeta').textContent = `出生于 ${text}`;
+      document.getElementById('profileAge').textContent = `${age} 岁`;
+
+      closePicker();
+    }
+
+    // 关闭
+    function closePicker() {
+      document.getElementById('mask').classList.remove('show');
+      document.getElementById('pickerPopup').classList.remove('show');
+      pending = { ...selected };
+    }
+  </script>
+</body>
+</html>

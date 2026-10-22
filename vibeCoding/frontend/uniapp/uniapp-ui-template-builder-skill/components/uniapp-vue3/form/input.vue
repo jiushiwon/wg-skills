@@ -41,7 +41,7 @@
         class="t-input__clear"
         @click="handleClear"
       >
-        ✕
+        
       </view>
 
       <!-- 后置内容 -->
@@ -145,23 +145,23 @@ function handleClear() {
 .t-input {
   display: flex;
   align-items: center;
-  background: var(--color-bg-surface, #fff);
-  border: 1px solid var(--color-border, #e5e7eb);
-  border-radius: var(--radius-input, 8px);
+  background: var(--bg-card, #ffffff);
+  border: 1px solid var(--border, #e5e5e5);
+  border-radius: var(--radius-input, 16rpx);
   transition: all 0.2s ease;
 }
 
 .t-input--focus {
-  border-color: var(--color-primary, #333);
+  border-color: var(--color-primary, #14b8a6);
   box-shadow: 0 0 0 2px rgba(51, 51, 51, 0.1);
 }
 
 .t-input--error {
-  border-color: var(--color-error, #ef4444);
+  border-color: var(--color-error, #EF4444);
 }
 
 .t-input--disabled {
-  background: var(--color-bg-surface-hover, #f9fafb);
+  background: var(--bg-light, #f5f5f5);
   opacity: 0.6;
 }
 
@@ -174,49 +174,49 @@ function handleClear() {
 
 .t-input__inner {
   flex: 1;
-  padding: var(--input-padding-y, 8px) var(--input-padding-x, 12px);
-  font-size: var(--text-base, 16px);
-  color: var(--color-text-primary, #111827);
+  padding: var(--space-3, 12rpx) var(--space-4, 16rpx);
+  font-size: var(--font-md, 28rpx);
+  color: var(--text-primary, #171717);
   background: transparent;
   border: none;
   outline: none;
 }
 
 .t-input__inner::placeholder {
-  color: var(--color-text-placeholder, #9ca3af);
+  color: var(--text-placeholder, #d4d4d4);
 }
 
 .t-input__prepend,
 .t-input__append {
   display: flex;
   align-items: center;
-  padding: 0 var(--space-3, 12px);
-  color: var(--color-text-secondary, #6b7280);
+  padding: 0 var(--space-3, 12rpx);
+  color: var(--text-secondary, #525252);
 }
 
 .t-input__prepend {
-  border-right: 1px solid var(--color-border, #e5e7eb);
+  border-right: 1px solid var(--border, #e5e5e5);
 }
 
 .t-input__append {
-  border-left: 1px solid var(--color-border, #e5e7eb);
+  border-left: 1px solid var(--border, #e5e5e5);
 }
 
 .t-input__prefix,
 .t-input__suffix {
   display: flex;
   align-items: center;
-  padding-left: var(--space-2, 8px);
-  color: var(--color-text-secondary, #6b7280);
+  padding-left: var(--space-2, 8rpx);
+  color: var(--text-secondary, #525252);
 }
 
 .t-input__suffix {
   padding-left: 0;
-  padding-right: var(--space-2, 8px);
+  padding-right: var(--space-2, 8rpx);
 }
 
 .t-input__icon {
-  font-size: var(--text-base, 16px);
+  font-size: var(--font-md, 28rpx);
 }
 
 .t-input__clear {
@@ -225,16 +225,16 @@ function handleClear() {
   justify-content: center;
   width: 20px;
   height: 20px;
-  margin-right: var(--space-2, 8px);
+  margin-right: var(--space-2, 8rpx);
   font-size: 12px;
-  color: var(--color-text-tertiary, #9ca3af);
-  background: var(--color-bg-surface-hover, #f3f4f6);
+  color: var(--text-tertiary, #a3a3a3);
+  background: var(--bg-light, #f5f5f5);
   border-radius: 50%;
   cursor: pointer;
 }
 
 .t-input__clear:active {
-  background: var(--color-bg-surface-active, #e5e7eb);
+  background: var(--bg-tertiary, #e5e5e5);
 }
 </style>
 
@@ -245,7 +245,7 @@ function handleClear() {
     v-model="value"
     placeholder="请输入内容"
     clearable
-    prefix-icon="👤"
+    prefix-icon="用户"
     @focus="handleFocus"
     @blur="handleBlur"
   />

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>base-popup 实战 - 列表勾选</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --color-primary: #4a90e2;
+      --color-success: #52c41a;
+      --text-primary: #333;
+      --text-secondary: #666;
+      --text-tertiary: #999;
+      --bg-page: #f5f5f5;
+      --bg-card: #fff;
+      --border: #e8e8e8;
+    }
+    body { background: var(--bg-page); font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; padding: 20px; }
+
+    .page { max-width: 414px; margin: 0 auto; }
+
+    .phone {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    .phone-header {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-4);
+      border-bottom: 1px solid var(--border);
+    }
+    .phone-title { font-size: 16px; font-weight: 500; }
+    .phone-body { min-height: 600px; padding: var(--space-4); }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      text-align: center;
+      cursor: pointer;
+      margin-bottom: var(--space-3);
+    }
+
+    .chat-item {
+      display: flex;
+      align-items: center;
+      padding: var(--space-3);
+      border-bottom: 1px solid var(--border);
+      gap: var(--space-3);
+    }
+    .chat-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--bg-page);
+    }
+    .chat-info { flex: 1; }
+    .chat-name { font-size: 15px; font-weight: 500; margin-bottom: 4px; }
+    .chat-msg { font-size: 13px; color: var(--text-secondary); }
+
+    /* Popup */
+    .popup-mask {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.5);
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+      z-index: 10;
+    }
+    .popup-mask.show { opacity: 1; visibility: visible; }
+
+    .popup {
+      position: absolute;
+      background: var(--bg-card);
+      transition: transform 0.3s;
+      z-index: 20;
+    }
+    .popup-bottom {
+      bottom: 0; left: 0; right: 0;
+      transform: translateY(100%);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      max-height: 70%;
+      display: flex;
+      flex-direction: column;
+    }
+    .popup-bottom.show { transform: translateY(0); }
+
+    .popup-header {
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .popup-title { font-size: 16px; font-weight: 500; }
+    .popup-close { font-size: 24px; color: var(--text-tertiary); cursor: pointer; }
+
+    .popup-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-2);
+    }
+
+    .select-item {
+      display: flex;
+      align-items: center;
+      padding: var(--space-3);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-2);
+      background: var(--bg-page);
+      gap: var(--space-3);
+    }
+    .select-item.active { background: rgba(74, 144, 226, 0.1); }
+
+    .select-check {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .select-item.active .select-check {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+    }
+    .select-item.active .select-check::after {
+      content: '';
+      color: #fff;
+      font-size: 12px;
+    }
+
+    .select-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #ddd;
+    }
+    .select-info { flex: 1; }
+    .select-name { font-size: 14px; font-weight: 500; }
+    .select-desc { font-size: 12px; color: var(--text-secondary); }
+
+    .popup-footer {
+      padding: var(--space-3) var(--space-4);
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: var(--space-3);
+    }
+    .popup-footer .btn { margin: 0; }
+
+    .result-bar {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--text-primary);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 14px;
+      display: none;
+    }
+    .result-bar.show { display: block; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="phone">
+      <div class="phone-header">
+        <span class="phone-title">选择联系人</span>
+        <span style="color:var(--color-primary);font-size:14px;" onclick="openSelect()">选择</span>
+      </div>
+      <div class="phone-body">
+        <div class="chat-item">
+          <div class="chat-avatar" style="background:#ff6b6b;"></div>
+          <div class="chat-info">
+            <div class="chat-name">张三</div>
+            <div class="chat-msg">晚上一起吃饭？</div>
+          </div>
+        </div>
+        <div class="chat-item">
+          <div class="chat-avatar" style="background:#4ecdc4;"></div>
+          <div class="chat-info">
+            <div class="chat-name">李四</div>
+            <div class="chat-msg">收到，谢谢！</div>
+          </div>
+        </div>
+        <div class="chat-item">
+          <div class="chat-avatar" style="background:#45b7d1;"></div>
+          <div class="chat-info">
+            <div class="chat-name">王五</div>
+            <div class="chat-msg">明天开会记得带资料</div>
+          </div>
+        </div>
+        <div class="chat-item">
+          <div class="chat-avatar" style="background:#96ceb4;"></div>
+          <div class="chat-info">
+            <div class="chat-name">赵六</div>
+            <div class="chat-msg">周末去爬山吗？</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 已选提示 -->
+      <div class="result-bar" id="resultBar">已选择 0 人</div>
+
+      <div class="popup-mask" id="mask" onclick="closeSelect()"></div>
+
+      <!-- 选择弹窗 -->
+      <div class="popup popup-bottom" id="popup">
+        <div class="popup-header">
+          <span class="popup-title">多选联系人</span>
+          <span class="popup-close" onclick="closeSelect()">×</span>
+        </div>
+
+        <div class="popup-body">
+          <div class="select-item" data-id="1" onclick="toggleSelect(this)">
+            <div class="select-check"></div>
+            <div class="select-avatar" style="background:#ff6b6b;"></div>
+            <div class="select-info">
+              <div class="select-name">张三</div>
+              <div class="select-desc">产品经理</div>
+            </div>
+          </div>
+
+          <div class="select-item" data-id="2" onclick="toggleSelect(this)">
+            <div class="select-check"></div>
+            <div class="select-avatar" style="background:#4ecdc4;"></div>
+            <div class="select-info">
+              <div class="select-name">李四</div>
+              <div class="select-desc">技术开发</div>
+            </div>
+          </div>
+
+          <div class="select-item" data-id="3" onclick="toggleSelect(this)">
+            <div class="select-check"></div>
+            <div class="select-avatar" style="background:#45b7d1;"></div>
+            <div class="select-info">
+              <div class="select-name">王五</div>
+              <div class="select-desc">设计师</div>
+            </div>
+          </div>
+
+          <div class="select-item" data-id="4" onclick="toggleSelect(this)">
+            <div class="select-check"></div>
+            <div class="select-avatar" style="background:#96ceb4;"></div>
+            <div class="select-info">
+              <div class="select-name">赵六</div>
+              <div class="select-desc">运营</div>
+            </div>
+          </div>
+
+          <div class="select-item" data-id="5" onclick="toggleSelect(this)">
+            <div class="select-check"></div>
+            <div class="select-avatar" style="background:#ffeaa7;"></div>
+            <div class="select-info">
+              <div class="select-name">钱七</div>
+              <div class="select-desc">市场</div>
+            </div>
+          </div>
+
+          <div class="select-item" data-id="6" onclick="toggleSelect(this)">
+            <div class="select-check"></div>
+            <div class="select-avatar" style="background:#dfe6e9;"></div>
+            <div class="select-info">
+              <div class="select-name">孙八</div>
+              <div class="select-desc">HR</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="popup-footer">
+          <button class="btn" style="flex:1;" onclick="confirmSelect()">确定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const popup = document.getElementById('popup');
+    const mask = document.getElementById('mask');
+    const resultBar = document.getElementById('resultBar');
+    let selectedCount = 0;
+
+    function openSelect() {
+      mask.classList.add('show');
+      popup.classList.add('show');
+    }
+
+    function closeSelect() {
+      mask.classList.remove('show');
+      popup.classList.remove('show');
+    }
+
+    function toggleSelect(el) {
+      el.classList.toggle('active');
+      selectedCount = document.querySelectorAll('.select-item.active').length;
+    }
+
+    function confirmSelect() {
+      const count = document.querySelectorAll('.select-item.active').length;
+      resultBar.textContent = `已选择 ${count} 人`;
+      resultBar.classList.add('show');
+      closeSelect();
+
+      setTimeout(() => {
+        resultBar.classList.remove('show');
+      }, 2000);
+    }
+  </script>
+</body>
+</html>

@@ -22,7 +22,7 @@ uni-app 项目主题系统引擎：为项目添加多主题切换能力，支持
 ## 触发词清单
 
 ```
-# 主题生成
+# # 主题生成
 添加主题系统
 给项目添加主题系统，主色 #6366F1
 动态生成色阶
@@ -59,7 +59,7 @@ uni-app 项目主题系统引擎：为项目添加多主题切换能力，支持
 ## 使用示例
 
 ```
-# 完整流程：生成主题 + 统一硬编码
+# # 完整流程：生成主题 + 统一硬编码
 给项目添加主题系统，主色 #2563EB，统一所有硬编码
 
 # 简单换色
@@ -84,7 +84,7 @@ uni-app 项目主题系统引擎：为项目添加多主题切换能力，支持
 | 圆角 | `--radius-{size}` | `--radius-sm` (8rpx), `--radius-full` (9999rpx) |
 | 图标 | `--icon-{size}` | `--icon-xs` (24rpx), `--icon-md` (48rpx) |
 | 颜色 | `--{color}-{step}` | `--primary-500`, `--gray-900` |
-| 语义颜色 | `--color-{semantic}` | `--color-primary`, `--color-bg` |
+| 语义颜色 | `--color-{semantic}` | `--color-primary`, `--bg-page` |
 | 文字颜色 | `--text-{level}` | `--text-primary`, `--text-secondary` |
 | 背景颜色 | `--bg-{level}` | `--bg-page`, `--bg-card` |
 | 边框颜色 | `--border-{level}` | `--border`, `--border-light` |
@@ -216,9 +216,9 @@ node scripts/generate-tokens.js #6366F1
 | `--color-primary` | 主色语义（指向 `--primary-500`） |
 | `--color-secondary` | 第二主题色语义（指向 `--secondary-500`） |
 | `--color-tertiary` | 第三主题色语义（指向 `--tertiary-500`） |
-| `--color-bg` | 背景色语义 |
-| `--color-text` | 文字色语义 |
-| `--color-text-inverse` | 反色文字 |
+| `--bg-page` | 背景色语义 |
+| `--text-primary` | 文字色语义 |
+| `--text-inverse` | 反色文字 |
 | `--radius-btn` | 按钮圆角（默认 full） |
 | `--radius-input` | 输入框圆角（默认 md） |
 | `--radius-card` | 卡片圆角（默认 lg） |
@@ -226,8 +226,8 @@ node scripts/generate-tokens.js #6366F1
 ## 与 ui-template-builder-skill 的关系
 
 ```
-ui-template-builder-skill  →  生成页面骨架
-uniapp-theme-skill        →  添加主题系统
+uniapp-ui-template-builder-skill    生成页面骨架
+uniapp-theme-skill          添加主题系统
 ```
 
 ## 完整换主题流程
@@ -237,7 +237,7 @@ uniapp-theme-skill        →  添加主题系统
 修改目标项目的 `src/static/css/base.css`：
 
 ```css
-/* 蓝色主题 */
+/*/* 蓝色主题 */
 --primary-500: #2563EB;
 --primary-600: #1D4ED8;
 ```
@@ -245,7 +245,7 @@ uniapp-theme-skill        →  添加主题系统
 ### 第2步：修改 pages.json（tabBar 选中色）
 
 ```json
-"tabBar": {
+"t"tabBar": {
   "selectedColor": "#2563EB"
 }
 ```
@@ -273,10 +273,10 @@ uniapp-theme-skill        →  添加主题系统
 | `24rpx` | `var(--space-6)` |
 | `32rpx` | `var(--space-8)` |
 | `40rpx` | `var(--space-10)` |
-| `80rpx` | `var(--size-md)` |
-| `200rpx` | `var(--size-img-md)` |
-| `300rpx` | `var(--size-img-lg)` |
-| `500rpx` | `var(--height-xl)` |
+| `80rpx` | `var(--icon-md)` |
+| `200rpx` | `var(--icon-md)` |
+| `300rpx` | `var(--icon-lg)` |
+| `500rpx` | `var(--height-btn-xl)` |
 
 #### 字号替换
 
@@ -301,7 +301,7 @@ uniapp-theme-skill        →  添加主题系统
 ### 第4步：生成主题图标（配合 frontend-icon-skill）
 
 ```bash
-# 安装依赖（首次）
+# # 安装依赖（首次）
 cd "$SKILL_DIR/frontend-icon-skill" && npm install
 
 # 生成选中状态图标（蓝色）
@@ -310,6 +310,7 @@ node image-forge.cjs config.json
 
 配置示例：
 ```json
+{
 {
   "outDir": "项目/src/static/tabbar",
   "size": 40,
@@ -323,7 +324,7 @@ node image-forge.cjs config.json
 ## 项目结构示例
 
 ```
-项目/src/
+项目项目/src/
 ├── App.vue                      # 引入主题
 ├── static/
 │   └── css/

@@ -29,7 +29,7 @@ login/
 **布局**：表单居中，背景纯净
 
 ```
-┌─────────────────────┐
+┌─┌─────────────────────┐
 │                     │
 │                     │
 │    ┌───────────┐    │
@@ -52,7 +52,7 @@ login/
 **布局**：左侧表单 + 右侧大图
 
 ```
-┌────────────────────────────┐
+┌─┌────────────────────────────┐
 │  Logo                      │
 │                            │
 │  ┌────────┐  ┌─────────┐  │
@@ -73,7 +73,7 @@ login/
 **布局**：浮层卡片，背景虚化
 
 ```
-┌────────────────────────────┐
+┌─┌────────────────────────────┐
 │        Background          │
 │        (blur)              │
 │                            │
@@ -98,7 +98,7 @@ login/
 **布局**：深色背景，霓虹边框
 
 ```
-┌────────────────────────────┐
+┌─┌────────────────────────────┐
 │                            │
 │    ┌──────────────────┐    │
 │    │ ═══════════════ │    │
@@ -123,11 +123,11 @@ login/
 ### 风格1：极简纯净
 
 ```scss
---bg-page: #FFFFFF;
+----bg-page: #FFFFFF;
 --bg-card: #FFFFFF;
 --text-primary: #333333;
 --text-secondary: #999999;
---primary: #2563EB;
+--color-primary: #2563EB;
 --border: #E5E5E5;
 --radius: 8px;
 ```
@@ -137,9 +137,9 @@ login/
 ### 风格2：温暖橙色
 
 ```scss
---bg-page: #FFFBF5;
+----bg-page: #FFFBF5;
 --bg-card: #FFFFFF;
---primary: #F97316;
+--color-primary: #F97316;
 --text-primary: #1A1A1A;
 --accent: #FDBA74;
 ```
@@ -149,9 +149,9 @@ login/
 ### 风格3：深蓝商务
 
 ```scss
---bg-page: #0F172A;
+----bg-page: #0F172A;
 --bg-card: #1E293B;
---primary: #3B82F6;
+--color-primary: #3B82F6;
 --text-primary: #F8FAFC;
 --text-secondary: #94A3B8;
 --border: #334155;
@@ -162,9 +162,9 @@ login/
 ### 风格4：绿色清新
 
 ```scss
---bg-page: #F0FDF4;
+----bg-page: #F0FDF4;
 --bg-card: #FFFFFF;
---primary: #22C55E;
+--color-primary: #22C55E;
 --text-primary: #166534;
 --radius: 12px;
 ```
@@ -358,6 +358,7 @@ function toggleMode() {
 ## Mock数据
 
 ```json
+{
 {
   "loginConfig": {
     "methods": ["password", "sms", "social"],

@@ -1,0 +1,16 @@
+{
+  "name": "top-tab",
+  "title": "顶部页签",
+  "category": "navigation",
+  "description": "顶部横向页签切换，指示条使用 transform 动画",
+  "aliases": ["顶部页签", "顶部tab", "分类切换", "top-tab", "tabbar-top"],
+  "props": [
+    { "name": "items", "type": "array", "default": [], "desc": "页签列表 [{key, text, badge}]" },
+    { "name": "modelValue", "type": "string", "default": "", "desc": "当前选中项的 key" },
+    { "name": "activeColor", "type": "string", "default": "var(--color-primary, #14b8a6)", "desc": "选中态颜色" },
+    { "name": "inactiveColor", "type": "string", "default": "var(--text-secondary, #525252)", "desc": "未选中态颜色" },
+    { "name": "scroll", "type": "boolean", "default": true, "desc": "超出宽度时是否横向滚动" }
+  ],
+  "events": ["update:modelValue", "change"],
+  "slots": []
+}

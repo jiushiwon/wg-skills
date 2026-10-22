@@ -4,7 +4,7 @@
     <view class="list-header">
       <text class="header-title">商品列表</text>
       <view class="header-icon" @click="showMenu">
-        <text>☰</text>
+        <text>≡</text>
       </view>
     </view>
 

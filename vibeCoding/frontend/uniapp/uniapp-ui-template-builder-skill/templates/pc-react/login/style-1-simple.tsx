@@ -43,7 +43,7 @@ export default function LoginPage({
         <div className="login-card">
           <div className="login-header">
             <div className="logo">
-              <span className="logo-icon">🔷</span>
+              <span className="logo-icon"></span>
               <span className="logo-text">{logoText}</span>
             </div>
             <h1 className="login-title">{title}</h1>

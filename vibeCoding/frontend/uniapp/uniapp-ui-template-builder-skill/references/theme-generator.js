@@ -382,15 +382,15 @@ function generateCSSVariables(tokens) {
   // 常用复合变量
   css += `
   /* 常用复合变量 */
-  --color-primary: var(--color-primary-500, #333333);
-  --color-text-primary: var(--color-gray-900, #111827);
-  --color-text-secondary: var(--color-gray-600, #4b5563);
-  --color-text-tertiary: var(--color-gray-400, #9ca3af);
-  --color-border: var(--color-gray-200, #e5e7eb);
-  --color-border-light: var(--color-gray-100, #f3f4f6);
-  --color-bg-surface: #ffffff;
-  --color-bg-surface-hover: var(--color-gray-50, #f9fafb);
-  --color-bg-surface-active: var(--color-gray-100, #f3f4f6);
+  --color-primary: var(--primary-500, #333333);
+  --text-primary: var(--color-gray-900, #111827);
+  --text-secondary: var(--color-gray-600, #4b5563);
+  --text-tertiary: var(--color-gray-400, #9ca3af);
+  --border: var(--gray-200, #e5e7eb);
+  --border-light: var(--gray-100, #f3f4f6);
+  --bg-card: #ffffff;
+  --bg-light: var(--gray-50, #f9fafb);
+  --bg-tertiary: var(--gray-100, #f3f4f6);
 `
 
   css += '}\n'

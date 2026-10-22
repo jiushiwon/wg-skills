@@ -1,0 +1,14 @@
+{
+  "name": "loading",
+  "title": "加载态",
+  "category": "feedback",
+  "description": "加载中指示器",
+  "aliases": ["加载", "加载中", "loading", "spinner"],
+  "props": [
+    { "name": "loading", "type": "boolean", "default": true, "desc": "是否显示加载态" },
+    { "name": "text", "type": "string", "default": "", "desc": "加载文字" },
+    { "name": "size", "type": "'small' | 'medium' | 'large'", "default": "medium", "desc": "尺寸" }
+  ],
+  "events": [],
+  "slots": []
+}

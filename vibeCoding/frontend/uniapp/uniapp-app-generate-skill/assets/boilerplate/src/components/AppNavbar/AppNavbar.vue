@@ -32,7 +32,7 @@ const screenWidth = computed(
   () => systemInfo.screenWidth || systemInfo.windowWidth || 375,
 );
 
-// rpx → px，与 SCSS 中的 rpx token 在当前屏宽下保持一致
+// rpx  px，与 SCSS 中的 rpx token 在当前屏宽下保持一致
 const titleRowHeight = computed(() => Math.round((TITLE_ROW_RPX * screenWidth.value) / 750));
 
 // 胶囊带：胶囊独占一行，左右对称留出与胶囊顶部相同的间距，返回图标在此带内垂直居中
@@ -72,7 +72,7 @@ function handleBack() {
         class="app-navbar__back"
         @tap="handleBack"
       >
-        <text class="app-navbar__back-icon">←</text>
+        <text class="app-navbar__back-icon"></text>
       </view>
     </view>
 
@@ -85,7 +85,7 @@ function handleBack() {
 
 <style lang="scss" scoped>
 :root {
-  --navbar-height: v-bind(navBarHeight + 'px');
+  --height-navbar: v-bind(navBarHeight + 'px');
 }
 
 .app-navbar {

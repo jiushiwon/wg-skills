@@ -12,7 +12,7 @@
 ## Token 表
 
 ```css
---primary: #2563EB;
+----color-primary: #2563EB;
 --primary-hover: #1D4ED8;
 --bg-page: #FFFFFF;
 --bg-section: #F9FAFB;

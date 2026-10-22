@@ -1,0 +1,18 @@
+{
+  "name": "product-card",
+  "title": "商品卡片",
+  "category": "list",
+  "description": "商品卡片，卡片外壳由 BaseCard 提供，支持图片、标题、描述、价格、原价、销量、标签",
+  "aliases": ["商品", "商品块", "product", "goods-card"],
+  "props": [
+    { "name": "image", "type": "string", "default": "", "desc": "商品图片地址" },
+    { "name": "title", "type": "string", "default": "", "desc": "商品标题" },
+    { "name": "desc", "type": "string", "default": "", "desc": "商品描述" },
+    { "name": "price", "type": "string|number", "default": "0.00", "desc": "售价" },
+    { "name": "originalPrice", "type": "string|number", "default": "", "desc": "原价，带删除线展示" },
+    { "name": "sales", "type": "string|number", "default": "", "desc": "销量" },
+    { "name": "tags", "type": "string[]", "default": [], "desc": "标签数组" }
+  ],
+  "events": ["click"],
+  "slots": []
+}

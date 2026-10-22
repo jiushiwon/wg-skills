@@ -38,24 +38,24 @@ description: 当用户在 uniapp 项目中需要设计或审查请求层（reque
 
 ```
 Phase 1: 现状评估
-  → 读取项目 src/utils/request.* / src/api/* / src/services/*
-  → 评估是否已封装、是否接入鉴权、是否处理 SSE
+   读取项目 src/utils/request.* / src/api/* / src/services/*
+   评估是否已封装、是否接入鉴权、是否处理 SSE
 
 Phase 2: 规范对照
-  → 按 frontend-request-skill/references/uniapp-spec.md 的 11 项要点逐条对照
-  → 输出"差距清单"
+   按 frontend-request-skill/references/uniapp-spec.md 的 11 项要点逐条对照
+   输出"差距清单"
 
 Phase 3: 用户确认
-  → 列出"哪些项需要补、哪些项可保持现状"
-  → 用户确认后进入实施
+   列出"哪些项需要补、哪些项可保持现状"
+   用户确认后进入实施
 
 Phase 4: 改造实施
-  → 新建或改造 src/utils/request.ts
-  → 集成 auth、错误处理、Mock、防抖、SSE、上传
+   新建或改造 src/utils/request.ts
+   集成 auth、错误处理、Mock、防抖、SSE、上传
 
 Phase 5: 验证
-  → 小程序 / H5 / App 三端联调
-  → 401 刷新流程、SSE 流式、上传进度回归
+   小程序 / H5 / App 三端联调
+   401 刷新流程、SSE 流式、上传进度回归
 ```
 
 ## 11 项核心要点（详见 `frontend-request-skill/references/uniapp-spec.md`）

@@ -1,0 +1,17 @@
+{
+  "name": "base-avatar",
+  "title": "头像容器",
+  "category": "container",
+  "description": "根容器：统一头像渲染（图片 / 文字兜底 / 4 档尺寸 / 圆形或圆角 / 点击事件）",
+  "aliases": ["头像", "avatar", "base-avatar", "用户头像", "昵称头像"],
+  "props": [
+    { "name": "src", "type": "string", "default": "", "desc": "图片地址" },
+    { "name": "name", "type": "string", "default": "", "desc": "昵称，优先取末两字" },
+    { "name": "size", "type": "'sm' | 'md' | 'lg' | 'xl'", "default": "md", "desc": "尺寸档" },
+    { "name": "round", "type": "boolean", "default": true, "desc": "是否圆形（false 时用圆角矩形）" },
+    { "name": "mode", "type": "'aspectFill' | 'aspectFit' | 'widthFix' | 'scaleToFill'", "default": "aspectFill", "desc": "图片裁剪模式" },
+    { "name": "fallback", "type": "string", "default": "", "desc": "兜底文字，不传则由 name 推导" }
+  ],
+  "events": ["click"],
+  "slots": []
+}

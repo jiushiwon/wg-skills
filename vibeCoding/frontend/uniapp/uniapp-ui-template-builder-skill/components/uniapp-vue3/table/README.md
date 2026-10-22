@@ -175,13 +175,13 @@ function handleGetSelection() {
 组件使用以下 CSS 变量（可在全局覆盖）：
 
 ```css
-:root {
-  --color-bg-surface: #ffffff;
-  --color-border: #e5e7eb;
-  --color-border-light: #f3f4f6;
-  --color-text-primary: #111827;
-  --color-text-secondary: #6b7280;
-  --color-text-tertiary: #9ca3af;
+:r:root {
+  --bg-card: #ffffff;
+  --border: #e5e7eb;
+  --border-light: #f3f4f6;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-tertiary: #9ca3af;
   --primary-50: #f9fafb;
   --radius-card: 12px;
 }

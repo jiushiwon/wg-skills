@@ -90,7 +90,7 @@ export default function TableList({
             <button className="table-list__btn table-list__btn--primary" onClick={onAdd}>+ {addButtonText}</button>
           )}
           {showRefresh && (
-            <button className="table-list__btn" onClick={onRefresh}>↻ 刷新</button>
+            <button className="table-list__btn" onClick={onRefresh}> 刷新</button>
           )}
         </div>
       </div>

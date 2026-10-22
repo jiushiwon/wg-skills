@@ -1,0 +1,15 @@
+{
+  "name": "checkbox-group",
+  "title": "多选组",
+  "category": "form",
+  "description": "多选框组，支持 options 驱动的多值选择",
+  "aliases": ["多选框", "多选", "checkbox", "checkgroup", "复选框组"],
+  "props": [
+    { "name": "modelValue", "type": "array", "default": [], "desc": "绑定值数组，元素为选中的 option.value（string | number）" },
+    { "name": "label", "type": "string", "default": "", "desc": "分组标题，为空时不渲染" },
+    { "name": "options", "type": "array", "default": [], "desc": "选项列表 [{ label: string, value: string | number }]" },
+    { "name": "disabled", "type": "boolean", "default": false, "desc": "整组禁用，禁用时点击不触发变更" }
+  ],
+  "events": ["update:modelValue", "change"],
+  "slots": []
+}

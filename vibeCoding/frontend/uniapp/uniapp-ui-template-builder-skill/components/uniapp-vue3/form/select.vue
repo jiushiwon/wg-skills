@@ -31,7 +31,7 @@
           @click.stop="handleSelect(option)"
         >
           <text>{{ option[labelKey] }}</text>
-          <text v-if="option[valueKey] === modelValue" class="t-select__check">✓</text>
+          <text v-if="option[valueKey] === modelValue" class="t-select__check"></text>
         </view>
 
         <!-- 空状态 -->
@@ -134,20 +134,20 @@ watch(() => visible.value, (val) => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--input-padding-y, 8px) var(--input-padding-x, 12px);
-  background: var(--color-bg-surface, #fff);
-  border: 1px solid var(--color-border, #e5e7eb);
-  border-radius: var(--radius-input, 8px);
+  padding: var(--space-3, 12rpx) var(--space-4, 16rpx);
+  background: var(--bg-card, #ffffff);
+  border: 1px solid var(--border, #e5e5e5);
+  border-radius: var(--radius-input, 16rpx);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .t-select__trigger:active {
-  border-color: var(--color-primary, #333);
+  border-color: var(--color-primary, #14b8a6);
 }
 
 .t-select--disabled .t-select__trigger {
-  background: var(--color-bg-surface-hover, #f9fafb);
+  background: var(--bg-light, #f5f5f5);
   cursor: not-allowed;
   opacity: 0.6;
 }
@@ -160,17 +160,17 @@ watch(() => visible.value, (val) => {
 }
 
 .t-select__placeholder {
-  color: var(--color-text-placeholder, #9ca3af);
+  color: var(--text-placeholder, #d4d4d4);
 }
 
 .t-select__placeholder--hidden {
-  color: var(--color-text-primary, #111827);
+  color: var(--text-primary, #171717);
 }
 
 .t-select__arrow {
-  margin-left: var(--space-2, 8px);
+  margin-left: var(--space-2, 8rpx);
   font-size: 10px;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--text-tertiary, #a3a3a3);
   transition: transform 0.2s ease;
 }
 
@@ -188,10 +188,10 @@ watch(() => visible.value, (val) => {
 }
 
 .t-select__dropdown-inner {
-  background: var(--color-bg-surface, #fff);
-  border: 1px solid var(--color-border, #e5e7eb);
-  border-radius: var(--radius-md, 8px);
-  box-shadow: var(--shadow-popup, 0 4px 12px rgba(0, 0, 0, 0.1));
+  background: var(--bg-card, #ffffff);
+  border: 1px solid var(--border, #e5e5e5);
+  border-radius: var(--radius-md, 16rpx);
+  box-shadow: var(--shadow-lg, 0 4px 12px rgba(0, 0, 0, 0.1));
   overflow: auto;
 }
 
@@ -199,20 +199,20 @@ watch(() => visible.value, (val) => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-2, 8px) var(--space-3, 12px);
-  font-size: var(--text-base, 16px);
-  color: var(--color-text-primary, #111827);
+  padding: var(--space-2, 8rpx) var(--space-3, 12rpx);
+  font-size: var(--font-md, 28rpx);
+  color: var(--text-primary, #171717);
   transition: background 0.15s ease;
 }
 
 .t-select__option:active {
-  background: var(--color-bg-surface-hover, #f9fafb);
+  background: var(--bg-light, #f5f5f5);
 }
 
 .t-select__option--selected {
-  color: var(--color-primary, #333);
+  color: var(--color-primary, #14b8a6);
   font-weight: 500;
-  background: var(--primary-50, #f9fafb);
+  background: var(--primary-50, #f0fdfa);
 }
 
 .t-select__option--disabled {
@@ -221,15 +221,15 @@ watch(() => visible.value, (val) => {
 }
 
 .t-select__check {
-  font-size: var(--text-sm, 14px);
-  color: var(--color-primary, #333);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--color-primary, #14b8a6);
 }
 
 .t-select__empty {
-  padding: var(--space-4, 16px);
+  padding: var(--space-4, 16rpx);
   text-align: center;
-  color: var(--color-text-tertiary, #9ca3af);
-  font-size: var(--text-sm, 14px);
+  color: var(--text-tertiary, #a3a3a3);
+  font-size: var(--font-sm, 26rpx);
 }
 
 .t-select__mask {

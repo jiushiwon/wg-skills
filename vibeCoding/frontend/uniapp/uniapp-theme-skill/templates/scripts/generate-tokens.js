@@ -169,10 +169,10 @@ function generateCSSVariables(tokens, themeName) {
   if (tokens.tertiary) {
     css += `  --color-tertiary: var(--tertiary-500, ${tokens.tertiary[500]});\n`;
   }
-  css += `  --color-success: var(--success-500, ${tokens.success[500]});\n`;
-  css += `  --color-warning: var(--warning-500, ${tokens.warning[500]});\n`;
-  css += `  --color-error: var(--error-500, ${tokens.error[500]});\n`;
-  css += `  --color-info: var(--info-500, ${tokens.info[500]});\n`;
+  css += `  --color-success: var(--color-success, ${tokens.success[500]});\n`;
+  css += `  --color-warning: var(--color-warning, ${tokens.warning[500]});\n`;
+  css += `  --color-error: var(--color-error, ${tokens.error[500]});\n`;
+  css += `  --color-info: var(--color-info, ${tokens.info[500]});\n`;
 
   css += `\n  /* === Font Sizes (static rpx, no calc) === */\n`;
   const fontSizes = { '2xs': 20, 'xs': 24, 'sm': 26, 'md': 28, 'lg': 30, 'xl': 32, '2xl': 40, '3xl': 48 };

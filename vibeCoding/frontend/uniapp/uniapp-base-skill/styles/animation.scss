@@ -1,0 +1,59 @@
+/**
+ * 动画关键帧真源
+ * ============================================================
+ * 全局 `@keyframes` 只允许在本文件定义。
+ * 组件内禁止自带 `@keyframes`（防止同一动画多份定义、命名冲突）。
+ *
+ * 使用方式：
+ *   1. 全局引入 @import '@/styles/index.scss';
+ *   2. 元素上加对应类名：class="ui-spin"
+ *
+ * 动画时长统一走 --transition-*，缓动统一走 --ease-*。
+ */
+
+/* 旋转（loading / 刷新） */
+@keyframes ui-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ui-spin {
+  animation: ui-spin var(--transition-slow, 300ms ease) linear infinite;
+}
+
+/* 淡入（弹层 / 提示进场） */
+@keyframes ui-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.ui-fade-in {
+  animation: ui-fade-in var(--transition-normal, 200ms ease) var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)) both;
+}
+
+/* 上滑淡入（底部面板进场） */
+@keyframes ui-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(24rpx);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ui-slide-up {
+  animation: ui-slide-up var(--transition-normal, 200ms ease) var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)) both;
+}

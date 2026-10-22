@@ -79,7 +79,8 @@ export interface BaseFormItemProps {
 export interface BaseFormField {
   key: string
   label: string
-  type: 'input' | 'textarea' | 'select' | 'switch' | 'checkbox' | 'radio' | 'datepicker' | 'upload' | 'custom'
+  type: 'input' | 'textarea' | 'select' | 'cascader' | 'switch' | 'checkbox' | 'radio' | 'datepicker' | 'upload' | 'custom'
+  subType?: string  // upload: image/images/video/audio/file; input: phone/idcard/email 等
   required?: boolean
   placeholder?: string
   options?: { label: string; value: unknown }[]

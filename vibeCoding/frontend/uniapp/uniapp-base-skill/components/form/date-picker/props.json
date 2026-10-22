@@ -1,0 +1,21 @@
+{
+  "name": "date-picker",
+  "title": "日期选择器",
+  "category": "form",
+  "description": "底部弹出的年/月/日三列滑轮选择器，基于 BasePopup 容器",
+  "aliases": ["日期选择", "日期选择器", "时间选择", "datepicker", "date"],
+  "props": [
+    { "name": "modelValue", "type": "string", "default": "", "desc": "选中日期，格式 YYYY-MM-DD，v-model 双向绑定" },
+    { "name": "show", "type": "boolean", "default": false, "desc": "弹层是否显示" },
+    { "name": "min", "type": "number", "default": 1970, "desc": "最小年份" },
+    { "name": "max", "type": "number", "default": 2100, "desc": "最大年份" },
+    { "name": "format", "type": "string", "default": "YYYY-MM-DD", "desc": "展示与确认载荷格式，支持 YYYY / MM / DD 占位" },
+    { "name": "title", "type": "string", "default": "选择日期", "desc": "弹窗标题" },
+    { "name": "confirmText", "type": "string", "default": "确认", "desc": "确认按钮文案" },
+    { "name": "cancelText", "type": "string", "default": "取消", "desc": "取消按钮文案" },
+    { "name": "maskClosable", "type": "boolean", "default": true, "desc": "点击遮罩是否关闭" },
+    { "name": "safeArea", "type": "boolean", "default": true, "desc": "底部是否适配安全区" }
+  ],
+  "events": ["update:modelValue", "update:show", "change", "confirm", "cancel"],
+  "slots": [{ "name": "header-right", "desc": "标题栏右侧自定义区域" }]
+}

@@ -7,24 +7,24 @@
 ## 1. 数据流架构
 
 ```
-config/_theme-config.scss        ← 唯一人工配置
+config/_theme-config.scss         唯一人工配置
          │
          ▼
-_functions.scss                  ← 色板生成算法 (tint/shade/color-scale)
+_functions.scss                   色板生成算法 (tint/shade/color-scale)
          │
          ├──────────┬──────────┐
          ▼          ▼          ▼
- _primitive.scss   字号阶梯    间距阶梯    ← 自动生成的基础 Token
+ _primitive.scss   字号阶梯    间距阶梯     自动生成的基础 Token
          │
          ▼
-_semantic.scss                   ← 语义变量，业务代码唯一引用入口
+_semantic.scss                    语义变量，业务代码唯一引用入口
          │
          ├──────────┐
          ▼          ▼
- _mixins.scss    variables.scss  ← 混入 + 统一出口
+ _mixins.scss    variables.scss   混入 + 统一出口
          │
          ▼
-vite.config.ts (additionalData)  ← 自动注入到所有 .vue 文件
+vite.config.ts (additionalData)   自动注入到所有 .vue 文件
 ```
 
 ---
@@ -34,7 +34,7 @@ vite.config.ts (additionalData)  ← 自动注入到所有 .vue 文件
 ### 2.1 tint() — 生成浅色色阶
 
 ```scss
-@function tint($color, $weight) {
+@f@function tint($color, $weight) {
   @return mix(white, $color, $weight);
 }
 ```
@@ -46,7 +46,7 @@ vite.config.ts (additionalData)  ← 自动注入到所有 .vue 文件
 ### 2.2 shade() — 生成深色色阶
 
 ```scss
-@function shade($color, $weight) {
+@f@function shade($color, $weight) {
   @return mix(black, $color, $weight);
 }
 ```
@@ -58,7 +58,7 @@ vite.config.ts (additionalData)  ← 自动注入到所有 .vue 文件
 ### 2.3 color-scale() — 兼容旧写法的通用函数
 
 ```scss
-@function color-scale($color, $weight, $mode: 'light') {
+@f@function color-scale($color, $weight, $mode: 'light') {
   @if $mode == 'dark' {
     @return mix(black, $color, $weight);
   }
@@ -90,8 +90,8 @@ $color-primary-900: shade($theme-primary, 60%);
 
 **相同方式为每个功能色生成色板**：
 ```scss
-$color-success-50: tint($theme-success, 90%);
-// ... up to 500 → 900
+$c$color-success-50: tint($theme-success, 90%);
+// ... up to 500  900
 $color-warning-50: tint($theme-warning, 90%);
 // ...
 $color-error-50: tint($theme-error, 90%);
@@ -161,7 +161,7 @@ function generate() {
   }
 
   fs.writeFileSync(outputPath, output, 'utf-8')
-  console.log('✅ Color palette generated')
+  console.log(' Color palette generated')
 }
 
 generate()
@@ -206,7 +206,7 @@ function generate() {
   }
 
   fs.writeFileSync(outputPath, output, 'utf-8')
-  console.log('✅ Color constants generated')
+  console.log(' Color constants generated')
 }
 
 generate()
@@ -215,6 +215,7 @@ generate()
 ### 3.3 package.json 脚本配置
 
 ```json
+{
 {
   "scripts": {
     "generate:colors": "node scripts/generate-colors.js && node scripts/generate-theme-colors.js",
@@ -288,36 +289,36 @@ $spacing-16: $theme-spacing-base * 16;
 // 将 SCSS 变量映射为 CSS 自定义属性，供深色模式和 JS 读取使用
 page {
   --color-primary: #{$color-primary};
-  --color-primary-50: #{$color-primary-50};
-  --color-primary-100: #{$color-primary-100};
-  --color-primary-500: #{$color-primary-500};
-  --color-primary-600: #{$color-primary-600};
-  --color-primary-700: #{$color-primary-700};
+  --primary-50: #{$color-primary-50};
+  --primary-100: #{$color-primary-100};
+  --primary-500: #{$color-primary-500};
+  --primary-600: #{$color-primary-600};
+  --primary-700: #{$color-primary-700};
 
   --color-success: #{$color-success};
   --color-warning: #{$color-warning};
   --color-error: #{$color-error};
   --color-info: #{$color-info};
 
-  --color-bg-primary: #{$color-bg-primary};
-  --color-bg-secondary: #{$color-bg-secondary};
-  --color-bg-tertiary: #{$color-bg-tertiary};
+  --bg-page: #{$color-bg-primary};
+  --bg-light: #{$color-bg-secondary};
+  --bg-tertiary: #{$color-bg-tertiary};
   --color-bg-mask: #{$color-bg-mask};
 
-  --color-text-primary: #{$color-text-primary};
-  --color-text-secondary: #{$color-text-secondary};
-  --color-text-tertiary: #{$color-text-tertiary};
-  --color-text-disabled: #{$color-text-disabled};
-  --color-text-placeholder: #{$color-text-placeholder};
-  --color-text-inverse: #{$color-text-inverse};
-  --color-text-link: #{$color-text-link};
+  --text-primary: #{$color-text-primary};
+  --text-secondary: #{$color-text-secondary};
+  --text-tertiary: #{$color-text-tertiary};
+  --text-disabled: #{$color-text-disabled};
+  --text-placeholder: #{$color-text-placeholder};
+  --text-inverse: #{$color-text-inverse};
+  --color-primary: #{$color-text-link};
 
-  --color-border: #{$color-border};
-  --color-border-light: #{$color-border-light};
+  --border: #{$color-border};
+  --border-light: #{$color-border-light};
 
-  --radius-small: #{$radius-small};
-  --radius-medium: #{$radius-medium};
-  --radius-large: #{$radius-large};
+  --radius-sm: #{$radius-small};
+  --radius-md: #{$radius-medium};
+  --radius-lg: #{$radius-large};
 
   --shadow-sm: #{$shadow-sm};
   --shadow-md: #{$shadow-md};
@@ -329,11 +330,11 @@ page {
   --spacing-6: #{$spacing-6};
   --spacing-8: #{$spacing-8};
 
-  --font-size-xs: #{$font-size-xs};
-  --font-size-sm: #{$font-size-sm};
-  --font-size-md: #{$font-size-md};
-  --font-size-lg: #{$font-size-lg};
-  --font-size-xl: #{$font-size-xl};
+  --font-xs: #{$font-size-xs};
+  --font-sm: #{$font-size-sm};
+  --font-md: #{$font-size-md};
+  --font-lg: #{$font-size-lg};
+  --font-xl: #{$font-size-xl};
 }
 ```
 
@@ -357,8 +358,8 @@ page {
 // CSS 变量作为运行时覆盖层
 
 .btn-primary {
-  background: var(--color-primary, $color-primary);
-  color: var(--color-text-inverse, $color-text-inverse);
+  background: var(--color-primary, #14b8a6);
+  color: var(--text-inverse, #ffffff);
 }
 
 // 当 CSS 变量 --color-primary 存在时（theme-skill 注入），使用运行时值
@@ -370,10 +371,10 @@ page {
 **⚠ 小程序不支持 `getComputedStyle()`，请使用以下替代方案：**
 
 ```typescript
-// ❌ 错误：小程序不可用
+//  错误：小程序不可用
 // const val = getComputedStyle(el).getPropertyValue('--color-primary')
 
-// ✅ 正确：通过 style 属性读取
+//  正确：通过 style 属性读取
 function getCssVarOnPage(varName: string): Promise<string> {
   return new Promise((resolve) => {
     const query = uni.createSelectorQuery()
@@ -429,20 +430,20 @@ page {
 // 方式 A：跟随系统
 @media (prefers-color-scheme: dark) {
   page {
-    --color-bg-primary: #1a1a2e;
-    --color-bg-secondary: #16213e;
-    --color-bg-tertiary: #0f3460;
+    --bg-page: #1a1a2e;
+    --bg-light: #16213e;
+    --bg-tertiary: #0f3460;
     --color-bg-mask: rgba(0, 0, 0, 0.75);
 
-    --color-text-primary: #e4e6eb;
-    --color-text-secondary: #b0b3b8;
-    --color-text-tertiary: #8a8d93;
-    --color-text-disabled: #5a5d63;
-    --color-text-placeholder: #5a5d63;
-    --color-text-inverse: #1a1a2e;
+    --text-primary: #e4e6eb;
+    --text-secondary: #b0b3b8;
+    --text-tertiary: #8a8d93;
+    --text-disabled: #5a5d63;
+    --text-placeholder: #5a5d63;
+    --text-inverse: #1a1a2e;
 
-    --color-border: #2a2a3e;
-    --color-border-light: #1f1f32;
+    --border: #2a2a3e;
+    --border-light: #1f1f32;
 
     --shadow-sm: 0 2rpx 4rpx rgba(0, 0, 0, 0.3);
     --shadow-md: 0 4rpx 12rpx rgba(0, 0, 0, 0.4);
@@ -452,8 +453,8 @@ page {
 
 // 方式 B：手动切换（与 A 并列）
 [data-theme="dark"] page {
-  --color-bg-primary: #1a1a2e;
-  --color-bg-secondary: #16213e;
+  --bg-page: #1a1a2e;
+  --bg-light: #16213e;
   // ... 与上面相同的变量
 }
 ```
@@ -542,7 +543,7 @@ onMounted(() => {
 ### 9.2 全局查找正则
 
 ```bash
-# 颜色硬编码
+# # 颜色硬编码
 rg ":\s*#[0-9a-fA-F]{3,8}" --glob "*.scss" --glob "*.vue"
 
 # 字号硬编码

@@ -65,8 +65,8 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{ primaryClick: []; secondaryClick: [] }>()
 
 const iconMap: Record<string, string> = {
-  success: '✓',
-  error: '✕',
+  success: '',
+  error: '',
   warning: '!',
   info: 'i',
 }
@@ -78,22 +78,22 @@ const iconMap: Record<string, string> = {
   flex-direction: column;
   align-items: center;
   min-height: 100%;
-  padding: var(--spacing-3xl) var(--spacing-xl);
+  padding: var(--space-24, 96rpx) var(--space-12, 48rpx);
   overflow: hidden;
   box-sizing: border-box;
-  background: var(--color-bg-page);
+  background: var(--bg-page, #fafafa);
 }
 
 .rp-icon {
-  width: var(--height-avatar-lg);
-  height: var(--height-avatar-lg);
-  border-radius: var(--radius-full);
+  width: var(--height-avatar-lg, 120rpx);
+  height: var(--height-avatar-lg, 120rpx);
+  border-radius: var(--radius-full, 9999rpx);
   display: flex;
   align-items: center;
   justify-content: center;
 
   &.is-success {
-    background: var(--color-bg-tinted);
+    background: var(--bg-light, #f5f5f5);
   }
 
   &.is-error {
@@ -105,55 +105,55 @@ const iconMap: Record<string, string> = {
   }
 
   &.is-info {
-    background: var(--color-bg-tinted);
+    background: var(--bg-light, #f5f5f5);
   }
 }
 
 .rp-icon-text {
-  font-size: var(--font-2xl);
+  font-size: var(--font-2xl, 40rpx);
   font-weight: 700;
 
   .is-success & {
-    color: var(--color-primary);
+    color: var(--color-primary, #14b8a6);
   }
 
   .is-error & {
-    color: var(--color-error);
+    color: var(--color-error, #EF4444);
   }
 
   .is-warning & {
-    color: var(--color-warning);
+    color: var(--color-warning, #F59E0B);
   }
 
   .is-info & {
-    color: var(--color-text-secondary);
+    color: var(--text-secondary, #525252);
   }
 }
 
 .rp-title {
-  margin-top: var(--spacing-lg);
-  font-size: var(--font-xl);
+  margin-top: var(--space-8, 32rpx);
+  font-size: var(--font-xl, 32rpx);
   font-weight: 600;
-  color: var(--color-text-primary);
+  color: var(--text-primary, #171717);
 }
 
 .rp-desc {
-  margin-top: var(--spacing-sm);
-  font-size: var(--font-sm);
-  color: var(--color-text-tertiary);
+  margin-top: var(--space-4, 16rpx);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-tertiary, #a3a3a3);
   text-align: center;
 }
 
 .rp-actions {
   width: 100%;
   margin-top: auto;
-  padding-top: var(--spacing-2xl);
+  padding-top: var(--space-16, 64rpx);
   display: flex;
   flex-direction: column;
 }
 
 .rp-actions > * {
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--space-6, 24rpx);
 }
 
 .rp-actions > *:last-child {

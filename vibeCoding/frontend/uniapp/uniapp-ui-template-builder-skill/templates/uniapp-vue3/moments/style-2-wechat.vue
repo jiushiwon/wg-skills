@@ -24,8 +24,8 @@
           <view class="moment-footer">
             <text class="moment-time">{{ item.time }}</text>
             <view class="moment-action">
-              <text class="action-btn">👍 {{ item.likes }}</text>
-              <text class="action-btn">💬 {{ item.comments }}</text>
+              <text class="action-btn">赞 {{ item.likes }}</text>
+              <text class="action-btn">留言 {{ item.comments }}</text>
             </view>
           </view>
         </view>
@@ -63,7 +63,7 @@ const props = defineProps({
         name: '李四',
         avatar: 'https://picsum.photos/80/81',
         time: '5小时前',
-        content: '新买的手机到了，开心！🎉',
+        content: '新买的手机到了，开心！',
         images: [
           'https://picsum.photos/150/150',
           'https://picsum.photos/150/151',

@@ -34,6 +34,7 @@ description: UniApp 三端项目初始化技能。面向零基础小白，从想
 ### 1.2 条件编译
 
 ```vue
+<template>
 <!-- #ifdef MP-WEIXIN -->
 <text>微信小程序特有</text>
 <!-- #endif -->
@@ -45,6 +46,9 @@ description: UniApp 三端项目初始化技能。面向零基础小白，从想
 <!-- #ifdef APP-PLUS -->
 <text>App 特有</text>
 <!-- #endif -->
+</template>
+
+
 ```
 
 ### 1.3 平台判断
@@ -130,7 +134,7 @@ export const isApp = () => {
 ## 触发关键词
 
 ```
-帮我做一个 uniapp 小程序
+帮我帮我做一个 uniapp 小程序
 初始化 uniapp 项目
 uniapp 三端应用
 微信小程序构建

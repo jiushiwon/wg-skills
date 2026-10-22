@@ -1,21 +1,21 @@
-# wg-skills — Agents Skills 集合（前后端一体化）
+# wg-skills — 把古法全栈开发经验装进 AI
 
-> **149 个** Claude Code / Cursor / Codex / 任意支持 Skill 协议的智能体技能，**全部公开、零门槛、MIT 协议**。
-> 一句话触发，**完整可运行、可演进**的前后端项目，覆盖前端 4 套体系 × 后端 5 语言矩阵。
+> **158 个**面向 Claude Code / Cursor / Codex 等智能体的公开 Skills，MIT 协议。
+> 不是提示词合集，而是一套让 AI 按统一工程规范完成“项目骨架 → 模块 → 前后端契约 → 部署 → 迭代”的基础能力体系。
 
 ---
 
 ### 关于 [itlifetime.com](https://itlifetime.com)
 
-**一句话**：10 年经验 + 技能体系，帮你把想法变成上线项目。
+`itlifetime.com` 是“考拉搞 AI”的公开入口：这里持续展示真实项目、页面效果、wg-skills 的使用路径与系列文章。
 
-| 核心业务 | 说明 |
+| 你正在解决的问题 | 从哪里开始 |
 |---------|------|
-| **项目开发** | 小程序 / 网站 / H5，从 0 到上线 |
-| **技能培训** | wg-skills 技能体系教学，带你实战 |
-| **陪跑服务** | 7 天手把手做完，30 天答疑 |
+| 想做一个能运行的项目 | 看 [项目案例与服务](https://itlifetime.com/project-kits) |
+| 想从零理解这套公开体系 | 看 [wg-skills 技能目录](https://itlifetime.com/skills) 与 [ONBOARDING.md](ONBOARDING.md) |
+| 想把自己项目经验沉淀为 Skill | 先阅读下方“谁适合使用”，再从一个真实项目复盘开始 |
 
-> 想跳过学习曲线，直接有人带？→ [7 天陪跑 ¥699](https://itlifetime.com/services)
+> 这里不卖“万能一键生成”。我分享的是十年全栈开发里反复验证过的工程习惯：先把共同规则定住，再让 AI 高效完成具体工作。
 
 ---
 
@@ -23,13 +23,15 @@
 
 ## 这是什么
 
-一个**自包含**的技能仓库。每个子目录是一个技能（`SKILL.md` + `README.md` + `references/`），用一句话触发，AI 智能体按"选型 → 骨架 → 业务模块 → 上线"的顺序串起来执行。
+一个**自包含**的技能仓库。每个子目录是一个技能（`SKILL.md` + `README.md` + `references/`），它们不是孤立存在：前端页面与主题、后端骨架与模块、数据库与接口契约、部署与验收能够按项目需要组合。
 
-**不是** AI 一键生成的流水线玩具，**是** 10 年开发经验沉淀的可复用体系——真实项目跑过、迭代过、留下工程方法论的产物。
+它沉淀的是全栈项目里反复出现的共同部分：目录结构、响应格式、错误码、JWT、分页、Design Token、请求层、环境与部署。具体行业业务、品牌视觉和产品取舍，仍然必须由项目负责人决定。
 
 ### 一句话定位
 
-> **把"古法编程"容纳到 AI 体系之中**。AI 时代不是取代程序员，而是把传统工程中**重复、规范、体系化**的部分抽出来，沉淀成可被 AI 调用的技能，让人专注于业务决策与架构判断。
+> **不是让 AI 替你做项目，而是让 AI 按你的工程经验做项目。**
+
+把传统全栈开发里重复、规范、可验证的部分抽出来，沉淀成 AI 可调用的 Skill；人仍然负责业务边界、产品判断和最终验收。
 
 ### 与"传统 AI 一键做项目"的区别
 
@@ -45,9 +47,9 @@
 
 ---
 
-## 149 个技能 · 全部 MIT 公开 · 持续迭代中
+## 158 个技能 · 全部 MIT 公开 · 持续迭代中
 
-> ⚠️ **技能以实际效果为准，149 个技能都在持续迭代中**。每个技能都在真实项目里跑过，但 API、组件形态、触发词会随实战反馈调整，不保证向后兼容。
+> ⚠️ **技能以实际效果为准，158 个技能都在持续迭代中**。每个技能都在真实项目里跑过，但 API、组件形态、触发词会随实战反馈调整，不保证向后兼容。
 > 任何问题、反馈或建议，欢迎两个渠道：
 > 1. 访问 [itlifetime.com](https://itlifetime.com)（首页底部 → 加微信 **jiushiwon**）
 > 2. 在 [GitHub Issues](https://github.com/jiushiwon/wg-skills/issues) 提 issue
@@ -56,8 +58,8 @@
 
 | 板块 | 数量 | 子分类 |
 |------|------|--------|
-| **[`vibeCoding/backend`](#后端)** | **48** | Java【14】· Python【17】· Go【4】· Node.js【1】· Rust【1】· 数据库【8】· 元工具【3】 |
-| **[`vibeCoding/frontend`](#前端)** | **70** | Vue【37】· React【3】· UniApp【18】· HTML【1】· Electron【2】· 公共【9】 |
+| **[`vibeCoding/backend`](#后端)** | **55** | Java / Python / Go / Node.js / Rust / 数据库 / 公共规范；具体清单见下文 |
+| **[`vibeCoding/frontend`](#前端)** | **78** | Vue / UniApp / React / HTML / Electron / 公共能力；具体清单见下文 |
 | **[`vibeCoding/super-deploy-skills`](#部署套件)** | **16** | 部署总入口 · 数据库安装【4】· 运行时安装【4】· Docker · 原生 · Nginx · 服务器 · 环境检测 |
 | **[`vibeCoding/vibecoding-guide-skill`](#vibecoding-工作流)** | **4** | VibeCoding 总入口 · 智能体访谈 · 智能体学习 · 完整工作流 |
 | **[`vibeCoding/video`](#视频)** | **2** | FFmpeg · Remotion |
@@ -86,37 +88,56 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 ---
 
+## 谁适合使用
+
+| 你是谁 | 你会得到什么 |
+|---|---|
+| 想把想法做成作品的小白 | 不必先背完整技术栈，按场景选择骨架、页面、模块与部署路径 |
+| 正在 VibeCoding 的开发者 | 给 AI 一套固定的接口、主题、目录与验收规则，避免项目越改越乱 |
+| 有经验的全栈开发者或小团队 | 把已验证的代码规范和模块经验沉淀为可复用 Skill，减少重复交代与重复实现 |
+
+### 如何开始沉淀自己的 Skill
+
+不要从 YAML 格式开始。先拿一个做成功的真实功能，依次写清楚：它解决什么场景、哪些规则不能变、需要哪些输入、应该交付什么、如何验收。能重复使用的部分才值得成为 Skill。
+
+`wg-skills` 提供的是这套方法和基础设施；你自己的行业规则、业务流程和产品经验，才是最有价值的下一层能力。
+
+---
+
 ## 完整技能清单
 
 ### 后端
 
-**48 个**，覆盖 5 语言后端 + 数据库 + 后端元工具。
+**55 个**，覆盖 5 语言后端 + 数据库 + 后端元工具。
 
-#### Java 矩阵（12 个）
+#### Java 矩阵（16 个）
 
 | 技能 | 说明 |
 |------|------|
 | `java-fast-skill` | Java 快速入门（小白友好） |
 | `springboot-init-skill` | Spring Boot 一键初始化 |
-| `springboot-module/`（10 个子技能） | 万能登录 API / auth / agent / dict / kafka / log / notification / org-permission / payment / redis / storage / upload |
+| `springboot-module/`（14 个子技能） | 万能登录 API / auth / agent / dict / kafka / log / notification / org-permission / payment / redis / storage / upload / alipay-pay / wechat-pay |
 
-#### Python 矩阵（13 个）
+#### Python 矩阵（20 个）
 
 | 技能 | 说明 |
 |------|------|
 | `python-fast-skill` | Python 快速入门 |
 | `fastapi-init-skill` | FastAPI 一键初始化 |
-| `fastapi-module/`（14 个子技能） | auth / agent / ai-chat / dict / log / notification / org-permission / payment / storage / upload / ws / python-redis / python-kafka |
+| `fastapi-module/`（15 个子技能） | auth / agent / ai-chat / dict / log / notification / org-permission / payment / storage / upload / ws / python-redis / python-kafka / alipay-pay / wechat-pay |
+| `fastapi-qr-login-skill` | FastAPI 扫码登录 |
 | `article-generator` | 多平台文章生成 |
 | `hot-trend-collector` | 热点抓取工具 |
 
-#### Go 矩阵（3 个）
+#### Go 矩阵（6 个）
 
 | 技能 | 说明 |
 |------|------|
 | `go-gin-init-skill` | Go + Gin 一键初始化 |
 | `go-frame-init-skill` | Go 多框架初始化（Hertz/Fiber/Chi） |
+| `go-grpc-init-skill` | Go gRPC 服务初始化（4 种流模式 + 拦截器） |
 | `go-ws-module-skill` | Go WebSocket 模块 |
+| `go-auth-module-skill` | Go 鉴权模块 |
 | `go-module/go-storage-module-skill` | Go 文件存储模块 |
 
 #### Node.js / Rust 矩阵（2 个）
@@ -155,32 +176,31 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 ### 前端
 
-**70 个**，按 4 套体系组织。
+**78 个**，按 4 套体系组织。
 
-#### Vue 体系（30 个）— SPA + SSR
+#### Vue 体系（43 个）— SPA + SSR
 
-**核心组件体系**（`vue-base-skill/` 父技能 + 22 个子技能）：
+**核心组件体系**（`vue-base-skill/` 父技能 + 30 个子技能，其中 `vue-complex-skill/` 下含 7 个复合场景技能）：
 
-按钮 / 卡片 / 表格 / 表单 / 下拉 / 树 / 输入 / 选择 / 日期 / 复选 / 单选 / 开关 / 上传 / 列表页 / 列表项 / 右键菜单 / 折叠 / 状态 / 标签 / 综合 CRUD / 登录页 / 仪表盘
+布局 / 按钮 / 卡片 / 徽章 / 表单 / 输入 / 选择 / 级联 / 下拉 / 树 / 日期 / 复选 / 单选 / 开关 / 表格 / 标签 / 状态 / 折叠 / 右键菜单 / 提示 / 对话框 / 空状态 / 加载 / 上传 / 菜单 / 列表页 / 列表项 / 万能登录页 / Vue 项目生成 / 综合 CRUD（`vue-complex-skill/`）
 
 **配套规范**：
 
 - `vue-theme-skill` — 设计 Token + 深色主题
 - `vue-style-skill` — 样式规范（动画/工具类/布局）
 - `vue-tui-skill` — TUI 终端界面
-- `vue-generate-skill` — Vue 项目生成
 - `nuxt-generate-skill` — Nuxt 3 + TS + Pinia 全栈（SSR/SEO）
 - `electron-vue-init-skill` — Electron + Vue3 桌面端
-- `universal-login-page` — 万能登录页（嵌入式）
 
 #### UniApp 体系（16 个）— 跨端小程序
 
-`uniapp-base-skill`（父技能，含表单/卡片/页面）+ 14 个独立技能：
+`uniapp-base-skill`（基础组件与容器唯一真源：6 个根容器 + 26 个组件）+ 15 个独立技能：
 
 - 项目类：`uniapp-app-generate-skill` / `uniapp-standard-skill`
 - 规范类：`uniapp-style-skill` / `uniapp-theme-skill` / `request-skill`
 - 鉴权类：`uniapp-auth-skill`
 - 组件类：`uniapp-page-components-skill`
+- 场景页：`uniapp-member-center-skill`（会员中心 / 积分任务 / 积分商城）
 - 诊断类：`uniapp-diagnostic-skill` / `uniapp-code-audit-skill` / `uniapp-crossplatform-audit-skill` / `uniapp-vue2-upgrade-skill`
 - UI 类：`uniapp-ui-replica-skill` / `uniapp-ui-component-commands-skill` / `uniapp-ui-template-builder-skill`
 
@@ -194,7 +214,7 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 - `html-frontend-template` — 纯 HTML 管理后台模板（**下一个重点建设方向**）
 
-#### 综合前端（10 个）
+#### 综合前端（9 个）
 
 - `frontend-code-doctor` — 前端代码审查
 - `frontend-request-skill` — **4 套体系共用**请求层（响应信封 + 错误码 + Token 注入 + 防抖 + Mock + SSE）
@@ -202,6 +222,13 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 - `frontend-ui-foundry` — 综合前端 UI
 - `frontend-icon-skill` — SVG 模板生成 + 图片处理
 - `icon-image-catch-skill`（父 + 2 子）— 图标抓取 / 图片抓取
+- `image-forge-skill` — AI 图片生成
+
+#### Electron 体系（3 个）
+
+- `electron-dev-restart` — Electron 开发期重启
+- `electron-react-skill` — Electron + React 桌面端
+- `xterm-js-rendering-pitfalls` — xterm.js 渲染踩坑
 
 ---
 
@@ -294,7 +321,7 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 | 🐍 Python | `python-fast-skill` / `fastapi-init-skill` |
 | 🐹 Go | `go-gin-init-skill` |
 | 🎨 Vue | `vue-base-skill` / `vue-generate-skill` |
-| 📱 UniApp | `uniapp-base-skill` 21 个组件 |
+| 📱 UniApp | `uniapp-base-skill` 26 个组件 + 6 个根容器 |
 | ⚛️ React | `react-generate-skill` / `next-generate-skill` |
 
 一句"帮我用 Java 搭一个商城"，智能体按"选型 → 骨架 → 业务模块"串起多个技能。
@@ -339,6 +366,8 @@ api-contract.md  ← 前后端唯一事实来源
 | 文件 | 面向对象 | 看什么 |
 |------|---------|-------|
 | **`README.md`**（本文件） | 人类访客 / 潜在用户 | 仓库能干什么、怎么快速上手、有什么技能 |
+| **[`ONBOARDING.md`](ONBOARDING.md)** | 第一次使用者 | 用场景选择入口，完成第一个项目 |
+| **[`MISSING_SKILLS.md`](MISSING_SKILLS.md)** | 使用者 / 维护者 | 已迁至私有仓库的引用登记与替代路径 |
 | **[`AGENTS.md`](AGENTS.md)** | AI 智能体 + 维护者 | 完整规范、目录结构、开发原则、提交规范 |
 | **[`CLAUDE.md`](CLAUDE.md)** | Claude Code | 入口（引用 `AGENTS.md`） |
 | `各 skill/SKILL.md` | AI 智能体 | 触发条件、生成流程、输出规范、依赖 |
@@ -364,7 +393,7 @@ api-contract.md  ← 前后端唯一事实来源
 
 ---
 
-## 为什么开放 + 为什么 149 个
+## 为什么开放 + 为什么 155 个
 
 之前这个仓库是分层结构（精选 23 个公开 + 全量私有）。经过两轮迭代决定：
 

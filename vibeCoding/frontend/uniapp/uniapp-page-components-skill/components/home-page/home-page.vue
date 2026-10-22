@@ -127,7 +127,7 @@ function onLoadMore() {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: var(--color-bg-page);
+  background: var(--bg-page, #fafafa);
 }
 
 .hp-body {
@@ -136,34 +136,34 @@ function onLoadMore() {
 }
 
 .hp-body-inner {
-  padding-bottom: var(--spacing-2xl);
+  padding-bottom: var(--space-16, 64rpx);
 }
 
 .hp-list {
-  padding: 0 var(--spacing-lg);
+  padding: 0 var(--space-8, 32rpx);
 }
 
 .hp-empty {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-3xl) 0;
+  padding: var(--space-24, 96rpx) 0;
 }
 
 .hp-empty-text {
-  font-size: var(--font-md);
-  color: var(--color-text-tertiary);
+  font-size: var(--font-md, 28rpx);
+  color: var(--text-tertiary, #a3a3a3);
 }
 
 .hp-tip {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-md) 0;
+  padding: var(--space-6, 24rpx) 0;
 }
 
 .hp-tip-text {
-  font-size: var(--font-sm);
-  color: var(--color-text-tertiary);
+  font-size: var(--font-sm, 26rpx);
+  color: var(--text-tertiary, #a3a3a3);
 }
 </style>

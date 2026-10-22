@@ -1,0 +1,929 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>级联选择器 · Vue Skill Demo</title>
+  <style>
+    :root {
+      --color-primary: #409eff;
+      --color-primary-light-9: #ecf5ff;
+      --color-success: #67c23a;
+      --color-warning: #e6a23c;
+      --color-danger: #f56c6c;
+      --color-info: #909399;
+      --color-text-primary: #303133;
+      --color-text-regular: #606266;
+      --color-text-secondary: #909399;
+      --color-text-placeholder: #c0c4cc;
+      --color-border: #dcdfe6;
+      --color-border-light: #e4e7ed;
+      --color-bg-white: #ffffff;
+      --color-bg: #f5f7fa;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --font-xs: 12px;
+      --font-sm: 13px;
+      --font-base: 14px;
+      --font-lg: 16px;
+      --shadow-light: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif; background: var(--color-bg); color: var(--color-text-primary); line-height: 1.5; min-width: 1100px; }
+
+    .page { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+    h1 { font-size: 28px; margin-bottom: 8px; color: var(--color-text-primary); }
+    .subtitle { color: var(--color-text-secondary); margin-bottom: 32px; font-size: var(--font-base); }
+
+    .demo-section { margin-bottom: 40px; }
+    .demo-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .demo-title { font-size: var(--font-lg); font-weight: 600; }
+    .demo-tag { font-size: var(--font-xs); padding: 2px 8px; background: var(--color-primary-light-9); color: var(--color-primary); border-radius: var(--radius-sm); }
+    .demo-desc { font-size: var(--font-sm); color: var(--color-text-secondary); margin-bottom: 16px; }
+
+    .demo-card { background: var(--color-bg-white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-light); }
+    .demo-row { display: flex; gap: 24px; flex-wrap: wrap; }
+    .demo-item { flex: 1; min-width: 240px; }
+    .demo-label { display: block; font-size: var(--font-sm); color: var(--color-text-secondary); margin-bottom: 8px; }
+
+    /* Cascader Styles - Element Plus Style */
+    .cascader { position: relative; width: 100%; }
+
+    .cascader-trigger {
+      position: relative;
+      height: 40px;
+      line-height: 40px;
+      padding: 0 30px 0 15px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-bg-white);
+      cursor: pointer;
+      transition: border-color 0.2s;
+      font-size: var(--font-base);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .cascader-trigger:hover { border-color: var(--color-primary); }
+    .cascader-trigger.is-disabled { background: var(--color-bg); color: var(--color-text-placeholder); cursor: not-allowed; }
+    .cascader-trigger.is-focused { border-color: var(--color-primary); }
+
+    .cascader-trigger__placeholder { color: var(--color-text-placeholder); }
+    .cascader-trigger__label { color: var(--color-text-regular); }
+
+    .cascader-trigger__arrow {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border: 5px solid transparent;
+      border-top-color: var(--color-text-secondary);
+      transition: transform 0.2s;
+    }
+    .cascader-trigger.is-opened .cascader-trigger__arrow { transform: translateY(-50%) rotate(180deg); }
+
+    .cascader-trigger__clear {
+      position: absolute;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      line-height: 14px;
+      text-align: center;
+      border-radius: 50%;
+      background: var(--color-bg-white);
+      color: var(--color-text-placeholder);
+      font-size: 14px;
+      cursor: pointer;
+      z-index: 1;
+    }
+    .cascader-trigger__clear:hover { color: var(--color-text-regular); background: var(--color-bg); }
+
+    /* Tags for multiple */
+    .cascader-tags { display: flex; flex-wrap: wrap; gap: 4px; padding: 4px 30px 4px 4px; }
+    .cascader-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0 8px;
+      height: 24px;
+      line-height: 22px;
+      background: var(--color-primary-light-9);
+      color: var(--color-primary);
+      border-radius: var(--radius-sm);
+      font-size: var(--font-xs);
+    }
+    .cascader-tag__close { width: 14px; height: 14px; line-height: 12px; text-align: center; border-radius: 50%; cursor: pointer; }
+    .cascader-tag__close:hover { background: var(--color-primary); color: white; }
+
+    /* Dropdown */
+    .cascader-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      margin-top: 6px;
+      background: var(--color-bg-white);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-light);
+      z-index: 1000;
+      display: none;
+      overflow: hidden;
+    }
+    .cascader-dropdown.is-visible { display: block; }
+
+    /* Menu Panels */
+    .cascader-menus { display: flex; }
+    .cascader-menu {
+      min-width: 180px;
+      max-height: 204px;
+      overflow-y: auto;
+      border-right: 1px solid var(--color-border-light);
+    }
+    .cascader-menu:last-child { border-right: none; }
+
+    .cascader-menu__item {
+      position: relative;
+      height: 34px;
+      line-height: 34px;
+      padding: 0 20px 0 15px;
+      font-size: var(--font-base);
+      color: var(--color-text-regular);
+      cursor: pointer;
+      transition: background 0.15s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .cascader-menu__item:hover { background: var(--color-bg); }
+    .cascader-menu__item.is-active { color: var(--color-primary); font-weight: 500; }
+    .cascader-menu__item.is-disabled { color: var(--color-text-placeholder); cursor: not-allowed; }
+    .cascader-menu__item.is-active::after {
+      content: '✓';
+      position: absolute;
+      right: 10px;
+      color: var(--color-primary);
+      font-size: 12px;
+    }
+
+    .cascader-menu__item-arrow {
+      position: absolute;
+      right: 8px;
+      color: var(--color-text-placeholder);
+      font-size: 12px;
+    }
+    .cascader-menu__item.has-arrow .cascader-menu__item-arrow { display: block; }
+
+    .cascader-menu__item-loading {
+      color: var(--color-primary);
+      animation: cascader-loading 1s infinite;
+    }
+    @keyframes cascader-loading {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    /* Search Panel */
+    .cascader-search-panel { padding: 10px; border-bottom: 1px solid var(--color-border-light); }
+    .cascader-search-input {
+      width: 100%;
+      height: 32px;
+      padding: 0 12px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-size: var(--font-base);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .cascader-search-input:focus { border-color: var(--color-primary); }
+
+    .cascader-search-list { max-height: 200px; overflow-y: auto; }
+    .cascader-search-item { padding: 8px 12px; font-size: var(--font-base); cursor: pointer; }
+    .cascader-search-item:hover { background: var(--color-bg); }
+    .cascader-search-item__label { color: var(--color-text-regular); }
+    .cascader-search-item__path { font-size: var(--font-xs); color: var(--color-text-placeholder); }
+
+    /* Empty */
+    .cascader-empty { padding: 20px; text-align: center; color: var(--color-text-placeholder); font-size: var(--font-base); }
+
+    /* Loading */
+    .cascader-loading {
+      padding: 20px;
+      text-align: center;
+      color: var(--color-text-placeholder);
+      font-size: var(--font-base);
+    }
+    .cascader-loading::after {
+      content: '加载中...';
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>级联选择器</h1>
+    <p class="subtitle">基于 wg-skills 规范，纯 CSS 实现，契约驱动</p>
+
+    <!-- Demo 1: 单选模式 -->
+    <div class="demo-section">
+      <div class="demo-header">
+        <span class="demo-title">单选模式</span>
+        <span class="demo-tag">最常用</span>
+      </div>
+      <p class="demo-desc">选择省市区，只能选中最末级（叶子节点）</p>
+      <div class="demo-card">
+        <div class="demo-row">
+          <div class="demo-item">
+            <span class="demo-label">基础用法</span>
+            <div class="cascader" id="cascader1">
+              <div class="cascader-trigger" onclick="toggleCascader('cascader1')">
+                <span class="cascader-trigger__placeholder">请选择</span>
+                <span class="cascader-trigger__arrow"></span>
+              </div>
+              <div class="cascader-dropdown" id="dropdown1"></div>
+            </div>
+          </div>
+          <div class="demo-item">
+            <span class="demo-label">有默认值</span>
+            <div class="cascader" id="cascader1b">
+              <div class="cascader-trigger" onclick="toggleCascader('cascader1b')">
+                <span class="cascader-trigger__label">广东省 / 深圳市 / 南山区</span>
+                <span class="cascader-trigger__arrow"></span>
+              </div>
+              <div class="cascader-dropdown" id="dropdown1b"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Demo 2: 多选模式 -->
+    <div class="demo-section">
+      <div class="demo-header">
+        <span class="demo-title">多选模式</span>
+        <span class="demo-tag">适用标签/权限</span>
+      </div>
+      <p class="demo-desc">可同时选择多个选项，展示为标签</p>
+      <div class="demo-card">
+        <div class="demo-row">
+          <div class="demo-item">
+            <span class="demo-label">多选（带标签）</span>
+            <div class="cascader" id="cascader2">
+              <div class="cascader-trigger" onclick="toggleCascader('cascader2')">
+                <div class="cascader-tags">
+                  <span class="cascader-tag">技术<span class="cascader-tag__close">×</span></span>
+                  <span class="cascader-tag">前端<span class="cascader-tag__close">×</span></span>
+                </div>
+                <span class="cascader-trigger__arrow"></span>
+              </div>
+              <div class="cascader-dropdown" id="dropdown2"></div>
+            </div>
+          </div>
+          <div class="demo-item">
+            <span class="demo-label">多选（可清除）</span>
+            <div class="cascader" id="cascader2b">
+              <div class="cascader-trigger" onclick="toggleCascader('cascader2b')">
+                <div class="cascader-tags">
+                  <span class="cascader-tag">前端<span class="cascader-tag__close">×</span></span>
+                </div>
+                <span class="cascader-trigger__clear">×</span>
+                <span class="cascader-trigger__arrow"></span>
+              </div>
+              <div class="cascader-dropdown" id="dropdown2b"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Demo 3: 父子不关联 -->
+    <div class="demo-section">
+      <div class="demo-header">
+        <span class="demo-title">父子不关联</span>
+        <span class="demo-tag">适用组织/权限</span>
+      </div>
+      <p class="demo-desc">可以选择任意层级，不自动选中子节点</p>
+      <div class="demo-card">
+        <div class="demo-row">
+          <div class="demo-item">
+            <span class="demo-label">组织架构选择</span>
+            <div class="cascader" id="cascader3">
+              <div class="cascader-trigger" onclick="toggleCascader('cascader3')">
+                <span class="cascader-trigger__placeholder">请选择组织</span>
+                <span class="cascader-trigger__arrow"></span>
+              </div>
+              <div class="cascader-dropdown" id="dropdown3"></div>
+            </div>
+          </div>
+          <div class="demo-item">
+            <span class="demo-label">权限分配（多选）</span>
+            <div class="cascader" id="cascader3b">
+              <div class="cascader-trigger" onclick="toggleCascader('cascader3b')">
+                <span class="cascader-trigger__placeholder">请分配权限</span>
+                <span class="cascader-trigger__arrow"></span>
+              </div>
+              <div class="cascader-dropdown" id="dropdown3b"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Demo 4: 可搜索 -->
+    <div class="demo-section">
+      <div class="demo-header">
+        <span class="demo-title">可搜索</span>
+        <span class="demo-tag">适用大数据</span>
+      </div>
+      <p class="demo-desc">输入关键字过滤选项</p>
+      <div class="demo-card">
+        <div class="demo-row">
+          <div class="demo-item">
+            <span class="demo-label">搜索省市区</span>
+            <div class="cascader" id="cascader4">
+              <div class="cascader-trigger" onclick="toggleCascader('cascader4')">
+                <span class="cascader-trigger__placeholder">搜索省市区...</span>
+                <span class="cascader-trigger__arrow"></span>
+              </div>
+              <div class="cascader-dropdown" id="dropdown4">
+                <div class="cascader-search-panel">
+                  <input type="text" class="cascader-search-input" placeholder="输入关键字搜索" oninput="handleSearch(this.value, 'cascader4')">
+                </div>
+                <div class="cascader-search-list" id="searchList4"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Demo 5: 动态加载 -->
+    <div class="demo-section">
+      <div class="demo-header">
+        <span class="demo-title">动态加载</span>
+        <span class="demo-tag">懒加载</span>
+      </div>
+      <p class="demo-desc">点击节点时动态加载子数据（模拟）</p>
+      <div class="demo-card">
+        <div class="demo-row">
+          <div class="demo-item">
+            <span class="demo-label">懒加载示例</span>
+            <div class="cascader" id="cascader5">
+              <div class="cascader-trigger" onclick="toggleCascader('cascader5')">
+                <span class="cascader-trigger__placeholder">选择省份</span>
+                <span class="cascader-trigger__arrow"></span>
+              </div>
+              <div class="cascader-dropdown" id="dropdown5"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Demo 6: 禁用状态 -->
+    <div class="demo-section">
+      <div class="demo-header">
+        <span class="demo-title">禁用状态</span>
+      </div>
+      <p class="demo-desc">禁用整个组件或单个选项</p>
+      <div class="demo-card">
+        <div class="demo-row">
+          <div class="demo-item">
+            <span class="demo-label">禁用组件</span>
+            <div class="cascader">
+              <div class="cascader-trigger is-disabled">
+                <span class="cascader-trigger__placeholder">禁用状态</span>
+                <span class="cascader-trigger__arrow"></span>
+              </div>
+            </div>
+          </div>
+          <div class="demo-item">
+            <span class="demo-label">禁用选项</span>
+            <div class="cascader" id="cascader6">
+              <div class="cascader-trigger" onclick="toggleCascader('cascader6')">
+                <span class="cascader-trigger__placeholder">请选择</span>
+                <span class="cascader-trigger__arrow"></span>
+              </div>
+              <div class="cascader-dropdown" id="dropdown6"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== 级联数据 =====
+    const regionData = [
+      {
+        value: 'zhejiang', label: '浙江省',
+        children: [
+          { value: 'hangzhou', label: '杭州市', children: [
+            { value: 'xihu', label: '西湖区' },
+            { value: 'binjiang', label: '滨江区' },
+            { value: 'yuhang', label: '余杭区' }
+          ]},
+          { value: 'ningbo', label: '宁波市', children: [
+            { value: 'jiangbei', label: '江北区' },
+            { value: 'yinzhou', label: '鄞州区' }
+          ]},
+          { value: 'wenzhou', label: '温州市' }
+        ]
+      },
+      {
+        value: 'guangdong', label: '广东省',
+        children: [
+          { value: 'shenzhen', label: '深圳市', children: [
+            { value: 'nanshan', label: '南山区' },
+            { value: 'futian', label: '福田区' },
+            { value: 'luohu', label: '罗湖区' },
+            { value: 'yantian', label: '盐田区' }
+          ]},
+          { value: 'guangzhou', label: '广州市', children: [
+            { value: 'tianhe', label: '天河区' },
+            { value: 'baiyun', label: '白云区' },
+            { value: 'haizhu', label: '海珠区' }
+          ]},
+          { value: 'dongguan', label: '东莞市' }
+        ]
+      },
+      {
+        value: 'jiangsu', label: '江苏省',
+        children: [
+          { value: 'nanjing', label: '南京市', children: [
+            { value: 'xuanwu', label: '玄武区' },
+            { value: 'gulou', label: '鼓楼区' }
+          ]},
+          { value: 'suzhou', label: '苏州市' }
+        ]
+      }
+    ];
+
+    const categoryData = [
+      {
+        value: 'tech', label: '技术',
+        children: [
+          { value: 'frontend', label: '前端', children: [
+            { value: 'vue', label: 'Vue' },
+            { value: 'react', label: 'React' },
+            { value: 'angular', label: 'Angular' }
+          ]},
+          { value: 'backend', label: '后端', children: [
+            { value: 'java', label: 'Java' },
+            { value: 'go', label: 'Go' },
+            { value: 'python', label: 'Python' }
+          ]},
+          { value: 'ai', label: 'AI', children: [
+            { value: 'llm', label: '大模型' },
+            { value: 'ml', label: '机器学习' }
+          ]}
+        ]
+      },
+      {
+        value: 'design', label: '设计',
+        children: [
+          { value: 'ui', label: 'UI设计' },
+          { value: 'ux', label: '用户体验' },
+          { value: 'product', label: '产品设计' }
+        ]
+      },
+      {
+        value: 'business', label: '商务',
+        children: [
+          { value: 'sales', label: '销售' },
+          { value: 'marketing', label: '市场营销' },
+          { value: 'hr', label: '人力资源' }
+        ]
+      }
+    ];
+
+    const orgData = [
+      {
+        value: 'hq', label: '总部',
+        children: [
+          { value: 'tech', label: '技术部', children: [
+            { value: 'fe', label: '前端组' },
+            { value: 'be', label: '后端组' },
+            { value: 'qa', label: '测试组' }
+          ]},
+          { value: 'ops', label: '运营部', children: [
+            { value: 'content', label: '内容运营' },
+            { value: 'user', label: '用户运营' }
+          ]},
+          { value: 'sales', label: '销售部' }
+        ]
+      },
+      {
+        value: 'branch', label: '分公司',
+        children: [
+          { value: 'bj', label: '北京分公司' },
+          { value: 'sh', label: '上海分公司' },
+          { value: 'gz', label: '广州分公司' }
+        ]
+      }
+    ];
+
+    const permissionData = [
+      {
+        value: 'system', label: '系统管理',
+        children: [
+          { value: 'user', label: '用户管理', children: [
+            { value: 'user:view', label: '查看' },
+            { value: 'user:create', label: '新增' },
+            { value: 'user:edit', label: '编辑' },
+            { value: 'user:delete', label: '删除' }
+          ]},
+          { value: 'role', label: '角色管理', children: [
+            { value: 'role:view', label: '查看' },
+            { value: 'role:manage', label: '管理' }
+          ]},
+          { value: 'menu', label: '菜单管理' }
+        ]
+      },
+      {
+        value: 'content', label: '内容管理',
+        children: [
+          { value: 'article', label: '文章管理', children: [
+            { value: 'article:view', label: '查看' },
+            { value: 'article:publish', label: '发布' },
+            { value: 'article:edit', label: '编辑' }
+          ]},
+          { value: 'comment', label: '评论管理' }
+        ]
+      }
+    ];
+
+    // ===== 状态管理 =====
+    const cascaderState = {
+      cascader1: { open: false, value: null, path: [], menus: [regionData] },
+      cascader1b: { open: false, value: 'gd/sz/ns', path: ['广东省', '深圳市', '南山区'], menus: [regionData] },
+      cascader2: { open: false, value: ['tech', 'frontend'], path: [], menus: [categoryData] },
+      cascader2b: { open: false, value: ['frontend'], path: [], menus: [categoryData] },
+      cascader3: { open: false, value: null, path: [], menus: [orgData] },
+      cascader3b: { open: false, value: [], path: [], menus: [permissionData] },
+      cascader4: { open: false, value: null, path: [], menus: [regionData] },
+      cascader5: { open: false, value: null, path: [], menus: [[]], loading: false, loadingLevel: -1 },
+      cascader6: { open: false, value: null, path: [], menus: [regionData] }
+    };
+
+    // ===== 懒加载数据（初始只有一级） =====
+    const lazyData = [
+      { value: 'zhejiang', label: '浙江省', children: [] },
+      { value: 'guangdong', label: '广东省', children: [] },
+      { value: 'jiangsu', label: '江苏省', children: [] }
+    ];
+
+    // 懒加载模拟：返回子数据
+    function getLazyChildren(parentValue) {
+      const lazyChildrenMap = {
+        zhejiang: [
+          { value: 'hangzhou', label: '杭州市', children: [
+            { value: 'xihu', label: '西湖区' },
+            { value: 'binjiang', label: '滨江区' }
+          ]},
+          { value: 'ningbo', label: '宁波市' }
+        ],
+        guangdong: [
+          { value: 'shenzhen', label: '深圳市', children: [
+            { value: 'nanshan', label: '南山区' },
+            { value: 'futian', label: '福田区' }
+          ]},
+          { value: 'guangzhou', label: '广州市' }
+        ],
+        jiangsu: [
+          { value: 'nanjing', label: '南京市' },
+          { value: 'suzhou', label: '苏州市' }
+        ]
+      };
+      return lazyChildrenMap[parentValue] || [];
+    }
+
+    // ===== 核心函数 =====
+    function toggleCascader(id) {
+      const state = cascaderState[id];
+      if (!state) return;
+
+      // 关闭其他
+      Object.keys(cascaderState).forEach(key => {
+        if (key !== id && cascaderState[key].open) {
+          cascaderState[key].open = false;
+          const el = document.getElementById('dropdown' + key.slice(-1));
+          if (el) el.classList.remove('is-visible');
+          const trigger = document.querySelector('#' + key + ' .cascader-trigger');
+          if (trigger) trigger.classList.remove('is-opened');
+        }
+      });
+
+      state.open = !state.open;
+      const dropdown = document.getElementById('dropdown' + id.slice(-1));
+      const trigger = document.querySelector('#' + id + ' .cascader-trigger');
+
+      if (state.open) {
+        dropdown.classList.add('is-visible');
+        trigger.classList.add('is-opened');
+        trigger.classList.add('is-focused');
+        // 重置菜单，只保留第一级
+        state.menus = [state.menus[0] || getOptionsById(id)];
+        // 清空所有菜单，重新渲染
+        const menusContainer = dropdown.querySelector('.cascader-menus');
+        if (menusContainer) menusContainer.innerHTML = '';
+        renderMenu(id, 0);
+      } else {
+        dropdown.classList.remove('is-visible');
+        trigger.classList.remove('is-opened');
+        trigger.classList.remove('is-focused');
+      }
+    }
+
+    // 获取级联数据
+    function getOptionsById(id) {
+      if (id === 'cascader1' || id === 'cascader1b' || id === 'cascader4' || id === 'cascader6') {
+        return regionData;
+      }
+      if (id === 'cascader5') {
+        return lazyData; // 懒加载初始数据
+      }
+      if (id === 'cascader2' || id === 'cascader2b') {
+        return categoryData;
+      }
+      if (id === 'cascader3') {
+        return orgData;
+      }
+      if (id === 'cascader3b') {
+        return permissionData;
+      }
+      return regionData;
+    }
+
+    function renderMenu(id, level) {
+      const state = cascaderState[id];
+      const data = state.menus[level];
+      if (!data) return;
+
+      const dropdown = document.getElementById('dropdown' + id.slice(-1));
+      let menusContainer = dropdown.querySelector('.cascader-menus');
+
+      // 创建菜单容器
+      if (!menusContainer) {
+        menusContainer = document.createElement('div');
+        menusContainer.className = 'cascader-menus';
+        // 移除旧的菜单，添加新的容器
+        const oldMenus = dropdown.querySelectorAll('.cascader-menu');
+        oldMenus.forEach(m => m.remove());
+        dropdown.appendChild(menusContainer);
+      }
+
+      // 清除当前级别及之后的菜单
+      const existingMenus = menusContainer.querySelectorAll('.cascader-menu');
+      existingMenus.forEach((menu, idx) => {
+        if (idx >= level) menu.remove();
+      });
+
+      // 创建菜单面板
+      const menuEl = document.createElement('div');
+      menuEl.className = 'cascader-menu';
+      menuEl.dataset.level = level;
+      menusContainer.appendChild(menuEl);
+
+      // 渲染选项
+      menuEl.innerHTML = data.map(item => {
+        const hasChildren = item.children && item.children.length > 0;
+        const isDisabled = item.disabled;
+        const isActive = state.path[level]?.value === item.value;
+        const isLoading = id === 'cascader5' && state.loadingLevel === level;
+
+        // 懒加载节点显示加载状态
+        const labelHtml = isLoading
+          ? `<span class="cascader-menu__item-loading">加载中...</span>`
+          : item.label;
+
+        return `
+          <div class="cascader-menu__item ${isActive ? 'is-active' : ''} ${isDisabled ? 'is-disabled' : ''} ${hasChildren ? 'has-arrow' : ''}"
+               data-value="${item.value}" data-label="${item.label}" data-level="${level}"
+               onclick="handleSelect('${id}', '${item.value}', '${item.label}', ${level})">
+            ${labelHtml}
+            ${hasChildren && !isLoading ? '<span class="cascader-menu__item-arrow">›</span>' : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function handleSelect(id, value, label, level) {
+      const state = cascaderState[id];
+      const dropdown = document.getElementById('dropdown' + id.slice(-1));
+
+      // 检查是否是叶子节点或者父子不关联模式
+      const menuData = state.menus[level];
+      const selectedItem = menuData.find(m => m.value === value);
+      const hasChildren = selectedItem?.children && selectedItem.children.length > 0;
+
+      // ===== 懒加载模式 (cascader5) =====
+      if (id === 'cascader5') {
+        // 懒加载：模拟异步获取子节点
+        state.loading = true;
+        state.loadingLevel = level;
+
+        // 模拟 API 延迟
+        setTimeout(() => {
+          // 模拟返回的子数据
+          const lazyChildren = getLazyChildren(value);
+          selectedItem.children = lazyChildren;
+          state.loading = false;
+          state.loadingLevel = -1;
+
+          // 更新路径
+          state.path = state.path.slice(0, level);
+          state.path.push({ value, label });
+
+          // 添加子菜单
+          if (lazyChildren.length > 0) {
+            state.menus[level + 1] = lazyChildren;
+            renderMenu(id, level + 1);
+          } else {
+            // 叶子节点，选中完成
+            updateTrigger(id);
+            state.open = false;
+            dropdown.classList.remove('is-visible');
+            const trigger = document.querySelector('#' + id + ' .cascader-trigger');
+            trigger.classList.remove('is-opened');
+          }
+        }, 600);
+        return;
+      }
+
+      // 多选或父子不关联可以直接选
+      if (id === 'cascader2' || id === 'cascader2b' || id === 'cascader3b') {
+        // 多选逻辑
+        const idx = state.value.indexOf(value);
+        if (idx > -1) {
+          state.value.splice(idx, 1);
+        } else {
+          state.value.push(value);
+        }
+        renderTags(id);
+        renderMenu(id, 0);
+        return;
+      }
+
+      // 父子不关联单选
+      if (id === 'cascader3') {
+        state.path = state.path.slice(0, level);
+        state.path.push({ value, label });
+        renderMenu(id, 0);
+        updateTrigger(id);
+        return;
+      }
+
+      // 单选：检查是否有子级
+      if (hasChildren) {
+        // 进入下一级
+        state.path = state.path.slice(0, level);
+        state.path.push({ value, label });
+        state.menus[level + 1] = selectedItem.children;
+        renderMenu(id, level + 1);
+      } else {
+        // 叶子节点，选中
+        state.path = state.path.slice(0, level);
+        state.path.push({ value, label });
+        updateTrigger(id);
+
+        // 关闭
+        state.open = false;
+        dropdown.classList.remove('is-visible');
+        const trigger = document.querySelector('#' + id + ' .cascader-trigger');
+        trigger.classList.remove('is-opened');
+        trigger.classList.remove('is-focused');
+      }
+    }
+
+    function updateTrigger(id) {
+      const state = cascaderState[id];
+      const trigger = document.querySelector('#' + id + ' .cascader-trigger');
+
+      if (state.path.length === 0) {
+        trigger.innerHTML = '<span class="cascader-trigger__placeholder">请选择</span><span class="cascader-trigger__arrow"></span>';
+      } else {
+        const label = state.path.map(p => p.label).join(' / ');
+        trigger.innerHTML = '<span class="cascader-trigger__label">' + label + '</span><span class="cascader-trigger__arrow"></span>';
+      }
+    }
+
+    function renderTags(id) {
+      const state = cascaderState[id];
+      const trigger = document.querySelector('#' + id + ' .cascader-trigger');
+
+      // 扁平化获取标签
+      const getLabel = (arr, val) => {
+        for (const item of arr) {
+          if (item.value === val) return item.label;
+          if (item.children) {
+            const found = getLabel(item.children, val);
+            if (found) return found;
+          }
+        }
+        return val;
+      };
+
+      if (state.value.length === 0) {
+        trigger.innerHTML = '<span class="cascader-trigger__placeholder">请选择</span><span class="cascader-trigger__arrow"></span>';
+        return;
+      }
+
+      const tagsHtml = state.value.map(v => {
+        return '<span class="cascader-tag">' + getLabel(state.menus[0], v) + '<span class="cascader-tag__close" onclick="removeTag(event, \'' + id + '\', \'' + v + '\')">×</span></span>';
+      }).join('');
+
+      trigger.innerHTML = '<div class="cascader-tags">' + tagsHtml + '</div><span class="cascader-trigger__arrow"></span>';
+    }
+
+    function removeTag(event, id, value) {
+      event.stopPropagation();
+      const state = cascaderState[id];
+      const idx = state.value.indexOf(value);
+      if (idx > -1) {
+        state.value.splice(idx, 1);
+        renderTags(id);
+      }
+    }
+
+    function handleSearch(query, id) {
+      const state = cascaderState[id];
+      const searchList = document.getElementById('searchList' + id.slice(-1));
+
+      if (!query) {
+        searchList.innerHTML = '';
+        return;
+      }
+
+      // 扁平化搜索
+      const results = [];
+      function flatten(arr, path = []) {
+        for (const item of arr) {
+          const currentPath = [...path, item.label];
+          if (item.label.toLowerCase().includes(query.toLowerCase())) {
+            results.push({ value: item.value, label: item.label, path: currentPath });
+          }
+          if (item.children) {
+            flatten(item.children, currentPath);
+          }
+        }
+      }
+      flatten(state.menus[0]);
+
+      if (results.length === 0) {
+        searchList.innerHTML = '<div class="cascader-empty">无匹配结果</div>';
+        return;
+      }
+
+      searchList.innerHTML = results.slice(0, 10).map(r => {
+        return '<div class="cascader-search-item" onclick="selectSearchResult(\'' + id + '\', \'' + r.value + '\', \'' + r.label + '\')">' +
+          '<div class="cascader-search-item__label">' + r.label + '</div>' +
+          '<div class="cascader-search-item__path">' + r.path.join(' / ') + '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    function selectSearchResult(id, value, label) {
+      const state = cascaderState[id];
+      state.value = value;
+      state.path = [{ value, label }];
+      updateTrigger(id);
+
+      // 关闭
+      state.open = false;
+      const dropdown = document.getElementById('dropdown' + id.slice(-1));
+      dropdown.classList.remove('is-visible');
+      const trigger = document.querySelector('#' + id + ' .cascader-trigger');
+      trigger.classList.remove('is-opened');
+    }
+
+    // 点击外部关闭
+    document.addEventListener('click', (e) => {
+      Object.keys(cascaderState).forEach(id => {
+        const state = cascaderState[id];
+        const el = document.getElementById(id);
+        if (el && !el.contains(e.target) && state.open) {
+          state.open = false;
+          const dropdown = document.getElementById('dropdown' + id.slice(-1));
+          const trigger = el.querySelector('.cascader-trigger');
+          dropdown.classList.remove('is-visible');
+          trigger.classList.remove('is-opened');
+          trigger.classList.remove('is-focused');
+        }
+      });
+    });
+
+    // 初始化禁用选项数据
+    cascaderState.cascader6.menus[0][0].children[1].disabled = true; // 禁用"后端"
+  </script>
+</body>
+</html>
