@@ -86,7 +86,7 @@ curl -X DELETE http://localhost:8080/api/users/1 \
 |--------|------|
 | admin  | admin123 |
 
-> Demo 阶段账号硬编码在 `handler/auth.go`，真实业务请查库。
+> 首次启动自动播种到 `wg_user` 表，密码只存 **bcrypt 哈希**（不可逆），登录时查库比对。
 
 ## 公共路由
 
@@ -112,8 +112,15 @@ curl -X DELETE http://localhost:8080/api/users/1 \
 | 变量 | 默认值 | 说明 |
 |------|--------|------|
 | PORT       | 8080              | 监听端口 |
-| JWT_SECRET | wg-skills-secret  | 签名密钥 |
+| JWT_SECRET | **无默认值，缺失即拒绝启动** | HS256 签名密钥，至少 32 字节 |
 | DB_PATH    | data.db           | SQLite 文件路径 |
+
+> 启动前必须设置 `JWT_SECRET`（≥32 字节），否则进程直接退出：
+>
+> ```bash
+> export JWT_SECRET=$(openssl rand -base64 48)
+> go run cmd/server/main.go
+> ```
 
 ## 切换数据库
 
@@ -131,4 +138,15 @@ db, err = gorm.Open(mysql.Open("user:pass@tcp(127.0.0.1:3306)/db?charset=utf8mb4
 - **Gin** v1.9.x - HTTP 框架
 - **GORM** v1.25.x - ORM
 - **SQLite** (glebarez 驱动) - 零依赖数据库
-- **JWT** v5 - 鉴权
+- **JWT** v5 - 鉴权（固定 HS256，禁 alg 混淆）
+- **bcrypt** (golang.org/x/crypto) - 密码哈希
+
+## 已知遗留
+
+Demo 只演示最小链路，以下按 `crypto-scenario-skill` 的清单仍未实现：
+
+- **Refresh Token**：目前只有 access token（2 小时），未做双令牌与刷新令牌轮换。
+- **登录限流 / 账号锁定**：未实现。
+- **用户注册接口**：账号靠首次启动播种。
+- **注销接口**：未做令牌黑名单，依赖 access token 短过期。
+

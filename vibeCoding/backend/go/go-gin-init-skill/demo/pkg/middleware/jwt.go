@@ -20,9 +20,10 @@ func JWT(secret string) gin.HandlerFunc {
 			return
 		}
 		tokenStr := strings.TrimPrefix(auth, "Bearer ")
+		// 固定期望算法 HS256：不让 token header 里的 alg 决定验签方式，堵死 alg 混淆攻击
 		token, err := jwt.Parse(tokenStr, func(t *jwt.Token) (interface{}, error) {
 			return []byte(secret), nil
-		})
+		}, jwt.WithValidMethods([]string{"HS256"}))
 		if err != nil || !token.Valid {
 			utils.Fail(c, http.StatusUnauthorized, "token 无效")
 			c.Abort()

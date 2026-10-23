@@ -4,8 +4,9 @@ server:
   mode: debug   # debug / release / test
 
 jwt:
-  secret: wg-skills-secret
-  expire: 24h
+  # 至少 32 字节，缺失或过短服务拒绝启动
+  secret: wg-skills-demo-only-secret-change-me-32bytes
+  expire: 2h
 
 db:
   driver: sqlite      # sqlite / mysql / postgres

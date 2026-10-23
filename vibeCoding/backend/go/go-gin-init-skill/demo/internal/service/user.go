@@ -22,6 +22,11 @@ func (s *UserService) Get(id uint) (*model.User, error) {
 	return s.repo.FindByID(id)
 }
 
+// FindByUsername 按用户名查询
+func (s *UserService) FindByUsername(username string) (*model.User, error) {
+	return s.repo.FindByUsername(username)
+}
+
 func (s *UserService) List(page, size int) ([]model.User, int64, error) {
 	return s.repo.List(page, size)
 }

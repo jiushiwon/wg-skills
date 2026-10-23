@@ -27,6 +27,15 @@ func (r *UserRepository) FindByID(id uint) (*model.User, error) {
 	return &user, nil
 }
 
+// FindByUsername 按用户名查询，登录鉴权用
+func (r *UserRepository) FindByUsername(username string) (*model.User, error) {
+	var user model.User
+	if err := r.db.Where("username = ?", username).First(&user).Error; err != nil {
+		return nil, err
+	}
+	return &user, nil
+}
+
 func (r *UserRepository) List(page, size int) ([]model.User, int64, error) {
 	var users []model.User
 	var total int64

@@ -180,6 +180,7 @@ description: Go 项目一键初始化技能。面向零基础小白，提供环�
 7. **所有注释、文档用中文**：目标用户是中文小白，不要英文注释。
 8. **接口契约必须和 frontend-request-skill 对齐**：响应信封、错误码、字段命名前后端一致。
 9. **`.env` 与 `.gitignore` 必须随脚手架一起生成，且 `.env` 中的配置必须被服务加载**：`config.go` 通过 `godotenv` 读取 `.env` 全部配置，禁止在代码中硬编码端口、数据库密码、JWT 密钥等运行时可变参数。
+10. **密码与签名按场景选型**：用户密码只存 bcrypt 哈希（cost 12）或 Argon2id，禁止 MD5 / SHA1 / SHA256 裸哈希与可逆加密；JWT 固定 HS256 验签（`jwt.WithValidMethods([]string{"HS256"})`），HS256 密钥不少于 32 字节，缺失或过短**拒绝启动**。细则见 `crypto-scenario-skill`。
 
 ## 触发关键词清单
 
@@ -193,6 +194,7 @@ create go project、go starter
 ## 相关技能
 
 - **go-auth-module-skill**：在生成的项目上叠加 RBAC + 组织架构模块（用户、角色、菜单、部门、岗位、租户、数据权限）
+- **crypto-scenario-skill**：加密算法按场景选型（密码哈希 / 支付验签 / JWT 签名 / 敏感字段）
 
 ## 不做
 
