@@ -100,7 +100,7 @@ wg-skills/
 │   ├── plans/             ← 本地沉淀
 │   ├── adr/               ← 待补（关键决策记录）
 │   └── skill-graph.yaml   ← 待补（机器可读关联图）
-└── vibeCoding/            ← 155 个 skill 都在这里（连同 others/ 共 161 个）
+└── vibeCoding/            ← 150 个 skill 都在这里（连同 others/ 共 158 个）
     ├── backend/           ← Java/Python/Go/Node.js/Rust + 数据库
     ├── frontend/          ← Vue/UniApp/React/HTML
     ├── super-deploy-skills/

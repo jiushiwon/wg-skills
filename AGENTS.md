@@ -195,6 +195,7 @@ wg-skills/
 │   │   │   ├── kafka-guide-skill/          # Kafka 消息队列
 │   │   │   ├── sqlite-guide-skill/         # SQLite 轻量数据库
 │   │   │   └── database-learning-skill/     # 数据库学习与选型
+│   │   ├── crypto-scenario-skill/            # 加密场景选型（密码/支付验签/JWT/敏感字段/文件校验）
 │   │
 │   ├── frontend/                      # 前端 4 套体系（Vue / UniApp / React / HTML）
 │   │   ├── frontend-code-doctor/             # 前端代码审查

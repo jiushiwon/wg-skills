@@ -1,6 +1,6 @@
 # wg-skills — 把古法全栈开发经验装进 AI
 
-> **157 个**面向 Claude Code / Cursor / Codex 等智能体的公开 Skills，MIT 协议。
+> **158 个**面向 Claude Code / Cursor / Codex 等智能体的公开 Skills，MIT 协议。
 > 不是提示词合集，而是一套让 AI 按统一工程规范完成“项目骨架 → 模块 → 前后端契约 → 部署 → 迭代”的基础能力体系。
 
 ---
@@ -47,9 +47,9 @@
 
 ---
 
-## 157 个技能 · 全部 MIT 公开 · 持续迭代中
+## 158 个技能 · 全部 MIT 公开 · 持续迭代中
 
-> ⚠️ **技能以实际效果为准，157 个技能都在持续迭代中**。每个技能都在真实项目里跑过，但 API、组件形态、触发词会随实战反馈调整，不保证向后兼容。
+> ⚠️ **技能以实际效果为准，158 个技能都在持续迭代中**。每个技能都在真实项目里跑过，但 API、组件形态、触发词会随实战反馈调整，不保证向后兼容。
 > 任何问题、反馈或建议，欢迎两个渠道：
 > 1. 访问 [itlifetime.com](https://itlifetime.com)（首页底部 → 加微信 **jiushiwon**）
 > 2. 在 [GitHub Issues](https://github.com/jiushiwon/wg-skills/issues) 提 issue
@@ -107,7 +107,7 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 ### 后端
 
-**55 个**，覆盖 5 语言后端 + 数据库 + 后端元工具。
+**56 个**，覆盖 5 语言后端 + 数据库 + 后端元工具 + 加密选型。
 
 #### Java 矩阵（16 个）
 
@@ -166,6 +166,12 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 | `backend-analysis-skill` | 后端项目静态分析（接口/技术/数据库/业务四份报告） |
 | `backend-convention-skill` | 后端强制规范（响应信封/错误码/JWT） |
 | `backend-select-skill` | 后端选型入口（语言/框架/数据库推荐） |
+
+#### 加密选型（1 个）
+
+| 技能 | 说明 |
+|------|------|
+| `crypto-scenario-skill` | 按场景给加密结论（密码存储/支付验签/JWT/敏感字段/文件校验）+ AI 约束块 |
 
 #### 公共规范层
 
@@ -383,7 +389,7 @@ api-contract.md  ← 前后端唯一事实来源
 
 ---
 
-## 为什么开放 + 为什么 157 个
+## 为什么开放 + 为什么 158 个
 
 之前这个仓库是分层结构（精选 23 个公开 + 全量私有）。经过两轮迭代决定：
 
