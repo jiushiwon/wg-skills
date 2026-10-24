@@ -28,13 +28,13 @@
 
 | 名称 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| `mode` | `'thumb' | 'cover'` | `thumb` | 模式：thumb 左侧缩略图 / cover 顶部封面 |
+| `mode` | `'thumb' \| 'cover'` | `thumb` | 模式：thumb 左侧缩略图 / cover 顶部封面 |
 | `image` | `string` |  | 封面图地址 |
 | `title` | `string` |  | 标题 |
 | `desc` | `string` |  | 描述 |
 | `author` | `string` |  | 作者 |
 | `date` | `string` |  | 日期 |
-| `views` | `string|number` |  | 阅读量 |
+| `views` | `string\|number` |  | 阅读量 |
 
 **事件**：
 
@@ -56,8 +56,8 @@
 
 | 名称 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| `position` | `'left' | 'right'` | `left` | 位置：left 接收方 / right 发送方 |
-| `type` | `'text' | 'image' | 'voice'` | `text` | 类型：text 文本 / image 图片 / voice 语音 |
+| `position` | `'left' \| 'right'` | `left` | 位置：left 接收方 / right 发送方 |
+| `type` | `'text' \| 'image' \| 'voice'` | `text` | 类型：text 文本 / image 图片 / voice 语音 |
 | `message` | `string` |  | 消息内容，image 类型时为图片地址 |
 | `avatar` | `string` |  | 头像地址 |
 | `name` | `string` |  | 用户名，同时用于头像文字兜底 |
@@ -119,9 +119,9 @@
 | `image` | `string` |  | 商品图片地址 |
 | `title` | `string` |  | 商品标题 |
 | `desc` | `string` |  | 商品描述 |
-| `price` | `string|number` | `0.00` | 售价 |
-| `originalPrice` | `string|number` |  | 原价，带删除线展示 |
-| `sales` | `string|number` |  | 销量 |
+| `price` | `string\|number` | `0.00` | 售价 |
+| `originalPrice` | `string\|number` |  | 原价，带删除线展示 |
+| `sales` | `string\|number` |  | 销量 |
 | `tags` | `string[]` | `[]` | 标签数组 |
 
 **事件**：

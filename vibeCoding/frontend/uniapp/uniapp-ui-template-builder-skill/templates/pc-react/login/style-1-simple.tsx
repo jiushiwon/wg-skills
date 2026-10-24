@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './style.css'
+import './style-1-simple.css'
 
 interface LoginField {
   name: string
@@ -16,7 +16,11 @@ interface LoginPageProps {
   submitText?: string
   footerText?: string
   footerLink?: string
+  /** 提交逻辑；抛错即进入错误态并展示重试入口 */
+  onSubmit?: (form: Record<string, any>) => void | Promise<void>
 }
+
+type Status = 'idle' | 'loading' | 'error'
 
 export default function LoginPage({
   logoText = '应用名称',
@@ -28,13 +32,31 @@ export default function LoginPage({
   ],
   submitText = '登 录',
   footerText = '还没有账号？',
-  footerLink = '立即注册'
+  footerLink = '立即注册',
+  onSubmit
 }: LoginPageProps) {
   const [form, setForm] = useState<Record<string, any>>({})
+  const [status, setStatus] = useState<Status>('idle')
+  const [errorText, setErrorText] = useState('')
+
+  const doSubmit = async () => {
+    if (status === 'loading') return
+    setStatus('loading')
+    setErrorText('')
+    try {
+      if (onSubmit) {
+        await onSubmit(form)
+      }
+      setStatus('idle')
+    } catch (err) {
+      setStatus('error')
+      setErrorText('登录失败，请重试')
+    }
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('登录:', form)
+    doSubmit()
   }
 
   return (
@@ -76,7 +98,16 @@ export default function LoginPage({
               <a href="#" className="forgot-link">忘记密码？</a>
             </div>
 
-            <button type="submit" className="submit-btn">{submitText}</button>
+            {errorText && (
+              <div className="login-error">
+                <span>{errorText}</span>
+                <button type="button" onClick={doSubmit}>重试</button>
+              </div>
+            )}
+
+            <button type="submit" className="submit-btn" disabled={status === 'loading'}>
+              {status === 'loading' ? '登录中…' : submitText}
+            </button>
           </form>
 
           <div className="login-footer">

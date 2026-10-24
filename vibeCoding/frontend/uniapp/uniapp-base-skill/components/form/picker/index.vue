@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import BasePopup from '../../containers/base-popup/index.vue'
+import BasePopup from '../../../containers/base-popup/index.vue'
 
 /** 列值类型：string 文本 / number 数字 / date 日期 */
 type ColumnType = 'string' | 'number' | 'date'

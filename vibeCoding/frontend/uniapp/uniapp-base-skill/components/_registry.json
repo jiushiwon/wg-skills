@@ -218,18 +218,19 @@
       "path": "vibeCoding/frontend/uniapp/uniapp-base-skill/components/feedback/toast/"
     },
     {
-      "name": "button",
+      "name": "base-button",
       "title": "按钮",
       "kind": "component",
       "category": "form",
       "aliases": [
+        "base-button",
         "按钮",
         "button",
         "提交按钮",
         "主按钮",
         "次按钮"
       ],
-      "path": "vibeCoding/frontend/uniapp/uniapp-base-skill/components/form/button/"
+      "path": "vibeCoding/frontend/uniapp/uniapp-base-skill/components/form/base-button/"
     },
     {
       "name": "checkbox-group",

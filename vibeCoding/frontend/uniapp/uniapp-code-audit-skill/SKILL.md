@@ -78,6 +78,17 @@ Phase 4: 输出报告
 | **冗余与死代码** | `references/dead-code-checklist.md` | 通用工程规范、`uniapp-app-generate-skill` 静态资源规范 |
 | **API 契约** | `references/api-contract-checklist.md` | `frontend-request-skill`、`uniapp-standard-skill` 接口规范 |
 
+## 可执行检查脚本
+
+```bash
+node scripts/check-miniprogram.js <项目根目录>
+```
+
+覆盖「小程序专项」中的 M1（scoped `:root` 变量静默失效）、M2（自定义导航未读胶囊）、
+K1（输入框未声明 `adjust-position`）、M7（模板残留 HTML 标签）、
+M8（DOM 式图片兜底）、M9（登录 / 注册页缺四态）。
+输出 `P0 / P1 / P2` 分级清单，存在 P0 / P1 时退出码为 `1`，可直接接入 CI。
+
 ## 风险等级
 
 | 等级 | 说明 |

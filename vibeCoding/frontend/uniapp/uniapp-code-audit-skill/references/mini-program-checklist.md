@@ -82,6 +82,47 @@
 | 未处理授权拒绝 | P2 | 用户拒绝后无法再次引导 | 调用相机/位置等未处理授权失败 | 微信小程序官方文档 | 检查权限相关逻辑 |
 | 未处理扫码/支付回调 | P1 | 业务状态丢失 | 调用 `uni.scanCode`/`uni.requestPayment` 后未处理失败/取消 | 微信小程序官方文档 | 检查相关页面 |
 
+## 11. 自定义导航与胶囊避让
+
+> 判据：`uniapp/AGENTS.md` §9.1。以下 M1 / M3 已由脚本自动判定，无需人工确认。
+
+| 编号 | 检查项 | 风险等级 | 风险描述 | 判定依据 | 参考标准 | 检测命令 |
+|------|--------|----------|----------|----------|----------|----------|
+| M1 | `scoped` 样式里定义 `:root` 变量 | P0 | 编译为 `:root[data-v-xxx]`，匹配不到 `<html>`，变量**静默失效**，页面拿到兜底值 | `<style scoped>` 中出现 `:root {` | AGENTS.md §9.1 规则 4 | `node scripts/check-miniprogram.js <项目根>` |
+| M2 | 自定义导航页未读取胶囊位置 | P1 | 标题压住系统胶囊 | `pages.json` 有 `navigationStyle: custom` 但全项目无 `getMenuButtonBoundingClientRect` / `getNavbarHeight` | AGENTS.md §9.1 | `node scripts/check-miniprogram.js <项目根>` |
+| M3 | 导航高度用 CSS 变量下发 | P1 | 兜底高度与实际导航高不一致，内容被吸顶导航遮挡 | 页面用 `padding-top: var(--height-navbar)` 取值且变量非全局常量 | AGENTS.md §9.1 规则 4 | `grep -rn 'var(--height-navbar' src/` |
+| M4 | 右侧插槽未预留胶囊宽度 | P1 | 右侧菜单压住胶囊 | 自定义导航右侧元素右边界越过胶囊左边界 | AGENTS.md §9.1 规则 3 | 人工核对导航组件右侧留白 |
+
+## 12. 键盘顶起与安全区
+
+> 判据：`uniapp/AGENTS.md` §9.2 / §9.3。
+
+| 编号 | 检查项 | 风险等级 | 风险描述 | 判定依据 | 参考标准 | 检测命令 |
+|------|--------|----------|----------|----------|----------|----------|
+| K1 | 输入框未声明 `adjust-position` | P1 | 键盘弹起时输入框被遮挡 | `<input>` / `<textarea>` 缺 `adjust-position` 属性 | AGENTS.md §9.2 规则 1 | `node scripts/check-miniprogram.js <项目根>` |
+| K2 | 固定底栏未处理键盘 | P1 | 键盘弹起把底栏顶出可视区 | 底栏 `position: fixed` 且项目无 `onKeyboardHeightChange` | AGENTS.md §9.2 规则 2 | `grep -rn 'onKeyboardHeightChange' src/` |
+| K3 | 安全区只处理底部 | P2 | 横屏 / 刘海屏下左右被裁 | 代码中只出现 `env(safe-area-inset-bottom)`，无 left / right | AGENTS.md §9.3 | `grep -rn 'env(safe-area-inset' src/` |
+| K4 | fixed 元素无等高占位 | P1 | 页面最后一行内容被底栏遮挡 | fixed 底栏 / 吸顶导航无 `placeholder` 或等高占位 | AGENTS.md §9.3 | `grep -rn 'position: fixed' src/` 后核对是否有占位 |
+
+## 13. 小程序端不可用写法
+
+> 判据：`uniapp/AGENTS.md` §5 组件规范（只用小程序内置组件）。全部由脚本自动判定。
+
+| 编号 | 检查项 | 风险等级 | 风险描述 | 判定依据 | 参考标准 | 检测命令 |
+|------|--------|----------|----------|----------|----------|----------|
+| M7 | 模板出现 HTML 标签 | P1 | `<div>` `<span>` `<strong>` 等在小程序端不识别，页面结构错乱 | 模板区出现 HTML 标签 | AGENTS.md §5 | `node scripts/check-miniprogram.js <项目根>` |
+| M8 | DOM 式图片兜底 | P1 | 小程序端无 DOM 节点，兜底逻辑失效 | `event.target.src` / `target as HTMLImageElement` | AGENTS.md §5 | `node scripts/check-miniprogram.js <项目根>` |
+| M9 | 登录 / 注册页缺四态 | P2 | 用户看不到失败原因，也没有重试入口 | 页面缺 `loading` / `error` / 重试入口 | AGENTS.md §9.4 | `node scripts/check-miniprogram.js <项目根>` |
+
+## 14. 可执行检查脚本
+
+```bash
+node scripts/check-miniprogram.js <项目根目录>
+```
+
+覆盖 M1 / M2 / K1 / M7 / M8 / M9，输出 `P0 / P1 / P2` 分级问题清单，
+存在 P0 / P1 时退出码为 `1`，可直接接入 CI。
+
 ## 小程序专项评分参考
 
 | 级别 | 描述 |

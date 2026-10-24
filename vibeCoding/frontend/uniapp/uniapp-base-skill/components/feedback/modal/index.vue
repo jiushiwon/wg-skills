@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import BasePopup from '../../containers/base-popup/index.vue'
+import BasePopup from '../../../containers/base-popup/index.vue'
 
 interface ModalProps {
   /** 显示状态（v-model:show） */

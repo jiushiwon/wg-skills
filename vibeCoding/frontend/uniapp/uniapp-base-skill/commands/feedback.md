@@ -91,7 +91,7 @@
 |------|------|--------|------|
 | `loading` | `boolean` | `true` | 是否显示加载态 |
 | `text` | `string` |  | 加载文字 |
-| `size` | `'small' | 'medium' | 'large'` | `medium` | 尺寸 |
+| `size` | `'small' \| 'medium' \| 'large'` | `medium` | 尺寸 |
 
 **用法**：见 [usage.md](../components/feedback/loading/usage.md)
 
@@ -150,7 +150,7 @@
 |------|------|--------|------|
 | `show` | `boolean` | `false` | 是否显示 |
 | `text` | `string` |  | 提示文案 |
-| `type` | `'text' | 'success' | 'error' | 'warning' | 'loading'` | `text` | 提示类型 |
+| `type` | `'text' \| 'success' \| 'error' \| 'warning' \| 'loading'` | `text` | 提示类型 |
 | `duration` | `number` | `2000` | 自动关闭时长(ms)，0 表示不自动关闭 |
 
 **事件**：

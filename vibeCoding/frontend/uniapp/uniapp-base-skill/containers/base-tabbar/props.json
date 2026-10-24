@@ -8,7 +8,8 @@
     { "name": "items", "type": "TabbarItem[]", "default": "[]", "desc": "菜单项（2~5 个）" },
     { "name": "modelValue", "type": "string | number", "default": "", "desc": "当前激活 key（v-model）" },
     { "name": "fixed", "type": "boolean", "default": true, "desc": "是否底部固定" },
-    { "name": "safeArea", "type": "boolean", "default": true, "desc": "是否适配安全区" }
+    { "name": "safeArea", "type": "boolean", "default": true, "desc": "是否适配安全区" },
+    { "name": "placeholder", "type": "boolean", "default": true, "desc": "固定时是否渲染等高占位（避免内容被底栏遮挡）" }
   ],
   "events": ["update:modelValue", "change"],
   "slots": [

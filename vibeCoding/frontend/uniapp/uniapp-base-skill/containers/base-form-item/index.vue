@@ -20,7 +20,7 @@
       </view>
 
       <view class="bfi-content">
-        <slot />
+        <slot :input-props="inputProps" />
       </view>
     </view>
 
@@ -33,6 +33,8 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
 interface Props {
   /** 标签文案 */
   label?: string
@@ -42,6 +44,10 @@ interface Props {
   error?: string
   /** 标签列宽 */
   labelWidth?: string
+  /** 键盘弹起时是否自动上推页面（小程序端） */
+  adjustPosition?: boolean
+  /** 输入框与键盘的间距（px，仅 adjustPosition 为 true 时生效） */
+  cursorSpacing?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -49,7 +55,15 @@ const props = withDefaults(defineProps<Props>(), {
   required: false,
   error: '',
   labelWidth: '160rpx',
+  adjustPosition: true,
+  cursorSpacing: 0,
 })
+
+// 透传给插槽里的输入控件，保证行内所有输入框的键盘行为一致
+const inputProps = computed(() => ({
+  adjustPosition: props.adjustPosition,
+  cursorSpacing: props.cursorSpacing,
+}))
 </script>
 
 <style lang="scss" scoped>

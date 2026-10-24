@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import BaseCard from '../../containers/base-card/index.vue'
+import BaseCard from '../../../containers/base-card/index.vue'
 
 interface CouponProps {
   /** 券类型：money 金额券 / discount 折扣券 */

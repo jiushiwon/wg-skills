@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import BaseCard from '../../containers/base-card/index.vue'
+import BaseCard from '../../../containers/base-card/index.vue'
 
 /** 时间线节点数据 */
 interface TimelineItem {

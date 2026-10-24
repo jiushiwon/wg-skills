@@ -13,7 +13,7 @@
 <!-- 5 个不同用户的头像，各自处理加载失败兜底 -->
 <view class="comment-list">
   <view v-for="c in comments" :key="c.id" class="row">
-    <base-avatar :src="c.avatar" :nickname="c.name" size="sm" />
+    <base-avatar :src="c.avatar" :name="c.name" size="sm" />
     <text>{{ c.content }}</text>
   </view>
 </view>
@@ -26,7 +26,7 @@
 
 ```vue
 <template>
-<base-avatar :src="user.avatar" :nickname="user.nickname" size="lg" @click="goProfile" />
+<base-avatar :src="user.avatar" :name="user.nickname" size="lg" @click="goProfile" />
 </template>
 
 
@@ -36,7 +36,7 @@
 
 ```vue
 <template>
-<base-avatar :src="chat.avatar" :nickname="chat.name" size="sm" />
+<base-avatar :src="chat.avatar" :name="chat.name" size="sm" />
 </template>
 
 

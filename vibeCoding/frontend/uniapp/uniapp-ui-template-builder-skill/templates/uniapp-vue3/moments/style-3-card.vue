@@ -21,8 +21,8 @@
             <text class="user-name">{{ item.user }}</text>
           </view>
           <view class="item-stats">
-            <span>♥ {{ item.like }}</span>
-            <span>留言 {{ item.comment }}</span>
+            <text>♥ {{ item.like }}</text>
+            <text>留言 {{ item.comment }}</text>
           </view>
         </view>
       </view>
@@ -73,5 +73,5 @@ const props = defineProps({
 .user-img { width: 20px; height: 20px; border-radius: 50% }
 .user-name { font-size: 11px; color: #666 }
 .item-stats { display: flex; gap: 10px; margin-top: 6px }
-.item-stats span { font-size: 11px; color: #999 }
+.item-stats text { font-size: 11px; color: #999 }
 </style>

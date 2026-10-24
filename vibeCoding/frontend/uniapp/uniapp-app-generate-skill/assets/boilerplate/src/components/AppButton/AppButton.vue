@@ -1,5 +1,5 @@
 <script setup lang="ts">
-withDefaults(
+const props = withDefaults(
   defineProps<{
     type?: 'primary' | 'secondary' | 'ghost';
     size?: 'small' | 'medium' | 'large';
@@ -17,19 +17,20 @@ const emit = defineEmits<{
 }>();
 
 function handleClick(event: MouseEvent) {
+  if (props.disabled) return;
   emit('click', event);
 }
 </script>
 
 <template>
-  <button
+  <!-- 小程序端不识别 <button>，用 view + 禁用态样式实现 -->
+  <view
     class="app-button"
     :class="[`app-button--${type}`, `app-button--${size}`, { 'app-button--disabled': disabled }]"
-    :disabled="disabled"
     @click="handleClick"
   >
     <slot />
-  </button>
+  </view>
 </template>
 
 <style lang="scss" scoped>
@@ -47,7 +48,7 @@ function handleClick(event: MouseEvent) {
     display: none;
   }
 
-  &--color-primary {
+  &--primary {
     background: $color-primary;
     color: $color-bg-primary;
   }

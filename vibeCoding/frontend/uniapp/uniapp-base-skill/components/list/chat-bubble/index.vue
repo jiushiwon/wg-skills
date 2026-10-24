@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import BaseAvatar from '../../containers/base-avatar/index.vue'
+import BaseAvatar from '../../../containers/base-avatar/index.vue'
 
 interface ChatBubbleProps {
   /** 位置：left 接收方 / right 发送方 */

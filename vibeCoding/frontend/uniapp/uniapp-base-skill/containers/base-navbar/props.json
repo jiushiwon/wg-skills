@@ -13,7 +13,9 @@
     { "name": "statusBarHeight", "type": "string", "default": "'0'", "desc": "状态栏高度，小程序端建议传 var(--status-bar-height)" },
     { "name": "showStatusBar", "type": "boolean", "default": true, "desc": "是否渲染状态栏占位行" },
     { "name": "rightText", "type": "string", "default": "", "desc": "右侧文字按钮" },
-    { "name": "capsuleRight", "type": "CapsuleItem[]", "default": "[]", "desc": "右侧胶囊按钮组" }
+    { "name": "capsuleRight", "type": "CapsuleItem[]", "default": "[]", "desc": "右侧胶囊按钮组" },
+    { "name": "avoidCapsule", "type": "boolean", "default": true, "desc": "是否避让微信系统胶囊（微信端生效）" },
+    { "name": "capsuleGap", "type": "number", "default": 8, "desc": "胶囊与右侧内容的间距（px）" }
   ],
   "events": ["back", "rightClick", "capsuleClick"],
   "slots": [

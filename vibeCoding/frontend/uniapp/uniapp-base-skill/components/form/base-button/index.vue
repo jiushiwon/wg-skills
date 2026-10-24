@@ -30,6 +30,8 @@
 </template>
 
 <script setup lang="ts">
+defineOptions({ name: 'base-button' })
+
 interface ButtonProps {
   /** 按钮类型 */
   type?: 'primary' | 'ghost' | 'text' | 'danger'

@@ -4,7 +4,7 @@
     <view class="search-bar">
       <view class="search-input">
         <text class="search-icon">⌕</text>
-        <input type="text" placeholder="搜索" />
+        <input type="text" placeholder="搜索" :adjust-position="true" />
       </view>
     </view>
 

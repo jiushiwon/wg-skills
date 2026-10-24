@@ -178,14 +178,29 @@ description: uniapp 常用「组件化页面」技能。内置 22 个组件（6 
 
 ### Step 3：注册组件
 
-推荐 **easycom 自动注册**（uni-app Vue3 默认规则 `components/组件名/组件名.vue` → 全局标签）：
+本模块的页面组件目录为 `components/<组件名>/<组件名>.vue`，**满足** uni-app Vue3 easycom 默认规则，
+`{ "easycom": { "autoscan": true } }` 即可直接使用 `<chat-page>`、`<search-page>` 等标签。
+
+但 **base-* 容器/组件不满足默认规则**（容器在 `containers/<name>/index.vue`，
+内置组件在 `components/<category>/<name>/index.vue`），必须额外注册 custom 规则，
+否则 `<base-card>` / `<base-button>` **扫不到**，页面直接空白：
 
 ```json
 // pages.json
-{ "easycom": { "autoscan": true } }
+{
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^base-card$": "@/containers/base-card/index.vue",
+      "^base-button$": "@/components/form/base-button/index.vue"
+    }
+  }
+}
 ```
 
-即可直接使用 `<base-card>`、`<chat-page>`、`<base-button>`、`<search-page>` 等标签；若项目未开启 autoscan，则用 easycom `custom` 规则或手动 `import`（参考 `references/theme-integration.md` §3）。
+完整规则由 `uniapp-base-skill` 的 `node scripts/gen-easycom.js` 从注册表生成
+（产物 `easycom.json`），**以 base-skill 生成的为准**，不要手写维护。
+若项目未开启 autoscan，则全部改用手动 `import`（参考 `references/theme-integration.md` §3）。
 
 ### Step 4：生成使用示例
 

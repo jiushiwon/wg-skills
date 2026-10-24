@@ -6,10 +6,14 @@
     - 页面内底部菜单（切换本页内容视图）；
     - 或作为"自定义 tabBar"的骨架（配合 pages.json custom-tab-bar 方案时，
       页面根需另包 custom-tab-bar 容器，本项目提供菜单 UI 与交互事件）。
-  特性：底部固定 + 安全区适配；角标 red-dot / 数字；点击项自定义 slot。
+  特性：底部固定 + 安全区适配；角标 red-dot / 数字；点击项自定义 slot；
+       fixed 时自动渲染等高占位（spacer），页面内容不会被底栏遮住。
 -->
 <template>
-  <view class="base-tabbar" :class="{ 'is-fixed': fixed, 'is-safe': safeArea }">
+  <view class="bt-wrapper">
+    <view v-if="fixed && placeholder" class="bt-placeholder" :style="placeholderStyle" />
+
+    <view class="base-tabbar" :class="{ 'is-fixed': fixed, 'is-safe': safeArea }">
     <view v-for="item in items" :key="item.key" class="bt-item" :class="{ 'is-active': item.key === modelValue }" @click="onItemClick(item)">
       <slot name="item" :item="item" :active="item.key === modelValue">
         <view class="bt-icon-wrap">
@@ -31,6 +35,8 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
 interface TabbarItem {
   key: string | number
   text: string
@@ -49,6 +55,8 @@ interface Props {
   fixed?: boolean
   /** 是否适配安全区 */
   safeArea?: boolean
+  /** 固定时是否渲染等高占位（避免内容被底栏遮挡） */
+  placeholder?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -60,7 +68,15 @@ const props = withDefaults(defineProps<Props>(), {
   modelValue: 'home',
   fixed: true,
   safeArea: true,
+  placeholder: true,
 })
+
+// 占位高度 = 菜单项高度（+ 安全区），与底栏实际高度保持一致
+const placeholderStyle = computed(() => ({
+  height: props.safeArea
+    ? 'calc(var(--height-btn-xl, 96rpx) + env(safe-area-inset-bottom))'
+    : 'var(--height-btn-xl, 96rpx)',
+}))
 
 const emit = defineEmits<{
   'update:modelValue': [value: string | number]
@@ -75,6 +91,10 @@ function onItemClick(item: TabbarItem) {
 </script>
 
 <style lang="scss" scoped>
+.bt-placeholder {
+  width: 100%;
+}
+
 .base-tabbar {
   display: flex;
   background: var(--bg-card, #ffffff);

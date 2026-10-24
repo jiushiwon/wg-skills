@@ -1,5 +1,11 @@
 <template>
-  <BaseFormItem :label="label" :label-width="label ? labelWidth : '0'" :error="errorText">
+  <BaseFormItem
+    :label="label"
+    :label-width="label ? labelWidth : '0'"
+    :error="errorText"
+    :adjust-position="adjustPosition"
+    :cursor-spacing="cursorSpacing"
+  >
     <view :class="['input-field__wrap', { 'input-field__wrap--error': error }]">
       <input
         class="input-field__input"
@@ -8,6 +14,8 @@
         :placeholder="placeholder"
         :disabled="disabled"
         :maxlength="maxlength"
+        :adjust-position="adjustPosition"
+        :cursor-spacing="cursorSpacing"
         @input="handleInput"
         @blur="handleBlur"
         @focus="handleFocus"
@@ -19,7 +27,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import BaseFormItem from '../../containers/base-form-item/index.vue'
+import BaseFormItem from '../../../containers/base-form-item/index.vue'
 
 interface InputFieldProps {
   /** 绑定值 */
@@ -42,6 +50,10 @@ interface InputFieldProps {
   errorMessage?: string
   /** 标签列宽 */
   labelWidth?: string
+  /** 键盘弹起时是否自动上推页面（小程序端） */
+  adjustPosition?: boolean
+  /** 输入框与键盘的间距（px，仅 adjustPosition 为 true 时生效） */
+  cursorSpacing?: number
 }
 
 const props = withDefaults(defineProps<InputFieldProps>(), {
@@ -55,6 +67,8 @@ const props = withDefaults(defineProps<InputFieldProps>(), {
   error: false,
   errorMessage: '',
   labelWidth: '160rpx',
+  adjustPosition: true,
+  cursorSpacing: 0,
 })
 
 const emit = defineEmits<{

@@ -1,0 +1,39 @@
+{
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^base-avatar$": "@/containers/base-avatar/index.vue",
+      "^base-card$": "@/containers/base-card/index.vue",
+      "^base-form-item$": "@/containers/base-form-item/index.vue",
+      "^base-navbar$": "@/containers/base-navbar/index.vue",
+      "^base-popup$": "@/containers/base-popup/index.vue",
+      "^base-tabbar$": "@/containers/base-tabbar/index.vue",
+      "^count-down$": "@/components/business/count-down/index.vue",
+      "^coupon$": "@/components/business/coupon/index.vue",
+      "^price-tag$": "@/components/business/price-tag/index.vue",
+      "^progress-bar$": "@/components/business/progress-bar/index.vue",
+      "^stepper$": "@/components/business/stepper/index.vue",
+      "^action-sheet$": "@/components/feedback/action-sheet/index.vue",
+      "^empty-state$": "@/components/feedback/empty-state/index.vue",
+      "^loading$": "@/components/feedback/loading/index.vue",
+      "^modal$": "@/components/feedback/modal/index.vue",
+      "^toast$": "@/components/feedback/toast/index.vue",
+      "^base-button$": "@/components/form/base-button/index.vue",
+      "^checkbox-group$": "@/components/form/checkbox-group/index.vue",
+      "^date-picker$": "@/components/form/date-picker/index.vue",
+      "^input-field$": "@/components/form/input-field/index.vue",
+      "^picker$": "@/components/form/picker/index.vue",
+      "^radio-group$": "@/components/form/radio-group/index.vue",
+      "^search-bar$": "@/components/form/search-bar/index.vue",
+      "^switch$": "@/components/form/switch/index.vue",
+      "^article-card$": "@/components/list/article-card/index.vue",
+      "^chat-bubble$": "@/components/list/chat-bubble/index.vue",
+      "^list-item$": "@/components/list/list-item/index.vue",
+      "^product-card$": "@/components/list/product-card/index.vue",
+      "^timeline$": "@/components/list/timeline/index.vue",
+      "^breadcrumb$": "@/components/navigation/breadcrumb/index.vue",
+      "^side-menu$": "@/components/navigation/side-menu/index.vue",
+      "^top-tab$": "@/components/navigation/top-tab/index.vue"
+    }
+  }
+}

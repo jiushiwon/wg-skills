@@ -38,7 +38,8 @@ uniapp-page-components-skill/
     └── theme-detect.md
 ```
 
-- 组件目录 kebab-case，入口文件与目录同名（`base-card/base-card.vue`），走 easycom 自动注册。
+- 组件目录 kebab-case，入口文件与目录同名（`chat-page/chat-page.vue`），走 easycom 自动注册。
+- 依赖的 `base-*` 容器/组件在 base-skill 内，**不满足** easycom 默认规则，须用 base-skill 生成的 `easycom.json` 里的 custom 规则注册。
 - 组件只消费 props 与 slot，**禁止**在组件内发起 `uni.request`。
 
 ## 四、内容清单

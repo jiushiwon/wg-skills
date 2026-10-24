@@ -25,7 +25,7 @@
           <view class="moments-me">
             <text class="moments-me-name">{{ myNickname }}</text>
             <view class="moments-me-avatar" @click="$emit('meClick')">
-              <base-avatar :src="myAvatar" :nickname="myNickname || '我'" size="lg" />
+              <base-avatar :src="myAvatar" :name="myNickname || '我'" size="lg" />
             </view>
           </view>
         </view>
@@ -37,7 +37,7 @@
         <view v-for="feed in feedList" :key="feedKey(feed)" class="moments-feed">
           <slot name="feed" :feed="feed">
             <view class="feed-avatar" @click="$emit('avatarClick', feed)">
-              <base-avatar :src="feed.avatar" :nickname="feed.nickname || '好友'" size="md" />
+              <base-avatar :src="feed.avatar" :name="feed.nickname || '好友'" size="md" />
             </view>
 
             <view class="feed-main">

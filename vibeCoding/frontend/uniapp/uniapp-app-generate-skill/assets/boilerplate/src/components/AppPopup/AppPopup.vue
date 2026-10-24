@@ -58,7 +58,7 @@ function onMaskTap() {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 2000;
+  z-index: $z-index-popup;
   display: flex;
 
   &--bottom {

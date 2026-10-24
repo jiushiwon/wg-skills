@@ -65,13 +65,13 @@
 
 | 名称 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| `type` | `'money' | 'discount'` | `money` | 券类型：money 金额券 / discount 折扣券 |
-| `value` | `string | number` | `0` | 优惠值 |
+| `type` | `'money' \| 'discount'` | `money` | 券类型：money 金额券 / discount 折扣券 |
+| `value` | `string \| number` | `0` | 优惠值 |
 | `condition` | `string` |  | 使用条件 |
 | `title` | `string` |  | 标题 |
 | `desc` | `string` |  | 描述 |
 | `date` | `string` |  | 有效期 |
-| `status` | `'unused' | 'used' | 'expired'` | `unused` | 状态：未使用 / 已使用 / 已过期 |
+| `status` | `'unused' \| 'used' \| 'expired'` | `unused` | 状态：未使用 / 已使用 / 已过期 |
 | `disabled` | `boolean` | `false` | 是否禁用 |
 | `showReceive` | `boolean` | `false` | 是否显示领取文案 |
 | `received` | `boolean` | `false` | 是否已领取 |
@@ -97,9 +97,9 @@
 
 | 名称 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| `price` | `string | number` | `0.00` | 价格 |
-| `originalPrice` | `string | number` |  | 原价，划线显示 |
-| `size` | `'small' | 'medium' | 'large'` | `medium` | 尺寸 |
+| `price` | `string \| number` | `0.00` | 价格 |
+| `originalPrice` | `string \| number` |  | 原价，划线显示 |
+| `size` | `'small' \| 'medium' \| 'large'` | `medium` | 尺寸 |
 | `currency` | `string` | `¥` | 货币符号 |
 | `symbol` | `boolean` | `true` | 是否显示货币符号 |
 | `decimal` | `boolean` | `true` | 数字价格是否保留两位小数 |
@@ -121,8 +121,8 @@
 | 名称 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `percent` | `number` | `0` | 进度百分比(0-100)，超出自动截断 |
-| `status` | `'primary' | 'success' | 'warning' | 'error'` |  | 状态，决定填充色；为空时取 type |
-| `type` | `'primary' | 'success' | 'warning' | 'error'` | `primary` | 状态，兼容旧属性名 |
+| `status` | `'primary' \| 'success' \| 'warning' \| 'error'` |  | 状态，决定填充色；为空时取 type |
+| `type` | `'primary' \| 'success' \| 'warning' \| 'error'` | `primary` | 状态，兼容旧属性名 |
 | `showText` | `boolean` | `true` | 是否显示文字 |
 | `text` | `string` |  | 自定义文字，为空时显示百分比 |
 | `strokeWidth` | `number` | `6` | 进度条高度(px 值，按 1px=2rpx 换算) |

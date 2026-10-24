@@ -135,7 +135,7 @@ for (const cat of Object.keys(CAT_TITLE)) {
       lines.push('|------|------|--------|------|');
       for (const pr of props) {
         lines.push(
-          `| \`${pr.name}\` | \`${pr.type}\` | ${fmtDefault(pr.default)} | ${mdEscape(pr.desc || '')} |`,
+          `| \`${pr.name}\` | \`${mdEscape(pr.type)}\` | ${fmtDefault(pr.default)} | ${mdEscape(pr.desc || '')} |`,
         );
       }
       lines.push('');

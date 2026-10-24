@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import BaseCard from '../../containers/base-card/index.vue'
+import BaseCard from '../../../containers/base-card/index.vue'
 
 interface ArticleCardProps {
   /** 模式：thumb 左侧缩略图 / cover 顶部封面 */

@@ -47,7 +47,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import BaseCard from '../../containers/base-card/index.vue'
+import BaseCard from '../../../containers/base-card/index.vue'
 
 interface ProductCardProps {
   /** 商品图片地址 */

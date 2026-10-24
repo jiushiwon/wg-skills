@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import BasePopup from '../../containers/base-popup/index.vue'
+import BasePopup from '../../../containers/base-popup/index.vue'
 
 /** 操作项 */
 interface ActionSheetItem {

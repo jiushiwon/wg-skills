@@ -13,7 +13,7 @@
       <slot name="header">
         <view class="profile-user" @click="$emit('headerClick')">
           <view class="profile-avatar">
-            <base-avatar :src="userInfo.avatar" :nickname="userInfo.nickname || '我'" size="lg" />
+            <base-avatar :src="userInfo.avatar" :name="userInfo.nickname || '我'" size="lg" />
           </view>
           <view class="profile-user-info">
             <text class="profile-user-name">{{ userInfo.nickname || '未登录' }}</text>

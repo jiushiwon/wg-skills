@@ -7,6 +7,10 @@ import { AppEmpty } from '@/components/AppEmpty';
 import { AppNavbar } from '@/components/AppNavbar';
 import { getDemoList, type DemoItem } from '@/api/modules/demo';
 import { formatDateTime } from '@/utils/date';
+import { getNavbarHeight } from '@/utils/navbar';
+
+// 吸顶导航为 fixed 定位，页面内容需按实际导航高度让位（状态栏 + 胶囊带 + 标题行）
+const navbarHeight = getNavbarHeight();
 
 const list = ref<DemoItem[]>([]);
 const loading = ref(false);
@@ -35,7 +39,10 @@ onPullDownRefresh(() => loadList(true));
 </script>
 
 <template>
-  <view class="page list-page">
+  <view
+    class="page list-page"
+    :style="{ paddingTop: `${navbarHeight}px` }"
+  >
     <AppNavbar title="示例列表" :show-back="false" />
 
     <view class="list-page__header">
@@ -84,7 +91,6 @@ onPullDownRefresh(() => loadList(true));
 <style lang="scss" scoped>
 .list-page {
   min-height: 100vh;
-  padding-top: var(--height-navbar, 88rpx);
   background: $color-bg-secondary;
 
   &__header {

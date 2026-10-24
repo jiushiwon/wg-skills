@@ -9,7 +9,7 @@
   <base-card :radius="radius" :padding="padding" :background="background" :margin="margin" :border="border" :shadow="shadow" :clickable="clickable" @click="$emit('click')">
     <view class="uc">
       <view class="uc-avatar" @click="$emit('avatarClick')">
-        <base-avatar :src="avatar" :nickname="nickname" size="sm" />
+        <base-avatar :src="avatar" :name="nickname" size="sm" />
       </view>
 
       <view class="uc-main">

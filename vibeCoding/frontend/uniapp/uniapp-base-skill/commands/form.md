@@ -8,7 +8,7 @@
 
 | 组件 | 说明 | 别名 | 类型 |
 |------|------|------|------|
-| `button` | 统一按钮样式：primary / ghost / text / danger × sm / md / lg，支持 loading / disabled / block / round | 按钮 / button / 提交按钮 / 主按钮 / 次按钮 | 组件 |
+| `base-button` | 统一按钮样式：primary / ghost / text / danger × sm / md / lg，支持 loading / disabled / block / round | base-button / 按钮 / button / 提交按钮 / 主按钮 / 次按钮 | 组件 |
 | `checkbox-group` | 多选框组，支持 options 驱动的多值选择 | 多选框 / checkbox-group / 复选框 / 多选 | 组件 |
 | `date-picker` | 底部弹出的年/月/日三列滑轮选择器，基于 BasePopup 容器 | 日期选择 / date-picker / 年月日选择 / 日期滚轮 | 组件 |
 | `input-field` | 表单项，基于 BaseFormItem 容器，支持标签、清除与错误提示 | 输入框 / input-field / 表单输入 / 文本输入 | 组件 |
@@ -19,24 +19,24 @@
 
 ---
 
-## button 按钮
+## base-button 按钮
 
 **说明**：统一按钮样式：primary / ghost / text / danger × sm / md / lg，支持 loading / disabled / block / round
 
-**别名**：按钮、button、提交按钮、主按钮、次按钮
+**别名**：base-button、按钮、button、提交按钮、主按钮、次按钮
 
-**路径**：`vibeCoding/frontend/uniapp/uniapp-base-skill/components/form/button/`
+**路径**：`vibeCoding/frontend/uniapp/uniapp-base-skill/components/form/base-button/`
 
 **属性**：
 
 | 名称 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| `type` | `'primary' | 'ghost' | 'text' | 'danger'` | `primary` | 按钮类型 |
-| `size` | `'sm' | 'md' | 'lg'` | `md` | 尺寸 |
+| `type` | `'primary' \| 'ghost' \| 'text' \| 'danger'` | `primary` | 按钮类型 |
+| `size` | `'sm' \| 'md' \| 'lg'` | `md` | 尺寸 |
 | `disabled` | `boolean` | `false` | 禁用 |
 | `loading` | `boolean` | `false` | 加载中（内置转圈并禁用点击） |
 | `block` | `boolean` | `false` | 块级，宽度 100% |
-| `shape` | `'radius' | 'round'` | `radius` | 圆角风格 |
+| `shape` | `'radius' \| 'round'` | `radius` | 圆角风格 |
 | `icon` | `string` |  | 左侧图标地址 |
 | `text` | `string` | `按钮` | 按钮文字，默认插槽优先 |
 
@@ -50,7 +50,7 @@
 |------|------|
 | `default` | 按钮内容，优先于 text |
 
-**用法**：见 [usage.md](../components/form/button/usage.md)
+**用法**：见 [usage.md](../components/form/base-button/usage.md)
 
 ---
 
@@ -133,7 +133,7 @@
 
 | 名称 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| `modelValue` | `'string' | 'number'` |  | 绑定值 |
+| `modelValue` | `'string' \| 'number'` |  | 绑定值 |
 | `label` | `string` |  | 标签文案，为空时隐藏标签列 |
 | `type` | `string` | `text` | 输入类型，text / number / idcard / digit 等 |
 | `placeholder` | `string` |  | 占位文案 |
@@ -143,6 +143,8 @@
 | `error` | `boolean` | `false` | 错误状态，输入框描边转红 |
 | `errorMessage` | `string` |  | 错误提示文案，error 为 true 时显示在控件下方 |
 | `labelWidth` | `string` | `160rpx` | 标签列宽 |
+| `adjustPosition` | `boolean` | `true` | 键盘弹起时是否自动上推页面（小程序端） |
+| `cursorSpacing` | `number` | `0` | 输入框与键盘的间距（px，仅 adjustPosition 为 true 时生效） |
 
 **事件**：
 
@@ -208,7 +210,7 @@
 
 | 名称 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| `modelValue` | `'string' | 'number'` |  | 绑定值，等于选中的 option.value |
+| `modelValue` | `'string' \| 'number'` |  | 绑定值，等于选中的 option.value |
 | `label` | `string` |  | 分组标题，为空时不渲染 |
 | `options` | `array` | `[]` | 选项列表 [{ label: string, value: string \| number }] |
 | `disabled` | `boolean` | `false` | 整组禁用，禁用时点击不触发变更 |

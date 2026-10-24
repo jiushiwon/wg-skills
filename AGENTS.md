@@ -209,6 +209,7 @@ wg-skills/
 │   │   │   └── image-catch-skill/            # 图片抓取
 │   │   ├── frontend-icon-skill/              # SVG 模板生成 + SVG→PNG 导出 + 图片处理（合并自 image-forge-skill）
 │   │   ├── uniapp/                           # uni-app 技能矩阵（15 skill）
+│   │   │   ├── README.md                     # 模块入口地图（15 环节 → skill → 触发词）
 │   │   │   ├── uniapp-base-skill/            # 基础组件与容器唯一真源（6 容器 + 26 组件 + 组件索引）
 │   │   │   │   ├── containers/               # 根容器层
 │   │   │   │   ├── components/               # 内置组件层（form/feedback/list/navigation/business）+ 注册表

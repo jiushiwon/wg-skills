@@ -204,19 +204,22 @@ import { AppNavbar } from '@/components/AppNavbar';
 </script>
 
 <template>
-  <view class="page">
+  <view
+    class="page"
+    :style="{ paddingTop: `${navbarHeight}px` }"
+  >
     <AppNavbar title="页面标题" />
     <view class="page__content">
       <!-- 页面内容 -->
     </view>
   </view>
 </template>
+```
 
-<style lang="scss" scoped>
-.page {
-  padding-top: var(--height-navbar, 88rpx);
-}
-</style>
+```ts
+// script setup
+import { getNavbarHeight } from '@/utils/navbar';
+const navbarHeight = getNavbarHeight();
 ```
 
 对应的 `pages.json`：
@@ -236,11 +239,13 @@ import { AppNavbar } from '@/components/AppNavbar';
 1. 通过 `uni.getMenuButtonBoundingClientRect()` 获取胶囊按钮位置，通过 `uni.getSystemInfoSync()` 获取状态栏高度；
 2. **胶囊带独占一行**：该带内仅放左侧返回图标，右侧留给系统胶囊，标题/菜单/操作一律不得进入；
 3. 标题放在胶囊带**下方**独立一行（高度 `$comp-navbar-title-height`）；
-4. 导航栏总高 = 状态栏 + 胶囊带 + 标题行，页面用 `padding-top: var(--height-navbar)` 下移内容，确保不覆盖胶囊。
+4. 导航栏总高 = 状态栏 + 胶囊带 + 标题行，页面用 `@/utils/navbar` 的 `getNavbarHeight()` 下移内容，确保不覆盖胶囊；
+5. 尺寸计算**必须**由 JS 给出并以内联 style 绑定。不要在 `<style scoped>` 中写 `:root { --height-navbar: ... }`——`scoped` 会把选择器编译成 `:root[data-v-xxx]`，匹配不到根元素，变量静默失效，页面只会拿到 `var()` 兜底值。
 
 ### 源码位置
 
-`src/components/AppNavbar/AppNavbar.vue`
+`src/components/AppNavbar/AppNavbar.vue`（组件）
+`src/utils/navbar.ts`（尺寸计算真源，组件与页面共用）
 
 ## 表单与输入
 

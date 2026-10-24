@@ -8,6 +8,7 @@
         :value="inner"
         :placeholder="placeholder"
         :disabled="disabled"
+        :adjust-position="true"
         @input="handleInput"
         @confirm="handleSearch"
       />

@@ -8,11 +8,13 @@
     { "name": "label", "type": "string", "default": "", "desc": "标签文案" },
     { "name": "required", "type": "boolean", "default": false, "desc": "必填（左侧红色星号）" },
     { "name": "error", "type": "string", "default": "", "desc": "错误提示，非空即显示并把行标红" },
-    { "name": "labelWidth", "type": "string", "default": "160rpx", "desc": "标签列宽" }
+    { "name": "labelWidth", "type": "string", "default": "160rpx", "desc": "标签列宽" },
+    { "name": "adjustPosition", "type": "boolean", "default": true, "desc": "键盘弹起时是否自动上推页面（小程序端）" },
+    { "name": "cursorSpacing", "type": "number", "default": 0, "desc": "输入框与键盘的间距（px，仅 adjustPosition 为 true 时生效）" }
   ],
   "events": [],
   "slots": [
-    { "name": "default", "desc": "控件内容" },
+    { "name": "default", "desc": "控件内容，插槽参数 inputProps 含 adjustPosition / cursorSpacing" },
     { "name": "label", "desc": "标签内容，优先级高于 label" },
     { "name": "error", "desc": "错误提示内容，优先级高于 error" }
   ]

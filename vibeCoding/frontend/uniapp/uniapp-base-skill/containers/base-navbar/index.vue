@@ -7,8 +7,10 @@
       uni.getSystemInfoSync().statusBarHeight），默认 0；
     - fixed + placeholder 可吸顶并占位，避免内容被遮；
     - 右侧 right slot 可放菜单/按钮；
-    - 简易通用版：未做微信胶囊对齐（那是 app-generate-skill 的 AppNavbar 强约束场景），
-      小程序自定义导航如需胶囊对齐请用 AppNavbar 或本组件 #title slot 自行处理。
+    - 微信端自动避让系统胶囊：读取 uni.getMenuButtonBoundingClientRect()，
+      在右侧预留胶囊宽度，右侧内容永不压到胶囊下面（非微信端无此行为）；
+    - 本组件为单行通用版；需要「胶囊独占一行 + 标题在下方」的强避让布局时，
+      用 app-generate-skill 的 AppNavbar。
 -->
 <template>
   <view>
@@ -34,7 +36,7 @@
           </slot>
         </view>
 
-        <view class="bn-side bn-side-right">
+        <view class="bn-side bn-side-right" :style="capsuleStyle">
           <slot name="right">
             <view v-if="rightText" class="bn-right" @click="$emit('rightClick')">
               <text class="bn-right-text">{{ rightText }}</text>
@@ -85,6 +87,10 @@ interface Props {
   rightText?: string
   /** 右侧胶囊按钮组（如「更多 / 分享」） */
   capsuleRight?: CapsuleItem[]
+  /** 是否避让微信系统胶囊（微信端生效，其它端无差别） */
+  avoidCapsule?: boolean
+  /** 胶囊与右侧内容之间的额外间距（px） */
+  capsuleGap?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -97,6 +103,8 @@ const props = withDefaults(defineProps<Props>(), {
   showStatusBar: true,
   rightText: '',
   capsuleRight: () => [],
+  avoidCapsule: true,
+  capsuleGap: 8,
 })
 
 const emit = defineEmits<{ back: []; rightClick: []; capsuleClick: [item: CapsuleItem] }>()
@@ -108,6 +116,25 @@ const navbarStyle = computed(() => ({
 
 const totalHeight = computed(() =>
   props.showStatusBar ? `calc(${props.statusBarHeight} + var(--height-btn-xl, 96rpx))` : 'var(--height-btn-xl, 96rpx)',
+)
+
+// 微信端系统胶囊矩形；非微信端或未开启避让时为 null
+const capsuleRect = computed(() => {
+  if (!props.avoidCapsule) return null
+  try {
+    const rect = uni.getMenuButtonBoundingClientRect()
+    return rect && rect.width ? rect : null
+  } catch {
+    // 非微信端无此 API
+    return null
+  }
+})
+
+// 右侧预留胶囊宽度，右侧内容不会压到胶囊下方
+const capsuleStyle = computed(() =>
+  capsuleRect.value
+    ? { paddingRight: `${capsuleRect.value.width + props.capsuleGap}px` }
+    : {},
 )
 </script>
 

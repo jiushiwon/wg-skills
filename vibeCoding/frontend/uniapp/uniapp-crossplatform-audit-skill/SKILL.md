@@ -106,6 +106,37 @@ grep -rnE 'fetch\(|window\.|document\.|localStorage|sessionStorage' src/
 grep -rnE '#ifdef MP-WEIXIN|#ifdef APP-PLUS|#ifdef H5' src/
 ```
 
+### 端间表现差异专项（键盘 / 胶囊 / 安全区）
+
+这三项是「一端正常、另一端被遮」的高发区，必须逐项扫，判据见 `uniapp/AGENTS.md` §9：
+
+```bash
+# 胶囊避让：自定义导航是否读了胶囊位置
+grep -rn 'getMenuButtonBoundingClientRect' src/
+
+# 键盘顶起：输入框是否声明 adjust-position
+grep -rnE '<input|<textarea' src/ | grep -v 'adjust-position'
+
+# 键盘顶起：固定底栏是否处理键盘高度
+grep -rn 'onKeyboardHeightChange' src/
+
+# 安全区：四边是否都处理（只出现 bottom 视为 P2）
+grep -rn 'env(safe-area-inset' src/
+```
+
+上述规则的自动判定已脚本化，直接跑：
+
+```bash
+node ../uniapp-code-audit-skill/scripts/check-miniprogram.js <项目根目录>
+```
+
+| 维度 | 判定要点 |
+|------|---------|
+| 胶囊避让 | 自定义导航页必须读胶囊位置；标题不得与胶囊同排；右侧内容需预留胶囊宽度 |
+| 键盘顶起 | 输入框统一 `adjust-position` + `cursor-spacing`；固定底栏按键盘高度上移 |
+| 安全区 | 顶边用 `statusBarHeight` 实测值；底边用 `env(safe-area-inset-bottom)`；fixed 元素有等高占位 |
+| 登录四态 | loading / error / disabled / 重试 四态齐全（AGENTS.md §9.4） |
+
 > 禁止在扫描过程中使用任何会修改项目的命令（如 `rm`、`mv`、`sed -i`、自动格式化等）。
 
 ## 自我审计

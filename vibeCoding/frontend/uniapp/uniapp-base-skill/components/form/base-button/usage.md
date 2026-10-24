@@ -1,10 +1,10 @@
-# button 使用示例
+# base-button 使用示例
 
 ## 基础用法
 
 ```vue
 <template>
-<button text="提交" @click="onSubmit" />
+<base-button text="提交" @click="onSubmit" />
 </template>
 
 
@@ -14,10 +14,10 @@
 
 ```vue
 <template>
-<button type="primary" size="lg" text="立即下单" />
-<button type="ghost" size="sm" text="取消" />
-<button type="text" text="查看更多" />
-<button type="danger" text="删除" />
+<base-button type="primary" size="lg" text="立即下单" />
+<base-button type="ghost" size="sm" text="取消" />
+<base-button type="text" text="查看更多" />
+<base-button type="danger" text="删除" />
 </template>
 
 
@@ -27,8 +27,8 @@
 
 ```vue
 <template>
-<button :loading="submitting" text="提交中" />
-<button disabled text="暂不可用" />
+<base-button :loading="submitting" text="提交中" />
+<base-button disabled text="暂不可用" />
 </template>
 
 
@@ -38,7 +38,7 @@
 
 ```vue
 <template>
-<button block shape="round" text="一键登录" />
+<base-button block shape="round" text="一键登录" />
 </template>
 
 
@@ -48,10 +48,10 @@
 
 ```vue
 <template>
-<button>
+<base-button>
   <image src="/icons/check.png" mode="aspectFit" class="btn-icon" />
   <text>完成</text>
-</button>
+</base-button>
 </template>
 
 

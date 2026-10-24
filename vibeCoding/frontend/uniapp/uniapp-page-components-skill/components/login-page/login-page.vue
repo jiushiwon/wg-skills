@@ -19,6 +19,13 @@
     </view>
 
     <view class="lp-form">
+      <view v-if="error" class="lp-error">
+        <text class="lp-error-text">{{ error }}</text>
+        <view class="lp-error-retry" @click="onRetry">
+          <text class="lp-error-retry-text">{{ errorRetryText }}</text>
+        </view>
+      </view>
+
       <slot name="form">
         <view class="lp-field">
           <text class="lp-field-label">手机号</text>
@@ -29,6 +36,8 @@
             maxlength="11"
             placeholder="请输入手机号"
             placeholder-class="lp-input-ph"
+            :adjust-position="adjustPosition"
+            :cursor-spacing="cursorSpacing"
           />
         </view>
 
@@ -41,6 +50,8 @@
             maxlength="6"
             placeholder="请输入验证码"
             placeholder-class="lp-input-ph"
+            :adjust-position="adjustPosition"
+            :cursor-spacing="cursorSpacing"
           />
           <view class="lp-code-btn" :class="{ 'is-counting': countdown > 0 }" @click="onGetCode">
             <text class="lp-code-btn-text">{{ countdown > 0 ? `${countdown}s 后重发` : '获取验证码' }}</text>
@@ -61,7 +72,7 @@
         </view>
       </slot>
 
-      <base-button type="primary" :block="true" :loading="loading" @click="onSubmit">
+      <base-button type="primary" :block="true" :loading="loading" :disabled="disabled" @click="onSubmit">
         {{ submitText }}
       </base-button>
 
@@ -88,6 +99,16 @@ interface Props {
   submitText?: string
   /** 提交中 */
   loading?: boolean
+  /** 禁用提交按钮 */
+  disabled?: boolean
+  /** 错误提示（非空即显示错误条 + 重试入口） */
+  error?: string
+  /** 错误条上的重试文案 */
+  errorRetryText?: string
+  /** 键盘弹起时是否自动上推页面（小程序端） */
+  adjustPosition?: boolean
+  /** 输入框与键盘的间距（px，仅 adjustPosition 为 true 时生效） */
+  cursorSpacing?: number
   /** 是否显示微信一键登录 */
   showWechat?: boolean
   /** 是否显示协议勾选 */
@@ -101,6 +122,11 @@ const props = withDefaults(defineProps<Props>(), {
   subtitle: '',
   submitText: '登录',
   loading: false,
+  disabled: false,
+  error: '',
+  errorRetryText: '重试',
+  adjustPosition: true,
+  cursorSpacing: 0,
   showWechat: true,
   showAgreement: true,
   agreementText: '我已阅读并同意《用户协议》和《隐私政策》',
@@ -111,6 +137,7 @@ const emit = defineEmits<{
   wechatLogin: []
   agreementChange: [checked: boolean]
   getCode: [phone: string]
+  retry: []
 }>()
 
 const phone = ref('')
@@ -139,8 +166,13 @@ function onToggleAgreement() {
 }
 
 function onSubmit() {
+  if (props.loading || props.disabled) return
   if (props.showAgreement && !agreed.value) return
   emit('submit', { phone: phone.value, code: code.value })
+}
+
+function onRetry() {
+  emit('retry')
 }
 </script>
 
@@ -192,6 +224,39 @@ function onSubmit() {
 /* ---- 表单 ---- */
 .lp-form {
   margin-top: var(--space-16, 64rpx);
+}
+
+/* ---- 错误条 ---- */
+.lp-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-8, 32rpx);
+  padding: var(--space-6, 24rpx) var(--space-8, 32rpx);
+  border-radius: var(--radius-sm, 8rpx);
+  background: var(--bg-light, #f5f5f5);
+  border: 1rpx solid var(--color-error, #ef4444);
+}
+
+.lp-error-text {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--font-sm, 26rpx);
+  color: var(--color-error, #ef4444);
+}
+
+.lp-error-retry {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  min-height: 56rpx;
+  padding-left: var(--space-8, 32rpx);
+}
+
+.lp-error-retry-text {
+  font-size: var(--font-sm, 26rpx);
+  color: var(--color-error, #ef4444);
+  text-decoration: underline;
 }
 
 .lp-field {

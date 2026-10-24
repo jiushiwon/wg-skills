@@ -1,8 +1,25 @@
 import React, { useState } from 'react'
 import './style-3.css'
 
+type Status = 'idle' | 'loading' | 'error'
+
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true)
+  const [status, setStatus] = useState<Status>('idle')
+  const [errorText, setErrorText] = useState('')
+
+  const doSubmit = async () => {
+    if (status === 'loading') return
+    setStatus('loading')
+    setErrorText('')
+    try {
+      await Promise.resolve()
+      setStatus('idle')
+    } catch {
+      setStatus('error')
+      setErrorText('登录失败，请重试')
+    }
+  }
 
   return (
     <div className="login-page style-dark">
@@ -15,14 +32,22 @@ export default function LoginPage() {
             <h1 className="login-title">{isLogin ? 'Welcome Back' : 'Get Started'}</h1>
           </div>
 
-          <form className="login-form">
+          <form className="login-form" onSubmit={(e) => { e.preventDefault(); doSubmit() }}>
             <div className="form-item">
               <input type="text" className="form-input" placeholder="Email / Phone" />
             </div>
             <div className="form-item">
               <input type="password" className="form-input" placeholder="Password" />
             </div>
-            <button type="button" className="submit-btn">{isLogin ? 'Sign In' : 'Sign Up'}</button>
+            {errorText && (
+              <div className="login-error">
+                <span>{errorText}</span>
+                <button type="button" onClick={doSubmit}>Retry</button>
+              </div>
+            )}
+            <button type="submit" className="submit-btn" disabled={status === 'loading'}>
+              {status === 'loading' ? 'Loading…' : (isLogin ? 'Sign In' : 'Sign Up')}
+            </button>
           </form>
 
           <div className="login-footer">

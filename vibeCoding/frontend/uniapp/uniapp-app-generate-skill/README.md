@@ -262,23 +262,23 @@ const show = ref(false);
 ```vue
 <script setup lang="ts">
 import { AppNavbar } from '@/components/AppNavbar';
+import { getNavbarHeight } from '@/utils/navbar';
+
+// 吸顶导航为 fixed 定位，内容需按实际导航高让位
+const navbarHeight = getNavbarHeight();
 </script>
 
 <template>
-  <view class="page">
+  <view
+    class="page"
+    :style="{ paddingTop: `${navbarHeight}px` }"
+  >
     <AppNavbar title="页面标题" />
     <view class="page__content">
       <!-- 页面内容 -->
     </view>
   </view>
 </template>
-
-<style lang="scss" scoped>
-.page {
-  // 内容整体下移，避开状态栏 + 胶囊带 + 标题行，绝不覆盖胶囊
-  padding-top: var(--height-navbar, 88rpx);
-}
-</style>
 ```
 
 对应 `pages.json`：
@@ -293,7 +293,9 @@ import { AppNavbar } from '@/components/AppNavbar';
 }
 ```
 
-组件会根据 `uni.getMenuButtonBoundingClientRect()` 自动计算高度：**胶囊按钮独占一行**，仅左侧返回图标与胶囊同排对齐；标题位于胶囊带下方独立一行；页面内容用 `padding-top: var(--height-navbar)` 下移，绝不覆盖胶囊。使用默认导航栏（非 `custom`）的页面无需处理。
+组件会根据 `uni.getMenuButtonBoundingClientRect()` 自动计算高度：**胶囊按钮独占一行**，仅左侧返回图标与胶囊同排对齐；标题位于胶囊带下方独立一行。
+
+页面避让方式**必须**用 `@/utils/navbar` 的 `getNavbarHeight()`，以内联 style 绑定到 `paddingTop`。不要在 `<style scoped>` 里写 `:root { --height-navbar: ... }`：`scoped` 会给选择器加上 `[data-v-xxx]`，`:root[data-v-xxx]` 匹配不到根元素，变量**静默失效**，页面只拿到 `var()` 兜底值，内容会被吸顶导航遮挡。使用默认导航栏（非 `custom`）的页面无需处理。
 
 ---
 

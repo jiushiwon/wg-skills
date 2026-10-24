@@ -16,7 +16,11 @@ interface RegisterPageProps {
   agreementText?: string
   footerText?: string
   footerLink?: string
+  /** 提交逻辑；抛错即进入错误态并展示重试入口 */
+  onSubmit?: (form: Record<string, any>) => void | Promise<void>
 }
+
+type Status = 'idle' | 'loading' | 'error'
 
 export default function RegisterPage({
   title = '创建账号',
@@ -30,13 +34,31 @@ export default function RegisterPage({
   submitText = '注 册',
   agreementText = '我已阅读并同意服务条款',
   footerText = '已有账号？',
-  footerLink = '立即登录'
+  footerLink = '立即登录',
+  onSubmit
 }: RegisterPageProps) {
   const [form, setForm] = useState<Record<string, any>>({})
+  const [status, setStatus] = useState<Status>('idle')
+  const [errorText, setErrorText] = useState('')
+
+  const doSubmit = async () => {
+    if (status === 'loading') return
+    setStatus('loading')
+    setErrorText('')
+    try {
+      if (onSubmit) {
+        await onSubmit(form)
+      }
+      setStatus('idle')
+    } catch {
+      setStatus('error')
+      setErrorText('注册失败，请重试')
+    }
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('注册:', form)
+    doSubmit()
   }
 
   return (
@@ -70,7 +92,16 @@ export default function RegisterPage({
               <span className="agreement-text">{agreementText}</span>
             </label>
 
-            <button type="submit" className="submit-btn">{submitText}</button>
+            {errorText && (
+              <div className="register-error">
+                <span>{errorText}</span>
+                <button type="button" onClick={doSubmit}>重试</button>
+              </div>
+            )}
+
+            <button type="submit" className="submit-btn" disabled={status === 'loading'}>
+              {status === 'loading' ? '注册中…' : submitText}
+            </button>
           </form>
 
           <div className="register-footer">

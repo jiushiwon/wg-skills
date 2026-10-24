@@ -199,7 +199,8 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 #### UniApp 体系（16 个）— 跨端小程序
 
-`uniapp-base-skill`（基础组件与容器唯一真源：6 个根容器 + 26 个组件）+ 15 个独立技能：
+`uniapp-base-skill`（基础组件与容器唯一真源：6 个根容器 + 26 个组件）+ 15 个独立技能，
+模块入口地图见 [`vibeCoding/frontend/uniapp/README.md`](vibeCoding/frontend/uniapp/README.md)（15 环节 → skill → 触发词）：
 
 - 项目类：`uniapp-app-generate-skill` / `uniapp-standard-skill`
 - 规范类：`uniapp-style-skill` / `uniapp-theme-skill` / `request-skill`

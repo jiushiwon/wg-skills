@@ -41,7 +41,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import BaseCard from '../../containers/base-card/index.vue'
+import BaseCard from '../../../containers/base-card/index.vue'
 
 interface ListItemProps {
   /** 左侧图标地址（图片加载失败时自动隐藏） */

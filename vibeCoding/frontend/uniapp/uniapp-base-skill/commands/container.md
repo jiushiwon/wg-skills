@@ -31,9 +31,9 @@
 |------|------|--------|------|
 | `src` | `string` |  | 图片地址 |
 | `name` | `string` |  | 昵称，优先取末两字 |
-| `size` | `'sm' | 'md' | 'lg' | 'xl'` | `md` | 尺寸档 |
+| `size` | `'sm' \| 'md' \| 'lg' \| 'xl'` | `md` | 尺寸档 |
 | `round` | `boolean` | `true` | 是否圆形（false 时用圆角矩形） |
-| `mode` | `'aspectFill' | 'aspectFit' | 'widthFix' | 'scaleToFill'` | `aspectFill` | 图片裁剪模式 |
+| `mode` | `'aspectFill' \| 'aspectFit' \| 'widthFix' \| 'scaleToFill'` | `aspectFill` | 图片裁剪模式 |
 | `fallback` | `string` |  | 兜底文字，不传则由 name 推导 |
 
 **事件**：
@@ -62,8 +62,8 @@
 | `width` | `string` | `100%` | 宽度 |
 | `height` | `string` | `auto` | 高度 |
 | `minHeight` | `string` |  | 最小高度，为空不生效 |
-| `border` | `boolean | string` | `false` | 描边：true 用主题 --border，也可直接传 CSS 边框值 |
-| `shadow` | `boolean | string` | `false` | 阴影：true 用主题 --shadow-sm，也可直接传 CSS 阴影值 |
+| `border` | `boolean \| string` | `false` | 描边：true 用主题 --border，也可直接传 CSS 边框值 |
+| `shadow` | `boolean \| string` | `false` | 阴影：true 用主题 --shadow-sm，也可直接传 CSS 阴影值 |
 | `clickable` | `boolean` | `false` | 是否可点击（触发 click 并带按压反馈） |
 | `gap` | `string` | `var(--space-3, 12rpx)` | header / body / footer 之间的垂直间距 |
 | `image` | `string` |  | 左侧图片地址 |
@@ -101,12 +101,14 @@
 | `required` | `boolean` | `false` | 必填（左侧红色星号） |
 | `error` | `string` |  | 错误提示，非空即显示并把行标红 |
 | `labelWidth` | `string` | `160rpx` | 标签列宽 |
+| `adjustPosition` | `boolean` | `true` | 键盘弹起时是否自动上推页面（小程序端） |
+| `cursorSpacing` | `number` | `0` | 输入框与键盘的间距（px，仅 adjustPosition 为 true 时生效） |
 
 **插槽**：
 
 | 名称 | 说明 |
 |------|------|
-| `default` | 控件内容 |
+| `default` | 控件内容，插槽参数 inputProps 含 adjustPosition / cursorSpacing |
 | `label` | 标签内容，优先级高于 label |
 | `error` | 错误提示内容，优先级高于 error |
 
@@ -133,6 +135,8 @@
 | `showStatusBar` | `boolean` | `true` | 是否渲染状态栏占位行 |
 | `rightText` | `string` |  | 右侧文字按钮 |
 | `capsuleRight` | `CapsuleItem[]` | `[]` | 右侧胶囊按钮组 |
+| `avoidCapsule` | `boolean` | `true` | 是否避让微信系统胶囊（微信端生效） |
+| `capsuleGap` | `number` | `8` | 胶囊与右侧内容的间距（px） |
 
 **事件**：
 
@@ -164,11 +168,11 @@
 | 名称 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `show` | `boolean` | `false` | 是否显示（配合 update:show 做 v-model） |
-| `direction` | `'top' | 'bottom' | 'left' | 'right' | 'center'` | `bottom` | 弹出方向 |
+| `direction` | `'top' \| 'bottom' \| 'left' \| 'right' \| 'center'` | `bottom` | 弹出方向 |
 | `radius` | `string` | `var(--radius-lg, 24rpx)` | 圆角，方向决定圆角位置 |
 | `height` | `string` | `auto` | 高度，仅上下方向生效 |
 | `width` | `string` | `560rpx` | 宽度，左右 / 居中方向生效 |
-| `padding` | `'default' | 'sm' | 'none'` | `default` | 内边距档位，转发给内部 base-card |
+| `padding` | `'default' \| 'sm' \| 'none'` | `default` | 内边距档位，转发给内部 base-card |
 | `title` | `string` |  | 标题，转发给内部 base-card |
 | `mask` | `boolean` | `true` | 是否显示遮罩 |
 | `maskClosable` | `boolean` | `true` | 点击遮罩是否关闭 |
@@ -203,9 +207,10 @@
 | 名称 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `items` | `TabbarItem[]` | `[]` | 菜单项（2~5 个） |
-| `modelValue` | `string | number` |  | 当前激活 key（v-model） |
+| `modelValue` | `string \| number` |  | 当前激活 key（v-model） |
 | `fixed` | `boolean` | `true` | 是否底部固定 |
 | `safeArea` | `boolean` | `true` | 是否适配安全区 |
+| `placeholder` | `boolean` | `true` | 固定时是否渲染等高占位（避免内容被底栏遮挡） |
 
 **事件**：
 

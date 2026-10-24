@@ -260,7 +260,127 @@ components/<category>/<component-name>/
 
 ---
 
-## 九、变更纪律
+## 九、小程序端专项
+
+> 本章是**微信小程序端的硬约束**。规范不写，skill 就不做，审计也不查——因此这一章的每一条都必须能在代码里验收。
+>
+> 适用范围：`pages.json` 里 `"navigationStyle": "custom"` 的页面、含 `<input>` 的页面、含固定底栏的页面。
+
+### 9.1 状态栏高度与胶囊避让
+
+**取值口径（唯一）**：
+
+| 量 | 取法 | 单位 |
+|----|------|------|
+| 状态栏高度 | `uni.getSystemInfoSync().statusBarHeight` | px |
+| 胶囊矩形 | `uni.getMenuButtonBoundingClientRect()` → `{ top, right, bottom, left, width, height }` | px |
+
+**硬规则**：
+
+1. **胶囊独占一行**：胶囊所在行内只允许放返回图标，**标题、菜单、操作按钮一律不得进入**。
+2. **标题在胶囊带下方**独立一行，导航栏总高 = 状态栏 + 胶囊带 + 标题行。
+3. **右侧内容必须让位**：右侧插槽 / 胶囊按钮组的右边界不得越过胶囊左边界，实现方式是预留胶囊宽度。
+4. **导航高度只能由 JS 下发**：`v-bind()` / `v-bind()` 只能在 `<style scoped>` 下生效，且 `:root` 在 scoped 中会编译成 `:root[data-v-xxx]`，**匹配不到根元素，变量静默失效**。禁止写：
+
+   ```css
+   /* 禁止：scoped 下 :root 匹配不到 <html>，变量静默失效 */
+   :root { --height-navbar: v-bind(navBarHeight + 'px'); }
+   ```
+
+   正确做法是 JS 计算 + 内联 style 绑定：
+
+   ```ts
+   // utils/navbar.ts（尺寸计算真源，组件与页面共用）
+   export function getNavbarHeight(): number {
+     const info = uni.getSystemInfoSync();
+     const capsule = uni.getMenuButtonBoundingClientRect();
+     const statusBar = info.statusBarHeight || 0;
+     const screenWidth = info.screenWidth || info.windowWidth || 375;
+     const titleRow = Math.round((88 * screenWidth) / 750); // 88rpx 折算 px
+     const capsuleTop = capsule.top ?? statusBar + 8;
+     const capsuleHeight = capsule.height ?? 32;
+     return (capsuleTop - statusBar) * 2 + capsuleHeight + titleRow;
+   }
+   ```
+
+   ```vue
+   <view class="page" :style="{ paddingTop: `${navbarHeight}px` }">
+   ```
+
+5. **导航栏内容不得侵入状态栏**：状态栏占位用 `statusBarHeight` 实测值，不用 `env(safe-area-inset-top)`（小程序端顶部不生效）。
+
+**可验收断言**：
+
+| # | 断言 | 判定方式 |
+|---|------|---------|
+| N1 | 标题与胶囊不重叠 | 标题文字的矩形与胶囊矩形无交集 |
+| N2 | 右侧内容不压胶囊 | 右侧 slot 元素 `right` 坐标 ≤ 胶囊 `left` 坐标 |
+| N3 | 内容不被吸顶导航遮 | 页面首个内容元素 `top` ≥ 导航栏总高 |
+| N4 | 导航高度有唯一来源 | 全局 `:root` 常量或 JS 计算，**不存在** scoped `:root` 定义 |
+
+### 9.2 键盘顶起
+
+**取值口径**：
+
+| 属性 | 作用 | 默认 |
+|------|------|------|
+| `adjust-position` | 键盘弹起时页面是否自动上推 | `true` |
+| `cursor-spacing` | 输入框与键盘之间的间距 | `0` |
+
+**硬规则**：
+
+1. 页面内**所有**输入框都要显式声明这两个属性，统一通过 `base-form-item` / `input-field` 的同名 props 透传，不在页面里各写各的。
+2. **固定底栏必须让位**：底栏（`base-tabbar` / 自定义 tabBar）固定在底部时，键盘弹起会被顶出可视区。用 `uni.onKeyboardHeightChange` 取键盘高度，把底栏整体上移或页面整体上推，二选一，全项目统一：
+
+   ```ts
+   // 键盘高度 → 底栏上移量（页面级统一处理，组件内不各自监听）
+   uni.onKeyboardHeightChange((res) => {
+     keyboardHeight.value = res.detail.height;
+   });
+   ```
+
+   ```scss
+   .bottom-bar {
+     transform: translateY(calc(-1 * var(--keyboard-height, 0px)));
+   }
+   ```
+
+3. **提交按钮必须可达**：登录 / 注册 / 表单页的提交按钮要处于可滚动区域内，键盘弹起时能滚动到可见位置，不允许被键盘遮死。
+4. **输入类型固定**：密码框 `type="password"`，验证码 / 手机号框 `type="number"` 且必须给 `maxlength`。
+
+### 9.3 安全区（safe-area）
+
+四边分别处理，**不可只处理底部**：
+
+| 边 | 处理方式 |
+|----|---------|
+| 顶 | 用 `statusBarHeight` 实测值（§9.1），不用 `env(safe-area-inset-top)` |
+| 底 | 固定底栏 `padding-bottom: env(safe-area-inset-bottom)`；页面内容底部留白 = 底栏高 + 安全区 |
+| 左 / 右 | 横屏、刘海屏下用 `env(safe-area-inset-left)` / `env(safe-area-inset-right)` |
+| 内容占位 | **fixed 元素必须有等高占位**（`base-tabbar` 的 `placeholder`，默认开启），否则内容最后一行被遮 |
+
+### 9.4 登录 / 注册四态
+
+登录与注册类页面**必须**具备四态，缺一不可：
+
+| 态 | 要求 |
+|----|------|
+| loading | 提交中禁用按钮并给转圈反馈，防重复提交 |
+| error | 错误信息可见（错误条 / 行内提示），不让用户对着空白页猜 |
+| disabled | 未满足条件（未填、未勾选协议、加载中）时按钮为禁用态 |
+| 重试 | 错误态提供重试入口，失败后不用刷新页面 |
+
+**可验收断言**：
+
+| # | 断言 |
+|---|------|
+| K1 | 提交中再次点击不会发出第二次请求 |
+| K2 | 失败后页面出现错误文案且有可点的重试入口 |
+| K3 | 键盘弹起时提交按钮仍可见可点 |
+
+---
+
+## 十、变更纪律
 
 1. 改组件实现 → 同步 `props.json`、`usage.md`、对应 `*.md` 契约文档。
 2. 改触发词 → 同步 `README.md` 示例、`STANDARD.md`。
@@ -270,7 +390,7 @@ components/<category>/<component-name>/
 
 ---
 
-## 十、自检清单（提交前）
+## 十一、自检清单（提交前）
 
 ```bash
 bash scripts/check-skills.sh
@@ -284,3 +404,5 @@ bash scripts/check-skills.sh
 - [ ] `props.json` 是否仍是合法 JSON
 - [ ] 新增/移动组件是否已登记到注册表与索引层
 - [ ] 文档与实现是否一致
+- [ ] 自定义导航页是否满足 §9.1 的 N1~N4
+- [ ] 含输入框的页面是否满足 §9.2 的 K1~K3

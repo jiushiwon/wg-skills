@@ -18,6 +18,7 @@
       type="number"
       :value="display"
       :disabled="disabled || !editable"
+      :adjust-position="true"
       @input="onInput"
       @blur="onBlur"
     />

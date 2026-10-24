@@ -49,7 +49,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import BasePopup from '../../containers/base-popup/index.vue'
+import BasePopup from '../../../containers/base-popup/index.vue'
 
 interface DatePickerProps {
   /** 选中日期，格式 YYYY-MM-DD（v-model 双向绑定） */

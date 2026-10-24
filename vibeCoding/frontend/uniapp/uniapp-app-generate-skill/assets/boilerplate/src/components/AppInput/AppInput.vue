@@ -42,6 +42,8 @@ function onInput(e: UniInputEvent) {
       :type="type"
       :value="modelValue"
       :placeholder="placeholder"
+      :adjust-position="true"
+      :cursor-spacing="0"
       @input="onInput"
     >
     <text

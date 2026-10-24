@@ -14,7 +14,9 @@
     { "name": "clearable", "type": "boolean", "default": false, "desc": "有内容时显示清除按钮" },
     { "name": "error", "type": "boolean", "default": false, "desc": "错误状态，输入框描边转红" },
     { "name": "errorMessage", "type": "string", "default": "", "desc": "错误提示文案，error 为 true 时显示在控件下方" },
-    { "name": "labelWidth", "type": "string", "default": "160rpx", "desc": "标签列宽" }
+    { "name": "labelWidth", "type": "string", "default": "160rpx", "desc": "标签列宽" },
+    { "name": "adjustPosition", "type": "boolean", "default": true, "desc": "键盘弹起时是否自动上推页面（小程序端）" },
+    { "name": "cursorSpacing", "type": "number", "default": 0, "desc": "输入框与键盘的间距（px，仅 adjustPosition 为 true 时生效）" }
   ],
   "events": ["update:modelValue", "input", "blur", "focus", "clear"],
   "slots": []

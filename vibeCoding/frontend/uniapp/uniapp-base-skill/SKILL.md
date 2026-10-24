@@ -87,7 +87,11 @@ uniapp-base-skill/
 │   ├── container.md / form.md / feedback.md / list.md
 │   └── navigation.md / business.md / style.md
 ├── scripts/
-│   └── gen-commands.js          # ★ 索引生成器（改实现后必须重跑）
+│   ├── gen-commands.js          # ★ 索引生成器（改实现后必须重跑）
+│   ├── gen-easycom.js           # ★ easycom 注册块生成器（改组件位置后必须重跑）
+│   ├── check-imports.js         # 自检：相对 import 可解析 + 注册表路径齐全
+│   └── check-tables.js          # 自检：commands/*.md 的 GFM 表格未被打断
+├── easycom.json                 # ★ 生成物：全局标签注册块（合并进 pages.json）
 ├── references/
 │   ├── matching-rules.md        # 需求词 → 组件 匹配规则与冲突裁决
 │   ├── skill-matrix.md          # 技能矩阵（配套技能与协作方式）
@@ -131,6 +135,30 @@ components/<category>/<name>/
 └── usage.md       # 使用示例
 ```
 
+### 3.1 全局标签注册（easycom）
+
+本模块按三层规范分目录（容器在 `containers/`，组件在 `components/<category>/`），
+**两种目录都不满足 uni-app easycom 默认规则** `components/组件名/组件名.vue`。
+若不显式注册，页面里写 `<base-card>` / `<base-button>` 会**扫不到组件**，
+表现为「标签不报错、页面却空白」。
+
+因此把本模块复制进项目后，必须把 `easycom.json` 的内容合并进 `src/pages.json`：
+
+```json
+{
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^base-card$": "@/containers/base-card/index.vue",
+      "^base-button$": "@/components/form/base-button/index.vue"
+    }
+  }
+}
+```
+
+`easycom.json` 由 `node scripts/gen-easycom.js` 从 `components/_registry.json` 生成，
+**组件新增、移动、改名后必须重跑**，禁止手写维护。
+
 ## 四、容器原则
 
 > **所有内容型组件的外壳必须来自根容器，禁止各自手写外壳。**
@@ -154,7 +182,7 @@ components/<category>/<name>/
 
 ```vue
 <script setup lang="ts">
-import BaseCard from '../../containers/base-card/index.vue'
+import BaseCard from '../../../containers/base-card/index.vue'
 </script>
 
 <template>

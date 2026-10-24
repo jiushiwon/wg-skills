@@ -21,6 +21,7 @@
             placeholder-class="sp-input-ph"
             confirm-type="search"
             :focus="focused"
+            :adjust-position="true"
             @input="onInput"
             @confirm="onSearch"
             @clear="onClearKeyword"

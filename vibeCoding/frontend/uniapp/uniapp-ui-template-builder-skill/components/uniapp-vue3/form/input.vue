@@ -28,6 +28,7 @@
         :disabled="disabled"
         :readonly="readonly"
         :maxlength="maxlength"
+        :adjust-position="true"
         :cursor-spacing="120"
         @focus="handleFocus"
         @blur="handleBlur"

@@ -54,3 +54,7 @@ $radius-full: 9999rpx;
 $shadow-1: 0 2rpx 8rpx rgba-with-alpha($gray-900, 0.04);
 $shadow-2: 0 4rpx 12rpx rgba-with-alpha($gray-900, 0.08);
 $shadow-3: 0 8rpx 24rpx rgba-with-alpha($gray-900, 0.12);
+
+// 层级阶（吸底层级必须集中管理，禁止在组件里写裸数字）
+$z-index-navbar: 1000;
+$z-index-popup: 2000;

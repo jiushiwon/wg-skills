@@ -52,7 +52,7 @@
           >
             <slot name="message" :msg="msg" :index="index">
               <view class="chat-avatar" @click="$emit('avatarClick', msg)">
-                <base-avatar :src="msg.avatar" :nickname="msg.nickname || (msg.isSelf ? '我' : '友')" size="sm" />
+                <base-avatar :src="msg.avatar" :name="msg.nickname || (msg.isSelf ? '我' : '友')" size="sm" />
               </view>
 
               <view class="chat-main">
