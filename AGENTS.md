@@ -274,6 +274,7 @@ wg-skills/
 │   │
 │
 └── others/                            # 🧰 板块二：其他领域工具
+    ├── agent-qa-skill/                       # 应用回归、运行证据与 memidex 记忆审查
     ├── ai-speech-detector/                   # AI 风检测
     ├── electron-native-abi-fix/              # Electron 原生 ABI 修复
     ├── humanizer/                            # 去除AI写作模式（35个模式）
