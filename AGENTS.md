@@ -173,6 +173,7 @@ wg-skills/
 │   │   │   ├── go-frame-init-skill/         # Go 多框架初始化（Hertz/Fiber/Chi）
 │   │   │   ├── go-grpc-init-skill/          # Go gRPC 服务初始化（4 种流模式）
 │   │   │   ├── go-ws-module-skill/          # Go WebSocket 模块
+│   │   │   ├── go-perf-demo/                # Go 性能实测 demo（AI 版 vs 修复版，压测对照）
 │   │   │   └── go-module/                   # Go 模块矩阵
 │   │   │       └── go-storage-module-skill/ # 文件存储模块
 │   │   ├── nodejs/                          # Node.js 语言矩阵

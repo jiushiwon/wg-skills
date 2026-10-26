@@ -62,6 +62,10 @@ target/
 mvnw
 mvnw.cmd
 
+# Go 编译产物
+*.exe
+*.test
+
 # IDE / 编辑器
 .idea/
 .vscode/
