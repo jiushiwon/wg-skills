@@ -224,7 +224,7 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 - `frontend-code-doctor` — 前端代码审查
 - `frontend-request-skill` — **4 套体系共用**请求层（响应信封 + 错误码 + Token 注入 + 防抖 + Mock + SSE）
-- `frontend-style-harmonizer-skill` — 前端样式一致性
+- `frontend-style-harmonizer-skill` — 六类前端一致性审计（组件、主题、空间、兼容性、图标、请求）与样式治理
 - `frontend-ui-foundry` — 综合前端 UI
 - `frontend-icon-skill` — SVG 模板生成 + 图片处理
 - `icon-image-catch-skill`（父 + 2 子）— 图标抓取 / 图片抓取

@@ -1,17 +1,21 @@
 ---
 name: frontend-style-harmonizer-skill
-description: 前端样式一致性治理技能：发现跨页面样式重复、同类组件尺寸不一致、硬编码裸值，给出收敛方案并可自动落地为公共CSS/公共组件/CSS变量。uniapp优先，兼容vue/react/html。
+description: 前端一致性审计与样式治理：检查公共组件复用、主题Token、页面边距宽度、键盘安全区兼容性、动作图标及统一请求配置。触发词：前端审计、样式审查、组件不统一、页面边距、接口配置检查。uniapp优先，兼容vue/react/html。
 argument-hint: "[--report-only|--apply] [--scope reuse|align|hardcode|all] [path]"
 user-invocable: true
 ---
 
 # Frontend Style Harmonizer
 
-前端样式一致性治理工具。只读审计 + 可选自动重构，发现并修复三类问题：
+前端样式一致性治理工具。只读审计 + 可选自动重构，覆盖六类前端审计；样式治理保留以下三类操作：
 
 1. **复用**：多个页面写了相同的样式声明块 → 抽取为公共 CSS
 2. **对齐**：同类组件（按钮/tab/输入框/列表项）跨页面尺寸不一致 → 收敛到统一规格
 3. **硬编码**：散落的裸值（`14rpx`、`#c45c48`、`red`） → 收敛为 SCSS 变量 / CSS 变量
+
+## 前端审计范围（必读）
+
+执行审计必须读取 [六类审计清单](references/frontend-audit-checklist.md)，按公共组件、主题、页面空间、兼容性、图标、接口请求逐项输出列表。`--scope all` 包含六类；`reuse / align / hardcode` 保留原有含义，其余维度标记未检查。接口只审前端请求使用，不审后端实现，不自动修改 API 或业务状态。报告必须区分已取证问题、待验证风险和未覆盖范围。
 
 ## 核心原则
 
@@ -25,6 +29,9 @@ user-invocable: true
 ### 触发词（任一即可）
 
 ```
+前端审计
+页面边距审核
+接口配置检查
 统一各页面样式
 样式对齐
 抽取公共样式
@@ -53,10 +60,10 @@ Step 1: 检测项目类型
   → 检测依据：pages.json(uniapp) / package.json(vue/react) / index.html(html)
 
 Step 2: 收集目标文件
-  → 扫描 pages/, components/, src/ 下的 .vue/.scss/.css 文件
+  → 按项目扫描页面、组件、主题、布局和请求配置；包含 .vue/.scss/.css/.js/.ts/.jsx/.tsx/.html、pages.json、manifest.json 等适用文件
   → 忽略 node_modules, dist, .git
 
-Step 3: 按维度扫描（取决于 --scope）
+Step 3: 先读取 references/frontend-audit-checklist.md；all 按六类取证，再按样式机制分析（取决于 --scope）
   → 复用: 按 references/detection-rules.md 的"样式指纹"规则扫描
   → 对齐: 按 references/align-checklist.md 的"同类组件"规则扫描
   → 硬编码: 按 references/hardcode-patterns.md 的正则扫描
@@ -166,6 +173,10 @@ Step 5: (仅 --apply) 执行替换
 > 维度：all (reuse + align + hardcode)
 
 ---
+
+## 六类审计结果
+
+按 references/frontend-audit-checklist.md 逐项输出取证列表，并在结尾列出未覆盖的平台、自适应、请求时机、长文本及后端边界。以下表格仅用于样式专项汇总。
 
 ## 总览
 
