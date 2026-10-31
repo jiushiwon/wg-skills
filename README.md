@@ -1,6 +1,6 @@
 # wg-skills — 把古法全栈开发经验装进 AI
 
-> **158 个**面向 Claude Code / Cursor / Codex 等智能体的公开 Skills，MIT 协议。
+> **159 个**面向 Claude Code / Cursor / Codex 等智能体的公开 Skills，MIT 协议。
 > 不是提示词合集，而是一套让 AI 按统一工程规范完成“项目骨架 → 模块 → 前后端契约 → 部署 → 迭代”的基础能力体系。
 
 ---
@@ -47,9 +47,9 @@
 
 ---
 
-## 158 个技能 · 全部 MIT 公开 · 持续迭代中
+## 159 个技能 · 全部 MIT 公开 · 持续迭代中
 
-> ⚠️ **技能以实际效果为准，158 个技能都在持续迭代中**。每个技能都在真实项目里跑过，但 API、组件形态、触发词会随实战反馈调整，不保证向后兼容。
+> ⚠️ **技能以实际效果为准，159 个技能都在持续迭代中**。各技能的验证范围以对应文档或变更记录为准；API、组件形态、触发词会随实战反馈调整，不保证向后兼容。
 > 任何问题、反馈或建议，欢迎两个渠道：
 > 1. 访问 [itlifetime.com](https://itlifetime.com)（首页底部 → 加微信 **jiushiwon**）
 > 2. 在 [GitHub Issues](https://github.com/jiushiwon/wg-skills/issues) 提 issue
@@ -62,7 +62,7 @@
 | **[`vibeCoding/frontend`](#前端)** | **74** | Vue / UniApp / React / HTML / Electron / 公共能力；具体清单见下文 |
 | **[`vibeCoding/super-deploy-skills`](#部署套件)** | **16** | 部署总入口 · 数据库安装【4】· 运行时安装【4】· Docker · 原生 · Nginx · 服务器 · 环境检测 |
 | **[`vibeCoding/vibecoding-guide-skill`](#vibecoding-工作流)** | **4** | VibeCoding 总入口 · 智能体访谈 · 智能体学习 · 完整工作流 |
-| **[`others`](#其他工具)** | **8** | AI 风检测 · 人性改写 · Skill 审计 · 流程图 · 小红书写作 · Electron ABI 修复 · FFmpeg · Remotion |
+| **[`others`](#其他工具)** | **9** | agent-qa 应用回归 · AI 风检测 · 人性改写 · Skill 审计 · 流程图 · 小红书写作 · Electron ABI 修复 · FFmpeg · Remotion |
 
 > 🔒 **项目级编排技能**（完整项目骨架、跨模块编排、部署与验收套件）已迁移至私有仓库 `wg-project-kits`；本仓库继续维护免费、通用、可组合的基础 Skills。
 
@@ -270,10 +270,11 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 ### 其他工具
 
-**8 个**，覆盖写作、检测、流程图、视频处理等领域。
+**9 个**，覆盖应用回归、写作、检测、流程图、视频处理等领域。
 
 | 技能 | 说明 |
 |------|------|
+| [`agent-qa-skill`](others/agent-qa-skill/README.md) | agent-qa 应用回归与证据审查；先进的 memidex 记忆引擎与自我改进能力 |
 | `ai-speech-detector` | AI 风检测（识别 AI 生成文本） |
 | `humanizer` | 去除 AI 写作模式（35 个模式识别） |
 | `skill-auditor` | Skill 安全审计 |
@@ -390,7 +391,7 @@ api-contract.md  ← 前后端唯一事实来源
 
 ---
 
-## 为什么开放 + 为什么 158 个
+## 为什么开放 + 为什么 159 个
 
 之前这个仓库是分层结构（精选 23 个公开 + 全量私有）。经过两轮迭代决定：
 
