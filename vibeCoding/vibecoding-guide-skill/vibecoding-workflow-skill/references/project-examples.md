@@ -32,7 +32,7 @@
 ### 推荐路线
 
 1. 用 `vibecoding-workflow-skill` 输出 roadmap
-2. 用 `backend-generate-skill` 生成 Node.js 骨架
+2. 用 `backend-select-skill` 生成 Node.js 骨架
 3. 用 `frontend-ui-foundry` 生成前端界面
 4. 用 `super-deploy-skills` 部署上线
 
@@ -65,7 +65,7 @@
 
 1. 用 `vibecoding-workflow-skill` 输出 roadmap
 2. 用 `uniapp-app-generate-skill` 生成小程序项目
-3. 用 `backend-generate-skill` 生成后端骨架
+3. 用 `backend-select-skill` 生成后端骨架
 4. 用 `module-generate-skill` 添加支付模块
 5. 用 `super-deploy-skills` 部署后端和小程序
 
@@ -144,7 +144,7 @@
 ### 推荐路线
 
 1. 用 `vibecoding-workflow-skill` 输出 roadmap
-2. 用 `backend-generate-skill` 生成 Python 后端骨架
+2. 用 `backend-select-skill` 生成 Python 后端骨架
 3. 用 `frontend-ui-foundry` 生成管理后台界面
 4. 用 `module-generate-skill` 添加 AI 聊天模块
 5. 用 `super-deploy-skills` 部署上线
@@ -187,7 +187,7 @@
 ### 推荐路线
 
 1. 用 `vibecoding-workflow-skill` 输出 roadmap
-2. 用 `backend-generate-skill` 生成 Node.js 服务
+2. 用 `backend-select-skill` 生成 Node.js 服务
 3. 接入 GitHub/GitLab Webhook
 4. 用 LLM 分析 diff 并生成评论
 

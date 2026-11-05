@@ -1,6 +1,6 @@
 # wg-skills — 把古法全栈开发经验装进 AI
 
-> **158 个**面向 Claude Code / Cursor / Codex 等智能体的公开 Skills，MIT 协议。
+> **160 个**面向 Claude Code / Cursor / Codex 等智能体的公开 Skills，MIT 协议。
 > 不是提示词合集，而是一套让 AI 按统一工程规范完成“项目骨架 → 模块 → 前后端契约 → 部署 → 迭代”的基础能力体系。
 
 ---
@@ -47,9 +47,9 @@
 
 ---
 
-## 158 个技能 · 全部 MIT 公开 · 持续迭代中
+## 160 个技能 · 全部 MIT 公开 · 持续迭代中
 
-> ⚠️ **技能以实际效果为准，158 个技能都在持续迭代中**。每个技能都在真实项目里跑过，但 API、组件形态、触发词会随实战反馈调整，不保证向后兼容。
+> ⚠️ **技能以实际效果为准，160 个技能都在持续迭代中**。每个技能都在真实项目里跑过，但 API、组件形态、触发词会随实战反馈调整，不保证向后兼容。
 > 任何问题、反馈或建议，欢迎两个渠道：
 > 1. 访问 [itlifetime.com](https://itlifetime.com)（首页底部 → 加微信 **jiushiwon**）
 > 2. 在 [GitHub Issues](https://github.com/jiushiwon/wg-skills/issues) 提 issue
@@ -58,8 +58,8 @@
 
 | 板块 | 数量 | 子分类 |
 |------|------|--------|
-| **[`vibeCoding/backend`](#后端)** | **55** | Java / Python / Go / Node.js / Rust / 数据库 / 公共规范；具体清单见下文 |
-| **[`vibeCoding/frontend`](#前端)** | **74** | Vue / UniApp / React / HTML / Electron / 公共能力；具体清单见下文 |
+| **[`vibeCoding/backend`](#后端)** | **56** | Java / Python / Go / Node.js / Rust / 数据库 / 公共规范；具体清单见下文 |
+| **[`vibeCoding/frontend`](#前端)** | **76** | Vue / UniApp / React / HTML / Electron / 公共能力；具体清单见下文 |
 | **[`vibeCoding/super-deploy-skills`](#部署套件)** | **16** | 部署总入口 · 数据库安装【4】· 运行时安装【4】· Docker · 原生 · Nginx · 服务器 · 环境检测 |
 | **[`vibeCoding/vibecoding-guide-skill`](#vibecoding-工作流)** | **4** | VibeCoding 总入口 · 智能体访谈 · 智能体学习 · 完整工作流 |
 | **[`others`](#其他工具)** | **8** | AI 风检测 · 人性改写 · Skill 审计 · 流程图 · 小红书写作 · Electron ABI 修复 · FFmpeg · Remotion |
@@ -175,13 +175,13 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 #### 公共规范层
 
-`vibeCoding/backend/shared/` — 响应信封 / 错误码 / JWT / 分页 / API 契约模板（5 个规范）
+`vibeCoding/backend/shared/` — 响应信封 / 错误码 / JWT / 分页 / API 契约模板 / 模块输出（6 个规范）
 
 ---
 
 ### 前端
 
-**78 个**，按 4 套体系组织。
+**76 个**，按 4 套体系组织。
 
 #### Vue 体系（43 个）— SPA + SSR
 
@@ -197,7 +197,7 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 - `nuxt-generate-skill` — Nuxt 3 + TS + Pinia 全栈（SSR/SEO）
 - `electron-vue-init-skill` — Electron + Vue3 桌面端
 
-#### UniApp 体系（16 个）— 跨端小程序
+#### UniApp 体系（15 个）— 跨端小程序
 
 `uniapp-base-skill`（基础组件与容器唯一真源：6 个根容器 + 26 个组件）+ 15 个独立技能，
 模块入口地图见 [`vibeCoding/frontend/uniapp/README.md`](vibeCoding/frontend/uniapp/README.md)（15 环节 → skill → 触发词）：
@@ -220,11 +220,13 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 - `html-frontend-template` — 纯 HTML 管理后台模板（**下一个重点建设方向**）
 
-#### 综合前端（9 个）
+#### 综合前端（11 个）
 
 - `frontend-code-doctor` — 前端代码审查
 - `frontend-request-skill` — **4 套体系共用**请求层（响应信封 + 错误码 + Token 注入 + 防抖 + Mock + SSE）
-- `frontend-style-harmonizer-skill` — 前端样式一致性
+- `frontend-style-harmonizer-skill` — 前端 UI 一致性审查：Token、页面间距/固定区、组件契约、图标语义、键盘安全区与重复样式（兼容原样式治理调用）
+- `mobile-safe-area-audit-skill` — 移动端安全区与键盘审计修复：顶部胶囊、iPhone 底部 Home Indicator、固定操作栏、输入框顶起和多端差异
+- `mobile-uiux-spec-skill` — 移动端 UI/UX 设计与交付规范：iOS、Android、小程序、H5、鸿蒙的单位、尺寸、触控、安全区与真机验收
 - `frontend-ui-foundry` — 综合前端 UI
 - `frontend-icon-skill` — SVG 模板生成 + 图片处理
 - `icon-image-catch-skill`（父 + 2 子）— 图标抓取 / 图片抓取
@@ -390,7 +392,7 @@ api-contract.md  ← 前后端唯一事实来源
 
 ---
 
-## 为什么开放 + 为什么 158 个
+## 为什么开放 + 为什么 160 个
 
 之前这个仓库是分层结构（精选 23 个公开 + 全量私有）。经过两轮迭代决定：
 

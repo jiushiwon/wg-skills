@@ -18,9 +18,9 @@
 - 需要标准化 FastAPI 骨架的开发团队
 - 需要内置 SSE 流式、JWT 鉴权、Swagger 文档的原型项目
 
-**与 python-backend-skill 的区别**：
+**与传统手动搭建的区别**：
 
-| 维度 | python-backend-skill | fastapi-init-skill |
+| 维度 | 传统手动搭建 | fastapi-init-skill |
 |------|---------------------|--------------------|
 | 目标用户 | 后端开发者 | **零基础小白** |
 | 环境安装 | 用户自己装 | **自动检测 + 自动安装** |
@@ -48,7 +48,7 @@ create fastapi project、fastapi starter
 
 ### 2.2 自动触发逻辑
 
-当用户消息包含上述任一关键词，且未明确指定使用 python-backend-skill 时，自动路由到本技能。
+当用户消息包含上述任一关键词，且未明确指定其他后端生成方式时，自动路由到本技能。
 
 ---
 
@@ -632,7 +632,7 @@ const eventSource = new EventSource(
 
 ## 十五、红线（不可绕过）
 
-1. **不做 python-backend-skill 已做的事**：不重复生成同样的骨架代码，本 skill 生成的是更完整、更小白友好的版本。
+1. **不做传统手动搭建已做的事**：不重复生成同样的骨架代码，本 skill 生成的是更完整、更小白友好的版本。
 2. **不硬编码版本号**：Python / FastAPI / 依赖版本一律现场查询官方源最新稳定版。
 3. **不跳过环境探测**：生成前必须先检查用户环境，无法安装则给出明确提示。
 4. **不强制安装系统级数据库**：若本机有 Docker，`restart` 脚本或用户可参照 `references/db-guide.md` 快速启动开发数据库；否则提供 Docker 启动命令，由用户自行启动。

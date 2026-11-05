@@ -106,7 +106,7 @@ FLUSH PRIVILEGES;
 SQL
 ```
 
-> Docker 镜像限制：官方 MySQL 镜像拒绝 `root` 作为 `MYSQL_USER`，业务账号用 `app` 等非 root 名（与 `backend-generate-skill/database-skill` 的 MySQL 规范一致）。
+> Docker 镜像限制：官方 MySQL 镜像拒绝 `root` 作为 `MYSQL_USER`，业务账号用 `app` 等非 root 名（与 `database-design-skill` 的 MySQL 规范一致）。
 
 ## MongoDB
 

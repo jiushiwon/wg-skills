@@ -199,9 +199,12 @@ wg-skills/
 │   │   ├── crypto-scenario-skill/            # 加密场景选型（密码/支付验签/JWT/敏感字段/文件校验）
 │   │
 │   ├── frontend/                      # 前端 4 套体系（Vue / UniApp / React / HTML）
+│   │   ├── AGENTS.md                  # 前端公共规范与职责边界
 │   │   ├── frontend-code-doctor/             # 前端代码审查
 │   │   ├── frontend-request-skill/           # 前端请求层规范（4 套体系共用）
-│   │   ├── frontend-style-harmonizer-skill/  # 前端样式一致性
+│   │   ├── frontend-style-harmonizer-skill/  # 前端 UI 一致性审查（Token / 空间责任 / 固定区与键盘 / 组件 / 图标 / 平台状态）
+│   │   ├── mobile-safe-area-audit-skill/     # 移动端安全区与键盘审计修复（uni-app / H5 / 小程序）
+│   │   ├── mobile-uiux-spec-skill/            # 移动端 UI/UX 设计与交付规范（iOS / Android / 小程序 / H5 / 鸿蒙）
 │   │   ├── frontend-ui-foundry/              # 综合前端 UI
 │   │   ├── html/                             # HTML 体系（下一个重点方向）
 │   │   │   └── html-frontend-template/       # 纯 HTML 管理后台模板
@@ -329,6 +332,7 @@ wg-skills/
 
 | 技术栈 | 模块级 `AGENTS.md` | 个体级 `STANDARD.md` |
 |--------|-------------------|---------------------|
+| frontend 公共层 | ✅ `vibeCoding/frontend/AGENTS.md` | 渐进式补齐 |
 | uniapp | ✅ `vibeCoding/frontend/uniapp/AGENTS.md` | ✅ 15 / 15 |
 | vue | ⬜ 待补 | ⬜ 待补 |
 | java / go / python / nodejs / react | ⬜ 待补 | ⬜ 待补 |

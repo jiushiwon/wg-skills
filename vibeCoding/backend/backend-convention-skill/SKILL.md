@@ -35,7 +35,7 @@ description: Use when generating or reviewing any backend project that needs cro
 
 后端 skill 主体第一句必须声明：
 
-> 依赖：backend-convention-skill（规范）、database-skill（DB）
+> 依赖：backend-convention-skill（规范）、database-design-skill（DB）
 
 生成代码时：
 - 信封/错误码/分页 → 按 `response-format.md`
