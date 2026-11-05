@@ -51,11 +51,11 @@ Vue3 高端 PC 端 AI 聊天页技能，6 种真正差异化的视觉风格。
     <aside v-if="showSidebar" class="chat-sidebar">
       <div class="chat-sidebar__header">
         <slot name="sidebar-header">
-          <button class="chat-sidebar__new-btn" @click="$emit('conversation-select', '')">+ 新对话</button>
+          <div role="button" tabindex="0" class="chat-sidebar__new-btn" @click="$emit('conversation-select', '')" @keydown.enter="$emit('conversation-select', '')" @keydown.space.prevent="$emit('conversation-select', '')">+ 新对话</div>
         </slot>
       </div>
       <div class="chat-sidebar__search">
-        <input type="text" placeholder="搜索对话..." v-model="searchQuery" />
+        <div contenteditable="true" role="textbox" class="chat-sidebar__search-input" data-placeholder="搜索对话..." @input="searchQuery = ($event.target as HTMLElement).innerText"></div>
       </div>
       <div class="chat-sidebar__list">
         <div
@@ -106,7 +106,7 @@ Vue3 高端 PC 端 AI 聊天页技能，6 种真正差异化的视觉风格。
               <div v-if="msg.code" class="chat-code-block">
                 <div class="chat-code-block__header">
                   <span class="chat-code-block__lang">{{ msg.language || 'code' }}</span>
-                  <button class="chat-code-block__copy" @click="copyCode(msg.code!)">复制</button>
+                  <div role="button" tabindex="0" class="chat-code-block__copy" @click="copyCode(msg.code!)" @keydown.enter="copyCode(msg.code!)">复制</div>
                 </div>
                 <pre class="chat-code-block__pre"><code>{{ msg.code }}</code></pre>
               </div>
@@ -132,15 +132,16 @@ Vue3 高端 PC 端 AI 聊天页技能，6 种真正差异化的视觉风格。
       <!-- 输入区域 -->
       <div class="chat-input-area">
         <div class="chat-input-area__wrapper">
-          <button class="chat-input-area__attach" title="附件"><!-- SVG attach icon --></button>
-          <textarea
+          <div role="button" tabindex="0" class="chat-input-area__attach" title="附件"><!-- SVG attach icon --></div>
+          <div
+            contenteditable="true"
+            role="textbox"
             ref="inputRef"
-            v-model="inputText"
-            :placeholder="inputPlaceholder"
+            :data-placeholder="inputPlaceholder"
             class="chat-input-area__textarea"
-            @keydown.enter.exact="handleSend"
-            @input="autoResize"
-          />
+            @keydown.enter.exact.prevent="handleSend"
+            @input="inputText = ($event.target as HTMLElement).innerText; autoResize()"
+          ></div>
           <base-button
             type="primary"
             size="sm"

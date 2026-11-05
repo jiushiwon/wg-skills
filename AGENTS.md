@@ -577,11 +577,11 @@ grep -rnE '<(button|input|select|table|tr|td|th|textarea|form|option|label|field
   --include="*.md" \
   --exclude="base-upload.md" \
   ./vibeCoding/frontend/vue/vue-base-skill \
-  ./vibeCoding/frontend/vue/vue-form-skill \
-  ./vibeCoding/frontend/vue/vue-table-skill
+  ./vibeCoding/frontend/vue/vue-base-skill/vue-form-skill \
+  ./vibeCoding/frontend/vue/vue-base-skill/vue-table-skill
 
 # ❌ 错误：把 demo HTML 也纳入审计（会大量误报，无需修复）
-grep -rnE '<button' ./vibeCoding/frontend/vue/vue-table-skill/demo-components
+grep -rnE '<button' ./vibeCoding/frontend/vue/vue-base-skill/vue-table-skill/demo-components
 ```
 
 ### 12.6 修复责任划分
@@ -679,7 +679,7 @@ grep -rnE '<button' ./vibeCoding/frontend/vue/vue-table-skill/demo-components
 
 **体系间共享**：
 - `frontend-request-skill`：4 套体系共用同一套请求层规范（响应信封、错误码、Token 注入、防抖、Mock、SSE）
-- Design Token 命名：Vue 与 UniApp **完全对齐**（`--color-primary-{50~950}`、`--space-{n}`、`--font-{size}`）
+- Design Token 命名：Vue 与 UniApp **语义色简写与工具类 Token 对齐**（`--color-primary`、`--color-error`、`--space-{n}`、`--font-{size}`、`--radius-{size}`、`--shadow-{size}`、`--z-index-*`）。色阶前缀为各栈实现细节：Vue 用 `--color-primary-{50~950}`，UniApp 用 `--primary-{50~950}`（并映射到 `--color-primary` 简写）
 - api-contract.md：4 套体系共用同一份后端接口契约
 
 ### 13.3 后端统一分层
