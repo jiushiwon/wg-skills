@@ -40,11 +40,11 @@ description: 当用户要创建 Next.js 14+（React 生态的全栈框架，非 
 
 | next-generate-skill 输出 | 对应 frontend-request-skill 标准 |
 |--------------------------|--------------------------------|
-| `lib/api/client.ts` | `references/frontend-spec.md`（fetch 标准实现） |
-| `lib/services/auth.service.ts` | `references/auth-patterns.md`（Token 刷新队列） |
-| `lib/utils/{error,toast,auth}.ts` | `references/error-handling.md` + `auth-patterns.md` |
-| `lib/config/{api,error}.config.ts` | `references/frontend-spec.md`（BASE_URL + ERROR_CODE_MAP） |
-| `lib/hooks/useAuth.ts` | `references/auth-patterns.md` |
+| `lib/api/client.ts` | `frontend-request-skill/references/frontend-spec.md`（fetch 标准实现） |
+| `lib/services/auth.service.ts` | `frontend-request-skill/references/auth-patterns.md`（Token 刷新队列） |
+| `lib/utils/{error,toast,auth}.ts` | `frontend-request-skill/references/error-handling.md` + `frontend-request-skill/references/auth-patterns.md` |
+| `lib/config/{api,error}.config.ts` | `frontend-request-skill/references/frontend-spec.md`（BASE_URL + ERROR_CODE_MAP） |
+| `lib/hooks/useAuth.ts` | `frontend-request-skill/references/auth-patterns.md` |
 | 响应信封 `{ code, message, data }` | 与 `各 init-skill 内置的统一响应规范` 一致 |
 
 **接入本 Skill 前，请先阅读 `frontend-request-skill` 的 SKILL.md 与核心 reference。**

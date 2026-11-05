@@ -72,4 +72,4 @@ pip3 --version
 
 ## Resources
 
-- [references/install-commands.md](references/install-commands.md) — 各 OS 安装命令
+各 OS 安装命令见父技能 `runtime-install-skill` 的 `references/install-commands.md`。

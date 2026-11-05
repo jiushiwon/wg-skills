@@ -382,9 +382,6 @@ func (c *Client) readPump() {
 | 文件 | 内容 |
 |------|------|
 | `references/skeleton.go` | 完整模块代码模板 |
-| `references/ws-protocol.md` | WebSocket 消息协议详细规范 |
-| `references/heartbeat-guide.md` | 心跳保活与断线重连方案 |
-| `references/friend-guide.md` | 好友关系约束与集成方式 |
 
 ## 强制交付物
 

@@ -169,7 +169,7 @@ M8（DOM 式图片兜底）、M9（登录 / 注册页缺四态）。
 - `uniapp-standard-skill` — 红线规则（R01-R20）、目录结构、接口规范、性能规范
 - `uniapp-app-generate-skill` — 项目骨架、主题系统、组件标准、跨平台规范
 - `frontend-request-skill` — 请求层封装、API 契约、错误处理（通用 Web/uniapp 双端）
-- `uniapp-auth-skill` — 登录鉴权、Token 管理、安全规范（详见 `references/auth-framework.md` 与 `security.md`）
+- `uniapp-auth-skill` — 登录鉴权、Token 管理、安全规范（详见其 `references/security.md`）
 - `uniapp-style-skill` — 设计系统、Token 体系、组件规范
 - `uniapp-theme-skill` — 主题系统一致性治理
 

@@ -23,9 +23,9 @@ Vue3 高端 PC 端 AI 聊天页技能，6 种真正差异化的视觉风格。
 
 | 用到 | 来源 | 文件 |
 |------|------|------|
-| 消息卡片容器 | vue-base-skill | [base-card.md](../base-card.md) |
-| 发送按钮 | vue-button-skill | [base-button.md](../vue-button-skill/base-button.md) |
-| 操作按钮 | vue-button-skill | [base-button.md](../vue-button-skill/base-button.md) |
+| 消息卡片容器 | vue-base-skill | [base-card.md](../../base-card.md) |
+| 发送按钮 | vue-button-skill | [base-button.md](../../vue-button-skill/base-button.md) |
+| 操作按钮 | vue-button-skill | [base-button.md](../../vue-button-skill/base-button.md) |
 
 **禁止**自定义 div 实现按钮。所有原子组件必须从上述技能引用。
 

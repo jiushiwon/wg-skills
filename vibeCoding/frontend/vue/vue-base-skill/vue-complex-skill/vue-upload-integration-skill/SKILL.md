@@ -27,14 +27,14 @@ trigger: |
 
 | 技能 | 组件 / API | 用途 |
 |------|-----------|------|
-| [vue-upload-skill](../vue-upload-skill/) | `base-upload mode="file"` | 通用文件上传 |
+| [vue-upload-skill](../../vue-upload-skill/) | `base-upload mode="file"` | 通用文件上传 |
 | | `base-upload mode="image"` | 图片上传（预览/裁剪/压缩） |
 | | `base-upload mode="list"` | 文件列表展示 |
-| [vue-form-skill](../vue-form-skill/) | base-form / base-form-item | 表单容器 + 表单项 |
-| [vue-card-skill](../vue-card-skill/) | base-card | 根容器 |
-| [vue-button-skill](../vue-button-skill/) | base-button | 操作按钮 |
-| [vue-tag-skill](../vue-tag-skill/) | base-tag | 状态标签 |
-| [frontend-request-skill](../../../frontend-request-skill/) | upload() | 上传请求封装 |
+| [vue-form-skill](../../vue-form-skill/) | base-form / base-form-item | 表单容器 + 表单项 |
+| [vue-card-skill](../../vue-card-skill/) | base-card | 根容器 |
+| [vue-button-skill](../../vue-button-skill/) | base-button | 操作按钮 |
+| [vue-tag-skill](../../vue-tag-skill/) | base-tag | 状态标签 |
+| [frontend-request-skill](../../../../frontend-request-skill/) | upload() | 上传请求封装 |
 
 ## 场景矩阵
 
@@ -541,9 +541,9 @@ export async function upload<T = string>(options: UploadOptions): Promise<T> {
 
 | 后端框架 | 上传接口文档 |
 |----------|-------------|
-| FastAPI (Python) | [vue-upload-skill/references/backend-contract.md](../vue-upload-skill/references/backend-contract.md#fastapi-python) |
-| Spring Boot (Java) | [vue-upload-skill/references/backend-contract.md](../vue-upload-skill/references/backend-contract.md#spring-boot-java) |
-| Go Gin | [vue-upload-skill/references/backend-contract.md](../vue-upload-skill/references/backend-contract.md#go-gin) |
+| FastAPI (Python) | [vue-upload-skill/references/backend-contract.md](../../vue-upload-skill/references/backend-contract.md#fastapi-python) |
+| Spring Boot (Java) | [vue-upload-skill/references/backend-contract.md](../../vue-upload-skill/references/backend-contract.md#spring-boot-java) |
+| Go Gin | [vue-upload-skill/references/backend-contract.md](../../vue-upload-skill/references/backend-contract.md#go-gin) |
 
 **统一响应**：`{ code: 0, message: 'success', data: { url, name, size } }`
 

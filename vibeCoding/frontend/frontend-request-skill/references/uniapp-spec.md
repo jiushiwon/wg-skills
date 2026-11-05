@@ -26,8 +26,8 @@ export const REQUEST_RETRY_COUNT = 0;
 export const SUCCESS_CODES: (string | number)[] = [0];
 
 // 与 401 同等处理的业务失败码
-// api-contract.md §7.2：-1 是 JWT 鉴权失效的强约定，必须包含
-export const AUTH_FAILURE_CODES: (string | number)[] = [-1];
+// api-contract.md §7.2：-1002 是 JWT 鉴权失效的强约定，必须包含
+export const AUTH_FAILURE_CODES: (string | number)[] = [-1002];
 
 // Mock 全局开关：true 时所有请求强制走 Mock
 export const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true';
@@ -183,7 +183,7 @@ function shouldSetJsonContentType(data: any): boolean {
 function responseInterceptor<T>(res: any, options: RequestOptions): ApiResponse<T> {
   const { statusCode, data } = res;
 
-  // HTTP 401 或业务 code === -1（JWT 鉴权失效，api-contract.md §7.2）
+  // HTTP 401 或业务 code === -1002（JWT 鉴权失效，api-contract.md §7.2）
   if (statusCode === 401 || AUTH_FAILURE_CODES.includes(data?.code)) {
     throw formatError('UNAUTHORIZED', data?.message || '登录已过期', res);
   }

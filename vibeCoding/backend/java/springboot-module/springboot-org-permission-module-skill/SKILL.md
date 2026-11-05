@@ -27,7 +27,7 @@ description: 【已废弃·转发页】组织架构 / 部门管理 / 角色权�
 | 方法级鉴权 | 未提及 | **强制**（`@EnableMethodSecurity` + `@PreAuthorize`） |
 | 数据权限 | 未定义档位 | **4 档，多角色取最宽** |
 | 回填接口 | 未提及 | **强制 3 个** |
-| 代码 | 全篇省略号伪代码（`// 递归构建树`），不可运行 | `references/skeleton.md` 提供可运行代码 |
+| 代码 | 全篇省略号伪代码（`// 递归构建树`），不可运行 | `../springboot-auth-module-skill/references/skeleton.md` 提供可运行代码 |
 
 **典型翻车现场**：同一个项目里出现三种表前缀（`{prefix}_sys_*` / `{prefix}_user` / `sys_*`），"分配菜单"永远回填空树，后端零 `@PreAuthorize`。
 

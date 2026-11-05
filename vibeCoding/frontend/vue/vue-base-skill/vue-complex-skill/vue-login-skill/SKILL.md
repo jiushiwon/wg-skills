@@ -30,12 +30,12 @@ Vue3 高端 PC 端登录页技能，9 种**结构级差异化**视觉风格 + 5 
 
 | 用到 | 来源 | 文件 |
 |------|------|------|
-| 卡片容器 | vue-base-skill | [base-card.md](../base-card.md) |
-| 表单 | vue-form-skill | [base-form.md](../vue-form-skill/base-form.md) |
-| 表单项 | vue-form-skill | [base-form-item.md](../vue-form-skill/base-form-item.md) |
-| 输入框 | vue-form-skill | [base-input.md](../vue-form-skill/base-input.md) |
-| 复选框 | vue-form-skill | [base-checkbox.md](../vue-form-skill/base-checkbox.md) |
-| 按钮 | vue-button-skill | [base-button.md](../vue-button-skill/base-button.md) |
+| 卡片容器 | vue-base-skill | [base-card.md](../../base-card.md) |
+| 表单 | vue-form-skill | [base-form.md](../../vue-form-skill/base-form.md) |
+| 表单项 | vue-form-skill | [base-form-item.md](../../vue-form-skill/base-form-item.md) |
+| 输入框 | vue-form-skill | [base-input.md](../../vue-form-skill/base-input.md) |
+| 复选框 | vue-form-skill | [base-checkbox.md](../../vue-form-skill/base-checkbox.md) |
+| 按钮 | vue-button-skill | [base-button.md](../../vue-button-skill/base-button.md) |
 
 **禁止**自定义 div 实现 input/button/checkbox。所有原子组件必须从上述技能引用。
 
@@ -273,7 +273,7 @@ vue-login-skill/
 
 ## 设计 Token
 
-所有组件统一引用 [vue-theme-skill](../../vue-theme-skill/)。
+所有组件统一引用 [vue-theme-skill](../../../vue-theme-skill/)。
 
 变体装饰色（rgba 硬编码，token 缺失）：
 - dark 边框/焦点：`#0ff`（cyan）
@@ -297,7 +297,7 @@ vue-login-skill
 
 ## 相关技能
 
-- [vue-base-skill](../SKILL.md) — 基础组件父技能
-- [vue-form-skill](../vue-form-skill/SKILL.md) — 表单体系
-- [vue-button-skill](../vue-button-skill/SKILL.md) — 按钮组件
-- [vue-theme-skill](../../vue-theme-skill/SKILL.md) — 设计 Token
+- [vue-base-skill](../../SKILL.md) — 基础组件父技能
+- [vue-form-skill](../../vue-form-skill/SKILL.md) — 表单体系
+- [vue-button-skill](../../vue-button-skill/SKILL.md) — 按钮组件
+- [vue-theme-skill](../../../vue-theme-skill/SKILL.md) — 设计 Token

@@ -63,7 +63,7 @@ description: Node.js + Express 项目一键初始化技能。面向零基础小�
 
 ### 第二步：环境探测
 
-按 `references/env-setup.md` 流程执行：
+环境探测流程：
 
 1. 检测 Node.js 是否安装 / 版本（需 >= 18 LTS）
 2. 检测 npm 是否可用
@@ -143,12 +143,6 @@ description: Node.js + Express 项目一键初始化技能。面向零基础小�
 | 文件 | 内容 |
 |------|------|
 | `references/skeleton.md` | 精简目录结构 + 核心文件代码模板（app/config/database/middlewares/controllers/routes） |
-| `references/env-setup.md` | 环境探测流程、自动安装逻辑、常见问题排错 |
-| `references/db-guide.md` | 数据库选型、MongoDB/MySQL/PG 连接配置、Docker 启动命令 |
-| `references/auth-guide.md` | JWT 鉴权方案、passport.js 集成、token 刷新 |
-| `references/upload-guide.md` | 文件上传 multer 配置、存储策略、大小限制 |
-| `references/middleware-guide.md` | 中间件链（helmet→cors→body-parser→auth→router→error） |
-| `references/startup-scripts.md` | package.json scripts 模板（dev/prod 双模式） |
 | `references/api-contract-template.md` | 生成项目根目录 `api-contract.md` 的模板 |
 | `references/project-guide-template.md` | 生成项目 `docs/project-guide.md` 的模板 |
 

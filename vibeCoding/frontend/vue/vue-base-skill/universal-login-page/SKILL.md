@@ -166,7 +166,7 @@ VibCoder 开发了 3 个系统：
 
 > 表单字段类型 → 组件映射规范见 [vue-form-skill/references/form-contract.md](../vue-form-skill/references/form-contract.md)
 >
-> 接口契约见 [frontend-request-skill/references/api-contract.md](../frontend-request-skill/references/api-contract.md)
+> 接口契约见 [frontend-request-skill/references/api-contract.md](../../../frontend-request-skill/references/api-contract.md)
 
 ## 验证技能清单
 

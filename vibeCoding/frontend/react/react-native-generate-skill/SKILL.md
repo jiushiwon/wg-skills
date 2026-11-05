@@ -58,7 +58,7 @@ description: React Native 项目一键初始化技能。面向零基础小白，
 
 ### 第二步：环境探测
 
-按 `references/env-setup.md` 流程执行：
+环境探测流程：
 
 1. 检测 Node.js 是否安装（需 >= 18 LTS）
 2. 检测 Java JDK（Android 开发需要 JDK 17+）

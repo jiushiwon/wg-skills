@@ -236,7 +236,6 @@ vue-base-skill/
     ├── base-radio.md
     ├── base-switch.md
     ├── base-datepicker.md
-    ├── references/validation-rules.md
     └── demo-components/base-form/ + shared/
 ```
 
