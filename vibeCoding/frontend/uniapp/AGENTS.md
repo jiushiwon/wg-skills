@@ -117,7 +117,9 @@ uniapp 目录下的技能**不是并列的**，而是分层的。任何新增技
 
 | 类别 | 前缀 | 示例 |
 |------|------|------|
-| 语义色 | `--color-*` | `--color-primary` `--color-error` |
+| 语义色（简写） | `--color-*` | `--color-primary` `--color-error` |
+| 色阶（原始值） | `--primary-*` `--secondary-*` `--tertiary-*` `--gray-*` | `--primary-500` `--gray-200` |
+| 原始语义色 | `--success` `--warning` `--error` `--info` | `--error` `--success` |
 | 文字 | `--text-*` | `--text-primary` `--text-tertiary` |
 | 背景 | `--bg-*` | `--bg-page` `--bg-card` |
 | 线条 | `--border*` | `--border` `--border-light` |

@@ -191,19 +191,6 @@ Lambda相关：Lambda、stream、filter、map、reduce
 └─────────────────────────────────────────────┘
 ```
 
-## 引用索引
-
-| 文件 | 内容 |
-|------|------|
-| `references/java-basics.md` | 数据类型、变量、运算符、流程控制完整笔记 |
-| `references/oop-basics.md` | 面向对象：类、对象、继承、多态、接口 |
-| `references/collection-guide.md` | 集合框架详解与选型指南 |
-| `references/exception-guide.md` | 异常处理最佳实践 |
-| `references/io-guide.md` | IO 流与文件操作 |
-| `references/thread-guide.md` | 多线程与并发基础 |
-| `references/enum-guide.md` | 枚举使用指南 |
-| `references/lambda-guide.md` | Lambda 与 Stream API 入门 |
-
 ## 不做
 
 - 不提供完整的 Java 教程（太长）

@@ -92,15 +92,15 @@ wg-skills/
 ├── README.md              ← 产品页（5 分钟能力地图）
 ├── ONBOARDING.md          ← 本文件（5 分钟新手路径）
 ├── AGENTS.md              ← 规则 SoT（维护者读）
-├── CHANGELOG.md           ← 待补（聚合自 frontmatter）
-├── ARCHITECTURE.md        ← 待补（实际拓扑图）
+├── CHANGELOG.md           ← 变更聚合
+├── ARCHITECTURE.md        ← 实际拓扑图
 ├── MISSING_SKILLS.md      ← 4 个私有 skill 登记
 ├── .gitignore             ← 证书/私钥/数据库已覆盖
 ├── docs/
 │   ├── plans/             ← 本地沉淀
 │   ├── adr/               ← 待补（关键决策记录）
 │   └── skill-graph.yaml   ← 待补（机器可读关联图）
-└── vibeCoding/            ← 150 个 skill 都在这里（连同 others/ 共 159 个）
+└── vibeCoding/            ← 152 个 skill 都在这里（连同 others/ 共 161 个）
     ├── backend/           ← Java/Python/Go/Node.js/Rust + 数据库
     ├── frontend/          ← Vue/UniApp/React/HTML
     ├── super-deploy-skills/

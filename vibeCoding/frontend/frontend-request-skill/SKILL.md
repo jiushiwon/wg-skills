@@ -27,7 +27,7 @@ description: Use when designing or reviewing the request layer of a frontend pro
 > - **登录页/管理页接口契约**
 > - **请求头规范**（Authorization / Content-Type / X-Request-ID）
 > - **响应信封** `{ code, message, data }`
-> - **错误码契约**（`code<0` 异常，`>=0` 成功，**`-1` 特殊 = JWT 鉴权失效**）
+> - **错误码契约**（`code<0` 异常，`>=0` 成功，**`-1002` 特殊 = JWT 鉴权失效**）
 > - **showError 参数语义**（默认 `false` 自动弹，`true` 调用方自己处理）
 > - **HTTP 500 兜底**（强制 swallow 用户 Toast，交给全局错误处理）
 
@@ -151,10 +151,10 @@ export interface ApiResponse<T = any> {
 |-----------|------|----------|
 | `code = 0` | 业务成功 | 正常返回 `data` |
 | `code < 0` | 业务异常 | 抛出 `RequestError`，错误码为对应的负数值 |
-| `code = -1` | **JWT 鉴权失效**（未登录 / Token 无效 / 过期 / 未传递） | 触发 Token 刷新流程，等同 HTTP 401 |
+| `code = -1002` | **JWT 鉴权失效**（未登录 / Token 无效 / 过期 / 未传递） | 触发 Token 刷新流程，等同 HTTP 401 |
 | `code > 0` | 按项目约定（若存在） | 默认也视为业务异常 |
 
-> 本项目示例默认 `SUCCESS_CODES = [0]`、`AUTH_FAILURE_CODES = [-1]`。如果你的后端约定不同，请在 `src/config/api.config.ts` 中调整。
+> 本项目示例默认 `SUCCESS_CODES = [0]`、`AUTH_FAILURE_CODES = [-1002]`。如果你的后端约定不同，请在 `src/config/api.config.ts` 中调整。
 
 ### showError 参数语义（与 api-contract.md §8 严格对齐）
 
@@ -256,7 +256,7 @@ export interface TokenResponse {
 >
 > 请求头：`Authorization: Bearer <token>`。
 >
-> 失效标识：`HTTP 401` 或 `code === -1`。
+> 失效标识：`HTTP 401` 或 `code === -1002`。
 >
 > 完整规范见 [api-contract.md §11](references/api-contract.md)。
 
@@ -447,7 +447,7 @@ function handleLike() {
 - 后端 `EnvelopeRoute` 输出 `{ code, message, data }`
 - 前端 `request.ts` 按相同结构解析
 - `ERROR_CODE_MAP` 直接复用契约 §7 错误码表
-- JWT 鉴权 + `code === -1` 失效标识由契约 §11 约束
+- JWT 鉴权 + `code === -1002` 失效标识由契约 §11 约束
 
 后端 init-skill（`fastapi-init-skill` / `springboot-init-skill` / `go-gin-init-skill` / `nodejs-init-skill`）**必须**生成与 [`references/api-contract.md`](references/api-contract.md) 兼容的 `api-contract.md`，否则前后端无法桥接。
 

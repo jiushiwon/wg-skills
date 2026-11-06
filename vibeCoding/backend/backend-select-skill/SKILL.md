@@ -30,7 +30,7 @@ description: Use when the user wants to generate a backend project from scratch 
 
    团队强偏好优先。
 
-3. **数据库**：调用 `database-skill` 完成 PostgreSQL / MySQL / MongoDB 选型与表前缀（默认 `wg`）。
+3. **数据库**：调用 `database-learning-skill` 完成 PostgreSQL / MySQL / MongoDB 选型、`database-design-skill` 定表前缀（默认 `wg`）。
 
 4. **中间件**：按需问 Redis / Kafka / Elasticsearch / 对象存储 / SMS / Swagger（YAGNI，不要的全不加）。
 
@@ -40,16 +40,16 @@ description: Use when the user wants to generate a backend project from scratch 
 
 按选定语言显式调用对应后端 skill，并声明：
 
-> 公共规范见 backend-convention-skill，数据库见 database-skill。
+> 公共规范见 backend-convention-skill，数据库规范见 database-design-skill。
 
 分流时必须把 spec.md 交给目标后端 skill，并提醒其交付物包含：可运行骨架 + `api-contract.md`（接口 md）+ `docs/project-guide.md`（介绍 & 拓展性文档）+ `versions.md` + `CLAUDE.md`/`AGENTS.md`。
 
 | 选定 | 调用 |
 |------|------|
-| Java | java-backend-skill |
-| Go | go-backend-skill |
-| Python | python-backend-skill |
-| Node.js | nodejs-backend-skill（仅 Express；企业模块化走 java-backend-skill） |
+| Java | springboot-init-skill |
+| Go | go-gin-init-skill |
+| Python | fastapi-init-skill |
+| Node.js | nodejs-init-skill（仅 Express；企业模块化走 springboot-init-skill） |
 
 ## 红线
 

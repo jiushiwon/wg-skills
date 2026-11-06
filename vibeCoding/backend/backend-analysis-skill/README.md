@@ -120,9 +120,9 @@ backend-analysis-skill/
 2. **大项目**：先扫结构再按模块深入，不会一次读完全量文件
 3. **敏感信息**：密钥、密码、Token 在报告中自动打码
 4. **证据优先**：每条结论带来源文件，存疑项标"（推测）"，不会编造
-5. **边界**：要"部署检测"请用 `deploy-detect-skill`，要"从零生成后端"请用 `backend-generate-skill`
+5. **边界**：要"部署检测"请用 `deploy-detect-skill`，要"从零生成后端"请用 `backend-select-skill`
 
 ## 兼容性
 
 - 首次发布，无历史版本，无破坏性变更。
-- 与 `backend-generate-skill`、`super-deploy-skills` 触发词无冲突：本技能响应"分析/梳理/盘点/读懂/接手"，不响应"生成/部署"。
+- 与 `backend-select-skill`、`super-deploy-skills` 触发词无冲突：本技能响应"分析/梳理/盘点/读懂/接手"，不响应"生成/部署"。

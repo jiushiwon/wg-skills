@@ -92,9 +92,9 @@ AI：好的！已内置文件上传接口：
   ✓ 默认限制 10MB，支持 jpg/png/gif/pdf
 ```
 
-## 和 python-backend-skill 的区别
+## 和传统手动搭建的区别
 
-| 维度 | python-backend-skill | fastapi-init-skill |
+| 维度 | 传统手动搭建 | fastapi-init-skill |
 |------|---------------------|--------------------|
 | 目标用户 | 后端开发者 | **零基础小白** |
 | 环境安装 | 需要自己装 | **自动检测 + 自动安装** |
@@ -205,7 +205,7 @@ curl http://localhost:8080/api/health
 - 与 `各 init-skill 内置契约层` 规范对齐（响应信封、错误码、JWT），但 `api-contract` 与 `project-guide` 模板已内置本 skill，生成项目不依赖外部文件
 - 引用 `database-design-skill`（DB 设计规范与迁移规则）
 - 引用 `frontend-request-skill`（前端请求层规范，接口契约联动）
-- **不替代** `python-backend-skill`（后者面向开发者，在 backend-generate-skill 体系内）
+- **选型入口**见 `backend-select-skill`，本 skill 是其 Python 分支的落地实现
 
 ## 前后端联动
 

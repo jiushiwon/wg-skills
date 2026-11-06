@@ -76,8 +76,8 @@ export interface UploadFile {
 
 | 对接技能 | 对接方式 |
 |----------|----------|
-| [vue-theme-skill](../vue-theme-skill/) | Token 唯一来源，零硬编码 |
-| [frontend-request-skill](../../frontend-request-skill/) | 调用 `upload()` 封装 |
+| [vue-theme-skill](../../vue-theme-skill/) | Token 唯一来源，零硬编码 |
+| [frontend-request-skill](../../../frontend-request-skill/) | 调用 `upload()` 封装 |
 | [vue-card-skill](../vue-card-skill/) | 上传区域用 `<base-card>` 包裹 |
 | [vue-button-skill](../vue-button-skill/) | 按钮引用 `<base-button>` |
 | [vue-tag-skill](../vue-tag-skill/) | 状态标签引用 `<base-tag>` |

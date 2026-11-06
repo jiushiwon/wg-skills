@@ -26,8 +26,8 @@ export const REQUEST_RETRY_COUNT = 0;
 export const SUCCESS_CODES: (string | number)[] = [0];
 
 // 与 401 同等处理的业务失败码
-// api-contract.md §7.2：-1 是 JWT 鉴权失效的强约定，必须包含
-export const AUTH_FAILURE_CODES: (string | number)[] = [-1];
+// api-contract.md §7.2：-1002 是 JWT 鉴权失效的强约定，必须包含
+export const AUTH_FAILURE_CODES: (string | number)[] = [-1002];
 
 // Mock 全局开关：true 时所有请求强制走 Mock
 export const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true';
@@ -198,7 +198,7 @@ async function responseInterceptor<T>(res: Response, options: RequestOptions): P
     data = null;
   }
 
-  // HTTP 401 或业务 code === -1（JWT 鉴权失效，api-contract.md §7.2）
+  // HTTP 401 或业务 code === -1002（JWT 鉴权失效，api-contract.md §7.2）
   if (statusCode === 401 || AUTH_FAILURE_CODES.includes(data?.code)) {
     throw formatError('UNAUTHORIZED', data?.message || '登录已过期', { res, data });
   }
@@ -482,7 +482,7 @@ try {
   await get('/api/order/poll');
 } catch (err) {
   // 请求层不弹 Toast，自己决定如何降级
-  if (err.code === -1) return; // 鉴权失效：刷新中
+  if (err.code === -1002) return; // 鉴权失效：刷新中
   console.warn('轮询失败，下次重试', err);
 }
 ```

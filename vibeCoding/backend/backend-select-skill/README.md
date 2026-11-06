@@ -8,7 +8,7 @@
 - "帮我选一个后端技术栈"
 - "我有一堆需求，帮我梳理成 spec.md"
 
-**不适合**：你已经确定用某种语言（如"用 Java 写后端"）——那种情况直接进 java-backend-skill，跳过本 skill。
+**不适合**：你已经确定用某种语言（如"用 Java 写后端"）——那种情况直接进 springboot-init-skill，跳过本 skill。
 
 ## 触发关键词
 
@@ -48,13 +48,13 @@ AI：推荐 Node.js + Express + PostgreSQL。是否需要 Redis / Elasticsearch�
 
 你：都不要。
 
-AI：已写入 spec.md，请确认 → 分流到 nodejs-backend-skill 生成。
+AI：已写入 spec.md，请确认 → 分流到 nodejs-init-skill 生成。
 ```
 
 ## 与其他 skill 的关系
 
-- 调用 `database-skill` 完成数据库选型
-- 分流到 `java-backend-skill` / `go-backend-skill` / `python-backend-skill` / `nodejs-backend-skill`
+- 调用 `database-learning-skill` 完成数据库选型
+- 分流到 `springboot-init-skill` / `go-gin-init-skill` / `fastapi-init-skill` / `nodejs-init-skill`
 - 告诉用户"公共规范见 backend-convention-skill"
 
 ## 不做

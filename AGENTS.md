@@ -173,6 +173,7 @@ wg-skills/
 │   │   │   ├── go-frame-init-skill/         # Go 多框架初始化（Hertz/Fiber/Chi）
 │   │   │   ├── go-grpc-init-skill/          # Go gRPC 服务初始化（4 种流模式）
 │   │   │   ├── go-ws-module-skill/          # Go WebSocket 模块
+│   │   │   ├── go-perf-demo/                # Go 性能实测 demo（AI 版 vs 修复版，压测对照）
 │   │   │   └── go-module/                   # Go 模块矩阵
 │   │   │       └── go-storage-module-skill/ # 文件存储模块
 │   │   ├── nodejs/                          # Node.js 语言矩阵
@@ -198,9 +199,12 @@ wg-skills/
 │   │   ├── crypto-scenario-skill/            # 加密场景选型（密码/支付验签/JWT/敏感字段/文件校验）
 │   │
 │   ├── frontend/                      # 前端 4 套体系（Vue / UniApp / React / HTML）
+│   │   ├── AGENTS.md                  # 前端公共规范与职责边界
 │   │   ├── frontend-code-doctor/             # 前端代码审查
 │   │   ├── frontend-request-skill/           # 前端请求层规范（4 套体系共用）
-│   │   ├── frontend-style-harmonizer-skill/  # 前端样式一致性
+│   │   ├── frontend-style-harmonizer-skill/  # 前端 UI 一致性审查（Token / 空间责任 / 固定区与键盘 / 组件 / 图标 / 平台状态）
+│   │   ├── mobile-safe-area-audit-skill/     # 移动端安全区与键盘审计修复（uni-app / H5 / 小程序）
+│   │   ├── mobile-uiux-spec-skill/            # 移动端 UI/UX 设计与交付规范（iOS / Android / 小程序 / H5 / 鸿蒙）
 │   │   ├── frontend-ui-foundry/              # 综合前端 UI
 │   │   ├── html/                             # HTML 体系（下一个重点方向）
 │   │   │   └── html-frontend-template/       # 纯 HTML 管理后台模板
@@ -329,8 +333,9 @@ wg-skills/
 
 | 技术栈 | 模块级 `AGENTS.md` | 个体级 `STANDARD.md` |
 |--------|-------------------|---------------------|
+| frontend 公共层 | ✅ `vibeCoding/frontend/AGENTS.md` | 渐进式补齐 |
 | uniapp | ✅ `vibeCoding/frontend/uniapp/AGENTS.md` | ✅ 15 / 15 |
-| vue | ⬜ 待补 | ⬜ 待补 |
+| vue | ✅ `vibeCoding/frontend/vue/AGENTS.md` | 渐进式补齐（5 / 30+，父技能 + button/card/table/form） |
 | java / go / python / nodejs / react | ⬜ 待补 | ⬜ 待补 |
 
 补建顺序：**先模块级**（把该栈的架构与真源定下来），**再批量补个体级**（从各 skill 现有约束里抽红线编号）。参考实现：`vibeCoding/frontend/uniapp/`。
@@ -404,6 +409,10 @@ wg-skills/
 ---
 
 ## 九、审计与维护
+
+- uni-app 跨端审计必须分别核查模板/脚本语法、运行时内置对象、CSS 渲染器与平台专属能力，App 需区分 vue/nvue、逻辑层和原生插件调用环境。
+
+- 跨端审计先核对平台版本与代码可达性，报告区分已确认、待验证、不适用、未执行。`uniapp-crossplatform-audit-skill` 仅交付报告，不输出修复方案或补丁。
 
 - **每季度**审查一次所有 skill 的 `SKILL.md` 触发词是否仍然准确。
 - **每年**检查一次目录结构与本文件的同步性，移除废弃 skill。
@@ -573,11 +582,11 @@ grep -rnE '<(button|input|select|table|tr|td|th|textarea|form|option|label|field
   --include="*.md" \
   --exclude="base-upload.md" \
   ./vibeCoding/frontend/vue/vue-base-skill \
-  ./vibeCoding/frontend/vue/vue-form-skill \
-  ./vibeCoding/frontend/vue/vue-table-skill
+  ./vibeCoding/frontend/vue/vue-base-skill/vue-form-skill \
+  ./vibeCoding/frontend/vue/vue-base-skill/vue-table-skill
 
 # ❌ 错误：把 demo HTML 也纳入审计（会大量误报，无需修复）
-grep -rnE '<button' ./vibeCoding/frontend/vue/vue-table-skill/demo-components
+grep -rnE '<button' ./vibeCoding/frontend/vue/vue-base-skill/vue-table-skill/demo-components
 ```
 
 ### 12.6 修复责任划分
@@ -675,7 +684,7 @@ grep -rnE '<button' ./vibeCoding/frontend/vue/vue-table-skill/demo-components
 
 **体系间共享**：
 - `frontend-request-skill`：4 套体系共用同一套请求层规范（响应信封、错误码、Token 注入、防抖、Mock、SSE）
-- Design Token 命名：Vue 与 UniApp **完全对齐**（`--color-primary-{50~950}`、`--space-{n}`、`--font-{size}`）
+- Design Token 命名：Vue 与 UniApp **语义色简写与工具类 Token 对齐**（`--color-primary`、`--color-error`、`--space-{n}`、`--font-{size}`、`--radius-{size}`、`--shadow-{size}`、`--z-index-*`）。色阶前缀为各栈实现细节：Vue 用 `--color-primary-{50~950}`，UniApp 用 `--primary-{50~950}`（并映射到 `--color-primary` 简写）
 - api-contract.md：4 套体系共用同一份后端接口契约
 
 ### 13.3 后端统一分层
@@ -856,3 +865,7 @@ description: 一句话描述（含触发词）
 ---
 
 **【wg-skills】让 AI 时代的编程可进阶、可迭代、可体系化。**
+
+### 前端一致性审计职责补充（2026-10-31）
+
+`frontend-style-harmonizer-skill` 的审计覆盖公共组件、主题、页面空间、兼容性、图标、前端请求六类；具体取证清单由该技能 references/frontend-audit-checklist.md 维护。原有复用、对齐、硬编码参数保持可用。请求审计默认只读，不扩展到后端实现；静态证据、待验证风险、模拟示例分开记录。

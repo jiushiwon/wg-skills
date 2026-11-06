@@ -228,23 +228,6 @@ const fitAndResize = () => {
 - [ ] fit 后用 `term.cols/rows` 不是 `proposeDimensions()`？
 - [ ] 改了渲染端后**重启 Electron**了？（参见 `electron-dev-restart` 技能）
 
-## 引用索引
-
-| 文件 | 内容 |
-|---|---|
-| `references/font-resolver.md` | `resolveMonoFont()` 的实现细节、为什么 ctx.font 不支持 var() |
-| `references/theme-state-lift.md` | useTheme → AppContext 迁移的步骤 + before/after 对比 |
-| `references/pty-size-settling.md` | 三重兜底校正的完整实现 + 为什么单信号不够 |
-
-## 触发关键词清单
-
-```
-xterm 主题不切换、xterm 字体不生效、xterm 字符越界、vi 排版错乱、
-vi gg G 失效、vi :q 关不了、xterm 背景色不变、xterm canvas 没重绘、
-useTheme 主题不传播、useState 主题孤岛、PTY 尺寸不对、TIOCSWINSZ 偏大、
-xterm fit 算错、xterm theme 没生效、xterm 还是白色
-```
-
 ## 关联技能
 
 - **`vibeCoding/frontend/electron/electron-dev-restart`**：改完渲染端必须重启 Electron 才生效

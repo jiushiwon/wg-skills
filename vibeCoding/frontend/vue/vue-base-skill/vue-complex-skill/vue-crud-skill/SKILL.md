@@ -749,13 +749,12 @@ function closeAllDropdowns() {
         <!-- 页码跳转 -->
         <div class="base-paginated__jumper">
           跳至
-          <input
-            type="number"
+          <div
+            contenteditable="true"
+            role="textbox"
             class="base-paginated__jumper-input"
-            :value="localPagination.page"
-            min="1"
-            @keydown.enter="handlePageChange(Number(($event.target as HTMLInputElement).value))"
-          >
+            @keydown.enter="handlePageChange(Number(($event.target as HTMLElement).innerText))"
+          ></div>
           页
         </div>
       </div>
