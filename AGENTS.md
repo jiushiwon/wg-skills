@@ -334,7 +334,7 @@ wg-skills/
 |--------|-------------------|---------------------|
 | frontend 公共层 | ✅ `vibeCoding/frontend/AGENTS.md` | 渐进式补齐 |
 | uniapp | ✅ `vibeCoding/frontend/uniapp/AGENTS.md` | ✅ 15 / 15 |
-| vue | ⬜ 待补 | ⬜ 待补 |
+| vue | ✅ `vibeCoding/frontend/vue/AGENTS.md` | 渐进式补齐（5 / 30+，父技能 + button/card/table/form） |
 | java / go / python / nodejs / react | ⬜ 待补 | ⬜ 待补 |
 
 补建顺序：**先模块级**（把该栈的架构与真源定下来），**再批量补个体级**（从各 skill 现有约束里抽红线编号）。参考实现：`vibeCoding/frontend/uniapp/`。
@@ -408,6 +408,10 @@ wg-skills/
 ---
 
 ## 九、审计与维护
+
+- uni-app 跨端审计必须分别核查模板/脚本语法、运行时内置对象、CSS 渲染器与平台专属能力，App 需区分 vue/nvue、逻辑层和原生插件调用环境。
+
+- 跨端审计先核对平台版本与代码可达性，报告区分已确认、待验证、不适用、未执行。`uniapp-crossplatform-audit-skill` 仅交付报告，不输出修复方案或补丁。
 
 - **每季度**审查一次所有 skill 的 `SKILL.md` 触发词是否仍然准确。
 - **每年**检查一次目录结构与本文件的同步性，移除废弃 skill。
