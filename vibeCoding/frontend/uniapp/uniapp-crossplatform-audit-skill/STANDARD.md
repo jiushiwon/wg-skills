@@ -28,7 +28,7 @@ uniapp-crossplatform-audit-skill/
 ```
 
 - 本模块无 `references/`：内容体量小，全部收在 `SKILL.md`。
-- 报告产物：与代码审计同名的 `uniapp-audit-report.md`（跨端章节独立成节），或在项目内单独输出 `uniapp-crossplatform-audit.md`。
+- 报告产物：`uniapp-crossplatform-audit-report.md`。
 
 ## 四、内容清单
 
@@ -46,19 +46,19 @@ uniapp-crossplatform-audit-skill/
 
 **X01** 只读审计，输出报告，不改代码（与 `uniapp-code-audit-skill` U01 一致）。
 
-**X02** 每条问题必须写明：**影响平台**（可多选）、路径行号、平台差异事实、修复方案。
+**X02** 每条记录写明影响平台、版本、路径行号、调用路径、依据、影响和证据状态；禁止输出修复方案。
 
 **X03** 条件编译块必须**成对且可读**：`#ifdef` 与 `#endif` 配对，跨端分支不得只有单端实现而无兜底。
 
-**X04** 平台专属 API 必须标注替代方案或降级路径，禁止只写"该 API 在 XX 端不支持"就结束。
+**X04** 平台专属 API 核查条件编译、调用可达性及已有降级路径，仅记录事实，不设计替代实现。
 
 **X05** 单位统一 `rpx`；`px` 只在必须物理像素处使用（与上位规范 §4.2 一致）。
 
-**X06** 安全区必须用 `env(safe-area-inset-*)`，不得写死数值。
+**X06** 按平台与容器责任检查安全区，不能仅因缺少 env() 判为问题。
 
-**X07** 涉及 `scroll-view` / `swiper` / `video` / `map` 等组件的差异，必须给出实际平台结论，不写"可能存在差异"。
+**X07** 组件差异须有平台版本依据或运行证据；缺少证据标为待验证，列验证操作和预期结果。
 
-**X08** 风险分级与 `uniapp-code-audit-skill` 的 P0–P3 保持一致，跨端问题最高可判 P1。
+**X08** 按 SKILL.md 的 P0–P3 和实际影响分级，待验证项不计入确认问题。
 
 **X09** 报告中的"规范依据"引用必须带前缀（"R19"、"D11"）。
 
@@ -72,6 +72,6 @@ uniapp-crossplatform-audit-skill/
 - [ ] 未修改被审计文件
 - [ ] 每条问题标明影响平台
 - [ ] 条件编译检查覆盖全部 `#ifdef`
-- [ ] 建议含降级/替代方案
+- [ ] 无修复方案、替代实现或补丁
 - [ ] 风险分级与 code-audit 对齐
 - [ ] `bash scripts/check-skills.sh` 错误为 0

@@ -208,6 +208,8 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 - 组件类：`uniapp-page-components-skill`
 - 场景页：`uniapp-member-center-skill`（会员中心 / 积分任务 / 积分商城）
 - 诊断类：`uniapp-diagnostic-skill` / `uniapp-code-audit-skill` / `uniapp-crossplatform-audit-skill` / `uniapp-vue2-upgrade-skill`
+
+跨端审计技能仅交付报告，按平台版本、调用路径和证据区分已确认、待验证、不适用、未执行，禁止输出修复方案或补丁。
 - UI 类：`uniapp-ui-replica-skill` / `uniapp-ui-template-builder-skill`
 
 #### React 体系（3 个）
