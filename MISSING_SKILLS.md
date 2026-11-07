@@ -25,8 +25,8 @@ CI 校验（待补）：`scripts/check-broken-skill-refs.sh` 扫所有 `.md` 提
 ## 公开化计划
 
 - **短期**：本仓库 AGENTS.md / 各 skill SKILL.md 保留"私有仓库"提示，**不假装存在**
-- **中期**：把 `vue-admin-skill` 的**模板骨架**（`template/backend/`、`template/frontend/`）开源到本仓库的 `vibeCoding/frontend/vue/vue-base-skill/admin-template/` 子目录
-- **长期**：将 `universal-login-bridge-skill` 的桥接规范沉淀为 `vibeCoding/frontend/frontend-request-skill/references/universal-login-spec.md`
+- **中期**：把 `vue-admin-skill` 的**模板骨架**（`template/backend/`、`template/frontend/`）开源到本仓库的 `frontend/vue/vue-base-skill/admin-template/` 子目录
+- **长期**：将 `universal-login-bridge-skill` 的桥接规范沉淀为 `frontend/frontend-request-skill/references/universal-login-spec.md`
 
 ## 引用审计
 

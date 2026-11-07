@@ -46,9 +46,9 @@
 
 进入项目前，**必读**以下 3 份规范（只读与自己相关的）：
 
-- [backend-convention-skill](vibeCoding/backend/backend-convention-skill/) — 后端统一规范（响应信封 / 错误码 / JWT / 分页 / 模块接口）
-- [frontend-request-skill](vibeCoding/frontend/frontend-request-skill/) — 前端请求层规范（4 套前端共用）
-- [database-design-skill](vibeCoding/backend/database/database-design-skill/) — 数据库设计规范
+- [backend-convention-skill](backend/backend-convention-skill/) — 后端统一规范（响应信封 / 错误码 / JWT / 分页 / 模块接口）
+- [frontend-request-skill](frontend/frontend-request-skill/) — 前端请求层规范（4 套前端共用）
+- [database-design-skill](database/database-design-skill/) — 数据库设计规范
 
 ### 步骤 3：跑骨架（1 分钟）
 
@@ -56,7 +56,7 @@
 
 ```bash
 # 示例：搭一个 SpringBoot 后端
-cd vibeCoding/backend/java/springboot-init-skill
+cd backend/java/springboot-init-skill
 # 把 README「快速上手」段贴给 AI 智能体
 ```
 
@@ -67,9 +67,9 @@ cd vibeCoding/backend/java/springboot-init-skill
 ### 步骤 5：查契约（前后端桥接）
 
 前后端连调前，**必看**：
-- 后端 → `vibeCoding/backend/shared/` 下 5 份 spec（error/jwt/pagination/response/module）
-- 前端 → `vibeCoding/frontend/frontend-request-skill/references/`
-- 桥接 → `vibeCoding/vibecoding-guide-skill/vibecoding-workflow-skill/references/frontend-backend-integration.md`
+- 后端 → `backend/shared/` 下 5 份 spec（error/jwt/pagination/response/module）
+- 前端 → `frontend/frontend-request-skill/references/`
+- 桥接 → `vibecoding-guide-skill/vibecoding-workflow-skill/references/frontend-backend-integration.md`
 
 ---
 
@@ -100,7 +100,7 @@ wg-skills/
 │   ├── plans/             ← 本地沉淀
 │   ├── adr/               ← 待补（关键决策记录）
 │   └── skill-graph.yaml   ← 待补（机器可读关联图）
-└── vibeCoding/            ← 152 个公开 skill
+└──             ← 152 个公开 skill
     ├── backend/           ← Java/Python/Go/Node.js/Rust + 数据库
     ├── frontend/          ← Vue/UniApp/React/HTML
     ├── super-deploy-skills/

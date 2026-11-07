@@ -1,7 +1,7 @@
 # wg-skills — 把古法全栈开发经验装进 AI
 
 > **152 个**面向 Claude Code / Cursor / Codex 等智能体的公开 Skills，MIT 协议。
-> 让 AI 按统一工程规范完成“项目骨架 → 模块 → 前后端契约 → 部署 → 迭代”。也提供可直接复制的任务提示词，让常用规范更容易用起来。
+> 让 AI 按统一工程规范完成“项目骨架 → 模块 → 前后端契约 → 部署 → 迭代”。围绕前端、后端、数据库、部署与学习形成工程协作路径。
 
 ---
 
@@ -27,11 +27,17 @@
 
 它沉淀的是全栈项目里反复出现的共同部分：目录结构、响应格式、错误码、JWT、分页、Design Token、请求层、环境与部署。具体行业业务、品牌视觉和产品取舍，仍然必须由项目负责人决定。
 
-### 提示词模板与狐獴笔记
+### 根模块导航
 
-[提示词目录](prompts/README.md)把 Skill 的关键约束压缩成一次任务可直接使用的提示词。第一份是[页面 Demo 设计与迭代](prompts/design/page-demo-iteration.md)，适合围绕一个真实任务调整布局、交互和页面状态，并写出可复验的通过条件。
+| 模块 | 入口 |
+|---|---|
+| 前端 | [frontend/](frontend/) |
+| 后端 | [backend/](backend/) |
+| 数据库 | [database/](database/) |
+| 环境与部署 | [super-deploy-skills/](super-deploy-skills/) |
+| 学习与工程协作 | [vibecoding-guide-skill/](vibecoding-guide-skill/) |
 
-想在手机上保存、分类和复用提示词，可了解[狐獴笔记小程序](https://itlifetime.com/projects/humeng-uniapp-note.html)。从智能体按分类读取个人提示词的授权和工具边界见[狐獴 MCP 接入设计](prompts/humeng-mcp-design.md)。
+任务提示词模板由私有 wg-project-kits/prompts/ 维护。
 
 ### 一句话定位
 
@@ -64,10 +70,10 @@
 
 | 板块 | 数量 | 子分类 |
 |------|------|--------|
-| **[`vibeCoding/backend`](#后端)** | **56** | Java / Python / Go / Node.js / Rust / 数据库 / 公共规范；具体清单见下文 |
-| **[`vibeCoding/frontend`](#前端)** | **76** | Vue / UniApp / React / HTML / Electron / 公共能力；具体清单见下文 |
-| **[`vibeCoding/super-deploy-skills`](#部署套件)** | **16** | 部署总入口 · 数据库安装【4】· 运行时安装【4】· Docker · 原生 · Nginx · 服务器 · 环境检测 |
-| **[`vibeCoding/vibecoding-guide-skill`](#vibecoding-工作流)** | **4** | VibeCoding 总入口 · 智能体访谈 · 智能体学习 · 完整工作流 |
+| **[`backend`](#后端)** | **56** | Java / Python / Go / Node.js / Rust / 数据库 / 公共规范；具体清单见下文 |
+| **[`frontend`](#前端)** | **76** | Vue / UniApp / React / HTML / Electron / 公共能力；具体清单见下文 |
+| **[`super-deploy-skills`](#部署套件)** | **16** | 部署总入口 · 数据库安装【4】· 运行时安装【4】· Docker · 原生 · Nginx · 服务器 · 环境检测 |
+| **[`vibecoding-guide-skill`](#vibecoding-工作流)** | **4** | VibeCoding 总入口 · 智能体访谈 · 智能体学习 · 完整工作流 |
 
 > 🔒 **项目级编排技能**（完整项目骨架、跨模块编排、部署与验收套件）已迁移至私有仓库 `wg-project-kits`；本仓库继续维护免费、通用、可组合的基础 Skills。
 
@@ -180,7 +186,7 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 #### 公共规范层
 
-`vibeCoding/backend/shared/` — 响应信封 / 错误码 / JWT / 分页 / API 契约模板 / 模块输出（6 个规范）
+`backend/shared/` — 响应信封 / 错误码 / JWT / 分页 / API 契约模板 / 模块输出（6 个规范）
 
 ---
 
@@ -205,7 +211,7 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 #### UniApp 体系（15 个）— 跨端小程序
 
 `uniapp-base-skill`（基础组件与容器唯一真源：6 个根容器 + 26 个组件）+ 15 个独立技能，
-模块入口地图见 [`vibeCoding/frontend/uniapp/README.md`](vibeCoding/frontend/uniapp/README.md)（15 环节 → skill → 触发词）：
+模块入口地图见 [`frontend/uniapp/README.md`](frontend/uniapp/README.md)（15 环节 → skill → 触发词）：
 
 - 项目类：`uniapp-app-generate-skill` / `uniapp-standard-skill`
 - 规范类：`uniapp-style-skill` / `uniapp-theme-skill` / `request-skill`
@@ -319,7 +325,7 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 ## 架构与契约
 
-前后端通过项目 `api-contract.md` 对接；响应信封、错误码、JWT 与分页由 `vibeCoding/backend/shared/` 统一定义，前端请求层按项目契约落位到 `src/api/`。
+前后端通过项目 `api-contract.md` 对接；响应信封、错误码、JWT 与分页由 `backend/shared/` 统一定义，前端请求层按项目契约落位到 `src/api/`。
 
 完整的拓扑、依赖方向与真源位置见 [ARCHITECTURE.md](ARCHITECTURE.md)；智能体的治理规则见 [AGENTS.md](AGENTS.md)。
 
@@ -398,3 +404,5 @@ MIT License — 自由使用、修改、商用。
 ## 近期变更
 
 2026-11-07：独立领域工具 `others/` 的 8 个技能迁移到私有 `wg-project-kits/others/`。公开仓库现有 152 个技能，聚焦古法工程经验融入 AI。旧目录使用者请更新本地路径，原触发词保留于迁入版本。私有仓库需要相应访问权限。
+
+2026-11-07：五个模块提升到仓库根目录，数据库从后端独立；prompts/ 迁移至私有 wg-project-kits。旧路径需更新。

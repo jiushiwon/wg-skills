@@ -7,7 +7,7 @@
 #   3. 触发词缺失检测（description 无任何触发词标记）
 #   4. 引用了不存在目录的 skill 名
 #   5. README.md 顶部数字与实际 SKILL.md 数量一致
-#   6. *-skill 目录必须位于 vibeCoding/ 或 others/ 下（防误建副本）
+#   6. *-skill 目录必须位于  或 others/ 下（防误建副本）
 #
 # 用法：
 #   bash scripts/check-skills.sh           # 全量检查
@@ -43,7 +43,7 @@ WARNINGS=0
 # ---- 检查 1: SKILL.md 数量 ----
 check_count() {
     local count
-    count=$(find vibeCoding others -name "SKILL.md" -type f 2>/dev/null | wc -l | tr -d ' ')
+    count=$(find frontend backend database super-deploy-skills vibecoding-guide-skill -name "SKILL.md" -type f 2>/dev/null | wc -l | tr -d ' ')
     # 从 README 提取数字
     local readme_count
     readme_count=$(grep -oE '\*\*[0-9]+ 个\*\*' README.md 2>/dev/null | head -1 | grep -oE '[0-9]+' || echo "0")
@@ -68,7 +68,7 @@ check_frontmatter() {
             fail "frontmatter 缺 description: $f"
             missing_desc=$((missing_desc+1))
         fi
-    done < <(find vibeCoding others -name "SKILL.md" -type f 2>/dev/null)
+    done < <(find frontend backend database super-deploy-skills vibecoding-guide-skill -name "SKILL.md" -type f 2>/dev/null)
     if [ "$missing_name" -eq 0 ] && [ "$missing_desc" -eq 0 ]; then
         ok "frontmatter: $total 个 SKILL.md 全部含 name+description"
     fi
@@ -84,7 +84,7 @@ check_triggers() {
             warn "触发词缺失: $f"
             missing=$((missing+1))
         fi
-    done < <(find vibeCoding others -name "SKILL.md" -type f 2>/dev/null)
+    done < <(find frontend backend database super-deploy-skills vibecoding-guide-skill -name "SKILL.md" -type f 2>/dev/null)
     if [ "$missing" -eq 0 ]; then
         ok "触发词: $total 个 SKILL.md 全部含触发词"
     else
@@ -131,12 +131,12 @@ check_missing_refs() {
             continue
         fi
         # 精确目录名匹配
-        if find vibeCoding others -type d -name "$skill" 2>/dev/null | grep -q .; then
+        if find frontend backend database super-deploy-skills vibecoding-guide-skill -type d -name "$skill" 2>/dev/null | grep -q .; then
             continue
         fi
         # 模糊匹配：目录名包含 skill（处理带前缀的情况）
         # 例：auth-module-skill → springboot-auth-module-skill
-        if find vibeCoding others -type d -name "*-${skill}" 2>/dev/null | grep -q .; then
+        if find frontend backend database super-deploy-skills vibecoding-guide-skill -type d -name "*-${skill}" 2>/dev/null | grep -q .; then
             false_positives=$((false_positives+1))
             continue
         fi
@@ -151,7 +151,7 @@ check_missing_refs() {
 # ---- 检查 5: README 数字 ----
 check_readme() {
     local count
-    count=$(find vibeCoding others -name "SKILL.md" -type f 2>/dev/null | wc -l | tr -d ' ')
+    count=$(find frontend backend database super-deploy-skills vibecoding-guide-skill -name "SKILL.md" -type f 2>/dev/null | wc -l | tr -d ' ')
     local declared
     declared=$(grep -oE '\*\*[0-9]+ 个\*\*' README.md 2>/dev/null | head -1 | grep -oE '[0-9]+' || echo "0")
     if [ "$count" = "$declared" ]; then
@@ -162,12 +162,12 @@ check_readme() {
 }
 
 # ---- 检查 6: 技能目录位置 ----
-# 所有 *-skill 目录必须位于 vibeCoding/ 或 others/ 之下。
+# 所有 *-skill 目录必须位于  或 others/ 之下。
 # 防止在仓库根（或其它层）误建技能目录副本（曾出现 vue-base-skill/vue-empty-skill/）。
 check_layout() {
     local bad
     bad=$(find . -type d -name "*-skill" \
-        -not -path "./vibeCoding/*" \
+        -not -path "./*" \
         -not -path "./others/*" \
         -not -path "./.git/*" \
         -not -path "./docs/*" \
@@ -181,10 +181,10 @@ check_layout() {
     if [ -n "$bad" ]; then
         while IFS= read -r d; do
             [ -z "$d" ] && continue
-            fail "技能目录位置错误（应在 vibeCoding/ 或 others/ 下）: $d"
+            fail "技能目录位置错误（应在  或 others/ 下）: $d"
         done <<< "$bad"
     else
-        ok "所有 *-skill 目录均在 vibeCoding/ 或 others/ 下"
+        ok "所有 *-skill 目录均在  或 others/ 下"
     fi
 }
 

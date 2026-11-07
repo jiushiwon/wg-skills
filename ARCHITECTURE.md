@@ -4,14 +4,7 @@
 
 ## 1. 板块拓扑
 
-```text
-wg-skills/
-├── vibeCoding/
-│   ├── backend/           语言骨架、业务模块、数据库与公共协议
-│   ├── frontend/          Vue、UniApp、React、HTML 与前端公共能力
-│   └── super-deploy-skills/ 运行环境与部署技能
-└── prompts/               工程任务提示词
-```
+frontend/、backend/、database/、super-deploy-skills/、vibecoding-guide-skill/ 位于仓库根目录。提示词与独立领域工具归属私有 wg-project-kits。
 
 ## 2. 规范分层与依赖方向
 
@@ -49,11 +42,11 @@ frontend-request-skill          读取契约并落位 src/api/
 
 | 主题 | 真源 | 消费方 |
 |---|---|---|
-| Vue 组件红线与 demo 边界 | `vibeCoding/frontend/vue/AGENTS.md` | Vue 各 skill |
-| UniApp 容器、组件、主题规则 | `vibeCoding/frontend/uniapp/AGENTS.md` | UniApp 各 skill |
-| 后端公共协议 | `vibeCoding/backend/shared/` | 所有后端技能与前端请求层 |
-| 数据库设计规则 | `vibeCoding/backend/database/database-design-skill/` | 各语言骨架与模块 |
-| 密码存储与密码学选型 | `vibeCoding/backend/crypto-scenario-skill/` | 认证、支付和安全相关 skill |
+| Vue 组件红线与 demo 边界 | `frontend/vue/AGENTS.md` | Vue 各 skill |
+| UniApp 容器、组件、主题规则 | `frontend/uniapp/AGENTS.md` | UniApp 各 skill |
+| 后端公共协议 | `backend/shared/` | 所有后端技能与前端请求层 |
+| 数据库设计规则 | `database/database-design-skill/` | 各语言骨架与模块 |
+| 密码存储与密码学选型 | `backend/crypto-scenario-skill/` | 认证、支付和安全相关 skill |
 
 ## 5. 根入口分工
 
