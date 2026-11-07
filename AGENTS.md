@@ -128,6 +128,7 @@ wg-skills/
 ├── AGENTS.md                          # 本文件：主控规范（所有智能体的入口）
 ├── CLAUDE.md                          # Claude Code 入口（仅引用 AGENTS.md）
 ├── README.md                          # 仓库总览（人类视角）
+├── prompts/                           # 公开提示词模板与接入说明
 ├── .gitignore
 ├── LICENSE
 │
@@ -460,6 +461,8 @@ wg-skills/
 ---
 
 ## 十一、文档沉淀规范（plan / design / doc）
+
+`prompts/` 收录面向使用者发布的提示词模板及配套用法和接入说明，随仓库公开版本维护。内部调研和实施计划仍放在 `docs/plans/`。提示词聚焦单个任务，声明输入、边界、输出和验收条件，并引用来源 Skill。项目级规则模板在正文中注明目标文件与作用范围。
 
 本仓库的所有**计划、设计稿、辅助文档**（不含 skill 内容本身），**统一沉淀到 `docs/plans/`** 下。
 
