@@ -84,43 +84,9 @@ Phase 4: 输出报告
 
 ---
 
-## 审计维度详解
+## 审计覆盖与证据
 
-> 判定更新（2026-11-05）：以下历史清单用于发现候选，不能按关键字直接定级。以 SKILL.md「证据判定」为准，区分已确认、待验证、不适用、未执行，仅交付报告，禁止修复方案。
-
-### 1. 模板标签
-
-- **P0**：`<div>`、`<span>`、`<p>`、`<h1~h6>`、`<img>`、`<section>`、`<article>`、`<main>`、`<ul>`/`li`/`ol` 在小程序端无法识别
-- **P2**：H5 表单标签（`input type="date"` 等）
-
-### 2. 样式兼容
-
-- **P1**：`background-image: url()` 小程序端表现不一致
-- **P2**：`calc()`、`vw`/`vh`、`px`/`rpx` 混用、`position: fixed`
-
-### 3. API 兼容
-
-- **P1**：`fetch`、`window`、`document`、`localStorage`、`sessionStorage` 在小程序端不可用
-- **P2**：`alert`、`history.pushState`
-
-### 4. 条件编译
-
-- **P2**：平台差异未使用条件编译
-- **P3**：条件编译使用过多，代码被严重割裂
-
-### 5. 平台配置
-
-- **P1**：微信小程序合法域名未配置
-- **P2**：`manifest.json` 三端配置缺失、H5 CORS 未处理
-
-### 6. 端间表现差异
-
-- **P1**：原生组件层级问题、分享/支付回调差异、胶囊遮挡、键盘弹起遮挡
-- **P2**：图片/字体未按端适配、安全区只处理单边
-- **P3**：滚动行为差异
-
-> 胶囊避让 / 键盘顶起 / 安全区 / 登录四态的判定标准见 `uniapp/AGENTS.md` §9，
-> 自动判定脚本：`node ../uniapp-code-audit-skill/scripts/check-miniprogram.js <项目根目录>`
+以 SKILL.md 的九项专项清单为准，包含技术栈、依赖、条件编译、微信登录、PC/手机适配、节点、Canvas、上传下载及相册权限。关键词只产生候选，禁止直接按标签、CSS 或 API 名称定级。追踪可达路径与平台依据，分别记录已确认、待验证、不适用、未执行。只统计已确认问题，只交付报告。
 
 ---
 
@@ -171,7 +137,7 @@ uniapp-crossplatform-audit-skill/
 └── README.md          # 本文件
 ```
 
-> 当前为骨架版本：仅含 SKILL.md 与 README.md。如需扩展 references/ 详细检查清单，可参考 `uniapp-code-audit-skill/references/cross-platform-checklist.md` 的维度结构。
+> 当前包含 SKILL.md、README.md 与 STANDARD.md，专项清单维护于 SKILL.md。如需扩展 references/ 详细检查清单，可参考 `uniapp-code-audit-skill/references/cross-platform-checklist.md` 的维度结构。
 
 ---
 

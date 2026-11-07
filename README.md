@@ -410,3 +410,5 @@ MIT License — 自由使用、修改、商用。
 2026-11-07：独立领域工具 `others/` 的 8 个技能迁移到私有 `wg-project-kits/others/`。公开仓库现有 152 个技能，聚焦古法工程经验融入 AI。旧目录使用者请更新本地路径，原触发词保留于迁入版本。私有仓库需要相应访问权限。
 
 2026-11-07：五个模块提升到仓库根目录，数据库从后端独立；prompts/ 迁移至私有 wg-project-kits。旧路径需更新。
+
+三端兼容审计现包含技术栈与依赖、节点、Canvas、微信登录及上传下载与相册权限专项清单，详见 frontend/uniapp/uniapp-crossplatform-audit-skill。
