@@ -1,90 +1,59 @@
-# ARCHITECTURE — wg-skills 拓扑
+# ARCHITECTURE — wg-skills 拓扑与真源地图
 
-> 本文件描述仓库的**实际结构**与核心机制，供维护者与深度使用者理解「技能之间怎么连起来」。
+> 本文件只说明结构、依赖方向与真源位置。使用方式见 [README.md](README.md)，首次上手见 [ONBOARDING.md](ONBOARDING.md)，治理规则见 [AGENTS.md](AGENTS.md)。
 
 ## 1. 板块拓扑
 
-```
-wg-skills/
-├── AGENTS.md                    # 仓库级规范（唯一 SoT）
-├── CLAUDE.md                    # Claude Code 入口（引用 AGENTS.md）
-├── README.md                    # 产品页（能力地图）
-├── ONBOARDING.md                # 5 分钟新手路径
-├── CHANGELOG.md                 # 变更聚合
-├── MISSING_SKILLS.md            # 私有仓库 skill 登记
-├── scripts/                     # 健康检查 + 维护工具
-│
-├── vibeCoding/                  # 板块一：编程开发（~90%）
-│   ├── backend/                 #   后端 5 语言 + 数据库 + 元工具 + shared
-│   ├── frontend/                #   前端 4 套体系 + 公共能力 + Electron
-│   ├── super-deploy-skills/     #   部署套件（16 个）
-│   └── vibecoding-guide-skill/  #   VibeCoding 工作流方法论（4 个）
-│
-└── others/                      # 板块二：其他领域工具（~10%）
-    ├── ai-speech-detector / humanizer / skill-auditor
-    ├── workflow-diagram-skill / xhs-style-writer-skill
-    ├── electron-native-abi-fix
-    └── video/ (ffmpeg / remotion)
+frontend/、backend/、database/、super-deploy-skills/、vibecoding-guide-skill/ 位于仓库根目录。提示词与独立领域工具归属私有 wg-project-kits。
+
+## 2. 规范分层与依赖方向
+
+```text
+仓库治理：AGENTS.md
+        ↓
+模块规则：<domain>/AGENTS.md
+        ↓
+公共协议：backend/shared/ 与模块唯一真源
+        ↓
+Skill：SKILL.md / README.md / 可选 STANDARD.md
+        ↓
+项目生成物：api-contract.md / api-contract-<module>.md
 ```
 
-## 2. 前后端一体化（契约连接）
+下层只能引用上层，不能复制或反向定义上层事实。`STANDARD.md` 仅用于该 skill 无法由上层表达的局部约束；测试状态与迭代记录可放该 skill 内部的 `STATUS.md`。
 
-前后端不通过口头约定，而通过**接口契约**连接：
+## 3. 前后端契约路径
 
-```
-后端 shared/ 六份 spec
-  ├─ response-envelope-spec   { code, message, data }
-  ├─ error-code-spec          0 成功 / 负数失败 / -3xxx 模块扩展
-  ├─ jwt-auth-spec            Bearer + HS256
-  ├─ pagination-spec          page + pageSize（camelCase）
-  ├─ api-contract-template    init-skill 基础接口
-  └─ module-output-spec       module-skill 增量契约
-        │
-        ▼
-  init-skill ──生成──▶ api-contract.md
-  module-skill ──追加──▶ api-contract-<module>.md
-        │
-        ▼
-  frontend-request-skill ──消费──▶ request.ts / ERROR_CODE_MAP / upload / sse
+```text
+backend/shared/
+  ├─ response-envelope-spec.md  响应信封
+  ├─ error-code-spec.md         错误码
+  ├─ jwt-auth-spec.md           JWT
+  └─ pagination-spec.md         分页
+          ↓
+项目 api-contract.md            真实端点、字段、已接入模块
+          ↓
+frontend-request-skill          读取契约并落位 src/api/
 ```
 
-## 3. 技术栈矩阵
+公共协议与项目实例分别是不同作用域的真源：前者定义跨语言不变事实，后者定义项目真实接口。前端不另建第三份全局协议。
 
-| 层 | Java | Python | Go | Node.js | Rust |
-|----|------|--------|-----|---------|------|
-| 初始化 | springboot-init | fastapi-init | go-gin-init / go-frame-init / go-grpc-init | nodejs-init | rust-backend |
-| 业务模块 | 14 个 module | 15 个 module | go-auth / go-ws / go-storage | — | — |
-| 快速入门 | java-fast | python-fast | — | — | — |
+## 4. 主题与组件真源
 
-| 前端体系 | Vue | UniApp | React | HTML |
-|---------|-----|--------|-------|------|
-| 完成度 | 85% | 90% | 30% | 10%（重点方向） |
-| 组件/容器 | vue-base（30+ 子） | uniapp-base（26 组件 + 6 容器） | — | — |
-| 主题 | vue-theme | uniapp-theme | — | — |
-| 项目生成 | vue-generate / nuxt | uniapp-app-generate | react / next / react-native | html-template |
+| 主题 | 真源 | 消费方 |
+|---|---|---|
+| Vue 组件红线与 demo 边界 | `frontend/vue/AGENTS.md` | Vue 各 skill |
+| UniApp 容器、组件、主题规则 | `frontend/uniapp/AGENTS.md` | UniApp 各 skill |
+| 后端公共协议 | `backend/shared/` | 所有后端技能与前端请求层 |
+| 数据库设计规则 | `database/database-design-skill/` | 各语言骨架与模块 |
+| 密码存储与密码学选型 | `backend/crypto-scenario-skill/` | 认证、支付和安全相关 skill |
 
-## 4. 规范分层（三层单向）
+## 5. 根入口分工
 
-```
-仓库级  AGENTS.md（根）               ── 定位 / 目录 / 跨栈规则
-   ▲
-模块级  <栈>/AGENTS.md                ── 层级架构 / 唯一真源 / 协作规则
-   ▲   （frontend、uniapp 已建，其余待补）
-个体级  <skill>/STANDARD.md           ── 特有红线（编号约束）/ 自检清单
-   （uniapp 15/15、frontend 公共层 3 个，其余渐进补齐）
-```
-
-## 5. 父子嵌套（串接触发）
-
-- `vue-base-skill` → 30+ 子组件（button/card/table/form/tree/...）+ `vue-complex-skill`（7 复合场景）
-- `uniapp-base-skill` → 6 根容器 + 26 组件
-- `icon-image-catch-skill` → 图标抓取 + 图片抓取
-- `super-deploy-skills` → 数据库安装 / 运行时安装 / Docker / 原生 / Nginx / 服务器 / 检测
-
-## 6. 关键机制
-
-- **唯一真源（SoT）**：同一事实只存一份（主题变量、容器实现、错误码表、组件注册表），其余引用。
-- **契约赢**：`api-contract.md` 是前后端唯一事实来源，实现与契约冲突时契约优先。
-- **容器原则**：内容型组件外壳必须来自根容器，禁止手写圆角 / 遮罩 / 弹窗。
-- **零 HTML5 标签**：`.md` 组件文档用 `<div role="*">` + ARIA 替代原生控件；demo HTML 豁免。
-- **只读优先**：审查类 skill（style-harmonizer / safe-area-audit）默认只报告，确认后才 `--apply`。
+| 文件 | 读者 | 职责 |
+|---|---|---|
+| `README.md` | 使用者 | 定位、导航、适用边界 |
+| `ONBOARDING.md` | 新使用者 | 首次完成任务的行动路径 |
+| `AGENTS.md` | 智能体与维护者 | 治理、文档归属与变更纪律 |
+| `MISSING_SKILLS.md` | 使用者与维护者 | 仓库外依赖登记 |
+| `CHANGELOG.md` | 使用者 | 已发布变更 |

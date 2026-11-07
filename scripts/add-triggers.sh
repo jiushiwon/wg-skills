@@ -7,7 +7,7 @@ cd "$SCRIPT_DIR/.."
 DRY_RUN="${1:-}"
 ADDED=0; SKIPPED=0
 
-for f in $(find vibeCoding -name "SKILL.md" -type f 2>/dev/null); do
+for f in $(find frontend backend database super-deploy-skills vibecoding-guide-skill -name "SKILL.md" -type f 2>/dev/null); do
     # 已有触发词标记则跳过
     if grep -qE '触发[词：:]|trigger:' "$f" 2>/dev/null; then
         SKIPPED=$((SKIPPED+1))

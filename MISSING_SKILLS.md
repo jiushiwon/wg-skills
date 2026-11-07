@@ -25,9 +25,24 @@ CI 校验（待补）：`scripts/check-broken-skill-refs.sh` 扫所有 `.md` 提
 ## 公开化计划
 
 - **短期**：本仓库 AGENTS.md / 各 skill SKILL.md 保留"私有仓库"提示，**不假装存在**
-- **中期**：把 `vue-admin-skill` 的**模板骨架**（`template/backend/`、`template/frontend/`）开源到本仓库的 `vibeCoding/frontend/vue/vue-base-skill/admin-template/` 子目录
-- **长期**：将 `universal-login-bridge-skill` 的桥接规范沉淀为 `vibeCoding/frontend/frontend-request-skill/references/universal-login-spec.md`
+- **中期**：把 `vue-admin-skill` 的**模板骨架**（`template/backend/`、`template/frontend/`）开源到本仓库的 `frontend/vue/vue-base-skill/admin-template/` 子目录
+- **长期**：将 `universal-login-bridge-skill` 的桥接规范沉淀为 `frontend/frontend-request-skill/references/universal-login-spec.md`
 
 ## 引用审计
 
 最近一次扫描（2026-10-13）发现 **15 处引用**全部在以上 4 个 skill 名下，未发现其他伪存在引用。
+
+## 已迁移的独立工具
+
+以下技能维护于私有 wg-project-kits/others/，原名称可在私有仓库中使用。
+
+- **`ai-speech-detector`**
+- **`humanizer`**
+- **`skill-auditor`**
+- **`workflow-diagram-skill`**
+- **`xhs-style-writer-skill`**
+- **`electron-native-abi-fix`**
+- **`ffmpeg-skill`**
+- **`remotion-skill`**
+
+- **`go-vue-admin-skill`**：私有 Go 管理后台参考，按私有仓库当前验证状态使用。

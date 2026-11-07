@@ -1,7 +1,7 @@
 # wg-skills — 把古法全栈开发经验装进 AI
 
-> **161 个**面向 Claude Code / Cursor / Codex 等智能体的公开 Skills，MIT 协议。
-> 不是提示词合集，而是一套让 AI 按统一工程规范完成“项目骨架 → 模块 → 前后端契约 → 部署 → 迭代”的基础能力体系。
+> **153 个**面向 Claude Code / Cursor / Codex 等智能体的公开 Skills，MIT 协议。
+> 让 AI 按统一工程规范完成“项目骨架 → 模块 → 前后端契约 → 部署 → 迭代”。围绕前端、后端、数据库、部署与学习形成工程协作路径。
 
 ---
 
@@ -23,9 +23,21 @@
 
 ## 这是什么
 
-一个**自包含**的技能仓库。每个子目录是一个技能（`SKILL.md` + `README.md` + `references/`），它们不是孤立存在：前端页面与主题、后端骨架与模块、数据库与接口契约、部署与验收能够按项目需要组合。
+一个**自包含**的技能仓库。每个技能目录提供技能入口（`SKILL.md` + `README.md` + `references/`），它们不是孤立存在：前端页面与主题、后端骨架与模块、数据库与接口契约、部署与验收能够按项目需要组合。
 
 它沉淀的是全栈项目里反复出现的共同部分：目录结构、响应格式、错误码、JWT、分页、Design Token、请求层、环境与部署。具体行业业务、品牌视觉和产品取舍，仍然必须由项目负责人决定。
+
+### 根模块导航
+
+| 模块 | 入口 |
+|---|---|
+| 前端 | [frontend/](frontend/) |
+| 后端 | [backend/](backend/) |
+| 数据库 | [database/](database/) |
+| 环境与部署 | [super-deploy-skills/](super-deploy-skills/) |
+| 学习与工程协作 | [vibecoding-guide-skill/](vibecoding-guide-skill/) |
+
+任务提示词模板由私有 wg-project-kits/prompts/ 维护。
 
 ### 一句话定位
 
@@ -47,9 +59,9 @@
 
 ---
 
-## 161 个技能 · 全部 MIT 公开 · 持续迭代中
+## 153 个技能 · 全部 MIT 公开 · 持续迭代中
 
-> ⚠️ **技能以实际效果为准，161 个技能都在持续迭代中**。各技能的验证范围以对应文档或变更记录为准； API、组件形态、触发词会随实战反馈调整，不保证向后兼容。
+> ⚠️ **技能以实际效果为准，153 个技能都在持续迭代中**。不同技能的模板、示例与运行验证覆盖程度不同，具体以对应目录和验证结果为准。API、组件形态与触发词随实战反馈迭代。
 > 任何问题、反馈或建议，欢迎两个渠道：
 > 1. 访问 [itlifetime.com](https://itlifetime.com)（首页底部 → 加微信 **jiushiwon**）
 > 2. 在 [GitHub Issues](https://github.com/jiushiwon/wg-skills/issues) 提 issue
@@ -58,11 +70,11 @@
 
 | 板块 | 数量 | 子分类 |
 |------|------|--------|
-| **[`vibeCoding/backend`](#后端)** | **56** | Java / Python / Go / Node.js / Rust / 数据库 / 公共规范；具体清单见下文 |
-| **[`vibeCoding/frontend`](#前端)** | **76** | Vue / UniApp / React / HTML / Electron / 公共能力；具体清单见下文 |
-| **[`vibeCoding/super-deploy-skills`](#部署套件)** | **16** | 部署总入口 · 数据库安装【4】· 运行时安装【4】· Docker · 原生 · Nginx · 服务器 · 环境检测 |
-| **[`vibeCoding/vibecoding-guide-skill`](#vibecoding-工作流)** | **4** | VibeCoding 总入口 · 智能体访谈 · 智能体学习 · 完整工作流 |
-| **[`others`](#其他工具)** | **9** | agent-qa 应用回归 · AI 风检测 · 人性改写 · Skill 审计 · 流程图 · 小红书写作 · Electron ABI 修复 · FFmpeg · Remotion |
+| **[`backend`](#后端)** | **48** | Java / Python / Go / Node.js / Rust / 公共规范；具体清单见下文 |
+| **[`database`](#数据库)** | **8** | 数据建模、迁移、数据库与中间件参考 |
+| **[`frontend`](#前端)** | **77** | Vue / UniApp / React / HTML / Electron / 公共能力；具体清单见下文 |
+| **[`super-deploy-skills`](#部署套件)** | **16** | 部署总入口 · 数据库安装【4】· 运行时安装【4】· Docker · 原生 · Nginx · 服务器 · 环境检测 |
+| **[`vibecoding-guide-skill`](#vibecoding-工作流)** | **4** | VibeCoding 总入口 · 智能体访谈 · 智能体学习 · 完整工作流 |
 
 > 🔒 **项目级编排技能**（完整项目骨架、跨模块编排、部署与验收套件）已迁移至私有仓库 `wg-project-kits`；本仓库继续维护免费、通用、可组合的基础 Skills。
 
@@ -107,7 +119,7 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 ### 后端
 
-**56 个**，覆盖 5 语言后端 + 数据库 + 后端元工具 + 加密选型。
+**48 个**，覆盖 5 语言后端 + 后端元工具 + 加密选型。
 
 #### Java 矩阵（16 个）
 
@@ -146,19 +158,6 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 | `nodejs-init-skill` | Node.js + Express 一键初始化 |
 | `rust-backend-skill` | Rust + Axum 后端初始化 |
 
-#### 数据库矩阵（8 个）
-
-| 技能 | 说明 |
-|------|------|
-| `database-design-skill` | 数据库设计规范（表名/索引/分库分表/性能） |
-| `database-learning-skill` | 数据库学习与选型 |
-| `mysql-guide-skill` | MySQL 模块集成 |
-| `pgsql-guide-skill` | PostgreSQL 模块集成 |
-| `mongodb-guide-skill` | MongoDB 模块集成 |
-| `redis-guide-skill` | Redis 缓存/分布式锁 |
-| `kafka-guide-skill` | Kafka 消息队列 |
-| `sqlite-guide-skill` | SQLite 轻量数据库 |
-
 #### 后端元工具（3 个）
 
 | 技能 | 说明 |
@@ -175,13 +174,29 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 #### 公共规范层
 
-`vibeCoding/backend/shared/` — 响应信封 / 错误码 / JWT / 分页 / API 契约模板 / 模块输出（6 个规范）
+`backend/shared/` — 响应信封 / 错误码 / JWT / 分页 / API 契约模板 / 模块输出（6 个规范）
 
 ---
 
+### 数据库
+
+**8 个**，维护数据设计、数据库与中间件参考。
+
+| 技能 | 说明 |
+|------|------|
+| `database-design-skill` | 数据库设计规范（表名/索引/分库分表/性能） |
+| `database-learning-skill` | 数据库学习与选型 |
+| `mysql-guide-skill` | MySQL 模块集成 |
+| `pgsql-guide-skill` | PostgreSQL 模块集成 |
+| `mongodb-guide-skill` | MongoDB 模块集成 |
+| `redis-guide-skill` | Redis 缓存/分布式锁 |
+| `kafka-guide-skill` | Kafka 消息队列 |
+| `sqlite-guide-skill` | SQLite 轻量数据库 |
+
+
 ### 前端
 
-**76 个**，按 4 套体系组织。
+**77 个**，按 4 套体系组织。
 
 #### Vue 体系（43 个）— SPA + SSR
 
@@ -200,7 +215,7 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 #### UniApp 体系（15 个）— 跨端小程序
 
 `uniapp-base-skill`（基础组件与容器唯一真源：6 个根容器 + 26 个组件）+ 15 个独立技能，
-模块入口地图见 [`vibeCoding/frontend/uniapp/README.md`](vibeCoding/frontend/uniapp/README.md)（15 环节 → skill → 触发词）：
+模块入口地图见 [`frontend/uniapp/README.md`](frontend/uniapp/README.md)（15 环节 → skill → 触发词）：
 
 - 项目类：`uniapp-app-generate-skill` / `uniapp-standard-skill`
 - 规范类：`uniapp-style-skill` / `uniapp-theme-skill` / `request-skill`
@@ -222,9 +237,10 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 - `html-frontend-template` — 纯 HTML 管理后台模板（**下一个重点建设方向**）
 
-#### 综合前端（11 个）
+#### 综合前端（12 个）
 
 - `frontend-code-doctor` — 前端代码审查
+- [`agent-qa-skill`](frontend/agent-qa-skill/SKILL.md) — 只读审查 [agent-qa / vostride](https://vostride.com) 的运行证据与 memidex 记忆来源
 - `frontend-request-skill` — **4 套体系共用**请求层（响应信封 + 错误码 + Token 注入 + 防抖 + Mock + SSE）
 - `frontend-style-harmonizer-skill` — 前端 UI 一致性审查：Token、页面间距/固定区、组件契约、图标语义、键盘安全区与重复样式（兼容原样式治理调用）
 - `mobile-safe-area-audit-skill` — 移动端安全区与键盘审计修复：顶部胶囊、iPhone 底部 Home Indicator、固定操作栏、输入框顶起和多端差异
@@ -272,24 +288,6 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 ---
 
-### 其他工具
-
-**9 个**，覆盖应用回归、写作、检测、流程图、视频处理等领域。
-
-| 技能 | 说明 |
-|------|------|
-| [`agent-qa-skill`](others/agent-qa-skill/README.md) | agent-qa 应用回归与证据审查；先进的 memidex 记忆引擎与自我改进能力 |
-| `ai-speech-detector` | AI 风检测（识别 AI 生成文本） |
-| `humanizer` | 去除 AI 写作模式（35 个模式识别） |
-| `skill-auditor` | Skill 安全审计 |
-| `workflow-diagram-skill` | 一句话生成流程图 |
-| `xhs-style-writer-skill` | 小红书个人风格写作 |
-| `electron-native-abi-fix` | Electron 原生 ABI 修复 |
-| `ffmpeg-skill` | FFmpeg 命令与脚本 |
-| `remotion-skill` | Remotion React 视频 |
-
----
-
 ## 适用场景
 
 ### 场景 1：具体业务项目
@@ -309,7 +307,7 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 | 接手陌生项目 | `backend-analysis-skill`（产出 4 份报告：接口/技术/数据库/业务） |
 | 前端代码优化 | `frontend-code-doctor` |
 | 项目规范化 | `uniapp-diagnostic-skill` |
-| Skill 自身审计 | `skill-auditor` |
+| Skill 自身审计 | 私有仓库 `wg-project-kits/others/skill-auditor` |
 
 ### 场景 3：完整部署上线
 
@@ -330,36 +328,11 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 ---
 
-## 架构：前后端契约连接
+## 架构与契约
 
-```
-用户触发一句话
-"帮我做一个管理后台"
-        │
-   ┌────┼────┐
-   │    │    │
-前端层 后端层 数据库层
-组件库  init-skill  design-skill
-主题    module
-请求层
-样式
-   │    │    │
-   └──┬─┴──┘
-      │
-api-contract.md  ← 前后端唯一事实来源
-      │
-  ┌───┼───┐
-  │   │   │
-响应格式 错误码 接口清单
-```
+前后端通过项目 `api-contract.md` 对接；响应信封、错误码、JWT 与分页由 `backend/shared/` 统一定义，前端请求层按项目契约落位到 `src/api/`。
 
-**4 套前端体系共享**：`frontend-request-skill`（请求层）+ Design Token 命名（`--color-primary-{50~950}` 完全对齐）
-
-**5 语言后端共享**：`vibeCoding/backend/shared/`（响应信封 + 错误码 + JWT + 分页）
-
-强制规则：每个 `init-skill` 必须生成 `api-contract.md`，每个 `module-skill` 必须输出 `api-contract-<module>.md`，前后端契约一致。
-
-完整规范见 [`AGENTS.md`](AGENTS.md) 第十三节。
+完整的拓扑、依赖方向与真源位置见 [ARCHITECTURE.md](ARCHITECTURE.md)；智能体的治理规则见 [AGENTS.md](AGENTS.md)。
 
 ---
 
@@ -370,6 +343,7 @@ api-contract.md  ← 前后端唯一事实来源
 | **`README.md`**（本文件） | 人类访客 / 潜在用户 | 仓库能干什么、怎么快速上手、有什么技能 |
 | **[`ONBOARDING.md`](ONBOARDING.md)** | 第一次使用者 | 用场景选择入口，完成第一个项目 |
 | **[`MISSING_SKILLS.md`](MISSING_SKILLS.md)** | 使用者 / 维护者 | 已迁至私有仓库的引用登记与替代路径 |
+| **[`ARCHITECTURE.md`](ARCHITECTURE.md)** | 维护者 / 架构阅读者 | 模块拓扑、依赖方向与唯一真源地图 |
 | **[`AGENTS.md`](AGENTS.md)** | AI 智能体 + 维护者 | 完整规范、目录结构、开发原则、提交规范 |
 | **[`CLAUDE.md`](CLAUDE.md)** | Claude Code | 入口（引用 `AGENTS.md`） |
 | `各 skill/SKILL.md` | AI 智能体 | 触发条件、生成流程、输出规范、依赖 |
@@ -395,7 +369,7 @@ api-contract.md  ← 前后端唯一事实来源
 
 ---
 
-## 为什么开放 + 为什么 161 个
+## 为什么开放 + 为什么 153 个
 
 之前这个仓库是分层结构（精选 23 个公开 + 全量私有）。经过两轮迭代决定：
 
@@ -427,3 +401,15 @@ api-contract.md  ← 前后端唯一事实来源
 ## 许可证
 
 MIT License — 自由使用、修改、商用。
+
+
+前端一致性审计默认只读，覆盖组件、主题、空间、兼容性、图标和请求六类；样式修改与回滚均限定本轮确认的范围，不覆盖原有未提交工作。请求模板限制令牌的发送范围，Go Gin 演示可按其说明显式设置本地账号。
+
+
+## 近期变更
+
+2026-11-07：独立领域工具 `others/` 的 8 个技能迁移到私有 `wg-project-kits/others/`。公开仓库现有 152 个技能，聚焦古法工程经验融入 AI。旧目录使用者请更新本地路径，原触发词保留于迁入版本。私有仓库需要相应访问权限。
+
+2026-11-07：五个模块提升到仓库根目录，数据库从后端独立；prompts/ 迁移至私有 wg-project-kits。旧路径需更新。
+
+三端兼容审计现包含技术栈与依赖、节点、Canvas、微信登录及上传下载与相册权限专项清单，详见 frontend/uniapp/uniapp-crossplatform-audit-skill。

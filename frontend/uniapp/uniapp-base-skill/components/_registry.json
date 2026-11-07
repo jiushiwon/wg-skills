@@ -1,0 +1,496 @@
+{
+  "description": "内置组件库注册表 - 预置组件无需用户每次重新定义。实现真源在 uniapp-base-skill，本表只做索引。",
+  "version": "2.0.0",
+  "source": "frontend/uniapp/uniapp-base-skill",
+  "components": [
+    {
+      "name": "base-avatar",
+      "title": "头像容器",
+      "kind": "container",
+      "category": "container",
+      "aliases": [
+        "头像",
+        "avatar",
+        "用户头像",
+        "圆形头像"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/containers/base-avatar/"
+    },
+    {
+      "name": "base-card",
+      "title": "卡片容器",
+      "kind": "container",
+      "category": "container",
+      "aliases": [
+        "卡片",
+        "card",
+        "base-card",
+        "卡片容器",
+        "面板外壳",
+        "面板",
+        "列表项外壳"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/containers/base-card/"
+    },
+    {
+      "name": "base-form-item",
+      "title": "表单项容器",
+      "kind": "container",
+      "category": "container",
+      "aliases": [
+        "表单项",
+        "form-item",
+        "base-form-item",
+        "表单行",
+        "输入行"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/containers/base-form-item/"
+    },
+    {
+      "name": "base-navbar",
+      "title": "顶部导航容器",
+      "kind": "container",
+      "category": "container",
+      "aliases": [
+        "导航栏",
+        "navbar",
+        "顶部导航",
+        "自定义导航"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/containers/base-navbar/"
+    },
+    {
+      "name": "base-popup",
+      "title": "弹窗容器",
+      "kind": "container",
+      "category": "container",
+      "aliases": [
+        "弹窗",
+        "popup",
+        "base-popup",
+        "弹层",
+        "抽屉外壳"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/containers/base-popup/"
+    },
+    {
+      "name": "base-tabbar",
+      "title": "底部菜单容器",
+      "kind": "container",
+      "category": "container",
+      "aliases": [
+        "底部导航",
+        "tabbar",
+        "底部菜单",
+        "自定义 tabbar"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/containers/base-tabbar/"
+    },
+    {
+      "name": "count-down",
+      "title": "倒计时",
+      "kind": "component",
+      "category": "business",
+      "aliases": [
+        "倒计时",
+        "count-down",
+        "秒杀倒计时",
+        "剩余时间"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/business/count-down/"
+    },
+    {
+      "name": "coupon",
+      "title": "优惠券",
+      "kind": "component",
+      "category": "business",
+      "aliases": [
+        "优惠券",
+        "coupon",
+        "卡券",
+        "代金券"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/business/coupon/"
+    },
+    {
+      "name": "price-tag",
+      "title": "价格标签",
+      "kind": "component",
+      "category": "business",
+      "aliases": [
+        "价格",
+        "price-tag",
+        "金额展示",
+        "价钱"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/business/price-tag/"
+    },
+    {
+      "name": "progress-bar",
+      "title": "进度条",
+      "kind": "component",
+      "category": "business",
+      "aliases": [
+        "进度条",
+        "progress-bar",
+        "完成度",
+        "进度"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/business/progress-bar/"
+    },
+    {
+      "name": "stepper",
+      "title": "数量步进器",
+      "kind": "component",
+      "category": "business",
+      "aliases": [
+        "步进器",
+        "stepper",
+        "数量加减",
+        "计数器"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/business/stepper/"
+    },
+    {
+      "name": "action-sheet",
+      "title": "动作面板",
+      "kind": "component",
+      "category": "feedback",
+      "aliases": [
+        "操作面板",
+        "action-sheet",
+        "底部菜单弹层",
+        "动作列表"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/feedback/action-sheet/"
+    },
+    {
+      "name": "empty-state",
+      "title": "空状态",
+      "kind": "component",
+      "category": "feedback",
+      "aliases": [
+        "空页面",
+        "empty-state",
+        "暂无数据",
+        "空列表占位"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/feedback/empty-state/"
+    },
+    {
+      "name": "loading",
+      "title": "加载中",
+      "kind": "component",
+      "category": "feedback",
+      "aliases": [
+        "加载",
+        "loading",
+        "加载动画",
+        "转圈"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/feedback/loading/"
+    },
+    {
+      "name": "modal",
+      "title": "模态弹窗",
+      "kind": "component",
+      "category": "feedback",
+      "aliases": [
+        "模态框",
+        "modal",
+        "对话框",
+        "确认框",
+        "确认弹窗"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/feedback/modal/"
+    },
+    {
+      "name": "toast",
+      "title": "轻提示",
+      "kind": "component",
+      "category": "feedback",
+      "aliases": [
+        "提示",
+        "toast",
+        "轻提示",
+        "操作反馈"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/feedback/toast/"
+    },
+    {
+      "name": "base-button",
+      "title": "按钮",
+      "kind": "component",
+      "category": "form",
+      "aliases": [
+        "base-button",
+        "按钮",
+        "button",
+        "提交按钮",
+        "主按钮",
+        "次按钮"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/form/base-button/"
+    },
+    {
+      "name": "checkbox-group",
+      "title": "复选框组",
+      "kind": "component",
+      "category": "form",
+      "aliases": [
+        "多选框",
+        "checkbox-group",
+        "复选框",
+        "多选"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/form/checkbox-group/"
+    },
+    {
+      "name": "date-picker",
+      "title": "日期选择器",
+      "kind": "component",
+      "category": "form",
+      "aliases": [
+        "日期选择",
+        "date-picker",
+        "年月日选择",
+        "日期滚轮"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/form/date-picker/"
+    },
+    {
+      "name": "input-field",
+      "title": "输入框",
+      "kind": "component",
+      "category": "form",
+      "aliases": [
+        "输入框",
+        "input-field",
+        "表单输入",
+        "文本输入"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/form/input-field/"
+    },
+    {
+      "name": "picker",
+      "title": "滚轮选择器",
+      "kind": "component",
+      "category": "form",
+      "aliases": [
+        "选择器",
+        "picker",
+        "下拉选择",
+        "滚轮选择"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/form/picker/"
+    },
+    {
+      "name": "radio-group",
+      "title": "单选框组",
+      "kind": "component",
+      "category": "form",
+      "aliases": [
+        "单选框",
+        "radio-group",
+        "单选按钮",
+        "radio"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/form/radio-group/"
+    },
+    {
+      "name": "search-bar",
+      "title": "搜索栏",
+      "kind": "component",
+      "category": "form",
+      "aliases": [
+        "搜索框",
+        "search-bar",
+        "查询栏",
+        "搜索输入"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/form/search-bar/"
+    },
+    {
+      "name": "switch",
+      "title": "开关",
+      "kind": "component",
+      "category": "form",
+      "aliases": [
+        "开关",
+        "switch",
+        "切换开关",
+        "toggle"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/form/switch/"
+    },
+    {
+      "name": "article-card",
+      "title": "文章卡片",
+      "kind": "component",
+      "category": "list",
+      "aliases": [
+        "文章卡",
+        "article-card",
+        "资讯卡片",
+        "图文卡片"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/list/article-card/"
+    },
+    {
+      "name": "chat-bubble",
+      "title": "聊天气泡",
+      "kind": "component",
+      "category": "list",
+      "aliases": [
+        "气泡",
+        "chat-bubble",
+        "消息气泡",
+        "对话气泡"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/list/chat-bubble/"
+    },
+    {
+      "name": "list-item",
+      "title": "列表项",
+      "kind": "component",
+      "category": "list",
+      "aliases": [
+        "列表行",
+        "list-item",
+        "条目",
+        "列表单元"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/list/list-item/"
+    },
+    {
+      "name": "product-card",
+      "title": "商品卡片",
+      "kind": "component",
+      "category": "list",
+      "aliases": [
+        "商品卡",
+        "product-card",
+        "商品项",
+        "商品列表项"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/list/product-card/"
+    },
+    {
+      "name": "timeline",
+      "title": "时间线",
+      "kind": "component",
+      "category": "list",
+      "aliases": [
+        "时间轴",
+        "timeline",
+        "时间线列表",
+        "进度时间线"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/list/timeline/"
+    },
+    {
+      "name": "breadcrumb",
+      "title": "面包屑",
+      "kind": "component",
+      "category": "navigation",
+      "aliases": [
+        "面包屑导航",
+        "breadcrumb",
+        "路径导航",
+        "层级路径"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/navigation/breadcrumb/"
+    },
+    {
+      "name": "side-menu",
+      "title": "侧边菜单",
+      "kind": "component",
+      "category": "navigation",
+      "aliases": [
+        "侧边栏",
+        "side-menu",
+        "折叠菜单",
+        "抽屉菜单"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/navigation/side-menu/"
+    },
+    {
+      "name": "top-tab",
+      "title": "顶部页签",
+      "kind": "component",
+      "category": "navigation",
+      "aliases": [
+        "顶部标签",
+        "top-tab",
+        "选项卡",
+        "页签导航"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/components/navigation/top-tab/"
+    },
+    {
+      "name": "btn",
+      "title": "按钮样式类",
+      "kind": "style",
+      "category": "style",
+      "aliases": [
+        "按钮样式类",
+        "btn-style",
+        "ui-btn",
+        "主按钮样式"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/styles/button/"
+    },
+    {
+      "name": "card",
+      "title": "卡片样式类",
+      "kind": "style",
+      "category": "style",
+      "aliases": [
+        "卡片样式类",
+        "card-style",
+        "ui-card",
+        "面板样式"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/styles/card/"
+    },
+    {
+      "name": "combo",
+      "title": "组合样式类",
+      "kind": "style",
+      "category": "style",
+      "aliases": [
+        "组合",
+        "combo",
+        "图文组合",
+        "徽标组合"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/styles/combo/"
+    },
+    {
+      "name": "line",
+      "title": "分隔线样式类",
+      "kind": "style",
+      "category": "style",
+      "aliases": [
+        "分割线",
+        "line",
+        "横线",
+        "虚线"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/styles/line/"
+    },
+    {
+      "name": "shape",
+      "title": "图形样式类",
+      "kind": "style",
+      "category": "style",
+      "aliases": [
+        "图形",
+        "shape",
+        "圆形",
+        "标签角标"
+      ],
+      "path": "frontend/uniapp/uniapp-base-skill/styles/shape/"
+    }
+  ]
+}

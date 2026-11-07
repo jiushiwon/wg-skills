@@ -14,7 +14,7 @@
 
 本仓库是一套 **Agents Skills 集合（智能体技能集合）**，不绑定任何一家厂商、不依赖任何私有协议。
 
-每个子目录对应一个独立 skill（技能），技能通过 `SKILL.md` 定义触发条件、审查维度与输出格式。**任何支持 Skill / Agent 协议的智能体都可以加载并使用本仓库的技能**。
+每个技能目录对应一个独立 skill（技能），技能通过 `SKILL.md` 定义触发条件、审查维度与输出格式。**任何支持 Skill / Agent 协议的智能体都可以加载并使用本仓库的技能**。
 
 **核心设计理念**：前后端一体化。前端 4 套体系（Vue / UniApp / React / HTML）与后端 5 语言矩阵（Java / Python / Go / Node.js / Rust）通过 `api-contract.md` 契约连接，前端请求层自动适配后端响应信封和错误码，Design Token 命名体系跨框架对齐。
 
@@ -119,183 +119,20 @@ description: 一句话描述技能用途  # 必填，含触发词
 
 ---
 
-## 三、目录结构（三大板块）
+## 三、目录结构
 
-本仓库采用 **3 + N** 板块布局，将所有 skill 按业务域归类：
+文档与脚本审计需核对实际根模块、父级规范路径、相对引用和生成项目内路径。只将仓库内已存在的资料写为可点击引用，生成后才存在的文件以代码路径说明。
 
-```
-wg-skills/
-├── AGENTS.md                          # 本文件：主控规范（所有智能体的入口）
-├── CLAUDE.md                          # Claude Code 入口（仅引用 AGENTS.md）
-├── README.md                          # 仓库总览（人类视角）
-├── .gitignore
-├── LICENSE
-│
-├── vibeCoding/                        # 🎯 板块一：编程开发（占比 85%）
-│   ├── backend/                       # 后端语言矩阵
-│   │   ├── java/                            # Java 语言矩阵
-│   │   │   ├── java-fast-skill/             # Java 快速入门（小白友好）
-│   │   │   ├── springboot-init-skill/        # Spring Boot 一键初始化
-│   │   │   └── springboot-module/            # Java 业务模块矩阵
-│   │   │       ├── universal-login-api/      # 万能登录后端 API
-│   │   │       ├── springboot-auth-module-skill/
-│   │   │       ├── springboot-agent-module-skill/
-│   │   │       ├── springboot-dict-module-skill/
-│   │   │       ├── springboot-kafka-module-skill/
-│   │   │       ├── springboot-log-module-skill/
-│   │   │       ├── springboot-notification-module-skill/
-│   │   │       ├── springboot-org-permission-module-skill/
-│   │   │       ├── springboot-payment-module-skill/
-│   │   │       ├── springboot-redis-module-skill/
-│   │   │       ├── springboot-storage-module-skill/
-│   │   │       └── springboot-upload-module-skill/
-│   │   ├── python/                          # Python 语言矩阵
-│   │   │   ├── python-fast-skill/           # Python 快速入门（小白友好）
-│   │   │   ├── fastapi-init-skill/          # FastAPI 一键初始化
-│   │   │   ├── article-generator/           # 多平台文章生成
-│   │   │   ├── hot-trend-collector/         # 热点抓取工具
-│   │   │   └── fastapi-module/              # Python 业务模块矩阵
-│   │   │       ├── fastapi-auth-module-skill/
-│   │   │       ├── fastapi-agent-module-skill/
-│   │   │       ├── fastapi-ai-chat-module-skill/
-│   │   │       ├── fastapi-dict-module-skill/
-│   │   │       ├── fastapi-log-module-skill/
-│   │   │       ├── fastapi-notification-module-skill/
-│   │   │       ├── fastapi-org-permission-module-skill/
-│   │   │       ├── fastapi-payment-module-skill/
-│   │   │       ├── fastapi-storage-module-skill/
-│   │   │       ├── fastapi-upload-module-skill/
-│   │   │       ├── fastapi-ws-module-skill/
-│   │   │       ├── python-redis-module-skill/
-│   │   │       └── python-kafka-module-skill/
-│   │   ├── go/                              # Go 语言矩阵
-│   │   │   ├── go-gin-init-skill/           # Go + Gin 一键初始化
-│   │   │   ├── go-frame-init-skill/         # Go 多框架初始化（Hertz/Fiber/Chi）
-│   │   │   ├── go-grpc-init-skill/          # Go gRPC 服务初始化（4 种流模式）
-│   │   │   ├── go-ws-module-skill/          # Go WebSocket 模块
-│   │   │   ├── go-perf-demo/                # Go 性能实测 demo（AI 版 vs 修复版，压测对照）
-│   │   │   └── go-module/                   # Go 模块矩阵
-│   │   │       └── go-storage-module-skill/ # 文件存储模块
-│   │   ├── nodejs/                          # Node.js 语言矩阵
-│   │   │   └── nodejs-init-skill/           # Node.js + Express 一键初始化
-│   │   ├── rust/                            # Rust 语言矩阵
-│   │   │   └── rust-backend-skill/          # Rust Axum 后端初始化
-│   │   ├── shared/                          # 后端公共规范层（响应信封/错误码/JWT/分页）
-│   │   │   ├── response-envelope-spec.md    # 统一响应信封
-│   │   │   ├── error-code-spec.md           # 全局错误码（单一事实来源）
-│   │   │   ├── jwt-auth-spec.md             # JWT 鉴权规范
-│   │   │   ├── pagination-spec.md           # 分页规范
-│   │   │   ├── api-contract-template.md     # 通用契约模板
-│   │   │   └── module-output-spec.md        # 模块接口输出规范
-│   │   ├── database/                        # 数据库设计规范体系
-│   │   │   ├── database-design-skill/       # 数据库设计规范（表名/索引/分库分表/性能）
-│   │   │   ├── mysql-guide-skill/          # MySQL 模块集成
-│   │   │   ├── mongodb-guide-skill/        # MongoDB 模块集成
-│   │   │   ├── pgsql-guide-skill/          # PostgreSQL 模块集成
-│   │   │   ├── redis-guide-skill/           # Redis 缓存/分布式锁
-│   │   │   ├── kafka-guide-skill/          # Kafka 消息队列
-│   │   │   ├── sqlite-guide-skill/         # SQLite 轻量数据库
-│   │   │   └── database-learning-skill/     # 数据库学习与选型
-│   │   ├── crypto-scenario-skill/            # 加密场景选型（密码/支付验签/JWT/敏感字段/文件校验）
-│   │
-│   ├── frontend/                      # 前端 4 套体系（Vue / UniApp / React / HTML）
-│   │   ├── AGENTS.md                  # 前端公共规范与职责边界
-│   │   ├── frontend-code-doctor/             # 前端代码审查
-│   │   ├── frontend-request-skill/           # 前端请求层规范（4 套体系共用）
-│   │   ├── frontend-style-harmonizer-skill/  # 前端 UI 一致性审查（Token / 空间责任 / 固定区与键盘 / 组件 / 图标 / 平台状态）
-│   │   ├── mobile-safe-area-audit-skill/     # 移动端安全区与键盘审计修复（uni-app / H5 / 小程序）
-│   │   ├── mobile-uiux-spec-skill/            # 移动端 UI/UX 设计与交付规范（iOS / Android / 小程序 / H5 / 鸿蒙）
-│   │   ├── frontend-ui-foundry/              # 综合前端 UI
-│   │   ├── html/                             # HTML 体系（下一个重点方向）
-│   │   │   └── html-frontend-template/       # 纯 HTML 管理后台模板
-│   │   ├── icon-image-catch-skill/           # 素材抓取（父技能 + 2 嵌套子）
-│   │   │   ├── icon-catch-skill/             # 图标抓取
-│   │   │   └── image-catch-skill/            # 图片抓取
-│   │   ├── frontend-icon-skill/              # SVG 模板生成 + SVG→PNG 导出 + 图片处理（合并自 image-forge-skill）
-│   │   ├── uniapp/                           # uni-app 技能矩阵（15 skill）
-│   │   │   ├── README.md                     # 模块入口地图（15 环节 → skill → 触发词）
-│   │   │   ├── uniapp-base-skill/            # 基础组件与容器唯一真源（6 容器 + 26 组件 + 组件索引）
-│   │   │   │   ├── containers/               # 根容器层
-│   │   │   │   ├── components/               # 内置组件层（form/feedback/list/navigation/business）+ 注册表
-│   │   │   │   ├── commands/                 # 分类组件索引（生成物）
-│   │   │   │   └── styles/                   # 样式类组件 + 全局关键帧真源
-│   │   │   ├── uniapp-app-generate-skill/    # uni-app 项目生成
-│   │   │   ├── uniapp-standard-skill/        # 开发通用规范
-│   │   │   ├── uniapp-style-skill/           # 设计系统
-│   │   │   ├── uniapp-theme-skill/           # 主题系统
-│   │   │   ├── uniapp-auth-skill/      # 登录鉴权与安全
-│   │   │   ├── uniapp-page-components-skill/ # 组件化页面
-│   │   │   ├── uniapp-member-center-skill/    # 会员中心与积分商城场景页
-│   │   │   ├── uniapp-request-skill/         # 请求层设计
-│   │   │   ├── uniapp-diagnostic-skill/ # 项目规范化
-│   │   │   ├── uniapp-code-audit-skill/      # 代码审计
-│   │   │   ├── uniapp-crossplatform-audit-skill/ # 跨平台兼容审计
-│   │   │   ├── uniapp-vue2-upgrade-skill/    # Vue2 → Vue3
-│   │   │   ├── uniapp-ui-replica-skill/      # UI 原型图复刻
-│   │   │   └── uniapp-ui-template-builder-skill/   # UI 页面模板
-│   │   └── vue/                              # Vue 通用技能矩阵
-│   │       ├── vue-base-skill/               # Vue 基础（父技能，含 21 个子技能）
-│   │       │   ├── references/               # 技能矩阵与协同说明
-│   │       │   ├── vue-button-skill/         # 按钮组件（6 种形态）
-│   │       │   ├── vue-card-skill/           # 卡片容器
-│   │       │   ├── vue-table-skill/          # 表格组件（23 种形态，3 个独立组件）
-│   │       │   ├── vue-form-skill/           # 表单体系（组装型，引用独立技能）
-│   │       │   ├── vue-dropdown-skill/       # 万能浮层
-│   │       │   ├── vue-tree-skill/           # 树形组件（10+ 形态）
-│   │       │   ├── vue-input-skill/          # 输入框组件
-│   │       │   ├── vue-select-skill/         # 下拉选择器
-│   │       │   ├── vue-datepicker-skill/     # 日期选择器
-│   │       │   ├── vue-checkbox-skill/       # 复选框组件
-│   │       │   ├── vue-radio-skill/          # 单选框组件
-│   │       │   ├── vue-switch-skill/         # 开关组件
-│   │       │   ├── vue-upload-skill/         # 上传组件
-│   │       │   ├── vue-list-page-skill/      # 列表页（搜索+表格+分页）
-│   │       │   ├── vue-list-item-skill/      # 列表项抽象（tree/menu/dropdown 复用基座）
-│   │       │   ├── vue-contextmenu-skill/    # 右键菜单组件
-│   │       │   ├── vue-collapse-skill/       # 折叠面板组件
-│   │       │   ├── vue-status-skill/         # 状态标签组件
-│   │       │   ├── vue-tag-skill/            # 标签组件
-│   │       │   ├── vue-generate-skill/       # Vue 项目生成
-│   │       │   └── vue-complex-skill/        # 综合页面
-│   │       │       ├── vue-crud-skill/       # 增删改查页面
-│   │       │       ├── vue-login-skill/      # 登录页
-│   │       │       └── vue-ai-creative-workspace-skill/ # AI 创作工作台（页面编排）
-│   │       ├── universal-login-page/        # 万能登录页（嵌入式登录组件）
-│   │       ├── vue-theme-skill/              # Vue 主题系统（设计 Token 层）
-│   │       ├── vue-style-skill/              # Vue 样式规范（动画/工具类/布局）
-│   │       ├── vue-tui-skill/                # Vue TUI 终端界面
-│   │       ├── electron-vue-init-skill/      # Electron + Vue3 桌面端初始化
-│   │       └── nuxt-generate-skill/         # Nuxt 3 + TS + Pinia 全栈项目生成
-│   │   └── react/                            # React 技能矩阵
-│   │       ├── react-generate-skill/            # React + TS + Vite 项目生成
-│   │       ├── next-generate-skill/         # Next.js 14+ App Router 全栈项目生成
-│   │       └── react-native-generate-skill/  # React Native 移动端初始化
-│   │
-│   ├── 项目级技能（私有仓库）                # 🎯 见 git@github.com:jiushiwon/wg-project-kits.git
-│   │   ├── vue-admin-skill/                # Vue3 管理后台项目
-│   │   ├── sse-agent-skill/                # SSE Agent 项目
-│   │   └── universal-identity-bridge-skill/ # 统一身份接入编排（Java 先行，Go/Python 预留）
-│   │
-│
-└── others/                            # 🧰 板块二：其他领域工具
-    ├── agent-qa-skill/                       # 应用回归、运行证据与 memidex 记忆审查
-    ├── ai-speech-detector/                   # AI 风检测
-    ├── electron-native-abi-fix/              # Electron 原生 ABI 修复
-    ├── humanizer/                            # 去除AI写作模式（35个模式）
-    ├── skill-auditor/                        # Skill 安全审计
-    ├── workflow-diagram-skill/               # 一句话生成流程图
-    ├── xhs-style-writer-skill/               # 小红书个人风格写作
-    └── video/                                # 视频处理
-        ├── ffmpeg-skill/                     # FFmpeg 命令与脚本
-        └── remotion-skill/                   # Remotion React 视频
-```
+五个根模块分别维护前端、后端、数据库、环境部署与学习辅助。
 
-### 3.1 板块说明
+- frontend/：前端框架、组件、主题、请求层与页面审查。
+  - agent-qa-skill/：只读审查已有运行的步骤证据与 memidex 记忆来源。
+- backend/：语言骨架、业务模块与 shared 公共契约。
+- database/：建模规范与数据库、中间件集成参考。
+- super-deploy-skills/：环境识别、运行依赖与部署。
+- vibecoding-guide-skill/：选型、学习和工程协作流程。
 
-| 板块 | 占比 | 业务定位 |
-|------|------|---------|
-| **vibeCoding** | 90% | 编程开发：前后端一体化体系（4 套前端 × 5 语言后端 × 统一契约） |
-| **others** | 10% | 其他领域工具：写作、审计、流程图等 |
+prompts/ 与独立领域工具维护于私有 wg-project-kits。
 
 ### 3.2 父子嵌套结构（5 个父技能）
 
@@ -303,12 +140,12 @@ wg-skills/
 
 | 父技能 | 嵌套子技能数 | 子技能定位 |
 |--------|------------|-----------|
-| `vibeCoding/frontend/icon-image-catch-skill` | 2 | 图标抓取 / 图片抓取 |
-| `vibeCoding/frontend/vue/vue-base-skill` | 20+ | Vue 组件体系（按钮/卡片/表格/表单/树等） |
+| `frontend/icon-image-catch-skill` | 2 | 图标抓取 / 图片抓取 |
+| `frontend/vue/vue-base-skill` | 20+ | Vue 组件体系（按钮/卡片/表格/表单/树等） |
 
 ### 3.3 顶层遗留目录
 
-当前仓库根**无**遗留副本目录，全部技能均位于 `vibeCoding/` 之下。
+当前仓库根**无**遗留副本目录，全部技能均位于 `` 之下。
 
 ### 3.4 规范分层体系（仓库级 / 模块级 / 个体级）
 
@@ -324,21 +161,12 @@ wg-skills/
 
 | 文件 | 位置 | 数量 | 头部必须声明 |
 |------|------|------|--------------|
-| `AGENTS.md` | 技术栈目录根（如 `vibeCoding/frontend/uniapp/AGENTS.md`） | 每栈 1 个 | 上位规范：仓库根 `AGENTS.md`；下位规范：各 skill `STANDARD.md` |
-| `STANDARD.md` | 每个 skill 目录根 | 每 skill 1 个 | 上位规范：所属模块级 `AGENTS.md` |
+| `AGENTS.md` | 技术栈目录根（如 `frontend/uniapp/AGENTS.md`） | 每栈 1 个 | 上位规范：仓库根 `AGENTS.md`；下位规范：各 skill `STANDARD.md` |
+| `STANDARD.md`（可选） | 有局部约束的 skill 目录根 | 仅在需要时创建 | 上位规范：所属模块级 `AGENTS.md` |
 | `SKILL.md` | 每个 skill 目录根 | 每 skill 1 个（必备入口） | — |
 | `README.md` | 每个 skill 目录根 | 每 skill 1 个（对外说明） | — |
 
-**落地现状**（渐进式补齐，不要求一次做完）：
-
-| 技术栈 | 模块级 `AGENTS.md` | 个体级 `STANDARD.md` |
-|--------|-------------------|---------------------|
-| frontend 公共层 | ✅ `vibeCoding/frontend/AGENTS.md` | 渐进式补齐 |
-| uniapp | ✅ `vibeCoding/frontend/uniapp/AGENTS.md` | ✅ 15 / 15 |
-| vue | ✅ `vibeCoding/frontend/vue/AGENTS.md` | 渐进式补齐（5 / 30+，父技能 + button/card/table/form） |
-| java / go / python / nodejs / react | ⬜ 待补 | ⬜ 待补 |
-
-补建顺序：**先模块级**（把该栈的架构与真源定下来），**再批量补个体级**（从各 skill 现有约束里抽红线编号）。参考实现：`vibeCoding/frontend/uniapp/`。
+新增或调整规范时，先明确模块级真源，再判断单个 skill 是否确有不可替代的局部约束；不得用“补齐数量”衡量规范质量。
 
 ---
 
@@ -350,15 +178,15 @@ wg-skills/
 4. **参考资料沉淀**：通用规则、词表、案例放入 skill 内 `references/`；避免把长文本直接塞进 `SKILL.md`。
 5. **向后兼容**：已有触发词和命令行保持可用；破坏性变更需在 `README.md` 中标注迁移方式。
 6. **多智能体通用**：所有 `SKILL.md` 必须使用通用 YAML frontmatter，**不得绑定特定智能体**。
-7. **目录归位**：新增 skill 必须放在所属板块下（vibeCoding / others），禁止散落到顶层。
+7. **目录归位**：新增 skill 必须放在上述所属根模块下，禁止散落到顶层。
 8. **规范分层**：通用规则写在所属技术栈的模块级 `AGENTS.md`，单个 skill 的特有红线写在自己的 `STANDARD.md`；**同一条规则只在一处写**，下位不重复上位。
 
 ---
 
 ## 五、新增 Skill 流程
 
-1. **确定归属板块**（vibeCoding / others）。
-2. **创建目录**：`<板块>/<二级分类>/<skill-name>/`，目录名 kebab-case。
+1. **确定所属根模块**。
+2. **创建目录**：`<根模块>/<技术栈或分类>/<skill-name>/`，目录名 kebab-case。
 3. **写入 `SKILL.md`**，必填前置元数据：
 
    ```yaml
@@ -367,7 +195,7 @@ wg-skills/
    description: 一句话描述技能用途（含触发词）
    ---
    ```
-4. **写入 `STANDARD.md`**（个体规范）：模块定位、依赖、目录约定、内置约束（编号红线）、变更纪律、自检清单；头部声明上位规范为所属模块级 `AGENTS.md`。
+4. **判断是否需要 `STANDARD.md`**：仅当存在无法由模块 `AGENTS.md` 与 `SKILL.md` 表达的局部约束时创建；创建后写模块定位、依赖、目录约定、编号红线、变更纪律与自检清单，头部声明上位规范。
 5. **写入 `README.md`**：包含功能、使用方式、示例、目录说明。
 6. **创建 `references/`**：通用规则、词表、案例按主题拆分文件。
 7. **更新本文件（AGENTS.md）**：将新 skill 加入第三节"目录结构"对应位置。
@@ -382,7 +210,7 @@ wg-skills/
 2. 触发词变化必须检查是否有其他 skill 冲突。
 3. 删除或重命名 references 文件时，检查 SKILL.md 中的引用路径。
 4. 修改父技能时，**必须**逐个审查所有嵌套子技能的依赖关系。
-5. 跨板块调整（vibeCoding ↔ others）需先在 PR 描述中说明理由。
+5. 跨仓库迁移需在变更记录中说明归属、目标路径与兼容方式。
 6. **规范归属判断**：改的是"该技术栈通用规则" → 改模块级 `<技术栈>/AGENTS.md`；改的是"单个 skill 特有红线" → 改该 skill 的 `STANDARD.md`；两者都不要重复写。
 7. 改了模块级 `AGENTS.md` 后，**必须**逐个核对受影响 skill 的 `STANDARD.md` 是否与上位冲突（例：上位已禁止 `px`，下位不得再允许 `px`）。
 
@@ -420,97 +248,17 @@ wg-skills/
 
 ---
 
-## 十、附：体系总览图
+## 十、附：体系总览
 
-```
-                ┌─────────────────────────────────────────────────────────┐
-                │            wg-skills —— Agents Skills 集合              │
-                │   前后端一体化：契约连接 + 统一主题 + 标准化技能         │
-                └──────────────────────┬──────────────────────────────────┘
-                                       │
-        ┌──────────────────────────────┼──────────────────────────────┐
-        │                              │                              │
-   ┌────▼─────┐                  ┌─────▼─────┐                  ┌──────▼──────┐
-   │vibeCoding│  编程开发 90%     │   others   │  其他工具 10%  │
-   └────┬─────┘                  └─────┬─────┘                  └──────┬──────┘
-        │                              │                              │
-   ┌────┴────────────────┐             │                              │
-   │   backend           │        ┌────┴─────┐                  ┌──────┴───────┐
-   │   ├ java/springboot │        │humanizer │                  │ai-speech-det │
-   │   ├ python/fastapi  │        │article-il│                  │skill-auditor │
-   │   ├ go/gin          │        │workflow-d│                  │xhs-writer    │
-   │   ├ nodejs/express  │        └──────────┘                  └──────────────┘
-   │   ├ rust/axum       │
-   │   └ database (7)    │ ← mysql / pgsql / mongodb / redis / kafka / sqlite
-   │                     │
-   │   frontend (4 套)   │
-   │   ├ vue (85%)       │ 20+ 组件 + theme + request + nuxt
-   │   ├ uniapp (90%)    │ 26 组件 + 6 容器 + theme + style + request
-   │   ├ react (30%)     │ generate + next.js fullstack
-   │   └ html (10%)      │ template only ← 下一个重点
-   │                     │
-   │   项目级技能         │
-   │   ├ vue-admin-skill │ 编排器：前端 + 后端 + 数据库
-   │   └ sse-agent-skill │ 编排器：SSE 流式 AI 对话
-   │                     │
-   │   部署套件 (7)       │
-   │   └ super-deploy    │ docker / native / nginx / db-install
-   │                     │
-   └─────────────────────┘
-                │
-                ▼
-   api-contract.md ← 前后端契约连接（响应信封 + 错误码 + JWT + 分页）
-                │
-        ┌───────┼───────┐
-        │       │       │
-   request.ts  SKILL.md  database-design
-   (前端消费)  (后端生成)  (表结构规范)
-```
+前端、后端通过 backend/shared/ 与项目 api-contract.md 连接，database/ 提供数据设计规范，部署与学习辅助分别由对应根模块负责。
 
----
+## 十一、文档沉淀规范
 
-## 十一、文档沉淀规范（plan / design / doc）
-
-本仓库的所有**计划、设计稿、辅助文档**（不含 skill 内容本身），**统一沉淀到 `docs/plans/`** 下。
-
-### 11.1 适用范围
-
-| 类型 | 是否沉淀到 `docs/plans/` | 说明 |
-|------|------------------------|------|
-| 实施计划（plan） | ✅ 是 | 如商业模式、设计方案、重构计划 |
-| 设计稿（design） | ✅ 是 | 架构图、接口设计、UI 草稿 |
-| 调研笔记（research） | ✅ 是 | 选型对比、可行性分析 |
-| 会议纪要（meeting） | ✅ 是 | 协作沟通结果 |
-| Skill 文档（SKILL.md / README.md） | ❌ 否 | 跟随 skill 目录 |
-| 仓库主控（AGENTS.md / CLAUDE.md / README.md） | ❌ 否 | 在仓库根目录 |
-| 公开入口文档（ONBOARDING.md / MISSING_SKILLS.md） | ❌ 否 | 在仓库根目录，随仓库公开发布并由 README 链接 |
-| 公众号文章 | ❌ 否 | 在 `docs/<对应分类>/公众号文章.md` |
-
-### 11.2 命名规范
-
-文件名格式：`<kebab-case-主题>-<类型>.md`
-
-示例：
-- `monetization-plan.md`（变现方案计划）
-- `fastapi-ws-refactor-design.md`（fastapi-ws 重构设计）
-- `redis-vs-kafka-research.md`（选型调研）
-
-### 11.3 禁止事项
-
-- ❌ **禁止写入全局默认 `~/.claude/plans/`** —— 本仓库所有 plan **必须**沉淀到 `docs/plans/`
-- ❌ 禁止把 plan 文件放到 skill 目录里（污染 skill 自包含性）
-- ❌ 禁止把 plan / design 内容混入 SKILL.md（SKILL.md 只承载技能定义）
-- ❌ 禁止把面向外部使用者的入口说明移入 `docs/`；`ONBOARDING.md` 与 `MISSING_SKILLS.md` 是公开仓库导航的一部分。
-
-### 11.4 版本控制
-
-按第七节规定，`docs/` 全目录**不进入 git**。`docs/plans/` 同理，本地沉淀、随时查阅，**无需提交**。
-
----
+内部计划、设计与调研统一写入 docs/plans/，docs/ 不提交。公开技能说明跟随技能目录。任务提示词模板归属私有 wg-project-kits/prompts/。
 
 ## 十二、Vue 组件实现规范（md vs demo 关系）
 
-本节针对 `vibeCoding/frontend/vue/**` 下所有 `.md` 组件文档与 demo 演示文件的协作关系。
+本节针对 `frontend/vue/**` 下所有 `.md` 组件文档与 demo 演示文件的协作关系。
 
 ### 12.1 核心分层
 
@@ -581,12 +329,12 @@ wg-skills/
 grep -rnE '<(button|input|select|table|tr|td|th|textarea|form|option|label|fieldset|header|footer|h[1-6])' \
   --include="*.md" \
   --exclude="base-upload.md" \
-  ./vibeCoding/frontend/vue/vue-base-skill \
-  ./vibeCoding/frontend/vue/vue-base-skill/vue-form-skill \
-  ./vibeCoding/frontend/vue/vue-base-skill/vue-table-skill
+  ./frontend/vue/vue-base-skill \
+  ./frontend/vue/vue-base-skill/vue-form-skill \
+  ./frontend/vue/vue-base-skill/vue-table-skill
 
 # ❌ 错误：把 demo HTML 也纳入审计（会大量误报，无需修复）
-grep -rnE '<button' ./vibeCoding/frontend/vue/vue-base-skill/vue-table-skill/demo-components
+grep -rnE '<button' ./frontend/vue/vue-base-skill/vue-table-skill/demo-components
 ```
 
 ### 12.6 修复责任划分
@@ -664,7 +412,7 @@ grep -rnE '<button' ./vibeCoding/frontend/vue/vue-base-skill/vue-table-skill/dem
          │    ┌──────────┘
          │    │
     ┌────▼────▼────┐
-    │ api-contract │  ← 前后端唯一事实来源
+    │ 项目 api-contract │  ← 项目接口实例真源
     │    .md       │
     └──────────────┘
 ```
@@ -736,7 +484,7 @@ grep -rnE '<button' ./vibeCoding/frontend/vue/vue-base-skill/vue-table-skill/dem
 | **SKILL.md** | AI 智能体 | 触发条件、生成流程、输出规范、依赖关系、契约定义 | 安装教程、人类快速上手 |
 | **README.md** | 人类用户 | 安装方式、快速上手、目录结构、贡献指南 | 与 SKILL.md 重复的能力清单、触发词列表 |
 
-**禁止重叠**：README.md 不得复制 SKILL.md 中的"核心能力清单"表格或触发词列表。README 应引用 SKILL.md：`详见 [SKILL.md](SKILL.md)`。
+**禁止重叠**：README.md 不得复制 SKILL.md 中的"核心能力清单"表格或触发词列表。README 应引用 SKILL.md：`详见 各技能目录的 `SKILL.md``。
 
 ---
 
@@ -792,7 +540,7 @@ description: 一句话描述（含触发词）
 
 ## 目录结构
 
-## 详细规范 → [SKILL.md](SKILL.md)
+## 详细规范 → 各技能目录的 `SKILL.md`
 
 ## 贡献指南（可选）
 ```
@@ -827,7 +575,7 @@ description: 一句话描述（含触发词）
 
 ### 15.4 模块级 AGENTS.md 必备章节
 
-适用于 `<技术栈目录>/AGENTS.md`（如 `vibeCoding/frontend/uniapp/AGENTS.md`）。
+适用于 `<技术栈目录>/AGENTS.md`（如 `frontend/uniapp/AGENTS.md`）。
 
 ```markdown
 # <技术栈> 模块规范
@@ -866,6 +614,19 @@ description: 一句话描述（含触发词）
 
 **【wg-skills】让 AI 时代的编程可进阶、可迭代、可体系化。**
 
+### 公开示例的安全与验收基线
+
+前端请求示例只向配置的 API 源附加项目令牌，公开请求失败不启动会话刷新。演示账号须显式配置凭据，数据库示例须标明并遵循目标引擎方言。可交互页面 Demo 应验证窄屏布局和关键键盘路径。
+
 ### 前端一致性审计职责补充（2026-10-31）
 
 `frontend-style-harmonizer-skill` 的审计覆盖公共组件、主题、页面空间、兼容性、图标、前端请求六类；具体取证清单由该技能 references/frontend-audit-checklist.md 维护。原有复用、对齐、硬编码参数保持可用。请求审计默认只读，不扩展到后端实现；静态证据、待验证风险、模拟示例分开记录。
+
+
+## 2026-10-31 审计技能回滚边界补充
+
+样式治理不得建议整仓回滚覆盖未提交工作；回滚仅针对本次明确的改动，先审查差异并保护用户原有改动。Skill 调用示例是智能体指令，不代表安装了同名终端命令。
+
+## 三端审计专项覆盖
+
+三端审计使用六维证据框架与九项专项清单，登记技术栈与依赖，节点、Canvas、登录及文件链路按平台取证。扫描只产生候选。
