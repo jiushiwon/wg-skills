@@ -25,6 +25,7 @@ description: Spring Boot 授权与企业组织架构模块一键叠加技能，*
 - **springboot-init-skill**：基础 JWT、统一响应、分页、当前用户注解必须已存在。
 - **frontend-request-skill**：响应信封、错误码、Token、分页字段必须保持对齐。
 - **database-design-skill**：表前缀、字段命名、软删除、索引规范沿用。
+- **crypto-scenario-skill**：涉及密码创建、校验、修改或迁移时，必须遵循其密码存储规范；不得自行选择或实现密码哈希算法。
 
 ## 用户问题（最多 3 个）
 

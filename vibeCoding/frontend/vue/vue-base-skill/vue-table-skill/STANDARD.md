@@ -30,7 +30,7 @@ vue-table-skill/
 
 ## 五、内置约束（编号红线）
 
-- **T01**：零 HTML5 标签——`<table>`/`<tr>`/`<td>`/`<th>` 用 `<div role="table/row/gridcell">` + CSS Grid/Flex 实现。
+- **T01**：遵循 [vue/AGENTS.md](../../AGENTS.md) 的 HTML 结构规则；表格局部必须提供与列、行、单元格对应的 ARIA 角色。
 - **T02**：列定义（columns）与数据（data）契约分离，columns 支持 `slot` 自定义单元格。
 - **T03**：分页 `page` + `pageSize` 对齐后端分页规范（camelCase，上限 100）。
 
@@ -40,6 +40,6 @@ vue-table-skill/
 
 ## 七、自检清单
 
-- [ ] 零 HTML5 标签（`<table>` 系列全替代）
+- [ ] 已满足上位的 HTML、Emoji 与 Token 规则
 - [ ] columns/data 契约分离
 - [ ] 23 形态覆盖

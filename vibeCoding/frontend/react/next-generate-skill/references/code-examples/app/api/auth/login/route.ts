@@ -81,7 +81,7 @@ export async function POST(request: NextRequest) {
     );
   } catch {
     return NextResponse.json(
-      { code: -1, message: '服务器内部错误', data: null },
+      { code: -2000, message: '服务器内部错误', data: null },
       { status: 500 }
     );
   }

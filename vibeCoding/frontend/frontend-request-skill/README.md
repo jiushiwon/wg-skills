@@ -33,8 +33,7 @@ frontend-request-skill/
     └── sse-guide.md                # SSE 流式请求与打字机效果
 ```
 
-> ⭐ [`api-contract.md`](references/api-contract.md) 是前后端桥接的**唯一真理源**：
-> 接口存放位置（vue/uniapp/react 统一 `src/api/`）、登录页/管理页接口契约、错误码（`code<0` 异常、`code=-1` JWT 鉴权专用）、JWT 鉴权约定、`showError` 参数语义、HTTP 500 兜底。
+> ⭐ [`api-contract.md`](references/api-contract.md) 说明前端如何消费契约：接口统一落在 `src/api/`，具体端点读项目 `api-contract.md`，公共响应、错误码、JWT 与分页读 `backend/shared/`。
 
 ## 本地安装
 

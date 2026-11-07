@@ -32,7 +32,7 @@ vue-form-skill/
 
 ## 五、内置约束（编号红线）
 
-- **F01**：零 HTML5 标签——`<form>` 用 `<div role="form">` + `emit('submit')`；`<label>` 用 `<div class="*-label">`。
+- **F01**：遵循 [vue/AGENTS.md](../../AGENTS.md) 的 HTML 结构规则；表单提交与标签结构必须同时满足键盘可访问性要求。
 - **F02**：组装型——不复制输入控件的实现，通过 v-model 对接 `vue-input-skill` 等独立控件。
 - **F03**：校验提示态（error/success）齐全，错误信息可见（四态：loading/error/disabled/重试）。
 
@@ -42,6 +42,6 @@ vue-form-skill/
 
 ## 七、自检清单
 
-- [ ] 零 HTML5 标签（`<form>` `<label>` 全替代）
+- [ ] 已满足上位的 HTML、Emoji 与 Token 规则
 - [ ] 组装型（不复制控件实现）
 - [ ] 校验四态齐全

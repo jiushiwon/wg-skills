@@ -32,9 +32,9 @@ vue-button-skill/
 
 ## 五、内置约束（编号红线）
 
-- **B01**：零 HTML5 标签——用 `<div role="button" tabindex="0">` + `@keydown.enter` + `@keydown.space.prevent`。
+- **B01**：遵循 [vue/AGENTS.md](../../AGENTS.md) 的零 HTML5 标签规则；按钮的键盘可访问性实现使用 `div[role="button"]`、`@keydown.enter` 与 `@keydown.space.prevent`。
 - **B02**：`loading` 态必须禁用点击并给转圈反馈（防重复提交）。
-- **B03**：颜色/高度/圆角全走 `var(--color-*`、`var(--height-button-*`、`var(--radius-*`，零硬编码。
+- **B03**：遵循上位 Token 规则；按钮额外只允许使用已定义的颜色、高度与圆角语义变量。
 
 ## 六、变更纪律
 
@@ -42,6 +42,6 @@ vue-button-skill/
 
 ## 七、自检清单
 
-- [ ] 零 HTML5 标签、零 emoji、零硬编码
+- [ ] 已满足上位的 HTML、Emoji 与 Token 规则
 - [ ] 6 type × 3 variant × 3 size 全覆盖
 - [ ] loading/disabled 态齐全

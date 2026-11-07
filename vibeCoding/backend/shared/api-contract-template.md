@@ -12,51 +12,31 @@
 | Content-Type | `application/json`（文件上传用 `multipart/form-data`） |
 | 字符编码 | UTF-8 |
 | 时区 | UTC，时间字段格式 ISO 8601（如 `2026-07-10T08:00:00Z`） |
-| 分页默认值 | `page=1`，`pageSize=20`；分页上限 `pageSize ≤ 100` |
+| 公共规则版本 | 填写本项目采用的 `backend/shared/` 规范版本或提交标识 |
 
 ## 2. 统一响应格式
 
 > 遵循 [shared/response-envelope-spec.md](response-envelope-spec.md)
 
-```json
-{
-  "code": 0,
-  "message": "success",
-  "data": {}
-}
-```
+本项目不在此重复定义响应字段；接口清单中的每个响应数据模型均位于公共信封的 `data` 内。
 
 ## 3. 全局错误码
 
 > 遵循 [shared/error-code-spec.md](error-code-spec.md)
 
-| code | 含义 | HTTP |
-|------|------|------|
-| 0 | 成功 | 200 |
-| -1001 | 参数校验失败 | 400 |
-| -1002 | 未授权 | 401 |
-| -1003 | 禁止访问 | 403 |
-| -1004 | 资源不存在 | 404 |
-| -1005 | 资源冲突 | 409 |
-| -1006 | 请求过于频繁 | 429 |
-| -1031 | 请求体过大 | 413 |
-| -1032 | 不支持的文件类型 | 415 |
-| -2000 | 系统异常 | 500 |
+本项目只在“接口清单”中标注可能出现的错误码；错误码含义与 HTTP 映射以公共规范为准。模块扩展错误码记录在对应 `api-contract-<module>.md`。
 
 ## 4. JWT 鉴权
 
 > 遵循 [shared/jwt-auth-spec.md](jwt-auth-spec.md)
 
-```
-Authorization: Bearer {access_token}
-```
+项目若有额外认证端点或设备策略，在接口清单中补充；不得改写公共 JWT 格式和刷新规则。
 
 ## 5. 分页
 
 > 遵循 [shared/pagination-spec.md](pagination-spec.md)
 
-请求：`?page=1&pageSize=20`
-响应：`{ list, total, page, pageSize }`
+项目可在接口清单中标注哪些端点支持分页；不得自行改变公共参数和响应结构。
 
 ## 6. 接口清单
 

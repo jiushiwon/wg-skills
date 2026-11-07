@@ -329,36 +329,11 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 ---
 
-## 架构：前后端契约连接
+## 架构与契约
 
-```
-用户触发一句话
-"帮我做一个管理后台"
-        │
-   ┌────┼────┐
-   │    │    │
-前端层 后端层 数据库层
-组件库  init-skill  design-skill
-主题    module
-请求层
-样式
-   │    │    │
-   └──┬─┴──┘
-      │
-api-contract.md  ← 前后端唯一事实来源
-      │
-  ┌───┼───┐
-  │   │   │
-响应格式 错误码 接口清单
-```
+前后端通过项目 `api-contract.md` 对接；响应信封、错误码、JWT 与分页由 `vibeCoding/backend/shared/` 统一定义，前端请求层按项目契约落位到 `src/api/`。
 
-**4 套前端体系共享**：`frontend-request-skill`（请求层）+ Design Token 命名（`--color-primary-{50~950}` 完全对齐）
-
-**5 语言后端共享**：`vibeCoding/backend/shared/`（响应信封 + 错误码 + JWT + 分页）
-
-强制规则：每个 `init-skill` 必须生成 `api-contract.md`，每个 `module-skill` 必须输出 `api-contract-<module>.md`，前后端契约一致。
-
-完整规范见 [`AGENTS.md`](AGENTS.md) 第十三节。
+完整的拓扑、依赖方向与真源位置见 [ARCHITECTURE.md](ARCHITECTURE.md)；智能体的治理规则见 [AGENTS.md](AGENTS.md)。
 
 ---
 
@@ -369,6 +344,7 @@ api-contract.md  ← 前后端唯一事实来源
 | **`README.md`**（本文件） | 人类访客 / 潜在用户 | 仓库能干什么、怎么快速上手、有什么技能 |
 | **[`ONBOARDING.md`](ONBOARDING.md)** | 第一次使用者 | 用场景选择入口，完成第一个项目 |
 | **[`MISSING_SKILLS.md`](MISSING_SKILLS.md)** | 使用者 / 维护者 | 已迁至私有仓库的引用登记与替代路径 |
+| **[`ARCHITECTURE.md`](ARCHITECTURE.md)** | 维护者 / 架构阅读者 | 模块拓扑、依赖方向与唯一真源地图 |
 | **[`AGENTS.md`](AGENTS.md)** | AI 智能体 + 维护者 | 完整规范、目录结构、开发原则、提交规范 |
 | **[`CLAUDE.md`](CLAUDE.md)** | Claude Code | 入口（引用 `AGENTS.md`） |
 | `各 skill/SKILL.md` | AI 智能体 | 触发条件、生成流程、输出规范、依赖 |

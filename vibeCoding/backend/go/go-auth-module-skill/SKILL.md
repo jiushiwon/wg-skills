@@ -17,6 +17,7 @@ description: 在 Go（Gin + GORM）Web 项目上叠加 RBAC + 组织架构 + 通
 - **go-gin-init-skill**：基础骨架（响应信封 / 错误码 / JWT / 启动脚本），本 skill 在其之上叠加
 - **database-design-skill**：表前缀 `wg`、字段与索引规范
 - **frontend-request-skill**：响应信封、错误码、Token 与前端消费契约
+- **crypto-scenario-skill**：密码创建、校验、修改或迁移必须遵循其密码存储规范；不得自行选择或实现密码哈希算法
 
 ## 核心能力清单（9 项）
 

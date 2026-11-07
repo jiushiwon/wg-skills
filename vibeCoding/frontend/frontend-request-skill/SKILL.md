@@ -19,15 +19,13 @@ description: Use when designing or reviewing the request layer of a frontend pro
 
 ## 前后端契约（强约定）
 
-> **本 skill 的所有规范必须与 [`references/api-contract.md`](references/api-contract.md) 严格对齐**。
+> **本 skill 的前端消费流程遵循 [`references/api-contract.md`](references/api-contract.md)；响应信封、错误码、JWT、分页的公共定义以 `backend/shared/` 为准，业务接口以项目 `api-contract.md` 为准。**
 >
-> 该契约文档是前后端桥接的**唯一真理源**，定义：
+> 该消费规范只定义前端落地方式：
 >
 > - **接口存放位置**（vue/uniapp/react 统一 `src/api/`）
-> - **登录页/管理页接口契约**
-> - **请求头规范**（Authorization / Content-Type / X-Request-ID）
-> - **响应信封** `{ code, message, data }`
-> - **错误码契约**（`code<0` 异常，`>=0` 成功，**`-1002` 特殊 = JWT 鉴权失效**）
+> - **接口存放位置**（vue/uniapp/react 统一 `src/api/`）
+> - **读取项目 `api-contract.md` 的顺序与目录落位**
 > - **showError 参数语义**（默认 `false` 自动弹，`true` 调用方自己处理）
 > - **HTTP 500 兜底**（强制 swallow 用户 Toast，交给全局错误处理）
 
@@ -442,14 +440,14 @@ function handleLike() {
 
 ## 与后端规范的联动
 
-> 本 skill 的响应信封、错误码、JWT、请求头规范以 [`references/api-contract.md`](references/api-contract.md) 为准。
+> 本 skill 的前端目录与消费流程以 [`references/api-contract.md`](references/api-contract.md) 为准；响应信封、错误码、JWT、分页以 `backend/shared/` 为准，项目端点以项目 `api-contract.md` 为准。
 
 - 后端 `EnvelopeRoute` 输出 `{ code, message, data }`
 - 前端 `request.ts` 按相同结构解析
-- `ERROR_CODE_MAP` 直接复用契约 §7 错误码表
-- JWT 鉴权 + `code === -1002` 失效标识由契约 §11 约束
+- `ERROR_CODE_MAP` 按 `backend/shared/error-code-spec.md` 与项目模块契约映射
+- JWT 鉴权 + `code === -1002` 失效标识由 `backend/shared/jwt-auth-spec.md` 与错误码规范约束
 
-后端 init-skill（`fastapi-init-skill` / `springboot-init-skill` / `go-gin-init-skill` / `nodejs-init-skill`）**必须**生成与 [`references/api-contract.md`](references/api-contract.md) 兼容的 `api-contract.md`，否则前后端无法桥接。
+后端 init-skill（`fastapi-init-skill` / `springboot-init-skill` / `go-gin-init-skill` / `nodejs-init-skill`）**必须**生成引用 `backend/shared/` 的项目 `api-contract.md`，否则前后端无法桥接。
 
 ## 触发词
 

@@ -206,7 +206,7 @@ export async function request<T = unknown>(
     return data.data as T;
   } catch (err) {
     if (err instanceof Error && err.name === 'AbortError') {
-      throw { code: -1, message: '请求超时' };
+      throw { code: 'TIMEOUT', message: '请求超时' };
     }
     throw err;
   } finally {

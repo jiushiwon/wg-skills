@@ -324,20 +324,11 @@ wg-skills/
 | 文件 | 位置 | 数量 | 头部必须声明 |
 |------|------|------|--------------|
 | `AGENTS.md` | 技术栈目录根（如 `vibeCoding/frontend/uniapp/AGENTS.md`） | 每栈 1 个 | 上位规范：仓库根 `AGENTS.md`；下位规范：各 skill `STANDARD.md` |
-| `STANDARD.md` | 每个 skill 目录根 | 每 skill 1 个 | 上位规范：所属模块级 `AGENTS.md` |
+| `STANDARD.md`（可选） | 有局部约束的 skill 目录根 | 仅在需要时创建 | 上位规范：所属模块级 `AGENTS.md` |
 | `SKILL.md` | 每个 skill 目录根 | 每 skill 1 个（必备入口） | — |
 | `README.md` | 每个 skill 目录根 | 每 skill 1 个（对外说明） | — |
 
-**落地现状**（渐进式补齐，不要求一次做完）：
-
-| 技术栈 | 模块级 `AGENTS.md` | 个体级 `STANDARD.md` |
-|--------|-------------------|---------------------|
-| frontend 公共层 | ✅ `vibeCoding/frontend/AGENTS.md` | 渐进式补齐 |
-| uniapp | ✅ `vibeCoding/frontend/uniapp/AGENTS.md` | ✅ 15 / 15 |
-| vue | ✅ `vibeCoding/frontend/vue/AGENTS.md` | 渐进式补齐（5 / 30+，父技能 + button/card/table/form） |
-| java / go / python / nodejs / react | ⬜ 待补 | ⬜ 待补 |
-
-补建顺序：**先模块级**（把该栈的架构与真源定下来），**再批量补个体级**（从各 skill 现有约束里抽红线编号）。参考实现：`vibeCoding/frontend/uniapp/`。
+新增或调整规范时，先明确模块级真源，再判断单个 skill 是否确有不可替代的局部约束；不得用“补齐数量”衡量规范质量。
 
 ---
 
@@ -366,7 +357,7 @@ wg-skills/
    description: 一句话描述技能用途（含触发词）
    ---
    ```
-4. **写入 `STANDARD.md`**（个体规范）：模块定位、依赖、目录约定、内置约束（编号红线）、变更纪律、自检清单；头部声明上位规范为所属模块级 `AGENTS.md`。
+4. **判断是否需要 `STANDARD.md`**：仅当存在无法由模块 `AGENTS.md` 与 `SKILL.md` 表达的局部约束时创建；创建后写模块定位、依赖、目录约定、编号红线、变更纪律与自检清单，头部声明上位规范。
 5. **写入 `README.md`**：包含功能、使用方式、示例、目录说明。
 6. **创建 `references/`**：通用规则、词表、案例按主题拆分文件。
 7. **更新本文件（AGENTS.md）**：将新 skill 加入第三节"目录结构"对应位置。
@@ -484,6 +475,7 @@ wg-skills/
 | 仓库主控（AGENTS.md / CLAUDE.md / README.md） | ❌ 否 | 在仓库根目录 |
 | 公开入口文档（ONBOARDING.md / MISSING_SKILLS.md） | ❌ 否 | 在仓库根目录，随仓库公开发布并由 README 链接 |
 | 公众号文章 | ❌ 否 | 在 `docs/<对应分类>/公众号文章.md` |
+| `STATUS.md`（可选） | ❌ 否 | 跟随对应 skill，记录测试状态、已知限制与后续迭代，不进入根目录导航 |
 
 ### 11.2 命名规范
 
@@ -500,6 +492,7 @@ wg-skills/
 - ❌ 禁止把 plan 文件放到 skill 目录里（污染 skill 自包含性）
 - ❌ 禁止把 plan / design 内容混入 SKILL.md（SKILL.md 只承载技能定义）
 - ❌ 禁止把面向外部使用者的入口说明移入 `docs/`；`ONBOARDING.md` 与 `MISSING_SKILLS.md` 是公开仓库导航的一部分。
+- ❌ 禁止将单个 skill 的测试进度、待验证项或内部迭代写入根 README、ARCHITECTURE、MISSING_SKILLS、CHANGELOG；影响 AI 输出边界的限制必须同时写入该 skill 的 `SKILL.md`。
 
 ### 11.4 版本控制
 
@@ -663,7 +656,7 @@ grep -rnE '<button' ./vibeCoding/frontend/vue/vue-base-skill/vue-table-skill/dem
          │    ┌──────────┘
          │    │
     ┌────▼────▼────┐
-    │ api-contract │  ← 前后端唯一事实来源
+    │ 项目 api-contract │  ← 项目接口实例真源
     │    .md       │
     └──────────────┘
 ```

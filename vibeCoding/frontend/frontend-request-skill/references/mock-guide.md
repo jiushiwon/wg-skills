@@ -275,11 +275,11 @@ MOCK_MAP['GET:/auth/menus'] = {
 
 ## 默认错误码集
 
-> **权威来源**：[`api-contract.md` §7.3](api-contract.md)（前后端桥接的唯一真理源）。
+> **权威来源**：[`backend/shared/error-code-spec.md`](../../../backend/shared/error-code-spec.md) 定义公共错误码；项目 `api-contract.md` 定义实际模块扩展码。
 >
 > 各 init-skill 内置的统一响应规范 → 后端实际返回的错误码远不止 `SUCCESS_CODES` 那一个。`ERROR_CODE_MAP` 必须按后端契约穷举到位，否则 toast 会显示"请求失败"而不是后端真实 message。
 >
-> **强制要求**：本仓库的 `ERROR_CODE_MAP` 与 [`api-contract.md` §7.3](api-contract.md) 保持一致；任何业务新增错误码必须**先**更新契约，**后**更新映射表。
+> **强制要求**：`ERROR_CODE_MAP` 必须与公共错误码规范和项目实际契约保持一致；任何业务新增错误码必须先更新模块契约，后更新映射表。
 
 ### 错误码分段（与 backend/shared/error-code-spec.md 对齐）
 
@@ -290,7 +290,7 @@ MOCK_MAP['GET:/auth/menus'] = {
 | 系统错误 | `-2000` ~ `-2002` | 系统异常 / 数据库异常 / 第三方服务异常 |
 | 模块扩展 | `-3001` ~ `-3999` | 各 module-skill 自定义（如支付 `-3001` 支付失败） |
 
-**默认 `ERROR_CODE_MAP` 完整示例**（与契约 §7.3 对齐）：
+**默认 `ERROR_CODE_MAP` 完整示例**（与公共错误码规范对齐）：
 
 ```typescript
 // src/config/error.config.ts
@@ -307,7 +307,7 @@ export const ERROR_CODE_MAP: Record<string, string> = {
   HTTP_5XX: '服务器繁忙，请稍后重试',
   UPLOAD_ERROR: '上传失败',
 
-  // 业务层（api-contract.md §7.3，与 backend/shared/error-code-spec.md 对齐）
+  // 业务层（与 backend/shared/error-code-spec.md 对齐）
   '-1001':    '参数校验错误',
   '-1002':    '未登录或 Token 无效',
   '-1003':    '无权限',
@@ -322,4 +322,4 @@ export const ERROR_CODE_MAP: Record<string, string> = {
 > - 项目启动后跑一遍联调，把后端实际抛出的 code 补到 `ERROR_CODE_MAP`，不要让前端 toast 永远显示"请求失败"
 > - key 必须是 `string`（负数也要带引号），TypeScript 会把 `Record<string, string>` 索引签名放宽到 string
 > - 文案尽量简短（≤15 字），过长的提示放在后端 `data.message` 字段通过 `extractMessage` 直接透传
-> - **业务错误码必须先更新 [`api-contract.md` §7.3](api-contract.md)，再更新本映射**——契约是前后端唯一真理源
+> - **业务错误码必须先更新项目 `api-contract.md` 或 `api-contract-<module>.md`，再更新本映射**

@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
     });
   } catch {
     return NextResponse.json(
-      { code: -1, message: '请求参数错误', data: null },
+      { code: -1001, message: '请求参数错误', data: null },
       { status: 400 }
     );
   }

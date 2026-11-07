@@ -22,6 +22,7 @@ description: FastAPI 授权与企业组织架构模块一键叠加技能。面�
 1. ✅ 已安装 `fastapi-init-skill`（项目骨架）
 2. ✅ 骨架包含：JWT、统一响应、SQLModel、分页、目录结构
 3. ✅ 遵循骨架的表前缀、字段命名、软删除规范
+4. ✅ 涉及密码创建、校验、修改或迁移时，遵循 `crypto-scenario-skill` 的密码存储规范；不得自行选择或实现密码哈希算法。
 
 **检测逻辑：**
 1. 读取用户项目根目录 `SKILL.md` 或 `README.md`
