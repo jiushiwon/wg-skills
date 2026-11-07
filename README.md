@@ -1,6 +1,6 @@
 # wg-skills — 把古法全栈开发经验装进 AI
 
-> **160 个**面向 Claude Code / Cursor / Codex 等智能体的公开 Skills，MIT 协议。
+> **152 个**面向 Claude Code / Cursor / Codex 等智能体的公开 Skills，MIT 协议。
 > 让 AI 按统一工程规范完成“项目骨架 → 模块 → 前后端契约 → 部署 → 迭代”。也提供可直接复制的任务提示词，让常用规范更容易用起来。
 
 ---
@@ -53,9 +53,9 @@
 
 ---
 
-## 160 个技能 · 全部 MIT 公开 · 持续迭代中
+## 152 个技能 · 全部 MIT 公开 · 持续迭代中
 
-> ⚠️ **技能以实际效果为准，160 个技能都在持续迭代中**。每个技能都在真实项目里跑过，但 API、组件形态、触发词会随实战反馈调整，不保证向后兼容。
+> ⚠️ **技能以实际效果为准，152 个技能都在持续迭代中**。每个技能都在真实项目里跑过，但 API、组件形态、触发词会随实战反馈调整，不保证向后兼容。
 > 任何问题、反馈或建议，欢迎两个渠道：
 > 1. 访问 [itlifetime.com](https://itlifetime.com)（首页底部 → 加微信 **jiushiwon**）
 > 2. 在 [GitHub Issues](https://github.com/jiushiwon/wg-skills/issues) 提 issue
@@ -68,7 +68,6 @@
 | **[`vibeCoding/frontend`](#前端)** | **76** | Vue / UniApp / React / HTML / Electron / 公共能力；具体清单见下文 |
 | **[`vibeCoding/super-deploy-skills`](#部署套件)** | **16** | 部署总入口 · 数据库安装【4】· 运行时安装【4】· Docker · 原生 · Nginx · 服务器 · 环境检测 |
 | **[`vibeCoding/vibecoding-guide-skill`](#vibecoding-工作流)** | **4** | VibeCoding 总入口 · 智能体访谈 · 智能体学习 · 完整工作流 |
-| **[`others`](#其他工具)** | **8** | AI 风检测 · 人性改写 · Skill 审计 · 流程图 · 小红书写作 · Electron ABI 修复 · FFmpeg · Remotion |
 
 > 🔒 **项目级编排技能**（完整项目骨架、跨模块编排、部署与验收套件）已迁移至私有仓库 `wg-project-kits`；本仓库继续维护免费、通用、可组合的基础 Skills。
 
@@ -278,23 +277,6 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 ---
 
-### 其他工具
-
-**8 个**，覆盖写作、检测、流程图、视频处理等领域。
-
-| 技能 | 说明 |
-|------|------|
-| `ai-speech-detector` | AI 风检测（识别 AI 生成文本） |
-| `humanizer` | 去除 AI 写作模式（35 个模式识别） |
-| `skill-auditor` | Skill 安全审计 |
-| `workflow-diagram-skill` | 一句话生成流程图 |
-| `xhs-style-writer-skill` | 小红书个人风格写作 |
-| `electron-native-abi-fix` | Electron 原生 ABI 修复 |
-| `ffmpeg-skill` | FFmpeg 命令与脚本 |
-| `remotion-skill` | Remotion React 视频 |
-
----
-
 ## 适用场景
 
 ### 场景 1：具体业务项目
@@ -314,7 +296,7 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 | 接手陌生项目 | `backend-analysis-skill`（产出 4 份报告：接口/技术/数据库/业务） |
 | 前端代码优化 | `frontend-code-doctor` |
 | 项目规范化 | `uniapp-diagnostic-skill` |
-| Skill 自身审计 | `skill-auditor` |
+| Skill 自身审计 | 私有仓库 `wg-project-kits/others/skill-auditor` |
 
 ### 场景 3：完整部署上线
 
@@ -376,7 +358,7 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 ---
 
-## 为什么开放 + 为什么 160 个
+## 为什么开放 + 为什么 152 个
 
 之前这个仓库是分层结构（精选 23 个公开 + 全量私有）。经过两轮迭代决定：
 
@@ -411,3 +393,8 @@ MIT License — 自由使用、修改、商用。
 
 
 前端一致性审计默认只读，覆盖组件、主题、空间、兼容性、图标和请求六类；样式修改与回滚均限定本轮确认的范围，不覆盖原有未提交工作。请求模板限制令牌的发送范围，Go Gin 演示可按其说明显式设置本地账号。
+
+
+## 近期变更
+
+2026-11-07：独立领域工具 `others/` 的 8 个技能迁移到私有 `wg-project-kits/others/`。公开仓库现有 152 个技能，聚焦古法工程经验融入 AI。旧目录使用者请更新本地路径，原触发词保留于迁入版本。私有仓库需要相应访问权限。

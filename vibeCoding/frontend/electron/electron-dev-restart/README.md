@@ -27,5 +27,5 @@ dev 模式只对渲染端（`src/renderer/*`）做 HMR；主进程和 preload �
 
 ## 相关技能
 
-- [electron-native-abi-fix](../../../others/electron-native-abi-fix/SKILL.md) — 原生模块 ABI 不匹配的同类问题，先排除 ABI 再查 HMR
+- 私有仓库 `wg-project-kits/others/electron-native-abi-fix` — 原生模块 ABI 不匹配的同类问题，先排除 ABI 再查 HMR
 - [electron-vue-init-skill](../../vue/electron-vue-init-skill/SKILL.md) — Electron + Vue 初始化模板

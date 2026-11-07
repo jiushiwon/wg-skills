@@ -24,7 +24,7 @@
 | Skill | 关联场景 |
 |------|----------|
 | `vibeCoding/frontend/vue/electron-vue-init-skill` | 新建 Electron + Vue 项目时用（Vue 框架） |
-| `vibeCoding/others/electron-native-abi-fix` | 原生模块 ABI 不匹配（`No handler registered` 可能是它而非 HMR） |
+| `wg-project-kits/others/electron-native-abi-fix` | 原生模块 ABI 不匹配（`No handler registered` 可能是它而非 HMR） |
 | `vibeCoding/frontend/vue/vue-theme-skill` | CSS 变量与主题系统（xterm 字体解析依赖它） |
 
 ## 不做

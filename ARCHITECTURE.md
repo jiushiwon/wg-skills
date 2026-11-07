@@ -10,7 +10,7 @@ wg-skills/
 │   ├── backend/           语言骨架、业务模块、数据库与公共协议
 │   ├── frontend/          Vue、UniApp、React、HTML 与前端公共能力
 │   └── super-deploy-skills/ 运行环境与部署技能
-└── others/                独立领域工具
+└── prompts/               工程任务提示词
 ```
 
 ## 2. 规范分层与依赖方向

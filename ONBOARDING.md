@@ -40,7 +40,7 @@
 
 ### 步骤 1：选型（30 秒）
 
-看 [README.md 的 6 大板块总览](README.md#6-大板块总览)，选你的"语言 × 框架"组合。
+看 [README.md](README.md)，选你的"语言 × 框架"组合。
 
 ### 步骤 2：读规范（3 分钟）
 
@@ -100,7 +100,7 @@ wg-skills/
 │   ├── plans/             ← 本地沉淀
 │   ├── adr/               ← 待补（关键决策记录）
 │   └── skill-graph.yaml   ← 待补（机器可读关联图）
-└── vibeCoding/            ← 152 个 skill 都在这里（连同 others/ 共 160 个）
+└── vibeCoding/            ← 152 个公开 skill
     ├── backend/           ← Java/Python/Go/Node.js/Rust + 数据库
     ├── frontend/          ← Vue/UniApp/React/HTML
     ├── super-deploy-skills/

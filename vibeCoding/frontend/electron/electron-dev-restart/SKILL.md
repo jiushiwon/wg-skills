@@ -155,5 +155,5 @@ api.xxx is not a function、Electron 点了没反应、连了 X 次都不行
 
 ## 关联技能
 
-- **`vibeCoding/others/electron-native-abi-fix`**：原生模块 ABI 不匹配的同类问题（`No handler registered` 也可能是它），先排除 ABI 再排查 HMR
+- **`wg-project-kits/others/electron-native-abi-fix`**：原生模块 ABI 不匹配的同类问题（`No handler registered` 也可能是它），先排除 ABI 再排查 HMR
 - **`vibeCoding/frontend/vue/electron-vue-init-skill`**：本类项目（Electron + Vue/React）的初始化模板

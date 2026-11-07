@@ -119,7 +119,7 @@ description: 一句话描述技能用途  # 必填，含触发词
 
 ---
 
-## 三、目录结构（三大板块）
+## 三、目录结构
 
 本仓库采用 **3 + N** 板块布局，将所有 skill 按业务域归类：
 
@@ -278,24 +278,12 @@ wg-skills/
 │   │   └── universal-identity-bridge-skill/ # 统一身份接入编排（Java 先行，Go/Python 预留）
 │   │
 │
-└── others/                            # 🧰 板块二：其他领域工具
-    ├── ai-speech-detector/                   # AI 风检测
-    ├── electron-native-abi-fix/              # Electron 原生 ABI 修复
-    ├── humanizer/                            # 去除AI写作模式（35个模式）
-    ├── skill-auditor/                        # Skill 安全审计
-    ├── workflow-diagram-skill/               # 一句话生成流程图
-    ├── xhs-style-writer-skill/               # 小红书个人风格写作
-    └── video/                                # 视频处理
-        ├── ffmpeg-skill/                     # FFmpeg 命令与脚本
-        └── remotion-skill/                   # Remotion React 视频
+
 ```
 
 ### 3.1 板块说明
 
-| 板块 | 占比 | 业务定位 |
-|------|------|---------|
-| **vibeCoding** | 90% | 编程开发：前后端一体化体系（4 套前端 × 5 语言后端 × 统一契约） |
-| **others** | 10% | 其他领域工具：写作、审计、流程图等 |
+公开仓库围绕古法工程经验融入 AI，维护编程开发技能、工程规范与任务提示词。`others/` 的 8 个独立工具已迁移至私有 `wg-project-kits/others/`，由该仓库维护。
 
 ### 3.2 父子嵌套结构（5 个父技能）
 
@@ -341,14 +329,14 @@ wg-skills/
 4. **参考资料沉淀**：通用规则、词表、案例放入 skill 内 `references/`；避免把长文本直接塞进 `SKILL.md`。
 5. **向后兼容**：已有触发词和命令行保持可用；破坏性变更需在 `README.md` 中标注迁移方式。
 6. **多智能体通用**：所有 `SKILL.md` 必须使用通用 YAML frontmatter，**不得绑定特定智能体**。
-7. **目录归位**：新增 skill 必须放在所属板块下（vibeCoding / others），禁止散落到顶层。
+7. **目录归位**：新增 skill 必须放在所属板块下（vibeCoding），禁止散落到顶层。
 8. **规范分层**：通用规则写在所属技术栈的模块级 `AGENTS.md`，单个 skill 的特有红线写在自己的 `STANDARD.md`；**同一条规则只在一处写**，下位不重复上位。
 
 ---
 
 ## 五、新增 Skill 流程
 
-1. **确定归属板块**（vibeCoding / others）。
+1. **确定归属板块**（vibeCoding）。
 2. **创建目录**：`<板块>/<二级分类>/<skill-name>/`，目录名 kebab-case。
 3. **写入 `SKILL.md`**，必填前置元数据：
 
@@ -373,7 +361,7 @@ wg-skills/
 2. 触发词变化必须检查是否有其他 skill 冲突。
 3. 删除或重命名 references 文件时，检查 SKILL.md 中的引用路径。
 4. 修改父技能时，**必须**逐个审查所有嵌套子技能的依赖关系。
-5. 跨板块调整（vibeCoding ↔ others）需先在 PR 描述中说明理由。
+5. 跨仓库迁移需在变更记录中说明归属、目标路径与兼容方式。
 6. **规范归属判断**：改的是"该技术栈通用规则" → 改模块级 `<技术栈>/AGENTS.md`；改的是"单个 skill 特有红线" → 改该 skill 的 `STANDARD.md`；两者都不要重复写。
 7. 改了模块级 `AGENTS.md` 后，**必须**逐个核对受影响 skill 的 `STANDARD.md` 是否与上位冲突（例：上位已禁止 `px`，下位不得再允许 `px`）。
 
@@ -411,52 +399,9 @@ wg-skills/
 
 ---
 
-## 十、附：体系总览图
+## 十、附：体系总览
 
-```
-                ┌─────────────────────────────────────────────────────────┐
-                │            wg-skills —— Agents Skills 集合              │
-                │   前后端一体化：契约连接 + 统一主题 + 标准化技能         │
-                └──────────────────────┬──────────────────────────────────┘
-                                       │
-        ┌──────────────────────────────┼──────────────────────────────┐
-        │                              │                              │
-   ┌────▼─────┐                  ┌─────▼─────┐                  ┌──────▼──────┐
-   │vibeCoding│  编程开发 90%     │   others   │  其他工具 10%  │
-   └────┬─────┘                  └─────┬─────┘                  └──────┬──────┘
-        │                              │                              │
-   ┌────┴────────────────┐             │                              │
-   │   backend           │        ┌────┴─────┐                  ┌──────┴───────┐
-   │   ├ java/springboot │        │humanizer │                  │ai-speech-det │
-   │   ├ python/fastapi  │        │article-il│                  │skill-auditor │
-   │   ├ go/gin          │        │workflow-d│                  │xhs-writer    │
-   │   ├ nodejs/express  │        └──────────┘                  └──────────────┘
-   │   ├ rust/axum       │
-   │   └ database (7)    │ ← mysql / pgsql / mongodb / redis / kafka / sqlite
-   │                     │
-   │   frontend (4 套)   │
-   │   ├ vue (85%)       │ 20+ 组件 + theme + request + nuxt
-   │   ├ uniapp (90%)    │ 26 组件 + 6 容器 + theme + style + request
-   │   ├ react (30%)     │ generate + next.js fullstack
-   │   └ html (10%)      │ template only ← 下一个重点
-   │                     │
-   │   项目级技能         │
-   │   ├ vue-admin-skill │ 编排器：前端 + 后端 + 数据库
-   │   └ sse-agent-skill │ 编排器：SSE 流式 AI 对话
-   │                     │
-   │   部署套件 (7)       │
-   │   └ super-deploy    │ docker / native / nginx / db-install
-   │                     │
-   └─────────────────────┘
-                │
-                ▼
-   api-contract.md ← 前后端契约连接（响应信封 + 错误码 + JWT + 分页）
-                │
-        ┌───────┼───────┐
-        │       │       │
-   request.ts  SKILL.md  database-design
-   (前端消费)  (后端生成)  (表结构规范)
-```
+`vibeCoding/` 维护前端、后端、数据库、部署与工程工作流。共享契约连接各栈，`prompts/` 提供按任务浓缩的输入、边界与验收说明。独立领域工具维护于 `wg-project-kits/others/`。
 
 ---
 
