@@ -106,7 +106,7 @@ docs/auth-module-guide.md         # 接入与扩展指南
 
 1. 确认已存在 FastAPI 骨架（含 JWT、统一响应、分页）。
 2. 询问用户包名、表前缀（默认 wg）、是否需要数据权限。
-3. 按 `references/skeleton.py` 生成 `auth/` 下全部源码：
+3. 按 `references/skeleton.md` 生成 `auth/` 下全部源码：
    - 将所有 `{prefix}` 占位符替换为用户指定的表前缀（如 `wg_`）
    - 将 `src.auth` 替换为用户的包名（如 `app.auth`）
 4. 生成 `api-contract-auth.md` 与 `docs/auth-module-guide.md`。

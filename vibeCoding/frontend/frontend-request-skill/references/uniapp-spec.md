@@ -37,6 +37,7 @@ export const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true';
 
 ```typescript
 import { getToken } from '@/utils/auth';
+import { showError } from '@/utils/toast';
 import { handleUnauthorized, refreshToken } from '@/services/auth.service';
 import {
   BASE_URL,
@@ -138,6 +139,16 @@ function getLocale(): string {
 }
 
 // ===== 请求拦截器（api-contract.md §5）=====
+// 相对路径由配置的 API 基址拼接。绝对地址必须与配置的协议及主机完全一致。
+function isTrustedApiUrl(url: string): boolean {
+  if (/[\s\\]/.test(url) || url.startsWith('//')) return false;
+  if (!/^[a-z][a-z\d+.-]*:/i.test(url)) return true;
+  const origin = (value: string) => /^https?:\/\/([a-z\d.-]+|\[[a-f\d:]+\])(?::\d+)?(?=[/?#]|$)/i
+    .exec(value)?.[0].toLowerCase();
+  const apiOrigin = origin(BASE_URL);
+  return apiOrigin !== undefined && origin(url) === apiOrigin;
+}
+
 function requestInterceptor(options: RequestOptions): RequestOptions {
   const headers: Record<string, string> = { ...options.header };
 
@@ -291,8 +302,13 @@ export function request<T = any>(options: RequestOptions): RequestPromise<T> {
     return Promise.reject(formatError('NO_AUTH_TOKEN', '未登录')) as RequestPromise<T>;
   }
 
-  const url = options.url.startsWith('http') ? options.url : `${BASE_URL}${prefix}${options.url}`;
-  const requestKey = generateRequestKey(url, method, options.data);
+  const url = /^https?:\/\//i.test(options.url) ? options.url : `${BASE_URL}${prefix}${options.url}`;
+  if ((!isTrustedApiUrl(options.url) || !isTrustedApiUrl(url)) && options.needAuth !== false) {
+    return Promise.reject(formatError('UNTRUSTED_API_URL', '鉴权请求地址超出 API 范围')) as RequestPromise<T>;
+  }
+
+  const authScope = options.needAuth === false ? 'public' : (options.authMode ?? 'default');
+  const requestKey = `${authScope}:${Boolean(options.skipAuthHandler)}:${generateRequestKey(url, method, options.data)}`;
 
   const maxRetry = options.retry ?? REQUEST_RETRY_COUNT;
   let currentRetry = 0;
@@ -336,7 +352,7 @@ export function request<T = any>(options: RequestOptions): RequestPromise<T> {
         if (task?.abort) task.abort();
       };
     }).catch(async (err: RequestError) => {
-      if (err.code === 'UNAUTHORIZED' && !isRetry && !opts.skipAuthHandler) {
+      if (err.code === 'UNAUTHORIZED' && !isRetry && opts.needAuth !== false && !opts.skipAuthHandler) {
         try {
           await refreshToken();
           const retryPromise = runRequest(true);

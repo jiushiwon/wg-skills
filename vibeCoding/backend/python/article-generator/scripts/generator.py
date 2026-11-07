@@ -301,7 +301,7 @@ def get_sample_content(platform: str, topic: str) -> str:
 ```python
 # 示例代码
 def example():
-    """这是一个示例函数"""
+    '''这是一个示例函数'''
     pass
 ```
 

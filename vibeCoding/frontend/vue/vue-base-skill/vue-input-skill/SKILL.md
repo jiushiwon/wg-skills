@@ -12,7 +12,7 @@ description: Vue3 输入框组件技能，提供 base-input 组件。触发词�
 
 ## 引用组件
 
-引用 `vue-form-skill/base-input.md` 的实现规范。
+实现规范见同目录 `base-input.md`。
 
 ## 使用方式
 

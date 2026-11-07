@@ -29,6 +29,8 @@ demo/
 
 ### 1. 启动
 
+先在当前终端设置至少 32 字节的随机 `JWT_SECRET`。如需演示登录，请同时设置 `DEMO_ADMIN_PASSWORD`（12 到 72 字节），并在下一步使用该密码。
+
 ```bash
 # Windows
 scripts\start.bat
@@ -37,14 +39,14 @@ scripts\start.bat
 ./scripts/start.sh
 ```
 
-服务监听 `http://localhost:8080`
+服务仅监听 `http://127.0.0.1:8080`。
 
 ### 2. 登录获取 token
 
 ```bash
 curl -X POST http://localhost:8080/api/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"username":"admin","password":"admin123"}'
+  -d '{"username":"admin","password":"<DEMO_ADMIN_PASSWORD>"}'
 ```
 
 返回：
@@ -80,13 +82,11 @@ curl -X DELETE http://localhost:8080/api/users/1 \
   -H "Authorization: Bearer <token>"
 ```
 
-## 默认账号
+## 本地演示账号
 
-| 用户名 | 密码 |
-|--------|------|
-| admin  | admin123 |
+只有设置 `DEMO_ADMIN_PASSWORD` 且库中还没有 `admin` 时才创建该用户。密码以 bcrypt 哈希保存，之后修改环境变量不会重置已有账号。未配置演示账号时，可以访问健康检查。
 
-> 首次启动自动播种到 `wg_user` 表，密码只存 **bcrypt 哈希**（不可逆），登录时查库比对。
+旧版固定凭据的数据库会被启动检查拒绝。保留原库并先离线迁移凭据，或使用 `DB_PATH` 指向新的本地演示库。这个演示只演示登录和受保护 CRUD，令牌过期后重新登录。需要刷新会话时，按项目契约接入认证模块。
 
 ## 公共路由
 

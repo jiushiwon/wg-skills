@@ -17,7 +17,7 @@ trigger: |
 
 > 基于「一切皆容器」思想的 Vue 卡片组件技能。**双层架构**：`base-card`（L0 根容器）+ `base-wg-card`（L1 业务卡片），二者严格分层、互不替代。
 >
-> **本技能严格镜像 [uniapp-base-skill/containers/base-card](../../uniapp/uniapp-base-skill/containers/base-card/)**，命名 100% 对齐。
+> **本技能严格镜像 [uniapp-base-skill/containers/base-card](../../../uniapp/uniapp-base-skill/containers/base-card/)**，命名 100% 对齐。
 >
 > **零样式标签铁律**：实现代码仅使用 `<div>` / `<span>` + CSS3，禁止 `<p>` `<h1~h6>` `<header>` `<footer>` `<section>` `<article>` `<aside>` `<nav>` `<main>` `<button>` `<table>` `<input>` `<select>` `<form>` `<label>` `<fieldset>` `<option>` `<img>` `<strong>` `<em>` 等带默认样式的标签。图片用 `<div>` + `background-image` 实现，图标用 `<div>` + CSS mask data URI。
 
@@ -25,7 +25,7 @@ trigger: |
 
 | 组件 | 层级 | 角色 | 文档 |
 |------|------|------|------|
-| **base-card** | L0 | 根容器（6 维度参数矩阵） | [../../base-card.md](../../base-card.md) |
+| **base-card** | L0 | 根容器（6 维度参数矩阵） | [../base-card.md](../base-card.md) |
 | **base-wg-card** | L1 | 业务卡片组件（11 种 variant） | [base-wg-card.md](base-wg-card.md) |
 
 **职责划分**：
@@ -168,7 +168,7 @@ grep -rnE '<(p|header|footer|section|article|aside|nav|main|h[1-6]|button|table|
 
 > **base-card 是 vue-base-skill 顶层的公共根容器**，完整规格（6 维度 prop / slot / event / template / style）见：
 >
-> ➡️ [../../base-card.md](../../base-card.md)
+> ➡️ [../base-card.md](../base-card.md)
 >
 > 本文件不再重复定义，base-wg-card 必须基于该源头规格实现。
 
@@ -191,7 +191,7 @@ vue-base-skill/
                 └── 00-showcase.html  # 11 种 variant 速查
 ```
 
-**base-card 是 vue-base-skill 顶层的公共组件**，本目录不再重复定义；所有 base-card 相关规格请前往 `../../base-card.md` 查看。
+**base-card 是 vue-base-skill 顶层的公共组件**，本目录不再重复定义；所有 base-card 相关规格请前往 `../base-card.md` 查看。
 
 ## 第三方组件库禁令
 

@@ -12,7 +12,7 @@ description: Vue3 下拉选择器组件技能，提供 base-select 组件。触�
 
 ## 引用组件
 
-引用 `vue-form-skill/base-select.md` 的实现规范。
+实现规范见同目录 `base-select.md`。
 
 ## 使用方式
 

@@ -24,7 +24,7 @@
 
 ## 完整规格
 
-→ [vue-form-skill/base-input.md](vue-form-skill/base-input.md)（14.7K，含 7 种 variant / 完整 Props / 校验 / 反例 vs 正例）
+→ [vue-input-skill/base-input.md](vue-input-skill/base-input.md)（14.7K，含 7 种 variant / 完整 Props / 校验 / 反例 vs 正例）
 
 ## 层级定位
 

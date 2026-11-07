@@ -33,8 +33,8 @@ Vue3 高端 PC 端登录页技能，9 种**结构级差异化**视觉风格 + 5 
 | 卡片容器 | vue-base-skill | [base-card.md](../../base-card.md) |
 | 表单 | vue-form-skill | [base-form.md](../../vue-form-skill/base-form.md) |
 | 表单项 | vue-form-skill | [base-form-item.md](../../vue-form-skill/base-form-item.md) |
-| 输入框 | vue-form-skill | [base-input.md](../../vue-form-skill/base-input.md) |
-| 复选框 | vue-form-skill | [base-checkbox.md](../../vue-form-skill/base-checkbox.md) |
+| 输入框 | vue-form-skill | [base-input.md](../../vue-input-skill/base-input.md) |
+| 复选框 | vue-form-skill | [base-checkbox.md](../../vue-checkbox-skill/base-checkbox.md) |
 | 按钮 | vue-button-skill | [base-button.md](../../vue-button-skill/base-button.md) |
 
 **禁止**自定义 div 实现 input/button/checkbox。所有原子组件必须从上述技能引用。

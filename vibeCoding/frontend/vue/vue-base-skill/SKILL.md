@@ -242,7 +242,7 @@ vue-base-skill/
 ## 如何使用
 
 1. **需要内容容器** → 直接 `<base-card>` ([base-card.md](base-card.md))
-2. **需要输入框** → 直接 `<base-input>` ([base-input.md](base-input.md))，详细规格见 [vue-form-skill/base-input.md](vue-form-skill/base-input.md)
+2. **需要输入框** → 直接 `<base-input>` ([base-input.md](base-input.md))，详细规格见 [vue-input-skill/base-input.md](vue-input-skill/base-input.md)
 3. **需要按钮** → 进入 [vue-button-skill](vue-button-skill/SKILL.md)
 4. **需要标签** → 进入 [vue-tag-skill](vue-tag-skill/SKILL.md)
 5. **需要状态/徽章** → 进入 [vue-status-skill](vue-status-skill/SKILL.md)

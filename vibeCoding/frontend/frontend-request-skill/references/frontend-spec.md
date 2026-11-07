@@ -14,8 +14,6 @@ src/api/request.ts
 
 ```typescript
 // src/config/api.config.ts
-import { SUCCESS_CODES, AUTH_FAILURE_CODES } from './api-contract';
-
 export const BASE_URL = import.meta.env.VITE_BASE_URL || '';
 export const DEFAULT_PREFIX = '/api';
 export const REQUEST_TIMEOUT = 30000;
@@ -33,10 +31,13 @@ export const AUTH_FAILURE_CODES: (string | number)[] = [-1002];
 export const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true';
 ```
 
+Web 项目的 `src/utils/toast.ts` 应导出 `showError`，将错误文案交给项目现有的通知组件。
+
 ## 类型定义
 
 ```typescript
 import { getToken } from '@/utils/auth';
+import { showError } from '@/utils/toast';
 import { handleUnauthorized, refreshToken } from '@/services/auth.service';
 import {
   BASE_URL,
@@ -130,9 +131,17 @@ function generateUuidV4(): string {
 }
 
 // ===== 请求拦截器 =====
-function requestInterceptor(options: RequestOptions): { url: string; init: RequestInit } {
-  const prefix = options.prefix ?? DEFAULT_PREFIX;
-  const url = options.url.startsWith('http') ? options.url : `${BASE_URL}${prefix}${options.url}`;
+// 相对路径由配置的 API 基址拼接。绝对地址必须与配置的协议及主机完全一致。
+function isTrustedApiUrl(url: string): boolean {
+  if (/[\s\\]/.test(url) || url.startsWith('//')) return false;
+  if (!/^[a-z][a-z\d+.-]*:/i.test(url)) return true;
+  const origin = (value: string) => /^https?:\/\/([a-z\d.-]+|\[[a-f\d:]+\])(?::\d+)?(?=[/?#]|$)/i
+    .exec(value)?.[0].toLowerCase();
+  const apiOrigin = origin(BASE_URL);
+  return apiOrigin !== undefined && origin(url) === apiOrigin;
+}
+
+function requestInterceptor(options: RequestOptions, url: string, signal: AbortSignal): { url: string; init: RequestInit } {
   const headers = new Headers(options.headers);
 
   // JSON Content-Type（与 api-contract.md §5 对齐）
@@ -166,7 +175,8 @@ function requestInterceptor(options: RequestOptions): { url: string; init: Reque
   const init: RequestInit = {
     method: options.method || 'GET',
     headers,
-    signal: abortController.signal,
+    signal,
+    redirect: options.needAuth === false ? 'follow' : 'error',
   };
 
   if (options.data !== undefined && options.data !== null) {
@@ -307,10 +317,15 @@ export function request<T = any>(options: RequestOptions): RequestPromise<T> {
     return Promise.reject(formatError('NO_AUTH_TOKEN', '未登录')) as RequestPromise<T>;
   }
 
-  const url = options.url.startsWith('http')
+  const url = /^https?:\/\//i.test(options.url)
     ? options.url
-    : `${BASE_URL}${options.prefix || DEFAULT_PREFIX}${options.url}`;
-  const requestKey = generateRequestKey(url, method, options.data);
+    : `${BASE_URL}${options.prefix ?? DEFAULT_PREFIX}${options.url}`;
+  if ((!isTrustedApiUrl(options.url) || !isTrustedApiUrl(url)) && options.needAuth !== false) {
+    return Promise.reject(formatError('UNTRUSTED_API_URL', '鉴权请求地址超出 API 范围')) as RequestPromise<T>;
+  }
+
+  const authScope = options.needAuth === false ? 'public' : (options.authMode ?? 'default');
+  const requestKey = `${authScope}:${Boolean(options.skipAuthHandler)}:${generateRequestKey(url, method, options.data)}`;
 
   const maxRetry = options.retry ?? REQUEST_RETRY_COUNT;
   let currentRetry = 0;
@@ -322,21 +337,24 @@ export function request<T = any>(options: RequestOptions): RequestPromise<T> {
       if (pending) return pending as RequestPromise<T>;
     }
 
-    const { url: finalUrl, init } = requestInterceptor(options);
+    const { url: finalUrl, init } = requestInterceptor(options, url, abortController.signal);
 
     const innerPromise = fetchWithTimeout(finalUrl, init, options.timeout || REQUEST_TIMEOUT)
       .then(async (res) => responseInterceptor<T>(res, options))
       .catch(async (err: RequestError | Error) => {
         const requestErr = err instanceof Error ? formatError('NETWORK_ERROR', err.message, err) : err;
 
-        if (requestErr.code === 'UNAUTHORIZED' && !isRetry && !options.skipAuthHandler) {
+        if (abortController.signal.aborted) throw requestErr;
+
+        if (requestErr.code === 'UNAUTHORIZED' && !isRetry && options.needAuth !== false && !options.skipAuthHandler) {
           try {
             await refreshToken();
+            if (abortController.signal.aborted) throw requestErr;
             abortController = new AbortController();
             const retryPromise = runRequest(true);
             return retryPromise;
           } catch {
-            handleUnauthorized();
+            if (!abortController.signal.aborted) handleUnauthorized();
             throw requestErr;
           }
         }
@@ -369,7 +387,14 @@ export function request<T = any>(options: RequestOptions): RequestPromise<T> {
 
 async function fetchWithTimeout(url: string, init: RequestInit, timeout: number): Promise<Response> {
   const controller = new AbortController();
-  const id = setTimeout(() => controller.abort(), timeout);
+  let timedOut = false;
+  const cancel = () => controller.abort();
+  if (init.signal?.aborted) cancel();
+  init.signal?.addEventListener('abort', cancel, { once: true });
+  const id = setTimeout(() => {
+    timedOut = true;
+    controller.abort();
+  }, timeout);
 
   try {
     const res = await fetch(url, {
@@ -379,11 +404,12 @@ async function fetchWithTimeout(url: string, init: RequestInit, timeout: number)
     return res;
   } catch (err: any) {
     if (err.name === 'AbortError') {
-      throw formatError('TIMEOUT', '请求超时');
+      throw timedOut ? formatError('TIMEOUT', '请求超时') : formatError('ABORTED', '请求已取消');
     }
     throw err;
   } finally {
     clearTimeout(id);
+    init.signal?.removeEventListener('abort', cancel);
   }
 }
 

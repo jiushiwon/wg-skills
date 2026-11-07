@@ -1,7 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"net"
+	"os"
 
 	"demo/internal/handler"
 	"demo/internal/model"
@@ -16,11 +19,7 @@ import (
 	"gorm.io/gorm"
 )
 
-// demoAccount 演示账号，首次启动时自动播种
-const (
-	demoUsername = "admin"
-	demoPassword = "admin123"
-)
+const demoUsername = "admin"
 
 func main() {
 	// 加载配置（JWT_SECRET 缺失或过短直接退出）
@@ -34,7 +33,7 @@ func main() {
 	if err := db.AutoMigrate(&model.User{}); err != nil {
 		log.Fatal("数据库迁移失败: ", err)
 	}
-	if err := seedDemoUser(db); err != nil {
+	if err := prepareDemoUser(db, os.Getenv("DEMO_ADMIN_PASSWORD")); err != nil {
 		log.Fatal("演示账号初始化失败: ", err)
 	}
 
@@ -67,21 +66,35 @@ func main() {
 	}
 
 	log.Printf("服务启动: http://localhost:%s", cfg.Port)
-	if err := r.Run(":" + cfg.Port); err != nil {
+	if err := r.Run(net.JoinHostPort("127.0.0.1", cfg.Port)); err != nil {
 		log.Fatal("服务异常退出: ", err)
 	}
 }
 
-// seedDemoUser 首次启动播种演示账号，密码只存 bcrypt 哈希（不可逆）
-func seedDemoUser(db *gorm.DB) error {
-	var count int64
-	if err := db.Model(&model.User{}).Where("username = ?", demoUsername).Count(&count).Error; err != nil {
+// prepareDemoUser 只在显式提供凭据时创建本地演示账号。
+func prepareDemoUser(db *gorm.DB, password string) error {
+	var user model.User
+	err := db.Where("username = ?", demoUsername).Take(&user).Error
+	switch err {
+	case nil:
+		if bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte("admin123")) == nil {
+			return fmt.Errorf("检测到旧版固定管理员密码，请先离线迁移现有数据或为 DB_PATH 指定新的演示库")
+		}
+		return nil
+	case gorm.ErrRecordNotFound:
+		// 只有新库或尚未创建管理员的数据库需要初始化。
+	default:
 		return err
 	}
-	if count > 0 {
+
+	if password == "" {
 		return nil
 	}
-	hash, err := bcrypt.GenerateFromPassword([]byte(demoPassword), 12)
+	if len(password) < 12 || len(password) > 72 {
+		return fmt.Errorf("DEMO_ADMIN_PASSWORD 必须为 12 到 72 字节")
+	}
+
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), 12)
 	if err != nil {
 		return err
 	}

@@ -33,17 +33,19 @@ description: 数据库设计规范技能。面向 AI 生成代码，提供表名
 ### 1.2 基础字段（所有表必须有）
 
 ```sql
--- 所有业务表必须包含这些字段
+-- PostgreSQL 示例：业务表基础字段
 CREATE TABLE "wg_user" (
     "id" BIGSERIAL PRIMARY KEY,
-    "status" SMALLINT NOT NULL DEFAULT 1 COMMENT '状态：0禁用 1正常',
-    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    "updated_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-    "deleted_at" TIMESTAMP DEFAULT NULL COMMENT '删除时间（软删除）'
+    "status" SMALLINT NOT NULL DEFAULT 1,
+    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "deleted_at" TIMESTAMP DEFAULT NULL
 );
 
 COMMENT ON TABLE "wg_user" IS '用户表';
 COMMENT ON COLUMN "wg_user"."status" IS '状态：0-禁用 1-正常';
+COMMENT ON COLUMN "wg_user"."created_at" IS '创建时间';
+COMMENT ON COLUMN "wg_user"."updated_at" IS '更新时间';
 COMMENT ON COLUMN "wg_user"."deleted_at" IS '软删除时间戳';
 ```
 
@@ -123,13 +125,13 @@ CREATE INDEX "idx_status_created" ON "wg_user" ("status", "created_at");
 -- 推荐：业务层控制关联，数据库层面不强制外键（性能考虑）
 -- 但保留外键约束文档，供 DBA 审阅
 
--- 订单表关联用户
+-- PostgreSQL 示例：订单表关联用户
 CREATE TABLE "wg_order" (
     "id" BIGSERIAL PRIMARY KEY,
-    "user_id" BIGINT NOT NULL COMMENT '用户ID',
-    "order_no" VARCHAR(32) NOT NULL COMMENT '订单号',
-    "amount" DECIMAL(10,2) NOT NULL DEFAULT 0 COMMENT '金额',
-    "status" SMALLINT NOT NULL DEFAULT 1 COMMENT '状态',
+    "user_id" BIGINT NOT NULL,
+    "order_no" VARCHAR(32) NOT NULL,
+    "amount" DECIMAL(10,2) NOT NULL DEFAULT 0,
+    "status" SMALLINT NOT NULL DEFAULT 1,
     "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deleted_at" TIMESTAMP
@@ -137,7 +139,7 @@ CREATE TABLE "wg_order" (
 
 -- 索引替代外键（性能更好）
 CREATE INDEX "idx_user_id" ON "wg_order" ("user_id");
-CREATE INDEX "idx_order_no" ON "wg_order" ("order_no" UNIQUE);
+CREATE UNIQUE INDEX "idx_order_no" ON "wg_order" ("order_no");
 CREATE INDEX "idx_status" ON "wg_order" ("status");
 ```
 

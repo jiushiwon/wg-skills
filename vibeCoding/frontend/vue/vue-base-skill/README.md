@@ -42,8 +42,8 @@
 | [vue-loading-skill](vue-loading-skill/SKILL.md) | 加载状态（骨架屏/动画/遮罩） | ✅ |
 | [vue-empty-skill](vue-empty-skill/SKILL.md) | 空状态（无数据/无结果） | ✅ |
 | [vue-generate-skill](vue-generate-skill/SKILL.md) | 代码生成器（表单/表格/CURD） | ✅ |
-| [vue-login-skill](vue-login-skill/SKILL.md) | 高端登录页（8 种差异化风格） | ✅ |
-| [vue-crud-skill](vue-crud-skill/SKILL.md) | 增删改查页面（搜索+表格+弹窗表单+分页） | ✅ |
+| [vue-login-skill](vue-complex-skill/vue-login-skill/SKILL.md) | 高端登录页（9 个 Demo 变体） | ✅ |
+| [vue-crud-skill](vue-complex-skill/vue-crud-skill/SKILL.md) | 增删改查页面（搜索+表格+弹窗表单+分页） | ✅ |
 
 ## 设计 Token
 

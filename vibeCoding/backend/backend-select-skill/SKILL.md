@@ -1,6 +1,7 @@
 ---
 name: backend-select-skill
-description: Use when the user wants to generate a backend project from scratch but the tech stack is undecided. Gathers requirements via questions and recommends "language + framework + database + middleware", then routes to the matching backend skill. Triggers: "生成后端项目", "搭建后端骨架", "初始化后端服务", "backend generate", "帮我做个后端接口", "后端选型", "用什么语言写后端".
+description: >-
+  Use when the user wants to generate a backend project from scratch but the tech stack is undecided. Gathers requirements via questions and recommends "language + framework + database + middleware", then routes to the matching backend skill. Triggers: "生成后端项目", "搭建后端骨架", "初始化后端服务", "backend generate", "帮我做个后端接口", "后端选型", "用什么语言写后端".
 ---
 
 # Backend Select Skill

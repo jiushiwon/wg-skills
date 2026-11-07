@@ -89,7 +89,7 @@ SKILL 是写给 AI 看的组件规范——完整的 Props/Events/Types/样式/�
 |------|------|------|
 | [vue-complex-skill](vue-base-skill/vue-complex-skill/) | 页面编排器（8 种页面类型） | ✅ |
 | [vue-crud-skill](vue-base-skill/vue-complex-skill/vue-crud-skill/) | 增删改查页面（搜索+表格+弹窗+分页） | ✅ |
-| [vue-login-skill](vue-base-skill/vue-login-skill/) | 高端登录页（8 种风格） | ✅ |
+| [vue-login-skill](vue-base-skill/vue-complex-skill/vue-login-skill/) | 高端登录页（8 种风格） | ✅ |
 | [vue-chart-skill](vue-base-skill/vue-complex-skill/vue-chart-skill/) | Canvas 图表（20 种形态，零依赖） | ✅ |
 | vue-dashboard-skill | 数据看板 | 🔲 |
 | vue-chat-skill | AI 对话页 | 🔲 |

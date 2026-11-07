@@ -27,13 +27,13 @@
 |------|------|------|
 | base-form | 表单容器（数据管理、校验引擎、布局控制） | [base-form.md](base-form.md) |
 | base-form-item | 表单项（标签、校验提示、必填标记） | [base-form-item.md](base-form-item.md) |
-| base-input | 输入框（文本、密码、搜索、文本域） | [base-input.md](base-input.md) |
-| base-select | 选择器（单选、多选、搜索过滤） | [base-select.md](base-select.md) |
-| base-checkbox | 复选框（单个、复选组） | [base-checkbox.md](base-checkbox.md) |
-| base-radio | 单选框（单选组） | [base-radio.md](base-radio.md) |
-| base-switch | 开关 | [base-switch.md](base-switch.md) |
-| base-datepicker | 日期选择器（日期、日期范围、月份、年份） | [base-datepicker.md](base-datepicker.md) |
-| base-upload | 上传（图片墙、附件、进度、删除） | [base-upload.md](base-upload.md) |
+| base-input | 输入框（文本、密码、搜索、文本域） | [base-input.md](../vue-input-skill/base-input.md) |
+| base-select | 选择器（单选、多选、搜索过滤） | [base-select.md](../vue-select-skill/base-select.md) |
+| base-checkbox | 复选框（单个、复选组） | [base-checkbox.md](../vue-checkbox-skill/base-checkbox.md) |
+| base-radio | 单选框（单选组） | [base-radio.md](../vue-radio-skill/base-radio.md) |
+| base-switch | 开关 | [base-switch.md](../vue-switch-skill/base-switch.md) |
+| base-datepicker | 日期选择器（日期、日期范围、月份、年份） | [base-datepicker.md](../vue-datepicker-skill/base-datepicker.md) |
+| base-upload | 上传（图片墙、附件、进度、删除） | [base-upload.md](../vue-upload-skill/base-upload.md) |
 | base-form-render | 契约驱动万能表单渲染器 | [base-form-render.md](base-form-render.md) |
 
 ## 契约驱动表单（万能表单）

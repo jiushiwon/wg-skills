@@ -1,6 +1,7 @@
 ---
 name: crypto-scenario-skill
-description: Use when picking a cryptographic algorithm or implementing hashing / encryption / signature for a concrete scenario - user password storage, WeChat Pay & Alipay callback verification, third-party open API signing, JWT login tokens, database sensitive-field encryption, file integrity checks, Git commit signing, TLS transport. Provides a scenario-to-algorithm decision table, code templates in Java / Python / Go / Node, and AI guardrail rules so generated code never uses MD5/SHA1 for passwords or hardcoded keys. Triggers: "加密选型", "密码加密", "密码存储", "密码哈希", "签名", "验签", "微信支付", "支付宝", "HMAC", "JWT 算法", "敏感字段加密", "文件校验", "传输加密".
+description: >-
+  Use when picking a cryptographic algorithm or implementing hashing / encryption / signature for a concrete scenario - user password storage, WeChat Pay & Alipay callback verification, third-party open API signing, JWT login tokens, database sensitive-field encryption, file integrity checks, Git commit signing, TLS transport. Provides a scenario-to-algorithm decision table, code templates in Java / Python / Go / Node, and AI guardrail rules so generated code never uses MD5/SHA1 for passwords or hardcoded keys. Triggers: "加密选型", "密码加密", "密码存储", "密码哈希", "签名", "验签", "微信支付", "支付宝", "HMAC", "JWT 算法", "敏感字段加密", "文件校验", "传输加密".
 ---
 
 # Crypto Scenario Skill

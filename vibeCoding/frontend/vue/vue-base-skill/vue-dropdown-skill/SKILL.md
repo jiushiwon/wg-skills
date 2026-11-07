@@ -19,7 +19,7 @@ trigger: |
 
 > 基于「一个组件 5 种 mode」思想的 Vue 万能浮层组件技能。base-dropdown 是核心，融合 5 种浮层形态（dropdown / popover / select / multi-select / menu），单组件 + mode 切换。
 >
-> **本技能严格镜像 [uniapp-dropdown-skill](../../uniapp/uniapp-base-skill/uniapp-dropdown-skill/)**，命名 100% 对齐。
+> **本技能是 Vue 浮层组件的实现入口。** uni-app 中的下拉选择由 [base-select](../../../uniapp/uniapp-base-skill/demo-components/base-form/base-select/) 承担，按各端组件契约使用。
 >
 > **容器铁律**：所有 panel 必须由 base-card 容器承载。
 >
@@ -67,24 +67,9 @@ trigger: |
 | 虚拟滚动 | `virtual` | `false` | > 100 选项建议开启 |
 | 虚拟行高 | `rowHeight` | `36` | px |
 
-## 命名对齐矩阵（与 uniapp-dropdown-skill 完全对齐）
+## 跨端复用边界
 
-```
-vue-dropdown-skill            ←   uniapp-dropdown-skill
-base-dropdown                 ←   base-dropdown
-mode='dropdown'               ←   mode='dropdown'
-mode='popover'                ←   mode='popover'
-mode='select'                 ←   mode='select'
-mode='multi-select'           ←   mode='multi-select'
-mode='menu'                   ←   mode='menu'
-trigger='click/hover/...'     ←   trigger='click/hover/...'
-position='bottom-start/...'   ←   position='bottom-start/...'
-tone='primary/...'            ←   tone='primary/...'
-searchable / clearable        ←   searchable / clearable
-remote / virtual              ←   remote / virtual
-```
-
-跨技能命名严格保持一致：组件名、mode 名、prop 名、Token、文件结构、容器原则。
+Vue 端的 `base-dropdown` 统一处理浮层、菜单和选择模式。跨端复用时，先对齐选择、清空和禁用等交互语义，再分别按 Vue 与 uni-app 对应组件的属性、事件和平台能力接入。
 
 ## 🚫 零样式标签铁律（.md 文档约束）
 

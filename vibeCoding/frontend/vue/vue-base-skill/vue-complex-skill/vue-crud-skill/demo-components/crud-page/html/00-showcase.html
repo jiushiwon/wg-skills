@@ -91,7 +91,7 @@
     /* ============================================
      * base-button（引用 vue-button-skill）
      * ============================================ */
-    .base-button { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-1); border-radius: var(--radius-md); font-weight: var(--weight-medium); cursor: pointer; transition: all 0.2s; border: 1px solid transparent; user-select: none; white-space: nowrap; background: var(--color-bg-secondary); color: var(--color-text); padding: 0 var(--space-3); }
+    .base-button { font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: var(--space-1); border-radius: var(--radius-md); font-weight: var(--weight-medium); cursor: pointer; transition: all 0.2s; border: 1px solid transparent; user-select: none; white-space: nowrap; background: var(--color-bg-secondary); color: var(--color-text); padding: 0 var(--space-3); }
     .base-button:hover { background: var(--color-bg-hover); }
     .base-button:active { transform: scale(0.98); }
     .base-button.is-disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
@@ -265,8 +265,8 @@
     .base-crud-page__toolbar-info { font-size: var(--font-xs); color: var(--color-text-tertiary); }
 
     /* 弹窗 */
-    .base-crud-page__modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.45); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.2s; }
-    .base-crud-page__modal-overlay.is-visible { opacity: 1; visibility: visible; }
+    .base-crud-page__modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.45); display: none; align-items: center; justify-content: center; z-index: 1000; }
+    .base-crud-page__modal-overlay.is-visible { display: flex; }
     .base-crud-page__modal { background: var(--color-surface); border-radius: var(--radius-lg); width: 90%; max-width: 640px; max-height: 80vh; overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow-lg); transform: translateY(-20px); transition: transform 0.2s; }
     .base-crud-page__modal-overlay.is-visible .base-crud-page__modal { transform: translateY(0); }
     .base-crud-page__modal-header { display: flex; align-items: center; justify-content: space-between; padding: var(--space-4) var(--space-6); border-bottom: 1px solid var(--color-divider); }
@@ -425,9 +425,9 @@
       <!-- ================================ 工具栏 ================================ -->
       <!-- 引用: vue-button-skill -->
       <div class="base-crud-page__toolbar">
-        <span class="base-button base-button--type-primary base-button--variant-solid base-button--size-md" role="button" tabindex="0" onclick="openModal('add')">
+        <button type="button" class="base-button base-button--type-primary base-button--variant-solid base-button--size-md" onclick="openModal('add')">
           + 新增
-        </span>
+        </button>
         <span class="base-button base-button--type-danger base-button--variant-outline base-button--size-md is-disabled" id="btn-batch-delete" role="button" tabindex="0" onclick="handleBatchDelete()">
           批量删除
         </span>
@@ -513,10 +513,10 @@
   <!-- ================================ 新增/编辑弹窗 ================================ -->
   <!-- 引用: vue-form-skill, vue-input-skill, vue-select-skill, vue-datepicker-skill, vue-switch-skill -->
   <div class="base-crud-page__modal-overlay" id="modal" onclick="closeModal()">
-    <div class="base-crud-page__modal" onclick="event.stopPropagation()">
+    <div class="base-crud-page__modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" onclick="event.stopPropagation()">
       <div class="base-crud-page__modal-header">
         <h3 id="modal-title">新增 用户</h3>
-        <span class="base-crud-page__modal-close" role="button" onclick="closeModal()">✕</span>
+        <button type="button" class="base-crud-page__modal-close" aria-label="关闭弹窗" onclick="closeModal()">✕</button>
       </div>
       <div class="base-crud-page__modal-body">
         <div class="base-crud-page__form-grid">
@@ -598,8 +598,8 @@
         </div>
       </div>
       <div class="base-crud-page__modal-footer">
-        <span class="base-button base-button--variant-outline base-button--size-md" role="button" tabindex="0" onclick="closeModal()">取消</span>
-        <span class="base-button base-button--type-primary base-button--variant-solid base-button--size-md" role="button" tabindex="0" onclick="handleSubmit()">保存</span>
+        <button type="button" class="base-button base-button--variant-outline base-button--size-md" onclick="closeModal()">取消</button>
+        <button type="button" class="base-button base-button--type-primary base-button--variant-solid base-button--size-md" onclick="handleSubmit()">保存</button>
       </div>
     </div>
   </div>
@@ -912,7 +912,10 @@
     // ============================================
     // 交互：弹窗（引用 vue-form-skill）
     // ============================================
+    let modalTrigger = null;
+
     function openModal(mode, rowId) {
+      modalTrigger = document.activeElement;
       modalMode = mode;
       const modal = document.getElementById('modal');
       document.getElementById('modal-title').textContent = mode === 'add' ? '新增 用户' : '编辑 用户';
@@ -938,11 +941,31 @@
       }
 
       modal.classList.add('is-visible');
+      document.getElementById('form-name').focus();
     }
 
     function closeModal() {
       document.getElementById('modal').classList.remove('is-visible');
+      if (modalTrigger?.isConnected) modalTrigger.focus();
+      modalTrigger = null;
     }
+
+    document.addEventListener('keydown', (event) => {
+      const modal = document.getElementById('modal');
+      if (!modal.classList.contains('is-visible')) return;
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeModal();
+      } else if (event.key === 'Tab') {
+        const controls = Array.from(modal.querySelectorAll('button, input, textarea, [tabindex="0"]'))
+          .filter(control => !control.disabled && control.getClientRects().length > 0);
+        const edge = event.shiftKey ? controls[0] : controls.at(-1);
+        if (document.activeElement === edge || !modal.contains(document.activeElement)) {
+          event.preventDefault();
+          (event.shiftKey ? controls.at(-1) : controls[0])?.focus();
+        }
+      }
+    });
 
     function handleSubmit() {
       const name = document.getElementById('form-name').value.trim();

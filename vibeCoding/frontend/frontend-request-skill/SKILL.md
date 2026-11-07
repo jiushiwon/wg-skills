@@ -254,6 +254,8 @@ export interface TokenResponse {
 >
 > 请求头：`Authorization: Bearer <token>`。
 >
+> 仅需要鉴权的 API 请求进入刷新流程。公开登录和外部地址须显式设置 `needAuth: false`；鉴权绝对地址须与 API 基址的协议、主机和端口一致。
+>
 > 失效标识：`HTTP 401` 或 `code === -1002`。
 >
 > 完整规范见 [api-contract.md §11](references/api-contract.md)。

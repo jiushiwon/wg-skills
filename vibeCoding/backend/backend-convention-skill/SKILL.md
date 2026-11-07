@@ -1,6 +1,7 @@
 ---
 name: backend-convention-skill
-description: Use when generating or reviewing any backend project that needs cross-language mandatory conventions. Covers unified response envelope, error codes, JWT auth, naming rules, environment variables, api-contract skeleton, and project meta-file templates. Referenced by the 4 backend skills; rarely triggered alone. Triggers: "后端规范", "统一返回格式", "api 契约", "错误码规范", "JWT 规范".
+description: >-
+  Use when generating or reviewing any backend project that needs cross-language mandatory conventions. Covers unified response envelope, error codes, JWT auth, naming rules, environment variables, api-contract skeleton, and project meta-file templates. Referenced by the 4 backend skills; rarely triggered alone. Triggers: "后端规范", "统一返回格式", "api 契约", "错误码规范", "JWT 规范".
 ---
 
 # Backend Convention Skill

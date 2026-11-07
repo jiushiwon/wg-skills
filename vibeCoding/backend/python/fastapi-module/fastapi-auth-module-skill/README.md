@@ -142,7 +142,7 @@ docs/auth-module-guide.md
 
 ### v1.1.0 (2026-08-22)
 
-- ✅ 新增 `references/skeleton.py` 完整代码骨架（含 models/schemas/routers/services）
+- ✅ 新增 `references/skeleton.md` 完整代码骨架（含 models/schemas/routers/services）
 - ✅ 新增 `api-contract-auth.md` 完整接口契约
 - ✅ 与 `java-auth-module-skill` 字段完全对齐
 
