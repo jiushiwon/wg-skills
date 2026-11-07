@@ -64,7 +64,7 @@ docs/vibecoding/roadmap.md
 |------|------------|
 | 生成前端 | `frontend-ui-foundry` |
 | 生成后端 | `backend-select-skill` |
-| 加业务模块 | `module-generate-skill` |
+| 加业务模块 | 对应语言的 module-skill（先从当前后端模块目录选择） |
 | 抓素材 | `icon-image-catch-skill` |
 | 部署 | `super-deploy-skills` |
 

@@ -16,7 +16,7 @@ description: Spring Boot 授权与企业组织架构模块一键叠加技能，*
 
 ## 定位
 
-- 目标：在已有 `springboot-init-skill` / `springboot-skill` 骨架上，添加**可运行且可鉴权**的 RBAC + 组织架构模块。
+- 目标：在已有 `springboot-init-skill` 骨架上，添加**可运行且可鉴权**的 RBAC + 组织架构模块。
 - 不替代：不重复生成 `springboot-init-skill` 已经提供的 JWT、统一响应、Swagger 等基础设施。
 - 输出：实体、仓储、服务、控制器、DTO、Flyway 迁移、接口契约、接入指南。
 

@@ -13,7 +13,7 @@ Vue 徽标组件技能。
 ## 文档
 
 - [SKILL.md](SKILL.md) - 技能定义
-- [base-badge.md](base-badge.md) - 组件文档
+- [base-badge.md](SKILL.md) - 组件文档
 
 ## Demo
 

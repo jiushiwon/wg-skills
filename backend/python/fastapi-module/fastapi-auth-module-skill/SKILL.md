@@ -142,7 +142,7 @@ docs/auth-module-guide.md         # 接入与扩展指南
 5. 接口鉴权先走 FastAPI 依赖注入 JWT 校验，再走角色-菜单权限校验。
 6. 所有注释、文档用中文。
 
-## 与 java-auth-module-skill 对齐
+## 与 springboot-auth-module-skill 对齐
 
 - 接口路径、字段命名、响应结构与 Java 版本完全一致
 - 确保前端一套 API 可同时对接 Java 和 Python 后端
@@ -151,7 +151,7 @@ docs/auth-module-guide.md         # 接入与扩展指南
 
 - 支持岗位数据权限、自定义数据权限规则。
 - 支持 OAuth2 / SSO 接入。
-- 与 `java-auth-module-skill` 保持 API 字段完全一致，方便前后端跨语言复用。
+- 与 `springboot-auth-module-skill` 保持 API 字段完全一致，方便前后端跨语言复用。
 
 ---
 

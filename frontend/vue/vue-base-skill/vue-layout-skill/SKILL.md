@@ -21,7 +21,7 @@ description: Vue 3 管理端布局技能，提供 7 种布局模式。触发词�
 | frontend-icon-skill | 图标渲染 | ✅ |
 | vue-badge-skill | 菜单徽标 | ✅ |
 | vue-dropdown-skill | 用户下拉菜单 | ✅ |
-| vue-breadcrumb-skill | 面包屑导航 | ✅ |
+| 面包屑导航 | 按项目路由组合，独立技能待建 | 待补 |
 
 ## 7 种布局模式
 

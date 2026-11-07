@@ -72,12 +72,12 @@ import { LoginForm, ParticleBackground, FlipLoginContainer, SplitLayout, SplitPr
 
 | 组件 | 来源 | 文件 |
 |------|------|------|
-| 卡片容器 | vue-base-skill | [base-card.md](../base-card.md) |
+| 卡片容器 | vue-base-skill | [base-card.md](../../base-card.md) |
 | 表单 | vue-form-skill | [base-form.md](../../vue-form-skill/base-form.md) |
 | 表单项 | vue-form-skill | [base-form-item.md](../../vue-form-skill/base-form-item.md) |
 | 输入框 | vue-form-skill | [base-input.md](../../vue-input-skill/base-input.md) |
 | 复选框 | vue-form-skill | [base-checkbox.md](../../vue-checkbox-skill/base-checkbox.md) |
-| 按钮 | vue-button-skill | [base-button.md](../vue-button-skill/base-button.md) |
+| 按钮 | vue-button-skill | [base-button.md](../../vue-button-skill/base-button.md) |
 
 **禁止**：自定义 div 模拟 input/button/checkbox。
 
@@ -135,11 +135,11 @@ vue-login-skill
 
 ## 设计 Token
 
-所有组件统一引用 [vue-theme-skill](../../vue-theme-skill/)。
+所有组件统一引用 [vue-theme-skill](../../../vue-theme-skill/)。
 
 ## 相关技能
 
 - [vue-base-skill](../SKILL.md) — 基础组件父技能
-- [vue-form-skill](../vue-form-skill/SKILL.md) — 表单体系
-- [vue-button-skill](../vue-button-skill/SKILL.md) — 按钮组件
-- [vue-theme-skill](../../vue-theme-skill/SKILL.md) — 设计 Token
+- [vue-form-skill](../../vue-form-skill/SKILL.md) — 表单体系
+- [vue-button-skill](../../vue-button-skill/SKILL.md) — 按钮组件
+- [vue-theme-skill](../../../vue-theme-skill/SKILL.md) — 设计 Token

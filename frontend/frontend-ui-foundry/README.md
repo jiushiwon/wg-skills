@@ -156,11 +156,11 @@ brand apple ./my-project
 
 每个子命令的完整流程见：
 
-- [docs/usage/01-forge-生成模式.md](docs/usage/01-forge-生成模式.md)
-- [docs/usage/02-optimize-优化模式.md](docs/usage/02-optimize-优化模式.md)
-- [docs/usage/03-audit-审查模式.md](docs/usage/03-audit-审查模式.md)
-- [docs/usage/04-tokens-管理.md](docs/usage/04-tokens-管理.md)
-- [docs/usage/05-子命令速查.md](docs/usage/05-子命令速查.md)
+- [references/commands/forge.md](references/commands/forge.md)
+- [references/commands/optimize.md](references/commands/optimize.md)
+- [references/commands/audit.md](references/commands/audit.md)
+- [references/commands/tokens.md](references/commands/tokens.md)
+- [references/commands/stack.md](references/commands/stack.md)
 
 ---
 
@@ -302,7 +302,7 @@ A: 可以。在 `references/brands/` 下新增品牌文件，或直接在命令�
 
 A: 默认中文。可在命令中通过 `--lang en` 切换为英文。
 
-更多问题见 [docs/usage/10-常见问题.md](docs/usage/10-常见问题.md)。
+更多问题见 [SKILL.md](SKILL.md)。
 
 ---
 

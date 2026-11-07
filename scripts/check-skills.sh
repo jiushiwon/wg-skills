@@ -7,7 +7,7 @@
 #   3. 触发词缺失检测（description 无任何触发词标记）
 #   4. 引用了不存在目录的 skill 名
 #   5. README.md 顶部数字与实际 SKILL.md 数量一致
-#   6. *-skill 目录必须位于  或 others/ 下（防误建副本）
+#   6. 技能入口必须位于五个根模块中（防误建副本）
 #
 # 用法：
 #   bash scripts/check-skills.sh           # 全量检查
@@ -166,25 +166,15 @@ check_readme() {
 # 防止在仓库根（或其它层）误建技能目录副本（曾出现 vue-base-skill/vue-empty-skill/）。
 check_layout() {
     local bad
-    bad=$(find . -type d -name "*-skill" \
-        -not -path "./*" \
-        -not -path "./others/*" \
-        -not -path "./.git/*" \
-        -not -path "./docs/*" \
-        -not -path "./graphify-out/*" \
-        -not -path "./.claude/*" \
-        -not -path "./.superpowers/*" \
-        -not -path "./.worktrees/*" \
-        -not -path "*/node_modules/*" \
-        -not -path "*/unpackage/*" 2>/dev/null)
+    bad=$(git ls-files -- '*/SKILL.md' | grep -vE '^(frontend|backend|database|super-deploy-skills|vibecoding-guide-skill)/' || true)
 
     if [ -n "$bad" ]; then
         while IFS= read -r d; do
             [ -z "$d" ] && continue
-            fail "技能目录位置错误（应在  或 others/ 下）: $d"
+            fail "技能入口位置错误（应在五个根模块下）: $d"
         done <<< "$bad"
     else
-        ok "所有 *-skill 目录均在  或 others/ 下"
+        ok "所有技能入口均在五个根模块下"
     fi
 }
 

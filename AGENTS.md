@@ -1,7 +1,3 @@
-# 根模块迁移规范
-
-本仓库聚焦古法工程经验融入 AI。根目录以 frontend、backend、database、super-deploy-skills、vibecoding-guide-skill 五个模块组织。prompts 由私有 wg-project-kits 维护。迁移时同步入口、引用和使用文档。
-
 # wg-skills 仓库规范（Agents Skills 主控文档）
 
 > **本文件是 wg-skills 仓库的主控规范文档**，所有项目级逻辑、结构、流程、规范均沉淀于此。
@@ -18,7 +14,7 @@
 
 本仓库是一套 **Agents Skills 集合（智能体技能集合）**，不绑定任何一家厂商、不依赖任何私有协议。
 
-每个子目录对应一个独立 skill（技能），技能通过 `SKILL.md` 定义触发条件、审查维度与输出格式。**任何支持 Skill / Agent 协议的智能体都可以加载并使用本仓库的技能**。
+每个技能目录对应一个独立 skill（技能），技能通过 `SKILL.md` 定义触发条件、审查维度与输出格式。**任何支持 Skill / Agent 协议的智能体都可以加载并使用本仓库的技能**。
 
 **核心设计理念**：前后端一体化。前端 4 套体系（Vue / UniApp / React / HTML）与后端 5 语言矩阵（Java / Python / Go / Node.js / Rust）通过 `api-contract.md` 契约连接，前端请求层自动适配后端响应信封和错误码，Design Token 命名体系跨框架对齐。
 
@@ -125,6 +121,8 @@ description: 一句话描述技能用途  # 必填，含触发词
 
 ## 三、目录结构
 
+文档与脚本审计需核对实际根模块、父级规范路径、相对引用和生成项目内路径。只将仓库内已存在的资料写为可点击引用，生成后才存在的文件以代码路径说明。
+
 五个根模块分别维护前端、后端、数据库、环境部署与学习辅助。
 
 - frontend/：前端框架、组件、主题、请求层与页面审查。
@@ -187,7 +185,7 @@ prompts/ 与独立领域工具维护于私有 wg-project-kits。
 ## 五、新增 Skill 流程
 
 1. **确定所属根模块**。
-2. **创建目录**：`<板块>/<二级分类>/<skill-name>/`，目录名 kebab-case。
+2. **创建目录**：`<根模块>/<技术栈或分类>/<skill-name>/`，目录名 kebab-case。
 3. **写入 `SKILL.md`**，必填前置元数据：
 
    ```yaml
@@ -485,7 +483,7 @@ grep -rnE '<button' ./frontend/vue/vue-base-skill/vue-table-skill/demo-component
 | **SKILL.md** | AI 智能体 | 触发条件、生成流程、输出规范、依赖关系、契约定义 | 安装教程、人类快速上手 |
 | **README.md** | 人类用户 | 安装方式、快速上手、目录结构、贡献指南 | 与 SKILL.md 重复的能力清单、触发词列表 |
 
-**禁止重叠**：README.md 不得复制 SKILL.md 中的"核心能力清单"表格或触发词列表。README 应引用 SKILL.md：`详见 [SKILL.md](SKILL.md)`。
+**禁止重叠**：README.md 不得复制 SKILL.md 中的"核心能力清单"表格或触发词列表。README 应引用 SKILL.md：`详见 各技能目录的 `SKILL.md``。
 
 ---
 
@@ -541,7 +539,7 @@ description: 一句话描述（含触发词）
 
 ## 目录结构
 
-## 详细规范 → [SKILL.md](SKILL.md)
+## 详细规范 → 各技能目录的 `SKILL.md`
 
 ## 贡献指南（可选）
 ```

@@ -61,7 +61,7 @@
 
 ## 152 个技能 · 全部 MIT 公开 · 持续迭代中
 
-> ⚠️ **技能以实际效果为准，152 个技能都在持续迭代中**。每个技能都在真实项目里跑过，但 API、组件形态、触发词会随实战反馈调整，不保证向后兼容。
+> ⚠️ **技能以实际效果为准，152 个技能都在持续迭代中**。不同技能的模板、示例与运行验证覆盖程度不同，具体以对应目录和验证结果为准。API、组件形态与触发词随实战反馈迭代。
 > 任何问题、反馈或建议，欢迎两个渠道：
 > 1. 访问 [itlifetime.com](https://itlifetime.com)（首页底部 → 加微信 **jiushiwon**）
 > 2. 在 [GitHub Issues](https://github.com/jiushiwon/wg-skills/issues) 提 issue
@@ -70,7 +70,8 @@
 
 | 板块 | 数量 | 子分类 |
 |------|------|--------|
-| **[`backend`](#后端)** | **56** | Java / Python / Go / Node.js / Rust / 数据库 / 公共规范；具体清单见下文 |
+| **[`backend`](#后端)** | **48** | Java / Python / Go / Node.js / Rust / 公共规范；具体清单见下文 |
+| **[`database`](#数据库)** | **8** | 数据建模、迁移、数据库与中间件参考 |
 | **[`frontend`](#前端)** | **76** | Vue / UniApp / React / HTML / Electron / 公共能力；具体清单见下文 |
 | **[`super-deploy-skills`](#部署套件)** | **16** | 部署总入口 · 数据库安装【4】· 运行时安装【4】· Docker · 原生 · Nginx · 服务器 · 环境检测 |
 | **[`vibecoding-guide-skill`](#vibecoding-工作流)** | **4** | VibeCoding 总入口 · 智能体访谈 · 智能体学习 · 完整工作流 |
@@ -118,7 +119,7 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 ### 后端
 
-**56 个**，覆盖 5 语言后端 + 数据库 + 后端元工具 + 加密选型。
+**48 个**，覆盖 5 语言后端 + 后端元工具 + 加密选型。
 
 #### Java 矩阵（16 个）
 
@@ -157,19 +158,6 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 | `nodejs-init-skill` | Node.js + Express 一键初始化 |
 | `rust-backend-skill` | Rust + Axum 后端初始化 |
 
-#### 数据库矩阵（8 个）
-
-| 技能 | 说明 |
-|------|------|
-| `database-design-skill` | 数据库设计规范（表名/索引/分库分表/性能） |
-| `database-learning-skill` | 数据库学习与选型 |
-| `mysql-guide-skill` | MySQL 模块集成 |
-| `pgsql-guide-skill` | PostgreSQL 模块集成 |
-| `mongodb-guide-skill` | MongoDB 模块集成 |
-| `redis-guide-skill` | Redis 缓存/分布式锁 |
-| `kafka-guide-skill` | Kafka 消息队列 |
-| `sqlite-guide-skill` | SQLite 轻量数据库 |
-
 #### 后端元工具（3 个）
 
 | 技能 | 说明 |
@@ -189,6 +177,22 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 `backend/shared/` — 响应信封 / 错误码 / JWT / 分页 / API 契约模板 / 模块输出（6 个规范）
 
 ---
+
+### 数据库
+
+**8 个**，维护数据设计、数据库与中间件参考。
+
+| 技能 | 说明 |
+|------|------|
+| `database-design-skill` | 数据库设计规范（表名/索引/分库分表/性能） |
+| `database-learning-skill` | 数据库学习与选型 |
+| `mysql-guide-skill` | MySQL 模块集成 |
+| `pgsql-guide-skill` | PostgreSQL 模块集成 |
+| `mongodb-guide-skill` | MongoDB 模块集成 |
+| `redis-guide-skill` | Redis 缓存/分布式锁 |
+| `kafka-guide-skill` | Kafka 消息队列 |
+| `sqlite-guide-skill` | SQLite 轻量数据库 |
+
 
 ### 前端
 

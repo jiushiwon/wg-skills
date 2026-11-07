@@ -196,7 +196,7 @@ func (XXX) TableName() string {
 
 ## 相关文档
 
-- [接口契约](../api-contract.md)
-- [数据库设计](references/db-schema-guide.md)
-- [SSE 指南](references/sse-guide.md)
-- [中间件说明](references/middleware-guide.md)
+- 接口契约（`../api-contract.md`，生成项目或本地设计路径）
+- 数据库设计（`references/db-schema-guide.md`，生成项目或本地设计路径）
+- SSE 指南（`references/sse-guide.md`，生成项目或本地设计路径）
+- 中间件说明（`references/middleware-guide.md`，生成项目或本地设计路径）

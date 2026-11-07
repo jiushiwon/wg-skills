@@ -411,7 +411,7 @@ app = FastAPI(lifespan=lifespan)
 - 支持 LangChain LCEL 表达式
 - 支持 RAG 知识库
 - 支持自定义 Agent 节点
-- 与 `java-agent-module-skill` 字段对齐
+- 与 `springboot-agent-module-skill` 字段对齐
 - Langfuse/LangSmith 可观测性集成
 - 多 Worker 部署的 Redis MemoryStore 适配器
 

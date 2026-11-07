@@ -114,7 +114,7 @@ docs/agent-module-guide.md
 2. Tool 可以调用 Auth 模块的服务层
 3. 用户权限决定 Tool 返回的数据范围
 
-## 与 java-agent-module-skill 对齐
+## 与 springboot-agent-module-skill 对齐
 
 - 接口路径一致：`/api/agent/*`
 - 响应结构一致：流式 SSE

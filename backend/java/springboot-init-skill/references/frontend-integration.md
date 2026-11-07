@@ -1,6 +1,6 @@
 # 前端联动规范
 
-> 与 `frontend-request-skill` / `uniapp-request-skill` / `web-request-skill` 的对接约定。本 skill 生成的接口契约可直接被前端消费。
+> 与 `frontend-request-skill` / `uniapp-request-skill` 的对接约定。本 skill 生成的接口契约可直接被前端消费。
 
 ## 一、响应信封对接
 

@@ -41,7 +41,7 @@ function handleDelete() {
 
 | Demo | 内容 |
 |------|------|
-| [html/00-showcase.html](demo-components/base-dialog/html/00-showcase.html) | 通用弹窗 + 确认对话框 + 动画 |
+| [html/00-showcase.html](SKILL.md) | 通用弹窗 + 确认对话框 + 动画 |
 
 ## Token 对齐
 

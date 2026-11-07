@@ -29,9 +29,9 @@
 
 | Demo | 内容 |
 |------|------|
-| [html/01-basic.html](demo-components/base-card-layout/html/01-basic.html) | 基础卡片（带/不带标题） |
-| [html/02-header-footer.html](demo-components/base-card-layout/html/02-header-footer.html) | 头部 + 底部操作区 |
-| [html/03-padding.html](demo-components/base-card-layout/html/03-padding.html) | 三种内边距变体 |
+| [html/01-basic.html](demo-components/base-card/html/01-base-card.html) | 基础卡片（带/不带标题） |
+| [html/02-header-footer.html](demo-components/base-card/html/02-layout-cards.html) | 头部 + 底部操作区 |
+| [html/03-padding.html](demo-components/base-card/html/03-flow-cards.html) | 三种内边距变体 |
 
 ## 容器原则（必读）
 

@@ -522,7 +522,7 @@ export function createGoods(data: Record<string, unknown>) {
 2. **类型对齐**：`FormField.type` 决定前端控件，后端按同样语义校验
 3. **必填对齐**：`FormField.required` === 后端 `required` 校验
 4. **响应信封对齐**：提交返回 `{ code, message, data }`，前端用 `code === 0` 判断成功
-5. **上传对齐**：`base-upload` 对接 `frontend-request-skill` 的 `upload<T>()` 封装（见 [error-handling.md](../../../frontend-request-skill/references/error-handling.md)）
+5. **上传对齐**：`base-upload` 对接 `frontend-request-skill` 的 `upload<T>()` 封装（见 [error-handling.md](../../../../frontend-request-skill/references/error-handling.md)）
 
 ## 九、后端注解 → FieldType 对齐（重点）
 

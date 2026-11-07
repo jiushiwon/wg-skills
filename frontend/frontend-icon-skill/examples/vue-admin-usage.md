@@ -1,6 +1,6 @@
 # vue-admin-skill 集成 frontend-icon-skill
 
-vue-admin-skill 不再内置 SVG 字典，全部通过 [frontend-icon-skill](../../frontend/frontend-icon-skill/) 渲染。
+vue-admin-skill 不再内置 SVG 字典，全部通过 [frontend-icon-skill](../) 渲染。
 
 ## 1. package.json 加软链接
 
@@ -106,7 +106,7 @@ const { users, columns } = useUsers()
 
 若模板库没有需要的 icon：
 
-1. 调用 [icon-image-catch-skill](../../frontend/icon-image-catch-skill/) 抓取
+1. 调用 [icon-image-catch-skill](../../icon-image-catch-skill/) 抓取
 2. 把 SVG 落入 `frontend-icon-skill/icon-templates/<category>/<name>.svg.template`
 3. 在 `frontend-icon-skill/src/registry.ts` 注册
 4. 跑 `node --experimental-strip-types test/generate.test.ts` 验证

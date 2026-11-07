@@ -9,7 +9,7 @@ description: This skill should be used when the user wants to create a standardi
 
 本 Skill **不重新发明请求层**。所有 HTTP / 错误处理 / 鉴权相关代码必须复用 `frontend-request-skill` 的标准实现：
 
-| react-init-skill 输出 | 对应 frontend-request-skill 标准 |
+| react-generate-skill 输出 | 对应 frontend-request-skill 标准 |
 |----------------------|--------------------------------|
 | `src/api/request.ts` | `frontend-request-skill/references/frontend-spec.md`（fetch 标准实现） |
 | `src/services/auth.service.ts` | `frontend-request-skill/references/auth-patterns.md`（Token 刷新队列） |
@@ -42,7 +42,7 @@ Invoke this skill when the user asks for:
 - "帮我生成一个标准的 React 项目结构"
 - Any request that involves creating a new React SPA from scratch (H5 / 后台 / 文档站)
 
-**Not for**: React Native / 小程序 / Taro / 移动端 hybrid — use `react-native-init-skill` instead.
+**Not for**: React Native / 小程序 / Taro / 移动端 hybrid — use `react-native-generate-skill` instead.
 
 ## Workflow Summary
 

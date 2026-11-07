@@ -66,7 +66,7 @@
 1. 用 `vibecoding-workflow-skill` 输出 roadmap
 2. 用 `uniapp-app-generate-skill` 生成小程序项目
 3. 用 `backend-select-skill` 生成后端骨架
-4. 用 `module-generate-skill` 添加支付模块
+4. 用 对应语言的 module-skill（先从当前后端模块目录选择） 添加支付模块
 5. 用 `super-deploy-skills` 部署后端和小程序
 
 ---
@@ -146,7 +146,7 @@
 1. 用 `vibecoding-workflow-skill` 输出 roadmap
 2. 用 `backend-select-skill` 生成 Python 后端骨架
 3. 用 `frontend-ui-foundry` 生成管理后台界面
-4. 用 `module-generate-skill` 添加 AI 聊天模块
+4. 用 对应语言的 module-skill（先从当前后端模块目录选择） 添加 AI 聊天模块
 5. 用 `super-deploy-skills` 部署上线
 
 ### 预计耗时

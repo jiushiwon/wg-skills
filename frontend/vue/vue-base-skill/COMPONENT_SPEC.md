@@ -4,7 +4,7 @@
 >
 > **唯一目标**：让 `import { BaseCard } from 'vue-card-skill'` 在 vue-admin-skill 里能正确解析。
 >
-> Vue 通用实现规则（原生标签、Token、容器、命名与 demo 边界）以 [Vue 模块 AGENTS](../AGENTS.md) 为准；本文件只维护组件包结构与导出接口。迁移背景与维护状态分别见 [组件包迁移设计](../../../../docs/plans/vue-component-packaging-design.md) 与 [STATUS.md](STATUS.md)。
+> Vue 通用实现规则（原生标签、Token、容器、命名与 demo 边界）以 [Vue 模块 AGENTS](../AGENTS.md) 为准；本文件只维护组件包结构与导出接口。迁移背景与维护状态分别见 组件包迁移设计（`../../../../docs/plans/vue-component-packaging-design.md`，生成项目或本地设计路径） 与 [STATUS.md](STATUS.md)。
 
 ---
 

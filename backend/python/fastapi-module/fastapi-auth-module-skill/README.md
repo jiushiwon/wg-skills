@@ -125,7 +125,7 @@ docs/auth-module-guide.md
 4. 若原项目已有简单 `User` 模型，可删除或保留；本模块使用独立的 `SysUser`。
 5. 启动后用 Swagger UI 验证接口。
 
-## 与 java-auth-module-skill 对齐
+## 与 springboot-auth-module-skill 对齐
 
 - 接口路径完全一致：`/api/auth/*`, `/api/users`, `/api/roles` 等
 - 字段命名一致：`data_scope`, `permission`, `menu_type` 等
@@ -144,7 +144,7 @@ docs/auth-module-guide.md
 
 - ✅ 新增 `references/skeleton.md` 完整代码骨架（含 models/schemas/routers/services）
 - ✅ 新增 `api-contract-auth.md` 完整接口契约
-- ✅ 与 `java-auth-module-skill` 字段完全对齐
+- ✅ 与 `springboot-auth-module-skill` 字段完全对齐
 
 ### v1.0.0 (2026-08-22)
 
@@ -155,14 +155,14 @@ docs/auth-module-guide.md
 - ✅ 个人鉴权（登录、登出、当前用户、菜单树、改密）
 - ✅ 接口契约 `api-contract-auth.md`
 - ✅ 接入指南 `docs/auth-module-guide.md`
-- ✅ 与 `java-auth-module-skill` 字段完全对齐
+- ✅ 与 `springboot-auth-module-skill` 字段完全对齐
 
 ## 后续规划
 
 - OAuth2 / SSO 接入
 - 岗位级数据权限
 - 操作日志审计
-- 与 `java-auth-module-skill` 字段完全对齐
+- 与 `springboot-auth-module-skill` 字段完全对齐
 
 ---
 

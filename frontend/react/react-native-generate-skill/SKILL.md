@@ -9,7 +9,7 @@ description: React Native 项目一键初始化技能。面向零基础小白，
 
 ## 与其他前端初始化技能的区别
 
-| 维度 | vue-generate-skill | electron-vue3-skill | 本 skill |
+| 维度 | vue-generate-skill | electron-vue-init-skill | 本 skill |
 |------|-------------------|---------------------|----------|
 | 目标用户 | 零基础小白 | 零基础小白 | 零基础小白 |
 | 运行环境 | 浏览器 | 桌面端 | **移动端（iOS/Android）** |
@@ -234,7 +234,7 @@ create reactnative project、reactnative starter、RN 脚手架
 
 ## 不做
 
-- 不生成与 vue-generate-skill / electron-vue3-skill 完全相同的骨架（本 skill 是 React Native 移动端版本）
+- 不生成与 vue-generate-skill / electron-vue-init-skill 完全相同的骨架（本 skill 是 React Native 移动端版本）
 - 不跳过环境探测（RN 环境配置复杂）
 - 不负责安装系统级依赖（Java、Android Studio、Xcode）
 - 不锁定版本号

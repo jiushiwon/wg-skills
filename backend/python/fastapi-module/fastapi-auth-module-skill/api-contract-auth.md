@@ -637,7 +637,7 @@ POST /api/tenants
 ## 错误码
 
 > ⚠️ **2026-10-13 v2 整改**：错误码从 HTTP 状态码（400/401/403/500）改为负数业务码，与 `springboot-auth-module-skill` 完全对齐。
-> HTTP 状态码仍为 200（业务状态由 `code` 表达，参考 [response-envelope-spec.md](../../shared/response-envelope-spec.md)）。
+> HTTP 状态码仍为 200（业务状态由 `code` 表达，参考 [response-envelope-spec.md](../../../shared/response-envelope-spec.md)）。
 > Python 实现：Pydantic 模型用 `model_config = ConfigDict(populate_by_name=True, alias_generator=to_camel)` 兼容 camelCase 序列化。
 
 | 错误码 | HTTP | 说明 |

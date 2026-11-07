@@ -8,21 +8,21 @@
 
 | # | variant / 能力 | 适用场景 | 文档 |
 |---|----------------|----------|------|
-| 00 | 总览 | 一页看完所有形态 | [html/00-showcase.html](html/00-showcase.html) |
-| 01 | basic（默认） | 最简数据展示 | [html/01-basic.html](html/01-basic.html) |
-| 02 | striped | 数据展示、报表 | [html/02-striped.html](html/02-striped.html) |
-| 03 | bordered | 库存、参数对比 | [html/03-bordered.html](html/03-bordered.html) |
-| 04 | hover | 可点击列表 | [html/04-hover.html](html/04-hover.html) |
-| 05 | compact | 日志、监控 | [html/05-compact.html](html/05-compact.html) |
-| 06 | fixed-header | 长列表 | [html/06-fixed-header.html](html/06-fixed-header.html) |
-| 07 | fixed-column | 多列横滚 | [html/07-fixed-column.html](html/07-fixed-column.html) |
-| 08 | selectable | 批量操作 | [html/08-selectable.html](html/08-selectable.html) |
-| 09 | sortable | 升降序 | [html/09-sortable.html](html/09-sortable.html) |
-| 10 | filterable | 列筛选 | [html/10-filterable.html](html/10-filterable.html) |
-| 11 | paginated | 分页 | [html/11-paginated.html](html/11-paginated.html) |
-| 12 | loading | 加载态 | [html/12-loading.html](html/12-loading.html) |
-| 13 | empty | 空状态 | [html/13-empty.html](html/13-empty.html) |
-| 14 | tree | 树形结构 | [html/14-tree.html](html/14-tree.html) |
+| 00 | 总览 | 一页看完所有形态 | [html/00-showcase.html](html/base-table.html) |
+| 01 | basic（默认） | 最简数据展示 | [html/01-basic.html](html/base-table.html) |
+| 02 | striped | 数据展示、报表 | [html/02-striped.html](html/base-table.html) |
+| 03 | bordered | 库存、参数对比 | [html/03-bordered.html](html/base-table.html) |
+| 04 | hover | 可点击列表 | [html/04-hover.html](html/base-table.html) |
+| 05 | compact | 日志、监控 | [html/05-compact.html](html/base-table.html) |
+| 06 | fixed-header | 长列表 | [html/06-fixed-header.html](html/base-table.html) |
+| 07 | fixed-column | 多列横滚 | [html/07-fixed-column.html](html/base-table.html) |
+| 08 | selectable | 批量操作 | [html/08-selectable.html](html/base-table.html) |
+| 09 | sortable | 升降序 | [html/09-sortable.html](html/base-table.html) |
+| 10 | filterable | 列筛选 | [html/10-filterable.html](html/base-table.html) |
+| 11 | paginated | 分页 | [html/11-paginated.html](html/base-table.html) |
+| 12 | loading | 加载态 | [html/12-loading.html](html/base-table.html) |
+| 13 | empty | 空状态 | [html/13-empty.html](html/base-table.html) |
+| 14 | tree | 树形结构 | [html/14-tree.html](html/base-table.html) |
 
 ## 核心 API
 

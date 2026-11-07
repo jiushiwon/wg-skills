@@ -28,7 +28,7 @@ toast.info('已复制到剪贴板');
 
 | Demo | 内容 |
 |------|------|
-| [html/00-showcase.html](demo-components/base-toast/html/00-showcase.html) | 4 种 type + 3 种位置 + 动画 |
+| [html/00-showcase.html](SKILL.md) | 4 种 type + 3 种位置 + 动画 |
 
 ## Token 对齐
 

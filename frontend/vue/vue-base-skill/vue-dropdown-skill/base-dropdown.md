@@ -913,5 +913,5 @@ onUnmounted(() => {
 - [SKILL.md](SKILL.md) — 父技能入口
 - [vue-theme-skill](../../vue-theme-skill/) — Token 唯一来源
 - [vue-style-skill](../../vue-style-skill/) — 通用样式规范
-- [vue-button-skill](../../vue-button-skill/base-button.md) — dropdown trigger 内嵌按钮
-- [vue-tag-skill](../../vue-tag-skill/base-tag.md) — select 选项内嵌标签
+- [vue-button-skill](../vue-button-skill/base-button.md) — dropdown trigger 内嵌按钮
+- [vue-tag-skill](../vue-tag-skill/base-tag.md) — select 选项内嵌标签

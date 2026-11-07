@@ -25,7 +25,7 @@
 ## 目录说明
 
 ```
-react-init-skill/
+react-generate-skill/
 ├── SKILL.md                    # 技能定义
 ├── README.md                   # 本文件
 ├── demo/                       # 示例项目
@@ -39,7 +39,7 @@ react-init-skill/
 
 ## 与 vue-generate-skill 的区别
 
-| 维度 | vue-generate-skill | react-init-skill |
+| 维度 | vue-generate-skill | react-generate-skill |
 |------|-------------------|------------------|
 | 框架 | Vue 3 | React 18 |
 | 状态管理 | Pinia | Zustand |

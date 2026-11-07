@@ -1,6 +1,6 @@
 # base-wg-card 业务卡片组件
 
-> **定位**：本期 card 组件——业务卡片（business card）。**与根容器 [base-card](../../base-card.md) 严格区分**：
+> **定位**：本期 card 组件——业务卡片（business card）。**与根容器 [base-card](../base-card.md) 严格区分**：
 >
 > | 组件 | 角色 | 层级 |
 > |------|------|------|
@@ -713,10 +713,10 @@ const resolved = computed(() => {
 
 ## 关联
 
-- [base-card.md](../../base-card.md) — 根容器规格（6 维度参数，必读）
+- [base-card.md](../base-card.md) — 根容器规格（6 维度参数，必读）
 - [SKILL.md](SKILL.md) — 父技能入口
 - [vue-theme-skill](../../vue-theme-skill/) — Token 唯一来源
 - [vue-style-skill](../../vue-style-skill/) — 通用样式规范
-- [vue-button-skill](../../vue-button-skill/base-button.md) — 内嵌按钮
-- [vue-tag-skill](../../vue-tag-skill/base-tag.md) — 内嵌标签
-- [vue-switch-skill](../../vue-switch-skill/base-switch.md) — set 卡片内嵌开关
+- [vue-button-skill](../vue-button-skill/base-button.md) — 内嵌按钮
+- [vue-tag-skill](../vue-tag-skill/base-tag.md) — 内嵌标签
+- [vue-switch-skill](../vue-switch-skill/base-switch.md) — set 卡片内嵌开关

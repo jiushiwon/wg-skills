@@ -6,14 +6,14 @@
 # # CLAUDE.md - {{PROJECT_NAME}} AI 开发规范
 
 > 本项目基于 uni-app（Vue3 + TypeScript + Pinia）开发，目标平台为微信小程序。
-> 所有开发规范、主题系统、目录约定详见 [AGENTS.md](./AGENTS.md)。
+> 所有开发规范、主题系统、目录约定详见 AGENTS.md（`./AGENTS.md`，生成项目或本地设计路径）。
 > 本文件是 Claude / AI 编码助手的入口指引。
 
 ---
 
 ## 必读规范
 
-本项目所有开发规范定义在 [AGENTS.md](./AGENTS.md) 中。在协助编码前，请务必阅读 AGENTS.md，并确保完全理解其中的内容。
+本项目所有开发规范定义在 AGENTS.md（`./AGENTS.md`，生成项目或本地设计路径） 中。在协助编码前，请务必阅读 AGENTS.md，并确保完全理解其中的内容。
 
 ## 技术栈
 
@@ -120,4 +120,4 @@
 1. 替换所有 `{{PROJECT_NAME}}`、`{{PROJECT_DESC}}` 占位符。
 2. 根据用户选择的布局风格（见 [layout-patterns.md](./layout-patterns.md)）补充底部菜单、顶部导航等特殊说明。
 3. 根据项目实际平台（微信小程序 / H5 / App）调整技术栈表格。
-4. 保持简洁，不要一次性塞入过多细节；详细规则放在 [AGENTS.md](./AGENTS.md) 中。
+4. 保持简洁，不要一次性塞入过多细节；详细规则放在 AGENTS.md（`./AGENTS.md`，生成项目或本地设计路径） 中。

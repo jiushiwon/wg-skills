@@ -32,6 +32,6 @@ FastAPI / Spring Boot / Go Gin 三端上传契约对齐，统一响应 `{ code: 
 
 ## 相关技能
 
-- [vue-upload-skill](../vue-upload-skill/SKILL.md) — base-upload 组件
-- [vue-form-skill](../vue-form-skill/SKILL.md) — base-form 表单
-- [frontend-request-skill](../../../frontend-request-skill/SKILL.md) — upload() 请求封装
+- [vue-upload-skill](../../vue-upload-skill/SKILL.md) — base-upload 组件
+- [vue-form-skill](../../vue-form-skill/SKILL.md) — base-form 表单
+- [frontend-request-skill](../../../../frontend-request-skill/SKILL.md) — upload() 请求封装
