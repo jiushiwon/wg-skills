@@ -205,6 +205,8 @@ prompts/ 与独立领域工具维护于私有 wg-project-kits。
 
 ## 六、修改现有 Skill 规范
 
+登录密码存储与应用连接凭证保护的选型归入后端 crypto-scenario-skill，按是否需要取回原值区分。
+
 1. 优先改 `SKILL.md`，再同步 `README.md` 与 `references/`。
 2. 触发词变化必须检查是否有其他 skill 冲突。
 3. 删除或重命名 references 文件时，检查 SKILL.md 中的引用路径。

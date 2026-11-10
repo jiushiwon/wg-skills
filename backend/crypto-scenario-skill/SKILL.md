@@ -19,7 +19,7 @@ description: >-
 
 | 场景 | 推荐 | 一句话理由 | 绝对禁止 |
 |------|------|------------|----------|
-| 用户密码存储 | bcrypt（cost 12）或 Argon2id | 故意算得慢，让爆破成本极高 | MD5 / SHA1 / SHA256 裸哈希、可逆加密、自研 |
+| 用户密码存储 | Argon2id 优先，scrypt 备选，bcrypt 用于存量系统，PBKDF2-HMAC-SHA-256 用于需要 FIPS 合规的场景 | 按环境压测成本参数，使用成熟库与独立随机盐 | MD5 / SHA1 / SHA256 裸哈希、可逆加密、自研 |
 | 微信支付回调验签 | RSA-SHA256（平台证书验签）+ 敏感字段 AEAD_AES_256_GCM | 官方强制算法，私钥不出商户 | 回调不验签、敏感字段不加密 |
 | 支付宝开放平台签名 | RSA2（SHA256WithRSA） | 支付宝 2015 年定下的标准 | RSA（SHA1）老算法、MD5 |
 | 对接第三方开放接口 | HmacSHA256（双方共享密钥） | 双方持有同一密钥即可验 | 把密钥写死在代码里 |
@@ -30,11 +30,20 @@ description: >-
 | Git 提交签名 | SSH（Ed25519，默认已启用）或 GPG | 证明"这笔提交是我发的" | 无 |
 | 传输 | TLS 1.3 | 全站强制 | TLS 1.0/1.1、自签名证书上生产 |
 
+## 连接凭证需要取回时
+
+SSH、数据库密码和第三方 API Key 需要交给目标服务使用。配置仅存凭证引用，秘密放 OS 凭证库或服务端 Secret Manager。确需保存本地密文时使用平台安全存储，服务端自行加密时使用 AEAD 并分离密钥。限制读取权限和有效期，避免把明文放进日志、导出文件或通用 IPC 响应。
+
+SuperShell 实例：Electron 主进程优先用 keytar。keytar 模块加载失败时，现有实现使用 safeStorage 加密本地文件。核查时应确认实际存储后端，Linux 的 basic_text 不应作为安全回退。安全后端不可用时拒绝持久化，或让用户本次输入。优先由主进程取用凭证完成连接，检查渲染进程能否通过 IPC 取回明文。
+
+参考：Electron safeStorage https://www.electronjs.org/docs/latest/api/safe-storage
+参考：OWASP 密码存储 https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
+
 ## 强制红线
 
 1. **不自己实现算法** —— 全部用成熟库（Java Bouncy Castle / Spring Security，Python `cryptography` + `passlib`，Go `golang.org/x/crypto`，Node `node:crypto` + `bcrypt`）。
 2. **密钥永不入库、不进仓库** —— 走环境变量或密钥管理服务，`.env` 必须 gitignore；启动时校验密钥长度，不达标直接失败退出。
-3. **密码只存哈希，永不存可逆密文** —— 服务器自己都还原不出来才是正解。
+3. **用户登录密码只存密码哈希** —— 使用库验证输入，忘记密码走重置。历史哈希在验证成功后按策略升级，写回时防止覆盖并发改密。
 4. **哈希定长到的是"文件/报文没被改"，密码要的是"慢"** —— 两类哈希别混用。
 5. **回调先验签、后处理业务** —— 验签通过前不落库、不发货、不调下游。
 6. **签名比较用常量时间函数** —— `hmac.compare_digest` / `crypto.timingSafeEqual`，不要用 `==`。

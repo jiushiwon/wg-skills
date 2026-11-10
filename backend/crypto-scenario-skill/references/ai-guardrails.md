@@ -11,7 +11,7 @@ AI 写密码学代码最常见的三类错误：**用错算法**（MD5/SHA1）�
 ```markdown
 ## 加密相关强制约束
 
-1. 用户密码存储一律用 bcrypt（cost 12）或 Argon2id，禁止 MD5 / SHA1 / SHA256 裸哈希，禁止可逆加密存密码。
+1. 用户登录密码优先使用 Argon2id，具体备选按 SKILL.md 决策表选择。禁止 MD5 / SHA1 / SHA256 裸哈希与可逆加密。SSH、数据库密码和 API Key 等连接凭证优先存凭证库，配置仅存引用，限制明文读取。
 2. 禁止自行实现任何加密算法；只用成熟库（Java Bouncy Castle / Spring Security，Python cryptography + passlib，Go golang.org/x/crypto，Node node:crypto + bcrypt）。
 3. 密钥、密码、salt、IV 一律从环境变量读取，禁止硬编码字面量；`.env` 必须进 `.gitignore`；启动时校验密钥长度，不达标直接启动失败。
 4. 敏感字段加密用 AES-256-GCM，附加认证数据（AAD）绑定字段名，禁止 ECB 模式。

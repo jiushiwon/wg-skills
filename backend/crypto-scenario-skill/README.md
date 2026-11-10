@@ -23,7 +23,7 @@
 
 | 场景 | 推荐 | 绝对禁止 |
 |------|------|----------|
-| 用户密码存储 | bcrypt(cost 12) / Argon2id | MD5 / SHA1 / SHA256 裸哈希、可逆加密 |
+| 用户密码存储 | Argon2id 优先，scrypt 备选，存量 bcrypt，FIPS 场景考虑 PBKDF2-HMAC-SHA-256 | MD5 / SHA1 / SHA256 裸哈希、可逆加密 |
 | 微信支付回调 | RSA-SHA256 验签 + AEAD_AES_256_GCM | 不验签、敏感字段不加密 |
 | 支付宝开放平台 | RSA2（SHA256WithRSA） | RSA(SHA1)、MD5 |
 | 第三方开放接口 | HmacSHA256 | 密钥硬编码 |
@@ -37,7 +37,7 @@
 
 1. 不自研算法，全部用成熟库
 2. 密钥永不入库、不进仓库，启动时校验长度
-3. 密码只存哈希，永不存可逆密文
+3. 用户登录密码存密码哈希。SSH、数据库密码和 API Key 等连接凭证使用凭证库或受控加密，连接配置只保存引用。
 4. 回调先验签、后处理业务
 5. 签名比较用常量时间函数
 6. 日志必须脱敏
@@ -58,7 +58,7 @@
 ```
 你：用户密码存库该用什么？
 
-AI：按 crypto-scenario-skill 决策表：用 bcrypt（cost 12），不是 MD5/SHA256 裸哈希。
+AI：按 crypto-scenario-skill 决策表，新系统优先考虑 Argon2id，成本参数按部署环境压测。
    原因：bcrypt 故意算得慢，拖库后爆破成本极高；服务器自己都还原不出来。
    库里的串自带盐，校验时从串里解析盐重算比对，无需额外存盐字段。
    详见 crypto-scenario-skill/references/password-storage.md。

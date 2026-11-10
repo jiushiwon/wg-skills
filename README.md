@@ -172,6 +172,8 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 |------|------|
 | `crypto-scenario-skill` | 按场景给加密结论（密码存储/支付验签/JWT/敏感字段/文件校验）+ AI 约束块 |
 
+后端加密选型涵盖登录密码哈希与 SSH、数据库等连接凭证的保护。
+
 #### 公共规范层
 
 `backend/shared/` — 响应信封 / 错误码 / JWT / 分页 / API 契约模板 / 模块输出（6 个规范）
