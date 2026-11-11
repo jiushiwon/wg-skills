@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package auth;
 
-option go_package = "github.com/your-org/auth-service/proto/auth";
+option go_package = "github.com/your-org/hello-service/proto/auth";
 
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";

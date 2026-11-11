@@ -20,7 +20,7 @@ const add = (level, rule, file, line, message) =>
 
 /** 去掉注释，避免把注释里的示例代码当成真问题 */
 function stripComments(src) {
-  return src.replace(/<!--[\s\S]*?-->/g, '').replace(/\/\*[\s\S]*?\*\//g, '');
+  return src.replace(/<!--[\s\S]*?-->|\/\*[\s\S]*?\*\//g, (comment) => comment.replace(/[^\r\n]/g, ' '));
 }
 
 /** 收集 .vue / .json 文件 */
@@ -50,13 +50,18 @@ for (const file of vueFiles) {
   }
 }
 
+function getTemplate(src) {
+  return src.match(/<template\b[^>]*>[\s\S]*<\/template>(?=\s*(?:<(?:script|style)\b|$))/)?.[0] || '';
+}
+
 // ---- K1：输入框未声明 adjust-position（键盘顶起）----
 for (const file of vueFiles) {
-  const src = fs.readFileSync(file, 'utf8');
-  for (const m of src.matchAll(/<(input|textarea)\b[^>]*>/g)) {
+  const src = stripComments(fs.readFileSync(file, 'utf8'));
+  const template = getTemplate(src);
+  for (const m of template.matchAll(/<(input|textarea)\b[^>]*>/g)) {
     if (!/adjust-position/.test(m[0])) {
-      const line = src.slice(0, m.index).split('\n').length;
-      add('P1', 'K1', file, line, `<${m[1]}> 未声明 adjust-position，键盘弹起时可能被遮挡`);
+      const line = src.slice(0, src.indexOf(template) + m.index).split('\n').length;
+      add('P2', 'K1', file, line, `<${m[1]}> 使用默认 adjust-position，请核对键盘位移责任和真机表现`);
     }
   }
 }
@@ -77,15 +82,14 @@ if (customNav) {
   }
 }
 
-// ---- M7：小程序端不识别的 HTML 标签 ----
-const HTML_TAGS = /<(div|span|strong|em|p|ul|ol|li|h[1-6]|img|section|article|header|footer|main|nav|button|form|label|a)\b[\s>]/gi;
+// ---- M7：请核对条件编译与小程序产物的 HTML 标签 ----
+const HTML_TAGS = /<(div|span|strong|em|p|ul|ol|li|h[1-6]|img|section|article|header|footer|main|nav|a)\b[\s>]/gi;
 for (const file of vueFiles) {
   const src = stripComments(fs.readFileSync(file, 'utf8'));
-  const templateEnd = src.indexOf('</template>');
-  const template = templateEnd === -1 ? src : src.slice(0, templateEnd);
+  const template = getTemplate(src);
   for (const m of template.matchAll(HTML_TAGS)) {
-    const line = template.slice(0, m.index).split('\n').length;
-    add('P1', 'M7', file, line, `模板中出现 HTML 标签 <${m[1]}>，小程序端不识别`);
+    const line = src.slice(0, src.indexOf(template) + m.index).split('\n').length;
+    add('P2', 'M7', file, line, `模板中出现 HTML 标签 <${m[1]}>，请核对条件编译与小程序产物`);
   }
 }
 

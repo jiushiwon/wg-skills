@@ -99,7 +99,7 @@
 
 | 编号 | 检查项 | 风险等级 | 风险描述 | 判定依据 | 参考标准 | 检测命令 |
 |------|--------|----------|----------|----------|----------|----------|
-| K1 | 输入框未声明 `adjust-position` | P1 | 键盘弹起时输入框被遮挡 | `<input>` / `<textarea>` 缺 `adjust-position` 属性 | AGENTS.md §9.2 规则 1 | `node scripts/check-miniprogram.js <项目根>` |
+| K1 | 输入框沿用默认键盘策略 | P2 线索 | 核对默认顶起是否与公共容器重复处理 | 静态检查 + 真机验证 | AGENTS.md §9.2 | node scripts/check-miniprogram.js <项目根> |
 | K2 | 固定底栏未处理键盘 | P1 | 键盘弹起把底栏顶出可视区 | 底栏 `position: fixed` 且项目无 `onKeyboardHeightChange` | AGENTS.md §9.2 规则 2 | `grep -rn 'onKeyboardHeightChange' src/` |
 | K3 | 安全区只处理底部 | P2 | 横屏 / 刘海屏下左右被裁 | 代码中只出现 `env(safe-area-inset-bottom)`，无 left / right | AGENTS.md §9.3 | `grep -rn 'env(safe-area-inset' src/` |
 | K4 | fixed 元素无等高占位 | P1 | 页面最后一行内容被底栏遮挡 | fixed 底栏 / 吸顶导航无 `placeholder` 或等高占位 | AGENTS.md §9.3 | `grep -rn 'position: fixed' src/` 后核对是否有占位 |
@@ -110,7 +110,7 @@
 
 | 编号 | 检查项 | 风险等级 | 风险描述 | 判定依据 | 参考标准 | 检测命令 |
 |------|--------|----------|----------|----------|----------|----------|
-| M7 | 模板出现 HTML 标签 | P1 | `<div>` `<span>` `<strong>` 等在小程序端不识别，页面结构错乱 | 模板区出现 HTML 标签 | AGENTS.md §5 | `node scripts/check-miniprogram.js <项目根>` |
+| M7 | 模板出现 Web 标签候选 | P2 线索 | 核对条件编译和微信小程序构建产物 | 静态检查 + 构建确认 | AGENTS.md §5 | node scripts/check-miniprogram.js <项目根> |
 | M8 | DOM 式图片兜底 | P1 | 小程序端无 DOM 节点，兜底逻辑失效 | `event.target.src` / `target as HTMLImageElement` | AGENTS.md §5 | `node scripts/check-miniprogram.js <项目根>` |
 | M9 | 登录 / 注册页缺四态 | P2 | 用户看不到失败原因，也没有重试入口 | 页面缺 `loading` / `error` / 重试入口 | AGENTS.md §9.4 | `node scripts/check-miniprogram.js <项目根>` |
 

@@ -2,9 +2,10 @@ syntax = "proto3";
 
 package streaming;
 
-option go_package = "github.com/your-org/streaming-service/proto/streaming";
+option go_package = "github.com/your-org/hello-service/proto/streaming";
 
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
 
 // ============== 4 种流模式演示 ==============
 
@@ -92,7 +93,3 @@ service IoTService {
   // Bidirectional: 设备上报 + 服务端控制
   rpc DeviceStream(stream IoTDataPoint) returns (stream IoTControlCommand);
 }
-
-// ============== 公共类型 ==============
-
-message google.protobuf.Empty {}

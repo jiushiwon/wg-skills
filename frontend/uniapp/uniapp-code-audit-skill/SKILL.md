@@ -85,7 +85,7 @@ node scripts/check-miniprogram.js <项目根目录>
 ```
 
 覆盖「小程序专项」中的 M1（scoped `:root` 变量静默失效）、M2（自定义导航未读胶囊）、
-K1（输入框未声明 `adjust-position`）、M7（模板残留 HTML 标签）、
+K1（默认键盘顶起待核对）、M7（Web 标签候选待核对）、
 M8（DOM 式图片兜底）、M9（登录 / 注册页缺四态）。
 输出 `P0 / P1 / P2` 分级清单，存在 P0 / P1 时退出码为 `1`，可直接接入 CI。
 

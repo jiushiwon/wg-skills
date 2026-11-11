@@ -2,14 +2,14 @@ package main
 
 import (
 	"context"
+	"io"
 	"log"
+	"os"
 	"time"
 
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/credentials/insecure"
 
-	"github.com/your-org/hello-service/internal/config"
 	pb "github.com/your-org/hello-service/proto/helloworld"
 )
 
@@ -21,36 +21,11 @@ type GrpcClient struct {
 
 // NewGrpcClient 创建 gRPC 客户端
 func NewGrpcClient() (*GrpcClient, error) {
-	var opts []grpc.DialOption
-
-	// 1. 传输认证
-	if config.UseTLS {
-		opts = append(opts, grpc.WithTransportCredentials(
-			credentials.NewClientTLSFromCert(nil, config.ServerName),
-		))
-	} else {
-		opts = append(opts, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	address := os.Getenv("GRPC_ADDRESS")
+	if address == "" {
+		address = "127.0.0.1:50051"
 	}
-
-	// 2. 重试策略
-	opts = append(opts, grpc.WithDefaultServiceConfig(`{
-		"methodConfig": [{
-			"name": [{"service": "helloworld.Greeter"}],
-			"retryPolicy": {
-				"maxAttempts": 3,
-				"initialBackoff": "0.1s",
-				"maxBackoff": "1s",
-				"backoffMultiplier": 2.0,
-				"retryableStatusCodes": ["UNAVAILABLE", "RESOURCE_EXHAUSTED"]
-			}
-		}]
-	}`))
-
-	// 3. 超时
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	conn, err := grpc.DialContext(ctx, config.Address, opts...)
+	conn, err := grpc.NewClient(address, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return nil, err
 	}
@@ -75,12 +50,14 @@ func (c *GrpcClient) SayHelloStream(ctx context.Context, name string) error {
 
 	for {
 		resp, err := stream.Recv()
+		if err == io.EOF {
+			return nil
+		}
 		if err != nil {
-			break
+			return err
 		}
 		log.Println(resp.Message)
 	}
-	return nil
 }
 
 // Upload Client Streaming 调用
@@ -101,24 +78,30 @@ func (c *GrpcClient) Upload(ctx context.Context, names []string) (*pb.HelloReply
 
 // Chat Bidirectional Streaming 调用
 func (c *GrpcClient) Chat(ctx context.Context, messages []string) error {
+	ctx, cancel := context.WithCancel(ctx)
+	defer cancel()
 	stream, err := c.client.Chat(ctx)
 	if err != nil {
 		return err
 	}
 
 	// 并发收发
-	done := make(chan struct{})
+	done := make(chan error, 1)
 
 	// 接收
 	go func() {
 		for {
 			resp, err := stream.Recv()
+			if err == io.EOF {
+				done <- nil
+				return
+			}
 			if err != nil {
-				break
+				done <- err
+				return
 			}
 			log.Println("收到:", resp.Message)
 		}
-		close(done)
 	}()
 
 	// 发送
@@ -145,7 +128,8 @@ func main() {
 	}
 	defer client.Close()
 
-	ctx := context.Background()
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
 
 	// Unary
 	resp, err := client.SayHello(ctx, "world")

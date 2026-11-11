@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick } from 'vue'
+import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 import type { CascaderProps, CascaderEmits, CascaderOption } from '../types/cascader'
 
 const props = withDefaults(defineProps<CascaderProps>(), {
@@ -31,46 +31,52 @@ const activeMenus = ref<CascaderOption[][]>([props.options])
 // 选中路径
 const selectedPath = ref<CascaderOption[]>([])
 
-// 加载状态
-const loading = ref(false)
-const loadingLevel = ref(-1) // 哪个层级正在加载
-
-// 过滤选项（搜索用）
-const filteredOptions = computed(() => {
-  if (!searchQuery.value) return []
-  const query = searchQuery.value.toLowerCase()
-  const result: CascaderOption[] = []
-
-  function filter(options: CascaderOption[], path: CascaderOption[] = []) {
-    for (const opt of options) {
-      const currentPath = [...path, opt]
-      if (opt.label.toLowerCase().includes(query)) {
-        result.push(opt)
-      }
-      if (opt.children) {
-        filter(opt.children, currentPath)
-      }
+// 模型值与浏览路径分开，展开菜单不会改变已提交的选择。
+const optionPaths = computed(() => {
+  const paths: CascaderOption[][] = []
+  function walk(options: CascaderOption[], ancestors: CascaderOption[] = []) {
+    for (const option of options) {
+      const path = [...ancestors, option]
+      paths.push(path)
+      if (option.children) walk(option.children, path)
     }
   }
-
-  filter(props.options)
-  return result
+  walk(props.options)
+  return paths
 })
 
-// 显示文本
-const displayText = computed(() => {
-  if (selectedPath.value.length === 0) return ''
-  if (props.multiple) {
-    return selectedPath.value.map(p => p.label). join(props.separator)
+const pathValue = (path: CascaderOption[]) => path.map(option => String(option.value)).join(props.separator)
+const lastOption = (path: CascaderOption[]) => path[path.length - 1]
+const singlePath = computed(() => optionPaths.value.find(path => pathValue(path) === props.modelValue) ?? [])
+const selectedTags = computed(() => {
+  if (!Array.isArray(props.modelValue)) return []
+  const values = new Set(props.modelValue)
+  const tags = new Map<string, CascaderOption>()
+  for (const path of optionPaths.value) {
+    const option = lastOption(path)
+    const value = String(option.value)
+    if (values.has(value) && (props.checkStrictly || !option.children?.length)) tags.set(value, option)
   }
-  if (props.showAllLevels) {
-    return selectedPath.value.map(p => p.label).join(props.separator)
-  }
-  return selectedPath.value[selectedPath.value.length - 1]?.label || ''
+  return [...tags.values()]
 })
+const filteredOptions = computed(() => {
+  const query = searchQuery.value.trim().toLowerCase()
+  if (!query) return []
+  return optionPaths.value.filter(path =>
+    !path.some(option => option.disabled) &&
+    (props.checkStrictly || !lastOption(path).children?.length) &&
+    path.some(option => option.label.toLowerCase().includes(query)),
+  )
+})
+const displayText = computed(() => props.showAllLevels
+  ? singlePath.value.map(option => option.label).join(props.separator)
+  : lastOption(singlePath.value)?.label ?? '')
+const hasValue = computed(() => props.multiple ? selectedTags.value.length > 0 : singlePath.value.length > 0)
 
-// 是否有值
-const hasValue = computed(() => selectedPath.value.length > 0)
+watch(() => props.options, options => {
+  activeMenus.value = [options]
+  selectedPath.value = []
+})
 
 // 切换展开
 function toggle() {
@@ -96,107 +102,57 @@ function close() {
   searchQuery.value = ''
 }
 
-// 选中处理
-async function handleSelect(option: CascaderOption, level: number) {
-  if (option.disabled) return
+function handleSelect(option: CascaderOption, level: number) {
+  if (option.disabled || props.disabled) return
+  const path = [...selectedPath.value.slice(0, level), option]
+  selectedPath.value = path
+  activeMenus.value = activeMenus.value.slice(0, level + 1)
+  if (option.children?.length) {
+    activeMenus.value.push(option.children)
+    emit('expandChange', { value: option.value, option, resolved: true })
+    if (!props.checkStrictly) return
+  }
+  commitSelection(path)
+}
 
-  // 更新路径
-  selectedPath.value = selectedPath.value.slice(0, level)
-  selectedPath.value.push(option)
-
-  const hasChildren = option.children && option.children.length > 0
-
-  // 多选逻辑
+function commitSelection(path: CascaderOption[]) {
+  if (props.disabled) return
+  const option = lastOption(path)
   if (props.multiple) {
-    // 父子不关联：直接切换选中状态
-    if (props.checkStrictly) {
-      emitValue()
-    }
-    // 有子节点且不是叶子节点，继续展开
-    if (hasChildren) {
-      activeMenus.value = activeMenus.value.slice(0, level + 1)
-      activeMenus.value.push(option.children)
-    }
+    const value = String(option.value)
+    const tags = selectedTags.value
+    const nextTags = tags.some(tag => String(tag.value) === value)
+      ? tags.filter(tag => String(tag.value) !== value)
+      : [...tags, option]
+    emitSelection(nextTags.map(tag => String(tag.value)), nextTags)
     return
   }
-
-  // 单选逻辑
-  if (hasChildren && !props.checkStrictly) {
-    // 有子节点，展开下一级
-    activeMenus.value = activeMenus.value.slice(0, level + 1)
-    activeMenus.value.push(option.children)
-    // 触发 expandChange 事件
-    emit('expandChange', {
-      value: option.value,
-      option,
-      resolved: true
-    })
-  } else {
-    // 叶子节点或父子不关联，选中完成
-    emitValue()
-    close()
-  }
+  emitSelection(pathValue(path), path)
+  close()
 }
 
-// 懒加载子节点
-async function loadChildren(option: CascaderOption, level: number) {
-  loading.value = true
-  loadingLevel.value = level
-
-  // 模拟异步加载
-  await new Promise(resolve => setTimeout(resolve, 500))
-
-  // 实际项目中这里应该 emit 事件让父组件加载数据
-  // emit('expand', { value: option.value, done: (children) => { option.children = children } })
-
-  loading.value = false
-  loadingLevel.value = -1
-
-  // 添加子节点到菜单
-  if (option.children && option.children.length > 0) {
-    activeMenus.value = activeMenus.value.slice(0, level + 1)
-    activeMenus.value.push(option.children)
-  }
+function emitSelection(value: string | string[], options: CascaderOption[]) {
+  emit('update:modelValue', value)
+  emit('change', { value, selectedOptions: options })
 }
 
-// 发射值
-function emitValue() {
-  const value = props.multiple
-    ? selectedPath.value
-        .filter(p => !p.children || p.children.length === 0 || props.checkStrictly)
-        .map(p => String(p.value))
-    : selectedPath.value.map(p => String(p.value)).join(props.separator)
-
-  emit('update:modelValue', props.multiple ? value : value)
-  emit('change', {
-    value: props.multiple ? value : value,
-    selectedOptions: selectedPath.value
-  })
-}
-
-// 清除
 function handleClear(e: Event) {
   e.stopPropagation()
+  if (props.disabled) return
   selectedPath.value = []
   activeMenus.value = [props.options]
-  emit('update:modelValue', props.multiple ? [] : '')
+  emitSelection(props.multiple ? [] : '', [])
   emit('clear')
 }
 
-// 点击外部关闭
 function handleClickOutside(e: Event) {
-  if (triggerRef.value && !triggerRef.value.contains(e.target as Node)) {
-    close()
-  }
+  if (triggerRef.value && !triggerRef.value.contains(e.target as Node)) close()
 }
 
-// 移除多选标签
-function removeTag(option: CascaderOption, level: number) {
-  const idx = selectedPath.value.findIndex(p => p.value === option.value)
-  if (idx > -1) {
-    selectedPath.value.splice(idx, 1)
-    emitValue()
-  }
+function removeTag(option: CascaderOption) {
+  if (props.disabled) return
+  const tags = selectedTags.value.filter(tag => String(tag.value) !== String(option.value))
+  emitSelection(tags.map(tag => String(tag.value)), tags)
 }
 
 onMounted(() => {
@@ -228,13 +184,14 @@ onBeforeUnmount(() => {
       <!-- 多选显示 Tags -->
       <div v-else class="base-cascader__tags">
         <span
-          v-for="(tag, idx) in selectedPath"
-          :key="idx"
+          v-for="tag in (collapseTags ? selectedTags.slice(0, 1) : selectedTags)"
+          :key="String(tag.value)"
           class="base-cascader__tag"
         >
           {{ tag.label }}
-          <span class="base-cascader__tag-remove" @click.stop="removeTag(tag, idx)">×</span>
+          <span class="base-cascader__tag-remove" @click.stop="removeTag(tag)">×</span>
         </span>
+        <span v-if="collapseTags && selectedTags.length > 1">+{{ selectedTags.length - 1 }}</span>
         <span v-if="!hasValue" class="base-cascader__placeholder">{{ placeholder }}</span>
       </div>
 
@@ -266,12 +223,12 @@ onBeforeUnmount(() => {
         <!-- 搜索结果 -->
         <div v-if="searchQuery && filteredOptions.length > 0" class="base-cascader__search-list">
           <div
-            v-for="opt in filteredOptions"
-            :key="String(opt.value)"
+            v-for="path in filteredOptions"
+            :key="pathValue(path)"
             class="base-cascader__search-item"
-            @click="handleSelect(opt, 0)"
+            @click="commitSelection(path)"
           >
-            <span class="base-cascader__search-label">{{ opt.label }}</span>
+            <span class="base-cascader__search-label">{{ path.map(option => option.label).join(separator) }}</span>
           </div>
         </div>
         <div v-else-if="searchQuery" class="base-cascader__search-empty">
@@ -296,11 +253,8 @@ onBeforeUnmount(() => {
               'has-children': option.children && option.children.length > 0,
             }"
             @click="handleSelect(option, level)"
-            @mouseenter="option.children && option.children.length > 0 && loadChildren(option, level)"
           >
-            <!-- 加载中 -->
-            <span v-if="loadingLevel === level" class="base-cascader__loading">...</span>
-            <span v-else class="base-cascader__item-label">{{ option.label }}</span>
+            <span class="base-cascader__item-label">{{ option.label }}</span>
             <span v-if="option.children && option.children.length > 0" class="base-cascader__item-arrow">›</span>
           </div>
         </div>

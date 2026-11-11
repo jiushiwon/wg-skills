@@ -146,7 +146,7 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 |------|------|
 | `go-gin-init-skill` | Go + Gin 一键初始化 |
 | `go-frame-init-skill` | Go 多框架初始化（Hertz/Fiber/Chi） |
-| `go-grpc-init-skill` | Go gRPC 服务初始化（4 种流模式 + 拦截器） |
+| `go-grpc-init-skill` | Go gRPC 服务初始化（可运行的四种 RPC 模式和健康检查，附拦截器参考） |
 | `go-ws-module-skill` | Go WebSocket 模块 |
 | `go-auth-module-skill` | Go 鉴权模块 |
 | `go-module/go-storage-module-skill` | Go 文件存储模块 |
@@ -244,7 +244,7 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 - `frontend-code-doctor` — 前端代码审查
 - `frontend-request-skill` — **4 套体系共用**请求层（响应信封 + 错误码 + Token 注入 + 防抖 + Mock + SSE）
 - `frontend-style-harmonizer-skill` — 前端 UI 一致性审查：Token、页面间距/固定区、组件契约、图标语义、键盘安全区与重复样式（兼容原样式治理调用）
-- `mobile-safe-area-audit-skill` — 移动端安全区与键盘审计修复：顶部胶囊、iPhone 底部 Home Indicator、固定操作栏、输入框顶起和多端差异
+- `mobile-safe-area-audit-skill` — 移动端安全区与键盘审计修复：顶部胶囊、iPhone 底部 Home Indicator、固定操作栏、输入框顶起及三端窗口尺寸联动验收
 - `mobile-uiux-spec-skill` — 移动端 UI/UX 设计与交付规范：iOS、Android、小程序、H5、鸿蒙的单位、尺寸、触控、安全区与真机验收
 - `frontend-ui-foundry` — 综合前端 UI
 - `frontend-icon-skill` — SVG 模板生成 + 图片处理
