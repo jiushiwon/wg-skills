@@ -128,6 +128,7 @@ description: 一句话描述技能用途  # 必填，含触发词
 五个根模块分别维护前端、后端、数据库、环境部署与学习辅助。
 
 - frontend/：前端框架、组件、主题、请求层与页面审查。
+  - agent-qa-skill/：只读审查已有运行的步骤证据与 memidex 记忆来源。
 - backend/：语言骨架、业务模块与 shared 公共契约。
 - database/：建模规范与数据库、中间件集成参考。
 - super-deploy-skills/：环境识别、运行依赖与部署。

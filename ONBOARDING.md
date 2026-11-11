@@ -104,7 +104,7 @@ wg-skills/
 ├── backend/               ← 5 语言后端与公共契约
 ├── database/              ← 数据设计、数据库与中间件
 ├── super-deploy-skills/    ← 环境与部署
-└── vibecoding-guide-skill/ ← 学习与工程协作，共计 152 个公开技能
+└── vibecoding-guide-skill/ ← 学习与工程协作，共计 153 个公开技能
 ```
 
 ---

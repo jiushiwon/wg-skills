@@ -6,6 +6,7 @@
 
 | 事实 | 唯一负责方 | 其他 Skill 的使用方式 |
 |---|---|---|
+| agent-qa 已有运行与 memidex 来源审查 | `agent-qa-skill` | 只读核对运行证据，不重跑测试或修改状态 |
 | Vue 设计 Token | `vue/vue-theme-skill` | 只引用、审查，不新造平行 Token |
 | Vue 样式基础设施 | `vue/vue-style-skill` | 只引用其布局、动效与工具类规则 |
 | Vue 基础组件 | `vue/vue-base-skill` 及子 Skill | 复用组件，不复制实现 |

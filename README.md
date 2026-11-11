@@ -1,6 +1,6 @@
 # wg-skills — 把古法全栈开发经验装进 AI
 
-> **152 个**面向 Claude Code / Cursor / Codex 等智能体的公开 Skills，MIT 协议。
+> **153 个**面向 Claude Code / Cursor / Codex 等智能体的公开 Skills，MIT 协议。
 > 让 AI 按统一工程规范完成“项目骨架 → 模块 → 前后端契约 → 部署 → 迭代”。围绕前端、后端、数据库、部署与学习形成工程协作路径。
 
 ---
@@ -59,9 +59,9 @@
 
 ---
 
-## 152 个技能 · 全部 MIT 公开 · 持续迭代中
+## 153 个技能 · 全部 MIT 公开 · 持续迭代中
 
-> ⚠️ **技能以实际效果为准，152 个技能都在持续迭代中**。不同技能的模板、示例与运行验证覆盖程度不同，具体以对应目录和验证结果为准。API、组件形态与触发词随实战反馈迭代。
+> ⚠️ **技能以实际效果为准，153 个技能都在持续迭代中**。不同技能的模板、示例与运行验证覆盖程度不同，具体以对应目录和验证结果为准。API、组件形态与触发词随实战反馈迭代。
 > 任何问题、反馈或建议，欢迎两个渠道：
 > 1. 访问 [itlifetime.com](https://itlifetime.com)（首页底部 → 加微信 **jiushiwon**）
 > 2. 在 [GitHub Issues](https://github.com/jiushiwon/wg-skills/issues) 提 issue
@@ -72,7 +72,7 @@
 |------|------|--------|
 | **[`backend`](#后端)** | **48** | Java / Python / Go / Node.js / Rust / 公共规范；具体清单见下文 |
 | **[`database`](#数据库)** | **8** | 数据建模、迁移、数据库与中间件参考 |
-| **[`frontend`](#前端)** | **76** | Vue / UniApp / React / HTML / Electron / 公共能力；具体清单见下文 |
+| **[`frontend`](#前端)** | **77** | Vue / UniApp / React / HTML / Electron / 公共能力；具体清单见下文 |
 | **[`super-deploy-skills`](#部署套件)** | **16** | 部署总入口 · 数据库安装【4】· 运行时安装【4】· Docker · 原生 · Nginx · 服务器 · 环境检测 |
 | **[`vibecoding-guide-skill`](#vibecoding-工作流)** | **4** | VibeCoding 总入口 · 智能体访谈 · 智能体学习 · 完整工作流 |
 
@@ -198,7 +198,7 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 ### 前端
 
-**76 个**，按 4 套体系组织。
+**77 个**，按 4 套体系组织。
 
 #### Vue 体系（43 个）— SPA + SSR
 
@@ -239,9 +239,10 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 - `html-frontend-template` — 纯 HTML 管理后台模板（**下一个重点建设方向**）
 
-#### 综合前端（11 个）
+#### 综合前端（12 个）
 
 - `frontend-code-doctor` — 前端代码审查
+- [`agent-qa-skill`](frontend/agent-qa-skill/SKILL.md) — 只读审查 [agent-qa / vostride](https://vostride.com) 的运行证据与 memidex 记忆来源
 - `frontend-request-skill` — **4 套体系共用**请求层（响应信封 + 错误码 + Token 注入 + 防抖 + Mock + SSE）
 - `frontend-style-harmonizer-skill` — 前端 UI 一致性审查：Token、页面间距/固定区、组件契约、图标语义、键盘安全区与重复样式（兼容原样式治理调用）
 - `mobile-safe-area-audit-skill` — 移动端安全区与键盘审计修复：顶部胶囊、iPhone 底部 Home Indicator、固定操作栏、输入框顶起及三端窗口尺寸联动验收
@@ -370,7 +371,7 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 ---
 
-## 为什么开放 + 为什么 152 个
+## 为什么开放 + 为什么 153 个
 
 之前这个仓库是分层结构（精选 23 个公开 + 全量私有）。经过两轮迭代决定：
 
