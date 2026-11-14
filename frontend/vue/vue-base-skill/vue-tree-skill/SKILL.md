@@ -71,7 +71,7 @@ interface TreeNode {
 
 ## 命名对齐矩阵（与 uniapp / list-item 一致）
 
-| 本技能 | vue-list-item-skill | uniapp-tree-skill |
+| 本技能 | vue-list-item-skill | uni-app 独立树组件技能（待建设） |
 |--------|---------------------|---------------------|
 | `base-tree` | — | `base-tree` |
 | `TreeNode` | `ListItem` | `TreeNode` |

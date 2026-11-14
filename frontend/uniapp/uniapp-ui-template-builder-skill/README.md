@@ -353,3 +353,8 @@ AI：
 ---
 
 **一句话**：选页面 → 选风格 → 确认 Mock → 一键生成 ✓
+
+
+## 个人中心五场景（2026-11-14）
+
+新增 [共享模板与实施契约](references/profile-gallery.md)：简洁、标准服务、商城订单、企业员工、会员权益。它们共用一份真实 uni-app 模板，使用 base-card / avatar / navbar / tabbar / button / popup 与主题真源。[运行 Demo](demo/README.md) 支持切换布局、数据状态与演示交互；旧四风格模板未纳入本次验收。

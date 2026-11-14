@@ -1,0 +1,113 @@
+{
+  "checks": [
+    {
+      "scene": "simple",
+      "width": 320,
+      "scroll": 320
+    },
+    {
+      "scene": "simple",
+      "width": 390,
+      "scroll": 390
+    },
+    {
+      "scene": "simple",
+      "width": 430,
+      "scroll": 430
+    },
+    {
+      "scene": "simple",
+      "width": 768,
+      "scroll": 768
+    },
+    {
+      "scene": "service",
+      "width": 320,
+      "scroll": 320
+    },
+    {
+      "scene": "service",
+      "width": 390,
+      "scroll": 390
+    },
+    {
+      "scene": "service",
+      "width": 430,
+      "scroll": 430
+    },
+    {
+      "scene": "service",
+      "width": 768,
+      "scroll": 768
+    },
+    {
+      "scene": "commerce",
+      "width": 320,
+      "scroll": 320
+    },
+    {
+      "scene": "commerce",
+      "width": 390,
+      "scroll": 390
+    },
+    {
+      "scene": "commerce",
+      "width": 430,
+      "scroll": 430
+    },
+    {
+      "scene": "commerce",
+      "width": 768,
+      "scroll": 768
+    },
+    {
+      "scene": "enterprise",
+      "width": 320,
+      "scroll": 320
+    },
+    {
+      "scene": "enterprise",
+      "width": 390,
+      "scroll": 390
+    },
+    {
+      "scene": "enterprise",
+      "width": 430,
+      "scroll": 430
+    },
+    {
+      "scene": "enterprise",
+      "width": 768,
+      "scroll": 768
+    },
+    {
+      "scene": "member",
+      "width": 320,
+      "scroll": 320
+    },
+    {
+      "scene": "member",
+      "width": 390,
+      "scroll": 390
+    },
+    {
+      "scene": "member",
+      "width": 430,
+      "scroll": 430
+    },
+    {
+      "scene": "member",
+      "width": 768,
+      "scroll": 768
+    }
+  ],
+  "runtimeErrors": [],
+  "behavior": [
+    "签到只加一次积分",
+    "未登录/失败/加载/空商品",
+    "长昵称与图片失败",
+    "菜单弹层开关",
+    "错误重试"
+  ],
+  "note": "H5 Edge browser checks, not device verification."
+}

@@ -75,7 +75,7 @@ function onClick() {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: var(--height-btn-xl, 96rpx);
+  min-height: max(var(--height-btn-xl, 96rpx), var(--height-touch-min, 44px));
   padding: 0 var(--space-12, 48rpx);
   border-radius: var(--radius-btn, 9999rpx);
   transition: transform var(--transition-fast, 150ms ease), opacity var(--transition-fast, 150ms ease);
@@ -89,18 +89,18 @@ function onClick() {
 /* ---- 尺寸 ---- */
 .is-sm {
   height: var(--height-btn-sm, 56rpx);
-  min-height: var(--height-btn-sm, 56rpx);
+  min-height: max(var(--height-btn-sm, 56rpx), var(--height-touch-min, 44px));
   padding: 0 var(--space-8, 32rpx);
 }
 
 .is-md {
   height: var(--height-btn-md, 72rpx);
-  min-height: var(--height-btn-md, 72rpx);
+  min-height: max(var(--height-btn-md, 72rpx), var(--height-touch-min, 44px));
 }
 
 .is-lg {
   height: var(--height-btn-lg, 88rpx);
-  min-height: var(--height-btn-lg, 88rpx);
+  min-height: max(var(--height-btn-lg, 88rpx), var(--height-touch-min, 44px));
   font-weight: 600;
 }
 

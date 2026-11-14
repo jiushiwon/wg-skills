@@ -13,7 +13,7 @@
   <view class="bt-wrapper">
     <view v-if="fixed && placeholder" class="bt-placeholder" :style="placeholderStyle" />
 
-    <view class="base-tabbar" :class="{ 'is-fixed': fixed, 'is-safe': safeArea }">
+    <view class="base-tabbar" :style="barStyle" :class="{ 'is-fixed': fixed, 'is-safe': safeArea }">
     <view v-for="item in items" :key="item.key" class="bt-item" :class="{ 'is-active': item.key === modelValue }" @click="onItemClick(item)">
       <slot name="item" :item="item" :active="item.key === modelValue">
         <view class="bt-icon-wrap">
@@ -31,6 +31,7 @@
         <text class="bt-text">{{ item.text }}</text>
       </slot>
     </view>
+  </view>
   </view>
 </template>
 
@@ -56,6 +57,7 @@ interface Props {
   /** 是否适配安全区 */
   safeArea?: boolean
   /** 固定时是否渲染等高占位（避免内容被底栏遮挡） */
+  maxWidth?: string
   placeholder?: boolean
 }
 
@@ -69,7 +71,10 @@ const props = withDefaults(defineProps<Props>(), {
   fixed: true,
   safeArea: true,
   placeholder: true,
+  maxWidth: 'none',
 })
+
+const barStyle = computed(() => ({ maxWidth: props.maxWidth, margin: '0 auto' }))
 
 // 占位高度 = 菜单项高度（+ 安全区），与底栏实际高度保持一致
 const placeholderStyle = computed(() => ({

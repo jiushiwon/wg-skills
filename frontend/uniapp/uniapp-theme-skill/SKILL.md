@@ -69,7 +69,7 @@ uni-app 项目主题系统引擎。
 
 | 能力 | 状态 |
 |------|------|
-| Dark Mode 暗色模式 | ❌ 不做 |
+| Dark Mode 自动选择与持久化 | 由宿主负责；base.css 提供 data-theme="dark" 中性色预设 |
 | Z-Index 层级系统 | ❌ 不做 |
 | Motion / Transition Token | ❌ 不做 |
 | JS Bridge / useTheme() | ❌ 不做 |
@@ -582,3 +582,6 @@ mv App.vue.bak App.vue
 ## 触发词
 
 uniapp-theme、uniapp-theme-skill
+
+
+2026-11-14：为规范中的暗色适配提供 `[data-theme="dark"]` 中性色预设，保持变量唯一真源；系统监听由宿主页面注册与清理。图标等静态资源需提供暗色可见版本，不能仅反转整页。

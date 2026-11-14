@@ -1,0 +1,21 @@
+{
+  "pages": [
+    {
+      "path": "pages/index",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    }
+  ],
+  "easycom": {
+    "autoscan": false,
+    "custom": {
+      "^base-button$": "@/skills/uniapp-base-skill/components/form/base-button/index.vue"
+    }
+  },
+  "globalStyle": {
+    "rpxCalcMaxDeviceWidth": 600,
+    "rpxCalcBaseDeviceWidth": 375,
+    "rpxCalcIncludeWidth": 750
+  }
+}

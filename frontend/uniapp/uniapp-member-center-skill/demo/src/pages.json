@@ -1,0 +1,17 @@
+{
+  "pages": [
+    {
+      "path": "pages/index",
+      "style": {
+        "navigationBarTitleText": "会员中心"
+      }
+    }
+  ],
+  "easycom": {
+    "autoscan": false,
+    "custom": {
+      "^empty$": "@/skills/uniapp-page-components-skill/components/empty/empty.vue",
+      "^base-button$": "@/skills/uniapp-base-skill/components/form/base-button/index.vue"
+    }
+  }
+}

@@ -1,6 +1,6 @@
 # wg-skills — 把古法全栈开发经验装进 AI
 
-> **152 个**面向 Claude Code / Cursor / Codex 等智能体的公开 Skills，MIT 协议。
+> **153 个**面向 Claude Code / Cursor / Codex 等智能体的公开 Skills，MIT 协议。
 > 让 AI 按统一工程规范完成“项目骨架 → 模块 → 前后端契约 → 部署 → 迭代”。围绕前端、后端、数据库、部署与学习形成工程协作路径。
 
 ---
@@ -59,9 +59,9 @@
 
 ---
 
-## 152 个技能 · 全部 MIT 公开 · 持续迭代中
+## 153 个技能 · 全部 MIT 公开 · 持续迭代中
 
-> ⚠️ **技能以实际效果为准，152 个技能都在持续迭代中**。不同技能的模板、示例与运行验证覆盖程度不同，具体以对应目录和验证结果为准。API、组件形态与触发词随实战反馈迭代。
+> ⚠️ **技能以实际效果为准，153 个技能都在持续迭代中**。不同技能的模板、示例与运行验证覆盖程度不同，具体以对应目录和验证结果为准。API、组件形态与触发词随实战反馈迭代。
 > 任何问题、反馈或建议，欢迎两个渠道：
 > 1. 访问 [itlifetime.com](https://itlifetime.com)（首页底部 → 加微信 **jiushiwon**）
 > 2. 在 [GitHub Issues](https://github.com/jiushiwon/wg-skills/issues) 提 issue
@@ -370,7 +370,9 @@ git clone https://github.com/jiushiwon/wg-skills.git ~/.claude/skills/wg-skills
 
 ---
 
-## 为什么开放 + 为什么 152 个
+- [Three.js 网页动效](frontend/threejs-motion-skill/SKILL.md)：渲染选型、最小场景和静态降级。
+
+## 为什么开放 + 为什么 153 个
 
 之前这个仓库是分层结构（精选 23 个公开 + 全量私有）。经过两轮迭代决定：
 
@@ -414,3 +416,8 @@ MIT License — 自由使用、修改、商用。
 2026-11-07：五个模块提升到仓库根目录，数据库从后端独立；prompts/ 迁移至私有 wg-project-kits。旧路径需更新。
 
 三端兼容审计现包含技术栈与依赖、节点、Canvas、微信登录及上传下载与相册权限专项清单，详见 frontend/uniapp/uniapp-crossplatform-audit-skill。
+
+
+### 个人中心五场景演示
+
+[uniapp-ui-template-builder-skill 的个人中心 Demo](frontend/uniapp/uniapp-ui-template-builder-skill/demo/README.md)：五套业务布局，一份共享模板，复用 uni-app 主题与基础容器。包含独立 mock、状态切换、本地签到演示、真实截图及分平台验证记录；不承诺后端业务或未测真机可用。

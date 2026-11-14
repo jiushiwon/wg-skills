@@ -96,3 +96,10 @@ uniapp-ui-template-builder-skill/
 - [ ] mock 字段结构与接口契约一致
 - [ ] 模板可直接运行
 - [ ] `bash scripts/check-skills.sh` 错误为 0
+
+
+## 五场景个人中心补充
+
+五场景采用一份 `profile-gallery.vue` 条件组合模块，不复制结构。色彩只用 theme-skill 的 `data-theme`；业务数据与视图分离。布局最大宽度 560px 与 768px 断点是容器/视口边界，不是间距 Token；运行时状态栏使用 px 测量值。页内尺寸、间距与颜色引用 base.css 中存在的 Token 并带一致兜底。图标来源和许可证保存在 demo/src/static/profile-icons/；PNG 构建工具来自 frontend-icon-skill。
+
+禁止将示例签到当作后端幂等实现：Demo 只做按钮防重复与本地积分更新，生产签到必须由后端验权并控制幂等。企业数据应按认证与组织权限过滤；本页不实现真实权限、工资或审批服务。

@@ -211,6 +211,7 @@
 | `fixed` | `boolean` | `true` | 是否底部固定 |
 | `safeArea` | `boolean` | `true` | 是否适配安全区 |
 | `placeholder` | `boolean` | `true` | 固定时是否渲染等高占位（避免内容被底栏遮挡） |
+| `maxWidth` | `string` | `none` | 底栏最大宽度，宽屏居中；默认保持全宽 |
 
 **事件**：
 

@@ -1,0 +1,13 @@
+{
+  "name": "会员中心 Demo",
+  "appid": "",
+  "versionName": "0.1.0",
+  "versionCode": "100",
+  "vueVersion": "3",
+  "mp-weixin": {
+    "appid": "",
+    "setting": {
+      "urlCheck": true
+    }
+  }
+}

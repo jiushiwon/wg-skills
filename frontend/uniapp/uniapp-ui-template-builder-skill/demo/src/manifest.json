@@ -1,0 +1,21 @@
+{
+  "name": "个人中心五场景",
+  "appid": "",
+  "versionName": "0.1.0",
+  "versionCode": "100",
+  "vueVersion": "3",
+  "h5": {
+    "router": {
+      "mode": "hash"
+    }
+  },
+  "mp-weixin": {
+    "appid": "",
+    "setting": {
+      "urlCheck": true
+    }
+  },
+  "uniStatistics": {
+    "enable": false
+  }
+}

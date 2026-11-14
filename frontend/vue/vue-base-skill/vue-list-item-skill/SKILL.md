@@ -12,7 +12,7 @@ trigger: |
 
 > Vue 列表项抽象基座。**所有「列表类」组件（menu / tree / dropdown / select / tabs / breadcrumb）的共同底层**。
 >
-> **本技能与 uniapp-list-item-skill 严格镜像**（待补），命名 100% 对齐。
+> uni-app 对应实现见 uniapp-base-skill 的 list-item 组件，两端按各自组件契约使用。
 >
 > **零样式标签铁律**：实现代码仅使用 `<div>` / `<span>` + CSS3，禁止 `<p>` `<h1~h6>` `<header>` `<footer>` `<section>` `<article>` `<aside>` `<nav>` `<main>` `<button>` `<table>` `<input>` `<select>` `<form>` `<label>` `<img>` 等带默认样式的标签。
 
@@ -140,7 +140,7 @@ interface ListItem {
 ## 命名对齐矩阵
 
 ```
-vue-list-item-skill     ←   uniapp-list-item-skill（待补）
+vue-list-item-skill     ←   uniapp-base-skill / list-item
 base-list-item          ←   base-list-item
 slot=expander           ←   slot=expander
 slot=icon               ←   slot=icon

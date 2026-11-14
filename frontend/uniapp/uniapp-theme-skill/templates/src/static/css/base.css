@@ -109,6 +109,7 @@ page {
   --radius-2xl: 56rpx;
   --radius-full: 9999rpx;
 
+  --height-touch-min: 44px; /* physical CSS touch target, independent of rpx scaling */
   --height-btn-sm: 56rpx;
   --height-btn-md: 72rpx;
   --height-btn-lg: 88rpx;
@@ -245,4 +246,19 @@ page {
 
 .bg-gradient {
   background: linear-gradient(135deg, var(--primary-600, #0d9488) 0%, var(--primary-500, #14b8a6) 100%);
+}
+
+/* Shared dark neutral preset. System preference selection remains with the host app. */
+[data-theme="dark"] {
+  --text-primary: #f5f5f5;
+  --text-secondary: #d4d4d4;
+  --text-tertiary: #a3a3a3;
+  --bg-page: #171717;
+  --bg-card: #262626;
+  --bg-light: #404040;
+  --border: #525252;
+  --border-light: #404040;
+  --primary-50: #134e4a;
+  --primary-700: #5eead4;
+  --error-dark: #f87171;
 }

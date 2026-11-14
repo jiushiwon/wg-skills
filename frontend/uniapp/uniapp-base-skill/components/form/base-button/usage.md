@@ -62,3 +62,6 @@
 - `loading` 与 `disabled` 都会阻止 `click` 事件触发。
 - 加载态的旋转动画由全局关键帧类 `ui-spin` 提供，组件内不自带 `@keyframes`。
 - 触控区高度不小于 88rpx（`size="sm"` 时为 56rpx，其余档位 ≥ 72rpx）。
+
+
+2026-11-14：点击区域 min-height 以 theme-skill 的 --height-touch-min（44px）为物理下限，不因窄屏 rpx 缩放低于 44px。

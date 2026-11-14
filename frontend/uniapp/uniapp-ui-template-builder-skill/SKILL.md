@@ -27,6 +27,17 @@ triggers:
 
 # UI Template Builder
 
+## 个人中心五场景：可运行入口
+
+用户要求简洁个人、标准服务、商城订单、企业员工或会员权益页面时，优先使用 [共享模板](templates/uniapp-vue3/profile-gallery/profile-gallery.vue) 与 [实施契约](references/profile-gallery.md)。旧 `profile/style-*.vue` 是历史示例，不代表已通过本次交互验收，不要把它们当成五场景的实现。
+
+- 结构只有一份，场景通过 `ProfileData.scenario`、业务数据与模块配置切换；皮肤引用 theme-skill 已有主题，不能以换配色冒充业务布局变化。
+- 必须引用本仓库 base-card、base-avatar、base-navbar、base-tabbar、base-popup、base-button 真源；空商品使用 page-components-skill 的 Empty。
+- 图标依赖 `frontend-icon-skill`，缺项按 `icon-image-catch-skill/icon-catch-skill` 取统一线性资产，构建期导出本地 PNG；不得引入运行时 UI/图标库或用 emoji 替代。
+- Demo 在 `demo/`，mock 在 `demo/src/api/_mocks_/profiles.ts`；交互副作用在容器 `demo/src/pages/index.vue`，展示模板仅通过事件交付。
+- 执行 `cd demo && npm ci && npm run dev:h5`。构建和验证范围见 `demo/README.md`，不得将编译通过描述为真机通过。
+
+
 页面模板固化技能：把常见页面固化下来，每次生成基于模板，确保效果稳定。
 
 ## 核心设计

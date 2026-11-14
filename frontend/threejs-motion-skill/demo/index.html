@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Three.js 动效最小示例</title>
+<style>body{font:16px system-ui;margin:24px;color:#24383c}main{max-width:640px;margin:auto}#stage{height:320px;background:#edf8f5;display:grid;place-items:center}canvas{display:block;width:100%;height:100%}button{padding:8px 14px;margin-top:12px}</style>
+<main><h1>旋转立方体</h1><div id="stage"><p id="fallback">静态预览 ◇</p></div><button id="toggle" disabled>暂停</button></main>
+<script type="module">
+const stage = document.querySelector('#stage');
+const fallback = document.querySelector('#fallback');
+const button = document.querySelector('#toggle');
+const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+async function boot() {
+  if (reduced.matches) return;
+  const T = await import('https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js');
+  const renderer = new T.WebGLRenderer({ antialias: true });
+  const scene = new T.Scene();
+  scene.background = new T.Color(0xedf8f5);
+  const camera = new T.PerspectiveCamera(45, 1, 0.1, 20);
+  camera.position.z = 4;
+  const geometry = new T.BoxGeometry();
+  const material = new T.MeshNormalMaterial();
+  const mesh = new T.Mesh(geometry, material);
+  scene.add(mesh);
+  stage.append(renderer.domElement);
+  fallback.hidden = true;
+  let playing = true;
+  function draw() { renderer.render(scene, camera); }
+  function sync() {
+    renderer.setAnimationLoop(playing && !document.hidden && !reduced.matches ? time => {
+      mesh.rotation.set(time * 0.0006, time * 0.0008, 0);
+      draw();
+    } : null);
+  }
+  const size = new ResizeObserver(() => {
+    const { clientWidth: w, clientHeight: h } = stage;
+    if (!w || !h) return;
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    draw();
+  });
+  size.observe(stage);
+  button.disabled = false;
+  button.onclick = () => { playing = !playing; button.textContent = playing ? '暂停' : '继续'; sync(); };
+  document.addEventListener('visibilitychange', sync);
+  reduced.addEventListener('change', sync);
+  renderer.domElement.addEventListener('webglcontextlost', () => {
+    cleanup();
+    fallback.hidden = false;
+  }, { once: true });
+  function cleanup() {
+    renderer.setAnimationLoop(null);
+    size.disconnect();
+    reduced.removeEventListener('change', sync);
+    document.removeEventListener('visibilitychange', sync);
+    geometry.dispose();
+    material.dispose();
+    renderer.dispose();
+    renderer.domElement.remove();
+    button.disabled = true;
+    button.onclick = null;
+  }
+  addEventListener('pagehide', event => { if (!event.persisted && renderer.domElement.isConnected) cleanup(); });
+  sync();
+}
+boot().catch(() => { fallback.hidden = false; });
+</script></html>

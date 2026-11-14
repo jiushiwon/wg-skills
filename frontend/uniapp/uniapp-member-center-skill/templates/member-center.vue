@@ -18,7 +18,7 @@
       <view class="task-card"><view class="progress"><text>{{ completedTaskCount }}/{{ tasks.length }}</text><text>今日任务</text></view><view class="task-main"><view class="section-head"><text>完成任务领积分</text><text @tap="emit('tasks')">查看全部 ›</text></view><view class="task-list"><view v-for="task in tasks.slice(0, 3)" :key="task.id" class="task" @tap="emit('task', task)"><text>{{ task.name }}</text><text class="reward">+{{ task.reward }}</text></view></view></view></view>
       <view class="section-head mall-head"><text>积分商城</text><text @tap="emit('mall')">更多好物 ›</text></view>
       <view v-if="products.length" class="product-grid"><view v-for="product in products" :key="product.id" class="product" @tap="emit('product', product)"><view class="product-img"><image v-if="product.image && !productErrors[product.id]" class="product-img-el" :src="product.image" mode="aspectFill" @error="onProductError(product.id)" /><text v-else class="product-img-ph">暂无图片</text></view><text>{{ product.name }}</text><text class="strong">{{ product.points }} 积分</text></view></view>
-      <empty v-else title="暂时没有可兑换商品" />
+      <empty v-else text="暂时没有可兑换商品" />
     </view>
   </view>
 </template>
