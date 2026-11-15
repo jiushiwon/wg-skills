@@ -648,3 +648,5 @@ description: 一句话描述（含触发词）
 本轮必要基础修复：base-tabbar 补齐外层闭合与可选宽屏 maxWidth；base-button 最小触控区使用 theme 的 44px 下限；暗色中性预设仅在主题真源维护，业务不重定义。
 
 Vue 列表项文档指向 uni-app 实际组件归属，规划中的树组件标为待建设。
+
+Flutter 移动端骨架由前端 flutter-generate-skill 提供。平台工程使用 Flutter CLI 生成，验收分别记录静态检查、测试、编译和装机。
