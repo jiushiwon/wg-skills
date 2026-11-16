@@ -1,6 +1,6 @@
 ---
 name: uniapp-ui-template-builder-skill
-description: "UI页面模板构建器 - 固化常见页面模板，多套风格可选，支持mock数据。从个人中心到商品页，从登录页到大屏，一键生成风格统一、质量稳定的页面代码。"
+description: "UI页面模板构建器 - 固化常见页面模板，多套风格可选，支持mock数据。含场景背景个人中心与内置图片素材。从个人中心到商品页，从登录页到大屏，一键生成风格统一、质量稳定的页面代码。"
 argument-hint: "[页面类型] [风格] [--mock]"
 user-invocable: true
 triggers:
@@ -26,6 +26,14 @@ triggers:
 ---
 
 # UI Template Builder
+
+## 个人中心第二组：五种场景背景与纯色圆环
+
+用户要求纯色圆环、特色背景、带图个人中心、冰川玻璃、潮流商城、极光社群、森林露营或阅读打卡时，读取 [场景背景契约](references/profile-scenic.md)，使用 templates/uniapp-vue3/profile-scenic/ 共享模板与独立 mock，素材位于 [assets/profile-scenic](assets/profile-scenic/README.md)。不要把第一组只是换背景就宣称新业务布局，也不要复制静态预览 HTML 为运行组件。
+
+- 五图随技能分发，不需要外部图片服务；正式应用按场景选择与压缩/分包，检查小程序包体，不默认全量进主包。
+- 使用现有主题及基础组件真源；图里的光纹/玻璃为静态装饰，卡片和文字由真实组件渲染。
+- Demo 新入口 /#/pages/scenic，scene=glacier/coral/aurora/forest/cloud/solid，旧入口保留；验收范围见 [验证记录](references/profile-scenic-verification.md)。
 
 ## 个人中心五场景：可运行入口
 

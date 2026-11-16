@@ -358,3 +358,19 @@ AI：
 ## 个人中心五场景（2026-11-14）
 
 新增 [共享模板与实施契约](references/profile-gallery.md)：简洁、标准服务、商城订单、企业员工、会员权益。它们共用一份真实 uni-app 模板，使用 base-card / avatar / navbar / tabbar / button / popup 与主题真源。[运行 Demo](demo/README.md) 支持切换布局、数据状态与演示交互；旧四风格模板未纳入本次验收。
+
+## 新增：五套场景背景个人中心
+
+- 素材：[五张内置无字背景与提示词](assets/profile-scenic/README.md)，随技能可用。
+- 实现：[共享模板与类型](templates/uniapp-vue3/profile-scenic/profile-scenic.vue)，[六份场景配置](templates/uniapp-vue3/profile-scenic/mock.ts)。
+- 使用：要求“使用 profile-scenic 生成 coral 商城个人中心，复用主题与 base-card 等真源”，按 [实施契约](references/profile-scenic.md) 生成。
+- Demo：运行原 demo，访问 /#/pages/scenic；scene 选择六种之一，preview=1 隐藏控制面板。
+- 特色背景不等于运行时动效，实际验证范围见 [记录](references/profile-scenic-verification.md)。
+
+### 纯色底 + 圆形装饰
+
+第六种配置为 solid，使用已有 business 主题和静态 CSS 圆形，未增加背景图片。复用同一个 profile-scenic.vue，可使用 /#/pages/scenic?scene=solid&preview=1 查看。它适合通用账户、工具应用与企业服务；与五套场景背景并存。
+
+本轮个人中心范围的 [审计与验证记录](references/profile-scenic-audit.md) 已补齐；其他历史页面不自动视为本轮全部通过。
+
+本轮为避免原图增加演示主包，已内置 runtime/ 轻量 JPEG（像素尺寸不变，五张合计 563491 字节），预构建脚本仅复制这些派生文件；原 PNG 与预览保留为技能素材。无需安装图像处理工具即可运行。

@@ -5,6 +5,12 @@
       "style": {
         "navigationStyle": "custom"
       }
+    },
+    {
+      "path": "pages/scenic",
+      "style": {
+        "navigationStyle": "custom"
+      }
     }
   ],
   "easycom": {

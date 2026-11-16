@@ -18,3 +18,15 @@ function link(name,target) {
 for(const name of ['uniapp-base-skill','uniapp-theme-skill','uniapp-page-components-skill'])link(name,path.join(uni,name))
 link('uniapp-ui-template-builder-skill/templates',path.join(skill,'templates'))
 console.log('Scoped source links ready; no copied component implementations.')
+
+// 背景素材唯一真源在技能 assets；构建时复制到各端 static。
+const scenicAssets=path.join(skill,'assets/profile-scenic')
+const scenicStatic=path.join(skill,'demo/src/static/profile-scenic')
+fs.mkdirSync(scenicStatic,{recursive:true})
+// 原图/预览只作为技能素材保存；运行时仅复制已核验的轻量派生图。
+for(const id of ['glacier','coral','aurora','forest','cloud']) {
+ const legacy=path.join(scenicStatic,id+'-background.png')
+ if(fs.existsSync(legacy))fs.unlinkSync(legacy) // 仅删除本脚本先前生成的已知文件。
+ const name=id+'-background.jpg'
+ fs.copyFileSync(path.join(scenicAssets,'runtime',name),path.join(scenicStatic,name))
+}

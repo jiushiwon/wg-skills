@@ -1,0 +1,47 @@
+[
+  {
+    "original": "aurora-background.png",
+    "runtime": "runtime/aurora-background.jpg",
+    "width": 830,
+    "height": 1896,
+    "source_bytes": 1664475,
+    "runtime_bytes": 104850,
+    "encoding": "JPEG quality=86, same pixel dimensions"
+  },
+  {
+    "original": "cloud-background.png",
+    "runtime": "runtime/cloud-background.jpg",
+    "width": 852,
+    "height": 1846,
+    "source_bytes": 1645043,
+    "runtime_bytes": 85160,
+    "encoding": "JPEG quality=86, same pixel dimensions"
+  },
+  {
+    "original": "coral-background.png",
+    "runtime": "runtime/coral-background.jpg",
+    "width": 852,
+    "height": 1846,
+    "source_bytes": 1568674,
+    "runtime_bytes": 90348,
+    "encoding": "JPEG quality=86, same pixel dimensions"
+  },
+  {
+    "original": "forest-background.png",
+    "runtime": "runtime/forest-background.jpg",
+    "width": 852,
+    "height": 1846,
+    "source_bytes": 2293566,
+    "runtime_bytes": 191465,
+    "encoding": "JPEG quality=86, same pixel dimensions"
+  },
+  {
+    "original": "glacier-background.png",
+    "runtime": "runtime/glacier-background.jpg",
+    "width": 852,
+    "height": 1846,
+    "source_bytes": 1615510,
+    "runtime_bytes": 91668,
+    "encoding": "JPEG quality=86, same pixel dimensions"
+  }
+]

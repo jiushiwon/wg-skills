@@ -1,0 +1,32 @@
+[
+  {
+    "id": "glacier",
+    "name": "冰川玻璃",
+    "prompt": "Create ONE high-resolution portrait mobile app BACKGROUND ASSET, 9:19.5 aspect ratio, target 1080x2340. Theme: Ice cyan and turquoise translucent glass sculpture, a sophisticated refractive glass arch and curved frosted acrylic ribbon on upper right, tiny silver droplets, luminous ice-blue caustics, premium airy photorealistic 3D material rendering, soft white center. Similar quality to high-end cyan glass smartphone campaign staging, but absolutely no device. Composition: decorative visual interest concentrated in TOP 32 percent and narrow side margins, fade toward quiet low-detail center and lower 65 percent where native app cards will later be placed. Topmost 7 percent must remain quiet for status bar. Cohesive full-bleed image, no split panels, no layout sheet. Must look richly designed, layered and distinctive, never generic gradient only. Crisp polished materials and subtle lighting effects, tasteful abundant detail confined to edges. STRICTLY NO text, lettering, numbers, logos, watermark, mobile phone frame, UI controls, cards, buttons, avatars, charts or screenshots. This is empty background artwork to be used under real uni-app components.",
+    "file": "glacier-background.png"
+  },
+  {
+    "id": "coral",
+    "name": "珊瑚潮流",
+    "prompt": "Create ONE high-resolution portrait mobile app BACKGROUND ASSET, 9:19.5 aspect ratio, target 1080x2340. Theme: Coral peach orange and warm rose pearlescent sculptural ribbons with a playful inflated glossy orb, refined glossy 3D retail art direction, upper-right sculptural shopping-inspired abstract folded form with no literal bag logo, warm ivory center, striking and stylish. Composition: decorative visual interest concentrated in TOP 32 percent and narrow side margins, fade toward quiet low-detail center and lower 65 percent where native app cards will later be placed. Topmost 7 percent must remain quiet for status bar. Cohesive full-bleed image, no split panels, no layout sheet. Must look richly designed, layered and distinctive, never generic gradient only. Crisp polished materials and subtle lighting effects, tasteful abundant detail confined to edges. STRICTLY NO text, lettering, numbers, logos, watermark, mobile phone frame, UI controls, cards, buttons, avatars, charts or screenshots. This is empty background artwork to be used under real uni-app components.",
+    "file": "coral-background.png"
+  },
+  {
+    "id": "aurora",
+    "name": "极光夜色",
+    "prompt": "Create ONE high-resolution portrait mobile app BACKGROUND ASSET, 9:19.5 aspect ratio, target 1080x2340. Theme: Deep navy midnight background with restrained violet turquoise aurora ribbons, dimensional chrome orbital hoop at upper right, subtle stardust around edges, premium futuristic members-club art direction, beautifully lit dark 3D sculptural atmosphere, center calm and dark. Composition: decorative visual interest concentrated in TOP 32 percent and narrow side margins, fade toward quiet low-detail center and lower 65 percent where native app cards will later be placed. Topmost 7 percent must remain quiet for status bar. Cohesive full-bleed image, no split panels, no layout sheet. Must look richly designed, layered and distinctive, never generic gradient only. Crisp polished materials and subtle lighting effects, tasteful abundant detail confined to edges. STRICTLY NO text, lettering, numbers, logos, watermark, mobile phone frame, UI controls, cards, buttons, avatars, charts or screenshots. This is empty background artwork to be used under real uni-app components.",
+    "file": "aurora-background.png"
+  },
+  {
+    "id": "forest",
+    "name": "森林露营",
+    "prompt": "Create ONE high-resolution portrait mobile app BACKGROUND ASSET, 9:19.5 aspect ratio, target 1080x2340. Theme: Premium illustrated miniature forest diorama in soft 3D clay and realistic paper texture, sage green, mist jade, warm cream, small layered pine trees framing upper corners, winding pale trail and tiny tent far upper right, dappled sunlight, cozy sophisticated outdoor lifestyle, center light mist. Composition: decorative visual interest concentrated in TOP 32 percent and narrow side margins, fade toward quiet low-detail center and lower 65 percent where native app cards will later be placed. Topmost 7 percent must remain quiet for status bar. Cohesive full-bleed image, no split panels, no layout sheet. Must look richly designed, layered and distinctive, never generic gradient only. Crisp polished materials and subtle lighting effects, tasteful abundant detail confined to edges. STRICTLY NO text, lettering, numbers, logos, watermark, mobile phone frame, UI controls, cards, buttons, avatars, charts or screenshots. This is empty background artwork to be used under real uni-app components.",
+    "file": "forest-background.png"
+  },
+  {
+    "id": "cloud",
+    "name": "奶油云朵",
+    "prompt": "Create ONE high-resolution portrait mobile app BACKGROUND ASSET, 9:19.5 aspect ratio, target 1080x2340. Theme: Premium playful creamy lavender and butter yellow 3D clay world, pillowy ivory clouds, one small glossy peach sun, delicate glass bubbles, simple floating stepped pedestal upper-right, tactile rounded forms, soft pastel but rich professional editorial illustration, calm pale center. Composition: decorative visual interest concentrated in TOP 32 percent and narrow side margins, fade toward quiet low-detail center and lower 65 percent where native app cards will later be placed. Topmost 7 percent must remain quiet for status bar. Cohesive full-bleed image, no split panels, no layout sheet. Must look richly designed, layered and distinctive, never generic gradient only. Crisp polished materials and subtle lighting effects, tasteful abundant detail confined to edges. STRICTLY NO text, lettering, numbers, logos, watermark, mobile phone frame, UI controls, cards, buttons, avatars, charts or screenshots. This is empty background artwork to be used under real uni-app components.",
+    "file": "cloud-background.png"
+  }
+]

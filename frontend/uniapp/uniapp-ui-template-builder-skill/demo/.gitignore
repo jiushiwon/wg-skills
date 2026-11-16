@@ -2,3 +2,5 @@ node_modules/
 dist/
 .unpackage/
 src/skills
+
+src/static/profile-scenic/
