@@ -1,7 +1,7 @@
 <template>
   <view class="search-bar">
     <view class="search-bar__wrap">
-      <text class="search-bar__icon">搜</text>
+      <view class="search-bar__icon" aria-hidden="true" />
       <input
         class="search-bar__input"
         type="text"
@@ -61,14 +61,19 @@ watch(
 
 const hasValue = computed(() => inner.value !== '')
 
-function handleInput(e: { detail: { value: string } }) {
-  inner.value = e.detail.value
-  emit('update:modelValue', e.detail.value)
-  emit('input', e.detail.value)
+function eventValue(e: unknown): string {
+  const event = e as { detail?: { value?: string }; target?: { value?: string } }
+  return event.detail?.value ?? event.target?.value ?? inner.value
 }
 
-function handleSearch(e: { detail: { value: string } }) {
-  const val = e.detail ? e.detail.value : inner.value
+function handleInput(e: unknown) {
+  inner.value = eventValue(e)
+  emit('update:modelValue', inner.value)
+  emit('input', inner.value)
+}
+
+function handleSearch(e: unknown) {
+  const val = eventValue(e)
   emit('search', val)
 }
 
@@ -107,6 +112,9 @@ function handleCancel() {
     font-size: var(--font-xs, 24rpx);
     color: var(--text-tertiary, #a3a3a3);
   }
+
+  &__icon { width: 26rpx; height: 26rpx; border: 4rpx solid currentColor; border-radius: 50%; position: relative; flex-shrink: 0; margin-right: var(--space-4); }
+  &__icon::after { content: ""; position: absolute; width: 14rpx; height: 4rpx; background: currentColor; right: -11rpx; bottom: -5rpx; transform: rotate(45deg); }
 
   &__input {
     flex: 1;

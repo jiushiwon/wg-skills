@@ -351,3 +351,11 @@ node image-forge.cjs config.json
 - 所有 CSS 变量带 fallback：`var(--x, fallback)`，确保 APP 端兼容
 - 所有 rpx 值为静态，禁止 calc()，确保微信小程序兼容
 - 命名体系统一：`--space-{n}` / `--font-{size}` / `--height-{comp}-{size}` / `--icon-{size}`
+
+## 商城组合预设
+
+读取 [商城预设](references/commerce-presets.md)，在应用根绑定统一选择状态。颜色、形状与空间在主题真源；业务布局由页面模板映射，不能把所有页面强制改成商品双栏。
+
+商城设计选型前读取 [设计目录](references/commerce-design-catalog.md)，按 A/B/C 与用户确认布局和参数，不仅切换配色。
+
+优先入口：[basic_theme.md](basic_theme.md)。这是全项目视觉主题；页面局部布局须读取对应 current_theme.md，旧商城目录不再作为二者混合的唯一入口。

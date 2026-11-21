@@ -22,6 +22,10 @@ __pycache__/
 # 环境变量
 .env
 .env.local
+.env.*
+!.env.example
+!.env.*.example
+!.env.sample
 .env.*.local
 
 # 证书 / 私钥 / 密钥库（支付 / 鉴权 / TLS 通用）
@@ -85,3 +89,5 @@ docs/
 # graphify 知识图谱产物
 graphify-out/
 
+
+frontend/uniapp/uniapp-ui-template-builder-skill/demo/src/static/commerce/

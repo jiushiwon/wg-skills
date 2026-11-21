@@ -30,3 +30,8 @@ for(const id of ['glacier','coral','aurora','forest','cloud']) {
  const name=id+'-background.jpg'
  fs.copyFileSync(path.join(scenicAssets,'runtime',name),path.join(scenicStatic,name))
 }
+
+const commerceSrc=path.join(skill,"assets/commerce")
+const commerceDest=path.join(skill,"demo/src/static/commerce")
+fs.mkdirSync(commerceDest,{recursive:true})
+for(const name of ["laptop.jpg","phone.jpg","headphones.jpg","watch.jpg","cart.svg","cart-white.svg","home.svg","wallet.svg","grid.svg"]) fs.copyFileSync(path.join(commerceSrc,name),path.join(commerceDest,name))

@@ -90,3 +90,5 @@ uniapp-theme-skill/
 - [ ] 无 rpx/px 混用
 - [ ] `theme-demo.html` 可直接打开且主题切换正常
 - [ ] `bash scripts/check-skills.sh` 错误为 0
+
+商城作用域变量：commerce-card-padding（卡片内边距）、commerce-image-radius（图片圆角）、commerce-price（价格色）、commerce-rail-width（分类栏宽）、commerce-category-radius（分类圆角）。真源为 base.css，设计目录记录对应数值。

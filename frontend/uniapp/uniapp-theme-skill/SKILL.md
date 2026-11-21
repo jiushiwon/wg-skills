@@ -585,3 +585,12 @@ uniapp-theme、uniapp-theme-skill
 
 
 2026-11-14：为规范中的暗色适配提供 `[data-theme="dark"]` 中性色预设，保持变量唯一真源；系统监听由宿主页面注册与清理。图标等静态资源需提供暗色可见版本，不能仅反转整页。
+
+
+## 商城组合预设
+
+读取 [商城预设](references/commerce-presets.md)，在应用根绑定统一选择状态。颜色、形状与空间在主题真源；业务布局由页面模板映射，不能把所有页面强制改成商品双栏。
+
+商城设计选型前读取 [设计目录](references/commerce-design-catalog.md)，按 A/B/C 与用户确认布局和参数，不仅切换配色。
+
+优先入口：[basic_theme.md](basic_theme.md)。这是全项目视觉主题；页面局部布局须读取对应 current_theme.md，旧商城目录不再作为二者混合的唯一入口。

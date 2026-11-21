@@ -262,3 +262,56 @@ page {
   --primary-700: #5eead4;
   --error-dark: #f87171;
 }
+
+/* 商城组合主题。只在显式容器下生效，历史主题不变。 */
+[data-commerce-theme="coral"] {
+  --primary-500: #C2410C;
+  --secondary-500: #1D4ED8;
+  --color-primary: #C2410C;
+  --color-secondary: #1D4ED8;
+  --bg-page: #FFF7ED;
+  --bg-card: #FFFFFF;
+  --text-primary: #18181B;
+  --text-secondary: #52525B;
+  --radius-card: 32rpx;
+  --radius-btn: 32rpx;
+  --commerce-gap: 16rpx;
+  --commerce-gutter: 24rpx;
+}
+[data-commerce-theme="forest"] {
+  --primary-500: #166534;
+  --secondary-500: #92400E;
+  --color-primary: #166534;
+  --color-secondary: #92400E;
+  --bg-page: #F3F7F1;
+  --bg-card: #FFFFFF;
+  --text-primary: #18181B;
+  --text-secondary: #52525B;
+  --radius-card: 16rpx;
+  --radius-btn: 16rpx;
+  --commerce-gap: 20rpx;
+  --commerce-gutter: 24rpx;
+}
+[data-commerce-theme="ink"] {
+  --primary-500: #18181B;
+  --secondary-500: #6D28D9;
+  --color-primary: #18181B;
+  --color-secondary: #6D28D9;
+  --bg-page: #F4F4F5;
+  --bg-card: #FFFFFF;
+  --text-primary: #18181B;
+  --text-secondary: #52525B;
+  --radius-card: 4rpx;
+  --radius-btn: 4rpx;
+  --commerce-gap: 16rpx;
+  --commerce-gutter: 24rpx;
+}
+
+/* 商城 A/B/C 参数覆盖：仅作用于商城主题作用域 */
+[data-commerce-theme="coral"]{--radius-card:24rpx;--radius-btn:16rpx;--commerce-gap:16rpx;--commerce-gutter:24rpx}
+[data-commerce-theme="ink"]{--color-secondary:#FACC15;--secondary-500:#FACC15;--radius-card:20rpx;--radius-btn:12rpx;--commerce-gap:16rpx;--commerce-gutter:20rpx}
+[data-commerce-theme="forest"]{--color-primary:#15803D;--primary-500:#15803D;--color-secondary:#DCFCE7;--secondary-500:#DCFCE7;--bg-page:#FFFFFF;--radius-card:16rpx;--radius-btn:12rpx;--commerce-gap:16rpx;--commerce-gutter:20rpx}
+
+[data-commerce-theme]{--commerce-card-padding:20rpx;--commerce-image-radius:16rpx;--commerce-price:#DC2626;--commerce-rail-width:128rpx;--commerce-category-radius:12rpx}
+[data-commerce-theme="coral"]{--commerce-card-padding:24rpx}
+[data-commerce-theme="forest"]{--commerce-card-padding:16rpx;--commerce-image-radius:12rpx;--commerce-category-radius:8rpx;--commerce-rail-width:144rpx}

@@ -374,3 +374,11 @@ AI：
 本轮个人中心范围的 [审计与验证记录](references/profile-scenic-audit.md) 已补齐；其他历史页面不自动视为本轮全部通过。
 
 本轮为避免原图增加演示主包，已内置 runtime/ 轻量 JPEG（像素尺寸不变，五张合计 563491 字节），预构建脚本仅复制这些派生文件；原 PNG 与预览保留为技能素材。无需安装图像处理工具即可运行。
+
+
+## 商城组合主题模板
+
+商品、购物车、钱包读取 [commerce](templates/uniapp-vue3/commerce/README.md)；主题变量引用 uniapp-theme-skill，不在页面声明变量。现有个人中心模板不变，商城 mock 不等同真实资金或订单实现。
+
+
+商城文案默认中文；不添加 CURATED 等英文装饰或测试、演示、mock标签。此要求写入调用提示词；页面内不放开发说明，接口与mock范围在使用文档交代。默认素材在 assets/commerce，构建时复制至 static/commerce。

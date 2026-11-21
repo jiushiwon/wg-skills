@@ -680,3 +680,27 @@ uniapp-ui-template-builder/
 ## 触发词
 
 uniapp-ui-template-builder、UI Template Builder
+
+
+## 商城组合主题模板
+
+商品、购物车、钱包读取 [commerce](templates/uniapp-vue3/commerce/README.md)；主题变量引用 uniapp-theme-skill，不在页面声明变量。现有个人中心模板不变，商城 mock 不等同真实资金或订单实现。
+
+
+商城文案默认中文；不添加 CURATED 等英文装饰或测试、演示、mock标签。此要求写入调用提示词；页面内不放开发说明，接口与mock范围在使用文档交代。默认素材在 assets/commerce，构建时复制至 static/commerce。
+
+商城生成前必须读取 ../uniapp-theme-skill/references/commerce-design-catalog.md；列出 A/B/C 的差异供用户选择。当前模板在已有商城布局上细化；B/C 的完整视觉验收以更新截图为准，不得宣称只是换色即完成。
+
+## 页面级组装契约
+- 先读取 uniapp-theme-skill 的设计目录与变量真源，确定 A/B/C 方案。布局遵循对应方案；用户显式选择其他布局时，说明覆盖项，不暗中替换。
+- 复用 uniapp-base-skill 的 SearchBar、BaseCard、BaseButton、BasePopup、BaseTabbar 与 uniapp-page-components-skill 的 Empty；不另写同类控件。
+- 图标使用既有组件提供的 icon/activeIcon 接口加载统一素材；当前为 SVG 资产与按钮/导航图标接口，不声称已接入独立 Icon 组件。
+- 页面负责业务数据和组件编排，颜色、内外边距、圆角参数由 theme 管理。新增布局先登记设计目录，再同步模板实现与验收。
+- 交付说明列出实际依赖与未接入项，文章仅给简要主题参数、效果图、统一使用提示词及结尾复用清单。
+
+商城分类必须接受 categories JSON 数组，允许单级与递归 children；id 全树唯一且保留 all，支持 image/productIds。默认分类与外部传入分类共用过滤链路，父分类包含后代商品。示例多级页面通过 categoryMode=multi 展示，不在用户页面写配置或测试字样。
+
+生成商城前先读 ../uniapp-theme-skill/basic_theme.md，再读 templates/uniapp-vue3/commerce/current_theme.md；分别选择全局主题与局部列表风格，不将列表布局冒充全局主题。
+
+## 模板模块隔离（发布要求）
+profile、profile-gallery、profile-scenic 与 commerce 为平级目录，独立入口、数据和局部布局，禁止用商城 current_theme.md 覆盖个人中心。basic_theme.md 是全项目视觉契约，接入项目时经用户选择绑定根容器；本轮兼容主题变量仍限定 data-commerce-theme 作用域，既有个人中心不会自动被改色。

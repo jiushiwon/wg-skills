@@ -11,6 +11,13 @@
       "style": {
         "navigationStyle": "custom"
       }
+    },
+    {
+      "path": "pages/commerce",
+      "style": {
+        "navigationStyle": "default",
+        "navigationBarTitleText": "数码商城"
+      }
     }
   ],
   "easycom": {

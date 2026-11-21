@@ -1,0 +1,21 @@
+{
+  "source": "Unsplash product photography",
+  "license": "https://unsplash.com/license",
+  "note": "真实摄影配图，非所售具体型号；使用前核对品牌、人物与其他权利。",
+  "photos": {
+    "laptop": "photo-1517336714731-489689fd1ca8",
+    "phone": "photo-1511707171634-5f897ff02aa9",
+    "headphones": "photo-1505740420928-5e560c06d30e",
+    "watch": "photo-1523275335684-37898b6baf30"
+  },
+  "icons": {
+    "files": [
+      "cart.svg",
+      "cart-white.svg",
+      "home.svg",
+      "grid.svg",
+      "wallet.svg"
+    ],
+    "source": "仓库内编写的线性 SVG，与技能代码一同交付"
+  }
+}
