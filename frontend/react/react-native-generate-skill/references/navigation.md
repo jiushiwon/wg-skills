@@ -1,3 +1,5 @@
+> 本文为结构参考；运行交付与当前版本选择以 runtime-delivery.md 为准。所有引用组件必须现场生成并通过类型检查。
+
 # React Native 导航配置
 
 基于 React Navigation 7.x 的完整导航架构。

@@ -1,6 +1,8 @@
+> 本文为结构参考；运行交付与当前版本选择以 runtime-delivery.md 为准。所有引用组件必须现场生成并通过类型检查。
+
 # React Native 项目骨架模板
 
-基于实际商业项目验证的完整目录结构。
+目录结构与代码示例；不代表当前生成项目已经通过装机验证。
 
 ## 整体结构
 
@@ -428,7 +430,8 @@ export function AppTabs(): React.JSX.Element {
 
 ```ts
 import { create } from 'zustand';
-import { persist, createJSONStorage } from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 interface AuthState {
   token: string | null;

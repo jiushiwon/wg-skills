@@ -1,0 +1,11 @@
+{
+ "env:check":"node scripts/env-check.mjs",
+ "start:dev":"node scripts/start.mjs dev",
+ "android:dev":"node scripts/android.mjs dev",
+ "ios:dev":"node scripts/run.mjs ios dev",
+ "build:android:test":"powershell -NoProfile -File scripts/build-android.ps1 -Environment test",
+ "build:android:prod":"powershell -NoProfile -File scripts/build-android.ps1 -Environment prod",
+ "build:ios:test":"bash scripts/build-ios.sh test",
+ "build:ios:prod":"bash scripts/build-ios.sh prod",
+ "e2e:test":"node scripts/e2e.mjs test"
+}

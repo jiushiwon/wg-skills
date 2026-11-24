@@ -1,0 +1,6 @@
+appId: ${APP_ID}
+---
+- launchApp
+- assertVisible:
+    id: "home-screen"
+- takeScreenshot: artifacts/home

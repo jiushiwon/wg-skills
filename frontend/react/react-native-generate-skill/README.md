@@ -23,7 +23,7 @@
 
 ## 依赖包规范
 
-基于 `D:\projects\cq-app-merchant` 实际项目验证：
+基于 `path/to/reference-project` 实际项目验证：
 
 - 框架：React Native 0.86.2
 - 导航：@react-navigation/native 7.x + react-native-screens 4.x
@@ -45,3 +45,6 @@ react-native-generate-skill/
     ├── navigation.md         # React Navigation 配置
     └── state-management.md  # Zustand 状态管理
 ```
+
+## 环境、启动与打包
+必读 [运行交付规范](references/runtime-delivery.md)。内置 assets/runtime 提供 dev/test/prod 环境、启动与签名打包脚本，须合入官方生成的原生工程并完成平台接线；Expo 使用独立 EAS 分支。验证边界见 references/audit-2026-11-24.md。

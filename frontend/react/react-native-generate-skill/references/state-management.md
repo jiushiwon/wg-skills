@@ -1,3 +1,5 @@
+> 本文为结构参考；运行交付与当前版本选择以 runtime-delivery.md 为准。所有引用组件必须现场生成并通过类型检查。
+
 # React Native 状态管理
 
 基于 Zustand 5.x + AsyncStorage 持久化的状态管理方案。
@@ -18,7 +20,8 @@
 
 ```ts
 import { create } from 'zustand';
-import { persist, createJSONStorage } from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import type { StateStorage } from 'zustand/middleware';
 
 const asyncStorageAdapter: StateStorage = {

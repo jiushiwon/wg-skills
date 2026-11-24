@@ -423,3 +423,6 @@ MIT License — 自由使用、修改、商用。
 [uniapp-ui-template-builder-skill 的个人中心 Demo](frontend/uniapp/uniapp-ui-template-builder-skill/demo/README.md)：五套业务布局，一份共享模板，复用 uni-app 主题与基础容器。包含独立 mock、状态切换、本地签到演示、真实截图及分平台验证记录；不承诺后端业务或未测真机可用。
 
 - [Flutter App 骨架](frontend/flutter-generate-skill/SKILL.md) · Android/iOS 初始化、主题、页面与构建验证。
+
+### React Native 运行交付
+`react-native-generate-skill` 补齐 dev/test/prod 环境与运行、签名打包脚本。使用前读取 [运行交付规范](frontend/react/react-native-generate-skill/references/runtime-delivery.md)，验证范围见同目录审计记录。
